@@ -20,9 +20,35 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**
- * A wrapper class for Date / Time related functions that provides concrete, non-overloaded methods.
+ * A wrapper class for Date, Time and DateTimerelated functions that provides concrete, non-overloaded methods.
  */
 public class DateTimeWrapper {
+
+    // Parse the string `s` as an LocalDate.
+    public static LocalDate localDateParse(String s) throws Exception {
+        final CharSequence cs = s;
+        return LocalDate.parse(cs);
+    }
+
+    // Parse the string `s` as an LocalDate. The format of the input string
+    // should be in the format mandated by `formatter`.
+    public static LocalDate localDateParseWithFormatter(String s, DateTimeFormatter formatter) throws Exception {
+        final CharSequence cs = s;
+        return LocalDate.parse(cs, formatter);
+    }
+
+    // Parse the string `s` as an LocalTime.
+    public static LocalTime localTimeParse(String s) throws Exception {
+        final CharSequence cs = s;
+        return LocalTime.parse(cs);
+    }
+
+    // Parse the string `s` as an LocalTime. The format of the input string
+    // should be in the format mandated by `formatter`.
+    public static LocalTime localTimeParseWithFormatter(String s, DateTimeFormatter formatter) throws Exception {
+        final CharSequence cs = s;
+        return LocalTime.parse(cs, formatter);
+    }
 
     // Parse the string `s` as an LocalDateTime. The format of the input string
     // should be ISO-8601 extended offset date-time format.

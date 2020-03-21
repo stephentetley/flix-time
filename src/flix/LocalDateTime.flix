@@ -22,7 +22,7 @@ opaque type LocalDateTime = ##java.time.LocalDateTime
 namespace LocalDateTime {
 
     ///
-    /// Returns the current time from the system clock.
+    /// Returns the current date-time from the system clock.
     ///
     pub def now(): LocalDateTime & Impure =
         import java.time.LocalDateTime:now();
@@ -38,20 +38,20 @@ namespace LocalDateTime {
         t.toString() as & Pure
 
     ///
-    /// Parse the string `s` as an LocalDateTime, leading or trailing whitespace is trimmed.
+    /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should be ISO-8601 extended offset date-time format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def fromString(s: String): Result[LocalDateTime, String] = try {
         import java.lang.String.strip();
-        import flix.runtime.library.DateTimeWrapper:localDateTimeParse(String) as parse;
-        Ok(LocalDateTime(s.strip().parse())) as & Pure
+        import flix.runtime.library.DateTimeWrapper:localDateTimeParse(String) as dateTimeParse;
+        Ok(LocalDateTime(s.strip().dateTimeParse())) as & Pure
     } catch {
         case _: ##java.time.format.DateTimeParseException => Err("LocalDateTime.fromString")
     }
 
     ///
-    /// Parse the string `s` as an LocalDateTime, leading or trailing whitespace is trimmed.
+    /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
