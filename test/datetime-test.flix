@@ -4,6 +4,10 @@
 def now01(): LocalDateTime & Impure = 
     LocalDateTime.now()
 
+@test
+def fromString01(): Result[LocalDate, String] & Pure = 
+    use LocalDate.fromString;
+    "2007-12-03".fromString()
 
 @test
 def fromStringWithFormat01(): Result[LocalDateTime, String] = 
@@ -37,3 +41,19 @@ def toString01(): String & Impure =
     use Time/ZoneId.systemDefault;
     use Time/ZoneId.toString;
     systemDefault() |> Result.map(toString) |> x -> Result.getWithDefault(x, "**error**")
+
+@test
+def equals01(): Bool & Impure = 
+    use LocalDate.now;
+    use LocalDate.equals;
+    let d1 = now();
+    let d2 = now();
+    equals(d1, d2)
+
+@test
+def before01(): Bool & Impure = 
+    use LocalDate.now;
+    use LocalDate.before;
+    let d1 = now();
+    let d2 = now();
+    before(d1, d2)

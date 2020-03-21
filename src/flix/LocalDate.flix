@@ -43,8 +43,9 @@ namespace LocalDate {
     ///
     pub def fromString(s: String): Result[LocalDate, String] = try {
         import java.lang.String.strip();
-        import flix.runtime.library.DateTimeWrapper:localDateParse(String) as dateParse;
-        Ok(LocalDate(s.strip().dateParse())) as & Pure
+        import java.time.LocalDate:parse(##java.lang.CharSequence);
+        let cs = s.strip() as ##java.lang.CharSequence & Pure;
+        Ok(LocalDate(parse(cs))) as & Pure
     } catch {
         case _: ##java.time.format.DateTimeParseException => Err("LocalDate.fromString")
     }
@@ -56,14 +57,40 @@ namespace LocalDate {
     ///
     pub def fromStringWithFormat(s: String, formatter: DateFormatter): Result[LocalDate, String] = try {
         import java.lang.String.strip();
-        import flix.runtime.library.DateTimeWrapper:localDateParseWithFormatter(String, ##java.time.format.DateTimeFormatter) as parseWithFormatter;
+        import java.time.LocalDate:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         let DateFormatter(fmtr) = formatter;
-        Ok(LocalDate(parseWithFormatter(s.strip(), fmtr))) as & Pure
+        let cs = s.strip() as ##java.lang.CharSequence & Pure;
+        Ok(LocalDate(cs.parse(fmtr))) as & Pure
     } catch {
         case _: ##java.time.format.DateTimeParseException => Err("LocalDate.fromStringWithFormat")
     }
 
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: LocalDate, y: LocalDate): Bool =
+        import java.time.LocalDate.equals(##java.lang.Object);
+        let LocalDate(d1) = x;
+        let LocalDate(d2) = y;
+        d1.equals(d2 as ##java.lang.Object) as & Pure
 
 
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def before(x: LocalDate, y: LocalDate): Bool =
+        import java.time.LocalDate.isBefore(##java.time.chrono.ChronoLocalDate);
+        let LocalDate(d1) = x;
+        let LocalDate(d2) = y;
+        d1.isBefore(d2 as ##java.time.chrono.ChronoLocalDate) as & Pure
+
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def after(x: LocalDate, y: LocalDate): Bool =
+        import java.time.LocalDate.isAfter(##java.time.chrono.ChronoLocalDate);
+        let LocalDate(d1) = x;
+        let LocalDate(d2) = y;
+        d1.isAfter(d2 as ##java.time.chrono.ChronoLocalDate) as & Pure
 
 }

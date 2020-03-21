@@ -113,5 +113,11 @@ namespace Time/Formatter {
         case _: ##java.lang.IllegalArgumentException => Err("Time/Formatter.dateTimeFormatter")
     }
 
+    pub def withZone(formatter: DateTimeFormatter, zone: ZoneId): DateTimeFormatter =
+        import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId) as withZone;
+        let DateTimeFormatter(fmtr) = formatter;
+        let ZoneId(z) = zone;
+        DateTimeFormatter(fmtr.withZone(z)) as & Pure
+
 
  }

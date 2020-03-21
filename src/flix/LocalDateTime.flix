@@ -44,8 +44,9 @@ namespace LocalDateTime {
     ///
     pub def fromString(s: String): Result[LocalDateTime, String] = try {
         import java.lang.String.strip();
-        import flix.runtime.library.DateTimeWrapper:localDateTimeParse(String) as dateTimeParse;
-        Ok(LocalDateTime(s.strip().dateTimeParse())) as & Pure
+        import java.time.LocalDateTime:parse(##java.lang.CharSequence);
+        let cs = s.strip() as ##java.lang.CharSequence & Pure;
+        Ok(LocalDateTime(parse(cs))) as & Pure
     } catch {
         case _: ##java.time.format.DateTimeParseException => Err("LocalDateTime.fromString")
     }
@@ -57,9 +58,10 @@ namespace LocalDateTime {
     ///
     pub def fromStringWithFormat(s: String, formatter: DateTimeFormatter): Result[LocalDateTime, String] = try {
         import java.lang.String.strip();
-        import flix.runtime.library.DateTimeWrapper:localDateTimeParseWithFormatter(String, ##java.time.format.DateTimeFormatter) as parseWithFormatter;
+        import java.time.LocalDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         let DateTimeFormatter(fmtr) = formatter;
-        Ok(LocalDateTime(parseWithFormatter(s.strip(), fmtr))) as & Pure
+        let cs = s.strip() as ##java.lang.CharSequence & Pure;
+        Ok(LocalDateTime(cs.parse(fmtr))) as & Pure
     } catch {
         case _: ##java.time.format.DateTimeParseException => Err("LocalDateTime.fromStringWithFormat")
     }
