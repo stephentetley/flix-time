@@ -90,5 +90,71 @@ namespace LocalTime {
         case _: ##java.lang.IllegalArgumentException => Err("Time/Formatter.formatter")
     }
 
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: LocalTime, y: LocalTime): Bool =
+        import java.time.LocalTime.equals(##java.lang.Object);
+        let LocalTime(x1) = x;
+        let LocalTime(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def before(x: LocalTime, y: LocalTime): Bool =
+        import java.time.LocalTime.isBefore(##java.time.LocalTime);
+        let LocalTime(x1) = x;
+        let LocalTime(y1) = y;
+        x1.isBefore(y1) as & Pure
+
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def after(x: LocalTime, y: LocalTime): Bool =
+        import java.time.LocalTime.isAfter(##java.time.LocalTime);
+        let LocalTime(x1) = x;
+        let LocalTime(y1) = y;
+        x1.isAfter(y1) as & Pure
+
+    pub def plusHours(x: LocalTime, hours: Int64): LocalTime =
+        import java.time.LocalTime.plusHours(Int64) as plus;
+        let LocalTime(x1) = x;
+        LocalTime(x1.plus(hours)) as & Pure
+
+    pub def minusHours(x: LocalTime, hours: Int64): LocalTime =
+        import java.time.LocalTime.minusHours(Int64) as minus;
+        let LocalTime(x1) = x;
+        LocalTime(x1.minus(hours)) as & Pure
+
+    pub def plusMinutes(x: LocalTime, minutes: Int64): LocalTime =
+        import java.time.LocalTime.plusMinutes(Int64) as plus;
+        let LocalTime(x1) = x;
+        LocalTime(x1.plus(minutes)) as & Pure
+
+    pub def minusMinutes(x: LocalTime, minutes: Int64): LocalTime =
+        import java.time.LocalTime.minusMinutes(Int64) as minus;
+        let LocalTime(x1) = x;
+        LocalTime(x1.minus(minutes)) as & Pure
+
+    pub def plusSeconds(x: LocalTime, seconds: Int64): LocalTime =
+        import java.time.LocalTime.plusSeconds(Int64) as plus;
+        let LocalTime(x1) = x;
+        LocalTime(x1.plus(seconds)) as & Pure
+
+    pub def minusSeconds(x: LocalTime, seconds: Int64): LocalTime =
+        import java.time.LocalTime.minusSeconds(Int64) as minus;
+        let LocalTime(x1) = x;
+        LocalTime(x1.minus(seconds)) as & Pure
+
+    pub def plusNanos(x: LocalTime, nanos: Int64): LocalTime =
+        import java.time.LocalTime.plusNanos(Int64) as plus;
+        let LocalTime(x1) = x;
+        LocalTime(x1.plus(nanos)) as & Pure
+
+    pub def minusNanos(x: LocalTime, nanos: Int64): LocalTime =
+        import java.time.LocalTime.minusNanos(Int64) as minus;
+        let LocalTime(x1) = x;
+        LocalTime(x1.minus(nanos)) as & Pure
 
 }

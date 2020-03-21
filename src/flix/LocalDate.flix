@@ -103,7 +103,6 @@ namespace LocalDate {
         case _: ##java.lang.IllegalArgumentException => Err("Time/Formatter.formatter")
     }
 
-
     ///
     /// Returns `true` if `x` == `y`.
     ///
@@ -112,7 +111,6 @@ namespace LocalDate {
         let LocalDate(d1) = x;
         let LocalDate(d2) = y;
         d1.equals(d2 as ##java.lang.Object) as & Pure
-
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -131,5 +129,45 @@ namespace LocalDate {
         let LocalDate(d1) = x;
         let LocalDate(d2) = y;
         d1.isAfter(d2 as ##java.time.chrono.ChronoLocalDate) as & Pure
+
+    pub def plusYears(x: LocalDate, years: Int64): LocalDate =
+        import java.time.LocalDate.plusYears(Int64) as plus;
+        let LocalDate(x1) = x;
+        LocalDate(x1.plus(years)) as & Pure
+
+    pub def minusYears(x: LocalDate, years: Int64): LocalDate =
+        import java.time.LocalDate.minusYears(Int64) as minus;
+        let LocalDate(x1) = x;
+        LocalDate(x1.minus(years)) as & Pure
+
+    pub def plusMonths(x: LocalDate, months: Int64): LocalDate =
+        import java.time.LocalDate.plusMonths(Int64) as plus;
+        let LocalDate(x1) = x;
+        LocalDate(x1.plus(months)) as & Pure
+
+    pub def minusMonths(x: LocalDate, months: Int64): LocalDate =
+        import java.time.LocalDate.minusMonths(Int64) as minus;
+        let LocalDate(x1) = x;
+        LocalDate(x1.minus(months)) as & Pure
+
+    pub def plusWeeks(x: LocalDate, weeks: Int64): LocalDate =
+        import java.time.LocalDate.plusWeeks(Int64) as plus;
+        let LocalDate(x1) = x;
+        LocalDate(x1.plus(weeks)) as & Pure
+
+    pub def minusWeeks(x: LocalDate, weeks: Int64): LocalDate =
+        import java.time.LocalDate.minusWeeks(Int64) as minus;
+        let LocalDate(x1) = x;
+        LocalDate(x1.minus(weeks)) as & Pure
+
+    pub def plusDays(x: LocalDate, days: Int64): LocalDate =
+        import java.time.LocalDate.plusDays(Int64) as plus;
+        let LocalDate(x1) = x;
+        LocalDate(x1.plus(days)) as & Pure
+
+    pub def minusDays(x: LocalDate, days: Int64): LocalDate =
+        import java.time.LocalDate.minusDays(Int64) as minus;
+        let LocalDate(x1) = x;
+        LocalDate(x1.minus(days)) as & Pure
 
 }
