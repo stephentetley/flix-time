@@ -15,7 +15,7 @@
  */
 
 ///
-/// A wrapper around a Java DateTimeFormatter for date-times.
+/// A wrapper around a Java ZoneId.
 ///
 opaque type ZoneId = ##java.time.ZoneId
 

@@ -57,3 +57,16 @@ def before01(): Bool & Impure =
     let d1 = now();
     let d2 = now();
     before(d1, d2)
+
+@test 
+def getDuration01(): String = 
+    use Time/ChronoUnit.getDuration;
+    use JDuration.toString;
+    getDuration(ChronoUnit.Forever) |> toString
+
+
+@test 
+def getDuration02(): String = 
+    use Time/ChronoUnit.getDuration;
+    use JDuration.toString;
+    getDuration(ChronoUnit.Nanos) |> toString
