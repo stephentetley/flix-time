@@ -19,6 +19,11 @@
 ///
 opaque type LocalDate = ##java.time.LocalDate
 
+///
+/// A wrapper around a Java DateTimeFormatter for dates.
+///
+opaque type DateFormatter = ##java.time.format.DateTimeFormatter
+
 namespace LocalDate {
 
     ///
@@ -64,6 +69,40 @@ namespace LocalDate {
     } catch {
         case _: ##java.time.format.DateTimeParseException => Err("LocalDate.fromStringWithFormat")
     }
+
+    pub def basic_iso_date(): DateFormatter =
+        import get java.time.format.DateTimeFormatter:BASIC_ISO_DATE as get_basic_iso_date;
+        DateFormatter(get_basic_iso_date()) as & Pure
+
+    pub def iso_local_date(): DateFormatter =
+        import get java.time.format.DateTimeFormatter:ISO_LOCAL_DATE as get_iso_local_date;
+        DateFormatter(get_iso_local_date()) as & Pure
+
+    pub def iso_offset_date(): DateFormatter =
+        import get java.time.format.DateTimeFormatter:ISO_OFFSET_DATE as get_iso_offset_date;
+        DateFormatter(get_iso_offset_date()) as & Pure
+
+    pub def iso_date(): DateFormatter =
+        import get java.time.format.DateTimeFormatter:ISO_DATE as get_iso_date;
+        DateFormatter(get_iso_date()) as & Pure
+
+    pub def iso_oridinal_date(): DateFormatter =
+        import get java.time.format.DateTimeFormatter:ISO_ORDINAL_DATE as get_iso_oridinal_date;
+        DateFormatter(get_iso_oridinal_date()) as & Pure
+
+    pub def iso_week_date(): DateFormatter =
+        import get java.time.format.DateTimeFormatter:ISO_WEEK_DATE as get_iso_week_date;
+        DateFormatter(get_iso_week_date()) as & Pure
+
+
+    pub def formatter(pattern: String): Result[DateFormatter, String] = try {
+        import java.lang.String.strip();
+        import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
+        Ok(DateFormatter(pattern.strip().ofPattern())) as & Pure
+    } catch {
+        case _: ##java.lang.IllegalArgumentException => Err("Time/Formatter.formatter")
+    }
+
 
     ///
     /// Returns `true` if `x` == `y`.

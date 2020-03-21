@@ -19,6 +19,11 @@
 ///
 opaque type LocalTime = ##java.time.LocalTime
 
+///
+/// A wrapper around a Java DateTimeFormatter for times.
+///
+opaque type TimeFormatter = ##java.time.format.DateTimeFormatter
+
 namespace LocalTime {
 
     ///
@@ -65,7 +70,25 @@ namespace LocalTime {
         case _: ##java.time.format.DateTimeParseException => Err("LocalTime.fromStringWithFormat")
     }
 
+    pub def iso_local_time(): TimeFormatter =
+        import get java.time.format.DateTimeFormatter:ISO_LOCAL_TIME as get_iso_local_time;
+        TimeFormatter(get_iso_local_time()) as & Pure
 
+    pub def iso_offset_time(): TimeFormatter =
+        import get java.time.format.DateTimeFormatter:ISO_OFFSET_TIME as get_iso_offset_time;
+        TimeFormatter(get_iso_offset_time()) as & Pure
+
+    pub def basic_iso_time(): TimeFormatter =
+        import get java.time.format.DateTimeFormatter:ISO_TIME as get_iso_time;
+        TimeFormatter(get_iso_time()) as & Pure
+
+    pub def formatter(pattern: String): Result[TimeFormatter, String] = try {
+        import java.lang.String.strip();
+        import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
+        Ok(TimeFormatter(pattern.strip().ofPattern())) as & Pure
+    } catch {
+        case _: ##java.lang.IllegalArgumentException => Err("Time/Formatter.formatter")
+    }
 
 
 }
