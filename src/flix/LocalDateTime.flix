@@ -42,14 +42,35 @@ namespace LocalDateTime {
         let ZoneId(z) = zone;
         LocalDateTime(now(z))
 
+    pub def fromLocalDateLocalTime(date: LocalDate, time: LocalTime): LocalDateTime =
+        import java.time.LocalDateTime:of(##java.time.LocalDate, ##java.time.LocalTime);
+        let LocalDate(d) = date;
+        let LocalTime(t) = time;
+        LocalDateTime(of(d, t)) as & Pure
+
+    ///
+    /// Returns the given date-time `x` as __.
+    ///
+    pub def toLocalDate(x: LocalDateTime): LocalDate =
+        import java.time.LocalDateTime.toLocalDate();
+        let LocalDateTime(x1) = x;
+        LocalDate(x1.toLocalDate()) as & Pure
+
+    ///
+    /// Returns the given date-time `x` as __.
+    ///
+    pub def toLocalTime(x: LocalDateTime): LocalTime =
+        import java.time.LocalDateTime.toLocalTime();
+        let LocalDateTime(x1) = x;
+        LocalTime(x1.toLocalTime()) as & Pure
 
     ///
     /// Returns the given date-time `x` as a String using ISO-8601 representation.
     ///
     pub def toString(x: LocalDateTime): String =
         import java.time.LocalDateTime.toString();
-        let LocalDateTime(t) = x;
-        t.toString() as & Pure
+        let LocalDateTime(x1) = x;
+        x1.toString() as & Pure
 
     ///
     /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
@@ -223,5 +244,44 @@ namespace LocalDateTime {
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.minus(nanos)) as & Pure
 
+    pub def withYear(x: LocalDateTime, year: Int32): LocalDateTime =
+        import java.time.LocalDateTime.withYear(Int32);
+        let LocalDateTime(x1) = x;
+        LocalDateTime(x1.withYear(year)) as & Pure
+
+    pub def withMonth(x: LocalDateTime, month: Int32): LocalDateTime =
+        import java.time.LocalDateTime.withMonth(Int32);
+        let LocalDateTime(x1) = x;
+        LocalDateTime(x1.withMonth(month)) as & Pure
+
+    pub def withDayOfYear(x: LocalDateTime, dayOfYear: Int32): LocalDateTime =
+        import java.time.LocalDateTime.withDayOfYear(Int32);
+        let LocalDateTime(x1) = x;
+        LocalDateTime(x1.withDayOfYear(dayOfYear)) as & Pure
+
+    pub def withDayOfMonth(x: LocalDateTime, dayOfMonth: Int32): LocalDateTime =
+        import java.time.LocalDateTime.withDayOfMonth(Int32);
+        let LocalDateTime(x1) = x;
+        LocalDateTime(x1.withDayOfMonth(dayOfMonth)) as & Pure
+
+    pub def withHour(x: LocalDateTime, hour: Int32): LocalDateTime =
+        import java.time.LocalDateTime.withHour(Int32);
+        let LocalDateTime(x1) = x;
+        LocalDateTime(x1.withHour(hour)) as & Pure
+
+    pub def withMinute(x: LocalDateTime, minute: Int32): LocalDateTime =
+        import java.time.LocalDateTime.withMinute(Int32);
+        let LocalDateTime(x1) = x;
+        LocalDateTime(x1.withMinute(minute)) as & Pure
+
+    pub def withSecond(x: LocalDateTime, second: Int32): LocalDateTime =
+        import java.time.LocalDateTime.withSecond(Int32);
+        let LocalDateTime(x1) = x;
+        LocalDateTime(x1.withSecond(second)) as & Pure
+
+    pub def withNano(x: LocalDateTime, nano: Int32): LocalDateTime =
+        import java.time.LocalDateTime.withNano(Int32);
+        let LocalDateTime(x1) = x;
+        LocalDateTime(x1.withNano(nano)) as & Pure
 
 }

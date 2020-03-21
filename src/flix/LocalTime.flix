@@ -33,6 +33,42 @@ namespace LocalTime {
         import java.time.LocalTime:now();
         LocalTime(now())
 
+    pub def fromHoursMinutes(hours: Int32, minutes: Int32): LocalTime =
+        import java.time.LocalTime:of(Int32, Int32);
+        LocalTime(of(hours, minutes)) as & Pure
+
+    pub def fromHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): LocalTime =
+        import java.time.LocalTime:of(Int32, Int32, Int32);
+        LocalTime(of(hours, minutes, seconds)) as & Pure
+
+    pub def fromHoursMinutesSecondsNanos(hours: Int32, minutes: Int32, seconds: Int32, nanos: Int32): LocalTime =
+        import java.time.LocalTime:of(Int32, Int32, Int32, Int32);
+        LocalTime(of(hours, minutes, seconds, nanos)) as & Pure
+
+    pub def fromInstant(x: Instant, zone: ZoneId): LocalTime =
+        import java.time.LocalTime:ofInstant(##java.time.Instant, ##java.time.ZoneId);
+        let Instant(x1) = x;
+        let ZoneId(z1) = zone;
+        LocalTime(ofInstant(x1, z1)) as & Pure
+
+    pub def fromSecondOfDay(secondOfDay: Int64): LocalTime =
+        import java.time.LocalTime:ofSecondOfDay(Int64);
+        LocalTime(ofSecondOfDay(secondOfDay)) as & Pure
+
+    pub def toSecondOfDay(time: LocalTime): Int32 =
+        import java.time.LocalTime.toSecondOfDay();
+        let LocalTime(x1) = time;
+        x1.toSecondOfDay() as & Pure
+
+    pub def fromNanoOfDay(nanoOfDay: Int64): LocalTime =
+        import java.time.LocalTime:ofNanoOfDay(Int64);
+        LocalTime(ofNanoOfDay(nanoOfDay)) as & Pure
+
+    pub def toNanoOfDay(time: LocalTime): Int64 =
+        import java.time.LocalTime.toNanoOfDay();
+        let LocalTime(x1) = time;
+        x1.toNanoOfDay() as & Pure
+
     ///
     /// Returns the given time `x` as a string using __.
     ///
@@ -156,5 +192,25 @@ namespace LocalTime {
         import java.time.LocalTime.minusNanos(Int64) as minus;
         let LocalTime(x1) = x;
         LocalTime(x1.minus(nanos)) as & Pure
+
+    pub def withHour(x: LocalTime, hour: Int32): LocalTime =
+        import java.time.LocalTime.withHour(Int32);
+        let LocalTime(x1) = x;
+        LocalTime(x1.withHour(hour)) as & Pure
+
+    pub def withMinute(x: LocalTime, minute: Int32): LocalTime =
+        import java.time.LocalTime.withMinute(Int32);
+        let LocalTime(x1) = x;
+        LocalTime(x1.withMinute(minute)) as & Pure
+
+    pub def withSecond(x: LocalTime, second: Int32): LocalTime =
+        import java.time.LocalTime.withSecond(Int32);
+        let LocalTime(x1) = x;
+        LocalTime(x1.withSecond(second)) as & Pure
+
+    pub def withNano(x: LocalTime, nano: Int32): LocalTime =
+        import java.time.LocalTime.withNano(Int32);
+        let LocalTime(x1) = x;
+        LocalTime(x1.withNano(nano)) as & Pure
 
 }

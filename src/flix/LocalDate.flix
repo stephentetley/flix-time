@@ -170,4 +170,24 @@ namespace LocalDate {
         let LocalDate(x1) = x;
         LocalDate(x1.minus(days)) as & Pure
 
+    pub def withYear(x: LocalDate, year: Int32): LocalDate =
+        import java.time.LocalDate.withYear(Int32);
+        let LocalDate(x1) = x;
+        LocalDate(x1.withYear(year)) as & Pure
+
+    pub def withMonth(x: LocalDate, month: Int32): LocalDate =
+        import java.time.LocalDate.withMonth(Int32);
+        let LocalDate(x1) = x;
+        LocalDate(x1.withMonth(month)) as & Pure
+
+    pub def withDayOfYear(x: LocalDate, dayOfYear: Int32): LocalDate =
+        import java.time.LocalDate.withDayOfYear(Int32);
+        let LocalDate(x1) = x;
+        LocalDate(x1.withDayOfYear(dayOfYear)) as & Pure
+
+    pub def withDayOfMonth(x: LocalDate, dayOfMonth: Int32): LocalDate =
+        import java.time.LocalDate.withDayOfMonth(Int32);
+        let LocalDate(x1) = x;
+        LocalDate(x1.withDayOfMonth(dayOfMonth)) as & Pure
+
 }
