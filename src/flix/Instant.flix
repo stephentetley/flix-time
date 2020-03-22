@@ -31,23 +31,63 @@ namespace Instant {
     ///
     /// ___
     ///
-    pub def epoch(): Instant & Pure =
+    pub def epoch(): Instant =
         import get java.time.Instant:EPOCH as get_epoch;
         Instant(get_epoch()) as & Pure
 
     ///
     /// ___
     ///
-    pub def minValue(): Instant & Pure =
+    pub def minValue(): Instant =
         import get java.time.Instant:MIN as get_min;
         Instant(get_min()) as & Pure
 
     ///
     /// ___
     ///
-    pub def maxValue(): Instant & Pure =
+    pub def maxValue(): Instant =
         import get java.time.Instant:MAX as get_max;
         Instant(get_max()) as & Pure
+
+    pub def fromEpochSecond(epochSecond: Int64): Instant =
+        import java.time.Instant:ofEpochSecond(Int64);
+        Instant(ofEpochSecond(epochSecond)) as & Pure
+
+    pub def fromEpochSecondWithNano(epochSecond: Int64, nanoAdjustment: Int64): Instant =
+        import java.time.Instant:ofEpochSecond(Int64, Int64);
+        Instant(ofEpochSecond(epochSecond, nanoAdjustment)) as & Pure
+
+    pub def fromEpochMilli(epochMilli: Int64): Instant =
+        import java.time.Instant:ofEpochMilli(Int64);
+        Instant(ofEpochMilli(epochMilli)) as & Pure
+
+    pub def toEpochMilli(x: Instant): Int64 =
+        import java.time.Instant.toEpochMilli();
+        let Instant(x1) = x;
+        toEpochMilli(x1) as & Pure
+
+
+    ///
+    /// Parse the string `s` as an Instant, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ____.
+    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
+    ///
+    pub def fromString(s: String): Result[Instant, String] = try {
+        import java.lang.String.strip();
+        import java.time.Instant:parse(##java.lang.CharSequence);
+        let cs = s.strip() as ##java.lang.CharSequence & Pure;
+        Ok(Instant(parse(cs))) as & Pure
+    } catch {
+        case _: ##java.time.format.DateTimeParseException => Err("Instant.fromString")
+    }
+
+    ///
+    /// Returns the given instant `x` as a String using ISO-8601 representation.
+    ///
+    pub def toString(x: Instant): String =
+        import java.time.Instant.toString();
+        let Instant(t) = x;
+        t.toString() as & Pure
 
     pub def atOffset(x: Instant, offset: ZoneOffset): OffsetDateTime =
         import java.time.Instant.atOffset(##java.time.ZoneOffset);
@@ -60,6 +100,24 @@ namespace Instant {
         let Instant(x1) = x;
         let ZoneId(z1) = zone;
         ZonedDateTime(x1.atZone(z1)) as & Pure
+
+
+    pub def getEpochSecond(x: Instant): Int64 =
+        import java.time.Instant.getEpochSecond();
+        let Instant(x1) = x;
+        x1.getEpochSecond() as & Pure
+
+    pub def getNano(x: Instant): Int32 =
+        import java.time.Instant.getNano();
+        let Instant(x1) = x;
+        x1.getNano() as & Pure
+
+
+    pub def compare(x: Instant, y: Instant): Int32 =
+        import java.time.Instant.compareTo(##java.time.Instant);
+        let Instant(x1) = x;
+        let Instant(y1) = y;
+        x1.compareTo(y1) as & Pure
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -79,6 +137,31 @@ namespace Instant {
         let Instant(t2) = y;
         t1.isAfter(t2) as & Pure
 
+    pub def plusSeconds(x: Instant, seconds: Int64): Instant =
+        import java.time.Instant.plusSeconds(Int64);
+        let Instant(x1) = x;
+        Instant(x1.plusSeconds(seconds)) as & Pure
+
+    pub def minusSeconds(x: Instant, seconds: Int64): Instant =
+        import java.time.Instant.minusSeconds(Int64);
+        let Instant(x1) = x;
+        Instant(x1.minusSeconds(seconds)) as & Pure
+
+    pub def plusMillis(x: Instant, millis: Int64): Instant =
+        import java.time.Instant.plusMillis(Int64);
+        let Instant(x1) = x;
+        Instant(x1.plusMillis(millis)) as & Pure
+
+    pub def minusMillis(x: Instant, millis: Int64): Instant =
+        import java.time.Instant.minusMillis(Int64);
+        let Instant(x1) = x;
+        Instant(x1.minusMillis(millis)) as & Pure
+
+    pub def plusNanos(x: Instant, nanos: Int64): Instant =
+        import java.time.Instant.plusNanos(Int64);
+        let Instant(x1) = x;
+        Instant(x1.plusNanos(nanos)) as & Pure
+
     ///
     /// Returns the given instant `x` plus `d` number of nano seconds.
     ///
@@ -94,14 +177,5 @@ namespace Instant {
         import java.time.Instant.minusNanos(Int64);
         let Instant(t) = x;
         Instant(t.minusNanos(d)) as & Pure
-
-
-    ///
-    /// Returns the given instant `x` as a String using ISO-8601 representation.
-    ///
-    pub def toString(x: Instant): String =
-        import java.time.Instant.toString();
-        let Instant(t) = x;
-        t.toString() as & Pure
 
 }
