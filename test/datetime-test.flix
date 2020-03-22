@@ -12,14 +12,12 @@ def fromString01(): Result[LocalDate, String] & Pure =
 @test
 def fromStringWithFormat01(): Result[LocalDateTime, String] = 
     use LocalDateTime.fromStringWithFormat;
-    use LocalDateTime.iso_local_date_time;
-    "2020-03-21T10:50:00".fromStringWithFormat(iso_local_date_time())
+    "2020-03-21T10:50:00".fromStringWithFormat(DateTimeFormatter.iso_local_date_time())
 
 @test
 def fromStringWithFormat02(): Result[LocalDateTime, String] = 
     use LocalDateTime.fromStringWithFormat;
-    use LocalDateTime.formatter;
-    match formatter("dd/MM/yyyy HH:mm") {
+    match DateTimeFormatter.fromPattern("dd/MM/yyyy HH:mm") {
         case Err(e) => Err(e)
         case Ok(fmt) => "19/12/2018 00:00".fromStringWithFormat(fmt)
     }
