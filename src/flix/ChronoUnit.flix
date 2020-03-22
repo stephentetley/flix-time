@@ -73,9 +73,9 @@ namespace Time/ChronoUnit {
             case Forever => get_forever() as & Pure
     }
 
-    pub def getDuration(x: ChronoUnit): JDuration =
+    pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();
         let x1 = toInternal(x);
-        JDuration(x1.getDuration()) as & Pure
+        Duration(x1.getDuration()) as & Pure
 
 }

@@ -17,17 +17,17 @@
 ///
 /// A wrapper around a Java Duration.
 ///
-opaque type JDuration = ##java.time.Duration
+opaque type Duration = ##java.time.Duration
 
-namespace JDuration {
+namespace Duration {
 
-    pub def fromDays(days: Int64): JDuration =
+    pub def fromDays(days: Int64): Duration =
         import java.time.Duration:ofDays(Int64);
-        JDuration(ofDays(days)) as & Pure
+        Duration(ofDays(days)) as & Pure
 
-    pub def toString(d: JDuration): String =
+    pub def toString(d: Duration): String =
         import java.time.Duration.toString();
-        let JDuration(d1) = d;
+        let Duration(d1) = d;
         d1.toString() as & Pure
 
 }
