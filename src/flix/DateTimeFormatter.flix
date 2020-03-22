@@ -57,4 +57,20 @@ namespace DateTimeFormatter {
         let ZoneId(z) = zone;
         DateTimeFormatter(fm.withZone(z)) as & Pure
 
+    pub def getZone(x: DateTimeFormatter): ZoneId =
+        import java.time.format.DateTimeFormatter.getZone();
+        let DateTimeFormatter(x1) = x;
+        ZoneId(x1.getZone()) as & Pure
+
+    pub def putZone(x: DateTimeFormatter, zone: ZoneId): DateTimeFormatter =
+        import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId);
+        let DateTimeFormatter(x1) = x;
+        let ZoneId(z1) = zone;
+        DateTimeFormatter(x1.withZone(z1)) as & Pure
+
+    pub def toString(x: DateTimeFormatter): String =
+        import java.time.format.DateTimeFormatter.toString();
+        let DateTimeFormatter(x1) = x;
+        x1.toString() as & Pure
+
 }

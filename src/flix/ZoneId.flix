@@ -19,9 +19,28 @@
 ///
 opaque type ZoneId = ##java.time.ZoneId
 
+opaque type ZonePrefix = String
+
 namespace Time/ZoneId {
 
-    pub def zoneId(zoneIdentifier: String): Result[ZoneId, String] = try {
+
+
+    pub def new(prefix: Option[ZonePrefix], offset: ZoneOffset): ZoneId =
+        import java.time.ZoneId:ofOffset(String, ##java.time.ZoneOffset);
+        let p1 = match prefix {
+            case Some(p) => { let ZonePrefix(s) = p; s }
+            case None => ""
+        };
+        let ZoneOffset(o1) = offset;
+        ZoneId(ofOffset(p1, o1)) as & Pure
+
+    pub def gmt(): ZonePrefix = ZonePrefix("GMT")
+
+    pub def utc(): ZonePrefix = ZonePrefix("UTC")
+
+    pub def ut(): ZonePrefix = ZonePrefix("UT")
+
+    pub def fromString(zoneIdentifier: String): Result[ZoneId, String] = try {
         import java.lang.String.strip();
         import java.time.ZoneId:of(String) as of;
         Ok(ZoneId(zoneIdentifier.strip().of())) as & Pure
@@ -54,5 +73,13 @@ namespace Time/ZoneId {
         let ZoneId(x1) = x;
         let ZoneId(y1) = y;
         x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    ///
+    /// Returns the unique ID of the time zone.
+    ///
+    pub def getTimeZoneId(x: ZoneId): String =
+        import java.time.ZoneId.getId();
+        let ZoneId(x1) = x;
+        x1.getId() as & Pure
 
 }

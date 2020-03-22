@@ -54,4 +54,9 @@ namespace DateFormatter {
         case _: ##java.lang.IllegalArgumentException => Err("Time/TimeFormatter.fromPattern")
     }
 
+    pub def toString(x: DateFormatter): String =
+        import java.time.format.DateTimeFormatter.toString();
+        let DateFormatter(x1) = x;
+        x1.toString() as & Pure
+
 }

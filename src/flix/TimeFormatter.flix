@@ -41,5 +41,21 @@ namespace TimeFormatter {
         case _: ##java.lang.IllegalArgumentException => Err("Time/TimeFormatter.fromPattern")
     }
 
+    pub def getZone(x: TimeFormatter): ZoneId =
+        import java.time.format.DateTimeFormatter.getZone();
+        let TimeFormatter(x1) = x;
+        ZoneId(x1.getZone()) as & Pure
+
+    pub def putZone(x: TimeFormatter, zone: ZoneId): TimeFormatter =
+        import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId);
+        let TimeFormatter(x1) = x;
+        let ZoneId(z1) = zone;
+        TimeFormatter(x1.withZone(z1)) as & Pure
+
+
+    pub def toString(x: TimeFormatter): String =
+        import java.time.format.DateTimeFormatter.toString();
+        let TimeFormatter(x1) = x;
+        x1.toString() as & Pure
 
 }

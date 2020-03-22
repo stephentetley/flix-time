@@ -136,6 +136,22 @@ namespace Time/ChronoUnit {
         let ChronoUnit(x1) = x;
         Duration(x1.getDuration()) as & Pure
 
+    pub def isDurationEstimated(x: ChronoUnit): Bool =
+        import java.time.temporal.ChronoUnit.isDurationEstimated();
+        let ChronoUnit(x1) = x;
+        x1.isDurationEstimated() as & Pure
+
+    pub def isDateBased(x: ChronoUnit): Bool =
+        import java.time.temporal.ChronoUnit.isDateBased();
+        let ChronoUnit(x1) = x;
+        x1.isDateBased() as & Pure
+
+    pub def isTimeBased(x: ChronoUnit): Bool =
+        import java.time.temporal.ChronoUnit.isTimeBased();
+        let ChronoUnit(x1) = x;
+        x1.isTimeBased() as & Pure
+
+
     pub def toString(x: ChronoUnit): String =
         import java.time.temporal.ChronoUnit.toString();
         let ChronoUnit(x1) = x;
