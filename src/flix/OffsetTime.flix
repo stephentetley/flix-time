@@ -55,12 +55,6 @@ namespace OffsetTime {
         import get java.time.OffsetTime:MAX as get_max;
         OffsetTime(get_max()) as & Pure
 
-
-    pub def fromHoursMinutesSecondsNanos(hours: Int32, minutes: Int32, seconds: Int32, nanos: Int32, offset: ZoneOffset): OffsetTime =
-        import java.time.OffsetTime:of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
-        let ZoneOffset(o1) = offset;
-        OffsetTime(of(hours, minutes, seconds, nanos, o1)) as & Pure
-
     pub def fromInstant(x: Instant, zone: ZoneId): OffsetTime =
         import java.time.OffsetTime:ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;

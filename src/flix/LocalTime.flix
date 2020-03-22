@@ -25,6 +25,7 @@ namespace LocalTime {
         import java.time.LocalTime:of(Int32, Int32);
         LocalTime(of(hour, minute)) as & Pure
 
+    /// TODO - distiction between from__ and new__ is getting a bit confused.
     pub def newWithSecond(hour: Int32, minute: Int32, second: Int32): LocalTime =
         import java.time.LocalTime:of(Int32, Int32, Int32);
         LocalTime(of(hour, minute, second)) as & Pure

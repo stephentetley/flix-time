@@ -54,14 +54,6 @@ namespace LocalDate {
         LocalDate(get_max()) as & Pure
 
     ///
-    /// Returns the given date `x` as a string using ____.
-    ///
-    pub def toString(x: LocalDate): String =
-        import java.time.LocalDate.toString();
-        let LocalDate(t) = x;
-        t.toString() as & Pure
-
-    ///
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
     /// The format of the input string should be ____.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
@@ -91,6 +83,13 @@ namespace LocalDate {
     }
 
 
+    ///
+    /// Returns the given date `x` as a string using ____.
+    ///
+    pub def toString(x: LocalDate): String =
+        import java.time.LocalDate.toString();
+        let LocalDate(t) = x;
+        t.toString() as & Pure
 
     ///
     /// Returns `true` if `x` == `y`.

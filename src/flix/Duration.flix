@@ -68,6 +68,9 @@ namespace Duration {
         import java.time.Duration:ofMillis(Int64);
         Duration(ofMillis(millis)) as & Pure
 
+    ///
+    /// Get the total length of Duration `x` in milliseconds.
+    ///
     pub def toMillis(x: Duration): Int64 =
         import java.time.Duration.toMillis();
         let Duration(x1) = x;
@@ -151,6 +154,11 @@ namespace Duration {
         let Duration(x1) = x;
         let Duration(y1) = y;
         x1.compareTo(y1) as & Pure
+
+    pub def abs(x: Duration): Duration =
+        import java.time.Duration.abs();
+        let Duration(x1) = x;
+        Duration(x1.abs()) as & Pure
 
     pub def negate(x: Duration): Duration =
         import java.time.Duration.negated();
