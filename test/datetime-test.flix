@@ -59,12 +59,12 @@ def before01(): Bool & Impure =
 @test 
 def getDuration01(): String = 
     use Time/ChronoUnit.getDuration;
-    use JDuration.toString;
+    use Duration.toString;
     getDuration(ChronoUnit.Forever) |> toString
 
 
 @test 
 def getDuration02(): String = 
     use Time/ChronoUnit.getDuration;
-    use JDuration.toString;
+    use Duration.toString;
     getDuration(ChronoUnit.Nanos) |> toString

@@ -21,6 +21,18 @@ opaque type LocalTime = ##java.time.LocalTime
 
 namespace LocalTime {
 
+    pub def new(hour: Int32, minute: Int32): LocalTime =
+        import java.time.LocalTime:of(Int32, Int32);
+        LocalTime(of(hour, minute)) as & Pure
+
+    pub def newWithSecond(hour: Int32, minute: Int32, second: Int32): LocalTime =
+        import java.time.LocalTime:of(Int32, Int32, Int32);
+        LocalTime(of(hour, minute, second)) as & Pure
+
+    pub def newWithSecondAndNano(hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32): LocalTime =
+        import java.time.LocalTime:of(Int32, Int32, Int32, Int32);
+        LocalTime(of(hour, minute, second, nanoSecond)) as & Pure
+
     ///
     /// Returns the current time from the system clock.
     ///

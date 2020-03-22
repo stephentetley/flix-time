@@ -22,6 +22,12 @@ opaque type ZonedDateTime = ##java.time.ZonedDateTime
 
 namespace ZonedDateTime {
 
+
+    pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, zone: ZoneId): ZonedDateTime =
+        import java.time.ZonedDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId);
+        let ZoneId(z1) = zone;
+        ZonedDateTime(of(year, month, dayOfMonth, hour, minute, second, nanoSecond, z1)) as & Pure
+
     ///
     /// Returns the current date-time from the system clock using the system zone id.
     ///
@@ -42,6 +48,14 @@ namespace ZonedDateTime {
         let LocalDateTime(dt) = dateTime;
         let ZoneId(z) = zone;
         ZonedDateTime(of(dt, z)) as & Pure
+
+    ///
+    /// Returns the given date-time `x` as __.
+    ///
+    pub def toLocalDateTime(x: ZonedDateTime): LocalDateTime =
+        import java.time.ZonedDateTime.toLocalDateTime();
+        let ZonedDateTime(x1) = x;
+        LocalDateTime(x1.toLocalDateTime()) as & Pure
 
     pub def fromLocalDateLocalTime(date: LocalDate, time: LocalTime, zone: ZoneId): ZonedDateTime =
         import java.time.ZonedDateTime:of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId);
@@ -66,13 +80,6 @@ namespace ZonedDateTime {
         let ZonedDateTime(x1) = x;
         LocalTime(x1.toLocalTime()) as & Pure
 
-    ///
-    /// Returns the given date-time `x` as __.
-    ///
-    pub def toLocalDateTime(x: ZonedDateTime): LocalDateTime =
-        import java.time.ZonedDateTime.toLocalDateTime();
-        let ZonedDateTime(x1) = x;
-        LocalDateTime(x1.toLocalDateTime()) as & Pure
 
     ///
     /// Returns the given date-time `x` as a String using ISO-8601 representation.

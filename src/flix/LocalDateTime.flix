@@ -23,6 +23,18 @@ opaque type LocalDateTime = ##java.time.LocalDateTime
 
 namespace LocalDateTime {
 
+    pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32): LocalDateTime =
+        import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32);
+        LocalDateTime(of(year, month, dayOfMonth, hour, minute)) as & Pure
+
+    pub def newWithSecond(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32): LocalDateTime =
+        import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32);
+        LocalDateTime(of(year, month, dayOfMonth, hour, minute, second)) as & Pure
+
+    pub def newWithSecondAndNano(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32): LocalDateTime =
+        import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32);
+        LocalDateTime(of(year, month, dayOfMonth, hour, minute, second, nanoSecond)) as & Pure
+
     ///
     /// Returns the current date-time from the system clock.
     ///

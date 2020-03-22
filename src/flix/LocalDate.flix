@@ -21,6 +21,10 @@ opaque type LocalDate = ##java.time.LocalDate
 
 namespace LocalDate {
 
+    pub def new(year: Int32, month: Int32, dayOfMonth: Int32): LocalDate =
+        import java.time.LocalDate:of(Int32, Int32, Int32);
+        LocalDate(of(year, month, dayOfMonth)) as & Pure
+
     ///
     /// Returns the current date from the system clock.
     ///

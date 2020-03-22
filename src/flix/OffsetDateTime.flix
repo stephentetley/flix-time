@@ -22,6 +22,11 @@ opaque type OffsetDateTime = ##java.time.OffsetDateTime
 
 namespace OffsetDateTime {
 
+    pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, offset: ZoneOffset): OffsetDateTime =
+        import java.time.OffsetDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
+        let ZoneOffset(o1) = offset;
+        OffsetDateTime(of(year, month, dayOfMonth, hour, minute, second, nanoSecond, o1)) as & Pure
+
     ///
     /// Returns the current date-time from the system clock using the system zone id.
     ///

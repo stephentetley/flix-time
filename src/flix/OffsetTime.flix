@@ -21,6 +21,11 @@ opaque type OffsetTime = ##java.time.OffsetTime
 
 namespace OffsetTime {
 
+    pub def new(hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, offset: ZoneOffset): OffsetTime =
+        import java.time.OffsetTime:of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
+        let ZoneOffset(o1) = offset;
+        OffsetTime(of(hour, minute, second, nanoSecond, o1)) as & Pure
+
     ///
     /// Returns the current time from the system clock.
     ///
