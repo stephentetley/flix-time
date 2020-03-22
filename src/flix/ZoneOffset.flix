@@ -21,6 +21,29 @@ opaque type ZoneOffset = ##java.time.ZoneOffset
 
 namespace Time/ZoneOffset {
 
+
+    ///
+    /// ___
+    ///
+    pub def utc(): ZoneOffset =
+        import get java.time.ZoneOffset:UTC as get_utc;
+        ZoneOffset(get_utc()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def minValue(): ZoneOffset =
+        import get java.time.ZoneOffset:MIN as get_min;
+        ZoneOffset(get_min()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def maxValue(): ZoneOffset =
+        import get java.time.ZoneOffset:MAX as get_max;
+        ZoneOffset(get_max()) as & Pure
+
+
     pub def fromHours(hours: Int32): ZoneOffset =
         import java.time.ZoneOffset:ofHours(Int32);
         ZoneOffset(ofHours(hours)) as & Pure
@@ -44,5 +67,20 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset.toString();
         let ZoneOffset(z) = x;
         z.toString() as & Pure
+
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: ZoneOffset, y: ZoneOffset): Bool =
+        import java.time.ZoneOffset.equals(##java.lang.Object);
+        let ZoneOffset(x1) = x;
+        let ZoneOffset(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    pub def compare(x: ZoneOffset, y: ZoneOffset): Int32 =
+        import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset);
+        let ZoneOffset(x1) = x;
+        let ZoneOffset(y1) = y;
+        x1.compareTo(y1) as & Pure
 
 }

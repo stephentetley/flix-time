@@ -60,11 +60,16 @@ def before01(): Bool & Impure =
 def getDuration01(): String = 
     use Time/ChronoUnit.getDuration;
     use Duration.toString;
-    getDuration(ChronoUnit.Forever) |> toString
+    getDuration(Time/ChronoUnit.forever()) |> toString
 
 
 @test 
 def getDuration02(): String = 
     use Time/ChronoUnit.getDuration;
     use Duration.toString;
-    getDuration(ChronoUnit.Nanos) |> toString
+    getDuration(Time/ChronoUnit.nanos()) |> toString
+
+@test 
+def toString01ChronoUnit(): String = 
+    use Time/ChronoUnit.toString;
+    Time/ChronoUnit.months() |> toString

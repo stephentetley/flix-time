@@ -46,4 +46,13 @@ namespace Time/ZoneId {
         let ZoneId(z) = x;
         z.toString() as & Pure
 
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: ZoneId, y: ZoneId): Bool =
+        import java.time.ZoneId.equals(##java.lang.Object);
+        let ZoneId(x1) = x;
+        let ZoneId(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
 }

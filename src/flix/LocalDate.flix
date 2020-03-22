@@ -97,27 +97,27 @@ namespace LocalDate {
     ///
     pub def equals(x: LocalDate, y: LocalDate): Bool =
         import java.time.LocalDate.equals(##java.lang.Object);
-        let LocalDate(d1) = x;
-        let LocalDate(d2) = y;
-        d1.equals(d2 as ##java.lang.Object) as & Pure
+        let LocalDate(x1) = x;
+        let LocalDate(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def before(x: LocalDate, y: LocalDate): Bool =
         import java.time.LocalDate.isBefore(##java.time.chrono.ChronoLocalDate);
-        let LocalDate(d1) = x;
-        let LocalDate(d2) = y;
-        d1.isBefore(d2 as ##java.time.chrono.ChronoLocalDate) as & Pure
+        let LocalDate(x1) = x;
+        let LocalDate(y1) = y;
+        x1.isBefore(y1 as ##java.time.chrono.ChronoLocalDate) as & Pure
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def after(x: LocalDate, y: LocalDate): Bool =
         import java.time.LocalDate.isAfter(##java.time.chrono.ChronoLocalDate);
-        let LocalDate(d1) = x;
-        let LocalDate(d2) = y;
-        d1.isAfter(d2 as ##java.time.chrono.ChronoLocalDate) as & Pure
+        let LocalDate(x1) = x;
+        let LocalDate(y1) = y;
+        x1.isAfter(y1 as ##java.time.chrono.ChronoLocalDate) as & Pure
 
     pub def plusYears(x: LocalDate, years: Int64): LocalDate =
         import java.time.LocalDate.plusYears(Int64) as plus;

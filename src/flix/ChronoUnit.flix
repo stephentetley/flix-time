@@ -14,68 +14,131 @@
  * limitations under the License.
  */
 
-pub enum ChronoUnit {
-    case Nanos,
-    case Micros,
-    case Millis,
-    case Seconds,
-    case Minutes,
-    case Hours,
-    case HalfDays,
-    case Days,
-    case Weeks,
-    case Months,
-    case Years,
-    case Decades,
-    case Centuries,
-    case Millenia,
-    case Eras,
-    case Forever
-}
+opaque type ChronoUnit = ##java.time.temporal.ChronoUnit
 
 namespace Time/ChronoUnit {
 
-    type alias InternalChronoUnit = ##java.time.temporal.ChronoUnit
 
-    pub def toInternal(x: ChronoUnit): InternalChronoUnit =
+    ///
+    /// The unit of nanoseconds.
+    ///
+    pub def nanos(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:NANOS as get_nanos;
+        ChronoUnit(get_nanos()) as & Pure
+
+    ///
+    /// The unit of microseconds.
+    ///
+    pub def micros(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:MICROS as get_micros;
+        ChronoUnit(get_micros()) as & Pure
+
+    ///
+    /// The unit of milliseconds.
+    ///
+    pub def millis(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:MILLIS as get_millis;
+        ChronoUnit(get_millis()) as & Pure
+
+    ///
+    /// The unit of seconds.
+    ///
+    pub def seconds(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:SECONDS as get_seconds;
+        ChronoUnit(get_seconds()) as & Pure
+
+    ///
+    /// The unit of minutes.
+    ///
+    pub def minutes(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:MINUTES as get_minutes;
+        ChronoUnit(get_minutes()) as & Pure
+
+    ///
+    /// The unit of hours.
+    ///
+    pub def hours(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:HOURS as get_hours;
+        ChronoUnit(get_hours()) as & Pure
+
+    ///
+    /// The unit of half_days.
+    ///
+    pub def half_days(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:HALF_DAYS as get_half_days;
+        ChronoUnit(get_half_days()) as & Pure
+
+    ///
+    /// The unit of days.
+    ///
+    pub def days(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:DAYS as get_days;
+        ChronoUnit(get_days()) as & Pure
+
+    ///
+    /// The unit of weeks.
+    ///
+    pub def weeks(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:WEEKS as get_weeks;
+        ChronoUnit(get_weeks()) as & Pure
+
+    ///
+    /// The unit of months.
+    ///
+    pub def months(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:MONTHS as get_months;
+        ChronoUnit(get_months()) as & Pure
+
+    ///
+    /// The unit of year.
+    ///
+    pub def year(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:YEARS as get_years;
+        ChronoUnit(get_years()) as & Pure
+
+    ///
+    /// The unit of decades.
+    ///
+    pub def decades(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:DECADES as get_decades;
+        ChronoUnit(get_decades()) as & Pure
+
+    ///
+    /// The unit of centuries.
+    ///
+    pub def centuries(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:CENTURIES as get_centuries;
+        ChronoUnit(get_centuries()) as & Pure
+
+    ///
+    /// The unit of millenia.
+    ///
+    pub def millenia(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:MILLENNIA as get_millenia;
+        ChronoUnit(get_millenia()) as & Pure
+
+    ///
+    /// The unit of eras.
+    ///
+    pub def eras(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:ERAS as get_eras;
+        ChronoUnit(get_eras()) as & Pure
+
+    ///
+    /// The abstract unit of forever.
+    ///
+    pub def forever(): ChronoUnit =
         import get java.time.temporal.ChronoUnit:FOREVER as get_forever;
-        match x {
-            case Nanos => get_nanos() as & Pure
-            case Micros => get_micros() as & Pure
-            case Millis => get_millis() as & Pure
-            case Seconds => get_seconds() as & Pure
-            case Minutes => get_minutes() as & Pure
-            case Hours => get_hours() as & Pure
-            case HalfDays => get_half_days() as & Pure
-            case Days => get_days() as & Pure
-            case Weeks => get_weeks() as & Pure
-            case Months => get_months() as & Pure
-            case Years => get_years() as & Pure
-            case Decades => get_decades() as & Pure
-            case Centuries => get_centuries() as & Pure
-            case Millenia => get_millenia() as & Pure
-            case Eras => get_eras() as & Pure
-            case Forever => get_forever() as & Pure
-    }
+        ChronoUnit(get_forever()) as & Pure
 
     pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();
-        let x1 = toInternal(x);
+        let ChronoUnit(x1) = x;
         Duration(x1.getDuration()) as & Pure
+
+    pub def toString(x: ChronoUnit): String =
+        import java.time.temporal.ChronoUnit.toString();
+        let ChronoUnit(x1) = x;
+        x1.toString() as & Pure
 
 }
