@@ -37,6 +37,20 @@ namespace OffsetDateTime {
         let ZoneId(z) = zone;
         OffsetDateTime(now(z))
 
+    ///
+    /// ___
+    ///
+    pub def minValue(): OffsetDateTime =
+        import get java.time.OffsetDateTime:MIN as get_min;
+        OffsetDateTime(get_min()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def maxValue(): OffsetDateTime =
+        import get java.time.OffsetDateTime:MAX as get_max;
+        OffsetDateTime(get_max()) as & Pure
+
     pub def fromLocalDateTime(dateTime: LocalDateTime, offset: ZoneOffset): OffsetDateTime =
         import java.time.OffsetDateTime:of(##java.time.LocalDateTime, ##java.time.ZoneOffset);
         let LocalDateTime(dt) = dateTime;

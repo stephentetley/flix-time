@@ -117,18 +117,34 @@ namespace Duration {
     ///
     /// Get the second part of the duration `x`.
     ///
-    pub def secondsPart(x: Duration): Int64 =
+    pub def getSeconds(x: Duration): Int64 =
         import java.time.Duration.getSeconds();
         let Duration(x1) = x;
         x1.getSeconds() as & Pure
 
     ///
+    /// Set the seconds part of the duration `x` to `seconds``.
+    ///
+    pub def putSeconds(x: Duration, seconds: Int64): Duration =
+        import java.time.Duration.withSeconds(Int64);
+        let Duration(x1) = x;
+        Duration(x1.withSeconds(seconds)) as & Pure
+
+    ///
     /// Get the nanosecond part of the duration `x`.
     ///
-    pub def nanoPart(x: Duration): Int64 =
+    pub def getNano(x: Duration): Int32 =
         import java.time.Duration.getNano();
         let Duration(x1) = x;
         x1.getNano() as & Pure
+
+    ///
+    /// Set the nano part of the duration `x` to `seconds``.
+    ///
+    pub def putNano(x: Duration, nanos: Int32): Duration =
+        import java.time.Duration.withNanos(Int32);
+        let Duration(x1) = x;
+        Duration(x1.withNanos(nanos)) as & Pure
 
     pub def compare(x: Duration, y: Duration): Int32 =
         import java.time.Duration.compareTo(##java.time.Duration);

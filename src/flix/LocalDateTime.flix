@@ -38,6 +38,20 @@ namespace LocalDateTime {
         let ZoneId(z) = zone;
         LocalDateTime(now(z))
 
+    ///
+    /// ___
+    ///
+    pub def minValue(): LocalDateTime =
+        import get java.time.LocalDateTime:MIN as get_min;
+        LocalDateTime(get_min()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def maxValue(): LocalDateTime =
+        import get java.time.LocalDateTime:MAX as get_max;
+        LocalDateTime(get_max()) as & Pure
+
     pub def fromLocalDateLocalTime(date: LocalDate, time: LocalTime): LocalDateTime =
         import java.time.LocalDateTime:of(##java.time.LocalDate, ##java.time.LocalTime);
         let LocalDate(d) = date;

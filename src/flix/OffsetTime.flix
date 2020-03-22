@@ -36,6 +36,19 @@ namespace OffsetTime {
         let ZoneId(z) = zone;
         OffsetTime(now(z))
 
+    ///
+    /// ___
+    ///
+    pub def minValue(): OffsetTime =
+        import get java.time.OffsetTime:MIN as get_min;
+        OffsetTime(get_min()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def maxValue(): OffsetTime =
+        import get java.time.OffsetTime:MAX as get_max;
+        OffsetTime(get_max()) as & Pure
 
 
     pub def fromHoursMinutesSecondsNanos(hours: Int32, minutes: Int32, seconds: Int32, nanos: Int32, offset: ZoneOffset): OffsetTime =

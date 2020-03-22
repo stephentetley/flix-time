@@ -28,6 +28,35 @@ namespace LocalTime {
         import java.time.LocalTime:now();
         LocalTime(now())
 
+    ///
+    /// ___
+    ///
+    pub def minValue(): LocalTime =
+        import get java.time.LocalTime:MIN as get_min;
+        LocalTime(get_min()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def maxValue(): LocalTime =
+        import get java.time.LocalTime:MAX as get_max;
+        LocalTime(get_max()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def midnight(): LocalTime =
+        import get java.time.LocalTime:MIDNIGHT as get_midnight;
+        LocalTime(get_midnight()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def noon(): LocalTime =
+        import get java.time.LocalTime:NOON as get_noon;
+        LocalTime(get_noon()) as & Pure
+
+
     pub def fromHoursMinutes(hours: Int32, minutes: Int32): LocalTime =
         import java.time.LocalTime:of(Int32, Int32);
         LocalTime(of(hours, minutes)) as & Pure

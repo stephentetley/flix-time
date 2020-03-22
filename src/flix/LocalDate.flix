@@ -29,6 +29,27 @@ namespace LocalDate {
         LocalDate(now())
 
     ///
+    /// ___
+    ///
+    pub def epoch(): LocalDate =
+        import get java.time.LocalDate:EPOCH as get_epoch;
+        LocalDate(get_epoch()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def minValue(): LocalDate =
+        import get java.time.LocalDate:MIN as get_min;
+        LocalDate(get_min()) as & Pure
+
+    ///
+    /// ___
+    ///
+    pub def maxValue(): LocalDate =
+        import get java.time.LocalDate:MAX as get_max;
+        LocalDate(get_max()) as & Pure
+
+    ///
     /// Returns the given date `x` as a string using ____.
     ///
     pub def toString(x: LocalDate): String =
