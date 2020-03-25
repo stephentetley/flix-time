@@ -20,7 +20,7 @@
 opaque type ZonedDateTime = ##java.time.ZonedDateTime
 
 
-namespace ZonedDateTime {
+namespace Time/ZonedDateTime {
 
 
     pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, zone: ZoneId): ZonedDateTime =

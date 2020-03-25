@@ -20,8 +20,8 @@
 opaque type LocalDateTime = ##java.time.LocalDateTime
 
 
+namespace Time/LocalDateTime {
 
-namespace LocalDateTime {
 
     pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32): LocalDateTime =
         import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32);
@@ -231,42 +231,89 @@ namespace LocalDateTime {
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.minus(nanos)) as & Pure
 
-    pub def withYear(x: LocalDateTime, year: Int32): LocalDateTime =
+    pub def getYear(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getYear();
+        let LocalDateTime(x1) = x;
+        x1.getYear() as & Pure
+
+    pub def putYear(x: LocalDateTime, year: Int32): LocalDateTime =
         import java.time.LocalDateTime.withYear(Int32);
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.withYear(year)) as & Pure
 
-    pub def withMonth(x: LocalDateTime, month: Int32): LocalDateTime =
+    pub def getMonth(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getMonth();
+        import java.time.Month.getValue();
+        let LocalDateTime(x1) = x;
+        x1.getMonth().getValue() as & Pure
+
+    pub def putMonth(x: LocalDateTime, month: Int32): LocalDateTime =
         import java.time.LocalDateTime.withMonth(Int32);
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.withMonth(month)) as & Pure
 
-    pub def withDayOfYear(x: LocalDateTime, dayOfYear: Int32): LocalDateTime =
+    pub def getDayOfYear(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getDayOfYear();
+        let LocalDateTime(x1) = x;
+        x1.getDayOfYear() as & Pure
+
+    pub def putDayOfYear(x: LocalDateTime, dayOfYear: Int32): LocalDateTime =
         import java.time.LocalDateTime.withDayOfYear(Int32);
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.withDayOfYear(dayOfYear)) as & Pure
 
-    pub def withDayOfMonth(x: LocalDateTime, dayOfMonth: Int32): LocalDateTime =
+    pub def getDayOfMonth(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getDayOfMonth();
+        let LocalDateTime(x1) = x;
+        x1.getDayOfMonth() as & Pure
+
+    pub def putDayOfMonth(x: LocalDateTime, dayOfMonth: Int32): LocalDateTime =
         import java.time.LocalDateTime.withDayOfMonth(Int32);
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.withDayOfMonth(dayOfMonth)) as & Pure
 
-    pub def withHour(x: LocalDateTime, hour: Int32): LocalDateTime =
+    pub def getDayOfWeek(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getDayOfWeek();
+        import java.time.DayOfWeek.getValue();
+        let LocalDateTime(x1) = x;
+        x1.getDayOfWeek().getValue() as & Pure
+
+    pub def getHour(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getHour();
+        let LocalDateTime(x1) = x;
+        x1.getHour() as & Pure
+
+    pub def putHour(x: LocalDateTime, hour: Int32): LocalDateTime =
         import java.time.LocalDateTime.withHour(Int32);
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.withHour(hour)) as & Pure
 
-    pub def withMinute(x: LocalDateTime, minute: Int32): LocalDateTime =
+    pub def getMinute(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getMinute();
+        let LocalDateTime(x1) = x;
+        x1.getMinute() as & Pure
+
+    pub def putMinute(x: LocalDateTime, minute: Int32): LocalDateTime =
         import java.time.LocalDateTime.withMinute(Int32);
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.withMinute(minute)) as & Pure
 
-    pub def withSecond(x: LocalDateTime, second: Int32): LocalDateTime =
+    pub def getSecond(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getSecond();
+        let LocalDateTime(x1) = x;
+        x1.getSecond() as & Pure
+
+    pub def putSecond(x: LocalDateTime, second: Int32): LocalDateTime =
         import java.time.LocalDateTime.withSecond(Int32);
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.withSecond(second)) as & Pure
 
-    pub def withNano(x: LocalDateTime, nano: Int32): LocalDateTime =
+    pub def getNano(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getNano();
+        let LocalDateTime(x1) = x;
+        x1.getNano() as & Pure
+
+    pub def putNano(x: LocalDateTime, nano: Int32): LocalDateTime =
         import java.time.LocalDateTime.withNano(Int32);
         let LocalDateTime(x1) = x;
         LocalDateTime(x1.withNano(nano)) as & Pure

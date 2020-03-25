@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-opaque type ChronoUnit = ##java.time.temporal.ChronoUnit
 
 namespace Time/ChronoUnit {
 
+
+    opaque type ChronoUnit = ##java.time.temporal.ChronoUnit
 
     ///
     /// The unit of nanoseconds.

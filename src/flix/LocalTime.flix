@@ -19,7 +19,7 @@
 ///
 opaque type LocalTime = ##java.time.LocalTime
 
-namespace LocalTime {
+namespace Time/LocalTime {
 
     pub def new(hour: Int32, minute: Int32): LocalTime =
         import java.time.LocalTime:of(Int32, Int32);
@@ -210,22 +210,42 @@ namespace LocalTime {
         let LocalTime(x1) = x;
         LocalTime(x1.minus(nanos)) as & Pure
 
-    pub def withHour(x: LocalTime, hour: Int32): LocalTime =
+    pub def getHour(x: LocalTime): Int32 =
+        import java.time.LocalTime.getHour();
+        let LocalTime(x1) = x;
+        x1.getHour() as & Pure
+
+    pub def putHour(x: LocalTime, hour: Int32): LocalTime =
         import java.time.LocalTime.withHour(Int32);
         let LocalTime(x1) = x;
         LocalTime(x1.withHour(hour)) as & Pure
 
-    pub def withMinute(x: LocalTime, minute: Int32): LocalTime =
+    pub def getMinute(x: LocalTime): Int32 =
+        import java.time.LocalTime.getMinute();
+        let LocalTime(x1) = x;
+        x1.getMinute() as & Pure
+
+    pub def putMinute(x: LocalTime, minute: Int32): LocalTime =
         import java.time.LocalTime.withMinute(Int32);
         let LocalTime(x1) = x;
         LocalTime(x1.withMinute(minute)) as & Pure
 
-    pub def withSecond(x: LocalTime, second: Int32): LocalTime =
+    pub def getSecond(x: LocalTime): Int32 =
+        import java.time.LocalTime.getSecond();
+        let LocalTime(x1) = x;
+        x1.getSecond() as & Pure
+
+    pub def putSecond(x: LocalTime, second: Int32): LocalTime =
         import java.time.LocalTime.withSecond(Int32);
         let LocalTime(x1) = x;
         LocalTime(x1.withSecond(second)) as & Pure
 
-    pub def withNano(x: LocalTime, nano: Int32): LocalTime =
+    pub def getNano(x: LocalTime): Int32 =
+        import java.time.LocalTime.getNano();
+        let LocalTime(x1) = x;
+        x1.getNano() as & Pure
+
+    pub def putNano(x: LocalTime, nano: Int32): LocalTime =
         import java.time.LocalTime.withNano(Int32);
         let LocalTime(x1) = x;
         LocalTime(x1.withNano(nano)) as & Pure

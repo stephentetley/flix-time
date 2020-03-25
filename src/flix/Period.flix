@@ -20,7 +20,7 @@
 opaque type Period = ##java.time.Period
 
 
-namespace Period {
+namespace Time/Period {
 
     pub def new(years: Int32, months: Int32, days: Int32): Period =
         import java.time.Period:of(Int32, Int32, Int32);
@@ -70,5 +70,92 @@ namespace Period {
         import java.time.Period.toString();
         let Period(t) = x;
         t.toString() as & Pure
+
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: Period, y: Period): Bool =
+        import java.time.Period.equals(##java.lang.Object);
+        let Period(x1) = x;
+        let Period(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    pub def isZero(x: Period): Bool =
+        import java.time.Period.isZero();
+        let Period(x1) = x;
+        x1.isZero() as & Pure
+
+    pub def isPositive(x: Period): Bool =
+        !x.isNegative()
+
+    pub def isNegative(x: Period): Bool =
+        import java.time.Period.isNegative();
+        let Period(x1) = x;
+        x1.isNegative() as & Pure
+
+    pub def negate(x: Period): Period =
+        import java.time.Period.negated();
+        let Period(x1) = x;
+        Period(x1.negated()) as & Pure
+
+    pub def plusYears(x: Period, years: Int64): Period =
+        import java.time.Period.plusYears(Int64) as plus;
+        let Period(x1) = x;
+        Period(x1.plus(years)) as & Pure
+
+    pub def minusYears(x: Period, years: Int64): Period =
+        import java.time.Period.minusYears(Int64) as minus;
+        let Period(x1) = x;
+        Period(x1.minus(years)) as & Pure
+
+    pub def plusMonths(x: Period, months: Int64): Period =
+        import java.time.Period.plusMonths(Int64) as plus;
+        let Period(x1) = x;
+        Period(x1.plus(months)) as & Pure
+
+    pub def minusMonths(x: Period, months: Int64): Period =
+        import java.time.Period.minusMonths(Int64) as minus;
+        let Period(x1) = x;
+        Period(x1.minus(months)) as & Pure
+
+    pub def plusDays(x: Period, days: Int64): Period =
+        import java.time.Period.plusDays(Int64) as plus;
+        let Period(x1) = x;
+        Period(x1.plus(days)) as & Pure
+
+    pub def minusDays(x: Period, days: Int64): Period =
+        import java.time.Period.minusDays(Int64) as minus;
+        let Period(x1) = x;
+        Period(x1.minus(days)) as & Pure
+
+    pub def getYears(x: Period): Int32 =
+        import java.time.Period.getYears();
+        let Period(x1) = x;
+        x1.getYears() as & Pure
+
+    pub def putYears(x: Period, years: Int32): Period =
+        import java.time.Period.withYears(Int32);
+        let Period(x1) = x;
+        Period(x1.withYears(years)) as & Pure
+
+    pub def getMonths(x: Period): Int32 =
+        import java.time.Period.getMonths();
+        let Period(x1) = x;
+        x1.getMonths() as & Pure
+
+    pub def putMonths(x: Period, months: Int32): Period =
+        import java.time.Period.withMonths(Int32);
+        let Period(x1) = x;
+        Period(x1.withMonths(months)) as & Pure
+
+    pub def getDays(x: Period): Int32 =
+        import java.time.Period.getDays();
+        let Period(x1) = x;
+        x1.getDays() as & Pure
+
+    pub def putDays(x: Period, days: Int32): Period =
+        import java.time.Period.withDays(Int32);
+        let Period(x1) = x;
+        Period(x1.withDays(days)) as & Pure
 
 }

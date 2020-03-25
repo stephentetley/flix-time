@@ -19,7 +19,7 @@
 ///
 opaque type LocalDate = ##java.time.LocalDate
 
-namespace LocalDate {
+namespace Time/LocalDate {
 
     pub def new(year: Int32, month: Int32, dayOfMonth: Int32): LocalDate =
         import java.time.LocalDate:of(Int32, Int32, Int32);
@@ -158,22 +158,43 @@ namespace LocalDate {
         let LocalDate(x1) = x;
         LocalDate(x1.minus(days)) as & Pure
 
-    pub def withYear(x: LocalDate, year: Int32): LocalDate =
+    pub def getYear(x: LocalDate): Int32 =
+        import java.time.LocalDate.getYear();
+        let LocalDate(x1) = x;
+        x1.getYear() as & Pure
+
+    pub def putYear(x: LocalDate, year: Int32): LocalDate =
         import java.time.LocalDate.withYear(Int32);
         let LocalDate(x1) = x;
         LocalDate(x1.withYear(year)) as & Pure
 
-    pub def withMonth(x: LocalDate, month: Int32): LocalDate =
+    pub def getMonth(x: LocalDate): Int32 =
+        import java.time.LocalDate.getMonth();
+        import java.time.Month.getValue();
+        let LocalDate(x1) = x;
+        x1.getMonth().getValue() as & Pure
+
+    pub def putMonth(x: LocalDate, month: Int32): LocalDate =
         import java.time.LocalDate.withMonth(Int32);
         let LocalDate(x1) = x;
         LocalDate(x1.withMonth(month)) as & Pure
 
-    pub def withDayOfYear(x: LocalDate, dayOfYear: Int32): LocalDate =
+    pub def getDayOfYear(x: LocalDate): Int32 =
+        import java.time.LocalDate.getDayOfYear();
+        let LocalDate(x1) = x;
+        x1.getDayOfYear() as & Pure
+
+    pub def putDayOfYear(x: LocalDate, dayOfYear: Int32): LocalDate =
         import java.time.LocalDate.withDayOfYear(Int32);
         let LocalDate(x1) = x;
         LocalDate(x1.withDayOfYear(dayOfYear)) as & Pure
 
-    pub def withDayOfMonth(x: LocalDate, dayOfMonth: Int32): LocalDate =
+    pub def getDayOfMonth(x: LocalDate): Int32 =
+        import java.time.LocalDate.getDayOfMonth();
+        let LocalDate(x1) = x;
+        x1.getDayOfMonth() as & Pure
+
+    pub def putDayOfMonth(x: LocalDate, dayOfMonth: Int32): LocalDate =
         import java.time.LocalDate.withDayOfMonth(Int32);
         let LocalDate(x1) = x;
         LocalDate(x1.withDayOfMonth(dayOfMonth)) as & Pure

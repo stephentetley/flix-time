@@ -20,7 +20,7 @@
 opaque type OffsetDateTime = ##java.time.OffsetDateTime
 
 
-namespace OffsetDateTime {
+namespace Time/OffsetDateTime {
 
     pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, offset: ZoneOffset): OffsetDateTime =
         import java.time.OffsetDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
@@ -254,10 +254,21 @@ namespace OffsetDateTime {
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.minus(nanos)) as & Pure
 
-    pub def withYear(x: OffsetDateTime, year: Int32): OffsetDateTime =
+    pub def getYear(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getYear();
+        let OffsetDateTime(x1) = x;
+        x1.getYear() as & Pure
+
+    pub def putYear(x: OffsetDateTime, year: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withYear(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withYear(year)) as & Pure
+
+    pub def getMonth(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getMonth();
+        import java.time.Month.getValue();
+        let OffsetDateTime(x1) = x;
+        x1.getMonth().getValue() as & Pure
 
     pub def withMonth(x: OffsetDateTime, month: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withMonth(Int32);

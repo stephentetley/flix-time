@@ -19,7 +19,7 @@
 ///
 opaque type DateTimeFormatter = ##java.time.format.DateTimeFormatter
 
-namespace DateTimeFormatter {
+namespace Time/DateTimeFormatter {
 
     /// Formatters
 
@@ -51,11 +51,6 @@ namespace DateTimeFormatter {
         case _: ##java.lang.IllegalArgumentException => Err("Time/Formatter.formatter")
     }
 
-    pub def withZone(fmt: DateTimeFormatter, zone: ZoneId): DateTimeFormatter =
-        import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId) as withZone;
-        let DateTimeFormatter(fm) = fmt;
-        let ZoneId(z) = zone;
-        DateTimeFormatter(fm.withZone(z)) as & Pure
 
     pub def getZone(x: DateTimeFormatter): ZoneId =
         import java.time.format.DateTimeFormatter.getZone();

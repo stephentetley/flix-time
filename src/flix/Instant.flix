@@ -19,7 +19,7 @@
 ///
 opaque type Instant = ##java.time.Instant
 
-namespace Instant {
+namespace Time/Instant {
 
     ///
     /// Returns the current time from the system clock.

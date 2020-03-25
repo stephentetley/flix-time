@@ -19,7 +19,7 @@
 ///
 opaque type OffsetTime = ##java.time.OffsetTime
 
-namespace OffsetTime {
+namespace Time/OffsetTime {
 
     pub def new(hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, offset: ZoneOffset): OffsetTime =
         import java.time.OffsetTime:of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
@@ -165,22 +165,42 @@ namespace OffsetTime {
         let OffsetTime(x1) = x;
         OffsetTime(x1.minus(nanos)) as & Pure
 
-    pub def withHour(x: OffsetTime, hour: Int32): OffsetTime =
+    pub def getHour(x: OffsetTime): Int32 =
+        import java.time.OffsetTime.getHour();
+        let OffsetTime(x1) = x;
+        x1.getHour() as & Pure
+
+    pub def putHour(x: OffsetTime, hour: Int32): OffsetTime =
         import java.time.OffsetTime.withHour(Int32);
         let OffsetTime(x1) = x;
         OffsetTime(x1.withHour(hour)) as & Pure
 
-    pub def withMinute(x: OffsetTime, minute: Int32): OffsetTime =
+    pub def getMinute(x: OffsetTime): Int32 =
+        import java.time.OffsetTime.getMinute();
+        let OffsetTime(x1) = x;
+        x1.getMinute() as & Pure
+
+    pub def putMinute(x: OffsetTime, minute: Int32): OffsetTime =
         import java.time.OffsetTime.withMinute(Int32);
         let OffsetTime(x1) = x;
         OffsetTime(x1.withMinute(minute)) as & Pure
 
-    pub def withSecond(x: OffsetTime, second: Int32): OffsetTime =
+    pub def getSecond(x: OffsetTime): Int32 =
+        import java.time.OffsetTime.getSecond();
+        let OffsetTime(x1) = x;
+        x1.getSecond() as & Pure
+
+    pub def putSecond(x: OffsetTime, second: Int32): OffsetTime =
         import java.time.OffsetTime.withSecond(Int32);
         let OffsetTime(x1) = x;
         OffsetTime(x1.withSecond(second)) as & Pure
 
-    pub def withNano(x: OffsetTime, nano: Int32): OffsetTime =
+    pub def getNano(x: OffsetTime): Int32 =
+        import java.time.OffsetTime.getNano();
+        let OffsetTime(x1) = x;
+        x1.getNano() as & Pure
+
+    pub def putNano(x: OffsetTime, nano: Int32): OffsetTime =
         import java.time.OffsetTime.withNano(Int32);
         let OffsetTime(x1) = x;
         OffsetTime(x1.withNano(nano)) as & Pure

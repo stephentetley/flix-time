@@ -19,7 +19,7 @@
 ///
 opaque type DateFormatter = ##java.time.format.DateTimeFormatter
 
-namespace DateFormatter {
+namespace Time/DateFormatter {
 
     pub def basic_iso_date(): DateFormatter =
         import get java.time.format.DateTimeFormatter:BASIC_ISO_DATE as get_basic_iso_date;

@@ -2,22 +2,22 @@
 
 @test
 def now01(): LocalDateTime & Impure = 
-    LocalDateTime.now()
+    Time/LocalDateTime.now()
 
 @test
 def fromString01(): Result[LocalDate, String] & Pure = 
-    use LocalDate.fromString;
+    use Time/LocalDate.fromString;
     "2007-12-03".fromString()
 
 @test
 def fromStringWithFormat01(): Result[LocalDateTime, String] = 
-    use LocalDateTime.fromStringWithFormat;
-    "2020-03-21T10:50:00".fromStringWithFormat(DateTimeFormatter.iso_local_date_time())
+    use Time/LocalDateTime.fromStringWithFormat;
+    "2020-03-21T10:50:00".fromStringWithFormat(Time/DateTimeFormatter.iso_local_date_time())
 
 @test
 def fromStringWithFormat02(): Result[LocalDateTime, String] = 
-    use LocalDateTime.fromStringWithFormat;
-    match DateTimeFormatter.fromPattern("dd/MM/yyyy HH:mm") {
+    use Time/LocalDateTime.fromStringWithFormat;
+    match Time/DateTimeFormatter.fromPattern("dd/MM/yyyy HH:mm") {
         case Err(e) => Err(e)
         case Ok(fmt) => "19/12/2018 00:00".fromStringWithFormat(fmt)
     }
@@ -25,8 +25,8 @@ def fromStringWithFormat02(): Result[LocalDateTime, String] =
 
 @test
 def zoneId01(): Result[ZoneId, String] = 
-    use Time/ZoneId.zoneId;
-    zoneId("Europe/Paris")
+    use Time/ZoneId.fromString;
+    fromString("Europe/Paris")
 
 
 @test
@@ -42,16 +42,16 @@ def toString01(): String & Impure =
 
 @test
 def equals01(): Bool & Impure = 
-    use LocalDate.now;
-    use LocalDate.equals;
+    use Time/LocalDate.now;
+    use Time/LocalDate.equals;
     let d1 = now();
     let d2 = now();
     equals(d1, d2)
 
 @test
 def before01(): Bool & Impure = 
-    use LocalDate.now;
-    use LocalDate.before;
+    use Time/LocalDate.now;
+    use Time/LocalDate.before;
     let d1 = now();
     let d2 = now();
     before(d1, d2)
@@ -59,14 +59,14 @@ def before01(): Bool & Impure =
 @test 
 def getDuration01(): String = 
     use Time/ChronoUnit.getDuration;
-    use Duration.toString;
+    use Time/Duration.toString;
     getDuration(Time/ChronoUnit.forever()) |> toString
 
 
 @test 
 def getDuration02(): String = 
     use Time/ChronoUnit.getDuration;
-    use Duration.toString;
+    use Time/Duration.toString;
     getDuration(Time/ChronoUnit.nanos()) |> toString
 
 @test 

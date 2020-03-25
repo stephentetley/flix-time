@@ -19,7 +19,7 @@
 ///
 opaque type Duration = ##java.time.Duration
 
-namespace Duration {
+namespace Time/Duration {
 
     ///
     /// ___

@@ -19,7 +19,7 @@
 ///
 opaque type TimeFormatter = ##java.time.format.DateTimeFormatter
 
-namespace TimeFormatter {
+namespace Time/TimeFormatter {
 
     pub def iso_local_time(): TimeFormatter =
         import get java.time.format.DateTimeFormatter:ISO_LOCAL_TIME as get_iso_local_time;
