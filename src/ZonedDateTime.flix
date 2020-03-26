@@ -228,42 +228,89 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.minus(nanos)) as & Pure
 
-    pub def withYear(x: ZonedDateTime, year: Int32): ZonedDateTime =
+    pub def getYear(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getYear();
+        let ZonedDateTime(x1) = x;
+        x1.getYear() as & Pure
+
+    pub def putYear(x: ZonedDateTime, year: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withYear(Int32);
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.withYear(year)) as & Pure
 
-    pub def withMonth(x: ZonedDateTime, month: Int32): ZonedDateTime =
+    pub def getMonth(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getMonth();
+        import java.time.Month.getValue();
+        let ZonedDateTime(x1) = x;
+        x1.getMonth().getValue() as & Pure
+
+    pub def putMonth(x: ZonedDateTime, month: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withMonth(Int32);
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.withMonth(month)) as & Pure
 
-    pub def withDayOfYear(x: ZonedDateTime, dayOfYear: Int32): ZonedDateTime =
+    pub def getDayOfYear(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getDayOfYear();
+        let ZonedDateTime(x1) = x;
+        x1.getDayOfYear() as & Pure
+
+    pub def putDayOfYear(x: ZonedDateTime, dayOfYear: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfYear(Int32);
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.withDayOfYear(dayOfYear)) as & Pure
 
-    pub def withDayOfMonth(x: ZonedDateTime, dayOfMonth: Int32): ZonedDateTime =
+    pub def getDayOfMonth(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getDayOfMonth();
+        let ZonedDateTime(x1) = x;
+        x1.getDayOfMonth() as & Pure
+
+    pub def putDayOfMonth(x: ZonedDateTime, dayOfMonth: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfMonth(Int32);
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.withDayOfMonth(dayOfMonth)) as & Pure
 
-    pub def withHour(x: ZonedDateTime, hour: Int32): ZonedDateTime =
+    pub def getDayOfWeek(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getDayOfWeek();
+        import java.time.DayOfWeek.getValue();
+        let ZonedDateTime(x1) = x;
+        x1.getDayOfWeek().getValue() as & Pure
+
+    pub def getHour(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getHour();
+        let ZonedDateTime(x1) = x;
+        x1.getHour() as & Pure
+
+    pub def putHour(x: ZonedDateTime, hour: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withHour(Int32);
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.withHour(hour)) as & Pure
 
-    pub def withMinute(x: ZonedDateTime, minute: Int32): ZonedDateTime =
+    pub def getMinute(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getMinute();
+        let ZonedDateTime(x1) = x;
+        x1.getMinute() as & Pure
+
+    pub def putMinute(x: ZonedDateTime, minute: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withMinute(Int32);
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.withMinute(minute)) as & Pure
 
-    pub def withSecond(x: ZonedDateTime, second: Int32): ZonedDateTime =
+    pub def getSecond(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getSecond();
+        let ZonedDateTime(x1) = x;
+        x1.getSecond() as & Pure
+
+    pub def putSecond(x: ZonedDateTime, second: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withSecond(Int32);
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.withSecond(second)) as & Pure
 
-    pub def withNano(x: ZonedDateTime, nano: Int32): ZonedDateTime =
+    pub def getNano(x: ZonedDateTime): Int32 =
+        import java.time.ZonedDateTime.getNano();
+        let ZonedDateTime(x1) = x;
+        x1.getNano() as & Pure
+
+    pub def putNano(x: ZonedDateTime, nano: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withNano(Int32);
         let ZonedDateTime(x1) = x;
         ZonedDateTime(x1.withNano(nano)) as & Pure

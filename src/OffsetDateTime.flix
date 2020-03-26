@@ -264,43 +264,83 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withYear(year)) as & Pure
 
+    /// TODO - probably Month is worth an enum
+    /// Current we use 1 (January) - 12 (December)
     pub def getMonth(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getMonth();
         import java.time.Month.getValue();
         let OffsetDateTime(x1) = x;
         x1.getMonth().getValue() as & Pure
 
-    pub def withMonth(x: OffsetDateTime, month: Int32): OffsetDateTime =
+    pub def putMonth(x: OffsetDateTime, month: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withMonth(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withMonth(month)) as & Pure
 
-    pub def withDayOfYear(x: OffsetDateTime, dayOfYear: Int32): OffsetDateTime =
+    pub def getDayOfYear(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getDayOfYear();
+        let OffsetDateTime(x1) = x;
+        x1.getDayOfYear() as & Pure
+
+    pub def putDayOfYear(x: OffsetDateTime, dayOfYear: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withDayOfYear(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withDayOfYear(dayOfYear)) as & Pure
 
-    pub def withDayOfMonth(x: OffsetDateTime, dayOfMonth: Int32): OffsetDateTime =
+    pub def getDayOfMonth(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getDayOfMonth();
+        let OffsetDateTime(x1) = x;
+        x1.getDayOfMonth() as & Pure
+
+    pub def putDayOfMonth(x: OffsetDateTime, dayOfMonth: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withDayOfMonth(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withDayOfMonth(dayOfMonth)) as & Pure
 
-    pub def withHour(x: OffsetDateTime, hour: Int32): OffsetDateTime =
+    /// TODO - probably DayOfWeek is worth an enum
+    /// Current we use 1 (Monday) - 7 (Sunday)
+    pub def getDayOfWeek(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getDayOfWeek();
+        import java.time.DayOfWeek.getValue();
+        let OffsetDateTime(x1) = x;
+        x1.getDayOfWeek().getValue() as & Pure
+
+    pub def getHour(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getHour();
+        let OffsetDateTime(x1) = x;
+        x1.getHour() as & Pure
+
+    pub def putHour(x: OffsetDateTime, hour: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withHour(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withHour(hour)) as & Pure
 
-    pub def withMinute(x: OffsetDateTime, minute: Int32): OffsetDateTime =
+    pub def getMinute(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getMinute();
+        let OffsetDateTime(x1) = x;
+        x1.getMinute() as & Pure
+
+    pub def putMinute(x: OffsetDateTime, minute: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withMinute(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withMinute(minute)) as & Pure
 
-    pub def withSecond(x: OffsetDateTime, second: Int32): OffsetDateTime =
+    pub def getSecond(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getSecond();
+        let OffsetDateTime(x1) = x;
+        x1.getSecond() as & Pure
+
+    pub def putSecond(x: OffsetDateTime, second: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withSecond(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withSecond(second)) as & Pure
 
-    pub def withNano(x: OffsetDateTime, nano: Int32): OffsetDateTime =
+    pub def getNano(x: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.getNano();
+        let OffsetDateTime(x1) = x;
+        x1.getNano() as & Pure
+
+    pub def putNano(x: OffsetDateTime, nano: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withNano(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withNano(nano)) as & Pure
