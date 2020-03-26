@@ -14,10 +14,25 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java OffsetTime.
-///
-opaque type OffsetTime = ##java.time.OffsetTime
+use Time.OffsetTime;
+use Time.OffsetTime.OffsetTime;
+use Time.Instant;
+use Time.Instant.Instant;
+use Time.TimeFormatter;
+use Time.TimeFormatter.TimeFormatter;
+use Time.ZoneId;
+use Time.ZoneId.ZoneId;
+use Time.ZoneOffset;
+use Time.ZoneOffset.ZoneOffset;
+
+namespace Time {
+
+    ///
+    /// A wrapper around a Java OffsetTime.
+    ///
+    opaque type OffsetTime = ##java.time.OffsetTime
+
+}
 
 namespace Time/OffsetTime {
 

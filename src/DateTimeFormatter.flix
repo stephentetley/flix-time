@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java DateTimeFormatter for date-time formats.
-///
-opaque type DateTimeFormatter = ##java.time.format.DateTimeFormatter
+use Time.DateTimeFormatter;
+use Time.DateTimeFormatter.DateTimeFormatter;
+use Time.ZoneId;
+use Time.ZoneId.ZoneId;
+
+namespace Time {
+
+    ///
+    /// A wrapper around a Java DateTimeFormatter for date-time formats.
+    ///
+    opaque type DateTimeFormatter = ##java.time.format.DateTimeFormatter
+
+}
 
 namespace Time/DateTimeFormatter {
 

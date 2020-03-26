@@ -14,11 +14,25 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java LocalDateTime.
-///
-opaque type LocalDateTime = ##java.time.LocalDateTime
+use Time.LocalDateTime;
+use Time.LocalDateTime.LocalDateTime;
+use Time.DateTimeFormatter;
+use Time.DateTimeFormatter.DateTimeFormatter;
+use Time.LocalDate;
+use Time.LocalDate.LocalDate;
+use Time.LocalTime;
+use Time.LocalTime.LocalTime;
+use Time.ZoneId;
+use Time.ZoneId.ZoneId;
 
+namespace Time {
+
+    ///
+    /// A wrapper around a Java LocalDateTime.
+    ///
+    opaque type LocalDateTime = ##java.time.LocalDateTime
+
+}
 
 namespace Time/LocalDateTime {
 

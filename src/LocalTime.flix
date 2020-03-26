@@ -14,10 +14,23 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java LocalTime.
-///
-opaque type LocalTime = ##java.time.LocalTime
+use Time.Instant;
+use Time.Instant.Instant;
+use Time.LocalTime;
+use Time.LocalTime.LocalTime;
+use Time.TimeFormatter;
+use Time.TimeFormatter.TimeFormatter;
+use Time.ZoneId;
+use Time.ZoneId.ZoneId;
+
+namespace Time {
+
+    ///
+    /// A wrapper around a Java LocalTime.
+    ///
+    opaque type LocalTime = ##java.time.LocalTime
+
+}
 
 namespace Time/LocalTime {
 

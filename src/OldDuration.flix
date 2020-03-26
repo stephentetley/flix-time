@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace OldDuration {
+namespace Duration {
 
     ///
     /// Returns the number of nanoseconds in one 24 hour day.

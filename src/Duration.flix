@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java Duration.
-///
-opaque type Duration = ##java.time.Duration
+use Time.Duration;
+use Time.Duration.Duration;
+
+namespace Time {
+
+    ///
+    /// A wrapper around a Java Duration.
+    ///
+    opaque type Duration = ##java.time.Duration
+
+}
 
 namespace Time/Duration {
 

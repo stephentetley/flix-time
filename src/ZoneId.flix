@@ -14,12 +14,23 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java ZoneId.
-///
-opaque type ZoneId = ##java.time.ZoneId
+use Time.ZoneId;
+use Time.ZoneId.ZoneId;
+use Time.ZonePrefix;
+use Time.ZonePrefix.ZonePrefix;
+use Time.ZoneOffset;
+use Time.ZoneOffset.ZoneOffset;
 
-opaque type ZonePrefix = String
+namespace Time {
+
+    ///
+    /// A wrapper around a Java ZoneId.
+    ///
+    opaque type ZoneId = ##java.time.ZoneId
+
+    opaque type ZonePrefix = String
+
+}
 
 namespace Time/ZoneId {
 

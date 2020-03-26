@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java ZonedDateTime.
-///
-opaque type ZonedDateTime = ##java.time.ZonedDateTime
+use Time.ZonedDateTime;
+use Time.ZonedDateTime.ZonedDateTime;
+use Time.DateTimeFormatter;
+use Time.DateTimeFormatter.DateTimeFormatter;
+use Time.LocalDate;
+use Time.LocalDate.LocalDate;
+use Time.LocalDateTime;
+use Time.LocalDateTime.LocalDateTime;
+use Time.LocalTime;
+use Time.LocalTime.LocalTime;
+use Time.ZoneId;
+use Time.ZoneId.ZoneId;
 
+namespace Time {
+
+    ///
+    /// A wrapper around a Java ZonedDateTime.
+    ///
+    opaque type ZonedDateTime = ##java.time.ZonedDateTime
+
+}
 
 namespace Time/ZonedDateTime {
 

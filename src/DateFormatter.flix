@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java DateTimeFormatter for date formats.
-///
-opaque type DateFormatter = ##java.time.format.DateTimeFormatter
+use Time.DateFormatter;
+use Time.DateFormatter.DateFormatter;
+
+namespace Time {
+
+    ///
+    /// A wrapper around a Java DateTimeFormatter for date formats.
+    ///
+    opaque type DateFormatter = ##java.time.format.DateTimeFormatter
+
+}
 
 namespace Time/DateFormatter {
 

@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java ZoneOffset.
-///
-opaque type ZoneOffset = ##java.time.ZoneOffset
+use Time.ZoneOffset;
+use Time.ZoneOffset.ZoneOffset;
+
+namespace Time {
+
+    ///
+    /// A wrapper around a Java ZoneOffset.
+    ///
+    opaque type ZoneOffset = ##java.time.ZoneOffset
+
+}
 
 namespace Time/ZoneOffset {
-
 
     ///
     /// ___

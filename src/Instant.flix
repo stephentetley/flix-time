@@ -14,10 +14,25 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java instant.
-///
-opaque type Instant = ##java.time.Instant
+use Time.Instant;
+use Time.Instant.Instant;
+use Time.OffsetDateTime;
+use Time.OffsetDateTime.OffsetDateTime;
+use Time.ZonedDateTime;
+use Time.ZonedDateTime.ZonedDateTime;
+use Time.ZoneId;
+use Time.ZoneId.ZoneId;
+use Time.ZoneOffset;
+use Time.ZoneOffset.ZoneOffset;
+
+namespace Time {
+
+    ///
+    /// A wrapper around a Java instant.
+    ///
+    opaque type Instant = ##java.time.Instant
+
+}
 
 namespace Time/Instant {
 

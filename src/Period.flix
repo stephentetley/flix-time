@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-///
-/// A wrapper around a Java Period.
-///
-opaque type Period = ##java.time.Period
+use Time.Period;
+use Time.Period.Period;
 
+namespace Time {
+
+    ///
+    /// A wrapper around a Java Period.
+    ///
+    opaque type Period = ##java.time.Period
+
+}
 
 namespace Time/Period {
 
