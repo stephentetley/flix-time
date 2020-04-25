@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-use Time.TimeFormatter;
-use Time.TimeFormatter.TimeFormatter;
+use Time/Format.TimeFormatter;
+use Time/Format.TimeFormatter.{TimeFormatter};
 use Time.ZoneId;
-use Time.ZoneId.ZoneId;
+use Time.ZoneId.{ZoneId};
 
-namespace Time {
+namespace Time/Format {
 
     ///
     /// A wrapper around a Java DateTimeFormatter for time formats.
     ///
-    opaque type TimeFormatter = ##java.time.format.DateTimeFormatter
+    pub opaque type TimeFormatter = ##java.time.format.DateTimeFormatter
 
 }
 
-namespace Time/TimeFormatter {
+namespace Time/Format/TimeFormatter {
 
     pub def iso_local_time(): TimeFormatter =
         import get java.time.format.DateTimeFormatter:ISO_LOCAL_TIME as get_iso_local_time;

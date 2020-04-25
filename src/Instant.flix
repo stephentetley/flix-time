@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Magnus Madsen
+ * Copyright 2019 Magnus Madsen, Stephen Tetley
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,22 @@
  */
 
 use Time.Instant;
-use Time.Instant.Instant;
+use Time.Instant.{Instant};
 use Time.OffsetDateTime;
-use Time.OffsetDateTime.OffsetDateTime;
+use Time.OffsetDateTime.{OffsetDateTime};
 use Time.ZonedDateTime;
-use Time.ZonedDateTime.ZonedDateTime;
+use Time.ZonedDateTime.{ZonedDateTime};
 use Time.ZoneId;
-use Time.ZoneId.ZoneId;
+use Time.ZoneId.{ZoneId};
 use Time.ZoneOffset;
-use Time.ZoneOffset.ZoneOffset;
+use Time.ZoneOffset.{ZoneOffset};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java instant.
     ///
-    opaque type Instant = ##java.time.Instant
+    pub opaque type Instant = ##java.time.Instant
 
 }
 

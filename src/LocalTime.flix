@@ -15,20 +15,20 @@
  */
 
 use Time.Instant;
-use Time.Instant.Instant;
+use Time.Instant.{Instant};
+use Time/Format.TimeFormatter;
+use Time/Format.TimeFormatter.{TimeFormatter};
 use Time.LocalTime;
-use Time.LocalTime.LocalTime;
-use Time.TimeFormatter;
-use Time.TimeFormatter.TimeFormatter;
+use Time.LocalTime.{LocalTime};
 use Time.ZoneId;
-use Time.ZoneId.ZoneId;
+use Time.ZoneId.{ZoneId};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java LocalTime.
     ///
-    opaque type LocalTime = ##java.time.LocalTime
+    pub opaque type LocalTime = ##java.time.LocalTime
 
 }
 
@@ -126,6 +126,15 @@ namespace Time/LocalTime {
         import java.time.LocalTime.toString();
         let LocalTime(t) = x;
         t.toString() as & Pure
+
+    ///
+    /// Returns the given LocalTime `x` as a String using `formatter`.
+    ///
+    pub def format(x: LocalTime, formatter: TimeFormatter): String =
+        import java.time.LocalTime.format(##java.time.format.DateTimeFormatter);
+        let LocalTime(x1) = x;
+        let TimeFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a LocalTime, leading or trailing whitespace is trimmed.

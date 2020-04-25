@@ -15,13 +15,13 @@
  */
 
 use Time.ChronoUnit;
-use Time.ChronoUnit.ChronoUnit;
+use Time.ChronoUnit.{ChronoUnit};
 use Time.Duration;
-use Time.Duration.Duration;
+use Time.Duration.{Duration};
 
 namespace Time {
 
-    opaque type ChronoUnit = ##java.time.temporal.ChronoUnit
+    pub opaque type ChronoUnit = ##java.time.temporal.ChronoUnit
 
 }
 

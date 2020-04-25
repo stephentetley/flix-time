@@ -15,14 +15,14 @@
  */
 
 use Time.Period;
-use Time.Period.Period;
+use Time.Period.{Period};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java Period.
     ///
-    opaque type Period = ##java.time.Period
+    pub opaque type Period = ##java.time.Period
 
 }
 

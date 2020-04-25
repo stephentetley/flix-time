@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-use Time.DateFormatter;
-use Time.DateFormatter.DateFormatter;
+use Time/Format.DateFormatter;
+use Time/Format.DateFormatter.{DateFormatter};
 
-namespace Time {
+namespace Time/Format {
 
     ///
     /// A wrapper around a Java DateTimeFormatter for date formats.
     ///
-    opaque type DateFormatter = ##java.time.format.DateTimeFormatter
+    pub opaque type DateFormatter = ##java.time.format.DateTimeFormatter
 
 }
 
-namespace Time/DateFormatter {
+namespace Time/Format/DateFormatter {
 
     pub def basic_iso_date(): DateFormatter =
         import get java.time.format.DateTimeFormatter:BASIC_ISO_DATE as get_basic_iso_date;

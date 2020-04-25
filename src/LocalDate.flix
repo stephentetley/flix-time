@@ -15,16 +15,16 @@
  */
 
 use Time.LocalDate;
-use Time.LocalDate.LocalDate;
-use Time.DateFormatter;
-use Time.DateFormatter.DateFormatter;
+use Time.LocalDate.{LocalDate};
+use Time/Format.DateFormatter;
+use Time/Format.DateFormatter.{DateFormatter};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java LocalDate.
     ///
-    opaque type LocalDate = ##java.time.LocalDate
+    pub opaque type LocalDate = ##java.time.LocalDate
 
 }
 
@@ -99,6 +99,15 @@ namespace Time/LocalDate {
         import java.time.LocalDate.toString();
         let LocalDate(t) = x;
         t.toString() as & Pure
+
+    ///
+    /// Returns LocalDate `x` as a String using `formatter`.
+    ///
+    pub def format(x: LocalDate, formatter: DateFormatter): String =
+        import java.time.LocalDate.format(##java.time.format.DateTimeFormatter);
+        let LocalDate(x1) = x;
+        let DateFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
 
     ///
     /// Returns `true` if `x` == `y`.

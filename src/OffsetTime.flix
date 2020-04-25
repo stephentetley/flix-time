@@ -15,22 +15,22 @@
  */
 
 use Time.OffsetTime;
-use Time.OffsetTime.OffsetTime;
+use Time.OffsetTime.{OffsetTime};
+use Time/Format.TimeFormatter;
+use Time/Format.TimeFormatter.{TimeFormatter};
 use Time.Instant;
-use Time.Instant.Instant;
-use Time.TimeFormatter;
-use Time.TimeFormatter.TimeFormatter;
+use Time.Instant.{Instant};
 use Time.ZoneId;
-use Time.ZoneId.ZoneId;
+use Time.ZoneId.{ZoneId};
 use Time.ZoneOffset;
-use Time.ZoneOffset.ZoneOffset;
+use Time.ZoneOffset.{ZoneOffset};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java OffsetTime.
     ///
-    opaque type OffsetTime = ##java.time.OffsetTime
+    pub opaque type OffsetTime = ##java.time.OffsetTime
 
 }
 
@@ -83,6 +83,15 @@ namespace Time/OffsetTime {
         import java.time.OffsetTime.toString();
         let OffsetTime(t) = x;
         t.toString() as & Pure
+
+    ///
+    /// Returns OffsetTime `x` as a String using `formatter`.
+    ///
+    pub def format(x: OffsetTime, formatter: TimeFormatter): String =
+        import java.time.OffsetTime.format(##java.time.format.DateTimeFormatter);
+        let OffsetTime(x1) = x;
+        let TimeFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a OffsetTime, leading or trailing whitespace is trimmed.

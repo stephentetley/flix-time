@@ -15,24 +15,24 @@
  */
 
 use Time.ZonedDateTime;
-use Time.ZonedDateTime.ZonedDateTime;
-use Time.DateTimeFormatter;
-use Time.DateTimeFormatter.DateTimeFormatter;
+use Time.ZonedDateTime.{ZonedDateTime};
+use Time/Format.DateTimeFormatter;
+use Time/Format.DateTimeFormatter.{DateTimeFormatter};
 use Time.LocalDate;
-use Time.LocalDate.LocalDate;
+use Time.LocalDate.{LocalDate};
 use Time.LocalDateTime;
-use Time.LocalDateTime.LocalDateTime;
+use Time.LocalDateTime.{LocalDateTime};
 use Time.LocalTime;
-use Time.LocalTime.LocalTime;
+use Time.LocalTime.{LocalTime};
 use Time.ZoneId;
-use Time.ZoneId.ZoneId;
+use Time.ZoneId.{ZoneId};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java ZonedDateTime.
     ///
-    opaque type ZonedDateTime = ##java.time.ZonedDateTime
+    pub opaque type ZonedDateTime = ##java.time.ZonedDateTime
 
 }
 
@@ -104,6 +104,15 @@ namespace Time/ZonedDateTime {
         import java.time.ZonedDateTime.toString();
         let ZonedDateTime(x1) = x;
         x1.toString() as & Pure
+
+    ///
+    /// Returns ZonedDateTime `x` as a String using `formatter`.
+    ///
+    pub def format(x: ZonedDateTime, formatter: DateTimeFormatter): String =
+        import java.time.ZonedDateTime.format(##java.time.format.DateTimeFormatter);
+        let ZonedDateTime(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.

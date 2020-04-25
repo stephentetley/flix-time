@@ -15,14 +15,14 @@
  */
 
 use Time.Duration;
-use Time.Duration.Duration;
+use Time.Duration.{Duration};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java Duration.
     ///
-    opaque type Duration = ##java.time.Duration
+    pub opaque type Duration = ##java.time.Duration
 
 }
 

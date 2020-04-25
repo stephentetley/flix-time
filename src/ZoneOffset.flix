@@ -15,14 +15,14 @@
  */
 
 use Time.ZoneOffset;
-use Time.ZoneOffset.ZoneOffset;
+use Time.ZoneOffset.{ZoneOffset};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java ZoneOffset.
     ///
-    opaque type ZoneOffset = ##java.time.ZoneOffset
+    pub opaque type ZoneOffset = ##java.time.ZoneOffset
 
 }
 

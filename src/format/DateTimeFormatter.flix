@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-use Time.DateTimeFormatter;
-use Time.DateTimeFormatter.DateTimeFormatter;
+use Time/Format.DateTimeFormatter;
+use Time/Format.DateTimeFormatter.{DateTimeFormatter};
 use Time.ZoneId;
-use Time.ZoneId.ZoneId;
+use Time.ZoneId.{ZoneId};
 
-namespace Time {
+namespace Time/Format {
 
     ///
     /// A wrapper around a Java DateTimeFormatter for date-time formats.
     ///
-    opaque type DateTimeFormatter = ##java.time.format.DateTimeFormatter
+    pub opaque type DateTimeFormatter = ##java.time.format.DateTimeFormatter
 
 }
 
-namespace Time/DateTimeFormatter {
+namespace Time/Format/DateTimeFormatter {
 
     /// Formatters
 

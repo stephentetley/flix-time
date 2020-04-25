@@ -15,20 +15,20 @@
  */
 
 use Time.ZoneId;
-use Time.ZoneId.ZoneId;
+use Time.ZoneId.{ZoneId};
 use Time.ZonePrefix;
-use Time.ZonePrefix.ZonePrefix;
+use Time.ZonePrefix.{ZonePrefix};
 use Time.ZoneOffset;
-use Time.ZoneOffset.ZoneOffset;
+use Time.ZoneOffset.{ZoneOffset};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java ZoneId.
     ///
-    opaque type ZoneId = ##java.time.ZoneId
+    pub opaque type ZoneId = ##java.time.ZoneId
 
-    opaque type ZonePrefix = String
+    pub opaque type ZonePrefix = String
 
 }
 

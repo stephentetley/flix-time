@@ -15,30 +15,30 @@
  */
 
 use Time.OffsetDateTime;
-use Time.OffsetDateTime.OffsetDateTime;
-use Time.DateTimeFormatter;
-use Time.DateTimeFormatter.DateTimeFormatter;
+use Time.OffsetDateTime.{OffsetDateTime};
+use Time/Format.DateTimeFormatter;
+use Time/Format.DateTimeFormatter.{DateTimeFormatter};
 use Time.LocalDate;
-use Time.LocalDate.LocalDate;
+use Time.LocalDate.{LocalDate};
 use Time.LocalDateTime;
-use Time.LocalDateTime.LocalDateTime;
+use Time.LocalDateTime.{LocalDateTime};
 use Time.LocalTime;
-use Time.LocalTime.LocalTime;
+use Time.LocalTime.{LocalTime};
 use Time.OffsetTime;
-use Time.OffsetTime.OffsetTime;
+use Time.OffsetTime.{OffsetTime};
 use Time.ZonedDateTime;
-use Time.ZonedDateTime.ZonedDateTime;
+use Time.ZonedDateTime.{ZonedDateTime};
 use Time.ZoneId;
-use Time.ZoneId.ZoneId;
+use Time.ZoneId.{ZoneId};
 use Time.ZoneOffset;
-use Time.ZoneOffset.ZoneOffset;
+use Time.ZoneOffset.{ZoneOffset};
 
 namespace Time {
 
     ///
     /// A wrapper around a Java OffsetDateTime.
     ///
-    opaque type OffsetDateTime = ##java.time.OffsetDateTime
+    pub opaque type OffsetDateTime = ##java.time.OffsetDateTime
 
 }
 
@@ -138,6 +138,15 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.toString();
         let OffsetDateTime(x1) = x;
         x1.toString() as & Pure
+
+    ///
+    /// Returns OffsetDateTime `x` as a String using `formatter`.
+    ///
+    pub def format(x: OffsetDateTime, formatter: DateTimeFormatter): String =
+        import java.time.OffsetDateTime.format(##java.time.format.DateTimeFormatter);
+        let OffsetDateTime(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
