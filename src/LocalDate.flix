@@ -16,6 +16,7 @@
 
 use Time.LocalDate;
 use Time.LocalDate.{LocalDate};
+use Time.Error.{DateTimeParseException};
 use Time/Format.DateFormatter;
 use Time/Format.DateFormatter.{DateFormatter};
 
@@ -67,29 +68,31 @@ namespace Time/LocalDate {
     /// The format of the input string should be ____.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[LocalDate, String] = try {
+    pub def fromString(s: String): Result[LocalDate, Time.Error] = 
         import java.lang.String.strip();
         import java.time.LocalDate:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(LocalDate(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("LocalDate.fromString")
-    }
+        try {        
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(LocalDate(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
 
     ///
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromStringWithFormat(s: String, formatter: DateFormatter): Result[LocalDate, String] = try {
+    pub def fromStringWithFormat(s: String, formatter: DateFormatter): Result[LocalDate, Time.Error] = 
         import java.lang.String.strip();
         import java.time.LocalDate:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
-        let DateFormatter(fmtr) = formatter;
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(LocalDate(cs.parse(fmtr))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("LocalDate.fromStringWithFormat")
-    }
+        try {
+            let DateFormatter(fmtr) = formatter;
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(LocalDate(cs.parse(fmtr))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
 
 
     ///

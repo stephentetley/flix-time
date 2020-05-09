@@ -16,6 +16,7 @@
 
 use Time.Period;
 use Time.Period.{Period};
+use Time.Error.{DateTimeParseException};
 
 namespace Time {
 
@@ -60,14 +61,15 @@ namespace Time/Period {
     /// The format of the input string should be ____.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[Period, String] = try {
+    pub def fromString(s: String): Result[Period, Time.Error] = 
         import java.lang.String.strip();
         import java.time.Period:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(Period(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("Period.fromString")
-    }
+        try {
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(Period(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
 
     ///
     /// Returns the given period `x` as a string using ____.

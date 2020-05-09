@@ -16,6 +16,7 @@
 
 use Time.Instant;
 use Time.Instant.{Instant};
+use Time.Error.{DateTimeParseException};
 use Time/Format.TimeFormatter;
 use Time/Format.TimeFormatter.{TimeFormatter};
 use Time.LocalTime;
@@ -141,29 +142,31 @@ namespace Time/LocalTime {
     /// The format of the input string should be ____.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[LocalTime, String] = try {
+    pub def fromString(s: String): Result[LocalTime, Time.Error] =
         import java.lang.String.strip();
         import java.time.LocalTime:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(LocalTime(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("LocalTime.fromString")
-    }
+        try {
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(LocalTime(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
 
     ///
     /// Parse the string `s` as a LocalTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromStringWithFormat(s: String, formatter: TimeFormatter): Result[LocalTime, String] = try {
+    pub def fromStringWithFormat(s: String, formatter: TimeFormatter): Result[LocalTime, Time.Error] = 
         import java.lang.String.strip();
         import java.time.LocalTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
-        let TimeFormatter(fmtr) = formatter;
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(LocalTime(cs.parse(fmtr))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("LocalTime.fromStringWithFormat")
-    }
+        try {
+            let TimeFormatter(fmtr) = formatter;
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(LocalTime(cs.parse(fmtr))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
 
     ///
     /// Returns `true` if `x` == `y`.

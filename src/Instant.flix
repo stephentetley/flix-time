@@ -16,6 +16,7 @@
 
 use Time.Instant;
 use Time.Instant.{Instant};
+use Time.Error.{DateTimeParseException};
 use Time.OffsetDateTime;
 use Time.OffsetDateTime.{OffsetDateTime};
 use Time.ZonedDateTime;
@@ -84,17 +85,18 @@ namespace Time/Instant {
 
     ///
     /// Parse the string `s` as an Instant, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ____.
+    /// The format of the input string should be ISO UTC format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[Instant, String] = try {
+    pub def fromString(s: String): Result[Instant, Time.Error] = 
         import java.lang.String.strip();
         import java.time.Instant:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(Instant(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("Instant.fromString")
-    }
+        try {
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(Instant(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
 
     ///
     /// Returns the given instant `x` as a String using ISO-8601 representation.

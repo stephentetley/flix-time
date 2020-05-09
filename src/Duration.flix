@@ -16,6 +16,7 @@
 
 use Time.Duration;
 use Time.Duration.{Duration};
+use Time.Error.{DateTimeParseException};
 
 namespace Time {
 
@@ -94,16 +95,16 @@ namespace Time/Duration {
 
     ///
     /// Parse the string `s` as a Duration, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ____.
+    /// The format of the input string should be ISO-8601 duration format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[Duration, String] = try {
+    pub def fromString(s: String): Result[Duration, Time.Error] = try {
         import java.lang.String.strip();
         import java.time.Duration:parse(##java.lang.CharSequence);
         let cs = s.strip() as ##java.lang.CharSequence & Pure;
         Ok(Duration(parse(cs))) as & Pure
     } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("Duration.fromString")
+        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
     }
 
     pub def toString(x: Duration): String =

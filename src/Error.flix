@@ -22,8 +22,11 @@ namespace Time {
     /// Represents an error.
     ///
     pub enum Error {
+        case DateTimeException,
+        case DateTimeParseException,
         case IllegalStateException,
         case IllegalArgumentException,
+        case ZoneRulesException,
         case Generic(String)
     }
 

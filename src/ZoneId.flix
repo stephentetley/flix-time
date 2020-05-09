@@ -16,6 +16,7 @@
 
 use Time.ZoneId;
 use Time.ZoneId.{ZoneId};
+use Time.Error.{DateTimeException, ZoneRulesException};
 use Time.ZonePrefix;
 use Time.ZonePrefix.{ZonePrefix};
 use Time.ZoneOffset;
@@ -51,22 +52,24 @@ namespace Time/ZoneId {
 
     pub def ut(): ZonePrefix = ZonePrefix("UT")
 
-    pub def fromString(zoneIdentifier: String): Result[ZoneId, String] = try {
+    pub def fromString(zoneIdentifier: String): Result[ZoneId, Time.Error] =
         import java.lang.String.strip();
         import java.time.ZoneId:of(String) as of;
-        Ok(ZoneId(zoneIdentifier.strip().of())) as & Pure
-    } catch {
-        case _: ##java.time.DateTimeException => Err("Time/ZoneId.zoneId invalid format")
-        case _: ##java.time.zone.ZoneRulesException => Err("Time/ZoneId.zoneId not found")
-    }
+        try {
+            Ok(ZoneId(zoneIdentifier.strip().of())) as & Pure
+        } catch {
+            case _: ##java.time.DateTimeException => Err(DateTimeException)
+            case _: ##java.time.zone.ZoneRulesException => Err(ZoneRulesException)
+        }
 
-    pub def systemDefault(): Result[ZoneId, String] & Impure = try {
+    pub def systemDefault(): Result[ZoneId, Time.Error] & Impure =
         import java.time.ZoneId:systemDefault() as systemDefaultZoneId;
-        Ok(ZoneId(systemDefaultZoneId()))
-    } catch {
-        case _: ##java.time.DateTimeException => Err("Time/ZoneId.systemDefault invalid format")
-        case _: ##java.time.zone.ZoneRulesException => Err("Time/ZoneId.systemDefault not found")
-    }
+        try {
+            Ok(ZoneId(systemDefaultZoneId()))
+        } catch {
+            case _: ##java.time.DateTimeException => Err(DateTimeException)
+            case _: ##java.time.zone.ZoneRulesException => Err(ZoneRulesException)
+        }
 
     ///
     /// Returns the given ZoneId `x` as a String.

@@ -18,6 +18,7 @@ use Time.OffsetDateTime;
 use Time.OffsetDateTime.{OffsetDateTime};
 use Time/Format.DateTimeFormatter;
 use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+use Time.Error.{DateTimeParseException};
 use Time.LocalDate;
 use Time.LocalDate.{LocalDate};
 use Time.LocalDateTime;
@@ -153,13 +154,13 @@ namespace Time/OffsetDateTime {
     /// The format of the input string should be ISO-8601 extended offset date-time format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[OffsetDateTime, String] = try {
+    pub def fromString(s: String): Result[OffsetDateTime, Time.Error] = try {
         import java.lang.String.strip();
         import java.time.OffsetDateTime:parse(##java.lang.CharSequence);
         let cs = s.strip() as ##java.lang.CharSequence & Pure;
         Ok(OffsetDateTime(parse(cs))) as & Pure
     } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("OffsetDateTime.fromString")
+        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
     }
 
     ///
@@ -167,14 +168,14 @@ namespace Time/OffsetDateTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromStringWithFormat(s: String, formatter: DateTimeFormatter): Result[OffsetDateTime, String] = try {
+    pub def fromStringWithFormat(s: String, formatter: DateTimeFormatter): Result[OffsetDateTime, Time.Error] = try {
         import java.lang.String.strip();
         import java.time.OffsetDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         let DateTimeFormatter(fmtr) = formatter;
         let cs = s.strip() as ##java.lang.CharSequence & Pure;
         Ok(OffsetDateTime(cs.parse(fmtr))) as & Pure
     } catch {
-        case _: ##java.time.format.DateTimeParseException => Err("OffsetDateTime.fromStringWithFormat")
+        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
     }
 
 
