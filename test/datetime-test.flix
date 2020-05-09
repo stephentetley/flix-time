@@ -1,36 +1,36 @@
 
 
 @test
-def now01(): LocalDateTime & Impure = 
+def now01(): Time.LocalDateTime & Impure = 
     Time/LocalDateTime.now()
 
 @test
-def fromString01(): Result[LocalDate, String] & Pure = 
+def fromString01(): Result[Time.LocalDate, Time.Error] & Pure = 
     use Time/LocalDate.fromString;
     "2007-12-03".fromString()
 
 @test
-def fromStringWithFormat01(): Result[LocalDateTime, String] = 
-    use Time/LocalDateTime.fromStringWithFormat;
-    "2020-03-21T10:50:00".fromStringWithFormat(Time/DateTimeFormatter.iso_local_date_time())
+def parse01(): Result[Time.LocalDateTime, Time.Error] = 
+    use Time/LocalDateTime.parse;
+    "2020-03-21T10:50:00".parse(Time/Format/DateTimeFormatter.iso_local_date_time())
 
 @test
-def fromStringWithFormat02(): Result[LocalDateTime, String] = 
-    use Time/LocalDateTime.fromStringWithFormat;
-    match Time/DateTimeFormatter.fromPattern("dd/MM/yyyy HH:mm") {
+def parse02(): Result[Time.LocalDateTime, Time.Error] = 
+    use Time/LocalDateTime.parse;
+    match Time/Format/DateTimeFormatter.fromPattern("dd/MM/yyyy HH:mm") {
         case Err(e) => Err(e)
-        case Ok(fmt) => "19/12/2018 00:00".fromStringWithFormat(fmt)
+        case Ok(fmt) => "19/12/2018 00:00".parse(fmt)
     }
     
 
 @test
-def zoneId01(): Result[ZoneId, String] = 
+def zoneId01(): Result[Time.ZoneId, Time.Error] = 
     use Time/ZoneId.fromString;
     fromString("Europe/Paris")
 
 
 @test
-def systemDefault01(): Result[ZoneId, String] & Impure = 
+def systemDefault01(): Result[Time.ZoneId, Time.Error] & Impure = 
     use Time/ZoneId.systemDefault;
     systemDefault()
 

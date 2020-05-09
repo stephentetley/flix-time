@@ -138,7 +138,7 @@ namespace Time/LocalDateTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromStringWithFormat(s: String, formatter: DateTimeFormatter): Result[LocalDateTime, Time.Error] =
+    pub def parse(s: String, formatter: DateTimeFormatter): Result[LocalDateTime, Time.Error] =
         import java.lang.String.strip();
         import java.time.LocalDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {

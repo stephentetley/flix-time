@@ -63,6 +63,8 @@ namespace Time/LocalDate {
         import get java.time.LocalDate:MAX as get_max;
         LocalDate(get_max()) as & Pure
 
+
+
     ///
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
     /// The format of the input string should be ____.
@@ -78,12 +80,14 @@ namespace Time/LocalDate {
             case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
         }
 
+    /// 
+    /// TODO: rename to `parse`? This would be consistent with `format`
     ///
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromStringWithFormat(s: String, formatter: DateFormatter): Result[LocalDate, Time.Error] = 
+    pub def parse(s: String, formatter: DateFormatter): Result[LocalDate, Time.Error] = 
         import java.lang.String.strip();
         import java.time.LocalDate:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {

@@ -114,7 +114,7 @@ namespace Time/OffsetTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromStringWithFormat(s: String, formatter: TimeFormatter): Result[OffsetTime, Time.Error] =
+    pub def parse(s: String, formatter: TimeFormatter): Result[OffsetTime, Time.Error] =
         import java.lang.String.strip();
         import java.time.OffsetTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
