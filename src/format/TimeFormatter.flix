@@ -16,6 +16,7 @@
 
 use Time/Format.TimeFormatter;
 use Time/Format.TimeFormatter.{TimeFormatter};
+use Time.Error.{IllegalArgumentException};
 use Time.ZoneId;
 use Time.ZoneId.{ZoneId};
 
@@ -42,13 +43,14 @@ namespace Time/Format/TimeFormatter {
         import get java.time.format.DateTimeFormatter:ISO_TIME as get_iso_time;
         TimeFormatter(get_iso_time()) as & Pure
 
-    pub def fromPattern(pattern: String): Result[TimeFormatter, String] = try {
-        import java.lang.String.strip();
-        import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
-        Ok(TimeFormatter(pattern.strip().ofPattern())) as & Pure
-    } catch {
-        case _: ##java.lang.IllegalArgumentException => Err("Time/TimeFormatter.fromPattern")
-    }
+    pub def fromPattern(pattern: String): Result[TimeFormatter, Time.Error] = 
+        try {
+            import java.lang.String.strip();
+            import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
+            Ok(TimeFormatter(pattern.strip().ofPattern())) as & Pure
+        } catch {
+            case _: ##java.lang.IllegalArgumentException => Err(IllegalArgumentException)
+        }
 
     pub def getZone(x: TimeFormatter): ZoneId =
         import java.time.format.DateTimeFormatter.getZone();

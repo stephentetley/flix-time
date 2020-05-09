@@ -16,6 +16,7 @@
 
 use Time/Format.DateTimeFormatter;
 use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+use Time.Error.{IllegalArgumentException};
 use Time.ZoneId;
 use Time.ZoneId.{ZoneId};
 
@@ -52,13 +53,15 @@ namespace Time/Format/DateTimeFormatter {
         import get java.time.format.DateTimeFormatter:RFC_1123_DATE_TIME as get_rfc_1123_date_time;
         DateTimeFormatter(get_rfc_1123_date_time()) as & Pure
 
-    pub def fromPattern(pattern: String): Result[DateTimeFormatter, String] = try {
+
+    pub def fromPattern(pattern: String): Result[DateTimeFormatter, Time.Error] =
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
-        Ok(DateTimeFormatter(pattern.strip().ofPattern())) as & Pure
-    } catch {
-        case _: ##java.lang.IllegalArgumentException => Err("Time/Formatter.formatter")
-    }
+        try {
+            Ok(DateTimeFormatter(pattern.strip().ofPattern())) as & Pure
+        } catch {
+            case _: ##java.lang.IllegalArgumentException => Err(IllegalArgumentException)
+        }
 
 
     pub def getZone(x: DateTimeFormatter): ZoneId =

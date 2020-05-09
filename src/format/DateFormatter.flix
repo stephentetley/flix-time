@@ -16,6 +16,7 @@
 
 use Time/Format.DateFormatter;
 use Time/Format.DateFormatter.{DateFormatter};
+use Time.Error.{IllegalArgumentException};
 
 namespace Time/Format {
 
@@ -53,13 +54,14 @@ namespace Time/Format/DateFormatter {
         DateFormatter(get_iso_week_date()) as & Pure
 
 
-    pub def fromPattern(pattern: String): Result[DateFormatter, String] = try {
+    pub def fromPattern(pattern: String): Result[DateFormatter, Time.Error] = 
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
-        Ok(DateFormatter(pattern.strip().ofPattern())) as & Pure
-    } catch {
-        case _: ##java.lang.IllegalArgumentException => Err("Time/TimeFormatter.fromPattern")
-    }
+        try {
+            Ok(DateFormatter(pattern.strip().ofPattern())) as & Pure
+        } catch {
+            case _: ##java.lang.IllegalArgumentException => Err(IllegalArgumentException)
+        }
 
     pub def toString(x: DateFormatter): String =
         import java.time.format.DateTimeFormatter.toString();
