@@ -16,6 +16,7 @@
 
 use Time.DayOfWeek;
 use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+use Time/Format.TextStyle;
 
 namespace Time {
 
@@ -34,13 +35,13 @@ namespace Time {
 namespace Time/DayOfWeek {
 
     pub def toInt32(x: DayOfWeek): Int32 = match x {
-        case Monday => 1
-        case Tuesday => 2
-        case Wednesday => 3
-        case Thursday => 4
-        case Friday => 5
-        case Saturday => 6
-        case Sunday => 7
+        case Monday     => 1
+        case Tuesday    => 2
+        case Wednesday  => 3
+        case Thursday   => 4
+        case Friday     => 5
+        case Saturday   => 6
+        case Sunday     => 7
     }
 
     pub def fromInt32(n: Int32): DayOfWeek = match (n % 7) {
@@ -54,6 +55,33 @@ namespace Time/DayOfWeek {
     }
 
 
+    pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek = 
+        import get java.time.DayOfWeek:MONDAY as javaMonday;
+        import get java.time.DayOfWeek:TUESDAY as javaTuesday;
+        import get java.time.DayOfWeek:WEDNESDAY as javaWednesday;
+        import get java.time.DayOfWeek:THURSDAY as javaThursday;
+        import get java.time.DayOfWeek:FRIDAY as javaFriday;
+        import get java.time.DayOfWeek:SATURDAY as javaSaturday;
+        import get java.time.DayOfWeek:SUNDAY as javaSunday;
+        match x {
+            case Monday     => javaMonday()
+            case Tuesday    => javaTuesday()
+            case Wednesday  => javaWednesday()
+            case Thursday   => javaThursday()
+            case Friday     => javaFriday()
+            case Saturday   => javaSaturday()
+            case Sunday     => javaSunday() 
+        } as & Pure
+
+
+
     // Wrapping `getDisplayName` a priority so we can experiment with Locale.
+
+    pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String = 
+        import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
+        let x1 = marshal(x);
+        let s1 = Time/Format/TextStyle.marshal(style);
+        let Locale(l1) = locale;
+        x1.getDisplayName(s1, l1) as & Pure
 
 }
