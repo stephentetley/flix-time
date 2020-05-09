@@ -16,6 +16,7 @@
 
 use Time.Month;
 use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};
+use Time/Format.TextStyle;
 
 namespace Time {
 
@@ -65,10 +66,86 @@ namespace Time/Month {
         case 9 => September
         case 10 => October
         case 11 => November
-        case _ => December
+        case _  => December
     }
 
+    pub def marshal(x: Month): ##java.time.Month = 
+        import get java.time.Month:JANUARY as javaJanuary;
+        import get java.time.Month:FEBRUARY as javaFebruary;
+        import get java.time.Month:MARCH as javaMarch;
+        import get java.time.Month:APRIL as javaApril;
+        import get java.time.Month:MAY as javaMay;
+        import get java.time.Month:JUNE as javaJune;
+        import get java.time.Month:JULY as javaJuly;
+        import get java.time.Month:AUGUST as javaAugust;
+        import get java.time.Month:SEPTEMBER as javaSeptember;
+        import get java.time.Month:OCTOBER as javaOctober;
+        import get java.time.Month:NOVEMBER as javaNovember;
+        import get java.time.Month:DECEMBER as javaDecember;
+        match x {
+            case January    => javaJanuary()
+            case February   => javaFebruary()
+            case March      => javaMarch()
+            case April      => javaApril()
+            case May        => javaMay()
+            case June       => javaJune()
+            case July       => javaJuly()
+            case August     => javaAugust()
+            case September  => javaSeptember()
+            case October    => javaOctober()
+            case November   => javaNovember()
+            case December   => javaDecember()
+        } as & Pure
 
-    // Wrapping `getDisplayName` a priority so we can experiment with Locale.
+    pub def unmarshal(x: ##java.time.Month): Month = 
+        import get java.time.Month:JANUARY as javaJanuary;
+        import get java.time.Month:FEBRUARY as javaFebruary;
+        import get java.time.Month:MARCH as javaMarch;
+        import get java.time.Month:APRIL as javaApril;
+        import get java.time.Month:MAY as javaMay;
+        import get java.time.Month:JUNE as javaJune;
+        import get java.time.Month:JULY as javaJuly;
+        import get java.time.Month:AUGUST as javaAugust;
+        import get java.time.Month:SEPTEMBER as javaSeptember;
+        import get java.time.Month:OCTOBER as javaOctober;
+        import get java.time.Month:NOVEMBER as javaNovember;
+        import get java.time.Month:DECEMBER as javaDecember;
+        match x {
+            case x1 if x1 == javaJanuary()      => January
+            case x1 if x1 == javaFebruary()     => February
+            case x1 if x1 == javaMarch()        => March
+            case x1 if x1 == javaApril()        => April
+            case x1 if x1 == javaMay()          => May
+            case x1 if x1 == javaJune()         => June
+            case x1 if x1 == javaJuly()         => July
+            case x1 if x1 == javaAugust()       => August
+            case x1 if x1 == javaSeptember()    => September
+            case x1 if x1 == javaOctober()      => October
+            case x1 if x1 == javaNovember()     => November
+            case x1 if x1 == javaDecember()     => December
+        } as & Pure
+
+
+    pub def getDisplayName(x: Month, style: TextStyle, locale: Locale): String = 
+        import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
+        let x1 = marshal(x);
+        let s1 = Time/Format/TextStyle.marshal(style);
+        let Locale(l1) = locale;
+        x1.getDisplayName(s1, l1) as & Pure
+
+    pub def plus(x:Month, y: Int64): Month = 
+        import java.time.Month.plus(Int64);
+        let x1 = marshal(x);
+        let x2 = plus(x1, y) as & Pure;
+        unmarshal(x2)
+
+    pub def minus(x:Month, y: Int64): Month = 
+        import java.time.Month.minus(Int64);
+        let x1 = marshal(x);
+        let x2 = minus(x1, y) as & Pure;
+        unmarshal(x2)
+
+
 
 }
+

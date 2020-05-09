@@ -73,3 +73,21 @@ def getDuration02(): String =
 def toString01ChronoUnit(): String = 
     use Time/ChronoUnit.toString;
     Time/ChronoUnit.months() |> toString
+
+
+@test
+def getDisplayName01(): String = 
+    Time/DayOfWeek.getDisplayName(Time/DayOfWeek.Saturday, Time/Format/TextStyle.Full, Locale.french())
+
+
+@test
+def getDisplayName02(): String = 
+    Time/DayOfWeek.getDisplayName(Time/DayOfWeek.Monday, Time/Format/TextStyle.FullStandalone, Locale.japanese())
+
+@test
+def plus01(): Time.Month = 
+    Time/Month.plus(Time/Month.June, 3i64)
+
+@test
+def plus02(): Time.Month = 
+    Time/Month.plus(Time/Month.June, 13i64)

@@ -73,7 +73,23 @@ namespace Time/DayOfWeek {
             case Sunday     => javaSunday() 
         } as & Pure
 
-
+    pub def unmarshal(x: ##java.time.DayOfWeek): DayOfWeek = 
+        import get java.time.DayOfWeek:MONDAY as javaMonday;
+        import get java.time.DayOfWeek:TUESDAY as javaTuesday;
+        import get java.time.DayOfWeek:WEDNESDAY as javaWednesday;
+        import get java.time.DayOfWeek:THURSDAY as javaThursday;
+        import get java.time.DayOfWeek:FRIDAY as javaFriday;
+        import get java.time.DayOfWeek:SATURDAY as javaSaturday;
+        import get java.time.DayOfWeek:SUNDAY as javaSunday;
+        match x {
+            case x1 if x1 == javaMonday()       => Monday
+            case x1 if x1 == javaTuesday()      => Tuesday
+            case x1 if x1 == javaWednesday()    => Wednesday
+            case x1 if x1 == javaThursday()     => Thursday
+            case x1 if x1 == javaFriday()       => Friday
+            case x1 if x1 == javaSaturday()     => Saturday
+            case x1 if x1 == javaSunday()       => Sunday
+        } as & Pure
 
     // Wrapping `getDisplayName` a priority so we can experiment with Locale.
 
@@ -83,5 +99,19 @@ namespace Time/DayOfWeek {
         let s1 = Time/Format/TextStyle.marshal(style);
         let Locale(l1) = locale;
         x1.getDisplayName(s1, l1) as & Pure
+
+
+    pub def plus(x:DayOfWeek, y: Int64): DayOfWeek = 
+        import java.time.DayOfWeek.plus(Int64);
+        let x1 = marshal(x);
+        let x2 = plus(x1, y) as & Pure;
+        unmarshal(x2)
+
+    pub def minus(x:DayOfWeek, y: Int64): DayOfWeek = 
+        import java.time.DayOfWeek.minus(Int64);
+        let x1 = marshal(x);
+        let x2 = minus(x1, y) as & Pure;
+        unmarshal(x2)
+
 
 }
