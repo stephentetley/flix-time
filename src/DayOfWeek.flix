@@ -33,7 +33,7 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
-    pub def toInt(day: DayOfWeek): Int32 = match day {
+    pub def toInt32(x: DayOfWeek): Int32 = match x {
         case Monday => 1
         case Tuesday => 2
         case Wednesday => 3
@@ -43,7 +43,7 @@ namespace Time/DayOfWeek {
         case Sunday => 7
     }
 
-    pub def fromInt(n: Int32): DayOfWeek = match (n % 7) {
+    pub def fromInt32(n: Int32): DayOfWeek = match (n % 7) {
         case 1 => Monday
         case 2 => Tuesday
         case 3 => Wednesday
