@@ -16,9 +16,9 @@
 
 use Time.OffsetDateTime;
 use Time.OffsetDateTime.{OffsetDateTime};
+use Time.Error.{DateTimeParseException};
 use Time/Format.DateTimeFormatter;
 use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-use Time.Error.{DateTimeParseException};
 use Time.LocalDate;
 use Time.LocalDate.{LocalDate};
 use Time.LocalDateTime;
@@ -27,6 +27,7 @@ use Time.LocalTime;
 use Time.LocalTime.{LocalTime};
 use Time.OffsetTime;
 use Time.OffsetTime.{OffsetTime};
+use Time/Temporal.ChronoUnit;
 use Time.ZonedDateTime;
 use Time.ZonedDateTime.{ZonedDateTime};
 use Time.ZoneId;
@@ -45,10 +46,19 @@ namespace Time {
 
 namespace Time/OffsetDateTime {
 
-    pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, offset: ZoneOffset): OffsetDateTime =
+    pub def new(x: {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, 
+                    second: Int32, nanoSecond: Int32, offset: ZoneOffset}): OffsetDateTime =
         import java.time.OffsetDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
-        let ZoneOffset(o1) = offset;
-        OffsetDateTime(of(year, month, dayOfMonth, hour, minute, second, nanoSecond, o1)) as & Pure
+        let ZoneOffset(o1) = x.offset;
+        OffsetDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond, o1)) as & Pure
+
+
+    pub def getFields(x: OffsetDateTime): {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, 
+                                            second: Int32, nanoSecond: Int32, offset: ZoneOffset} =
+        { year = x.getYear(), month = x.getMonth(), dayOfMonth = x.getDayOfMonth()
+        , hour = x.getHour(), minute = x.getMinute(), second = x.getSecond()
+        , nanoSecond = x.getNano(), offset = x.getOffset() }
+    
 
     ///
     /// Returns the current date-time from the system clock using the system zone id.
@@ -69,15 +79,29 @@ namespace Time/OffsetDateTime {
     /// ___
     ///
     pub def minValue(): OffsetDateTime =
-        import get java.time.OffsetDateTime:MIN as get_min;
-        OffsetDateTime(get_min()) as & Pure
+        import get java.time.OffsetDateTime:MIN as getMIN;
+        OffsetDateTime(getMIN()) as & Pure
 
     ///
     /// ___
     ///
     pub def maxValue(): OffsetDateTime =
-        import get java.time.OffsetDateTime:MAX as get_max;
-        OffsetDateTime(get_max()) as & Pure
+        import get java.time.OffsetDateTime:MAX as getMAX;
+        OffsetDateTime(getMAX()) as & Pure
+
+
+    pub def atZoneSameInstant(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime = 
+        import java.time.OffsetDateTime.atZoneSameInstant(##java.time.ZoneId);
+        let OffsetDateTime(x1) = x;
+        let ZoneId(z1) = zoneId;
+        ZonedDateTime(atZoneSameInstant(x1, z1)) as & Pure
+    
+    pub def atZoneSimilarLocal(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime = 
+        import java.time.OffsetDateTime.atZoneSimilarLocal(##java.time.ZoneId);
+        let OffsetDateTime(x1) = x;
+        let ZoneId(z1) = zoneId;
+        ZonedDateTime(atZoneSimilarLocal(x1, z1)) as & Pure
+    
 
     pub def fromLocalDateTime(dateTime: LocalDateTime, offset: ZoneOffset): OffsetDateTime =
         import java.time.OffsetDateTime:of(##java.time.LocalDateTime, ##java.time.ZoneOffset);
@@ -91,6 +115,16 @@ namespace Time/OffsetDateTime {
         let LocalTime(t) = time;
         let ZoneOffset(o) = offset;
         OffsetDateTime(of(d, t, o)) as & Pure
+
+    pub def toEpochSecond(x: OffsetDateTime): Int64 =
+        import java.time.OffsetDateTime.toEpochSecond();
+        let OffsetDateTime(x1) = x;
+        x1.toEpochSecond() as & Pure
+
+    pub def toInstant(x: OffsetDateTime): Instant =
+        import java.time.OffsetDateTime.toInstant();
+        let OffsetDateTime(x1) = x;
+        Instant(x1.toInstant()) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -141,6 +175,22 @@ namespace Time/OffsetDateTime {
         x1.toString() as & Pure
 
     ///
+    /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ISO-8601 extended offset date-time format.
+    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
+    ///
+    pub def fromString(s: String): Result[OffsetDateTime, Time.Error] = 
+        import java.lang.String.strip();
+        import java.time.OffsetDateTime:parse(##java.lang.CharSequence);
+        try {
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(OffsetDateTime(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
+
+
+    ///
     /// Returns OffsetDateTime `x` as a String using `formatter`.
     ///
     pub def format(x: OffsetDateTime, formatter: DateTimeFormatter): String =
@@ -151,32 +201,19 @@ namespace Time/OffsetDateTime {
 
     ///
     /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ISO-8601 extended offset date-time format.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[OffsetDateTime, Time.Error] = try {
-        import java.lang.String.strip();
-        import java.time.OffsetDateTime:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(OffsetDateTime(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
-    }
-
-    ///
-    /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: DateTimeFormatter): Result[OffsetDateTime, Time.Error] = try {
+    pub def parse(s: String, formatter: DateTimeFormatter): Result[OffsetDateTime, Time.Error] =
         import java.lang.String.strip();
         import java.time.OffsetDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
-        let DateTimeFormatter(fmtr) = formatter;
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(OffsetDateTime(cs.parse(fmtr))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
-    }
+        try {
+            let DateTimeFormatter(fmtr) = formatter;
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(OffsetDateTime(cs.parse(fmtr))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
 
 
     ///
@@ -187,6 +224,13 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         let OffsetDateTime(y1) = y;
         x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    pub def compare(x: OffsetDateTime, y: OffsetDateTime): Int32 =
+        import java.time.OffsetDateTime.compareTo(##java.time.OffsetDateTime);
+        let OffsetDateTime(x1) = x;
+        let OffsetDateTime(y1) = y;
+        x1.compareTo(y1) as & Pure
+
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -376,5 +420,32 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.withNano(Int32);
         let OffsetDateTime(x1) = x;
         OffsetDateTime(x1.withNano(nano)) as & Pure
+
+    pub def getOffset(x: OffsetDateTime): ZoneOffset =
+        import java.time.OffsetDateTime.getOffset();
+        let OffsetDateTime(x1) = x;
+        ZoneOffset(x1.getOffset()) as & Pure
+
+    pub def putOffsetSameInstant(x: OffsetDateTime, offset: ZoneOffset): OffsetDateTime = 
+        import java.time.OffsetDateTime.withOffsetSameInstant(##java.time.ZoneOffset);
+        let OffsetDateTime(x1) = x;
+        let ZoneOffset(o1) = offset;
+        OffsetDateTime(withOffsetSameInstant(x1, o1)) as & Pure
+    
+    pub def putOffsetSameLocal(x: OffsetDateTime, offset: ZoneOffset): OffsetDateTime = 
+        import java.time.OffsetDateTime.withOffsetSameLocal(##java.time.ZoneOffset);
+        let OffsetDateTime(x1) = x;
+        let ZoneOffset(o1) = offset;
+        OffsetDateTime(withOffsetSameLocal(x1, o1)) as & Pure
+
+    pub def until(b: OffsetDateTime, e: OffsetDateTime, unit: ChronoUnit): Int64 = 
+        import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
+        let OffsetDateTime(b1) = b;
+        let OffsetDateTime(e1) = e;
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let te1 = e1 as ##java.time.temporal.Temporal;
+        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
+        b1.until(te1, tu1) as & Pure
+
 
 }

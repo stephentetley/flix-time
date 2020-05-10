@@ -32,22 +32,22 @@ namespace Time/ZoneOffset {
     /// ___
     ///
     pub def utc(): ZoneOffset =
-        import get java.time.ZoneOffset:UTC as get_utc;
-        ZoneOffset(get_utc()) as & Pure
+        import get java.time.ZoneOffset:UTC as getUTC;
+        ZoneOffset(getUTC()) as & Pure
 
     ///
     /// ___
     ///
     pub def minValue(): ZoneOffset =
-        import get java.time.ZoneOffset:MIN as get_min;
-        ZoneOffset(get_min()) as & Pure
+        import get java.time.ZoneOffset:MIN as getMIN;
+        ZoneOffset(getMIN()) as & Pure
 
     ///
     /// ___
     ///
     pub def maxValue(): ZoneOffset =
-        import get java.time.ZoneOffset:MAX as get_max;
-        ZoneOffset(get_max()) as & Pure
+        import get java.time.ZoneOffset:MAX as getMAX;
+        ZoneOffset(getMAX()) as & Pure
 
 
     pub def fromHours(hours: Int32): ZoneOffset =

@@ -63,6 +63,13 @@ namespace Time/Year {
         let Year(y1) = y;
         x1.equals(y1 as ##java.lang.Object) as & Pure
 
+    pub def compare(x: Year, y: Year): Int32 =
+        import java.time.Year.compareTo(##java.time.Year);
+        let Year(x1) = x;
+        let Year(y1) = y;
+        x1.compareTo(y1) as & Pure
+
+
     ///
     /// Returns `true` if `x` is before `y`.
     ///
@@ -80,5 +87,21 @@ namespace Time/Year {
         let Year(x1) = x;
         let Year(y1) = y;
         x1.isAfter(y1) as & Pure
+
+    ///
+    /// Returns `true` if `x` is a leap year.
+    ///
+    pub def isLeap(x: Year): Bool =
+        import java.time.Year.isLeap();
+        let Year(x1) = x;
+        x1.isLeap() as & Pure
+
+    ///
+    /// Returns `true` if `x` is a leap year.
+    ///
+    pub def isLeapYear(x: Int64): Bool =
+        import java.time.Year:isLeap(Int64);
+        isLeap(x) as & Pure
+
 
 }
