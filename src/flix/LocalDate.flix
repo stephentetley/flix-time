@@ -46,21 +46,20 @@ namespace Time {
 
 namespace Time/LocalDate {
 
-    pub def new(x: { year: Int32, month: Int32, dayOfMonth: Int32}): LocalDate =
+    pub def new(x: {year: Int32, month: Int32, dayOfMonth: Int32}): LocalDate =
         import java.time.LocalDate:of(Int32, Int32, Int32);
         LocalDate(of(x.year, x.month, x.dayOfMonth)) as & Pure
 
-    pub def newWithMonth(x: { year: Int32, month: Month, dayOfMonth: Int32}): LocalDate =
+    pub def newWithMonth(x: {year: Int32, month: Month, dayOfMonth: Int32}): LocalDate =
         import java.time.LocalDate:of(Int32, ##java.time.Month, Int32);
         let m1 = Time/Month.marshal(x.month);
         LocalDate(of(x.year, m1, x.dayOfMonth)) as & Pure
 
+
+    pub def getFields(x: LocalDate): {year: Int32, month: Int32, dayOfMonth: Int32} = 
+        {year = x.getYear(), month = x.getMonth(), dayOfMonth = x.getDayOfMonth()}
+
     
-    pub def fromInstant(x: Instant, zoneId: ZoneId): LocalDate =
-        import java.time.LocalDate:ofInstant(##java.time.Instant, ##java.time.ZoneId);
-        let Instant(x1) = x;
-        let ZoneId(z1) = zoneId;
-        LocalDate(ofInstant(x1, z1)) as & Pure
 
 
     ///
@@ -70,7 +69,13 @@ namespace Time/LocalDate {
         import java.time.LocalDate:now();
         LocalDate(now())
 
-
+    ///
+    /// Returns the current date from the system clock using zoneId.
+    ///
+    pub def nowWithZoneId(zoneId: ZoneId): LocalDate & Impure =
+        import java.time.LocalDate:now(##java.time.ZoneId);
+        let ZoneId(z1) = zoneId;
+        LocalDate(now(z1))
 
 
     ///
@@ -116,6 +121,16 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         let OffsetTime(t1) = t;
         OffsetDateTime(x1.atTime(t1)) as & Pure
+
+
+    pub def fromInstant(x: Instant, zoneId: ZoneId): LocalDate =
+        import java.time.LocalDate:ofInstant(##java.time.Instant, ##java.time.ZoneId);
+        let Instant(x1) = x;
+        let ZoneId(z1) = zoneId;
+        LocalDate(ofInstant(x1, z1)) as & Pure
+
+
+
 
     ///
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.

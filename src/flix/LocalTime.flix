@@ -35,18 +35,20 @@ namespace Time {
 
 namespace Time/LocalTime {
 
-    pub def new(hour: Int32, minute: Int32): LocalTime =
+    pub def new(x: {hour: Int32, minute: Int32}): LocalTime =
         import java.time.LocalTime:of(Int32, Int32);
-        LocalTime(of(hour, minute)) as & Pure
+        LocalTime(of(x.hour, x.minute)) as & Pure
 
-    /// TODO - distiction between from__ and new__ is getting a bit confused.
-    pub def newWithSecond(hour: Int32, minute: Int32, second: Int32): LocalTime =
+    pub def newWithSecond(x: {hour: Int32, minute: Int32, second: Int32}): LocalTime =
         import java.time.LocalTime:of(Int32, Int32, Int32);
-        LocalTime(of(hour, minute, second)) as & Pure
+        LocalTime(of(x.hour, x.minute, x.second)) as & Pure
 
-    pub def newWithSecondAndNano(hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32): LocalTime =
+    pub def newWithSecondAndNano(x: {hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32}): LocalTime =
         import java.time.LocalTime:of(Int32, Int32, Int32, Int32);
-        LocalTime(of(hour, minute, second, nanoSecond)) as & Pure
+        LocalTime(of(x.hour, x.minute, x.second, x.nanoSecond)) as & Pure
+
+    pub def getFields(x: LocalTime): {hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32} =
+        {hour = x.getHour(), minute = x.getMinute(), second = x.getSecond(), nanoSecond= x.getNano()}
 
     ///
     /// Returns the current time from the system clock.
@@ -59,29 +61,29 @@ namespace Time/LocalTime {
     /// ___
     ///
     pub def minValue(): LocalTime =
-        import get java.time.LocalTime:MIN as get_min;
-        LocalTime(get_min()) as & Pure
+        import get java.time.LocalTime:MIN as getMIN;
+        LocalTime(getMIN()) as & Pure
 
     ///
     /// ___
     ///
     pub def maxValue(): LocalTime =
-        import get java.time.LocalTime:MAX as get_max;
-        LocalTime(get_max()) as & Pure
+        import get java.time.LocalTime:MAX as getMAX;
+        LocalTime(getMAX()) as & Pure
 
     ///
     /// ___
     ///
     pub def midnight(): LocalTime =
-        import get java.time.LocalTime:MIDNIGHT as get_midnight;
-        LocalTime(get_midnight()) as & Pure
+        import get java.time.LocalTime:MIDNIGHT as getMIDNIGHT;
+        LocalTime(getMIDNIGHT()) as & Pure
 
     ///
     /// ___
     ///
     pub def noon(): LocalTime =
-        import get java.time.LocalTime:NOON as get_noon;
-        LocalTime(get_noon()) as & Pure
+        import get java.time.LocalTime:NOON as getNOON;
+        LocalTime(getNOON()) as & Pure
 
 
     pub def fromHoursMinutes(hours: Int32, minutes: Int32): LocalTime =

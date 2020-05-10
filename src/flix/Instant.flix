@@ -19,6 +19,7 @@ use Time.Instant.{Instant};
 use Time.Error.{DateTimeParseException};
 use Time.OffsetDateTime;
 use Time.OffsetDateTime.{OffsetDateTime};
+use Time/Temporal.ChronoUnit;
 use Time.ZonedDateTime;
 use Time.ZonedDateTime.{ZonedDateTime};
 use Time.ZoneId;
@@ -37,6 +38,13 @@ namespace Time {
 
 namespace Time/Instant {
 
+    pub def new(epochSecond: Int64, nanoAdjustment: Int64): Instant =
+        import java.time.Instant:ofEpochSecond(Int64, Int64);
+        Instant(ofEpochSecond(epochSecond, nanoAdjustment)) as & Pure
+
+    pub def getFields(x: Instant): {epochSecond: Int64, nano: Int32} = 
+        {epochSecond = x.getEpochSecond(), nano = x.getNano()}
+
     ///
     /// Returns the current time from the system clock.
     ///
@@ -48,30 +56,28 @@ namespace Time/Instant {
     /// ___
     ///
     pub def epoch(): Instant =
-        import get java.time.Instant:EPOCH as get_epoch;
-        Instant(get_epoch()) as & Pure
+        import get java.time.Instant:EPOCH as getEPOCH;
+        Instant(getEPOCH()) as & Pure
 
     ///
     /// ___
     ///
     pub def minValue(): Instant =
-        import get java.time.Instant:MIN as get_min;
-        Instant(get_min()) as & Pure
+        import get java.time.Instant:MIN as getMIN;
+        Instant(getMIN()) as & Pure
 
     ///
     /// ___
     ///
     pub def maxValue(): Instant =
-        import get java.time.Instant:MAX as get_max;
-        Instant(get_max()) as & Pure
+        import get java.time.Instant:MAX as getMAX;
+        Instant(getMAX()) as & Pure
 
     pub def fromEpochSecond(epochSecond: Int64): Instant =
         import java.time.Instant:ofEpochSecond(Int64);
         Instant(ofEpochSecond(epochSecond)) as & Pure
 
-    pub def fromEpochSecondWithNano(epochSecond: Int64, nanoAdjustment: Int64): Instant =
-        import java.time.Instant:ofEpochSecond(Int64, Int64);
-        Instant(ofEpochSecond(epochSecond, nanoAdjustment)) as & Pure
+    
 
     pub def fromEpochMilli(epochMilli: Int64): Instant =
         import java.time.Instant:ofEpochMilli(Int64);
@@ -194,5 +200,16 @@ namespace Time/Instant {
         import java.time.Instant.minusNanos(Int64);
         let Instant(t) = x;
         Instant(t.minusNanos(d)) as & Pure
+
+
+    pub def until(b: Instant, e: Instant, unit: ChronoUnit): Int64 = 
+        import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
+        let Instant(b1) = b;
+        let Instant(e1) = e;
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let te1 = e1 as ##java.time.temporal.Temporal;
+        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
+        b1.until(te1, tu1) as & Pure
+
 
 }

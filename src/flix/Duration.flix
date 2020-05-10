@@ -17,6 +17,7 @@
 use Time.Duration;
 use Time.Duration.{Duration};
 use Time.Error.{DateTimeParseException};
+use Time/Temporal.ChronoUnit;
 
 namespace Time {
 
@@ -29,12 +30,21 @@ namespace Time {
 
 namespace Time/Duration {
 
+    pub def new(seconds: Int64, nanoAdjustment: Int64): Duration = 
+        import java.time.Duration:ofSeconds(Int64, Int64);
+        Duration(ofSeconds(seconds, nanoAdjustment)) as & Pure
+    
+    pub def getFields(x: Duration): {seconds: Int64, nanos: Int32} =
+        {seconds = x.getSeconds(), nanos = x.getNano()}
+
     ///
     /// ___
     ///
     pub def zero(): Duration =
         import get java.time.Duration:ZERO as get_zero;
         Duration(get_zero()) as & Pure
+
+
 
     pub def fromDays(days: Int64): Duration =
         import java.time.Duration:ofDays(Int64);
@@ -76,6 +86,13 @@ namespace Time/Duration {
         import java.time.Duration:ofMillis(Int64);
         Duration(ofMillis(millis)) as & Pure
 
+
+    pub def fromChrono(x: Int64, unit: ChronoUnit): Duration = 
+        import java.time.Duration:of(Int64, ##java.time.temporal.TemporalUnit);
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
+        Duration(x.of(tu1)) as & Pure
+
     ///
     /// Get the total length of Duration `x` in milliseconds.
     ///
@@ -98,19 +115,42 @@ namespace Time/Duration {
     /// The format of the input string should be ISO-8601 duration format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[Duration, Time.Error] = try {
+    pub def fromString(s: String): Result[Duration, Time.Error] = 
         import java.lang.String.strip();
         import java.time.Duration:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(Duration(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
-    }
+        try {
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(Duration(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        }
 
     pub def toString(x: Duration): String =
         import java.time.Duration.toString();
         let Duration(x1) = x;
         x1.toString() as & Pure
+
+
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: Duration, y: Duration): Bool =
+        import java.time.Duration.equals(##java.lang.Object);
+        let Duration(x1) = x;
+        let Duration(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
+
+    ///
+    /// Returns 1 if x > y, -1 if x < y, and 0 if x = y.
+    ///
+    pub def compare(x: Duration, y: Duration): Int32 =
+        import java.time.Duration.compareTo(##java.time.Duration);
+        let Duration(x1) = x;
+        let Duration(y1) = y;
+        x1.compareTo(y1) as & Pure
+
+    
 
     pub def isZero(x: Duration): Bool =
         import java.time.Duration.isZero();
@@ -125,21 +165,6 @@ namespace Time/Duration {
         let Duration(x1) = x;
         x1.isNegative() as & Pure
 
-    ///
-    /// Get the second part of the duration `x`.
-    ///
-    pub def getSeconds(x: Duration): Int64 =
-        import java.time.Duration.getSeconds();
-        let Duration(x1) = x;
-        x1.getSeconds() as & Pure
-
-    ///
-    /// Set the seconds part of the duration `x` to `seconds``.
-    ///
-    pub def putSeconds(x: Duration, seconds: Int64): Duration =
-        import java.time.Duration.withSeconds(Int64);
-        let Duration(x1) = x;
-        Duration(x1.withSeconds(seconds)) as & Pure
 
     ///
     /// Get the nanosecond part of the duration `x`.
@@ -157,11 +182,24 @@ namespace Time/Duration {
         let Duration(x1) = x;
         Duration(x1.withNanos(nanos)) as & Pure
 
-    pub def compare(x: Duration, y: Duration): Int32 =
-        import java.time.Duration.compareTo(##java.time.Duration);
+    ///
+    /// Get the second part of the duration `x`.
+    ///
+    pub def getSeconds(x: Duration): Int64 =
+        import java.time.Duration.getSeconds();
         let Duration(x1) = x;
-        let Duration(y1) = y;
-        x1.compareTo(y1) as & Pure
+        x1.getSeconds() as & Pure
+
+    ///
+    /// Set the seconds part of the duration `x` to `seconds``.
+    ///
+    pub def putSeconds(x: Duration, seconds: Int64): Duration =
+        import java.time.Duration.withSeconds(Int64);
+        let Duration(x1) = x;
+        Duration(x1.withSeconds(seconds)) as & Pure
+
+
+
 
     pub def abs(x: Duration): Duration =
         import java.time.Duration.abs();

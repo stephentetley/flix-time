@@ -35,26 +35,14 @@ namespace Time {
 namespace Time/DayOfWeek {
 
     /// 1 indexed.
-    pub def toInt32(x: DayOfWeek): Int32 = match x {
-        case Monday     => 1
-        case Tuesday    => 2
-        case Wednesday  => 3
-        case Thursday   => 4
-        case Friday     => 5
-        case Saturday   => 6
-        case Sunday     => 7
-    }
+    pub def toInt32(x: DayOfWeek): Int32 = 
+        import java.time.DayOfWeek.getValue();
+        x.marshal().getValue() as & Pure
 
     /// 1 indexed.
-    pub def fromInt32(n: Int32): DayOfWeek = match (n % 7) {
-        case 1 => Monday
-        case 2 => Tuesday
-        case 3 => Wednesday
-        case 4 => Thursday
-        case 5 => Friday
-        case 6 => Saturday
-        case _ => Sunday
-    }
+    pub def fromInt32(n: Int32): DayOfWeek =
+        import java.time.DayOfWeek:of(Int32);
+        n.of().unmarshal() as & Pure
 
 
     pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek = 
@@ -92,8 +80,6 @@ namespace Time/DayOfWeek {
             case x1 if x1 == getSATURDAY()  => Saturday
             case x1 if x1 == getSUNDAY()    => Sunday
         } as & Pure
-
-    // Wrapping `getDisplayName` a priority so we can experiment with Locale.
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String = 
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
