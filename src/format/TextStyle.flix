@@ -34,46 +34,47 @@ namespace Time/Format {
 namespace Time/Format/TextStyle {
 
     pub def marshal(x: TextStyle): ##java.time.format.TextStyle = 
-        import get java.time.format.TextStyle:FULL as javaFull;
-        import get java.time.format.TextStyle:FULL_STANDALONE as javaFullStandalone;
-        import get java.time.format.TextStyle:NARROW as javaNarrow;
-        import get java.time.format.TextStyle:NARROW_STANDALONE as javaNarrowStandalone;	
-        import get java.time.format.TextStyle:SHORT as javaShort;
-        import get java.time.format.TextStyle:SHORT_STANDALONE as javaShortStandalone;
+        import get java.time.format.TextStyle:FULL              as getFULL;
+        import get java.time.format.TextStyle:FULL_STANDALONE   as getFULL_STANDALONE;
+        import get java.time.format.TextStyle:NARROW            as getNARROW;
+        import get java.time.format.TextStyle:NARROW_STANDALONE as getNARROW_STANDALONE;	
+        import get java.time.format.TextStyle:SHORT             as getSHORT;
+        import get java.time.format.TextStyle:SHORT_STANDALONE  as getSHORT_STANDALONE;
         match x {
-            case Full               => javaFull()
-            case FullStandalone     => javaFullStandalone()
-            case Narrow             => javaNarrow()
-            case NarrowStandalone   => javaNarrowStandalone()
-            case Short              => javaShort()
-            case ShortStandalone    => javaShortStandalone() 
+            case Full               => getFULL()
+            case FullStandalone     => getFULL_STANDALONE()
+            case Narrow             => getNARROW()
+            case NarrowStandalone   => getNARROW_STANDALONE()
+            case Short              => getSHORT()
+            case ShortStandalone    => getSHORT_STANDALONE() 
         } as & Pure
 
-    pub def asStandalone(x: TextStyle): TextStyle = match x {
-        case Full               => FullStandalone
-        case FullStandalone     => FullStandalone
-        case Narrow             => NarrowStandalone
-        case NarrowStandalone   => NarrowStandalone
-        case Short              => ShortStandalone
-        case ShortStandalone    => ShortStandalone
-    }
-    
-    pub def asNormal(x: TextStyle): TextStyle = match x {
-        case Full               => Full
-        case FullStandalone     => Full
-        case Narrow             => Narrow
-        case NarrowStandalone   => Narrow
-        case Short              => Short
-        case ShortStandalone    => Short
-    }
+    pub def unmarshal(x: ##java.time.format.TextStyle): TextStyle = 
+        import get java.time.format.TextStyle:FULL              as getFULL;
+        import get java.time.format.TextStyle:FULL_STANDALONE   as getFULL_STANDALONE;
+        import get java.time.format.TextStyle:NARROW            as getNARROW;
+        import get java.time.format.TextStyle:NARROW_STANDALONE as getNARROW_STANDALONE;	
+        import get java.time.format.TextStyle:SHORT             as getSHORT;
+        import get java.time.format.TextStyle:SHORT_STANDALONE  as getSHORT_STANDALONE;
+        match x {
+            case x1 if x1 == getFULL()              => Full
+            case x1 if x1 == getFULL_STANDALONE()   => FullStandalone
+            case x1 if x1 == getNARROW()            => Narrow
+            case x1 if x1 == getNARROW_STANDALONE() => NarrowStandalone
+            case x1 if x1 == getSHORT()             => Short
+            case x1 if x1 == getSHORT_STANDALONE()  => ShortStandalone
+        } as & Pure
 
-    pub def isStandalone(x: TextStyle): Bool = match x {
-        case Full               => false
-        case FullStandalone     => true
-        case Narrow             => false
-        case NarrowStandalone   => true
-        case Short              => false
-        case ShortStandalone    => true
-    }
+    pub def asStandalone(x: TextStyle): TextStyle =
+        import java.time.format.TextStyle.asStandalone();
+        x.marshal().asStandalone().unmarshal() as & Pure
+    
+    pub def asNormal(x: TextStyle): TextStyle =
+        import java.time.format.TextStyle.asNormal();
+        x.marshal().asNormal().unmarshal() as & Pure
+
+    pub def isStandalone(x: TextStyle): Bool =
+        import java.time.format.TextStyle.isStandalone();
+        x.marshal().isStandalone() as & Pure
 
 }

@@ -70,59 +70,59 @@ namespace Time/Month {
     }
 
     pub def marshal(x: Month): ##java.time.Month = 
-        import get java.time.Month:JANUARY as javaJanuary;
-        import get java.time.Month:FEBRUARY as javaFebruary;
-        import get java.time.Month:MARCH as javaMarch;
-        import get java.time.Month:APRIL as javaApril;
-        import get java.time.Month:MAY as javaMay;
-        import get java.time.Month:JUNE as javaJune;
-        import get java.time.Month:JULY as javaJuly;
-        import get java.time.Month:AUGUST as javaAugust;
-        import get java.time.Month:SEPTEMBER as javaSeptember;
-        import get java.time.Month:OCTOBER as javaOctober;
-        import get java.time.Month:NOVEMBER as javaNovember;
-        import get java.time.Month:DECEMBER as javaDecember;
+        import get java.time.Month:JANUARY      as getJANUARY;
+        import get java.time.Month:FEBRUARY     as getFEBRUARY;
+        import get java.time.Month:MARCH        as getMARCH;
+        import get java.time.Month:APRIL        as getAPRIL;
+        import get java.time.Month:MAY          as getMAY;
+        import get java.time.Month:JUNE         as getJUNE;
+        import get java.time.Month:JULY         as getJULY;
+        import get java.time.Month:AUGUST       as getAUGUST;
+        import get java.time.Month:SEPTEMBER    as getSEPTEMBER;
+        import get java.time.Month:OCTOBER      as getOCTOBER;
+        import get java.time.Month:NOVEMBER     as getNOVEMBER;
+        import get java.time.Month:DECEMBER     as getDECEMBER;
         match x {
-            case January    => javaJanuary()
-            case February   => javaFebruary()
-            case March      => javaMarch()
-            case April      => javaApril()
-            case May        => javaMay()
-            case June       => javaJune()
-            case July       => javaJuly()
-            case August     => javaAugust()
-            case September  => javaSeptember()
-            case October    => javaOctober()
-            case November   => javaNovember()
-            case December   => javaDecember()
+            case January    => getJANUARY()
+            case February   => getFEBRUARY()
+            case March      => getMARCH()
+            case April      => getAPRIL()
+            case May        => getMAY()
+            case June       => getJUNE()
+            case July       => getJULY()
+            case August     => getAUGUST()
+            case September  => getSEPTEMBER()
+            case October    => getOCTOBER()
+            case November   => getNOVEMBER()
+            case December   => getDECEMBER()
         } as & Pure
 
     pub def unmarshal(x: ##java.time.Month): Month = 
-        import get java.time.Month:JANUARY as javaJanuary;
-        import get java.time.Month:FEBRUARY as javaFebruary;
-        import get java.time.Month:MARCH as javaMarch;
-        import get java.time.Month:APRIL as javaApril;
-        import get java.time.Month:MAY as javaMay;
-        import get java.time.Month:JUNE as javaJune;
-        import get java.time.Month:JULY as javaJuly;
-        import get java.time.Month:AUGUST as javaAugust;
-        import get java.time.Month:SEPTEMBER as javaSeptember;
-        import get java.time.Month:OCTOBER as javaOctober;
-        import get java.time.Month:NOVEMBER as javaNovember;
-        import get java.time.Month:DECEMBER as javaDecember;
+        import get java.time.Month:JANUARY      as getJANUARY;
+        import get java.time.Month:FEBRUARY     as getFEBRUARY;
+        import get java.time.Month:MARCH        as getMARCH;
+        import get java.time.Month:APRIL        as getAPRIL;
+        import get java.time.Month:MAY          as getMAY;
+        import get java.time.Month:JUNE         as getJUNE;
+        import get java.time.Month:JULY         as getJULY;
+        import get java.time.Month:AUGUST       as getAUGUST;
+        import get java.time.Month:SEPTEMBER    as getSEPTEMBER;
+        import get java.time.Month:OCTOBER      as getOCTOBER;
+        import get java.time.Month:NOVEMBER     as getNOVEMBER;
+        import get java.time.Month:DECEMBER     as getDECEMBER;
         match x {
-            case x1 if x1 == javaJanuary()      => January
-            case x1 if x1 == javaFebruary()     => February
-            case x1 if x1 == javaMarch()        => March
-            case x1 if x1 == javaApril()        => April
-            case x1 if x1 == javaMay()          => May
-            case x1 if x1 == javaJune()         => June
-            case x1 if x1 == javaJuly()         => July
-            case x1 if x1 == javaAugust()       => August
-            case x1 if x1 == javaSeptember()    => September
-            case x1 if x1 == javaOctober()      => October
-            case x1 if x1 == javaNovember()     => November
-            case x1 if x1 == javaDecember()     => December
+            case x1 if x1 == getJANUARY()   => January
+            case x1 if x1 == getFEBRUARY()  => February
+            case x1 if x1 == getMARCH()     => March
+            case x1 if x1 == getAPRIL()     => April
+            case x1 if x1 == getMAY()       => May
+            case x1 if x1 == getJUNE()      => June
+            case x1 if x1 == getJULY()      => July
+            case x1 if x1 == getAUGUST()    => August
+            case x1 if x1 == getSEPTEMBER() => September
+            case x1 if x1 == getOCTOBER()   => October
+            case x1 if x1 == getNOVEMBER()  => November
+            case x1 if x1 == getDECEMBER()  => December
         } as & Pure
 
 

@@ -136,6 +136,9 @@ namespace Locale {
         let Locale(x1) = x;
         x1.toString() as & Pure
 
-
+    pub def getAvailableLocales(): Array[Locale] & Impure = 
+        import java.util.Locale:getAvailableLocales();
+        let arr = getAvailableLocales();
+        Array.map(Locale, arr)
 
 }

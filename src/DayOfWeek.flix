@@ -34,6 +34,7 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
+    /// 1 indexed.
     pub def toInt32(x: DayOfWeek): Int32 = match x {
         case Monday     => 1
         case Tuesday    => 2
@@ -44,6 +45,7 @@ namespace Time/DayOfWeek {
         case Sunday     => 7
     }
 
+    /// 1 indexed.
     pub def fromInt32(n: Int32): DayOfWeek = match (n % 7) {
         case 1 => Monday
         case 2 => Tuesday
@@ -56,39 +58,39 @@ namespace Time/DayOfWeek {
 
 
     pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek = 
-        import get java.time.DayOfWeek:MONDAY as javaMonday;
-        import get java.time.DayOfWeek:TUESDAY as javaTuesday;
-        import get java.time.DayOfWeek:WEDNESDAY as javaWednesday;
-        import get java.time.DayOfWeek:THURSDAY as javaThursday;
-        import get java.time.DayOfWeek:FRIDAY as javaFriday;
-        import get java.time.DayOfWeek:SATURDAY as javaSaturday;
-        import get java.time.DayOfWeek:SUNDAY as javaSunday;
+        import get java.time.DayOfWeek:MONDAY       as getMONDAY;
+        import get java.time.DayOfWeek:TUESDAY      as getTUESDAY;
+        import get java.time.DayOfWeek:WEDNESDAY    as getWEDNESDAY;
+        import get java.time.DayOfWeek:THURSDAY     as getTHURSDAY;
+        import get java.time.DayOfWeek:FRIDAY       as getFRIDAY;
+        import get java.time.DayOfWeek:SATURDAY     as getSATURDAY;
+        import get java.time.DayOfWeek:SUNDAY       as getSUNDAY;
         match x {
-            case Monday     => javaMonday()
-            case Tuesday    => javaTuesday()
-            case Wednesday  => javaWednesday()
-            case Thursday   => javaThursday()
-            case Friday     => javaFriday()
-            case Saturday   => javaSaturday()
-            case Sunday     => javaSunday() 
+            case Monday     => getMONDAY()
+            case Tuesday    => getTUESDAY()
+            case Wednesday  => getWEDNESDAY()
+            case Thursday   => getTHURSDAY()
+            case Friday     => getFRIDAY()
+            case Saturday   => getSATURDAY()
+            case Sunday     => getSUNDAY() 
         } as & Pure
 
     pub def unmarshal(x: ##java.time.DayOfWeek): DayOfWeek = 
-        import get java.time.DayOfWeek:MONDAY as javaMonday;
-        import get java.time.DayOfWeek:TUESDAY as javaTuesday;
-        import get java.time.DayOfWeek:WEDNESDAY as javaWednesday;
-        import get java.time.DayOfWeek:THURSDAY as javaThursday;
-        import get java.time.DayOfWeek:FRIDAY as javaFriday;
-        import get java.time.DayOfWeek:SATURDAY as javaSaturday;
-        import get java.time.DayOfWeek:SUNDAY as javaSunday;
+        import get java.time.DayOfWeek:MONDAY       as getMONDAY;
+        import get java.time.DayOfWeek:TUESDAY      as getTUESDAY;
+        import get java.time.DayOfWeek:WEDNESDAY    as getWEDNESDAY;
+        import get java.time.DayOfWeek:THURSDAY     as getTHURSDAY;
+        import get java.time.DayOfWeek:FRIDAY       as getFRIDAY;
+        import get java.time.DayOfWeek:SATURDAY     as getSATURDAY;
+        import get java.time.DayOfWeek:SUNDAY       as getSUNDAY;
         match x {
-            case x1 if x1 == javaMonday()       => Monday
-            case x1 if x1 == javaTuesday()      => Tuesday
-            case x1 if x1 == javaWednesday()    => Wednesday
-            case x1 if x1 == javaThursday()     => Thursday
-            case x1 if x1 == javaFriday()       => Friday
-            case x1 if x1 == javaSaturday()     => Saturday
-            case x1 if x1 == javaSunday()       => Sunday
+            case x1 if x1 == getMONDAY()    => Monday
+            case x1 if x1 == getTUESDAY()   => Tuesday
+            case x1 if x1 == getWEDNESDAY() => Wednesday
+            case x1 if x1 == getTHURSDAY()  => Thursday
+            case x1 if x1 == getFRIDAY()    => Friday
+            case x1 if x1 == getSATURDAY()  => Saturday
+            case x1 if x1 == getSUNDAY()    => Sunday
         } as & Pure
 
     // Wrapping `getDisplayName` a priority so we can experiment with Locale.
