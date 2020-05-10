@@ -57,22 +57,28 @@ def before01(): Bool & Impure =
 
 @test 
 def getDuration01(): String = 
-    use Time/ChronoUnit.getDuration;
+    use Time/Temporal/ChronoUnit.getDuration;
     use Time/Duration.toString;
-    getDuration(Time/ChronoUnit.forever()) |> toString
+    getDuration(Time/Temporal/ChronoUnit.Forever) |> toString
 
 
 @test 
 def getDuration02(): String = 
-    use Time/ChronoUnit.getDuration;
+    use Time/Temporal/ChronoUnit.getDuration;
     use Time/Duration.toString;
-    getDuration(Time/ChronoUnit.nanos()) |> toString
+    getDuration(Time/Temporal/ChronoUnit.Nanos) |> toString
 
 @test 
 def toString01ChronoUnit(): String = 
-    use Time/ChronoUnit.toString;
-    Time/ChronoUnit.months() |> toString
+    use Time/Temporal/ChronoUnit.toString;
+    Time/Temporal/ChronoUnit.Months |> toString
 
+@test
+def until01(): Int64 = 
+    use Time/LocalDate.until;
+    let t1 = Time/LocalDate.new({ year= 2020, month = 5, dayOfMonth = 10});
+    let t2 = Time/LocalDate.new({ year= 2020, month = 6, dayOfMonth = 1});
+    t1.until(t2, Time/Temporal/ChronoUnit.Days)
 
 @test
 def getDisplayName01(): String = 
