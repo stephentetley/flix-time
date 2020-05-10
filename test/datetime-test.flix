@@ -50,11 +50,10 @@ def equals01(): Bool & Impure =
 
 @test
 def before01(): Bool & Impure = 
-    use Time/LocalDate.now;
-    use Time/LocalDate.before;
+    use Time/LocalDate.{now, isBefore};
     let d1 = now();
     let d2 = now();
-    before(d1, d2)
+    isBefore(d1, d2)
 
 @test 
 def getDuration01(): String = 

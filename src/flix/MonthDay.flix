@@ -17,6 +17,8 @@
 use Time.MonthDay;
 use Time.MonthDay.{MonthDay};
 use Time.Error.{DateTimeParseException};
+use Time.ZoneId;
+use Time.ZoneId.{ZoneId};
 
 namespace Time {
 
@@ -32,6 +34,11 @@ namespace Time/MonthDay {
     pub def now(): MonthDay & Impure =         
         import java.time.MonthDay:now();
         MonthDay(now())
+
+    pub def nowWithZoneId(x: ZoneId): MonthDay & Impure =         
+        import java.time.MonthDay:now(##java.time.ZoneId);
+        let ZoneId(x1) = x;
+        MonthDay(now(x1))
 
     ///
     /// 
@@ -52,6 +59,33 @@ namespace Time/MonthDay {
     } catch {
         case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
     }
+
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: MonthDay, y: MonthDay): Bool =
+        import java.time.MonthDay.equals(##java.lang.Object);
+        let MonthDay(x1) = x;
+        let MonthDay(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def isBefore(x: MonthDay, y: MonthDay): Bool =
+        import java.time.MonthDay.isBefore(##java.time.MonthDay);
+        let MonthDay(x1) = x;
+        let MonthDay(y1) = y;
+        x1.isBefore(y1) as & Pure
+
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def isAfter(x: MonthDay, y: MonthDay): Bool =
+        import java.time.MonthDay.isAfter(##java.time.MonthDay);
+        let MonthDay(x1) = x;
+        let MonthDay(y1) = y;
+        x1.isAfter(y1) as & Pure
 
 
 }

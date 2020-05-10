@@ -162,7 +162,7 @@ namespace Time/LocalDateTime {
     ///
     /// Returns `true` if `x` is before `y`.
     ///
-    pub def before(x: LocalDateTime, y: LocalDateTime): Bool =
+    pub def isBefore(x: LocalDateTime, y: LocalDateTime): Bool =
         import java.time.LocalDateTime.isBefore(##java.time.chrono.ChronoLocalDateTime);
         let LocalDateTime(x1) = x;
         let LocalDateTime(y1) = y;
@@ -171,7 +171,7 @@ namespace Time/LocalDateTime {
     ///
     /// Returns `true` if `x` is after `y`.
     ///
-    pub def after(x: LocalDateTime, y: LocalDateTime): Bool =
+    pub def isAfter(x: LocalDateTime, y: LocalDateTime): Bool =
         import java.time.LocalDateTime.isAfter(##java.time.chrono.ChronoLocalDateTime);
         let LocalDateTime(x1) = x;
         let LocalDateTime(y1) = y;

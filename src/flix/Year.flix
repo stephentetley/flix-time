@@ -33,6 +33,7 @@ namespace Time/Year {
         import java.time.Year:now();
         Year(now())
 
+
     ///
     /// 
     ///
@@ -53,5 +54,31 @@ namespace Time/Year {
         case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
     }
 
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: Year, y: Year): Bool =
+        import java.time.Year.equals(##java.lang.Object);
+        let Year(x1) = x;
+        let Year(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def isBefore(x: Year, y: Year): Bool =
+        import java.time.Year.isBefore(##java.time.Year);
+        let Year(x1) = x;
+        let Year(y1) = y;
+        x1.isBefore(y1) as & Pure
+
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def isAfter(x: Year, y: Year): Bool =
+        import java.time.Year.isAfter(##java.time.Year);
+        let Year(x1) = x;
+        let Year(y1) = y;
+        x1.isAfter(y1) as & Pure
 
 }

@@ -96,4 +96,20 @@ namespace Time/ZoneId {
         let ZoneId(x1) = x;
         x1.getId() as & Pure
 
+
+    pub def getAvailableZoneIds(): Set[String] & Impure = 
+        import new flix.runtime.library.time.UnmarshalGetAvailableLocales() as newIter;
+        import flix.runtime.library.time.UnmarshalGetAvailableLocales.hasNext();
+        import flix.runtime.library.time.UnmarshalGetAvailableLocales.next();
+        let iter = newIter();
+        let step = () ->
+            if (iter.hasNext() == false)
+                None
+            else {
+                let s = iter.next();
+                Some(s)
+                };
+        List.unfoldWithIter(step) |> List.toSet
+
+
 }

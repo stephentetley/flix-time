@@ -137,7 +137,7 @@ namespace Time/OffsetTime {
     ///
     /// Returns `true` if `x` is before `y`.
     ///
-    pub def before(x: OffsetTime, y: OffsetTime): Bool =
+    pub def isBefore(x: OffsetTime, y: OffsetTime): Bool =
         import java.time.OffsetTime.isBefore(##java.time.OffsetTime);
         let OffsetTime(x1) = x;
         let OffsetTime(y1) = y;
@@ -146,7 +146,7 @@ namespace Time/OffsetTime {
     ///
     /// Returns `true` if `x` is after `y`.
     ///
-    pub def after(x: OffsetTime, y: OffsetTime): Bool =
+    pub def isAfter(x: OffsetTime, y: OffsetTime): Bool =
         import java.time.OffsetTime.isAfter(##java.time.OffsetTime);
         let OffsetTime(x1) = x;
         let OffsetTime(y1) = y;

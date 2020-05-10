@@ -139,7 +139,7 @@ namespace Time/Instant {
     ///
     /// Returns `true` if `x` is before `y`.
     ///
-    pub def before(x: Instant, y: Instant): Bool =
+    pub def isBefore(x: Instant, y: Instant): Bool =
         import java.time.Instant.isBefore(##java.time.Instant);
         let Instant(t1) = x;
         let Instant(t2) = y;
@@ -148,7 +148,7 @@ namespace Time/Instant {
     ///
     /// Returns `true` if `x` is after `y`.
     ///
-    pub def after(x: Instant, y: Instant): Bool =
+    pub def isAfter(x: Instant, y: Instant): Bool =
         import java.time.Instant.isAfter(##java.time.Instant);
         let Instant(t1) = x;
         let Instant(t2) = y;

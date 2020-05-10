@@ -53,5 +53,31 @@ namespace Time/YearMonth {
         case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
     }
 
+    ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def equals(x: YearMonth, y: YearMonth): Bool =
+        import java.time.YearMonth.equals(##java.lang.Object);
+        let YearMonth(x1) = x;
+        let YearMonth(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def isBefore(x: YearMonth, y: YearMonth): Bool =
+        import java.time.YearMonth.isBefore(##java.time.YearMonth);
+        let YearMonth(x1) = x;
+        let YearMonth(y1) = y;
+        x1.isBefore(y1) as & Pure
+
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def isAfter(x: YearMonth, y: YearMonth): Bool =
+        import java.time.YearMonth.isAfter(##java.time.YearMonth);
+        let YearMonth(x1) = x;
+        let YearMonth(y1) = y;
+        x1.isAfter(y1) as & Pure
 
 }

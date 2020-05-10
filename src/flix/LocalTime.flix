@@ -180,7 +180,7 @@ namespace Time/LocalTime {
     ///
     /// Returns `true` if `x` is before `y`.
     ///
-    pub def before(x: LocalTime, y: LocalTime): Bool =
+    pub def isBefore(x: LocalTime, y: LocalTime): Bool =
         import java.time.LocalTime.isBefore(##java.time.LocalTime);
         let LocalTime(x1) = x;
         let LocalTime(y1) = y;
@@ -189,7 +189,7 @@ namespace Time/LocalTime {
     ///
     /// Returns `true` if `x` is after `y`.
     ///
-    pub def after(x: LocalTime, y: LocalTime): Bool =
+    pub def isAfter(x: LocalTime, y: LocalTime): Bool =
         import java.time.LocalTime.isAfter(##java.time.LocalTime);
         let LocalTime(x1) = x;
         let LocalTime(y1) = y;

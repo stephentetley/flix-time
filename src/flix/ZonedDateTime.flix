@@ -159,7 +159,7 @@ namespace Time/ZonedDateTime {
     ///
     /// Returns `true` if `x` is before `y`.
     ///
-    pub def before(x: ZonedDateTime, y: ZonedDateTime): Bool =
+    pub def isBefore(x: ZonedDateTime, y: ZonedDateTime): Bool =
         import java.time.chrono.ChronoZonedDateTime.isBefore(##java.time.chrono.ChronoZonedDateTime);
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
@@ -169,7 +169,7 @@ namespace Time/ZonedDateTime {
     ///
     /// Returns `true` if `x` is after `y`.
     ///
-    pub def after(x: ZonedDateTime, y: ZonedDateTime): Bool =
+    pub def isAfter(x: ZonedDateTime, y: ZonedDateTime): Bool =
         import java.time.chrono.ChronoZonedDateTime.isAfter(##java.time.chrono.ChronoZonedDateTime);
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
