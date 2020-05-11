@@ -82,12 +82,12 @@ def until01(): Int64 =
 
 @test
 def getDisplayName01(): String = 
-    Time/DayOfWeek.getDisplayName(Time/DayOfWeek.Saturday, Time/Format/TextStyle.Full, Locale.french())
+    Time/DayOfWeek.getDisplayName(Time/DayOfWeek.Saturday, Time/Format/TextStyle.Full, I18n/Locale.french())
 
 
 @test
 def getDisplayName02(): String = 
-    Time/DayOfWeek.getDisplayName(Time/DayOfWeek.Monday, Time/Format/TextStyle.FullStandalone, Locale.japanese())
+    Time/DayOfWeek.getDisplayName(Time/DayOfWeek.Monday, Time/Format/TextStyle.FullStandalone, I18n/Locale.japanese())
 
 @test
 def plus01(): Time.Month = 

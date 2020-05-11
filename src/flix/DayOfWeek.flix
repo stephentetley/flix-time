@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+use I18n.Locale.{Locale};
+
 use Time.DayOfWeek;
 use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
 use Time/Format.TextStyle;
@@ -81,7 +83,7 @@ namespace Time/DayOfWeek {
             case x1 if x1 == getSUNDAY()    => Sunday
         } as & Pure
 
-    pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String = 
+    pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: I18n.Locale): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
         let x1 = marshal(x);
         let s1 = Time/Format/TextStyle.marshal(style);

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+use I18n.Locale.{Locale};
+
 use Time.Month;
 use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};
 use Time/Format.TextStyle;
@@ -126,7 +128,7 @@ namespace Time/Month {
         } as & Pure
 
 
-    pub def getDisplayName(x: Month, style: TextStyle, locale: Locale): String = 
+    pub def getDisplayName(x: Month, style: TextStyle, locale: I18n.Locale): String =
         import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
         let x1 = marshal(x);
         let s1 = Time/Format/TextStyle.marshal(style);

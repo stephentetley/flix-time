@@ -98,9 +98,9 @@ namespace Time/ZoneId {
 
 
     pub def getAvailableZoneIds(): Set[String] & Impure = 
-        import new flix.runtime.library.time.UnmarshalGetAvailableLocales() as newIter;
-        import flix.runtime.library.time.UnmarshalGetAvailableLocales.hasNext();
-        import flix.runtime.library.time.UnmarshalGetAvailableLocales.next();
+        import new flix.runtime.spt.time.UnmarshalGetAvailableLocales() as newIter;
+        import flix.runtime.spt.time.UnmarshalGetAvailableLocales.hasNext();
+        import flix.runtime.spt.time.UnmarshalGetAvailableLocales.next();
         let iter = newIter();
         let step = () ->
             if (iter.hasNext() == false)
