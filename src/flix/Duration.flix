@@ -22,7 +22,9 @@ use Time/Temporal.ChronoUnit;
 namespace Time {
 
     ///
-    /// A wrapper around a Java Duration.
+    /// A measure of time represented internally as seconds and a nonseconds adjustment.
+    ///
+    /// This is a wrapper around java.time.Duration.
     ///
     pub opaque type Duration = ##java.time.Duration
 
@@ -30,10 +32,17 @@ namespace Time {
 
 namespace Time/Duration {
 
+
+    ///
+    /// Return a new duration.
+    ///
     pub def new(seconds: Int64, nanoAdjustment: Int64): Duration = 
         import java.time.Duration:ofSeconds(Int64, Int64);
         Duration(ofSeconds(seconds, nanoAdjustment)) as & Pure
-    
+
+    ///
+    /// Deconstruct a duration.
+    ///
     pub def getFields(x: Duration): {seconds: Int64, nanos: Int32} =
         {seconds = x.getSeconds(), nanos = x.getNano()}
 
@@ -115,7 +124,7 @@ namespace Time/Duration {
     /// The format of the input string should be ISO-8601 duration format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[Duration, Time.Error] = 
+    pub def parse(s: String): Result[Duration, Time.Error] =
         import java.lang.String.strip();
         import java.time.Duration:parse(##java.lang.CharSequence);
         try {
@@ -125,7 +134,7 @@ namespace Time/Duration {
             case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
         }
 
-    pub def toString(x: Duration): String =
+    pub def format(x: Duration): String =
         import java.time.Duration.toString();
         let Duration(x1) = x;
         x1.toString() as & Pure

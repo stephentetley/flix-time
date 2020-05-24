@@ -18,10 +18,16 @@ use I18n.Locale.{Locale};
 
 use Time.DayOfWeek;
 use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+use Time.Error.{DateTimeException};
 use Time/Format.TextStyle;
 
 namespace Time {
 
+    ///
+    /// A day of the week.
+    ///
+    /// Days are reprepresented as an enum from Monday to Sunday.
+    ///
     pub enum DayOfWeek {
         case Monday,
         case Tuesday,
@@ -36,15 +42,28 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
-    /// 1 indexed.
+    ///
+    /// Returns an integer representation of the day of the week `x`.
+    ///
+    /// The representation follows the ISO-8601 standard.
+    /// Days are counted from 1 (Monday) to 7 (Sunday).
+    ///
     pub def toInt32(x: DayOfWeek): Int32 = 
         import java.time.DayOfWeek.getValue();
         x.marshal().getValue() as & Pure
 
-    /// 1 indexed.
-    pub def fromInt32(n: Int32): DayOfWeek =
+    ///
+    /// Returns the corresponding day of the week for the integer `n`.
+    ///
+    /// `n` must be within the range 1 (Monday) to 7 (Sunday) otherwise `Err(_)` is returned.
+    ///
+    pub def fromInt32(n: Int32): Result[DayOfWeek, Time.Error] =
         import java.time.DayOfWeek:of(Int32);
-        n.of().unmarshal() as & Pure
+        try {
+            Ok(n.of().unmarshal()) as & Pure
+        } catch {
+            case _: ##java.time.DateTimeException => Err(DateTimeException)
+        }
 
 
     pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek = 
@@ -90,6 +109,7 @@ namespace Time/DayOfWeek {
         let Locale(l1) = locale;
         x1.getDisplayName(s1, l1) as & Pure
 
+    pub def compare(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(toInt32(x), toInt32(y))
 
     pub def plus(x:DayOfWeek, y: Int64): DayOfWeek = 
         import java.time.DayOfWeek.plus(Int64);

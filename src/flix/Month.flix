@@ -135,6 +135,8 @@ namespace Time/Month {
         let Locale(l1) = locale;
         x1.getDisplayName(s1, l1) as & Pure
 
+    pub def compare(x: Month, y: Month): Int32 = Int32.compare(toInt32(x), toInt32(y))
+
     pub def plus(x:Month, y: Int64): Month = 
         import java.time.Month.plus(Int64);
         let x1 = marshal(x);

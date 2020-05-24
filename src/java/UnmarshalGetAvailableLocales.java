@@ -15,9 +15,11 @@
  */
 
 // Add this to you working Flix repository with the path:
-// main/src/flix/runtime/spt/time
+// main/src/flix/runtime/spt/newtime
 
-package flix.runtime.spt.time;
+// Used by Time/ZoneId
+
+package flix.runtime.spt.newtime;
 
 import java.time.ZoneId;
 import java.util.Iterator;
