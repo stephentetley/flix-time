@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{IllegalArgumentException};
+
 use Time/Format.DateTimeFormatter;
 use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-use Time.Error.{IllegalArgumentException};
 use Time.ZoneId;
 use Time.ZoneId.{ZoneId};
 
@@ -54,7 +55,7 @@ namespace Time/Format/DateTimeFormatter {
         DateTimeFormatter(get_rfc_1123_date_time()) as & Pure
 
 
-    pub def fromPattern(pattern: String): Result[DateTimeFormatter, Time.Error] =
+    pub def fromPattern(pattern: String): Result[DateTimeFormatter, System.Error] =
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
         try {

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.ZoneId;
 use Time.ZoneId.{ZoneId};
-use Time.Error.{DateTimeException, ZoneRulesException};
 use Time.ZonePrefix;
 use Time.ZonePrefix.{ZonePrefix};
 use Time.ZoneOffset;
@@ -52,23 +53,23 @@ namespace Time/ZoneId {
 
     pub def ut(): ZonePrefix = ZonePrefix("UT")
 
-    pub def fromString(zoneIdentifier: String): Result[ZoneId, Time.Error] =
+    pub def fromString(zoneIdentifier: String): Result[ZoneId, System.Error] =
         import java.lang.String.strip();
         import java.time.ZoneId:of(String) as of;
         try {
             Ok(ZoneId(zoneIdentifier.strip().of())) as & Pure
         } catch {
-            case _: ##java.time.DateTimeException => Err(DateTimeException)
-            case _: ##java.time.zone.ZoneRulesException => Err(ZoneRulesException)
+            case _: ##java.time.DateTimeException => Err(Generic("DateTimeException"))
+            case _: ##java.time.zone.ZoneRulesException => Err(Generic("ZoneRulesException"))
         }
 
-    pub def systemDefault(): Result[ZoneId, Time.Error] & Impure =
+    pub def systemDefault(): Result[ZoneId, System.Error] & Impure =
         import java.time.ZoneId:systemDefault() as systemDefaultZoneId;
         try {
             Ok(ZoneId(systemDefaultZoneId()))
         } catch {
-            case _: ##java.time.DateTimeException => Err(DateTimeException)
-            case _: ##java.time.zone.ZoneRulesException => Err(ZoneRulesException)
+            case _: ##java.time.DateTimeException => Err(Generic("DateTimeException"))
+            case _: ##java.time.zone.ZoneRulesException => Err(Generic("ZoneRulesException"))
         }
 
     ///

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.ZonedDateTime;
 use Time.ZonedDateTime.{ZonedDateTime};
-use Time.Error.{DateTimeParseException};
 use Time/Format.DateTimeFormatter;
 use Time/Format.DateTimeFormatter.{DateTimeFormatter};
 use Time.LocalDate;
@@ -120,14 +121,14 @@ namespace Time/ZonedDateTime {
     /// The format of the input string should be ISO-8601 extended offset date-time format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[ZonedDateTime, Time.Error] =
+    pub def fromString(s: String): Result[ZonedDateTime, System.Error] =
         import java.lang.String.strip();
         import java.time.ZonedDateTime:parse(##java.lang.CharSequence);
         try {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(ZonedDateTime(parse(cs))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
     ///
@@ -135,7 +136,7 @@ namespace Time/ZonedDateTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: DateTimeFormatter): Result[ZonedDateTime, Time.Error] =
+    pub def parse(s: String, formatter: DateTimeFormatter): Result[ZonedDateTime, System.Error] =
         import java.lang.String.strip();
         import java.time.ZonedDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
@@ -143,7 +144,7 @@ namespace Time/ZonedDateTime {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(ZonedDateTime(cs.parse(fmtr))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
 

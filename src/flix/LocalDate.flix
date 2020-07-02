@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.LocalDate;
 use Time.LocalDate.{LocalDate};
 use Time.DayOfWeek;
-use Time.Error.{DateTimeParseException};
 use Time/Format.DateFormatter;
 use Time/Format.DateFormatter.{DateFormatter};
 use Time.LocalDateTime;
@@ -137,14 +138,14 @@ namespace Time/LocalDate {
     /// The format of the input string should be ____.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[LocalDate, Time.Error] = 
+    pub def fromString(s: String): Result[LocalDate, System.Error] =
         import java.lang.String.strip();
         import java.time.LocalDate:parse(##java.lang.CharSequence);
         try {        
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(LocalDate(parse(cs))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
 
@@ -161,7 +162,7 @@ namespace Time/LocalDate {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: DateFormatter): Result[LocalDate, Time.Error] = 
+    pub def parse(s: String, formatter: DateFormatter): Result[LocalDate, System.Error] =
         import java.lang.String.strip();
         import java.time.LocalDate:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
@@ -169,7 +170,7 @@ namespace Time/LocalDate {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(LocalDate(cs.parse(fmtr))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
     ///

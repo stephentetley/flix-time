@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
 use I18n.Locale.{Locale};
 
 use Time.DayOfWeek;
 use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
-use Time.Error.{DateTimeException};
 use Time/Format.TextStyle;
 
 namespace Time {
@@ -57,12 +57,12 @@ namespace Time/DayOfWeek {
     ///
     /// `n` must be within the range 1 (Monday) to 7 (Sunday) otherwise `Err(_)` is returned.
     ///
-    pub def fromInt32(n: Int32): Result[DayOfWeek, Time.Error] =
+    pub def fromInt32(n: Int32): Result[DayOfWeek, System.Error] =
         import java.time.DayOfWeek:of(Int32);
         try {
             Ok(n.of().unmarshal()) as & Pure
         } catch {
-            case _: ##java.time.DateTimeException => Err(DateTimeException)
+            case _: ##java.time.DateTimeException => Err(Generic("DateTimeException"))
         }
 
 

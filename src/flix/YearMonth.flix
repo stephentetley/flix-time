@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.YearMonth;
 use Time.YearMonth.{YearMonth};
-use Time.Error.{DateTimeParseException};
+
 
 namespace Time {
 
@@ -44,13 +46,13 @@ namespace Time/YearMonth {
     ///
     /// Returns the year ...
     ///
-    pub def fromString(s: String): Result[YearMonth, Time.Error] = try {
+    pub def fromString(s: String): Result[YearMonth, System.Error] = try {
         import java.lang.String.strip();
         import java.time.YearMonth:parse(##java.lang.CharSequence);
         let cs = s.strip() as ##java.lang.CharSequence & Pure;
         Ok(YearMonth(parse(cs))) as & Pure
     } catch {
-        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
     }
 
     ///

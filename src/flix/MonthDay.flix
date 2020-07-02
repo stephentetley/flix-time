@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.MonthDay;
 use Time.MonthDay.{MonthDay};
-use Time.Error.{DateTimeParseException};
 use Time.ZoneId;
 use Time.ZoneId.{ZoneId};
 
@@ -51,13 +52,13 @@ namespace Time/MonthDay {
     ///
     /// Returns the month / day ...
     ///
-    pub def fromString(s: String): Result[MonthDay, Time.Error] = try {
+    pub def fromString(s: String): Result[MonthDay, System.Error] = try {
         import java.lang.String.strip();
         import java.time.MonthDay:parse(##java.lang.CharSequence);
         let cs = s.strip() as ##java.lang.CharSequence & Pure;
         Ok(MonthDay(parse(cs))) as & Pure
     } catch {
-        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+        case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
     }
 
     ///

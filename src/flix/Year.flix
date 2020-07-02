@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.Year;
 use Time.Year.{Year};
-use Time.Error.{DateTimeParseException};
 
 namespace Time {
 
@@ -45,14 +46,15 @@ namespace Time/Year {
     ///
     /// Returns the year ...
     ///
-    pub def fromString(s: String): Result[Year, Time.Error] = try {
+    pub def fromString(s: String): Result[Year, System.Error] =
         import java.lang.String.strip();
         import java.time.Year:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(Year(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
-    }
+        try {
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(Year(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+        }
 
     ///
     /// Returns `true` if `x` == `y`.

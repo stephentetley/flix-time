@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{IllegalArgumentException};
+
 use Time/Format.TimeFormatter;
 use Time/Format.TimeFormatter.{TimeFormatter};
-use Time.Error.{IllegalArgumentException};
 use Time.ZoneId;
 use Time.ZoneId.{ZoneId};
 
@@ -43,7 +44,7 @@ namespace Time/Format/TimeFormatter {
         import get java.time.format.DateTimeFormatter:ISO_TIME as get_iso_time;
         TimeFormatter(get_iso_time()) as & Pure
 
-    pub def fromPattern(pattern: String): Result[TimeFormatter, Time.Error] = 
+    pub def fromPattern(pattern: String): Result[TimeFormatter, System.Error] =
         try {
             import java.lang.String.strip();
             import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;

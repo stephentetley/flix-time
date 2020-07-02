@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.Instant;
 use Time.Instant.{Instant};
-use Time.Error.{DateTimeParseException};
 use Time.OffsetDateTime;
 use Time.OffsetDateTime.{OffsetDateTime};
 use Time/Temporal.ChronoUnit;
@@ -94,14 +95,14 @@ namespace Time/Instant {
     /// The format of the input string should be ISO UTC format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[Instant, Time.Error] = 
+    pub def fromString(s: String): Result[Instant, System.Error] =
         import java.lang.String.strip();
         import java.time.Instant:parse(##java.lang.CharSequence);
         try {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(Instant(parse(cs))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
     ///

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.Duration;
 use Time.Duration.{Duration};
-use Time.Error.{DateTimeParseException};
 use Time/Temporal.ChronoUnit;
 
 namespace Time {
@@ -124,14 +125,14 @@ namespace Time/Duration {
     /// The format of the input string should be ISO-8601 duration format.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String): Result[Duration, Time.Error] =
+    pub def parse(s: String): Result[Duration, System.Error] =
         import java.lang.String.strip();
         import java.time.Duration:parse(##java.lang.CharSequence);
         try {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(Duration(parse(cs))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
     pub def format(x: Duration): String =

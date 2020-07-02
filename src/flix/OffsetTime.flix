@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.OffsetTime;
 use Time.OffsetTime.{OffsetTime};
-use Time.Error.{DateTimeParseException};
 use Time/Format.TimeFormatter;
 use Time/Format.TimeFormatter.{TimeFormatter};
 use Time.Instant;
@@ -107,14 +108,14 @@ namespace Time/OffsetTime {
     /// The format of the input string should be ____.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[OffsetTime, Time.Error] =
+    pub def fromString(s: String): Result[OffsetTime, System.Error] =
         import java.lang.String.strip();
         import java.time.OffsetTime:parse(##java.lang.CharSequence);
         try {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(OffsetTime(parse(cs))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
     ///
@@ -131,7 +132,7 @@ namespace Time/OffsetTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: TimeFormatter): Result[OffsetTime, Time.Error] =
+    pub def parse(s: String, formatter: TimeFormatter): Result[OffsetTime, System.Error] =
         import java.lang.String.strip();
         import java.time.OffsetTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
@@ -139,7 +140,7 @@ namespace Time/OffsetTime {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(OffsetTime(cs.parse(fmtr))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
     ///

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+use System.Error.{Generic};
+
 use Time.Period;
 use Time.Period.{Period};
-use Time.Error.{DateTimeParseException};
 use Time.LocalDate;
 use Time.LocalDate.{LocalDate};
 
@@ -72,14 +73,14 @@ namespace Time/Period {
     /// The format of the input string should be ____.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def fromString(s: String): Result[Period, Time.Error] = 
+    pub def fromString(s: String): Result[Period, System.Error] =
         import java.lang.String.strip();
         import java.time.Period:parse(##java.lang.CharSequence);
         try {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
             Ok(Period(parse(cs))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(DateTimeParseException)
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
 
     ///
