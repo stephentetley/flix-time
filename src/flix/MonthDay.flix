@@ -16,6 +16,9 @@
 
 use System.Error.{Generic};
 
+use Time/Format.DateFormatter;
+use Time/Format.DateFormatter.{DateFormatter};
+use Time.Month;
 use Time.MonthDay;
 use Time.MonthDay.{MonthDay};
 use Time.ZoneId;
@@ -31,6 +34,16 @@ namespace Time {
 }
 
 namespace Time/MonthDay {
+
+
+    pub def new(x: {month: Int32, dayOfMonth: Int32}): MonthDay =
+        import java.time.MonthDay:of(Int32, Int32);
+        MonthDay(of(x.month, x.dayOfMonth)) as & Pure
+
+    pub def newWithMonth(x: {month: Month, dayOfMonth: Int32}): MonthDay =
+        import java.time.MonthDay:of(##java.time.Month, Int32);
+        let m1 = Time/Month.marshal(x.month);
+        MonthDay(of(m1, x.dayOfMonth)) as & Pure
 
     pub def now(): MonthDay & Impure =         
         import java.time.MonthDay:now();
@@ -62,6 +75,31 @@ namespace Time/MonthDay {
     }
 
     ///
+    /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
+    /// The format of the input string should in the format mandated by `formatter`.
+    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
+    ///
+    pub def parse(s: String, formatter: DateFormatter): Result[MonthDay, System.Error] =
+        import java.lang.String.strip();
+        import java.time.MonthDay:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        try {
+            let DateFormatter(fmtr) = formatter;
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(MonthDay(cs.parse(fmtr))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+        }
+
+    ///
+    /// Returns MonthDay `x` as a String using `formatter`.
+    ///
+    pub def format(x: MonthDay, formatter: DateFormatter): String =
+        import java.time.MonthDay.format(##java.time.format.DateTimeFormatter);
+        let MonthDay(x1) = x;
+        let DateFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
+
+    ///
     /// Returns `true` if `x` == `y`.
     ///
     pub def equals(x: MonthDay, y: MonthDay): Bool =
@@ -69,6 +107,39 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         let MonthDay(y1) = y;
         x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    pub def getDayOfMonth(x: MonthDay): Int32 =
+        import java.time.MonthDay.getDayOfMonth();
+        let MonthDay(x1) = x;
+        x1.getDayOfMonth() as & Pure
+
+    pub def putDayOfMonth(x: MonthDay, dayOfMonth: Int32): MonthDay =
+        import java.time.MonthDay.withDayOfMonth(Int32);
+        let MonthDay(x1) = x;
+        MonthDay(x1.withDayOfMonth(dayOfMonth)) as & Pure
+
+    pub def getMonth(x: MonthDay): Month =
+        import java.time.MonthDay.getMonth();
+        use Time/Month.{unmarshal};
+        let MonthDay(x1) = x;
+        x1.getMonth().unmarshal() as & Pure
+
+    pub def putMonth(x: MonthDay, month: Month): MonthDay =
+        import java.time.MonthDay.with(##java.time.Month);
+        use Time/Month.{marshal};
+        let MonthDay(x1) = x;
+        let m1 = month.marshal();
+        MonthDay(x1.with(m1)) as & Pure
+
+    pub def getMonthValue(x: MonthDay): Int32 =
+        import java.time.MonthDay.getMonthValue();
+        let MonthDay(x1) = x;
+        x1.getMonthValue() as & Pure
+
+    pub def putMonthValue(x: MonthDay, month: Int32): MonthDay =
+        import java.time.MonthDay.withMonth(Int32);
+        let MonthDay(x1) = x;
+        MonthDay(x1.withMonth(month)) as & Pure
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -88,5 +159,12 @@ namespace Time/MonthDay {
         let MonthDay(y1) = y;
         x1.isAfter(y1) as & Pure
 
+    ///
+    /// Returns `true` if `year` is valid for the MonthDay `x`.
+    ///
+    pub def isValidYear(x: MonthDay, year: Int32): Bool =
+        import java.time.MonthDay.isValidYear(Int32);
+        let MonthDay(x1) = x;
+        x1.isValidYear(year) as & Pure
 
 }
