@@ -75,7 +75,16 @@ namespace Time/MonthDay {
     }
 
     ///
-    /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
+    /// Returns MonthDay `x` as a String using `formatter`.
+    ///
+    pub def format(x: MonthDay, formatter: DateFormatter): String =
+        import java.time.MonthDay.format(##java.time.format.DateTimeFormatter);
+        let MonthDay(x1) = x;
+        let DateFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
+
+    ///
+    /// Parse the string `s` as a MonthDay, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
@@ -89,15 +98,6 @@ namespace Time/MonthDay {
         } catch {
             case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
         }
-
-    ///
-    /// Returns MonthDay `x` as a String using `formatter`.
-    ///
-    pub def format(x: MonthDay, formatter: DateFormatter): String =
-        import java.time.MonthDay.format(##java.time.format.DateTimeFormatter);
-        let MonthDay(x1) = x;
-        let DateFormatter(fmtr) = formatter;
-        x1.format(fmtr) as & Pure
 
     ///
     /// Returns `true` if `x` == `y`.

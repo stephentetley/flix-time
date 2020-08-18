@@ -16,6 +16,9 @@
 
 use System.Error.{Generic};
 
+use Time/Format.DateFormatter;
+use Time/Format.DateFormatter.{DateFormatter};
+use Time.Month;
 use Time.YearMonth;
 use Time.YearMonth.{YearMonth};
 
@@ -30,6 +33,16 @@ namespace Time {
 }
 
 namespace Time/YearMonth {
+
+
+    pub def new(x: {year: Int32, month: Int32}): YearMonth =
+        import java.time.YearMonth:of(Int32, Int32);
+        YearMonth(of(x.year, x.month)) as & Pure
+
+    pub def newWithMonth(x: {year: Int, month: Month}): YearMonth =
+        import java.time.YearMonth:of(Int32, ##java.time.Month);
+        let m1 = Time/Month.marshal(x.month);
+        YearMonth(of(x.year, m1)) as & Pure
 
     pub def now(): YearMonth & Impure =         
         import java.time.YearMonth:now();
@@ -54,6 +67,31 @@ namespace Time/YearMonth {
     } catch {
         case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
     }
+
+    ///
+    /// Returns YearMonth `x` as a String using `formatter`.
+    ///
+    pub def format(x: YearMonth, formatter: DateFormatter): String =
+        import java.time.YearMonth.format(##java.time.format.DateTimeFormatter);
+        let YearMonth(x1) = x;
+        let DateFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
+
+    ///
+    /// Parse the string `s` as a YearMonth, leading or trailing whitespace is trimmed.
+    /// The format of the input string should in the format mandated by `formatter`.
+    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
+    ///
+    pub def parse(s: String, formatter: DateFormatter): Result[YearMonth, System.Error] =
+        import java.lang.String.strip();
+        import java.time.YearMonth:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        try {
+            let DateFormatter(fmtr) = formatter;
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Ok(YearMonth(cs.parse(fmtr))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+        }
 
     ///
     /// Returns `true` if `x` == `y`.
@@ -82,4 +120,57 @@ namespace Time/YearMonth {
         let YearMonth(y1) = y;
         x1.isAfter(y1) as & Pure
 
+    ///
+    /// Returns `true` if `x` is a leap year.
+    ///
+    pub def isLeapYear(x: YearMonth): Bool =
+        import java.time.YearMonth.isLeapYear();
+        let YearMonth(x1) = x;
+        x1.isLeapYear() as & Pure
+
+    ///
+    /// Returns `true` if `x` is a leap year.
+    ///
+    pub def isValidDay(x: YearMonth, dayOfMonth: Int32): Bool =
+        import java.time.YearMonth.isValidDay(Int32);
+        let YearMonth(x1) = x;
+        x1.isValidDay(dayOfMonth) as & Pure
+
+    ///
+    /// Returns the length of the month.
+    ///
+    pub def lengthOfMonth(x: YearMonth): Int32 =
+        import java.time.YearMonth.lengthOfMonth();
+        let YearMonth(x1) = x;
+        x1.lengthOfMonth() as & Pure
+
+    ///
+    /// Returns the length of the year.
+    ///
+    pub def lengthOfYear(x: YearMonth): Int32 =
+        import java.time.YearMonth.lengthOfYear();
+        let YearMonth(x1) = x;
+        x1.lengthOfYear() as & Pure
+
+
+    pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
+        import java.time.YearMonth.plusMonths(Int64);
+        let YearMonth(x1) = x;
+        YearMonth(x1.plusMonths(months)) as & Pure
+
+    pub def minusMonths(x: YearMonth, months: Int64): YearMonth =
+        import java.time.YearMonth.minusMonths(Int64);
+        let YearMonth(x1) = x;
+        YearMonth(x1.minusMonths(months)) as & Pure
+
+    pub def plusYears(x: YearMonth, years: Int64): YearMonth =
+        import java.time.YearMonth.plusYears(Int64);
+        let YearMonth(x1) = x;
+        YearMonth(x1.plusYears(years)) as & Pure
+
+    pub def minusYears(x: YearMonth, years: Int64): YearMonth =
+        import java.time.YearMonth.minusYears(Int64);
+        let YearMonth(x1) = x;
+        YearMonth(x1.minusYears(years)) as & Pure
+        
 }
