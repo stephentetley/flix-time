@@ -158,6 +158,18 @@ namespace Time/ZonedDateTime {
         x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def compare(x: ZonedDateTime, y: ZonedDateTime): Int32 =
+        import java.time.chrono.ChronoZonedDateTime.compareTo(##java.time.chrono.ChronoZonedDateTime);
+        let ZonedDateTime(x1) = x;
+        let ZonedDateTime(y1) = y;
+        let cx1 = x1 as ##java.time.chrono.ChronoZonedDateTime;
+        let cy1 = y1 as ##java.time.chrono.ChronoZonedDateTime;
+        cx1.compareTo(cy1) as & Pure
+
+
+    ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: ZonedDateTime, y: ZonedDateTime): Bool =

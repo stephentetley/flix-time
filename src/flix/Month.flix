@@ -135,7 +135,15 @@ namespace Time/Month {
         let Locale(l1) = locale;
         x1.getDisplayName(s1, l1) as & Pure
 
+    pub def getName(x: Month): String =
+        import java.lang.Enum.name();
+        let x1 = marshal(x) as ##java.lang.Enum;
+        x1.name() as & Pure
+
+    pub def equals(x: Month, y: Month): Bool = toInt32(x) == toInt32(y)
+
     pub def compare(x: Month, y: Month): Int32 = Int32.compare(toInt32(x), toInt32(y))
+
 
     pub def plus(x:Month, y: Int64): Month = 
         import java.time.Month.plus(Int64);

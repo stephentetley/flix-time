@@ -39,9 +39,9 @@ namespace Time {
 
 namespace Time/Instant {
 
-    pub def new(epochSecond: Int64, nanoAdjustment: Int64): Instant =
+    pub def new(x: {epochSecond: Int64, nano: Int64}): Instant =
         import java.time.Instant:ofEpochSecond(Int64, Int64);
-        Instant(ofEpochSecond(epochSecond, nanoAdjustment)) as & Pure
+        Instant(ofEpochSecond(x.epochSecond, x.nano)) as & Pure
 
     pub def getFields(x: Instant): {epochSecond: Int64, nano: Int32} = 
         {epochSecond = x.getEpochSecond(), nano = x.getNano()}
@@ -136,6 +136,11 @@ namespace Time/Instant {
         let Instant(x1) = x;
         x1.getNano() as & Pure
 
+    pub def equals(x: Instant, y: Instant): Bool =
+        import java.time.Instant.equals(##java.lang.Object);
+        let Instant(x1) = x;
+        let Instant(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     pub def compare(x: Instant, y: Instant): Int32 =
         import java.time.Instant.compareTo(##java.time.Instant);

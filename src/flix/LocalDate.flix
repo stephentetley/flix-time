@@ -202,6 +202,16 @@ namespace Time/LocalDate {
         x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
+    /// Returns `true` if `x` == `y`.
+    ///
+    pub def compare(x: LocalDate, y: LocalDate): Int32 =
+        import java.time.LocalDate.compareTo(##java.time.chrono.ChronoLocalDate);
+        let LocalDate(x1) = x;
+        let LocalDate(y1) = y;
+        x1.compareTo(y1 as ##java.time.chrono.ChronoLocalDate) as & Pure
+
+
+    ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: LocalDate, y: LocalDate): Bool =

@@ -108,6 +108,15 @@ namespace Time/MonthDay {
         let MonthDay(y1) = y;
         x1.equals(y1 as ##java.lang.Object) as & Pure
 
+    ///
+    /// Returns ...
+    ///
+    pub def compare(x: MonthDay, y: MonthDay): Int32 =
+        import java.time.MonthDay.compareTo(##java.time.MonthDay);
+        let MonthDay(x1) = x;
+        let MonthDay(y1) = y;
+        x1.compareTo(y1) as & Pure
+
     pub def getDayOfMonth(x: MonthDay): Int32 =
         import java.time.MonthDay.getDayOfMonth();
         let MonthDay(x1) = x;

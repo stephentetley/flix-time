@@ -102,6 +102,17 @@ namespace Time/YearMonth {
         let YearMonth(y1) = y;
         x1.equals(y1 as ##java.lang.Object) as & Pure
 
+
+    ///
+    /// Returns ...
+    ///
+    pub def compare(x: YearMonth, y: YearMonth): Int32 =
+        import java.time.YearMonth.compareTo(##java.time.YearMonth);
+        let YearMonth(x1) = x;
+        let YearMonth(y1) = y;
+        x1.compareTo(y1) as & Pure
+
+
     ///
     /// Returns `true` if `x` is before `y`.
     ///
@@ -172,5 +183,35 @@ namespace Time/YearMonth {
         import java.time.YearMonth.minusYears(Int64);
         let YearMonth(x1) = x;
         YearMonth(x1.minusYears(years)) as & Pure
-        
+
+
+    pub def getMonth(x: YearMonth): Month =
+        import java.time.YearMonth.getMonth();
+        use Time/Month.{unmarshal};
+        let YearMonth(x1) = x;
+        x1.getMonth().unmarshal() as & Pure
+
+    pub def putMonth(x: YearMonth, month: Month): YearMonth =
+        newWithMonth({year = getYear(x), month = month})
+
+    pub def getMonthValue(x: YearMonth): Int32 =
+        import java.time.YearMonth.getMonthValue();
+        let YearMonth(x1) = x;
+        x1.getMonthValue() as & Pure
+
+    pub def putMonthValue(x: YearMonth, month: Int32): YearMonth =
+        import java.time.YearMonth.withMonth(Int32);
+        let YearMonth(x1) = x;
+        YearMonth(x1.withMonth(month)) as & Pure
+
+    pub def getYear(x: YearMonth): Int32 =
+        import java.time.YearMonth.getYear();
+        let YearMonth(x1) = x;
+        x1.getYear() as & Pure
+
+    pub def putYear(x: YearMonth, year: Int32): YearMonth =
+        import java.time.YearMonth.withYear(Int32);
+        let YearMonth(x1) = x;
+        YearMonth(x1.withYear(year)) as & Pure
+
 }

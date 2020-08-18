@@ -181,6 +181,16 @@ namespace Time/LocalTime {
         x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
+    /// Returns
+    ///
+    pub def compare(x: LocalTime, y: LocalTime): Int32 =
+        import java.time.LocalTime.compareTo(##java.time.LocalTime);
+        let LocalTime(x1) = x;
+        let LocalTime(y1) = y;
+        x1.compareTo(y1) as & Pure
+
+
+    ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: LocalTime, y: LocalTime): Bool =

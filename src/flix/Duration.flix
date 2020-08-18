@@ -37,9 +37,9 @@ namespace Time/Duration {
     ///
     /// Return a new duration.
     ///
-    pub def new(seconds: Int64, nanoAdjustment: Int64): Duration = 
+    pub def new(x: {seconds: Int64, nanos: Int64}): Duration =
         import java.time.Duration:ofSeconds(Int64, Int64);
-        Duration(ofSeconds(seconds, nanoAdjustment)) as & Pure
+        Duration(ofSeconds(x.seconds, x.nanos)) as & Pure
 
     ///
     /// Deconstruct a duration.

@@ -89,4 +89,9 @@ namespace Time/ZoneOffset {
         let ZoneOffset(y1) = y;
         x1.compareTo(y1) as & Pure
 
+    pub def getId(x: ZoneOffset): String =
+        import java.time.ZoneOffset.getId();
+        let ZoneOffset(x1) = x;
+        x1.getId() as & Pure
+        
 }

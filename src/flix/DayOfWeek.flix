@@ -42,6 +42,8 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
+
+
     ///
     /// Returns an integer representation of the day of the week `x`.
     ///
@@ -108,6 +110,13 @@ namespace Time/DayOfWeek {
         let s1 = Time/Format/TextStyle.marshal(style);
         let Locale(l1) = locale;
         x1.getDisplayName(s1, l1) as & Pure
+
+    pub def getName(x: DayOfWeek): String =
+        import java.lang.Enum.name();
+        let x1 = marshal(x) as ##java.lang.Enum;
+        x1.name() as & Pure
+
+    pub def equals(x: DayOfWeek, y: DayOfWeek): Bool = toInt32(x) == toInt32(y)
 
     pub def compare(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(toInt32(x), toInt32(y))
 

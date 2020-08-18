@@ -107,6 +107,9 @@ namespace Time/Period {
         let Period(y1) = y;
         x1.equals(y1 as ##java.lang.Object) as & Pure
 
+    // `compareTo` not implemented in Java 13.
+
+
     pub def isZero(x: Period): Bool =
         import java.time.Period.isZero();
         let Period(x1) = x;

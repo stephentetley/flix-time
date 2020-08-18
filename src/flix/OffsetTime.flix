@@ -153,6 +153,15 @@ namespace Time/OffsetTime {
         x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
+    /// Returns .
+    ///
+    pub def compare(x: OffsetTime, y: OffsetTime): Int32 =
+        import java.time.OffsetTime.compareTo(##java.time.OffsetTime);
+        let OffsetTime(x1) = x;
+        let OffsetTime(y1) = y;
+        x1.compareTo(y1) as & Pure
+
+    ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: OffsetTime, y: OffsetTime): Bool =
