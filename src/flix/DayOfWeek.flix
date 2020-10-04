@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
-use I18n.Locale.{Locale};
 
-use Time.DayOfWeek;
-use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
-use Time/Format.TextStyle;
 
 namespace Time {
 
@@ -42,7 +37,12 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
+    use System.Error.{Generic};
+    use I18n.Locale.{Locale};
 
+    use Time.DayOfWeek;
+    use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+    use Time/Format.TextStyle;
 
     ///
     /// Returns an integer representation of the day of the week `x`.

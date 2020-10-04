@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{IllegalArgumentException};
-
-use Time/Format.TimeFormatter;
-use Time/Format.TimeFormatter.{TimeFormatter};
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
-
 namespace Time/Format {
 
     ///
@@ -31,6 +24,13 @@ namespace Time/Format {
 }
 
 namespace Time/Format/TimeFormatter {
+
+    use System.Error.{IllegalArgumentException};
+
+    use Time/Format.TimeFormatter;
+    use Time/Format.TimeFormatter.{TimeFormatter};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     pub def iso_local_time(): TimeFormatter =
         import get java.time.format.DateTimeFormatter:ISO_LOCAL_TIME as get_iso_local_time;

@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
 
-use Time.Duration;
-use Time.Duration.{Duration};
-use Time/Temporal.ChronoUnit;
 
 namespace Time {
 
@@ -33,6 +29,11 @@ namespace Time {
 
 namespace Time/Duration {
 
+    use System.Error.{Generic};
+
+    use Time.Duration;
+    use Time.Duration.{Duration};
+    use Time/Temporal.ChronoUnit;
 
     ///
     /// Return a new duration.

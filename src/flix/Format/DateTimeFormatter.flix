@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{IllegalArgumentException};
-
-use Time/Format.DateTimeFormatter;
-use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
-
 namespace Time/Format {
 
     ///
@@ -31,6 +24,13 @@ namespace Time/Format {
 }
 
 namespace Time/Format/DateTimeFormatter {
+
+    use System.Error.{IllegalArgumentException};
+
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     /// Formatters
 

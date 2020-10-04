@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
-
-use Time.OffsetTime;
-use Time.OffsetTime.{OffsetTime};
-use Time/Format.TimeFormatter;
-use Time/Format.TimeFormatter.{TimeFormatter};
-use Time.Instant;
-use Time.Instant.{Instant};
-use Time.LocalTime;
-use Time.LocalTime.{LocalTime};
-use Time/Temporal.ChronoUnit;
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
-use Time.ZoneOffset;
-use Time.ZoneOffset.{ZoneOffset};
 
 namespace Time {
 
@@ -40,6 +25,22 @@ namespace Time {
 }
 
 namespace Time/OffsetTime {
+
+    use System.Error.{Generic};
+
+    use Time.OffsetTime;
+    use Time.OffsetTime.{OffsetTime};
+    use Time/Format.TimeFormatter;
+    use Time/Format.TimeFormatter.{TimeFormatter};
+    use Time.Instant;
+    use Time.Instant.{Instant};
+    use Time.LocalTime;
+    use Time.LocalTime.{LocalTime};
+    use Time/Temporal.ChronoUnit;
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
+    use Time.ZoneOffset;
+    use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(x: { hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, offset: ZoneOffset}): OffsetTime =
         import java.time.OffsetTime:of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);

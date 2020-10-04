@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
-
-use Time.LocalDateTime;
-use Time.LocalDateTime.{LocalDateTime};
-use Time/Format.DateTimeFormatter;
-use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-use Time.LocalDate;
-use Time.LocalDate.{LocalDate};
-use Time.LocalTime;
-use Time.LocalTime.{LocalTime};
-use Time/Temporal.ChronoUnit;
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
-use Time.ZoneOffset;
-use Time.ZoneOffset.{ZoneOffset};
 
 
 namespace Time {
@@ -42,6 +27,21 @@ namespace Time {
 
 namespace Time/LocalDateTime {
 
+    use System.Error.{Generic};
+
+    use Time.LocalDateTime;
+    use Time.LocalDateTime.{LocalDateTime};
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
+    use Time.LocalTime;
+    use Time.LocalTime.{LocalTime};
+    use Time/Temporal.ChronoUnit;
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
+    use Time.ZoneOffset;
+    use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(x: {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32}): LocalDateTime =
         import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32);

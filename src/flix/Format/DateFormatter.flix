@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{IllegalArgumentException};
-
-use Time/Format.DateFormatter;
-use Time/Format.DateFormatter.{DateFormatter};
 
 namespace Time/Format {
 
@@ -29,6 +25,11 @@ namespace Time/Format {
 }
 
 namespace Time/Format/DateFormatter {
+
+    use System.Error.{IllegalArgumentException};
+
+    use Time/Format.DateFormatter;
+    use Time/Format.DateFormatter.{DateFormatter};
 
     pub def basic_iso_date(): DateFormatter =
         import get java.time.format.DateTimeFormatter:BASIC_ISO_DATE as get_basic_iso_date;

@@ -14,15 +14,7 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
 
-use Time/Format.DateFormatter;
-use Time/Format.DateFormatter.{DateFormatter};
-use Time.Month;
-use Time.MonthDay;
-use Time.MonthDay.{MonthDay};
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
 
 namespace Time {
 
@@ -35,6 +27,15 @@ namespace Time {
 
 namespace Time/MonthDay {
 
+    use System.Error.{Generic};
+
+    use Time/Format.DateFormatter;
+    use Time/Format.DateFormatter.{DateFormatter};
+    use Time.Month;
+    use Time.MonthDay;
+    use Time.MonthDay.{MonthDay};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     pub def new(x: {month: Int32, dayOfMonth: Int32}): MonthDay =
         import java.time.MonthDay:of(Int32, Int32);

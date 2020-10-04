@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-use I18n.Locale.{Locale};
 
-use Time.Month;
-use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};
-use Time/Format.TextStyle;
 
 namespace Time {
 
@@ -40,6 +36,12 @@ namespace Time {
 }
 
 namespace Time/Month {
+
+    use I18n.Locale.{Locale};
+
+    use Time.Month;
+    use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};
+    use Time/Format.TextStyle;
 
     pub def toInt32(x: Month): Int32 = match x {
         case January => 1

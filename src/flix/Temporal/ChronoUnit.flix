@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-use Time/Temporal.ChronoUnit;
-use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes, Hours, HalfDays,
-                                Days, Weeks, Months, Years, Decades, Centuries, Millenia, 
-                                Eras, Forever};
-use Time.Duration;
-use Time.Duration.{Duration};
 
 namespace Time/Temporal {
 
@@ -45,6 +39,13 @@ namespace Time/Temporal {
 }
 
 namespace Time/Temporal/ChronoUnit {
+
+    use Time/Temporal.ChronoUnit;
+    use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes,
+            Hours, HalfDays, Days, Weeks, Months, Years, Decades, Centuries,
+            Millenia, Eras, Forever};
+    use Time.Duration;
+    use Time.Duration.{Duration};
 
     pub def marshal(x: ChronoUnit): ##java.time.temporal.ChronoUnit = 
         import get java.time.temporal.ChronoUnit:NANOS      as getNANOS;

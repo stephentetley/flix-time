@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
-
-use Time.Period;
-use Time.Period.{Period};
-use Time.LocalDate;
-use Time.LocalDate.{LocalDate};
 
 namespace Time {
 
@@ -31,6 +25,13 @@ namespace Time {
 }
 
 namespace Time/Period {
+
+    use System.Error.{Generic};
+
+    use Time.Period;
+    use Time.Period.{Period};
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
 
     pub def new(x: {years: Int32, months: Int32, days: Int32}): Period =
         import java.time.Period:of(Int32, Int32, Int32);

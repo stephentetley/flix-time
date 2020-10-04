@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
-
-use Time.Year;
-use Time.Year.{Year};
 
 namespace Time {
 
@@ -29,6 +25,11 @@ namespace Time {
 }
 
 namespace Time/Year {
+
+    use System.Error.{Generic};
+
+    use Time.Year;
+    use Time.Year.{Year};
 
     pub def now(): Year & Impure =         
         import java.time.Year:now();

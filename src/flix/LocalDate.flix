@@ -14,27 +14,7 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
 
-use Time.LocalDate;
-use Time.LocalDate.{LocalDate};
-use Time.DayOfWeek;
-use Time/Format.DateFormatter;
-use Time/Format.DateFormatter.{DateFormatter};
-use Time.LocalDateTime;
-use Time.LocalDateTime.{LocalDateTime};
-use Time.LocalTime;
-use Time.LocalTime.{LocalTime};
-use Time.Month;
-use Time.OffsetDateTime;
-use Time.OffsetDateTime.{OffsetDateTime};
-use Time.OffsetTime;
-use Time.OffsetTime.{OffsetTime};
-use Time/Temporal.ChronoUnit;
-use Time.ZonedDateTime;
-use Time.ZonedDateTime.{ZonedDateTime};
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
 
 namespace Time {
 
@@ -46,6 +26,28 @@ namespace Time {
 }
 
 namespace Time/LocalDate {
+
+    use System.Error.{Generic};
+
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
+    use Time.DayOfWeek;
+    use Time/Format.DateFormatter;
+    use Time/Format.DateFormatter.{DateFormatter};
+    use Time.LocalDateTime;
+    use Time.LocalDateTime.{LocalDateTime};
+    use Time.LocalTime;
+    use Time.LocalTime.{LocalTime};
+    use Time.Month;
+    use Time.OffsetDateTime;
+    use Time.OffsetDateTime.{OffsetDateTime};
+    use Time.OffsetTime;
+    use Time.OffsetTime.{OffsetTime};
+    use Time/Temporal.ChronoUnit;
+    use Time.ZonedDateTime;
+    use Time.ZonedDateTime.{ZonedDateTime};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     pub def new(x: {year: Int32, month: Int32, dayOfMonth: Int32}): LocalDate =
         import java.time.LocalDate:of(Int32, Int32, Int32);

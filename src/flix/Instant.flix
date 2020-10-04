@@ -14,19 +14,7 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
 
-use Time.Instant;
-use Time.Instant.{Instant};
-use Time.OffsetDateTime;
-use Time.OffsetDateTime.{OffsetDateTime};
-use Time/Temporal.ChronoUnit;
-use Time.ZonedDateTime;
-use Time.ZonedDateTime.{ZonedDateTime};
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
-use Time.ZoneOffset;
-use Time.ZoneOffset.{ZoneOffset};
 
 namespace Time {
 
@@ -38,6 +26,20 @@ namespace Time {
 }
 
 namespace Time/Instant {
+
+    use System.Error.{Generic};
+
+    use Time.Instant;
+    use Time.Instant.{Instant};
+    use Time.OffsetDateTime;
+    use Time.OffsetDateTime.{OffsetDateTime};
+    use Time/Temporal.ChronoUnit;
+    use Time.ZonedDateTime;
+    use Time.ZonedDateTime.{ZonedDateTime};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
+    use Time.ZoneOffset;
+    use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(x: {epochSecond: Int64, nano: Int64}): Instant =
         import java.time.Instant:ofEpochSecond(Int64, Int64);

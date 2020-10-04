@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
-
-use Time/Format.DateFormatter;
-use Time/Format.DateFormatter.{DateFormatter};
-use Time.Month;
-use Time.YearMonth;
-use Time.YearMonth.{YearMonth};
-
 
 namespace Time {
 
@@ -34,6 +26,13 @@ namespace Time {
 
 namespace Time/YearMonth {
 
+    use System.Error.{Generic};
+
+    use Time/Format.DateFormatter;
+    use Time/Format.DateFormatter.{DateFormatter};
+    use Time.Month;
+    use Time.YearMonth;
+    use Time.YearMonth.{YearMonth};
 
     pub def new(x: {year: Int32, month: Int32}): YearMonth =
         import java.time.YearMonth:of(Int32, Int32);

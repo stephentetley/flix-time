@@ -14,16 +14,7 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
 
-use Time.Instant;
-use Time.Instant.{Instant};
-use Time/Format.TimeFormatter;
-use Time/Format.TimeFormatter.{TimeFormatter};
-use Time.LocalTime;
-use Time.LocalTime.{LocalTime};
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
 
 namespace Time {
 
@@ -35,6 +26,17 @@ namespace Time {
 }
 
 namespace Time/LocalTime {
+
+    use System.Error.{Generic};
+
+    use Time.Instant;
+    use Time.Instant.{Instant};
+    use Time/Format.TimeFormatter;
+    use Time/Format.TimeFormatter.{TimeFormatter};
+    use Time.LocalTime;
+    use Time.LocalTime.{LocalTime};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     pub def new(x: {hour: Int32, minute: Int32}): LocalTime =
         import java.time.LocalTime:of(Int32, Int32);

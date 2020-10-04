@@ -14,20 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
-
-use Time.ZonedDateTime;
-use Time.ZonedDateTime.{ZonedDateTime};
-use Time/Format.DateTimeFormatter;
-use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-use Time.LocalDate;
-use Time.LocalDate.{LocalDate};
-use Time.LocalDateTime;
-use Time.LocalDateTime.{LocalDateTime};
-use Time.LocalTime;
-use Time.LocalTime.{LocalTime};
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
 
 namespace Time {
 
@@ -40,6 +26,20 @@ namespace Time {
 
 namespace Time/ZonedDateTime {
 
+    use System.Error.{Generic};
+
+    use Time.ZonedDateTime;
+    use Time.ZonedDateTime.{ZonedDateTime};
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
+    use Time.LocalDateTime;
+    use Time.LocalDateTime.{LocalDateTime};
+    use Time.LocalTime;
+    use Time.LocalTime.{LocalTime};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, zone: ZoneId): ZonedDateTime =
         import java.time.ZonedDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId);

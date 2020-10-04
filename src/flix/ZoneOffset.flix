@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-use Time.ZoneOffset;
-use Time.ZoneOffset.{ZoneOffset};
-
 namespace Time {
 
     ///
@@ -27,6 +24,10 @@ namespace Time {
 }
 
 namespace Time/ZoneOffset {
+
+
+    use Time.ZoneOffset;
+    use Time.ZoneOffset.{ZoneOffset};
 
     ///
     /// ___

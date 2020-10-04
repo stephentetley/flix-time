@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-use System.Error.{Generic};
-
-use Time.ZoneId;
-use Time.ZoneId.{ZoneId};
-use Time.ZonePrefix;
-use Time.ZonePrefix.{ZonePrefix};
-use Time.ZoneOffset;
-use Time.ZoneOffset.{ZoneOffset};
 
 namespace Time {
 
@@ -36,7 +28,14 @@ namespace Time {
 
 namespace Time/ZoneId {
 
+    use System.Error.{Generic};
 
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
+    use Time.ZonePrefix;
+    use Time.ZonePrefix.{ZonePrefix};
+    use Time.ZoneOffset;
+    use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(prefix: Option[ZonePrefix], offset: ZoneOffset): ZoneId =
         import java.time.ZoneId:ofOffset(String, ##java.time.ZoneOffset);

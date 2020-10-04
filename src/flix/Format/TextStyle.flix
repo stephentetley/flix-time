@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-use Time/Format.TextStyle;
-use Time/Format.TextStyle.{Full, FullStandalone, Narrow, NarrowStandalone, Short, ShortStandalone};
-use Time.Error.{IllegalArgumentException};
-
 namespace Time/Format {
 
     pub enum TextStyle {
@@ -32,6 +28,12 @@ namespace Time/Format {
 }
 
 namespace Time/Format/TextStyle {
+
+    use Time/Format.TextStyle;
+    use Time/Format.TextStyle.{Full, FullStandalone, Narrow, NarrowStandalone,
+            Short, ShortStandalone};
+    use Time.Error.{IllegalArgumentException};
+
 
     pub def marshal(x: TextStyle): ##java.time.format.TextStyle = 
         import get java.time.format.TextStyle:FULL              as getFULL;
