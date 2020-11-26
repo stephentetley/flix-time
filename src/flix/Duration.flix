@@ -169,7 +169,7 @@ namespace Time/Duration {
         x1.isZero() as & Pure
 
     pub def isPositive(x: Duration): Bool =
-        !x.isNegative()
+        not x.isNegative()
 
     pub def isNegative(x: Duration): Bool =
         import java.time.Duration.isNegative();

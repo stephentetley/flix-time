@@ -117,7 +117,7 @@ namespace Time/Period {
         x1.isZero() as & Pure
 
     pub def isPositive(x: Period): Bool =
-        !x.isNegative()
+        not x.isNegative()
 
     pub def isNegative(x: Period): Bool =
         import java.time.Period.isNegative();
