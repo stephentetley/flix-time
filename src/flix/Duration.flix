@@ -19,11 +19,54 @@
 namespace Time {
 
     ///
-    /// A measure of time represented internally as seconds and a nonseconds adjustment.
+    /// A measure of time represented internally as seconds and a nanoseconds adjustment.
     ///
     /// This is a wrapper around java.time.Duration.
     ///
     pub opaque type Duration = ##java.time.Duration
+
+    instance ToString[Duration] {
+        def toString(x: Duration): String =
+            import java.time.Duration.toString();
+            let Duration(x1) = x;
+            toString(x1) as & Pure
+    }
+
+    instance FromString[Duration] {
+        def fromString(s: String): Option[Duration] =
+            import java.lang.String.strip();
+            import java.time.Duration:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(Duration(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
+
+    instance Add[Duration] {
+        def add(x: Duration, y: Duration): Duration =
+            import java.time.Duration.plus(##java.time.Duration);
+            let Duration(x1) = x;
+            let Duration(y1) = y;
+            Duration(x1.plus(y1)) as & Pure
+    }
+
+    instance Sub[Duration] {
+        def sub(x: Duration, y: Duration): Duration =
+            import java.time.Duration.minus(##java.time.Duration);
+            let Duration(x1) = x;
+            let Duration(y1) = y;
+            Duration(x1.minus(y1)) as & Pure
+    }
+
+    instance Neg[Duration] {
+        def neg(x: Duration): Duration =
+            import java.time.Duration.negated();
+            let Duration(x1) = x;
+            Duration(x1.negated()) as & Pure
+    }
+
 
 }
 
@@ -124,16 +167,16 @@ namespace Time/Duration {
     ///
     /// Parse the string `s` as a Duration, leading or trailing whitespace is trimmed.
     /// The format of the input string should be ISO-8601 duration format.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(s: String): Result[Duration, System.Error] =
+    pub def parse(s: String): Option[Duration] =
         import java.lang.String.strip();
         import java.time.Duration:parse(##java.lang.CharSequence);
         try {
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(Duration(parse(cs))) as & Pure
+            Some(Duration(parse(cs))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+            case _: ##java.time.format.DateTimeParseException => None
         }
 
     pub def format(x: Duration): String =

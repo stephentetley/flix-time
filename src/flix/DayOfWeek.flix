@@ -33,6 +33,38 @@ namespace Time {
         case Sunday
     }
 
+    instance ToString[DayOfWeek] {
+        def toString(x: DayOfWeek): String = match x {
+            case Monday => "Monday"
+            case Tuesday => "Tuesday"
+            case Wednesday => "Wednesday"
+            case Thursday => "Thursday"
+            case Friday => "Friday"
+            case Saturday => "Saturday"
+            case Sunday => "Sunday"
+        }
+    }
+
+    instance FromString[DayOfWeek] {
+        def fromString(x: String): Option[DayOfWeek] = match x {
+            case "Monday" => Some(Monday)
+            case "Tuesday" => Some(Tuesday)
+            case "Wednesday" => Some(Wednesday)
+            case "Thursday" => Some(Thursday)
+            case "Friday" => Some(Friday)
+            case "Saturday" => Some(Saturday)
+            case "Sunday" => Some(Sunday)
+            case _ => None
+        }
+    }
+
+    instance LowerBound[DayOfWeek] {
+        def minValue(): DayOfWeek = Monday
+    }
+
+    instance UpperBound[DayOfWeek] {
+        def maxValue(): DayOfWeek = Sunday
+    }
 }
 
 namespace Time/DayOfWeek {
@@ -57,15 +89,18 @@ namespace Time/DayOfWeek {
     ///
     /// Returns the corresponding day of the week for the integer `n`.
     ///
-    /// `n` must be within the range 1 (Monday) to 7 (Sunday) otherwise `Err(_)` is returned.
+    /// `x` must be within the range 1 (Monday) to 7 (Sunday) otherwise `None` is returned.
     ///
-    pub def fromInt32(n: Int32): Result[DayOfWeek, System.Error] =
-        import java.time.DayOfWeek:of(Int32);
-        try {
-            Ok(n.of().unmarshal()) as & Pure
-        } catch {
-            case _: ##java.time.DateTimeException => Err(Generic("DateTimeException"))
-        }
+    pub def fromInt32(x: Int32): Option[DayOfWeek] = match x {
+        case 1 => Some(Monday)
+        case 2 => Some(Tuesday)
+        case 3 => Some(Wednesday)
+        case 4 => Some(Thursday)
+        case 5 => Some(Friday)
+        case 6 => Some(Saturday)
+        case 7 => Some(Sunday)
+        case _ => None
+    }
 
 
     pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek = 
