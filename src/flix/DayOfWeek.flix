@@ -76,32 +76,33 @@ namespace Time/DayOfWeek {
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
     use Time/Format.TextStyle;
 
-    ///
-    /// Returns an integer representation of the day of the week `x`.
-    ///
-    /// The representation follows the ISO-8601 standard.
-    /// Days are counted from 1 (Monday) to 7 (Sunday).
-    ///
-    pub def toInt32(x: DayOfWeek): Int32 = 
-        import java.time.DayOfWeek.getValue();
-        x.marshal().getValue() as & Pure
 
+    /// 
+    /// Expected to be replaced by a typeclass method...
     ///
-    /// Returns the corresponding day of the week for the integer `n`.
-    ///
-    /// `x` must be within the range 1 (Monday) to 7 (Sunday) otherwise `None` is returned.
-    ///
-    pub def fromInt32(x: Int32): Option[DayOfWeek] = match x {
-        case 1 => Some(Monday)
-        case 2 => Some(Tuesday)
-        case 3 => Some(Wednesday)
-        case 4 => Some(Thursday)
-        case 5 => Some(Friday)
-        case 6 => Some(Saturday)
-        case 7 => Some(Sunday)
-        case _ => None
+    pub def fromEnum(x: DayOfWeek): Int32 = match x {
+        case Monday => 0
+        case Tuesday => 1
+        case Wednesday => 2
+        case Thursday => 3
+        case Friday => 4
+        case Saturday => 5
+        case Sunday => 6
     }
 
+    /// 
+    /// Expected to be replaced by a typeclass method...
+    ///    
+    pub def toEnum(x: Int32): Option[DayOfWeek] = match x {
+        case 0 => Some(Monday)
+        case 1 => Some(Tuesday)
+        case 2 => Some(Wednesday)
+        case 3 => Some(Thursday)
+        case 4 => Some(Friday)
+        case 5 => Some(Saturday)
+        case 6 => Some(Sunday)
+        case _ => None
+    }
 
     pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek = 
         import get java.time.DayOfWeek:MONDAY       as getMONDAY;
@@ -151,9 +152,18 @@ namespace Time/DayOfWeek {
         let x1 = marshal(x) as ##java.lang.Enum;
         x1.name() as & Pure
 
-    pub def __eq(x: DayOfWeek, y: DayOfWeek): Bool = toInt32(x) == toInt32(y)
+    pub def __eq(x: DayOfWeek, y: DayOfWeek): Bool = match (x, y) {
+        case (Monday, Monday) => true
+        case (Tuesday, Tuesday) => true
+        case (Wednesday, Wednesday) => true
+        case (Thursday, Thursday) => true
+        case (Friday, Friday) => true
+        case (Saturday, Saturday) => true
+        case (Sunday, Sunday) => true
+        case (_, _) => false
+    }
 
-    pub def compare(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(toInt32(x), toInt32(y))
+    pub def compare(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
 
     pub def plus(x:DayOfWeek, y: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64);

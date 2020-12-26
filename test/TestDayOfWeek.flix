@@ -17,59 +17,59 @@
 namespace TestDayOfWeek {
 
     /////////////////////////////////////////////////////////////////////////////
-    // toInt32                                                                 //
+    // fromEnum                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toInt3201(): Bool = Time/DayOfWeek.toInt32(Time/DayOfWeek.Monday) == 1
+    def fromEnum01(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Monday) == 0
 
     @test
-    def toInt3202(): Bool = Time/DayOfWeek.toInt32(Time/DayOfWeek.Tuesday) == 2
+    def fromEnum02(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Tuesday) == 1
 
     @test
-    def toInt3203(): Bool = Time/DayOfWeek.toInt32(Time/DayOfWeek.Wednesday) == 3
+    def fromEnum03(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Wednesday) == 2
 
     @test
-    def toInt3204(): Bool = Time/DayOfWeek.toInt32(Time/DayOfWeek.Thursday) == 4
+    def fromEnum04(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Thursday) == 3
 
     @test
-    def toInt3205(): Bool = Time/DayOfWeek.toInt32(Time/DayOfWeek.Friday) == 5
+    def fromEnum05(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Friday) == 4
 
     @test
-    def toInt3206(): Bool = Time/DayOfWeek.toInt32(Time/DayOfWeek.Saturday) == 6
+    def fromEnum06(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Saturday) == 5
 
     @test
-    def toInt3207(): Bool = Time/DayOfWeek.toInt32(Time/DayOfWeek.Sunday) == 7
+    def fromEnum07(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Sunday) == 6
 
     /////////////////////////////////////////////////////////////////////////////
-    // fromInt32                                                               //
+    // toEnum                                                                  //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def fromInt3201(): Bool = Time/DayOfWeek.fromInt32(1) == Some(Time/DayOfWeek.Monday)
+    def toEnum01(): Bool = Time/DayOfWeek.toEnum(0) == Some(Time/DayOfWeek.Monday)
 
     @test
-    def fromInt3202(): Bool = Time/DayOfWeek.fromInt32(2) == Some(Time/DayOfWeek.Tuesday)
+    def toEnum02(): Bool = Time/DayOfWeek.toEnum(1) == Some(Time/DayOfWeek.Tuesday)
 
     @test
-    def fromInt3203(): Bool = Time/DayOfWeek.fromInt32(3) == Some(Time/DayOfWeek.Wednesday)
+    def toEnum03(): Bool = Time/DayOfWeek.toEnum(2) == Some(Time/DayOfWeek.Wednesday)
 
     @test
-    def fromInt3204(): Bool = Time/DayOfWeek.fromInt32(4) == Some(Time/DayOfWeek.Thursday)
+    def toEnum04(): Bool = Time/DayOfWeek.toEnum(3) == Some(Time/DayOfWeek.Thursday)
 
     @test
-    def fromInt3205(): Bool = Time/DayOfWeek.fromInt32(5) == Some(Time/DayOfWeek.Friday)
+    def toEnum05(): Bool = Time/DayOfWeek.toEnum(4) == Some(Time/DayOfWeek.Friday)
 
     @test
-    def fromInt3206(): Bool = Time/DayOfWeek.fromInt32(6) == Some(Time/DayOfWeek.Saturday)
+    def toEnum06(): Bool = Time/DayOfWeek.toEnum(5) == Some(Time/DayOfWeek.Saturday)
 
     @test
-    def fromInt3207(): Bool = Time/DayOfWeek.fromInt32(7) == Some(Time/DayOfWeek.Sunday)
+    def toEnum07(): Bool = Time/DayOfWeek.toEnum(6) == Some(Time/DayOfWeek.Sunday)
 
     @test
-    def fromInt3208(): Bool = Time/DayOfWeek.fromInt32(0) == None
+    def toEnum08(): Bool = Time/DayOfWeek.toEnum(7) == None
 
     @test
-    def fromInt3209(): Bool = Time/DayOfWeek.fromInt32(8) == None
+    def toEnum09(): Bool = Time/DayOfWeek.toEnum(8) == None
 
 }

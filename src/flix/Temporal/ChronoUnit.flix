@@ -90,6 +90,45 @@ namespace Time/Temporal/ChronoUnit {
     use Time.Duration;
     use Time.Duration.{Duration};
 
+    pub def fromEnum(x: ChronoUnit): Int32 = match x {
+        case Nanos => 0
+        case Micros => 1
+        case Millis => 2
+        case Seconds => 3
+        case Minutes => 4
+        case Hours => 5 
+        case HalfDays => 6
+        case Days => 7
+        case Weeks => 8
+        case Months => 9
+        case Years => 10
+        case Decades => 11
+        case Centuries => 12
+        case Millenia => 13
+        case Eras => 14
+        case Forever => 15
+    }
+
+    pub def toEnum(x: Int32): Option[ChronoUnit] = match x {
+        case 0 => Some(Nanos)
+        case 1 => Some(Micros)
+        case 2 => Some(Millis)
+        case 3 => Some(Seconds)
+        case 4 => Some(Minutes)
+        case 5 => Some(Hours)
+        case 6 => Some(HalfDays)
+        case 7 => Some(Days)
+        case 8 => Some(Weeks)
+        case 9 => Some(Months)
+        case 10 => Some(Years)
+        case 11 => Some(Decades)
+        case 12 => Some(Centuries)
+        case 13 => Some(Millenia)
+        case 14 => Some(Eras)
+        case 15 => Some(Forever)
+        case _ =>   None
+    }
+
     pub def marshal(x: ChronoUnit): ##java.time.temporal.ChronoUnit = 
         import get java.time.temporal.ChronoUnit:NANOS      as getNANOS;
         import get java.time.temporal.ChronoUnit:MICROS     as getMICROS;
@@ -182,6 +221,7 @@ namespace Time/Temporal/ChronoUnit {
         case (_,_) => false
     }
 
+    pub def compare(x: ChronoUnit, y: ChronoUnit): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
 
     pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();

@@ -20,6 +20,7 @@ import ca.uwaterloo.flix.util.{FlixTest, Options}
 import org.scalatest.Suites
 
 class TimeSuite extends Suites(
+  new FlixTest("TestIsoUnit", "main/test/spt/newtime/TestIsoUnit.flix")(Options.TestWithLibrary),
   new FlixTest("TestDayOfWeek", "main/test/spt/newtime/TestDayOfWeek.flix")(Options.TestWithLibrary),
   new FlixTest("TestDuration", "main/test/spt/newtime/TestDuration.flix")(Options.TestWithLibrary),
 )
