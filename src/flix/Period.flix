@@ -17,10 +17,37 @@
 
 namespace Time {
 
+    use class Time/Temporal.Temporal;
+    use class Time/Temporal.TemporalAmount;
+
     ///
     /// A wrapper around a Java Period.
     ///
     pub opaque type Period = ##java.time.Period
+
+    instance ToString[Period] {
+        def toString(x: Period): String = 
+            import java.time.Period.toString();
+            let Period(t) = x;
+            t.toString() as & Pure
+    }
+
+    instance TemporalAmount[Period] {
+        def marshal(x: Period): ##java.time.temporal.TemporalAmount = 
+            let Period(x1) = x;
+            x1 as ##java.time.temporal.TemporalAmount
+
+        def unmarshal(x: ##java.time.temporal.TemporalAmount): Period = 
+            let x1 = x as ##java.time.Period;
+            Period(x1)
+
+        def addTo[b: Temporal](x: Period, y: b): b = 
+            import java.time.temporal.TemporalAmount.addTo(##java.time.temporal.Temporal);
+            let Period(x1) = x;
+            let ta1 = x1 as ##java.time.temporal.TemporalAmount;
+            let y1 = Time/Temporal/Temporal.marshal(y);
+            Time/Temporal/Temporal.unmarshal(addTo(ta1, y1)) as & Pure
+    }
 
 }
 
