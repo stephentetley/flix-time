@@ -36,6 +36,49 @@ namespace Time/Temporal {
         case Forever
     }
 
+    instance ToString[ChronoUnit] {
+        def toString(x: ChronoUnit): String = match x {
+            case Nanos => "Nanos"
+            case Micros => "Micros"
+            case Millis => "Millis"
+            case Seconds => "Seconds"
+            case Minutes => "Minutes"
+            case Hours => "Hours"
+            case HalfDays => "HalfDays"
+            case Days => "Days"
+            case Weeks => "Weeks"
+            case Months => "Months"
+            case Years => "Years"
+            case Decades => "Decades"
+            case Centuries => "Centuries"
+            case Millenia => "Millenia"
+            case Eras => "Eras"
+            case Forever => "Forever"
+        }
+    }
+
+    instance FromString[ChronoUnit] {
+        def fromString(x: String): Option[ChronoUnit] = match x {
+            case "Nanos" => Some(Nanos)
+            case "Micros" => Some(Micros)
+            case "Millis" => Some(Millis)
+            case "Seconds" => Some(Seconds)
+            case "Minutes" => Some(Minutes)
+            case "Hours" => Some(Hours)
+            case "HalfDays" => Some(HalfDays)
+            case "Days" => Some(Days)
+            case "Weeks" => Some(Weeks)
+            case "Months" => Some(Months)
+            case "Years" => Some(Years)
+            case "Decades" => Some(Decades)
+            case "Centuries" => Some(Centuries)
+            case "Millenia" => Some(Millenia)
+            case "Eras" => Some(Eras)
+            case "Forever" => Some(Forever)
+            case _ => None
+        }
+    }
+
 }
 
 namespace Time/Temporal/ChronoUnit {
@@ -119,6 +162,27 @@ namespace Time/Temporal/ChronoUnit {
             case x1 if x1 == getFOREVER()   => Forever
         } as & Pure
 
+    pub def __eq(x: ChronoUnit, y: ChronoUnit): Bool = match (x,y) { 
+        case (Nanos, Nanos) => true
+        case (Micros, Micros) => true
+        case (Millis, Millis) => true
+        case (Seconds, Seconds) => true
+        case (Minutes, Minutes) => true
+        case (Hours, Hours) => true
+        case (HalfDays, HalfDays) => true
+        case (Days, Days) => true
+        case (Weeks, Weeks) => true
+        case (Months, Months) => true
+        case (Years, Years) => true
+        case (Decades, Decades) => true
+        case (Centuries, Centuries) => true
+        case (Millenia, Millenia) => true
+        case (Eras, Eras) => true
+        case (Forever, Forever) => true
+        case (_,_) => false
+    }
+
+
     pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();
         Duration(x.marshal().getDuration()) as & Pure
@@ -135,9 +199,5 @@ namespace Time/Temporal/ChronoUnit {
         import java.time.temporal.ChronoUnit.isTimeBased();
         x.marshal().isTimeBased() as & Pure
 
-
-    pub def toString(x: ChronoUnit): String =
-        import java.time.temporal.ChronoUnit.toString();
-        x.marshal().toString() as & Pure
 
 }

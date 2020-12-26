@@ -25,6 +25,9 @@ namespace Time {
     ///
     pub opaque type Duration = ##java.time.Duration
 
+    ///
+    /// The format of the output string is in ISO-8601 duration format.
+    ///
     instance ToString[Duration] {
         def toString(x: Duration): String =
             import java.time.Duration.toString();
@@ -32,6 +35,11 @@ namespace Time {
             toString(x1) as & Pure
     }
 
+    ///
+    /// Parse the string `s` as a Duration, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ISO-8601 duration format.
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
     instance FromString[Duration] {
         def fromString(s: String): Option[Duration] =
             import java.lang.String.strip();
@@ -86,66 +94,86 @@ namespace Time/Duration {
         Duration(ofSeconds(x.seconds, x.nanos)) as & Pure
 
     ///
-    /// Deconstruct a duration.
+    /// Return the components of Duration `x` as a count of seconds and the
+    /// nanoseconds adjustment.
     ///
     pub def getFields(x: Duration): {seconds: Int64, nanos: Int32} =
         {seconds = x.getSeconds(), nanos = x.getNano()}
 
     ///
-    /// ___
+    /// Construct a zero length Duration.
     ///
     pub def zero(): Duration =
         import get java.time.Duration:ZERO as get_zero;
         Duration(get_zero()) as & Pure
 
-
-
+    ///
+    /// Construct a Duration from the supplied number of days.
+    ///
     pub def fromDays(days: Int64): Duration =
         import java.time.Duration:ofDays(Int64);
         Duration(ofDays(days)) as & Pure
 
+    ///
+    /// Return the number of days in Duration `x`.
+    ///
     pub def toDays(x: Duration): Int64 =
         import java.time.Duration.toDays();
         let Duration(x1) = x;
         x1.toDays() as & Pure
 
+    ///
+    /// Construct a Duration from the supplied number of hours.
+    ///
     pub def fromHours(hours: Int64): Duration =
         import java.time.Duration:ofHours(Int64);
         Duration(ofHours(hours)) as & Pure
 
+    ///
+    /// Return the number of hours in Duration `x`.
+    ///
     pub def toHours(x: Duration): Int64 =
         import java.time.Duration.toHours();
         let Duration(x1) = x;
         x1.toHours() as & Pure
 
+    ///
+    /// Construct a Duration from the supplied number of minutes.
+    ///
     pub def fromMinutes(minutes: Int64): Duration =
         import java.time.Duration:ofMinutes(Int64);
         Duration(ofMinutes(minutes)) as & Pure
 
+    ///
+    /// Return the number of minutes in Duration `x`.
+    ///
     pub def toMinutes(x: Duration): Int64 =
         import java.time.Duration.toMinutes();
         let Duration(x1) = x;
         x1.toMinutes() as & Pure
 
+    ///
+    /// Construct a Duration from the supplied number of seconds.
+    ///
     pub def fromSeconds(seconds: Int64): Duration =
         import java.time.Duration:ofSeconds(Int64);
         Duration(ofSeconds(seconds)) as & Pure
 
+    ///
+    /// Return the number of seconds in Duration `x`.
+    ///
     pub def toSeconds(x: Duration): Int64 =
         import java.time.Duration.toSeconds();
         let Duration(x1) = x;
         x1.toSeconds() as & Pure
 
+    ///
+    /// Construct a Duration from the supplied number of milliseconds.
+    ///
     pub def fromMillis(millis: Int64): Duration =
         import java.time.Duration:ofMillis(Int64);
         Duration(ofMillis(millis)) as & Pure
 
-
-    pub def fromChrono(x: Int64, unit: ChronoUnit): Duration = 
-        import java.time.Duration:of(Int64, ##java.time.temporal.TemporalUnit);
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
-        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        Duration(x.of(tu1)) as & Pure
 
     ///
     /// Get the total length of Duration `x` in milliseconds.
@@ -155,40 +183,33 @@ namespace Time/Duration {
         let Duration(x1) = x;
         x1.toMillis() as & Pure
 
+    ///
+    /// Return the number of nanoseconds in Duration `x`.
+    ///
     pub def fromNanos(nanos: Int64): Duration =
         import java.time.Duration:ofNanos(Int64);
         Duration(ofNanos(nanos)) as & Pure
 
+    ///
+    /// Return the number of nanoseconds in Duration `x`.
+    ///
     pub def toNanos(x: Duration): Int64 =
         import java.time.Duration.toNanos();
         let Duration(x1) = x;
         x1.toNanos() as & Pure
 
-    ///
-    /// Parse the string `s` as a Duration, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ISO-8601 duration format.
-    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
-    ///
-    pub def parse(s: String): Option[Duration] =
-        import java.lang.String.strip();
-        import java.time.Duration:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Some(Duration(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => None
-        }
 
-    pub def format(x: Duration): String =
-        import java.time.Duration.toString();
-        let Duration(x1) = x;
-        x1.toString() as & Pure
+    pub def fromChrono(x: Int64, unit: ChronoUnit): Duration =
+        import java.time.Duration:of(Int64, ##java.time.temporal.TemporalUnit);
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
+        Duration(x.of(tu1)) as & Pure
 
 
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: Duration, y: Duration): Bool =
+    pub def __eq(x: Duration, y: Duration): Bool =
         import java.time.Duration.equals(##java.lang.Object);
         let Duration(x1) = x;
         let Duration(y1) = y;
@@ -252,30 +273,14 @@ namespace Time/Duration {
         let Duration(x1) = x;
         Duration(x1.withSeconds(seconds)) as & Pure
 
-
-
-
+    ///
+    /// Returns the absolute value of `x`.
+    ///
     pub def abs(x: Duration): Duration =
         import java.time.Duration.abs();
         let Duration(x1) = x;
         Duration(x1.abs()) as & Pure
 
-    pub def negate(x: Duration): Duration =
-        import java.time.Duration.negated();
-        let Duration(x1) = x;
-        Duration(x1.negated()) as & Pure
-
-    pub def plus(x: Duration, y: Duration): Duration =
-        import java.time.Duration.plus(##java.time.Duration);
-        let Duration(x1) = x;
-        let Duration(y1) = y;
-        Duration(x1.plus(y1)) as & Pure
-
-    pub def minus(x: Duration, y: Duration): Duration =
-        import java.time.Duration.minus(##java.time.Duration);
-        let Duration(x1) = x;
-        let Duration(y1) = y;
-        Duration(x1.minus(y1)) as & Pure
 
     pub def multipliedBy(x: Duration, y: Int64): Duration =
         import java.time.Duration.multipliedBy(Int64);

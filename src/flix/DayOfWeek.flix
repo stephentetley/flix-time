@@ -151,11 +151,11 @@ namespace Time/DayOfWeek {
         let x1 = marshal(x) as ##java.lang.Enum;
         x1.name() as & Pure
 
-    pub def equals(x: DayOfWeek, y: DayOfWeek): Bool = toInt32(x) == toInt32(y)
+    pub def __eq(x: DayOfWeek, y: DayOfWeek): Bool = toInt32(x) == toInt32(y)
 
     pub def compare(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(toInt32(x), toInt32(y))
 
-    pub def plus(x:DayOfWeek, y: Int64): DayOfWeek = 
+    pub def plus(x:DayOfWeek, y: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64);
         let x1 = marshal(x);
         let x2 = plus(x1, y) as & Pure;
