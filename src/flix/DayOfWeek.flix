@@ -69,7 +69,6 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
-    use System.Error.{Generic};
     use I18n.Locale.{Locale};
 
     use Time.DayOfWeek;

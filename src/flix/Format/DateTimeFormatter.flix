@@ -21,11 +21,16 @@ namespace Time/Format {
     ///
     pub opaque type DateTimeFormatter = ##java.time.format.DateTimeFormatter
 
+    instance ToString[DateTimeFormatter] {
+        pub def toString(x: DateTimeFormatter): String =
+            import java.time.format.DateTimeFormatter.toString();
+            let DateTimeFormatter(x1) = x;
+            x1.toString() as & Pure
+    }
+
 }
 
 namespace Time/Format/DateTimeFormatter {
-
-    use System.Error.{IllegalArgumentException};
 
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
@@ -55,13 +60,13 @@ namespace Time/Format/DateTimeFormatter {
         DateTimeFormatter(get_rfc_1123_date_time()) as & Pure
 
 
-    pub def fromPattern(pattern: String): Result[DateTimeFormatter, System.Error] =
+    pub def fromPattern(pattern: String): Option[DateTimeFormatter] =
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
         try {
-            Ok(DateTimeFormatter(pattern.strip().ofPattern())) as & Pure
+            Some(DateTimeFormatter(pattern.strip().ofPattern())) as & Pure
         } catch {
-            case _: ##java.lang.IllegalArgumentException => Err(IllegalArgumentException)
+            case _: ##java.lang.IllegalArgumentException => None
         }
 
 
@@ -76,9 +81,5 @@ namespace Time/Format/DateTimeFormatter {
         let ZoneId(z1) = zone;
         DateTimeFormatter(x1.withZone(z1)) as & Pure
 
-    pub def toString(x: DateTimeFormatter): String =
-        import java.time.format.DateTimeFormatter.toString();
-        let DateTimeFormatter(x1) = x;
-        x1.toString() as & Pure
-
+    
 }

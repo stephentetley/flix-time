@@ -66,8 +66,6 @@ namespace Time {
 
 namespace Time/LocalDate {
 
-    use System.Error.{Generic};
-
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.DayOfWeek;

@@ -74,7 +74,7 @@ namespace Time {
             let Duration(x1) = x;
             Duration(x1.negated()) as & Pure
     }
-    
+
     /// Addition
     instance Monoid[Duration] {
         def empty(): Duration = Time/Duration.zero()
@@ -84,7 +84,6 @@ namespace Time {
 
 namespace Time/Duration {
 
-    use System.Error.{Generic};
 
     use Time.Duration;
     use Time.Duration.{Duration};

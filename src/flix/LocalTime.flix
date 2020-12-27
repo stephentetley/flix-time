@@ -66,8 +66,6 @@ namespace Time {
 
 namespace Time/LocalTime {
 
-    use System.Error.{Generic};
-
     use Time.Instant;
     use Time.Instant.{Instant};
     use Time/Format.TimeFormatter;

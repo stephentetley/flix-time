@@ -22,12 +22,16 @@ namespace Time/Format {
     ///
     pub opaque type DateFormatter = ##java.time.format.DateTimeFormatter
 
+    instance ToString[DateFormatter] {
+        pub def toString(x: DateFormatter): String =
+            import java.time.format.DateTimeFormatter.toString();
+            let DateFormatter(x1) = x;
+            x1.toString() as & Pure
+    }
 }
 
 namespace Time/Format/DateFormatter {
-
-    use System.Error.{IllegalArgumentException};
-
+    
     use Time/Format.DateFormatter;
     use Time/Format.DateFormatter.{DateFormatter};
 
@@ -56,18 +60,14 @@ namespace Time/Format/DateFormatter {
         DateFormatter(get_iso_week_date()) as & Pure
 
 
-    pub def fromPattern(pattern: String): Result[DateFormatter, System.Error] =
+    pub def fromPattern(pattern: String): Option[DateFormatter] =
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
         try {
-            Ok(DateFormatter(pattern.strip().ofPattern())) as & Pure
+            Some(DateFormatter(pattern.strip().ofPattern())) as & Pure
         } catch {
-            case _: ##java.lang.IllegalArgumentException => Err(IllegalArgumentException)
+            case _: ##java.lang.IllegalArgumentException => None
         }
 
-    pub def toString(x: DateFormatter): String =
-        import java.time.format.DateTimeFormatter.toString();
-        let DateFormatter(x1) = x;
-        x1.toString() as & Pure
-
+    
 }

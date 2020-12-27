@@ -51,8 +51,6 @@ namespace Time {
 
 namespace Time/ZoneId {
 
-    use System.Error.{Generic};
-
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
     use Time.ZonePrefix;
@@ -76,13 +74,13 @@ namespace Time/ZoneId {
     pub def ut(): ZonePrefix = ZonePrefix("UT")
 
 
-    pub def systemDefault(): Result[ZoneId, System.Error] & Impure =
+    pub def systemDefault(): Option[ZoneId] & Impure =
         import java.time.ZoneId:systemDefault() as systemDefaultZoneId;
         try {
-            Ok(ZoneId(systemDefaultZoneId()))
+            Some(ZoneId(systemDefaultZoneId()))
         } catch {
-            case _: ##java.time.DateTimeException => Err(Generic("DateTimeException"))
-            case _: ##java.time.zone.ZoneRulesException => Err(Generic("ZoneRulesException"))
+            case _: ##java.time.DateTimeException => None
+            case _: ##java.time.zone.ZoneRulesException => None
         }
 
 

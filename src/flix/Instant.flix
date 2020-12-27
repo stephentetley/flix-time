@@ -67,8 +67,6 @@ namespace Time {
 
 namespace Time/Instant {
 
-    use System.Error.{Generic};
-
     use Time.Instant;
     use Time.Instant.{Instant};
     use Time.OffsetDateTime;

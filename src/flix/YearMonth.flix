@@ -50,8 +50,6 @@ namespace Time {
 
 namespace Time/YearMonth {
 
-    use System.Error.{Generic};
-
     use Time/Format.DateFormatter;
     use Time/Format.DateFormatter.{DateFormatter};
     use Time.Month;

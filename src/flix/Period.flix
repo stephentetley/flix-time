@@ -101,8 +101,6 @@ namespace Time {
 
 namespace Time/Period {
 
-    use System.Error.{Generic};
-
     use Time.Period;
     use Time.Period.{Period};
     use Time.LocalDate;

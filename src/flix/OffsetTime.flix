@@ -66,8 +66,6 @@ namespace Time {
 
 namespace Time/OffsetTime {
 
-    use System.Error.{Generic};
-
     use Time.OffsetTime;
     use Time.OffsetTime.{OffsetTime};
     use Time/Format.TimeFormatter;

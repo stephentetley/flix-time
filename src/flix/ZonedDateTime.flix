@@ -52,8 +52,6 @@ namespace Time {
 
 namespace Time/ZonedDateTime {
 
-    use System.Error.{Generic};
-
     use Time.ZonedDateTime;
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time/Format.DateTimeFormatter;

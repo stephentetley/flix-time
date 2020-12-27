@@ -66,8 +66,6 @@ namespace Time {
 
 namespace Time/LocalDateTime {
 
-    use System.Error.{Generic};
-
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
     use Time/Format.DateTimeFormatter;
