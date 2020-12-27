@@ -23,6 +23,45 @@ namespace Time {
     ///
     pub opaque type LocalTime = ##java.time.LocalTime
 
+    ///
+    /// Returns the given time `x` as a string using __.
+    ///
+    instance ToString[LocalTime] {
+        def toString(x: LocalTime): String =
+            import java.time.LocalTime.toString();
+            let LocalTime(t) = x;
+            t.toString() as & Pure
+    }
+
+    ///
+    /// Parse the string `s` as a LocalTime, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ____.
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
+    instance FromString[LocalTime] {
+        def fromString(s: String): Option[LocalTime] =
+            import java.lang.String.strip();
+            import java.time.LocalTime:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(LocalTime(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
+
+    instance LowerBound[LocalTime] {
+        def minValue(): LocalTime =
+            import get java.time.LocalTime:MIN as getMIN;
+            LocalTime(getMIN()) as & Pure
+    }
+    
+    instance UpperBound[LocalTime] {
+        def maxValue(): LocalTime =
+            import get java.time.LocalTime:MAX as getMAX;
+            LocalTime(getMAX()) as & Pure
+    }
+
 }
 
 namespace Time/LocalTime {
@@ -60,19 +99,6 @@ namespace Time/LocalTime {
         import java.time.LocalTime:now();
         LocalTime(now())
 
-    ///
-    /// ___
-    ///
-    pub def minValue(): LocalTime =
-        import get java.time.LocalTime:MIN as getMIN;
-        LocalTime(getMIN()) as & Pure
-
-    ///
-    /// ___
-    ///
-    pub def maxValue(): LocalTime =
-        import get java.time.LocalTime:MAX as getMAX;
-        LocalTime(getMAX()) as & Pure
 
     ///
     /// ___
@@ -125,13 +151,6 @@ namespace Time/LocalTime {
         let LocalTime(x1) = time;
         x1.toNanoOfDay() as & Pure
 
-    ///
-    /// Returns the given time `x` as a string using __.
-    ///
-    pub def toString(x: LocalTime): String =
-        import java.time.LocalTime.toString();
-        let LocalTime(t) = x;
-        t.toString() as & Pure
 
     ///
     /// Returns the given LocalTime `x` as a String using `formatter`.
@@ -142,21 +161,7 @@ namespace Time/LocalTime {
         let TimeFormatter(fmtr) = formatter;
         x1.format(fmtr) as & Pure
 
-    ///
-    /// Parse the string `s` as a LocalTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ____.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[LocalTime, System.Error] =
-        import java.lang.String.strip();
-        import java.time.LocalTime:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(LocalTime(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
-
+    
     ///
     /// Parse the string `s` as a LocalTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.

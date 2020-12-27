@@ -50,6 +50,18 @@ namespace Time {
             }
     }
 
+    instance LowerBound[LocalDate] {
+        def minValue(): LocalDate =
+            import get java.time.LocalDate:MIN as getMIN;
+            LocalDate(getMIN()) as & Pure
+    }
+
+    instance UpperBound[LocalDate] {
+        def maxValue(): LocalDate =
+            import get java.time.LocalDate:MAX as getMAX;
+            LocalDate(getMAX()) as & Pure
+    }
+
 }
 
 namespace Time/LocalDate {
@@ -115,19 +127,7 @@ namespace Time/LocalDate {
         import get java.time.LocalDate:EPOCH as getEPOCH;
         LocalDate(getEPOCH()) as & Pure
 
-    ///
-    /// ___
-    ///
-    pub def minValue(): LocalDate =
-        import get java.time.LocalDate:MIN as getMIN;
-        LocalDate(getMIN()) as & Pure
 
-    ///
-    /// ___
-    ///
-    pub def maxValue(): LocalDate =
-        import get java.time.LocalDate:MAX as getMAX;
-        LocalDate(getMAX()) as & Pure
 
     pub def atStartOfDay(x: LocalDate): LocalDateTime = 
         import java.time.LocalDate.atStartOfDay();

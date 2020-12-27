@@ -49,6 +49,19 @@ namespace Time {
                 case _: ##java.time.format.DateTimeParseException => None
             }
     }
+
+    instance LowerBound[OffsetTime] {
+        def minValue(): OffsetTime =
+            import get java.time.OffsetTime:MIN as getMIN;
+            OffsetTime(getMIN()) as & Pure
+    }
+
+    instance UpperBound[OffsetTime] {
+        def maxValue(): OffsetTime =
+            import get java.time.OffsetTime:MAX as getMAX;
+            OffsetTime(getMAX()) as & Pure
+    }
+
 }
 
 namespace Time/OffsetTime {
@@ -94,19 +107,6 @@ namespace Time/OffsetTime {
         let ZoneId(z) = zone;
         OffsetTime(now(z))
 
-    ///
-    /// ___
-    ///
-    pub def minValue(): OffsetTime =
-        import get java.time.OffsetTime:MIN as getMIN;
-        OffsetTime(getMIN()) as & Pure
-
-    ///
-    /// ___
-    ///
-    pub def maxValue(): OffsetTime =
-        import get java.time.OffsetTime:MAX as getMAX;
-        OffsetTime(getMAX()) as & Pure
 
     pub def fromLocalTime(x: LocalTime, offset: ZoneOffset): OffsetTime =
         import java.time.OffsetTime:of(##java.time.LocalTime, ##java.time.ZoneOffset);

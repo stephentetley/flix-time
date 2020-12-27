@@ -50,6 +50,18 @@ namespace Time {
             }
     }
 
+    instance LowerBound[LocalDateTime] {
+        def minValue(): LocalDateTime =
+            import get java.time.LocalDateTime:MIN as getMIN;
+            LocalDateTime(getMIN()) as & Pure
+    }
+    
+    instance UpperBound[LocalDateTime] {
+        def maxValue(): LocalDateTime =
+            import get java.time.LocalDateTime:MAX as getMAX;
+            LocalDateTime(getMAX()) as & Pure
+    }
+
 }
 
 namespace Time/LocalDateTime {
@@ -102,19 +114,7 @@ namespace Time/LocalDateTime {
         let ZoneId(z) = zone;
         LocalDateTime(now(z))
 
-    ///
-    /// ___
-    ///
-    pub def minValue(): LocalDateTime =
-        import get java.time.LocalDateTime:MIN as getMIN;
-        LocalDateTime(getMIN()) as & Pure
 
-    ///
-    /// ___
-    ///
-    pub def maxValue(): LocalDateTime =
-        import get java.time.LocalDateTime:MAX as getMAX;
-        LocalDateTime(getMAX()) as & Pure
 
     pub def fromLocalDateLocalTime(d: LocalDate, t: LocalTime): LocalDateTime =
         import java.time.LocalDateTime:of(##java.time.LocalDate, ##java.time.LocalTime);

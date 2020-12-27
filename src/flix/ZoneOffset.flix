@@ -43,6 +43,19 @@ namespace Time {
                 case _: ##java.time.format.DateTimeParseException => None
             }
     }
+
+    instance LowerBound[ZoneOffset] {
+        def minValue(): ZoneOffset =
+            import get java.time.ZoneOffset:MIN as getMIN;
+            ZoneOffset(getMIN()) as & Pure
+    }
+
+    instance UpperBound[ZoneOffset] {
+        def maxValue(): ZoneOffset =
+            import get java.time.ZoneOffset:MAX as getMAX;
+            ZoneOffset(getMAX()) as & Pure
+    }
+
 }
 
 namespace Time/ZoneOffset {
@@ -57,20 +70,6 @@ namespace Time/ZoneOffset {
     pub def utc(): ZoneOffset =
         import get java.time.ZoneOffset:UTC as getUTC;
         ZoneOffset(getUTC()) as & Pure
-
-    ///
-    /// ___
-    ///
-    pub def minValue(): ZoneOffset =
-        import get java.time.ZoneOffset:MIN as getMIN;
-        ZoneOffset(getMIN()) as & Pure
-
-    ///
-    /// ___
-    ///
-    pub def maxValue(): ZoneOffset =
-        import get java.time.ZoneOffset:MAX as getMAX;
-        ZoneOffset(getMAX()) as & Pure
 
 
     pub def fromHours(hours: Int32): ZoneOffset =
@@ -93,7 +92,7 @@ namespace Time/ZoneOffset {
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: ZoneOffset, y: ZoneOffset): Bool =
+    pub def __eq(x: ZoneOffset, y: ZoneOffset): Bool =
         import java.time.ZoneOffset.equals(##java.lang.Object);
         let ZoneOffset(x1) = x;
         let ZoneOffset(y1) = y;

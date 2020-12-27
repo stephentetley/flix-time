@@ -50,6 +50,19 @@ namespace Time {
             }
     }
 
+    instance LowerBound[Instant] {
+        def minValue(): Instant =
+            import get java.time.Instant:MIN as getMIN;
+            Instant(getMIN()) as & Pure
+    }
+
+    instance UpperBound[Instant] {
+        def maxValue(): Instant =
+            import get java.time.Instant:MAX as getMAX;
+            Instant(getMAX()) as & Pure
+    }
+
+
 }   
 
 namespace Time/Instant {
@@ -89,20 +102,8 @@ namespace Time/Instant {
         import get java.time.Instant:EPOCH as getEPOCH;
         Instant(getEPOCH()) as & Pure
 
-    ///
-    /// ___
-    ///
-    pub def minValue(): Instant =
-        import get java.time.Instant:MIN as getMIN;
-        Instant(getMIN()) as & Pure
-
-    ///
-    /// ___
-    ///
-    pub def maxValue(): Instant =
-        import get java.time.Instant:MAX as getMAX;
-        Instant(getMAX()) as & Pure
-
+    
+    
     pub def fromEpochSecond(epochSecond: Int64): Instant =
         import java.time.Instant:ofEpochSecond(Int64);
         Instant(ofEpochSecond(epochSecond)) as & Pure

@@ -49,6 +49,18 @@ namespace Time {
             }
     }
 
+
+    instance LowerBound[OffsetDateTime] {
+        def minValue(): OffsetDateTime =
+            import get java.time.OffsetDateTime:MIN as getMIN;
+            OffsetDateTime(getMIN()) as & Pure
+    }
+    
+    instance UpperBound[OffsetDateTime] {
+        pub def maxValue(): OffsetDateTime =
+            import get java.time.OffsetDateTime:MAX as getMAX;
+            OffsetDateTime(getMAX()) as & Pure
+    }
 }
 
 namespace Time/OffsetDateTime {
@@ -104,19 +116,6 @@ namespace Time/OffsetDateTime {
         let ZoneId(z) = zone;
         OffsetDateTime(now(z))
 
-    ///
-    /// ___
-    ///
-    pub def minValue(): OffsetDateTime =
-        import get java.time.OffsetDateTime:MIN as getMIN;
-        OffsetDateTime(getMIN()) as & Pure
-
-    ///
-    /// ___
-    ///
-    pub def maxValue(): OffsetDateTime =
-        import get java.time.OffsetDateTime:MAX as getMAX;
-        OffsetDateTime(getMAX()) as & Pure
 
 
     pub def atZoneSameInstant(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime = 
