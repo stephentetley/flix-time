@@ -164,24 +164,25 @@ namespace Time/LocalDateTime {
     ///
     /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: DateTimeFormatter): Result[LocalDateTime, System.Error] =
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
+    pub def parse(s: String, formatter: DateTimeFormatter): Option[LocalDateTime] =
         import java.lang.String.strip();
         import java.time.LocalDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(LocalDateTime(cs.parse(fmtr))) as & Pure
+            Some(LocalDateTime(cs.parse(fmtr))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+            case _: ##java.time.format.DateTimeParseException => None
         }
 
 
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: LocalDateTime, y: LocalDateTime): Bool =
+    pub def __eq(x: LocalDateTime, y: LocalDateTime): Bool =
         import java.time.LocalDateTime.equals(##java.lang.Object);
         let LocalDateTime(x1) = x;
         let LocalDateTime(y1) = y;

@@ -84,23 +84,24 @@ namespace Time/YearMonth {
     ///
     /// Parse the string `s` as a YearMonth, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: DateFormatter): Result[YearMonth, System.Error] =
+    /// A successful parse is wrapped with `Some(_)`, a parse failure is indicated by `None`.
+    ///
+    pub def parse(s: String, formatter: DateFormatter): Option[YearMonth] =
         import java.lang.String.strip();
         import java.time.YearMonth:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(YearMonth(cs.parse(fmtr))) as & Pure
+            Some(YearMonth(cs.parse(fmtr))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+            case _: ##java.time.format.DateTimeParseException => None
         }
 
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: YearMonth, y: YearMonth): Bool =
+    pub def __eq(x: YearMonth, y: YearMonth): Bool =
         import java.time.YearMonth.equals(##java.lang.Object);
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;

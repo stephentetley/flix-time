@@ -208,24 +208,25 @@ namespace Time/OffsetDateTime {
     ///
     /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: DateTimeFormatter): Result[OffsetDateTime, System.Error] =
+    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `None`.
+    ///
+    pub def parse(s: String, formatter: DateTimeFormatter): Option[OffsetDateTime] =
         import java.lang.String.strip();
         import java.time.OffsetDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(OffsetDateTime(cs.parse(fmtr))) as & Pure
+            Some(OffsetDateTime(cs.parse(fmtr))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+            case _: ##java.time.format.DateTimeParseException => None
         }
 
 
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: OffsetDateTime, y: OffsetDateTime): Bool =
+    pub def __eq(x: OffsetDateTime, y: OffsetDateTime): Bool =
         import java.time.OffsetDateTime.equals(##java.lang.Object);
         let OffsetDateTime(x1) = x;
         let OffsetDateTime(y1) = y;

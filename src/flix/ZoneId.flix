@@ -44,7 +44,7 @@ namespace Time {
             }
     }
 
-    
+
     pub opaque type ZonePrefix = String
 
 }
@@ -90,7 +90,7 @@ namespace Time/ZoneId {
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: ZoneId, y: ZoneId): Bool =
+    pub def __eq(x: ZoneId, y: ZoneId): Bool =
         import java.time.ZoneId.equals(##java.lang.Object);
         let ZoneId(x1) = x;
         let ZoneId(y1) = y;

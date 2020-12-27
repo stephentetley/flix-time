@@ -82,7 +82,7 @@ namespace Time/Year {
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: Year, y: Year): Bool =
+    pub def __eq(x: Year, y: Year): Bool =
         import java.time.Year.equals(##java.lang.Object);
         let Year(x1) = x;
         let Year(y1) = y;

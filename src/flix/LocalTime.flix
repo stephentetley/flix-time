@@ -167,21 +167,21 @@ namespace Time/LocalTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: TimeFormatter): Result[LocalTime, System.Error] =
+    pub def parse(s: String, formatter: TimeFormatter): Option[LocalTime] =
         import java.lang.String.strip();
         import java.time.LocalTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let TimeFormatter(fmtr) = formatter;
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(LocalTime(cs.parse(fmtr))) as & Pure
+            Some(LocalTime(cs.parse(fmtr))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+            case _: ##java.time.format.DateTimeParseException => None
         }
 
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: LocalTime, y: LocalTime): Bool =
+    pub def __eq(x: LocalTime, y: LocalTime): Bool =
         import java.time.LocalTime.equals(##java.lang.Object);
         let LocalTime(x1) = x;
         let LocalTime(y1) = y;

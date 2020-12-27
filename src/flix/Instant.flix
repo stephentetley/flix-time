@@ -96,7 +96,7 @@ namespace Time/Instant {
         Instant(now())
 
     ///
-    /// ___
+    /// Returns the start of epoch instant - 1970-01-01T00:00:00Z
     ///
     pub def epoch(): Instant =
         import get java.time.Instant:EPOCH as getEPOCH;
@@ -147,7 +147,7 @@ namespace Time/Instant {
         let Instant(x1) = x;
         x1.getNano() as & Pure
 
-    pub def equals(x: Instant, y: Instant): Bool =
+    pub def __eq(x: Instant, y: Instant): Bool =
         import java.time.Instant.equals(##java.lang.Object);
         let Instant(x1) = x;
         let Instant(y1) = y;

@@ -138,24 +138,25 @@ namespace Time/ZonedDateTime {
     ///
     /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: DateTimeFormatter): Result[ZonedDateTime, System.Error] =
+    /// A successful parse is wrapped with `Some(_)`, a parse failure is indicated by `None`.
+    ///
+    pub def parse(s: String, formatter: DateTimeFormatter): Option[ZonedDateTime] =
         import java.lang.String.strip();
         import java.time.ZonedDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(ZonedDateTime(cs.parse(fmtr))) as & Pure
+            Some(ZonedDateTime(cs.parse(fmtr))) as & Pure
         } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
+            case _: ##java.time.format.DateTimeParseException => None
         }
 
 
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: ZonedDateTime, y: ZonedDateTime): Bool =
+    pub def __eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
         import java.time.ZonedDateTime.equals(##java.lang.Object);
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
