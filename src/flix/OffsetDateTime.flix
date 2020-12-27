@@ -22,6 +22,33 @@ namespace Time {
     ///
     pub opaque type OffsetDateTime = ##java.time.OffsetDateTime
 
+    ///
+    /// Returns the given date-time `x` as a String using ISO-8601 representation.
+    ///
+    instance ToString[OffsetDateTime] {
+        def toString(x: OffsetDateTime): String =
+            import java.time.OffsetDateTime.toString();
+            let OffsetDateTime(x1) = x;
+            x1.toString() as & Pure
+    }
+
+    ///
+    /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ISO-8601 extended offset date-time format.
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
+    instance FromString[OffsetDateTime] {
+        def fromString(s: String): Option[OffsetDateTime] =
+            import java.lang.String.strip();
+            import java.time.OffsetDateTime:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(OffsetDateTime(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
+
 }
 
 namespace Time/OffsetDateTime {
@@ -168,28 +195,6 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         ZonedDateTime(x1.toZonedDateTime()) as & Pure
 
-    ///
-    /// Returns the given date-time `x` as a String using ISO-8601 representation.
-    ///
-    pub def toString(x: OffsetDateTime): String =
-        import java.time.OffsetDateTime.toString();
-        let OffsetDateTime(x1) = x;
-        x1.toString() as & Pure
-
-    ///
-    /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ISO-8601 extended offset date-time format.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[OffsetDateTime, System.Error] =
-        import java.lang.String.strip();
-        import java.time.OffsetDateTime:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(OffsetDateTime(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
 
 
     ///

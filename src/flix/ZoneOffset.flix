@@ -21,6 +21,28 @@ namespace Time {
     ///
     pub opaque type ZoneOffset = ##java.time.ZoneOffset
 
+    ///
+    /// Returns the given ZoneOffset `x` as a String.
+    ///
+    instance ToString[ZoneOffset] {
+        def toString(x: ZoneOffset): String =
+            import java.time.ZoneOffset.toString();
+            let ZoneOffset(z) = x;
+            z.toString() as & Pure
+    }
+    
+    instance FromString[ZoneOffset] {
+        def fromString(offsetId: String): Option[ZoneOffset] =
+            import java.lang.String.strip();
+            import java.time.ZoneOffset:of(String);
+            import java.time.Period:parse(##java.lang.CharSequence);
+            try {
+                let s1 = offsetId.strip() as & Pure;
+                Some(ZoneOffset(of(s1))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
 }
 
 namespace Time/ZoneOffset {
@@ -67,14 +89,7 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset:ofTotalSeconds(Int32);
         ZoneOffset(ofTotalSeconds(seconds)) as & Pure
 
-    ///
-    /// Returns the given ZoneOffset `x` as a String.
-    ///
-    pub def toString(x: ZoneOffset): String =
-        import java.time.ZoneOffset.toString();
-        let ZoneOffset(z) = x;
-        z.toString() as & Pure
-
+    
     ///
     /// Returns `true` if `x` == `y`.
     ///

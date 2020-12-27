@@ -17,13 +17,14 @@
 
 namespace Time/Temporal {
 
-    
+    /// Note: MPTCs would provide a nicer API where we don't have to expose marshall/unmarshall
     pub class Temporal[a] {
         pub def marshal(x: a): ##java.time.temporal.Temporal
         pub def unmarshal(x: ##java.time.temporal.Temporal): a
         pub def plus[b: TemporalAmount](x: a, y: b): a 
     }
     
+    /// Note: MPTCs would provide a nicer API where we don't have to expose marshall/unmarshall
     pub class TemporalAmount[a] {
         pub def marshal(x: a): ##java.time.temporal.TemporalAmount
         pub def unmarshal(x: ##java.time.temporal.TemporalAmount): a

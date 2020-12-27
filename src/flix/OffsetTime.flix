@@ -22,6 +22,33 @@ namespace Time {
     ///
     pub opaque type OffsetTime = ##java.time.OffsetTime
 
+
+    ///
+    /// Returns the given time `x` as a string using __.
+    ///
+    instance ToString[OffsetTime] {
+        def toString(x: OffsetTime): String =
+            import java.time.OffsetTime.toString();
+            let OffsetTime(x1) = x;
+            x1.toString() as & Pure
+    }
+
+    ///
+    /// Parse the string `s` as a OffsetTime, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ____.
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
+    instance FromString[OffsetTime] {
+        def fromString(s: String): Option[OffsetTime] =
+            import java.lang.String.strip();
+            import java.time.OffsetTime:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(OffsetTime(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
 }
 
 namespace Time/OffsetTime {
@@ -95,29 +122,6 @@ namespace Time/OffsetTime {
         OffsetTime(ofInstant(x1, z1)) as & Pure
 
 
-    ///
-    /// Returns the given time `x` as a string using __.
-    ///
-    pub def toString(x: OffsetTime): String =
-        import java.time.OffsetTime.toString();
-        let OffsetTime(x1) = x;
-        x1.toString() as & Pure
-
-
-    ///
-    /// Parse the string `s` as a OffsetTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ____.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[OffsetTime, System.Error] =
-        import java.lang.String.strip();
-        import java.time.OffsetTime:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(OffsetTime(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
 
     ///
     /// Returns OffsetTime `x` as a String using `formatter`.

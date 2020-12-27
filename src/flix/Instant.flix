@@ -22,8 +22,35 @@ namespace Time {
     /// A wrapper around a Java instant.
     ///
     pub opaque type Instant = ##java.time.Instant
+    
+    ///
+    /// Returns the given instant `x` as a String using ISO-8601 representation.
+    ///
+    instance ToString[Instant] {
+        def toString(x: Instant): String =
+            import java.time.Instant.toString();
+            let Instant(t) = x;
+            t.toString() as & Pure
+    }
 
-}
+    ///
+    /// Parse the string `s` as an Instant, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ISO UTC format.
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
+    instance FromString[Instant] {
+        def fromString(s: String): Option[Instant] =
+            import java.lang.String.strip();
+            import java.time.Instant:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(Instant(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
+
+}   
 
 namespace Time/Instant {
 
@@ -92,28 +119,9 @@ namespace Time/Instant {
         toEpochMilli(x1) as & Pure
 
 
-    ///
-    /// Parse the string `s` as an Instant, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ISO UTC format.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[Instant, System.Error] =
-        import java.lang.String.strip();
-        import java.time.Instant:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(Instant(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
 
-    ///
-    /// Returns the given instant `x` as a String using ISO-8601 representation.
-    ///
-    pub def toString(x: Instant): String =
-        import java.time.Instant.toString();
-        let Instant(t) = x;
-        t.toString() as & Pure
+
+    
 
     pub def atOffset(x: Instant, offset: ZoneOffset): OffsetDateTime =
         import java.time.Instant.atOffset(##java.time.ZoneOffset);

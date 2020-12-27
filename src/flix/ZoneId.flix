@@ -22,6 +22,29 @@ namespace Time {
     ///
     pub opaque type ZoneId = ##java.time.ZoneId
 
+    ///
+    /// Returns the given ZoneId `x` as a String.
+    ///
+    instance ToString[ZoneId] {
+        def toString(x: ZoneId): String =
+            import java.time.ZoneId.toString();
+            let ZoneId(z) = x;
+            z.toString() as & Pure
+    }
+
+    instance FromString[ZoneId] {
+        def fromString(zoneIdentifier: String): Option[ZoneId] =
+            import java.lang.String.strip();
+            import java.time.ZoneId:of(String) as of;
+            try {
+                Some(ZoneId(zoneIdentifier.strip().of())) as & Pure
+            } catch {
+                case _: ##java.time.DateTimeException => None
+                case _: ##java.time.zone.ZoneRulesException => None
+            }
+    }
+
+    
     pub opaque type ZonePrefix = String
 
 }
@@ -52,15 +75,6 @@ namespace Time/ZoneId {
 
     pub def ut(): ZonePrefix = ZonePrefix("UT")
 
-    pub def fromString(zoneIdentifier: String): Result[ZoneId, System.Error] =
-        import java.lang.String.strip();
-        import java.time.ZoneId:of(String) as of;
-        try {
-            Ok(ZoneId(zoneIdentifier.strip().of())) as & Pure
-        } catch {
-            case _: ##java.time.DateTimeException => Err(Generic("DateTimeException"))
-            case _: ##java.time.zone.ZoneRulesException => Err(Generic("ZoneRulesException"))
-        }
 
     pub def systemDefault(): Result[ZoneId, System.Error] & Impure =
         import java.time.ZoneId:systemDefault() as systemDefaultZoneId;
@@ -71,13 +85,7 @@ namespace Time/ZoneId {
             case _: ##java.time.zone.ZoneRulesException => Err(Generic("ZoneRulesException"))
         }
 
-    ///
-    /// Returns the given ZoneId `x` as a String.
-    ///
-    pub def toString(x: ZoneId): String =
-        import java.time.ZoneId.toString();
-        let ZoneId(z) = x;
-        z.toString() as & Pure
+
 
     ///
     /// Returns `true` if `x` == `y`.

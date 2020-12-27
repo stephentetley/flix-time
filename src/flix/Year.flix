@@ -32,6 +32,21 @@ namespace Time {
             x1.toString() as & Pure
     }
 
+    ///
+    /// Returns the year ...
+    ///
+    instance FromString[Year] {
+        def fromString(s: String): Option[Year] =
+            import java.lang.String.strip();
+            import java.time.Year:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(Year(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
+
     instance Temporal[Year] {
         def marshal(x: Year): ##java.time.temporal.Temporal = 
             let Year(x1) = x;
@@ -63,27 +78,6 @@ namespace Time/Year {
         import java.time.Year:now();
         Year(now())
 
-
-    ///
-    /// 
-    ///
-    pub def toString(x: Year): String =
-        import java.time.Year.toString();
-        let Year(x1) = x;
-        x1.toString() as & Pure
-
-    ///
-    /// Returns the year ...
-    ///
-    pub def fromString(s: String): Result[Year, System.Error] =
-        import java.lang.String.strip();
-        import java.time.Year:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(Year(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
 
     ///
     /// Returns `true` if `x` == `y`.

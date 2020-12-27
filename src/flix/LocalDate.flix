@@ -23,6 +23,33 @@ namespace Time {
     ///
     pub opaque type LocalDate = ##java.time.LocalDate
 
+    ///
+    /// Returns the given date `x` as a string using the Java builtin toString method.
+    ///
+    instance ToString[LocalDate] {
+        def toString(x: LocalDate): String =
+            import java.time.LocalDate.toString();
+            let LocalDate(t) = x;
+            t.toString() as & Pure
+    }
+
+    ///
+    /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ____.
+    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
+    ///
+    instance FromString[LocalDate] {
+        def fromString(s: String): Option[LocalDate] =
+            import java.lang.String.strip();
+            import java.time.LocalDate:parse(##java.lang.CharSequence);
+            try {        
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(LocalDate(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
+
 }
 
 namespace Time/LocalDate {
@@ -131,33 +158,6 @@ namespace Time/LocalDate {
         let Instant(x1) = x;
         let ZoneId(z1) = zoneId;
         LocalDate(ofInstant(x1, z1)) as & Pure
-
-
-
-
-    ///
-    /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ____.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[LocalDate, System.Error] =
-        import java.lang.String.strip();
-        import java.time.LocalDate:parse(##java.lang.CharSequence);
-        try {        
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(LocalDate(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
-
-
-    ///
-    /// Returns the given date `x` as a string using ____.
-    ///
-    pub def toString(x: LocalDate): String =
-        import java.time.LocalDate.toString();
-        let LocalDate(t) = x;
-        t.toString() as & Pure
 
     /// 
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.

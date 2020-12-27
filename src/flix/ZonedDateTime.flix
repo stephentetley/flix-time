@@ -22,6 +22,32 @@ namespace Time {
     ///
     pub opaque type ZonedDateTime = ##java.time.ZonedDateTime
 
+    ///
+    /// Returns the given date-time `x` as a String using ISO-8601 representation.
+    ///
+    instance ToString[ZonedDateTime] {
+        def toString(x: ZonedDateTime): String =
+            import java.time.ZonedDateTime.toString();
+            let ZonedDateTime(x1) = x;
+            x1.toString() as & Pure
+    }
+
+    ///
+    /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ISO-8601 extended offset date-time format.
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
+    instance FromString[ZonedDateTime] {
+        def fromString(s: String): Option[ZonedDateTime] =
+            import java.lang.String.strip();
+            import java.time.ZonedDateTime:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(ZonedDateTime(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
 }
 
 namespace Time/ZonedDateTime {
@@ -99,13 +125,6 @@ namespace Time/ZonedDateTime {
         LocalTime(x1.toLocalTime()) as & Pure
 
 
-    ///
-    /// Returns the given date-time `x` as a String using ISO-8601 representation.
-    ///
-    pub def toString(x: ZonedDateTime): String =
-        import java.time.ZonedDateTime.toString();
-        let ZonedDateTime(x1) = x;
-        x1.toString() as & Pure
 
     ///
     /// Returns ZonedDateTime `x` as a String using `formatter`.
@@ -115,21 +134,6 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
         x1.format(fmtr) as & Pure
-
-    ///
-    /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ISO-8601 extended offset date-time format.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[ZonedDateTime, System.Error] =
-        import java.lang.String.strip();
-        import java.time.ZonedDateTime:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(ZonedDateTime(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
 
     ///
     /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.

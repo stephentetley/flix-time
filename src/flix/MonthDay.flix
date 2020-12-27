@@ -23,6 +23,29 @@ namespace Time {
     ///
     pub opaque type MonthDay = ##java.time.MonthDay
 
+    ///
+    /// 
+    ///
+    instance ToString[MonthDay] {
+        def toString(x: MonthDay): String =
+            import java.time.MonthDay.toString();
+            let MonthDay(x1) = x;
+            x1.toString() as & Pure
+    }
+
+    ///
+    /// Returns the month / day ...
+    ///
+    instance FromString[MonthDay] {
+        def fromString(s: String): Option[MonthDay] = try {
+            import java.lang.String.strip();
+            import java.time.MonthDay:parse(##java.lang.CharSequence);
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Some(MonthDay(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => None
+        }
+    }
 }
 
 namespace Time/MonthDay {
@@ -54,26 +77,6 @@ namespace Time/MonthDay {
         import java.time.MonthDay:now(##java.time.ZoneId);
         let ZoneId(x1) = x;
         MonthDay(now(x1))
-
-    ///
-    /// 
-    ///
-    pub def toString(x: MonthDay): String =
-        import java.time.MonthDay.toString();
-        let MonthDay(x1) = x;
-        x1.toString() as & Pure
-
-    ///
-    /// Returns the month / day ...
-    ///
-    pub def fromString(s: String): Result[MonthDay, System.Error] = try {
-        import java.lang.String.strip();
-        import java.time.MonthDay:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(MonthDay(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-    }
 
     ///
     /// Returns MonthDay `x` as a String using `formatter`.

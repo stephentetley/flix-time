@@ -22,6 +22,30 @@ namespace Time {
     ///
     pub opaque type YearMonth = ##java.time.YearMonth
 
+    ///
+    /// 
+    ///
+    instance ToString[YearMonth] {
+        pub def toString(x: YearMonth): String =
+            import java.time.YearMonth.toString();
+            let YearMonth(x1) = x;
+            x1.toString() as & Pure
+    }
+
+    ///
+    /// Returns the year ...
+    ///
+    instance FromString[YearMonth] {
+        def fromString(s: String): Option[YearMonth] = try {
+            import java.lang.String.strip();
+            import java.time.YearMonth:parse(##java.lang.CharSequence);
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Some(YearMonth(parse(cs))) as & Pure
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => None
+        }
+    }
+
 }
 
 namespace Time/YearMonth {
@@ -47,25 +71,6 @@ namespace Time/YearMonth {
         import java.time.YearMonth:now();
         YearMonth(now())
 
-    ///
-    /// 
-    ///
-    pub def toString(x: YearMonth): String =
-        import java.time.YearMonth.toString();
-        let YearMonth(x1) = x;
-        x1.toString() as & Pure
-
-    ///
-    /// Returns the year ...
-    ///
-    pub def fromString(s: String): Result[YearMonth, System.Error] = try {
-        import java.lang.String.strip();
-        import java.time.YearMonth:parse(##java.lang.CharSequence);
-        let cs = s.strip() as ##java.lang.CharSequence & Pure;
-        Ok(YearMonth(parse(cs))) as & Pure
-    } catch {
-        case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-    }
 
     ///
     /// Returns YearMonth `x` as a String using `formatter`.

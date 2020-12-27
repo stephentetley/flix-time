@@ -23,6 +23,33 @@ namespace Time {
     ///
     pub opaque type LocalDateTime = ##java.time.LocalDateTime
 
+    ///
+    /// Returns the given date-time `x` as a String using ISO-8601 representation.
+    ///
+    instance ToString[LocalDateTime] {
+        def toString(x: LocalDateTime): String =
+            import java.time.LocalDateTime.toString();
+            let LocalDateTime(x1) = x;
+            x1.toString() as & Pure
+    }
+
+    ///
+    /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ISO-8601 extended offset date-time format.
+    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
+    ///
+    instance FromString[LocalDateTime] {
+        pub def fromString(s: String): Option[LocalDateTime] =
+            import java.lang.String.strip();
+            import java.time.LocalDateTime:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(LocalDateTime(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
+
 }
 
 namespace Time/LocalDateTime {
@@ -123,29 +150,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         LocalTime(x1.toLocalTime()) as & Pure
 
-    ///
-    /// Returns the given date-time `x` as a String using ISO-8601 representation.
-    ///
-    pub def toString(x: LocalDateTime): String =
-        import java.time.LocalDateTime.toString();
-        let LocalDateTime(x1) = x;
-        x1.toString() as & Pure
 
-
-    ///
-    /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ISO-8601 extended offset date-time format.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[LocalDateTime, System.Error] =
-        import java.lang.String.strip();
-        import java.time.LocalDateTime:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(LocalDateTime(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
 
     ///
     /// Returns LocalDateTime `x` as a String using `formatter`.

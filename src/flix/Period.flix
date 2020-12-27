@@ -32,6 +32,23 @@ namespace Time {
             t.toString() as & Pure
     }
 
+    ///
+    /// Parse the string `s` as a Period, leading or trailing whitespace is trimmed.
+    /// The format of the input string should be ____.
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
+    instance FromString[Period] {
+        def fromString(s: String): Option[Period] =
+            import java.lang.String.strip();
+            import java.time.Period:parse(##java.lang.CharSequence);
+            try {
+                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                Some(Period(parse(cs))) as & Pure
+            } catch {
+                case _: ##java.time.format.DateTimeParseException => None
+            }
+    }
+
     instance TemporalAmount[Period] {
         def marshal(x: Period): ##java.time.temporal.TemporalAmount = 
             let Period(x1) = x;
@@ -96,29 +113,7 @@ namespace Time/Period {
         toTotalMonths(x1) as & Pure
 
         
-    ///
-    /// Parse the string `s` as a Period, leading or trailing whitespace is trimmed.
-    /// The format of the input string should be ____.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def fromString(s: String): Result[Period, System.Error] =
-        import java.lang.String.strip();
-        import java.time.Period:parse(##java.lang.CharSequence);
-        try {
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Ok(Period(parse(cs))) as & Pure
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => Err(Generic("DateTimeParseException"))
-        }
-
-    ///
-    /// Returns the given period `x` as a string using ____.
-    ///
-    pub def toString(x: Period): String =
-        import java.time.Period.toString();
-        let Period(t) = x;
-        t.toString() as & Pure
-
+    
 
      pub def normalize(x: Period): Period =
         import java.time.Period.normalized();

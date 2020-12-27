@@ -32,6 +32,41 @@ namespace Time {
         case November,
         case December
     }
+    
+    instance ToString[Month] {
+        def toString(x: Month): String = match x {
+            case January => "January"
+            case February => "February"
+            case March => "March"
+            case April => "April"
+            case May => "May"
+            case June => "June"
+            case July => "July"
+            case August => "August"
+            case September => "September"
+            case October => "October"
+            case November => "November"
+            case December => "December"
+        }
+    }
+
+    instance FromString[Month] {
+        def fromString(x: String): Option[Month] = match x {
+            case  "January" => Some(January)
+            case  "February" => Some(February)
+            case  "March" => Some(March)
+            case  "April" => Some(April)
+            case  "May" => Some(May)
+            case  "June" => Some(June)
+            case  "July" => Some(July)
+            case  "August" => Some(August)
+            case  "September" => Some(September)
+            case  "October" => Some(October)
+            case  "November" => Some(November)
+            case  "December" => Some(December)
+            case _ => None
+        }
+    }
 
 }
 
