@@ -71,7 +71,10 @@ namespace Time/Instant {
     use Time.Instant.{Instant};
     use Time.OffsetDateTime;
     use Time.OffsetDateTime.{OffsetDateTime};
+    use Time/Temporal.ChronoField;
     use Time/Temporal.ChronoUnit;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
     use Time.ZonedDateTime;
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
@@ -217,14 +220,22 @@ namespace Time/Instant {
         Instant(t.minusNanos(d)) as & Pure
 
 
-    pub def until(b: Instant, e: Instant, unit: ChronoUnit): Int64 = 
+    pub def until(b: Instant, e: Instant, cu: ChronoUnit): Int64 = 
         import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let Instant(b1) = b;
         let Instant(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let cu1 = Time/Temporal/ChronoUnit.marshal(cu);
         let te1 = e1 as ##java.time.temporal.Temporal;
-        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        b1.until(te1, tu1) as & Pure
+        let tu1 = cu1 as ##java.time.temporal.TemporalUnit;
+        until(b1, te1, tu1) as & Pure
+
+    pub def range(cf: ChronoField, x: Instant): ValueRange = 
+        /// Note the import path `java.time.Instant.range` causes a parse error.
+        import flix.runtime.spt.newtime.TimeWrapper:getRangeOfInstant(##java.time.Instant, ##java.time.temporal.TemporalField) as getRangeOfInstant;
+        let Instant(x1) = x;
+        let cf1 = Time/Temporal/ChronoField.marshal(cf);
+        let tf1 = cf1 as ##java.time.temporal.TemporalField;
+        ValueRange(getRangeOfInstant(x1, tf1)) as & Pure
 
 
 }
