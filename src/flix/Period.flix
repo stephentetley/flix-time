@@ -48,6 +48,31 @@ namespace Time {
                 case _: ##java.time.format.DateTimeParseException => None
             }
     }
+    
+    instance Add[Period] {
+        def add(x: Period, y: Period): Period =
+            import java.time.Period.plus(##java.time.temporal.TemporalAmount);
+            let Period(x1) = x;
+            let Period(y1) = y;
+            let ta1 = y1 as ##java.time.temporal.TemporalAmount;
+            Period(x1.plus(ta1)) as & Pure
+    }
+
+    instance Sub[Period] {
+        def sub(x: Period, y: Period): Period =
+            import java.time.Period.minus(##java.time.temporal.TemporalAmount);
+            let Period(x1) = x;
+            let Period(y1) = y;
+            let ta1 = y1 as ##java.time.temporal.TemporalAmount;
+            Period(x1.minus(ta1)) as & Pure
+    }
+
+    instance Neg[Period] {
+        pub def neg(x: Period): Period =
+            import java.time.Period.negated();
+            let Period(x1) = x;
+            Period(x1.negated()) as & Pure
+    }
 
     instance TemporalAmount[Period] {
         def marshal(x: Period): ##java.time.temporal.TemporalAmount = 
@@ -64,6 +89,12 @@ namespace Time {
             let ta1 = x1 as ##java.time.temporal.TemporalAmount;
             let y1 = Time/Temporal/Temporal.marshal(y);
             Time/Temporal/Temporal.unmarshal(addTo(ta1, y1)) as & Pure
+    }
+
+    /// Addition
+    instance Monoid[Period] {
+        def empty(): Period = Time/Period.zero()
+        def combine(x: Period, y: Period): Period = Add.add(x, y)
     }
 
 }
@@ -124,7 +155,7 @@ namespace Time/Period {
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def equals(x: Period, y: Period): Bool =
+    pub def __eq(x: Period, y: Period): Bool =
         import java.time.Period.equals(##java.lang.Object);
         let Period(x1) = x;
         let Period(y1) = y;
@@ -146,10 +177,6 @@ namespace Time/Period {
         let Period(x1) = x;
         x1.isNegative() as & Pure
 
-    pub def negate(x: Period): Period =
-        import java.time.Period.negated();
-        let Period(x1) = x;
-        Period(x1.negated()) as & Pure
 
     pub def plusYears(x: Period, years: Int64): Period =
         import java.time.Period.plusYears(Int64) as plus;

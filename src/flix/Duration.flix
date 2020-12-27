@@ -74,8 +74,12 @@ namespace Time {
             let Duration(x1) = x;
             Duration(x1.negated()) as & Pure
     }
-
-
+    
+    /// Addition
+    instance Monoid[Duration] {
+        def empty(): Duration = Time/Duration.zero()
+        def combine(x: Duration, y: Duration): Duration = Add.add(x, y)
+    }
 }
 
 namespace Time/Duration {
