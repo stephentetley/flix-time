@@ -62,6 +62,12 @@ namespace Time/Format/TextStyle {
             case ShortStandalone    => getSHORT_STANDALONE() 
         } as & Pure
 
+    def primEquals(x: ##java.time.format.TextStyle, y: ##java.time.format.TextStyle): Bool =
+        import java.lang.Object.equals(##java.lang.Object);
+        let x1 = x as ##java.lang.Object;
+        let y1 = y as ##java.lang.Object;
+        equals(x1, y1) as & Pure
+
     pub def unmarshal(x: ##java.time.format.TextStyle): TextStyle = 
         import get java.time.format.TextStyle:FULL              as getFULL;
         import get java.time.format.TextStyle:FULL_STANDALONE   as getFULL_STANDALONE;
@@ -70,12 +76,12 @@ namespace Time/Format/TextStyle {
         import get java.time.format.TextStyle:SHORT             as getSHORT;
         import get java.time.format.TextStyle:SHORT_STANDALONE  as getSHORT_STANDALONE;
         match x {
-            case x1 if x1 == getFULL()              => Full
-            case x1 if x1 == getFULL_STANDALONE()   => FullStandalone
-            case x1 if x1 == getNARROW()            => Narrow
-            case x1 if x1 == getNARROW_STANDALONE() => NarrowStandalone
-            case x1 if x1 == getSHORT()             => Short
-            case x1 if x1 == getSHORT_STANDALONE()  => ShortStandalone
+            case x1 if primEquals(x1, getFULL())                => Full
+            case x1 if primEquals(x1, getFULL_STANDALONE())     => FullStandalone
+            case x1 if primEquals(x1, getNARROW())              => Narrow
+            case x1 if primEquals(x1, getNARROW_STANDALONE())   => NarrowStandalone
+            case x1 if primEquals(x1, getSHORT())               => Short
+            case x1 if primEquals(x1, getSHORT_STANDALONE())    => ShortStandalone
         } as & Pure
 
     pub def asStandalone(x: TextStyle): TextStyle =

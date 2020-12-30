@@ -136,6 +136,12 @@ namespace Time/Month {
             case December   => getDECEMBER()
         } as & Pure
 
+    def primEquals(x: ##java.time.Month, y: ##java.time.Month): Bool =
+        import java.lang.Object.equals(##java.lang.Object);
+        let x1 = x as ##java.lang.Object;
+        let y1 = y as ##java.lang.Object;
+        equals(x1, y1) as & Pure
+
     pub def unmarshal(x: ##java.time.Month): Month = 
         import get java.time.Month:JANUARY      as getJANUARY;
         import get java.time.Month:FEBRUARY     as getFEBRUARY;
@@ -150,18 +156,18 @@ namespace Time/Month {
         import get java.time.Month:NOVEMBER     as getNOVEMBER;
         import get java.time.Month:DECEMBER     as getDECEMBER;
         match x {
-            case x1 if x1 == getJANUARY()   => January
-            case x1 if x1 == getFEBRUARY()  => February
-            case x1 if x1 == getMARCH()     => March
-            case x1 if x1 == getAPRIL()     => April
-            case x1 if x1 == getMAY()       => May
-            case x1 if x1 == getJUNE()      => June
-            case x1 if x1 == getJULY()      => July
-            case x1 if x1 == getAUGUST()    => August
-            case x1 if x1 == getSEPTEMBER() => September
-            case x1 if x1 == getOCTOBER()   => October
-            case x1 if x1 == getNOVEMBER()  => November
-            case x1 if x1 == getDECEMBER()  => December
+            case x1 if primEquals(x1, getJANUARY())     => January
+            case x1 if primEquals(x1, getFEBRUARY())    => February
+            case x1 if primEquals(x1, getMARCH())       => March
+            case x1 if primEquals(x1, getAPRIL())       => April
+            case x1 if primEquals(x1, getMAY())         => May
+            case x1 if primEquals(x1, getJUNE())        => June
+            case x1 if primEquals(x1, getJULY())        => July
+            case x1 if primEquals(x1, getAUGUST())      => August
+            case x1 if primEquals(x1, getSEPTEMBER())   => September
+            case x1 if primEquals(x1, getOCTOBER())     => October
+            case x1 if primEquals(x1, getNOVEMBER())    => November
+            case x1 if primEquals(x1, getDECEMBER())    => December
         } as & Pure
 
 

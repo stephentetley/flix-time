@@ -65,7 +65,28 @@ namespace Time {
     instance UpperBound[DayOfWeek] {
         def maxValue(): DayOfWeek = Sunday
     }
+
+    instance Eq[DayOfWeek] {
+
+    def eq(x: DayOfWeek, y: DayOfWeek): Bool = match (x, y) {
+        case (Monday, Monday) => true
+        case (Tuesday, Tuesday) => true
+        case (Wednesday, Wednesday) => true
+        case (Thursday, Thursday) => true
+        case (Friday, Friday) => true
+        case (Saturday, Saturday) => true
+        case (Sunday, Sunday) => true
+        case (_, _) => false
+    }
+
+    def neq(x: Time.DayOfWeek, y: Time.DayOfWeek): Bool = not (x == y)
 }
+
+
+
+}
+
+
 
 namespace Time/DayOfWeek {
 
@@ -103,7 +124,7 @@ namespace Time/DayOfWeek {
         case _ => None
     }
 
-    pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek = 
+    pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek =
         import get java.time.DayOfWeek:MONDAY       as getMONDAY;
         import get java.time.DayOfWeek:TUESDAY      as getTUESDAY;
         import get java.time.DayOfWeek:WEDNESDAY    as getWEDNESDAY;
@@ -121,7 +142,15 @@ namespace Time/DayOfWeek {
             case Sunday     => getSUNDAY() 
         } as & Pure
 
-    pub def unmarshal(x: ##java.time.DayOfWeek): DayOfWeek = 
+    def primEquals(x: ##java.time.DayOfWeek, y: ##java.time.DayOfWeek): Bool =
+        import java.lang.Object.equals(##java.lang.Object);
+        let x1 = x as ##java.lang.Object;
+        let y1 = y as ##java.lang.Object;
+        equals(x1, y1) as & Pure
+
+
+    pub def unmarshal(x: ##java.time.DayOfWeek): Time.DayOfWeek =
+
         import get java.time.DayOfWeek:MONDAY       as getMONDAY;
         import get java.time.DayOfWeek:TUESDAY      as getTUESDAY;
         import get java.time.DayOfWeek:WEDNESDAY    as getWEDNESDAY;
@@ -130,13 +159,13 @@ namespace Time/DayOfWeek {
         import get java.time.DayOfWeek:SATURDAY     as getSATURDAY;
         import get java.time.DayOfWeek:SUNDAY       as getSUNDAY;
         match x {
-            case x1 if x1 == getMONDAY()    => Monday
-            case x1 if x1 == getTUESDAY()   => Tuesday
-            case x1 if x1 == getWEDNESDAY() => Wednesday
-            case x1 if x1 == getTHURSDAY()  => Thursday
-            case x1 if x1 == getFRIDAY()    => Friday
-            case x1 if x1 == getSATURDAY()  => Saturday
-            case x1 if x1 == getSUNDAY()    => Sunday
+            case x1 if primEquals(x1, getMONDAY())      => Monday
+            case x1 if primEquals(x1, getTUESDAY())     => Tuesday
+            case x1 if primEquals(x1, getWEDNESDAY())   => Wednesday
+            case x1 if primEquals(x1, getTHURSDAY())    => Thursday
+            case x1 if primEquals(x1, getFRIDAY())      => Friday
+            case x1 if primEquals(x1, getSATURDAY())    => Saturday
+            case x1 if primEquals(x1, getSUNDAY())      => Sunday
         } as & Pure
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: I18n.Locale): String =
@@ -151,16 +180,7 @@ namespace Time/DayOfWeek {
         let x1 = marshal(x) as ##java.lang.Enum;
         x1.name() as & Pure
 
-    pub def __eq(x: DayOfWeek, y: DayOfWeek): Bool = match (x, y) {
-        case (Monday, Monday) => true
-        case (Tuesday, Tuesday) => true
-        case (Wednesday, Wednesday) => true
-        case (Thursday, Thursday) => true
-        case (Friday, Friday) => true
-        case (Saturday, Saturday) => true
-        case (Sunday, Sunday) => true
-        case (_, _) => false
-    }
+
 
     pub def compare(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
 

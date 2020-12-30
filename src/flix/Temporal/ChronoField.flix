@@ -265,6 +265,12 @@ namespace Time/Temporal/ChronoField {
             case OffsetSeconds              => getOFFSET_SECONDS()
         } as & Pure
 
+    def primEquals(x: ##java.time.temporal.ChronoField, y: ##java.time.temporal.ChronoField): Bool =
+        import java.lang.Object.equals(##java.lang.Object);
+        let x1 = x as ##java.lang.Object;
+        let y1 = y as ##java.lang.Object;
+        equals(x1, y1) as & Pure
+
     pub def unmarshal(x: ##java.time.temporal.ChronoField): ChronoField = 
         import get java.time.temporal.ChronoField:NANO_OF_SECOND                as getNANO_OF_SECOND;
         import get java.time.temporal.ChronoField:NANO_OF_DAY                   as getNANO_OF_DAY;
@@ -297,36 +303,36 @@ namespace Time/Temporal/ChronoField {
         import get java.time.temporal.ChronoField:INSTANT_SECONDS               as getINSTANT_SECONDS;
         import get java.time.temporal.ChronoField:OFFSET_SECONDS                as getOFFSET_SECONDS;
         match x {
-            case x1 if x1 == getNANO_OF_SECOND()                => NanoOfSecond
-            case x1 if x1 == getNANO_OF_DAY()                   => NanoOfDay
-            case x1 if x1 == getMICRO_OF_SECOND()               => MicroOfSecond
-            case x1 if x1 == getMICRO_OF_DAY()                  => MicroOfDay
-            case x1 if x1 == getMILLI_OF_SECOND()               => MilliOfSecond
-            case x1 if x1 == getMILLI_OF_DAY()                  => MilliOfDay
-            case x1 if x1 == getSECOND_OF_MINUTE()              => SecondOfMinute
-            case x1 if x1 == getSECOND_OF_DAY()                 => SecondOfDay
-            case x1 if x1 == getMINUTE_OF_HOUR()                => MinuteOfHour
-            case x1 if x1 == getMINUTE_OF_DAY()                 => MinuteOfDay
-            case x1 if x1 == getHOUR_OF_AMPM()                  => HourOfAmPm
-            case x1 if x1 == getCLOCK_HOUR_OF_AMPM()            => ClockHourOfAmPm
-            case x1 if x1 == getHOUR_OF_DAY()                   => HourOfDay
-            case x1 if x1 == getCLOCK_HOUR_OF_DAY()             => ClockHourOfDay
-            case x1 if x1 == getAMPM_OF_DAY()                   => AmPmOfDay
-            case x1 if x1 == getDAY_OF_WEEK()                   => DayOfWeek
-            case x1 if x1 == getALIGNED_DAY_OF_WEEK_IN_MONTH()  => AlignedDayOfWeekInMonth
-            case x1 if x1 == getALIGNED_DAY_OF_WEEK_IN_YEAR()   => AlignedDayOfWeekInYear
-            case x1 if x1 == getDAY_OF_MONTH()                  => DayOfMonth
-            case x1 if x1 == getDAY_OF_YEAR()                   => DayOfYear
-            case x1 if x1 == getEPOCH_DAY()                     => EpochDay
-            case x1 if x1 == getALIGNED_WEEK_OF_MONTH()         => AlignedWeekOfMonth
-            case x1 if x1 == getALIGNED_WEEK_OF_YEAR()          => AlignedWeekOfYear
-            case x1 if x1 == getMONTH_OF_YEAR()                 => MonthOfYear
-            case x1 if x1 == getPROLEPTIC_MONTH()               => ProlepticMonth
-            case x1 if x1 == getYEAR_OF_ERA()                   => YearOfEra
-            case x1 if x1 == getYEAR()                          => Year
-            case x1 if x1 == getERA()                           => Era
-            case x1 if x1 == getINSTANT_SECONDS()               => InstantSeconds
-            case x1 if x1 == getOFFSET_SECONDS()                => OffsetSeconds
+            case x1 if primEquals(x1, getNANO_OF_SECOND())                  => NanoOfSecond
+            case x1 if primEquals(x1, getNANO_OF_DAY())                     => NanoOfDay
+            case x1 if primEquals(x1, getMICRO_OF_SECOND())                 => MicroOfSecond
+            case x1 if primEquals(x1, getMICRO_OF_DAY())                    => MicroOfDay
+            case x1 if primEquals(x1, getMILLI_OF_SECOND())                 => MilliOfSecond
+            case x1 if primEquals(x1, getMILLI_OF_DAY())                    => MilliOfDay
+            case x1 if primEquals(x1, getSECOND_OF_MINUTE())                => SecondOfMinute
+            case x1 if primEquals(x1, getSECOND_OF_DAY())                   => SecondOfDay
+            case x1 if primEquals(x1, getMINUTE_OF_HOUR())                  => MinuteOfHour
+            case x1 if primEquals(x1, getMINUTE_OF_DAY())                   => MinuteOfDay
+            case x1 if primEquals(x1, getHOUR_OF_AMPM())                    => HourOfAmPm
+            case x1 if primEquals(x1, getCLOCK_HOUR_OF_AMPM())              => ClockHourOfAmPm
+            case x1 if primEquals(x1, getHOUR_OF_DAY())                     => HourOfDay
+            case x1 if primEquals(x1, getCLOCK_HOUR_OF_DAY())               => ClockHourOfDay
+            case x1 if primEquals(x1, getAMPM_OF_DAY())                     => AmPmOfDay
+            case x1 if primEquals(x1, getDAY_OF_WEEK())                     => DayOfWeek
+            case x1 if primEquals(x1, getALIGNED_DAY_OF_WEEK_IN_MONTH())    => AlignedDayOfWeekInMonth
+            case x1 if primEquals(x1, getALIGNED_DAY_OF_WEEK_IN_YEAR())     => AlignedDayOfWeekInYear
+            case x1 if primEquals(x1, getDAY_OF_MONTH())                    => DayOfMonth
+            case x1 if primEquals(x1, getDAY_OF_YEAR())                     => DayOfYear
+            case x1 if primEquals(x1, getEPOCH_DAY())                       => EpochDay
+            case x1 if primEquals(x1, getALIGNED_WEEK_OF_MONTH())           => AlignedWeekOfMonth
+            case x1 if primEquals(x1, getALIGNED_WEEK_OF_YEAR())            => AlignedWeekOfYear
+            case x1 if primEquals(x1, getMONTH_OF_YEAR())                   => MonthOfYear
+            case x1 if primEquals(x1, getPROLEPTIC_MONTH())                 => ProlepticMonth
+            case x1 if primEquals(x1, getYEAR_OF_ERA())                     => YearOfEra
+            case x1 if primEquals(x1, getYEAR())                            => Year
+            case x1 if primEquals(x1, getERA())                             => Era
+            case x1 if primEquals(x1, getINSTANT_SECONDS())                 => InstantSeconds
+            case x1 if primEquals(x1, getOFFSET_SECONDS())                  => OffsetSeconds
         } as & Pure
 
     pub def __eq(x: ChronoField, y: ChronoField): Bool = match (x,y) { 

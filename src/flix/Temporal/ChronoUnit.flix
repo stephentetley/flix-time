@@ -165,6 +165,12 @@ namespace Time/Temporal/ChronoUnit {
             case Forever    => getFOREVER()
         } as & Pure
 
+    def primEquals(x: ##java.time.temporal.ChronoUnit, y: ##java.time.temporal.ChronoUnit): Bool =
+        import java.lang.Object.equals(##java.lang.Object);
+        let x1 = x as ##java.lang.Object;
+        let y1 = y as ##java.lang.Object;
+        equals(x1, y1) as & Pure
+
     pub def unmarshal(x: ##java.time.temporal.ChronoUnit): ChronoUnit = 
         import get java.time.temporal.ChronoUnit:NANOS      as getNANOS;
         import get java.time.temporal.ChronoUnit:MICROS     as getMICROS;
@@ -183,22 +189,22 @@ namespace Time/Temporal/ChronoUnit {
         import get java.time.temporal.ChronoUnit:ERAS       as getERAS;
         import get java.time.temporal.ChronoUnit:FOREVER    as getFOREVER;
         match x {
-            case x1 if x1 == getNANOS()     => Nanos
-            case x1 if x1 == getMICROS()    => Micros
-            case x1 if x1 == getMILLIS()    => Millis
-            case x1 if x1 == getSECONDS()   => Seconds
-            case x1 if x1 == getMINUTES()   => Minutes
-            case x1 if x1 == getHOURS()     => Hours
-            case x1 if x1 == getHALF_DAYS() => HalfDays
-            case x1 if x1 == getDAYS()      => Days
-            case x1 if x1 == getWEEKS()     => Weeks
-            case x1 if x1 == getMONTHS()    => Months
-            case x1 if x1 == getYEARS()     => Years
-            case x1 if x1 == getDECADES()   => Decades
-            case x1 if x1 == getCENTURIES() => Centuries
-            case x1 if x1 == getMILLENNIA() => Millenia
-            case x1 if x1 == getERAS()      => Eras
-            case x1 if x1 == getFOREVER()   => Forever
+            case x1 if primEquals(x1, getNANOS())       => Nanos
+            case x1 if primEquals(x1, getMICROS())      => Micros
+            case x1 if primEquals(x1, getMILLIS())      => Millis
+            case x1 if primEquals(x1, getSECONDS())     => Seconds
+            case x1 if primEquals(x1, getMINUTES())     => Minutes
+            case x1 if primEquals(x1, getHOURS())       => Hours
+            case x1 if primEquals(x1, getHALF_DAYS())   => HalfDays
+            case x1 if primEquals(x1, getDAYS())        => Days
+            case x1 if primEquals(x1, getWEEKS())       => Weeks
+            case x1 if primEquals(x1, getMONTHS())      => Months
+            case x1 if primEquals(x1, getYEARS())       => Years
+            case x1 if primEquals(x1, getDECADES())     => Decades
+            case x1 if primEquals(x1, getCENTURIES())   => Centuries
+            case x1 if primEquals(x1, getMILLENNIA())   => Millenia
+            case x1 if primEquals(x1, getERAS())        => Eras
+            case x1 if primEquals(x1, getFOREVER())     => Forever
         } as & Pure
 
     pub def __eq(x: ChronoUnit, y: ChronoUnit): Bool = match (x,y) { 
