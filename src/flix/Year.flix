@@ -57,6 +57,20 @@ namespace Time {
         def neq(x: Year, y: Year): Bool = not (x == y)
     }
 
+    instance LowerBound[Year] {
+        def minValue(): Year = 
+            import get java.time.Year:MIN_VALUE as getMIN_VALUE;
+            import java.time.Year:of(Int32);
+            Year(of(getMIN_VALUE())) as & Pure
+    }
+
+    instance UpperBound[Year] {
+        def maxValue(): Year = 
+            import get java.time.Year:MAX_VALUE as getMAX_VALUE;
+            import java.time.Year:of(Int32);
+            Year(of(getMAX_VALUE())) as & Pure
+    }
+
     instance Temporal[Year] {
         def marshal(x: Year): ##java.time.temporal.Temporal = 
             let Year(x1) = x;
@@ -84,6 +98,18 @@ namespace Time/Year {
 
     use Time/Format.DateFormatter;
     use Time/Format.DateFormatter.{DateFormatter};
+    use Time.Clock;
+    use Time.Clock.{Clock};
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
+    use Time.Month;
+    use Time.MonthDay;
+    use Time.MonthDay.{MonthDay};
+    use Time.YearMonth;
+    use Time.YearMonth.{YearMonth};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
+
 
     pub def new(year: Int32): Year =
         import java.time.Year:of(Int32);
@@ -93,6 +119,16 @@ namespace Time/Year {
     pub def now(): Year & Impure =         
         import java.time.Year:now();
         Year(now())
+
+    pub def nowWithClock(x: Clock): Year & Impure =         
+        import java.time.Year:now(##java.time.Clock);
+        let Clock(x1) = x;
+        Year(now(x1))
+
+    pub def nowWithZoneId(x: ZoneId): Year & Impure =         
+        import java.time.Year:now(##java.time.ZoneId);
+        let ZoneId(x1) = x;
+        Year(now(x1))
 
 
     /// 
@@ -121,7 +157,41 @@ namespace Time/Year {
         let DateFormatter(fmtr) = formatter;
         x1.format(fmtr) as & Pure
 
+    pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
+        import java.time.Year.atDay(Int32);
+        try {
+            let Year(x1) = x;
+            Some(LocalDate(atDay(x1, dayOfYear))) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
 
+    pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
+        import java.time.Year.atMonth(Int32);
+        try {
+            let Year(x1) = x;
+            Some(YearMonth(atMonth(x1, month))) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => None
+        }  
+
+    pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
+        import java.time.Year.atMonth(##java.time.Month);
+        try {
+            let Year(x1) = x;
+            let m1 = Time/Month.marshal(month);
+            Some(YearMonth(atMonth(x1, m1))) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => None
+        }        
+    
+    pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
+        import java.time.Year.atMonthDay(##java.time.MonthDay);
+        let Year(x1) = x;
+        let MonthDay(m1) = monthDay;
+        LocalDate(atMonthDay(x1, m1)) as & Pure
+        
+    
 
     pub def compare(x: Year, y: Year): Int32 =
         import java.time.Year.compareTo(##java.time.Year);
@@ -171,5 +241,14 @@ namespace Time/Year {
         import java.time.Year.length();
         let Year(x1) = x;
         x1.length() as & Pure
+
+    ///
+    /// Returns `true` if `x` is a leap year.
+    ///
+    pub def plusYears(x: Year, yearsToAdd: Int64): Year =
+        import java.time.Year.plusYears(Int64);
+        let Year(x1) = x;
+        Year(plusYears(x1, yearsToAdd)) as & Pure
+    
 
 }

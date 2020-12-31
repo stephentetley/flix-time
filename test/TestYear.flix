@@ -17,6 +17,8 @@
 namespace TestYear {
 
     use ToString.toString;
+    use LowerBound.minValue;
+    use UpperBound.maxValue;
 
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
@@ -24,5 +26,19 @@ namespace TestYear {
 
     @test
     def toString01(): String = toString(Time/Year.new(1970))
+
+    /////////////////////////////////////////////////////////////////////////////
+    // minValue                                                                //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def minValue01(): Bool = minValue() == Time/Year.new(-999_999_999)
+
+    /////////////////////////////////////////////////////////////////////////////
+    // maxValue                                                                //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def maxValue01(): Bool = maxValue() == Time/Year.new(999_999_999)
 
 }
