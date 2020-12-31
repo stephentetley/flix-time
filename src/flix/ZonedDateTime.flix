@@ -48,6 +48,16 @@ namespace Time {
                 case _: ##java.time.format.DateTimeParseException => None
             }
     }
+
+    instance Eq[ZonedDateTime] {
+        def eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
+            import java.time.ZonedDateTime.equals(##java.lang.Object);
+            let ZonedDateTime(x1) = x;
+            let ZonedDateTime(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: ZonedDateTime, y: ZonedDateTime): Bool = not (x == y)
+    }
 }
 
 namespace Time/ZonedDateTime {
@@ -151,14 +161,6 @@ namespace Time/ZonedDateTime {
         }
 
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
-        import java.time.ZonedDateTime.equals(##java.lang.Object);
-        let ZonedDateTime(x1) = x;
-        let ZonedDateTime(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
     /// Returns `true` if `x` == `y`.

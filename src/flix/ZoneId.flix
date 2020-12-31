@@ -45,6 +45,17 @@ namespace Time {
     }
 
 
+    instance Eq[ZoneId] {
+        def eq(x: ZoneId, y: ZoneId): Bool =
+            import java.time.ZoneId.equals(##java.lang.Object);
+            let ZoneId(x1) = x;
+            let ZoneId(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: ZoneId, y: ZoneId): Bool = not (x == y)
+    }
+
+    
     pub opaque type ZonePrefix = String
 
 }
@@ -83,16 +94,6 @@ namespace Time/ZoneId {
             case _: ##java.time.zone.ZoneRulesException => None
         }
 
-
-
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: ZoneId, y: ZoneId): Bool =
-        import java.time.ZoneId.equals(##java.lang.Object);
-        let ZoneId(x1) = x;
-        let ZoneId(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
     /// Returns the unique ID of the time zone.

@@ -50,6 +50,16 @@ namespace Time {
             }
     }
 
+    instance Eq[LocalDate] {
+        def eq(x: LocalDate, y: LocalDate): Bool =
+            import java.time.LocalDate.equals(##java.lang.Object);
+            let LocalDate(x1) = x;
+            let LocalDate(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: LocalDate, y: LocalDate): Bool = not (x == y)
+    }
+
     instance LowerBound[LocalDate] {
         def minValue(): LocalDate =
             import get java.time.LocalDate:MIN as getMIN;
@@ -193,14 +203,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         toEpochDay(x1 as ##java.time.chrono.ChronoLocalDate) as & Pure
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: LocalDate, y: LocalDate): Bool =
-        import java.time.LocalDate.equals(##java.lang.Object);
-        let LocalDate(x1) = x;
-        let LocalDate(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
+
 
     ///
     /// Returns `true` if `x` == `y`.

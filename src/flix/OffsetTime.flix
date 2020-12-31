@@ -50,6 +50,16 @@ namespace Time {
             }
     }
 
+    instance Eq[OffsetTime] {
+        def eq(x: OffsetTime, y: OffsetTime): Bool =
+            import java.time.OffsetTime.equals(##java.lang.Object);
+            let OffsetTime(x1) = x;
+            let OffsetTime(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: OffsetTime, y: OffsetTime): Bool = not (x == y)
+    }
+
     instance LowerBound[OffsetTime] {
         def minValue(): OffsetTime =
             import get java.time.OffsetTime:MIN as getMIN;
@@ -147,14 +157,6 @@ namespace Time/OffsetTime {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: OffsetTime, y: OffsetTime): Bool =
-        import java.time.OffsetTime.equals(##java.lang.Object);
-        let OffsetTime(x1) = x;
-        let OffsetTime(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
     /// Returns .

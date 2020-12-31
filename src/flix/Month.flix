@@ -68,6 +68,25 @@ namespace Time {
         }
     }
 
+    instance Eq[Month] {
+        def eq(x: Month, y: Month): Bool = match (x,y) {
+            case (January, January) => true
+            case (February, February) => true
+            case (March, March) => true
+            case (April, April) => true
+            case (May, May) => true
+            case (June, June) => true
+            case (July, July) => true
+            case (August, August) => true
+            case (September, September) => true
+            case (October, October) => true
+            case (November, November) => true
+            case (December, December) => true
+            case (_, _) => false
+        }
+
+        def neq(x: Month, y: Month): Bool = not (x == y)
+    }
 }
 
 namespace Time/Month {
@@ -183,21 +202,6 @@ namespace Time/Month {
         let x1 = marshal(x) as ##java.lang.Enum;
         x1.name() as & Pure
 
-    pub def __eq(x: Month, y: Month): Bool = match (x,y) {
-        case (January, January) => true
-        case (February, February) => true
-        case (March, March) => true
-        case (April, April) => true
-        case (May, May) => true
-        case (June, June) => true
-        case (July, July) => true
-        case (August, August) => true
-        case (September, September) => true
-        case (October, October) => true
-        case (November, November) => true
-        case (December, December) => true
-        case (_, _) => false
-    }
 
     pub def compare(x: Month, y: Month): Int32 = Int32.compare(toInt32(x), toInt32(y))
 

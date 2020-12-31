@@ -79,6 +79,30 @@ namespace Time/Temporal {
         }
     }
 
+    instance Eq[ChronoUnit] {
+        def eq(x: ChronoUnit, y: ChronoUnit): Bool = match (x,y) { 
+            case (Nanos, Nanos) => true
+            case (Micros, Micros) => true
+            case (Millis, Millis) => true
+            case (Seconds, Seconds) => true
+            case (Minutes, Minutes) => true
+            case (Hours, Hours) => true
+            case (HalfDays, HalfDays) => true
+            case (Days, Days) => true
+            case (Weeks, Weeks) => true
+            case (Months, Months) => true
+            case (Years, Years) => true
+            case (Decades, Decades) => true
+            case (Centuries, Centuries) => true
+            case (Millenia, Millenia) => true
+            case (Eras, Eras) => true
+            case (Forever, Forever) => true
+            case (_,_) => false
+        }
+
+        def neq(x: ChronoUnit, y: ChronoUnit): Bool = not (x == y)
+    }
+
 }
 
 namespace Time/Temporal/ChronoUnit {
@@ -207,25 +231,7 @@ namespace Time/Temporal/ChronoUnit {
             case x1 if primEquals(x1, getFOREVER())     => Forever
         } as & Pure
 
-    pub def __eq(x: ChronoUnit, y: ChronoUnit): Bool = match (x,y) { 
-        case (Nanos, Nanos) => true
-        case (Micros, Micros) => true
-        case (Millis, Millis) => true
-        case (Seconds, Seconds) => true
-        case (Minutes, Minutes) => true
-        case (Hours, Hours) => true
-        case (HalfDays, HalfDays) => true
-        case (Days, Days) => true
-        case (Weeks, Weeks) => true
-        case (Months, Months) => true
-        case (Years, Years) => true
-        case (Decades, Decades) => true
-        case (Centuries, Centuries) => true
-        case (Millenia, Millenia) => true
-        case (Eras, Eras) => true
-        case (Forever, Forever) => true
-        case (_,_) => false
-    }
+    
 
     pub def compare(x: ChronoUnit, y: ChronoUnit): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
 

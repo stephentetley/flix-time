@@ -39,7 +39,7 @@ namespace Time {
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
     instance FromString[LocalDateTime] {
-        pub def fromString(s: String): Option[LocalDateTime] =
+        def fromString(s: String): Option[LocalDateTime] =
             import java.lang.String.strip();
             import java.time.LocalDateTime:parse(##java.lang.CharSequence);
             try {
@@ -48,6 +48,16 @@ namespace Time {
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
             }
+    }
+
+    instance Eq[LocalDateTime] {
+        def eq(x: LocalDateTime, y: LocalDateTime): Bool =
+            import java.time.LocalDateTime.equals(##java.lang.Object);
+            let LocalDateTime(x1) = x;
+            let LocalDateTime(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+        
+        def neq(x: LocalDateTime, y: LocalDateTime): Bool = not (x == y)
     }
 
     instance LowerBound[LocalDateTime] {
@@ -177,14 +187,6 @@ namespace Time/LocalDateTime {
         }
 
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: LocalDateTime, y: LocalDateTime): Bool =
-        import java.time.LocalDateTime.equals(##java.lang.Object);
-        let LocalDateTime(x1) = x;
-        let LocalDateTime(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     pub def compare(x: LocalDateTime, y: LocalDateTime): Int32 =
         import java.time.LocalDateTime.compareTo(##java.time.chrono.ChronoLocalDateTime);

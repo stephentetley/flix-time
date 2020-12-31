@@ -68,19 +68,19 @@ namespace Time {
 
     instance Eq[DayOfWeek] {
 
-    def eq(x: DayOfWeek, y: DayOfWeek): Bool = match (x, y) {
-        case (Monday, Monday) => true
-        case (Tuesday, Tuesday) => true
-        case (Wednesday, Wednesday) => true
-        case (Thursday, Thursday) => true
-        case (Friday, Friday) => true
-        case (Saturday, Saturday) => true
-        case (Sunday, Sunday) => true
-        case (_, _) => false
-    }
+        def eq(x: DayOfWeek, y: DayOfWeek): Bool = match (x, y) {
+            case (Monday, Monday) => true
+            case (Tuesday, Tuesday) => true
+            case (Wednesday, Wednesday) => true
+            case (Thursday, Thursday) => true
+            case (Friday, Friday) => true
+            case (Saturday, Saturday) => true
+            case (Sunday, Sunday) => true
+            case (_, _) => false
+        }
 
-    def neq(x: Time.DayOfWeek, y: Time.DayOfWeek): Bool = not (x == y)
-}
+        def neq(x: DayOfWeek, y: DayOfWeek): Bool = not (x == y)
+    }
 
 
 

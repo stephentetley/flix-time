@@ -44,6 +44,17 @@ namespace Time {
             }
     }
 
+    
+    instance Eq[ZoneOffset] {
+        def eq(x: ZoneOffset, y: ZoneOffset): Bool =
+            import java.time.ZoneOffset.equals(##java.lang.Object);
+            let ZoneOffset(x1) = x;
+            let ZoneOffset(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: ZoneOffset, y: ZoneOffset): Bool = (x == y)
+    }
+
     instance LowerBound[ZoneOffset] {
         def minValue(): ZoneOffset =
             import get java.time.ZoneOffset:MIN as getMIN;
@@ -88,15 +99,7 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset:ofTotalSeconds(Int32);
         ZoneOffset(ofTotalSeconds(seconds)) as & Pure
 
-    
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: ZoneOffset, y: ZoneOffset): Bool =
-        import java.time.ZoneOffset.equals(##java.lang.Object);
-        let ZoneOffset(x1) = x;
-        let ZoneOffset(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
+
 
     pub def compare(x: ZoneOffset, y: ZoneOffset): Int32 =
         import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset);

@@ -46,6 +46,16 @@ namespace Time {
         }
     }
 
+
+    instance Eq[YearMonth] {
+        def eq(x: YearMonth, y: YearMonth): Bool =
+            import java.time.YearMonth.equals(##java.lang.Object);
+            let YearMonth(x1) = x;
+            let YearMonth(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: YearMonth, y: YearMonth): Bool = not (x == y)
+    }
 }
 
 namespace Time/YearMonth {
@@ -96,14 +106,6 @@ namespace Time/YearMonth {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: YearMonth, y: YearMonth): Bool =
-        import java.time.YearMonth.equals(##java.lang.Object);
-        let YearMonth(x1) = x;
-        let YearMonth(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
 
     ///

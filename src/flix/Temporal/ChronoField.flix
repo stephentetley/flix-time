@@ -121,6 +121,44 @@ namespace Time/Temporal {
         }
     }
 
+    instance Eq[ChronoField] {
+        def eq(x: ChronoField, y: ChronoField): Bool = match (x,y) { 
+            case (NanoOfSecond, NanoOfSecond) => true
+            case (NanoOfDay, NanoOfDay) => true
+            case (MicroOfSecond, MicroOfSecond) => true
+            case (MicroOfDay, MicroOfDay) => true
+            case (MilliOfSecond, MilliOfSecond) => true
+            case (MilliOfDay, MilliOfDay) => true
+            case (SecondOfMinute, SecondOfMinute) => true
+            case (SecondOfDay, SecondOfDay) => true
+            case (MinuteOfHour, MinuteOfHour) => true
+            case (MinuteOfDay, MinuteOfDay) => true
+            case (HourOfAmPm, HourOfAmPm) => true
+            case (ClockHourOfAmPm, ClockHourOfAmPm) => true
+            case (HourOfDay, HourOfDay) => true
+            case (ClockHourOfDay, ClockHourOfDay) => true
+            case (AmPmOfDay, AmPmOfDay) => true
+            case (DayOfWeek, DayOfWeek) => true
+            case (AlignedDayOfWeekInMonth, AlignedDayOfWeekInMonth) => true
+            case (AlignedDayOfWeekInYear, AlignedDayOfWeekInYear) => true
+            case (DayOfMonth, DayOfMonth) => true
+            case (DayOfYear, DayOfYear) => true
+            case (EpochDay, EpochDay) => true
+            case (AlignedWeekOfMonth, AlignedWeekOfMonth) => true
+            case (AlignedWeekOfYear, AlignedWeekOfYear) => true
+            case (MonthOfYear, MonthOfYear) => true
+            case (ProlepticMonth, ProlepticMonth) => true
+            case (YearOfEra, YearOfEra) => true
+            case (Year, Year) => true
+            case (Era, Era) => true
+            case (InstantSeconds, InstantSeconds) => true
+            case (OffsetSeconds, OffsetSeconds) => true
+            case (_,_) => false
+        }
+
+        def neq(x: ChronoField, y: ChronoField): Bool = not (x == y)
+    }
+
 }
 
 namespace Time/Temporal/ChronoField {
@@ -335,39 +373,7 @@ namespace Time/Temporal/ChronoField {
             case x1 if primEquals(x1, getOFFSET_SECONDS())                  => OffsetSeconds
         } as & Pure
 
-    pub def __eq(x: ChronoField, y: ChronoField): Bool = match (x,y) { 
-        case (NanoOfSecond, NanoOfSecond) => true
-        case (NanoOfDay, NanoOfDay) => true
-        case (MicroOfSecond, MicroOfSecond) => true
-        case (MicroOfDay, MicroOfDay) => true
-        case (MilliOfSecond, MilliOfSecond) => true
-        case (MilliOfDay, MilliOfDay) => true
-        case (SecondOfMinute, SecondOfMinute) => true
-        case (SecondOfDay, SecondOfDay) => true
-        case (MinuteOfHour, MinuteOfHour) => true
-        case (MinuteOfDay, MinuteOfDay) => true
-        case (HourOfAmPm, HourOfAmPm) => true
-        case (ClockHourOfAmPm, ClockHourOfAmPm) => true
-        case (HourOfDay, HourOfDay) => true
-        case (ClockHourOfDay, ClockHourOfDay) => true
-        case (AmPmOfDay, AmPmOfDay) => true
-        case (DayOfWeek, DayOfWeek) => true
-        case (AlignedDayOfWeekInMonth, AlignedDayOfWeekInMonth) => true
-        case (AlignedDayOfWeekInYear, AlignedDayOfWeekInYear) => true
-        case (DayOfMonth, DayOfMonth) => true
-        case (DayOfYear, DayOfYear) => true
-        case (EpochDay, EpochDay) => true
-        case (AlignedWeekOfMonth, AlignedWeekOfMonth) => true
-        case (AlignedWeekOfYear, AlignedWeekOfYear) => true
-        case (MonthOfYear, MonthOfYear) => true
-        case (ProlepticMonth, ProlepticMonth) => true
-        case (YearOfEra, YearOfEra) => true
-        case (Year, Year) => true
-        case (Era, Era) => true
-        case (InstantSeconds, InstantSeconds) => true
-        case (OffsetSeconds, OffsetSeconds) => true
-        case (_,_) => false
-    }
+    
 
     pub def compare(x: ChronoField, y: ChronoField): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
 

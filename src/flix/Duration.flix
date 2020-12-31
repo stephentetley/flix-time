@@ -52,6 +52,17 @@ namespace Time {
             }
     }
 
+    instance Eq[Duration] {
+
+        def eq(x: Duration, y: Duration): Bool =
+            import java.time.Duration.equals(##java.lang.Object);
+            let Duration(x1) = x;
+            let Duration(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: Duration, y: Duration): Bool = not (x == y)
+    }
+
     instance Add[Duration] {
         def add(x: Duration, y: Duration): Duration =
             import java.time.Duration.plus(##java.time.Duration);
@@ -207,16 +218,6 @@ namespace Time/Duration {
         let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         Duration(x.of(tu1)) as & Pure
-
-
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: Duration, y: Duration): Bool =
-        import java.time.Duration.equals(##java.lang.Object);
-        let Duration(x1) = x;
-        let Duration(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
 
     ///

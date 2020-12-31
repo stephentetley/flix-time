@@ -46,6 +46,16 @@ namespace Time {
             case _: ##java.time.format.DateTimeParseException => None
         }
     }
+
+    instance Eq[MonthDay] {
+        def eq(x: MonthDay, y: MonthDay): Bool =
+            import java.time.MonthDay.equals(##java.lang.Object);
+            let MonthDay(x1) = x;
+            let MonthDay(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+        
+        def neq(x: MonthDay, y: MonthDay): Bool = not (x == y)
+    }
 }
 
 namespace Time/MonthDay {
@@ -102,14 +112,6 @@ namespace Time/MonthDay {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: MonthDay, y: MonthDay): Bool =
-        import java.time.MonthDay.equals(##java.lang.Object);
-        let MonthDay(x1) = x;
-        let MonthDay(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
     /// Returns ...

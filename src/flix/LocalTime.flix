@@ -50,6 +50,17 @@ namespace Time {
             }
     }
 
+
+    instance Eq[LocalTime] {
+        def eq(x: LocalTime, y: LocalTime): Bool =
+            import java.time.LocalTime.equals(##java.lang.Object);
+            let LocalTime(x1) = x;
+            let LocalTime(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: LocalTime, y: LocalTime): Bool = not (x == y)
+    }
+
     instance LowerBound[LocalTime] {
         def minValue(): LocalTime =
             import get java.time.LocalTime:MIN as getMIN;
@@ -176,14 +187,6 @@ namespace Time/LocalTime {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: LocalTime, y: LocalTime): Bool =
-        import java.time.LocalTime.equals(##java.lang.Object);
-        let LocalTime(x1) = x;
-        let LocalTime(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     ///
     /// Returns

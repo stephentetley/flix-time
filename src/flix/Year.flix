@@ -47,6 +47,16 @@ namespace Time {
             }
     }
 
+    instance Eq[Year] {
+        def eq(x: Year, y: Year): Bool =
+            import java.time.Year.equals(##java.lang.Object);
+            let Year(x1) = x;
+            let Year(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+
+        def neq(x: Year, y: Year): Bool = not (x == y)
+    }
+
     instance Temporal[Year] {
         def marshal(x: Year): ##java.time.temporal.Temporal = 
             let Year(x1) = x;
@@ -77,14 +87,7 @@ namespace Time/Year {
         Year(now())
 
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: Year, y: Year): Bool =
-        import java.time.Year.equals(##java.lang.Object);
-        let Year(x1) = x;
-        let Year(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
+
 
     pub def compare(x: Year, y: Year): Int32 =
         import java.time.Year.compareTo(##java.time.Year);

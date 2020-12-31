@@ -50,6 +50,16 @@ namespace Time {
             }
     }
 
+    instance Eq[Instant] {
+        def eq(x: Instant, y: Instant): Bool =
+            import java.time.Instant.equals(##java.lang.Object);
+            let Instant(x1) = x;
+            let Instant(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+        
+        def neq(x: Instant, y: Instant): Bool = not (x == y)
+    }
+
     instance LowerBound[Instant] {
         def minValue(): Instant =
             import get java.time.Instant:MIN as getMIN;
@@ -148,11 +158,6 @@ namespace Time/Instant {
         let Instant(x1) = x;
         x1.getNano() as & Pure
 
-    pub def __eq(x: Instant, y: Instant): Bool =
-        import java.time.Instant.equals(##java.lang.Object);
-        let Instant(x1) = x;
-        let Instant(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     pub def compare(x: Instant, y: Instant): Int32 =
         import java.time.Instant.compareTo(##java.time.Instant);

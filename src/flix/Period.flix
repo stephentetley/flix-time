@@ -48,7 +48,17 @@ namespace Time {
                 case _: ##java.time.format.DateTimeParseException => None
             }
     }
-    
+
+    instance Eq[Period] {
+        def eq(x: Period, y: Period): Bool =
+            import java.time.Period.equals(##java.lang.Object);
+            let Period(x1) = x;
+            let Period(y1) = y;
+            x1.equals(y1 as ##java.lang.Object) as & Pure
+        
+        def neq(x: Period, y: Period): Bool = not (x == y)
+    }
+
     instance Add[Period] {
         def add(x: Period, y: Period): Period =
             import java.time.Period.plus(##java.time.temporal.TemporalAmount);
@@ -150,14 +160,7 @@ namespace Time/Period {
         Period(x1.normalized()) as & Pure
 
 
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def __eq(x: Period, y: Period): Bool =
-        import java.time.Period.equals(##java.lang.Object);
-        let Period(x1) = x;
-        let Period(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
+
 
     // `compareTo` not implemented in Java 13.
 
