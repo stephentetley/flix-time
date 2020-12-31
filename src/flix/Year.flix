@@ -164,4 +164,12 @@ namespace Time/Year {
         isLeap(x) as & Pure
 
 
+    ///
+    /// Returns `true` if `x` is a leap year.
+    ///
+    pub def length(x: Year): Int32 =
+        import java.time.Year.length();
+        let Year(x1) = x;
+        x1.length() as & Pure
+
 }
