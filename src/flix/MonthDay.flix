@@ -23,9 +23,7 @@ namespace Time {
     ///
     pub opaque type MonthDay = ##java.time.MonthDay
 
-    ///
-    /// 
-    ///
+
     instance ToString[MonthDay] {
         def toString(x: MonthDay): String =
             import java.time.MonthDay.toString();
