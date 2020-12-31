@@ -82,10 +82,44 @@ namespace Time/Year {
     use Time.Year;
     use Time.Year.{Year};
 
+    use Time/Format.DateFormatter;
+    use Time/Format.DateFormatter.{DateFormatter};
+
+    pub def new(year: Int32): Year =
+        import java.time.Year:of(Int32);
+        Year(of(year)) as & Pure
+
+
     pub def now(): Year & Impure =         
         import java.time.Year:now();
         Year(now())
 
+
+    /// 
+    /// Parse the string `s` as a Year, leading or trailing whitespace is trimmed.
+    /// The format of the input string should in the format mandated by `formatter`.
+    ///
+    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    ///
+    pub def parse(s: String, formatter: DateFormatter): Option[Year] =
+        import java.lang.String.strip();
+        import java.time.Year:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        try {
+            let DateFormatter(fmtr) = formatter;
+            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            Some(Year(cs.parse(fmtr))) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
+
+    ///
+    /// Returns the Year `x` as a String using `formatter`.
+    ///
+    pub def format(x: Year, formatter: DateFormatter): String =
+        import java.time.Year.format(##java.time.format.DateTimeFormatter);
+        let Year(x1) = x;
+        let DateFormatter(fmtr) = formatter;
+        x1.format(fmtr) as & Pure
 
 
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace TestMonthDay {
+namespace TestInstant {
 
     use ToString.toString;
 
@@ -23,6 +23,6 @@ namespace TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/MonthDay.new({month = 1, dayOfMonth = 1}))
+    def toString01(): String = toString(Time/Instant.epoch())
 
 }
