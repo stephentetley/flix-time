@@ -59,6 +59,13 @@ namespace Time {
         def neq(x: OffsetDateTime, y: OffsetDateTime): Bool = not (x == y)
     }
 
+    instance Ord[OffsetDateTime] {
+        def less(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compare(x,y) < 0
+        def lessEqual(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compare(x,y) < 0 or x == y
+        def greater(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compare(x,y) > 0
+        def greaterEqual(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compare(x,y) > 0 or x == y
+    }
+
     instance LowerBound[OffsetDateTime] {
         def minValue(): OffsetDateTime =
             import get java.time.OffsetDateTime:MIN as getMIN;

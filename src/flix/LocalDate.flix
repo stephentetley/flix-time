@@ -60,6 +60,13 @@ namespace Time {
         def neq(x: LocalDate, y: LocalDate): Bool = not (x == y)
     }
 
+    instance Ord[LocalDate] {
+        def less(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compare(x,y) < 0
+        def lessEqual(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compare(x,y) < 0 or x == y
+        def greater(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compare(x,y) > 0
+        def greaterEqual(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compare(x,y) > 0 or x == y
+    }
+
     instance LowerBound[LocalDate] {
         def minValue(): LocalDate =
             import get java.time.LocalDate:MIN as getMIN;

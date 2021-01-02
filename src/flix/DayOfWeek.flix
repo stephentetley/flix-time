@@ -83,6 +83,12 @@ namespace Time {
     }
 
 
+    instance Ord[DayOfWeek] {
+        def less(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compare(x,y) < 0
+        def lessEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compare(x,y) < 0 or x == y
+        def greater(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compare(x,y) > 0
+        def greaterEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compare(x,y) > 0 or x == y
+    }
 
 }
 

@@ -63,6 +63,14 @@ namespace Time {
         def neq(x: Duration, y: Duration): Bool = not (x == y)
     }
 
+
+    instance Ord[Duration] {
+        def less(x: Duration, y: Duration): Bool = Time/Duration.compare(x,y) < 0
+        def lessEqual(x: Duration, y: Duration): Bool = Time/Duration.compare(x,y) < 0 or x == y
+        def greater(x: Duration, y: Duration): Bool = Time/Duration.compare(x,y) > 0
+        def greaterEqual(x: Duration, y: Duration): Bool = Time/Duration.compare(x,y) > 0 or x == y
+    }
+
     instance Add[Duration] {
         def add(x: Duration, y: Duration): Duration =
             import java.time.Duration.plus(##java.time.Duration);

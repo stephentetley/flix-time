@@ -60,6 +60,13 @@ namespace Time {
         def neq(x: Instant, y: Instant): Bool = not (x == y)
     }
 
+    instance Ord[Instant] {
+        def less(x: Instant, y: Instant): Bool = Time/Instant.compare(x,y) < 0
+        def lessEqual(x: Instant, y: Instant): Bool = Time/Instant.compare(x,y) < 0 or x == y
+        def greater(x: Instant, y: Instant): Bool = Time/Instant.compare(x,y) > 0
+        def greaterEqual(x: Instant, y: Instant): Bool = Time/Instant.compare(x,y) > 0 or x == y
+    }
+
     instance LowerBound[Instant] {
         def minValue(): Instant =
             import get java.time.Instant:MIN as getMIN;

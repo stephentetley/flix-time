@@ -55,6 +55,14 @@ namespace Time {
         def neq(x: ZoneOffset, y: ZoneOffset): Bool = (x == y)
     }
 
+    instance Ord[ZoneOffset] {
+        def less(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compare(x,y) < 0
+        def lessEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compare(x,y) < 0 or x == y
+        def greater(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compare(x,y) > 0
+        def greaterEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compare(x,y) > 0 or x == y
+    }
+    
+
     instance LowerBound[ZoneOffset] {
         def minValue(): ZoneOffset =
             import get java.time.ZoneOffset:MIN as getMIN;

@@ -56,6 +56,14 @@ namespace Time {
 
         def neq(x: YearMonth, y: YearMonth): Bool = not (x == y)
     }
+
+    instance Ord[YearMonth] {
+        def less(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compare(x,y) < 0
+        def lessEqual(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compare(x,y) < 0 or x == y
+        def greater(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compare(x,y) > 0
+        def greaterEqual(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compare(x,y) > 0 or x == y
+    }
+    
 }
 
 namespace Time/YearMonth {

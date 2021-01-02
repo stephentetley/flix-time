@@ -57,6 +57,13 @@ namespace Time {
         def neq(x: Year, y: Year): Bool = not (x == y)
     }
 
+    instance Ord[Year] {
+        def less(x: Year, y: Year): Bool = Time/Year.compare(x,y) < 0
+        def lessEqual(x: Year, y: Year): Bool = Time/Year.compare(x,y) < 0 or x == y
+        def greater(x: Year, y: Year): Bool = Time/Year.compare(x,y) > 0
+        def greaterEqual(x: Year, y: Year): Bool = Time/Year.compare(x,y) > 0 or x == y
+    }
+    
     instance LowerBound[Year] {
         def minValue(): Year = 
             import get java.time.Year:MIN_VALUE as getMIN_VALUE;
@@ -71,6 +78,9 @@ namespace Time {
             Year(of(getMAX_VALUE())) as & Pure
     }
 
+
+
+    /// Note - Temporal is an experiment...
     instance Temporal[Year] {
         def marshal(x: Year): ##java.time.temporal.Temporal = 
             let Year(x1) = x;

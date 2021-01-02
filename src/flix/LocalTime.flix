@@ -61,6 +61,13 @@ namespace Time {
         def neq(x: LocalTime, y: LocalTime): Bool = not (x == y)
     }
 
+    instance Ord[LocalTime] {
+        def less(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compare(x,y) < 0
+        def lessEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compare(x,y) < 0 or x == y
+        def greater(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compare(x,y) > 0
+        def greaterEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compare(x,y) > 0 or x == y
+    }
+
     instance LowerBound[LocalTime] {
         def minValue(): LocalTime =
             import get java.time.LocalTime:MIN as getMIN;
