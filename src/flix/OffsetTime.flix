@@ -60,11 +60,16 @@ namespace Time {
         def neq(x: OffsetTime, y: OffsetTime): Bool = not (x == y)
     }
 
-    instance Ord[OffsetTime] {
-        def less(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compare(x,y) < 0
-        def lessEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compare(x,y) < 0 or x == y
-        def greater(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compare(x,y) > 0
-        def greaterEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compare(x,y) > 0 or x == y
+    instance Order[OffsetTime] {
+        def less(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) < 0
+        def lessEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) < 0 or x == y
+        def greater(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) > 0
+        def greaterEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) > 0 or x == y
+        def compare(x: OffsetTime, y: OffsetTime): Comparison = match Time/OffsetTime.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
     instance LowerBound[OffsetTime] {
@@ -168,7 +173,7 @@ namespace Time/OffsetTime {
     ///
     /// Returns .
     ///
-    pub def compare(x: OffsetTime, y: OffsetTime): Int32 =
+    pub def compareTo(x: OffsetTime, y: OffsetTime): Int32 =
         import java.time.OffsetTime.compareTo(##java.time.OffsetTime);
         let OffsetTime(x1) = x;
         let OffsetTime(y1) = y;

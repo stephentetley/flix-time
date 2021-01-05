@@ -68,4 +68,18 @@ namespace TestYear {
 
     @test
     def greaterEq01(): Bool = Time/Year.new(2021) >= Time/Year.new(2020)
+
+    /////////////////////////////////////////////////////////////////////////////
+    // compare                                                                 //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def compare01(): Bool = Order.compare(Time/Year.new(2020), Time/Year.new(2021)) == LessThan
+
+    @test
+    def compare02(): Bool = Order.compare(Time/Year.new(2020), Time/Year.new(2020)) == EqualTo
+
+    @test
+    def compare03(): Bool = Order.compare(Time/Year.new(2021), Time/Year.new(2020)) == GreaterThan
+
 }

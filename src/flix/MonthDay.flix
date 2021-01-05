@@ -56,11 +56,16 @@ namespace Time {
     }
 
     
-    instance Ord[MonthDay] {
-        def less(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compare(x,y) < 0
-        def lessEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compare(x,y) < 0 or x == y
-        def greater(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compare(x,y) > 0
-        def greaterEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compare(x,y) > 0 or x == y
+    instance Order[MonthDay] {
+        def less(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) < 0
+        def lessEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) < 0 or x == y
+        def greater(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) > 0
+        def greaterEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) > 0 or x == y
+        def compare(x: MonthDay, y: MonthDay): Comparison = match Time/MonthDay.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
 }
@@ -123,7 +128,7 @@ namespace Time/MonthDay {
     ///
     /// Returns ...
     ///
-    pub def compare(x: MonthDay, y: MonthDay): Int32 =
+    pub def compareTo(x: MonthDay, y: MonthDay): Int32 =
         import java.time.MonthDay.compareTo(##java.time.MonthDay);
         let MonthDay(x1) = x;
         let MonthDay(y1) = y;

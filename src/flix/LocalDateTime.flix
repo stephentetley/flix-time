@@ -61,11 +61,16 @@ namespace Time {
     }
 
 
-    instance Ord[LocalDateTime] {
-        def less(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compare(x,y) < 0
-        def lessEqual(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compare(x,y) < 0 or x == y
-        def greater(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compare(x,y) > 0
-        def greaterEqual(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compare(x,y) > 0 or x == y
+    instance Order[LocalDateTime] {
+        def less(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compareTo(x,y) < 0
+        def lessEqual(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compareTo(x,y) < 0 or x == y
+        def greater(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compareTo(x,y) > 0
+        def greaterEqual(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compareTo(x,y) > 0 or x == y
+        def compare(x: LocalDateTime, y: LocalDateTime): Comparison = match Time/LocalDateTime.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
     instance LowerBound[LocalDateTime] {
@@ -196,7 +201,7 @@ namespace Time/LocalDateTime {
 
 
 
-    pub def compare(x: LocalDateTime, y: LocalDateTime): Int32 =
+    pub def compareTo(x: LocalDateTime, y: LocalDateTime): Int32 =
         import java.time.LocalDateTime.compareTo(##java.time.chrono.ChronoLocalDateTime);
         let LocalDateTime(x1) = x;
         let LocalDateTime(y1) = y;

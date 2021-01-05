@@ -55,11 +55,16 @@ namespace Time {
         def neq(x: ZoneOffset, y: ZoneOffset): Bool = (x == y)
     }
 
-    instance Ord[ZoneOffset] {
-        def less(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compare(x,y) < 0
-        def lessEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compare(x,y) < 0 or x == y
-        def greater(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compare(x,y) > 0
-        def greaterEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compare(x,y) > 0 or x == y
+    instance Order[ZoneOffset] {
+        def less(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) < 0
+        def lessEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) < 0 or x == y
+        def greater(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) > 0
+        def greaterEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) > 0 or x == y
+        def compare(x: ZoneOffset, y: ZoneOffset): Comparison = match Time/ZoneOffset.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
     
 
@@ -109,7 +114,7 @@ namespace Time/ZoneOffset {
 
 
 
-    pub def compare(x: ZoneOffset, y: ZoneOffset): Int32 =
+    pub def compareTo(x: ZoneOffset, y: ZoneOffset): Int32 =
         import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset);
         let ZoneOffset(x1) = x;
         let ZoneOffset(y1) = y;

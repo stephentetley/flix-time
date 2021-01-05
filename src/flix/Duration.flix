@@ -64,11 +64,17 @@ namespace Time {
     }
 
 
-    instance Ord[Duration] {
-        def less(x: Duration, y: Duration): Bool = Time/Duration.compare(x,y) < 0
-        def lessEqual(x: Duration, y: Duration): Bool = Time/Duration.compare(x,y) < 0 or x == y
-        def greater(x: Duration, y: Duration): Bool = Time/Duration.compare(x,y) > 0
-        def greaterEqual(x: Duration, y: Duration): Bool = Time/Duration.compare(x,y) > 0 or x == y
+    instance Order[Duration] {
+        
+        def less(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) < 0        
+        def lessEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) < 0 or x == y
+        def greater(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0        
+        def greaterEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0 or x == y
+        def compare(x: Duration, y: Duration): Comparison = match Time/Duration.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
     instance Add[Duration] {
@@ -231,7 +237,7 @@ namespace Time/Duration {
     ///
     /// Returns 1 if x > y, -1 if x < y, and 0 if x = y.
     ///
-    pub def compare(x: Duration, y: Duration): Int32 =
+    pub def compareTo(x: Duration, y: Duration): Int32 =
         import java.time.Duration.compareTo(##java.time.Duration);
         let Duration(x1) = x;
         let Duration(y1) = y;

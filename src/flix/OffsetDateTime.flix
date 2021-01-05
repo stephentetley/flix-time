@@ -59,11 +59,16 @@ namespace Time {
         def neq(x: OffsetDateTime, y: OffsetDateTime): Bool = not (x == y)
     }
 
-    instance Ord[OffsetDateTime] {
-        def less(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compare(x,y) < 0
-        def lessEqual(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compare(x,y) < 0 or x == y
-        def greater(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compare(x,y) > 0
-        def greaterEqual(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compare(x,y) > 0 or x == y
+    instance Order[OffsetDateTime] {
+        def less(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compareTo(x,y) < 0
+        def lessEqual(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compareTo(x,y) < 0 or x == y
+        def greater(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compareTo(x,y) > 0
+        def greaterEqual(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compareTo(x,y) > 0 or x == y
+        def compare(x: OffsetDateTime, y: OffsetDateTime): Comparison = match Time/OffsetDateTime.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
     instance LowerBound[OffsetDateTime] {
@@ -237,7 +242,7 @@ namespace Time/OffsetDateTime {
         }
 
 
-    pub def compare(x: OffsetDateTime, y: OffsetDateTime): Int32 =
+    pub def compareTo(x: OffsetDateTime, y: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.compareTo(##java.time.OffsetDateTime);
         let OffsetDateTime(x1) = x;
         let OffsetDateTime(y1) = y;

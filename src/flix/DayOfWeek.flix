@@ -83,11 +83,16 @@ namespace Time {
     }
 
 
-    instance Ord[DayOfWeek] {
-        def less(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compare(x,y) < 0
-        def lessEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compare(x,y) < 0 or x == y
-        def greater(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compare(x,y) > 0
-        def greaterEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compare(x,y) > 0 or x == y
+    instance Order[DayOfWeek] {
+        def less(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0
+        def lessEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0 or x == y
+        def greater(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) > 0
+        def greaterEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) > 0 or x == y
+        def compare(x: DayOfWeek, y: DayOfWeek): Comparison = match Time/DayOfWeek.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
 }
@@ -188,7 +193,7 @@ namespace Time/DayOfWeek {
 
 
 
-    pub def compare(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
+    pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
 
     pub def plus(x:DayOfWeek, y: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64);

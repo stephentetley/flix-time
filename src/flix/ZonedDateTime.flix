@@ -59,11 +59,16 @@ namespace Time {
         def neq(x: ZonedDateTime, y: ZonedDateTime): Bool = not (x == y)
     }
 
-    instance Ord[ZonedDateTime] {
-        def less(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compare(x,y) < 0
-        def lessEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compare(x,y) < 0 or x == y
-        def greater(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compare(x,y) > 0
-        def greaterEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compare(x,y) > 0 or x == y
+    instance Order[ZonedDateTime] {
+        def less(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) < 0
+        def lessEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) < 0 or x == y
+        def greater(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) > 0
+        def greaterEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) > 0 or x == y
+        def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison = match Time/ZonedDateTime.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
     
 }
@@ -173,7 +178,7 @@ namespace Time/ZonedDateTime {
     ///
     /// Returns `true` if `x` == `y`.
     ///
-    pub def compare(x: ZonedDateTime, y: ZonedDateTime): Int32 =
+    pub def compareTo(x: ZonedDateTime, y: ZonedDateTime): Int32 =
         import java.time.chrono.ChronoZonedDateTime.compareTo(##java.time.chrono.ChronoZonedDateTime);
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;

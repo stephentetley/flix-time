@@ -61,11 +61,16 @@ namespace Time {
         def neq(x: LocalTime, y: LocalTime): Bool = not (x == y)
     }
 
-    instance Ord[LocalTime] {
-        def less(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compare(x,y) < 0
-        def lessEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compare(x,y) < 0 or x == y
-        def greater(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compare(x,y) > 0
-        def greaterEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compare(x,y) > 0 or x == y
+    instance Order[LocalTime] {
+        def less(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) < 0
+        def lessEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) < 0 or x == y
+        def greater(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) > 0
+        def greaterEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) > 0 or x == y
+        def compare(x: LocalTime, y: LocalTime): Comparison = match Time/LocalTime.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
     instance LowerBound[LocalTime] {
@@ -198,7 +203,7 @@ namespace Time/LocalTime {
     ///
     /// Returns
     ///
-    pub def compare(x: LocalTime, y: LocalTime): Int32 =
+    pub def compareTo(x: LocalTime, y: LocalTime): Int32 =
         import java.time.LocalTime.compareTo(##java.time.LocalTime);
         let LocalTime(x1) = x;
         let LocalTime(y1) = y;

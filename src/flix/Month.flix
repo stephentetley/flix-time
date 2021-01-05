@@ -89,11 +89,16 @@ namespace Time {
     }
 
     
-    instance Ord[Month] {
-        def less(x: Month, y: Month): Bool = Time/Month.compare(x,y) < 0
-        def lessEqual(x: Month, y: Month): Bool = Time/Month.compare(x,y) < 0 or x == y
-        def greater(x: Month, y: Month): Bool = Time/Month.compare(x,y) > 0
-        def greaterEqual(x: Month, y: Month): Bool = Time/Month.compare(x,y) > 0 or x == y
+    instance Order[Month] {
+        def less(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) < 0
+        def lessEqual(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) < 0 or x == y
+        def greater(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) > 0
+        def greaterEqual(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) > 0 or x == y
+        def compare(x: Month, y: Month): Comparison = match Time/Month.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
 }
@@ -212,7 +217,7 @@ namespace Time/Month {
         x1.name() as & Pure
 
 
-    pub def compare(x: Month, y: Month): Int32 = Int32.compare(toInt32(x), toInt32(y))
+    pub def compareTo(x: Month, y: Month): Int32 = Int32.compare(toInt32(x), toInt32(y))
 
 
     pub def plus(x:Month, y: Int64): Month = 

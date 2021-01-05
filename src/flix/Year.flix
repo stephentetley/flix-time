@@ -57,11 +57,16 @@ namespace Time {
         def neq(x: Year, y: Year): Bool = not (x == y)
     }
 
-    instance Ord[Year] {
-        def less(x: Year, y: Year): Bool = Time/Year.compare(x,y) < 0
-        def lessEqual(x: Year, y: Year): Bool = Time/Year.compare(x,y) < 0 or x == y
-        def greater(x: Year, y: Year): Bool = Time/Year.compare(x,y) > 0
-        def greaterEqual(x: Year, y: Year): Bool = Time/Year.compare(x,y) > 0 or x == y
+    instance Order[Year] {
+        def less(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) < 0
+        def lessEqual(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) < 0 or x == y
+        def greater(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) > 0
+        def greaterEqual(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) > 0 or x == y
+        def compare(x: Year, y: Year): Comparison = match Time/Year.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
     
     instance LowerBound[Year] {
@@ -203,7 +208,7 @@ namespace Time/Year {
         
     
 
-    pub def compare(x: Year, y: Year): Int32 =
+    pub def compareTo(x: Year, y: Year): Int32 =
         import java.time.Year.compareTo(##java.time.Year);
         let Year(x1) = x;
         let Year(y1) = y;

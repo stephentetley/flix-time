@@ -60,11 +60,16 @@ namespace Time {
         def neq(x: Instant, y: Instant): Bool = not (x == y)
     }
 
-    instance Ord[Instant] {
-        def less(x: Instant, y: Instant): Bool = Time/Instant.compare(x,y) < 0
-        def lessEqual(x: Instant, y: Instant): Bool = Time/Instant.compare(x,y) < 0 or x == y
-        def greater(x: Instant, y: Instant): Bool = Time/Instant.compare(x,y) > 0
-        def greaterEqual(x: Instant, y: Instant): Bool = Time/Instant.compare(x,y) > 0 or x == y
+    instance Order[Instant] {
+        def less(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) < 0
+        def lessEqual(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) < 0 or x == y
+        def greater(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) > 0
+        def greaterEqual(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) > 0 or x == y
+        def compare(x: Instant, y: Instant): Comparison = match Time/Instant.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
     }
 
     instance LowerBound[Instant] {
@@ -166,7 +171,7 @@ namespace Time/Instant {
         x1.getNano() as & Pure
 
 
-    pub def compare(x: Instant, y: Instant): Int32 =
+    pub def compareTo(x: Instant, y: Instant): Int32 =
         import java.time.Instant.compareTo(##java.time.Instant);
         let Instant(x1) = x;
         let Instant(y1) = y;
