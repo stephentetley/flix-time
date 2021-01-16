@@ -17,8 +17,8 @@
 
 namespace Time {
 
-    use class Time/Temporal.Temporal;
-    use class Time/Temporal.TemporalAmount;
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAmount;
 
     ///
     /// A wrapper around a Java Period.
