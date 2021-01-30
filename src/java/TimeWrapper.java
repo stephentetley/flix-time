@@ -17,13 +17,21 @@
 package flix.runtime.spt.newtime;
 
 import java.time.Instant;
+import java.time.chrono.HijrahEra;
+import java.time.format.TextStyle;
 import java.time.temporal.TemporalField;
 import java.time.temporal.ValueRange;
+import java.util.Locale;
 
 
 public class TimeWrapper {
-    // `range` appears to be a keyword to Flix
-    public static ValueRange getRangeOfInstant(Instant i, TemporalField field) throws Exception {
+    // `range` causes Flix to throw parse errors in "import java...." statements
+    public static ValueRange instantRange(Instant i, TemporalField field) throws Exception {
         return i.range(field);
+    }
+
+    // `getDisplayName` causes same parse error
+    public static String hijrahEraGetDisplayName(HijrahEra x, TextStyle style, Locale locale) {
+        return x.getDisplayName(style, locale);
     }
 }

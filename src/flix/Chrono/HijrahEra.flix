@@ -26,6 +26,9 @@ namespace Time/Chrono/HijrahEra {
 
     use Time/Chrono.HijrahEra;
     use Time/Chrono.HijrahEra.{AH};
+    use Time/Format.TextStyle;
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
 
     pub def marshal(x: HijrahEra): ##java.time.chrono.HijrahEra = 
         import get java.time.chrono.HijrahEra:AH      as getAH;
@@ -49,4 +52,14 @@ namespace Time/Chrono/HijrahEra {
         import java.time.chrono.HijrahEra.getValue();
         let x1 = marshal(x);
         getValue(x1) as & Pure 
+
+    /// 
+    pub def getDisplayName(x: HijrahEra, style: TextStyle, locale: Locale): String = 
+        import flix.runtime.spt.newtime.TimeWrapper:hijrahEraGetDisplayName(##java.time.chrono.HijrahEra, ##java.time.format.TextStyle, ##java.util.Locale) as fn;
+        let x1 = marshal(x);
+        let style1 = Time/Format/TextStyle.marshal(style);
+        let Locale(locale1) = locale;
+        fn(x1, style1, locale1) as & Pure
+        
+
 }
