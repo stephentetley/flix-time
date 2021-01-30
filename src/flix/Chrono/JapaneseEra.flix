@@ -19,6 +19,8 @@ namespace Time/Chrono {
     ///
     /// A wrapper around java.time.chrono.JapaneseEra.
     ///
+    /// In Java, JapaneseEra is a class not an enum unlike HijrahEra
+    ///
     pub opaque type JapaneseEra = ##java.time.chrono.JapaneseEra
     
     ///

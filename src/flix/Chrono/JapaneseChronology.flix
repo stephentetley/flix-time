@@ -15,15 +15,43 @@
  */
 
 
+namespace Time/Chrono {
+
+    pub opaque type JapaneseChronology = ##java.time.chrono.JapaneseChronology
+
+}
+
+/// TODO should provide functions from the TemporalUnit interface
+
 namespace Time/Chrono/JapaneseChronology {
 
-    def getInstance(): ##java.time.chrono.JapaneseChronology & Impure = 
-        import get java.time.chrono.JapaneseChronology:INSTANCE      as getINSTANCE;
-        getINSTANCE()
+    use Time/Chrono.JapaneseChronology;
+    use Time/Chrono.JapaneseChronology.{JapaneseChronology};
+    use Time/Chrono.JapaneseDate;
+    use Time/Chrono.JapaneseDate.{JapaneseDate};
+    use Time/Chrono.JapaneseEra;
+    use Time/Chrono.JapaneseEra.{JapaneseEra};
 
-    pub def getCalendarType(): String & Impure = 
+
+    pub def getInstance(): JapaneseChronology & Impure = 
+        import get java.time.chrono.JapaneseChronology:INSTANCE      as getINSTANCE;
+        JapaneseChronology(getINSTANCE())
+
+    pub def getCalendarType(x: JapaneseChronology): String = 
         import java.time.chrono.JapaneseChronology.getCalendarType();
-        let x1 = getInstance();
-        getCalendarType(x1)
+        let JapaneseChronology(x1) = x;
+        getCalendarType(x1) as & Pure
+
+
+    pub def dateNow(x: JapaneseChronology): JapaneseDate & Impure = 
+        import java.time.chrono.JapaneseChronology.dateNow();
+        let JapaneseChronology(x1) = x;
+        JapaneseDate(dateNow(x1))
+
+    pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
+        import java.time.chrono.JapaneseChronology.eraOf(Int32);
+        let JapaneseChronology(x1) = x;
+        JapaneseEra(eraOf(x1, i) as & Pure)
+
 
 }

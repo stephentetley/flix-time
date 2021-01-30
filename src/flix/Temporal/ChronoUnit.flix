@@ -105,6 +105,8 @@ namespace Time/Temporal {
 
 }
 
+/// TODO should provide functions from the TemporalUnit interface
+
 namespace Time/Temporal/ChronoUnit {
 
     use Time/Temporal.ChronoUnit;
