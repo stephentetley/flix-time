@@ -48,5 +48,30 @@ namespace Time/Chrono/JapaneseEra {
             case _: ##java.time.DateTimeException => None
         }
 
+    pub def heisei(): JapaneseEra = 
+        import get java.time.chrono.JapaneseEra:HEISEI as getHEISEI;
+        JapaneseEra(getHEISEI()) as & Pure
+
+    pub def meiji(): JapaneseEra = 
+        import get java.time.chrono.JapaneseEra:MEIJI as getMEIJI;
+        JapaneseEra(getMEIJI()) as & Pure
+
+    /// Java 13
+    /// pub def reiwa(): JapaneseEra = 
+    ///     import get java.time.chrono.JapaneseEra:REIWA as getREIWA;
+    ///     JapaneseEra(getREIWA()) as & Pure
+
+    pub def showa(): JapaneseEra = 
+        import get java.time.chrono.JapaneseEra:SHOWA as getSHOWA;
+        JapaneseEra(getSHOWA()) as & Pure
+
+    pub def taisho(): JapaneseEra = 
+        import get java.time.chrono.JapaneseEra:TAISHO as getTAISHO;
+        JapaneseEra(getTAISHO()) as & Pure
+
+    pub def getValue(x: JapaneseEra): Int32 = 
+        import java.time.chrono.JapaneseEra.getValue();
+        let JapaneseEra(x1) = x;
+        getValue(x1) as & Pure 
 
 }

@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
+namespace Time/Chrono {
+
+    pub opaque type MinguoChronology = ##java.time.chrono.MinguoChronology
+
+}
 
 namespace Time/Chrono/MinguoChronology {
 
-    def getInstance(): ##java.time.chrono.MinguoChronology & Impure =
-        import get java.time.chrono.MinguoChronology:INSTANCE      as getINSTANCE;
-        getINSTANCE()
+    use Time/Chrono.MinguoChronology;
+    use Time/Chrono.MinguoChronology.{MinguoChronology};
 
-    pub def getCalendarType(): String & Impure = 
+    pub def getInstance(): MinguoChronology & Impure =
+        import get java.time.chrono.MinguoChronology:INSTANCE      as getINSTANCE;
+        MinguoChronology(getINSTANCE())
+
+    pub def getCalendarType(x: MinguoChronology): String = 
         import java.time.chrono.MinguoChronology.getCalendarType();
-        let x1 = getInstance();
-        getCalendarType(x1)
+        let MinguoChronology(x1) = x;
+        getCalendarType(x1) as & Pure
 
 }

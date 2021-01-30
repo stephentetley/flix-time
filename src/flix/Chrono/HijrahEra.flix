@@ -45,4 +45,8 @@ namespace Time/Chrono/HijrahEra {
             case x1 if primEquals(x1, getAH())     => AH
         } as & Pure
 
+    pub def getValue(x: HijrahEra): Int32 = 
+        import java.time.chrono.HijrahEra.getValue();
+        let x1 = marshal(x);
+        getValue(x1) as & Pure 
 }

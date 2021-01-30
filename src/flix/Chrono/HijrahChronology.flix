@@ -15,13 +15,8 @@
  */
 
 namespace Time/Chrono {
-    
-    ///
-    /// java.time.chrono.HijrahChronology is a singleton we treat it as a "handle monad" 
-    /// i.e. a Reader monad without local.
-    /// TODO - it's likely we will need to include error handling.
-    ///
-    pub opaque type HijrahChronology[a] = ##java.time.chrono.HijrahChronology ~> a
+
+    pub opaque type HijrahChronology = ##java.time.chrono.HijrahChronology
 
 }
 
@@ -34,28 +29,26 @@ namespace Time/Chrono/HijrahChronology {
     use Time/Chrono.HijrahDate.{HijrahDate};
     use Time/Chrono.HijrahEra;
 
-    def getInstance(): ##java.time.chrono.HijrahChronology & Impure =
-        import get java.time.chrono.HijrahChronology:INSTANCE      as getINSTANCE;
-        getINSTANCE()
+    pub def getInstance(): HijrahChronology & Impure =
+        import get java.time.chrono.HijrahChronology:INSTANCE as getINSTANCE;
+        HijrahChronology(getINSTANCE())
         
 
-    pub def runHijrahChronology(x: HijrahChronology[a]): a & Impure = 
-        let HijrahChronology(x1) = x;
-        let hc = getInstance();
-        x1(hc)
-
-    pub def dateNow(): HijrahChronology[HijrahDate] = 
+    pub def dateNow(x: HijrahChronology): HijrahDate & Impure = 
         import java.time.chrono.HijrahChronology.dateNow();
-        HijrahChronology(r -> HijrahDate(dateNow(r)))
+        let HijrahChronology(x1) = x;
+        HijrahDate(dateNow(x1))
 
 
-    pub def getCalendarType(): HijrahChronology[String] = 
+    pub def getCalendarType(x: HijrahChronology): String = 
         import java.time.chrono.HijrahChronology.getCalendarType();
-        HijrahChronology(r -> getCalendarType(r))
+        let HijrahChronology(x1) = x;
+        getCalendarType(x1) as & Pure
 
-    pub def eraOf(x: Int32): HijrahChronology[HijrahEra] = 
+    pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra = 
         import java.time.chrono.HijrahChronology.eraOf(Int32);
         use Time/Chrono/HijrahEra.{unmarshal};
-        HijrahChronology(r -> unmarshal(eraOf(r, x)))
+        let HijrahChronology(x1) = x;
+        unmarshal(eraOf(x1, i) as & Pure)
         
 }

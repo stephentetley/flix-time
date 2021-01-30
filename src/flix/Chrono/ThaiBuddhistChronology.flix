@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
+namespace Time/Chrono {
+
+    pub opaque type ThaiBuddhistChronology = ##java.time.chrono.ThaiBuddhistChronology
+
+}
 
 namespace Time/Chrono/ThaiBuddhistChronology {
 
-    def getInstance(): ##java.time.chrono.ThaiBuddhistChronology & Impure = 
-        import get java.time.chrono.ThaiBuddhistChronology:INSTANCE      as getINSTANCE;
-        getINSTANCE()
+    use Time/Chrono.ThaiBuddhistChronology;
+    use Time/Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology};
 
-    pub def getCalendarType(): String & Impure = 
+    pub def getInstance(): ThaiBuddhistChronology & Impure = 
+        import get java.time.chrono.ThaiBuddhistChronology:INSTANCE      as getINSTANCE;
+        ThaiBuddhistChronology(getINSTANCE())
+
+    pub def getCalendarType(x: ThaiBuddhistChronology): String  = 
         import java.time.chrono.ThaiBuddhistChronology.getCalendarType();
-        let x1 = getInstance();
-        getCalendarType(x1)
+        let ThaiBuddhistChronology(x1) = x;
+        getCalendarType(x1) as & Pure
 
 }
