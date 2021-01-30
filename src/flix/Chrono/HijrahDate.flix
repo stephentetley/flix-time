@@ -30,6 +30,12 @@ namespace Time/Chrono {
             let HijrahDate(x1) = x;
             toString(x1) as & Pure
     }
+
+    instance Eq[HijrahDate] {
+        def eq(x: HijrahDate, y: HijrahDate): Bool = Time/Chrono/HijrahDate.equals(x, y)
+
+        def neq(x: HijrahDate, y: HijrahDate): Bool = not (x == y)
+    }
 }
 
 namespace Time/Chrono/HijrahDate {
@@ -37,6 +43,8 @@ namespace Time/Chrono/HijrahDate {
 
     use Time/Chrono.HijrahDate;
     use Time/Chrono.HijrahDate.{HijrahDate};
+    use Time/Chrono.HijrahChronology;
+    use Time/Chrono.HijrahChronology.{HijrahChronology};
 
     ///
     /// Returns ___
@@ -45,5 +53,16 @@ namespace Time/Chrono/HijrahDate {
         import java.time.chrono.HijrahDate:now();
         HijrahDate(now())
 
+
+    pub def equals(x: HijrahDate, y: HijrahDate): Bool = 
+        import java.time.chrono.HijrahDate.equals(##java.lang.Object);
+        let HijrahDate(x1) = x;
+        let HijrahDate(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
+
+    /// pub def getChronology(x: HijrahDate): HijrahChronology = 
+    ///     import java.time.chrono.HijrahDate.getChronology(##java.lang.Object);
+    ///     let HijrahDate(x1) = x;
+    ///     getChronology(x1) as & Pure
 
 }
