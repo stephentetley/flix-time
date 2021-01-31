@@ -46,8 +46,11 @@ namespace Time/Chrono/HijrahDate {
     use Time/Chrono.HijrahChronology;
     use Time/Chrono.HijrahChronology.{HijrahChronology};
     use Time/Chrono.HijrahEra;
+    use Time/Temporal.ChronoUnit;
     use Time.Clock;
     use Time.Clock.{Clock};
+    use Time.Period;    
+    use Time.Period.{Period};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -104,5 +107,44 @@ namespace Time/Chrono/HijrahDate {
         import java.time.chrono.HijrahDate.lengthOfYear();
         let HijrahDate(x1) = x;
         lengthOfYear(x1) as & Pure
+
+    pub def plusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
+        import java.time.chrono.HijrahDate.plus(Int64, ##java.time.temporal.TemporalUnit);
+        let HijrahDate(x1) = x;
+        let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
+        HijrahDate(plus(x1, amount, unit1) as & Pure)
+
+    pub def minusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
+        import java.time.chrono.HijrahDate.minus(Int64, ##java.time.temporal.TemporalUnit);
+        let HijrahDate(x1) = x;
+        let unit1 = Time/Temporal/ChronoUnit.marshal(temporalUnit) as ##java.time.temporal.TemporalUnit;
+        HijrahDate(minus(x1, amount, unit1) as & Pure)
+
+    pub def plusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
+        import java.time.chrono.HijrahDate.plus(##java.time.temporal.TemporalAmount);
+        let HijrahDate(x1) = x;
+        let Period(amount1) = amount;
+        let tamount1 = amount1 as ##java.time.temporal.TemporalAmount;
+        HijrahDate(plus(x1, tamount1) as & Pure)
+
+    pub def minusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
+        import java.time.chrono.HijrahDate.minus(##java.time.temporal.TemporalAmount);
+        let HijrahDate(x1) = x;
+        let Period(amount1) = amount;
+        let tamount1 = amount1 as ##java.time.temporal.TemporalAmount;
+        HijrahDate(minus(x1, tamount1) as & Pure)
+
+    pub def until(b: HijrahDate, e: HijrahDate, unit: ChronoUnit): Int64 = 
+        import java.time.chrono.HijrahDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
+        let HijrahDate(b1) = b;
+        let HijrahDate(e1) = e;
+        let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
+        until(b1, e1, unit1)
+
+    pub def withVariant(x: HijrahDate, chronology: HijrahChronology): HijrahDate = 
+        import java.time.chrono.HijrahDate.withVariant(##java.time.chrono.HijrahChronology);
+        let HijrahDate(x1) = x;
+        let HijrahChronology(chronology1) = chronology;
+        HijrahDate(withVariant(x1, chronology1) as & Pure)
 
 }

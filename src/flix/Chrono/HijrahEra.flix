@@ -32,11 +32,15 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/HijrahEra {
 
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
+
     use Time/Chrono.HijrahEra;
     use Time/Chrono.HijrahEra.{AH};
     use Time/Format.TextStyle;
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use Time/Temporal.ChronoField;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
 
     pub def marshal(x: HijrahEra): ##java.time.chrono.HijrahEra = 
         import get java.time.chrono.HijrahEra:AH      as getAH;
@@ -69,6 +73,10 @@ namespace Time/Chrono/HijrahEra {
         let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1) as & Pure
         
-    
+    pub def range(x: HijrahEra, field: ChronoField): ValueRange = 
+        import java.time.chrono.HijrahEra.range(##java.time.temporal.TemporalField);
+        let x1 = marshal(x);
+        let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+        ValueRange(range(x1, field1) as & Pure)
 
 }
