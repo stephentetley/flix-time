@@ -117,7 +117,7 @@ namespace Time/Chrono/HijrahDate {
     pub def minusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
         import java.time.chrono.HijrahDate.minus(Int64, ##java.time.temporal.TemporalUnit);
         let HijrahDate(x1) = x;
-        let unit1 = Time/Temporal/ChronoUnit.marshal(temporalUnit) as ##java.time.temporal.TemporalUnit;
+        let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
         HijrahDate(minus(x1, amount, unit1) as & Pure)
 
     pub def plusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
@@ -138,8 +138,9 @@ namespace Time/Chrono/HijrahDate {
         import java.time.chrono.HijrahDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let HijrahDate(b1) = b;
         let HijrahDate(e1) = e;
+        let te1 = e1 as ##java.time.temporal.Temporal;
         let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
-        until(b1, e1, unit1)
+        until(b1, te1, unit1) as & Pure
 
     pub def withVariant(x: HijrahDate, chronology: HijrahChronology): HijrahDate = 
         import java.time.chrono.HijrahDate.withVariant(##java.time.chrono.HijrahChronology);
