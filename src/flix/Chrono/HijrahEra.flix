@@ -19,7 +19,15 @@ namespace Time/Chrono {
     pub enum HijrahEra {
         case AH
     }   
- 
+    
+    instance Eq[HijrahEra] {
+        def eq(x: HijrahEra, y: HijrahEra): Bool = match (x, y) {
+            case (AH, AH) => true
+        }
+
+        def neq(x: HijrahEra, y: HijrahEra): Bool = not (x == y)
+    }
+
 }
 
 namespace Time/Chrono/HijrahEra {
