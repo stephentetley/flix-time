@@ -43,7 +43,7 @@ namespace Time/Chrono/HijrahEra {
         equals(x1, y1) as & Pure
 
     pub def unmarshal(x: ##java.time.chrono.HijrahEra): HijrahEra = 
-        import get java.time.chrono.HijrahEra:AH      as getAH;
+        import get java.time.chrono.HijrahEra:AH as getAH;
         match x {
             case x1 if primEquals(x1, getAH())     => AH
         } as & Pure
@@ -55,11 +55,12 @@ namespace Time/Chrono/HijrahEra {
 
     /// 
     pub def getDisplayName(x: HijrahEra, style: TextStyle, locale: Locale): String = 
-        import flix.runtime.spt.newtime.TimeWrapper:hijrahEraGetDisplayName(##java.time.chrono.HijrahEra, ##java.time.format.TextStyle, ##java.util.Locale) as fn;
+        import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
         let x1 = marshal(x);
         let style1 = Time/Format/TextStyle.marshal(style);
         let Locale(locale1) = locale;
-        fn(x1, style1, locale1) as & Pure
+        getDisplayName(x1, style1, locale1) as & Pure
         
+    
 
 }

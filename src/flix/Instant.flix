@@ -248,11 +248,11 @@ namespace Time/Instant {
 
     pub def range(cf: ChronoField, x: Instant): ValueRange = 
         /// Note the import path `java.time.Instant.range` causes a parse error.
-        import flix.runtime.spt.newtime.TimeWrapper:instantRange(##java.time.Instant, ##java.time.temporal.TemporalField) as getRangeOfInstant;
+        import java.time.Instant.range(##java.time.temporal.TemporalField);
         let Instant(x1) = x;
         let cf1 = Time/Temporal/ChronoField.marshal(cf);
         let tf1 = cf1 as ##java.time.temporal.TemporalField;
-        ValueRange(getRangeOfInstant(x1, tf1)) as & Pure
+        ValueRange(range(x1, tf1)) as & Pure
 
 
 }
