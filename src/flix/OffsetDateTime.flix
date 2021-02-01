@@ -59,6 +59,10 @@ namespace Time {
         def neq(x: OffsetDateTime, y: OffsetDateTime): Bool = not (x == y)
     }
 
+    instance Hash[OffsetDateTime] {
+        def hash(x: OffsetDateTime): Int = Time/OffsetDateTime.hashCode(x)
+    }
+
     instance Order[OffsetDateTime] {
         def less(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compareTo(x,y) < 0
         def lessEqual(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compareTo(x,y) < 0 or x == y
@@ -241,6 +245,11 @@ namespace Time/OffsetDateTime {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+
+    pub def hashCode(x: OffsetDateTime): Int32 = 
+        import java.time.OffsetDateTime.hashCode();
+        let OffsetDateTime(x1) = x;
+        hashCode(x1) as & Pure
 
     pub def compareTo(x: OffsetDateTime, y: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.compareTo(##java.time.OffsetDateTime);

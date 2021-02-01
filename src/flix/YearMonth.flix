@@ -57,6 +57,10 @@ namespace Time {
         def neq(x: YearMonth, y: YearMonth): Bool = not (x == y)
     }
 
+    instance Hash[YearMonth] {
+        def hash(x: YearMonth): Int = Time/YearMonth.hashCode(x)
+    }
+
     instance Order[YearMonth] {
         def less(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) < 0
         def lessEqual(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) < 0 or x == y
@@ -119,6 +123,11 @@ namespace Time/YearMonth {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+
+    pub def hashCode(x: YearMonth): Int32 = 
+        import java.time.YearMonth.hashCode();
+        let YearMonth(x1) = x;
+        hashCode(x1) as & Pure
 
 
     ///

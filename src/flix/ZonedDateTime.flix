@@ -59,6 +59,10 @@ namespace Time {
         def neq(x: ZonedDateTime, y: ZonedDateTime): Bool = not (x == y)
     }
 
+    instance Hash[ZonedDateTime] {
+        def hash(x: ZonedDateTime): Int = Time/ZonedDateTime.hashCode(x)
+    }
+
     instance Order[ZonedDateTime] {
         def less(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) < 0
         def lessEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) < 0 or x == y
@@ -173,6 +177,11 @@ namespace Time/ZonedDateTime {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+
+    pub def hashCode(x: ZonedDateTime): Int32 = 
+        import java.time.ZonedDateTime.hashCode();
+        let ZonedDateTime(x1) = x;
+        hashCode(x1) as & Pure
 
 
     ///

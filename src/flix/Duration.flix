@@ -63,6 +63,9 @@ namespace Time {
         def neq(x: Duration, y: Duration): Bool = not (x == y)
     }
 
+    instance Hash[Duration] {
+        def hash(x: Duration): Int = Time/Duration.hashCode(x)
+    }
 
     instance Order[Duration] {
         
@@ -108,7 +111,6 @@ namespace Time {
 }
 
 namespace Time/Duration {
-
 
     use Time.Duration;
     use Time.Duration.{Duration};
@@ -233,6 +235,10 @@ namespace Time/Duration {
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         Duration(x.of(tu1)) as & Pure
 
+    pub def hashCode(x: Duration): Int32 = 
+        import java.time.Duration.hashCode();
+        let Duration(x1) = x;
+        hashCode(x1) as & Pure
 
     ///
     /// Returns 1 if x > y, -1 if x < y, and 0 if x = y.

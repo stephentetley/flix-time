@@ -55,6 +55,10 @@ namespace Time {
         def neq(x: ZoneOffset, y: ZoneOffset): Bool = (x == y)
     }
 
+    instance Hash[ZoneOffset] {
+        def hash(x: ZoneOffset): Int = Time/ZoneOffset.hashCode(x)
+    }
+
     instance Order[ZoneOffset] {
         def less(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) < 0
         def lessEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) < 0 or x == y
@@ -112,6 +116,11 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset:ofTotalSeconds(Int32);
         ZoneOffset(ofTotalSeconds(seconds)) as & Pure
 
+
+    pub def hashCode(x: ZoneOffset): Int32 = 
+        import java.time.ZoneOffset.hashCode();
+        let ZoneOffset(x1) = x;
+        hashCode(x1) as & Pure
 
 
     pub def compareTo(x: ZoneOffset, y: ZoneOffset): Int32 =

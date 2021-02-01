@@ -59,6 +59,11 @@ namespace Time {
         def neq(x: Period, y: Period): Bool = not (x == y)
     }
 
+
+    instance Hash[Period] {
+        def hash(x: Period): Int = Time/Period.hashCode(x)
+    }
+
     instance Add[Period] {
         def add(x: Period, y: Period): Period =
             import java.time.Period.plus(##java.time.temporal.TemporalAmount);
@@ -151,8 +156,11 @@ namespace Time/Period {
         let Period(x1) = x;
         toTotalMonths(x1) as & Pure
 
-        
-    
+    pub def hashCode(x: Period): Int32 = 
+        import java.time.Period.hashCode();
+        let Period(x1) = x;
+        hashCode(x1) as & Pure
+
 
      pub def normalize(x: Period): Period =
         import java.time.Period.normalized();

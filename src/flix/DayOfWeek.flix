@@ -82,6 +82,9 @@ namespace Time {
         def neq(x: DayOfWeek, y: DayOfWeek): Bool = not (x == y)
     }
 
+    instance Hash[DayOfWeek] {
+        def hash(x: DayOfWeek): Int = Time/DayOfWeek.hashCode(x)
+    }
 
     instance Order[DayOfWeek] {
         def less(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0
@@ -188,9 +191,13 @@ namespace Time/DayOfWeek {
 
     pub def getName(x: DayOfWeek): String =
         import java.lang.Enum.name();
-        let x1 = marshal(x) as ##java.lang.Enum;
-        x1.name() as & Pure
+        let en1 = marshal(x) as ##java.lang.Enum;
+        name(en1) as & Pure
 
+    pub def hashCode(x: DayOfWeek): Int32 =
+        import java.lang.Enum.hashCode();
+        let en1 = marshal(x) as ##java.lang.Enum;
+        hashCode(en1) as & Pure
 
 
     pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(fromEnum(x), fromEnum(y))

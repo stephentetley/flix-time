@@ -55,7 +55,10 @@ namespace Time {
         def neq(x: MonthDay, y: MonthDay): Bool = not (x == y)
     }
 
-    
+    instance Hash[MonthDay] {
+        def hash(x: MonthDay): Int = Time/MonthDay.hashCode(x)
+    }
+
     instance Order[MonthDay] {
         def less(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) < 0
         def lessEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) < 0 or x == y
@@ -124,6 +127,11 @@ namespace Time/MonthDay {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+
+    pub def hashCode(x: MonthDay): Int32 = 
+        import java.time.MonthDay.hashCode();
+        let MonthDay(x1) = x;
+        hashCode(x1) as & Pure
 
     ///
     /// Returns ...

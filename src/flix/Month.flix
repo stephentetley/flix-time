@@ -88,7 +88,10 @@ namespace Time {
         def neq(x: Month, y: Month): Bool = not (x == y)
     }
 
-    
+    instance Hash[Month] {
+        def hash(x: Month): Int = Time/Month.hashCode(x)
+    }
+
     instance Order[Month] {
         def less(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) < 0
         def lessEqual(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) < 0 or x == y
@@ -213,9 +216,14 @@ namespace Time/Month {
 
     pub def getName(x: Month): String =
         import java.lang.Enum.name();
-        let x1 = marshal(x) as ##java.lang.Enum;
-        x1.name() as & Pure
+        let en1 = marshal(x) as ##java.lang.Enum;
+        name(en1) as & Pure
 
+
+    pub def hashCode(x: Month): Int32 =
+        import java.lang.Enum.hashCode();
+        let en1 = marshal(x) as ##java.lang.Enum;
+        hashCode(en1) as & Pure
 
     pub def compareTo(x: Month, y: Month): Int32 = Int32.compare(toInt32(x), toInt32(y))
 

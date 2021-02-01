@@ -60,6 +60,9 @@ namespace Time {
         def neq(x: LocalDateTime, y: LocalDateTime): Bool = not (x == y)
     }
 
+    instance Hash[LocalDateTime] {
+        def hash(x: LocalDateTime): Int = Time/LocalDateTime.hashCode(x)
+    }
 
     instance Order[LocalDateTime] {
         def less(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compareTo(x,y) < 0
@@ -200,6 +203,10 @@ namespace Time/LocalDateTime {
         }
 
 
+    pub def hashCode(x: LocalDateTime): Int32 = 
+        import java.time.LocalDateTime.hashCode();
+        let LocalDateTime(x1) = x;
+        hashCode(x1) as & Pure
 
     pub def compareTo(x: LocalDateTime, y: LocalDateTime): Int32 =
         import java.time.LocalDateTime.compareTo(##java.time.chrono.ChronoLocalDateTime);

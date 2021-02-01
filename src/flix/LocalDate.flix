@@ -60,6 +60,11 @@ namespace Time {
         def neq(x: LocalDate, y: LocalDate): Bool = not (x == y)
     }
 
+    instance Hash[LocalDate] {
+        def hash(x: LocalDate): Int = Time/LocalDate.hashCode(x)
+    }
+
+
     instance Order[LocalDate] {
         def less(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) < 0
         def lessEqual(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) < 0 or x == y
@@ -205,6 +210,12 @@ namespace Time/LocalDate {
         let DateFormatter(fmtr) = formatter;
         x1.format(fmtr) as & Pure
 
+
+    pub def hashCode(x: LocalDate): Int32 = 
+        import java.time.LocalDate.hashCode();
+        let LocalDate(x1) = x;
+        hashCode(x1) as & Pure
+        
 
     pub def fromEpochDay(x: Int64): LocalDate =
         import java.time.LocalDate:ofEpochDay(Int64);

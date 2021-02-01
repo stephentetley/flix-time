@@ -57,6 +57,10 @@ namespace Time {
         def neq(x: Year, y: Year): Bool = not (x == y)
     }
 
+    instance Hash[Year] {
+        def hash(x: Year): Int = Time/Year.hashCode(x)
+    }
+
     instance Order[Year] {
         def less(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) < 0
         def lessEqual(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) < 0 or x == y
@@ -171,6 +175,11 @@ namespace Time/Year {
         let Year(x1) = x;
         let DateFormatter(fmtr) = formatter;
         x1.format(fmtr) as & Pure
+
+    pub def hashCode(x: Year): Int32 = 
+        import java.time.Year.hashCode();
+        let Year(x1) = x;
+        hashCode(x1) as & Pure
 
     pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
         import java.time.Year.atDay(Int32);

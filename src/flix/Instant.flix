@@ -60,6 +60,10 @@ namespace Time {
         def neq(x: Instant, y: Instant): Bool = not (x == y)
     }
 
+    instance Hash[Instant] {
+        def hash(x: Instant): Int = Time/Instant.hashCode(x)
+    }
+
     instance Order[Instant] {
         def less(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) < 0
         def lessEqual(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) < 0 or x == y
@@ -143,7 +147,10 @@ namespace Time/Instant {
         toEpochMilli(x1) as & Pure
 
 
-
+    pub def hashCode(x: Instant): Int32 = 
+        import java.time.Instant.hashCode();
+        let Instant(x1) = x;
+        hashCode(x1) as & Pure
 
     
 

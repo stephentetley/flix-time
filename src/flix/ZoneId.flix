@@ -55,7 +55,11 @@ namespace Time {
         def neq(x: ZoneId, y: ZoneId): Bool = not (x == y)
     }
 
-    
+
+    instance Hash[ZoneId] {
+        def hash(x: ZoneId): Int = Time/ZoneId.hashCode(x)
+    }
+
     pub opaque type ZonePrefix = String
 
 }
@@ -93,6 +97,12 @@ namespace Time/ZoneId {
             case _: ##java.time.DateTimeException => None
             case _: ##java.time.zone.ZoneRulesException => None
         }
+
+
+    pub def hashCode(x: ZoneId): Int32 = 
+        import java.time.ZoneId.hashCode();
+        let ZoneId(x1) = x;
+        hashCode(x1) as & Pure
 
 
     ///
