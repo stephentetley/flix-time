@@ -119,6 +119,17 @@ namespace Time/Temporal/IsoField {
         let Year(y1) = y;
         getFrom(x1, y1 as ##java.time.temporal.TemporalAccessor) as & Pure        
 
-        
+    /// TODO needs corresponding function for every type that implements TemporalAccessor!
+    pub def rangeRefinedByMonth(x: IsoField, m: Month): ValueRange = 
+        import java.time.temporal.TemporalField.rangeRefinedBy(##java.time.temporal.TemporalAccessor);
+        let IsoField(x1) = x;
+        let m1 = Time/Month.marshal(m);
+        ValueRange(rangeRefinedBy(x1, m1 as ##java.time.temporal.TemporalAccessor) as & Pure)
+
+    pub def rangeRefinedByYear(x: IsoField, y: Year): ValueRange = 
+        import java.time.temporal.TemporalField.rangeRefinedBy(##java.time.temporal.TemporalAccessor);
+        let IsoField(x1) = x;
+        let Year(y1) = y;
+        ValueRange(rangeRefinedBy(x1, y1 as ##java.time.temporal.TemporalAccessor) as & Pure )      
 
 }

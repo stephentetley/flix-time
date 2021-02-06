@@ -95,6 +95,7 @@ namespace Time/LocalDate {
 
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
+    use Time/Chrono.IsoEra;
     use Time.DayOfWeek;
     use Time/Format.DateFormatter;
     use Time/Format.DateFormatter.{DateFormatter};
@@ -374,5 +375,11 @@ namespace Time/LocalDate {
         import java.time.LocalDate.lengthOfYear();
         let LocalDate(x1) = x;
         x1.lengthOfYear() as & Pure
+
+    pub def getIsoEra(x: LocalDate): IsoEra = 
+        import java.time.LocalDate.getEra();
+        let LocalDate(x1) = x;
+        Time/Chrono/IsoEra.unmarshal(getEra(x1) as & Pure)
+
 
 }
