@@ -159,6 +159,21 @@ namespace Time/Temporal {
         def neq(x: ChronoField, y: ChronoField): Bool = not (x == y)
     }
 
+    instance Hash[ChronoField] {
+        def hash(x: ChronoField): Int = Time/Temporal/ChronoField.hashCode(x)
+    }
+
+    instance Order[ChronoField] {
+        def less(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) < 0
+        def lessEqual(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) < 0 or x == y
+        def greater(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) > 0
+        def greaterEqual(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) > 0 or x == y
+        def compare(x: ChronoField, y: ChronoField): Comparison = match Time/Temporal/ChronoField.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
+    }
 }
 
 namespace Time/Temporal/ChronoField {
@@ -375,8 +390,15 @@ namespace Time/Temporal/ChronoField {
 
     
 
-    pub def compare(x: ChronoField, y: ChronoField): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
+ 
+    pub def hashCode(x: ChronoField): Int32 =
+        import java.lang.Enum.hashCode();
+        let en1 = marshal(x) as ##java.lang.Enum;
+        hashCode(en1) as & Pure
 
-
-
+    pub def compareTo(x: ChronoField, y: ChronoField): Int32 = 
+        import java.lang.Enum.compareTo(##java.lang.Enum);
+        let x1 = marshal(x) as ##java.lang.Enum;
+        let y1 = marshal(y) as ##java.lang.Enum;
+        compareTo(x1, y1) as & Pure
 }

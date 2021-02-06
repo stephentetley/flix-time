@@ -36,6 +36,11 @@ namespace Time/Chrono {
 
         def neq(x: HijrahDate, y: HijrahDate): Bool = not (x == y)
     }
+    
+    instance Hash[HijrahDate] {
+        def hash(x: HijrahDate): Int = Time/Chrono/HijrahDate.hashCode(x)
+    }  
+
 }
 
 namespace Time/Chrono/HijrahDate {
@@ -81,7 +86,13 @@ namespace Time/Chrono/HijrahDate {
         import java.time.chrono.HijrahDate.equals(##java.lang.Object);
         let HijrahDate(x1) = x;
         let HijrahDate(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: HijrahDate): Int32 = 
+        import java.time.chrono.HijrahDate.hashCode();
+        let HijrahDate(x1) = x;
+        hashCode(x1) as & Pure
+
 
     pub def getChronology(x: HijrahDate): HijrahChronology = 
         import java.time.chrono.HijrahDate.getChronology();

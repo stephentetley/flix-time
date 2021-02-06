@@ -30,6 +30,16 @@ namespace Time/Chrono {
             let ThaiBuddhistDate(x1) = x;
             toString(x1) as & Pure
     }
+
+    instance Eq[ThaiBuddhistDate] {
+        def eq(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = Time/Chrono/ThaiBuddhistDate.equals(x, y)
+
+        def neq(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = not (x == y)
+    }
+    
+    instance Hash[ThaiBuddhistDate] {
+        def hash(x: ThaiBuddhistDate): Int = Time/Chrono/ThaiBuddhistDate.hashCode(x)
+    } 
 }
 
 namespace Time/Chrono/ThaiBuddhistDate {
@@ -45,5 +55,16 @@ namespace Time/Chrono/ThaiBuddhistDate {
         import java.time.chrono.ThaiBuddhistDate:now();
         ThaiBuddhistDate(now())
 
+
+    pub def equals(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = 
+        import java.time.chrono.ThaiBuddhistDate.equals(##java.lang.Object);
+        let ThaiBuddhistDate(x1) = x;
+        let ThaiBuddhistDate(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: ThaiBuddhistDate): Int32 = 
+        import java.time.chrono.ThaiBuddhistDate.hashCode();
+        let ThaiBuddhistDate(x1) = x;
+        hashCode(x1) as & Pure
 
 }

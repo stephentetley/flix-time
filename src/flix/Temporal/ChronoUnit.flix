@@ -103,6 +103,22 @@ namespace Time/Temporal {
         def neq(x: ChronoUnit, y: ChronoUnit): Bool = not (x == y)
     }
 
+    instance Hash[ChronoUnit] {
+        def hash(x: ChronoUnit): Int = Time/Temporal/ChronoUnit.hashCode(x)
+    }
+
+    instance Order[ChronoUnit] {
+        def less(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) < 0
+        def lessEqual(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) < 0 or x == y
+        def greater(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) > 0
+        def greaterEqual(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) > 0 or x == y
+        def compare(x: ChronoUnit, y: ChronoUnit): Comparison = match Time/Temporal/ChronoUnit.compareTo(x,y) { 
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
+    }
+
 }
 
 /// TODO should provide functions from the TemporalUnit interface
@@ -235,7 +251,16 @@ namespace Time/Temporal/ChronoUnit {
 
     
 
-    pub def compare(x: ChronoUnit, y: ChronoUnit): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
+    pub def hashCode(x: ChronoUnit): Int32 =
+        import java.lang.Enum.hashCode();
+        let en1 = marshal(x) as ##java.lang.Enum;
+        hashCode(en1) as & Pure
+
+    pub def compareTo(x: ChronoUnit, y: ChronoUnit): Int32 = 
+        import java.lang.Enum.compareTo(##java.lang.Enum);
+        let x1 = marshal(x) as ##java.lang.Enum;
+        let y1 = marshal(y) as ##java.lang.Enum;
+        compareTo(x1, y1) as & Pure
 
     pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();

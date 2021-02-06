@@ -30,6 +30,17 @@ namespace Time/Chrono {
             let JapaneseDate(x1) = x;
             toString(x1) as & Pure
     }
+
+    instance Eq[JapaneseDate] {
+        def eq(x: JapaneseDate, y: JapaneseDate): Bool = Time/Chrono/JapaneseDate.equals(x, y)
+
+        def neq(x: JapaneseDate, y: JapaneseDate): Bool = not (x == y)
+    }
+    
+    instance Hash[JapaneseDate] {
+        def hash(x: JapaneseDate): Int = Time/Chrono/JapaneseDate.hashCode(x)
+    }  
+
 }
 
 namespace Time/Chrono/JapaneseDate {
@@ -45,5 +56,16 @@ namespace Time/Chrono/JapaneseDate {
         import java.time.chrono.JapaneseDate:now();
         JapaneseDate(now())
 
+
+    pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
+        import java.time.chrono.JapaneseDate.equals(##java.lang.Object);
+        let JapaneseDate(x1) = x;
+        let JapaneseDate(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: JapaneseDate): Int32 = 
+        import java.time.chrono.JapaneseDate.hashCode();
+        let JapaneseDate(x1) = x;
+        hashCode(x1) as & Pure
 
 }

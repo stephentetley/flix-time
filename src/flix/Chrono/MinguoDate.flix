@@ -30,6 +30,16 @@ namespace Time/Chrono {
             let MinguoDate(x1) = x;
             toString(x1) as & Pure
     }
+
+    instance Eq[MinguoDate] {
+        def eq(x: MinguoDate, y: MinguoDate): Bool = Time/Chrono/MinguoDate.equals(x, y)
+
+        def neq(x: MinguoDate, y: MinguoDate): Bool = not (x == y)
+    }
+    
+    instance Hash[MinguoDate] {
+        def hash(x: MinguoDate): Int = Time/Chrono/MinguoDate.hashCode(x)
+    } 
 }
 
 namespace Time/Chrono/MinguoDate {
@@ -45,5 +55,16 @@ namespace Time/Chrono/MinguoDate {
         import java.time.chrono.MinguoDate:now();
         MinguoDate(now())
 
+
+    pub def equals(x: MinguoDate, y: MinguoDate): Bool = 
+        import java.time.chrono.MinguoDate.equals(##java.lang.Object);
+        let MinguoDate(x1) = x;
+        let MinguoDate(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: MinguoDate): Int32 = 
+        import java.time.chrono.MinguoDate.hashCode();
+        let MinguoDate(x1) = x;
+        hashCode(x1) as & Pure
 
 }

@@ -25,6 +25,17 @@ namespace Time/Temporal {
             let JulianField(x1) = x;
             toString(x1) as & Pure
     }
+    
+    instance Eq[JulianField] {
+        def eq(x: JulianField, y: JulianField): Bool = Time/Temporal/JulianField.equals(x, y)
+  
+
+        def neq(x: JulianField, y: JulianField): Bool = not (x == y)
+    }
+
+    instance Hash[JulianField] {
+        def hash(x: JulianField): Int = Time/Temporal/JulianField.hashCode(x)
+    }
 
 }
 
@@ -48,7 +59,19 @@ namespace Time/Temporal/JulianField {
         import get java.time.temporal.JulianFields:RATA_DIE as getRATA_DIE;
         JulianField(getRATA_DIE()) as & Pure
 
-    /// TODO typeclass method?
+
+
+    pub def equals(x: JulianField, y: JulianField): Bool =
+        import java.lang.Object.equals(##java.lang.Object);
+        let JulianField(x1) = x;
+        let JulianField(y1) = y;
+        equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: JulianField): Int32 =
+        import java.lang.Object.hashCode();
+        let JulianField(x1) = x;
+        hashCode(x1 as ##java.lang.Object) as & Pure
+
     pub def range(x: JulianField): ValueRange =
         import java.time.temporal.TemporalField.range();
         let JulianField(x1) = x;

@@ -225,7 +225,11 @@ namespace Time/Month {
         let en1 = marshal(x) as ##java.lang.Enum;
         hashCode(en1) as & Pure
 
-    pub def compareTo(x: Month, y: Month): Int32 = Int32.compare(toInt32(x), toInt32(y))
+    pub def compareTo(x: Month, y: Month): Int32 = 
+        import java.lang.Enum.compareTo(##java.lang.Enum);
+        let x1 = marshal(x) as ##java.lang.Enum;
+        let y1 = marshal(y) as ##java.lang.Enum;
+        compareTo(x1, y1) as & Pure
 
 
     pub def plus(x:Month, y: Int64): Month = 

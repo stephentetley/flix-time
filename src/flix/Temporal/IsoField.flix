@@ -28,6 +28,18 @@ namespace Time/Temporal {
             toString(x1) as & Pure
     }
 
+    
+    instance Eq[IsoField] {
+        def eq(x: IsoField, y: IsoField): Bool = Time/Temporal/IsoField.equals(x, y)
+  
+
+        def neq(x: IsoField, y: IsoField): Bool = not (x == y)
+    }
+
+    instance Hash[IsoField] {
+        def hash(x: IsoField): Int = Time/Temporal/IsoField.hashCode(x)
+    }
+
 }
 
 namespace Time/Temporal/IsoField {
@@ -58,6 +70,18 @@ namespace Time/Temporal/IsoField {
     pub def weekOfWeekBasedYear(): IsoField = 
         import get java.time.temporal.IsoFields:WEEK_OF_WEEK_BASED_YEAR as getWEEK_OF_WEEK_BASED_YEAR;
         IsoField(getWEEK_OF_WEEK_BASED_YEAR()) as & Pure
+
+    pub def equals(x: IsoField, y: IsoField): Bool =
+        import java.lang.Object.equals(##java.lang.Object);
+        let IsoField(x1) = x;
+        let IsoField(y1) = y;
+        equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: IsoField): Int32 =
+        import java.lang.Object.hashCode();
+        let IsoField(x1) = x;
+        hashCode(x1 as ##java.lang.Object) as & Pure
+
 
     pub def getDisplayName(x: IsoField, locale: Locale): String =
         import java.time.temporal.TemporalField.getDisplayName(##java.util.Locale);
