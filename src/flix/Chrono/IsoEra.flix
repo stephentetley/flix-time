@@ -21,6 +21,13 @@ namespace Time/Chrono {
         case CE
     }   
     
+    instance ToString[IsoEra] {
+        def toString(x: IsoEra): String = match x {
+            case BCE => "CE"
+            case CE => "CE"
+        }
+    }
+
     instance Eq[IsoEra] {
         def eq(x: IsoEra, y: IsoEra): Bool = match (x, y) {
             case (BCE, BCE) => true
@@ -30,6 +37,10 @@ namespace Time/Chrono {
 
         def neq(x: IsoEra, y: IsoEra): Bool = not (x == y)
     }
+
+    instance Hash[IsoEra] {
+        def hash(x: IsoEra): Int = Time/Chrono/IsoEra.hashCode(x)
+    }    
 
 }
 
@@ -71,6 +82,13 @@ namespace Time/Chrono/IsoEra {
         import java.time.chrono.IsoEra.getValue();
         let x1 = marshal(x);
         getValue(x1) as & Pure 
+
+
+    pub def hashCode(x: IsoEra): Int32 =
+        import java.lang.Enum.hashCode();
+        let en1 = marshal(x) as ##java.lang.Enum;
+        hashCode(en1) as & Pure
+
 
     /// 
     pub def getDisplayName(x: IsoEra, style: TextStyle, locale: Locale): String = 

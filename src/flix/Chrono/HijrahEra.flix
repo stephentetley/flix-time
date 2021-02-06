@@ -19,7 +19,13 @@ namespace Time/Chrono {
     pub enum HijrahEra {
         case AH
     }   
-    
+
+    instance ToString[HijrahEra] {
+        def toString(x: HijrahEra): String = match x {
+            case AH => "AH"
+        }
+    }
+
     instance Eq[HijrahEra] {
         def eq(x: HijrahEra, y: HijrahEra): Bool = match (x, y) {
             case (AH, AH) => true
@@ -27,6 +33,10 @@ namespace Time/Chrono {
 
         def neq(x: HijrahEra, y: HijrahEra): Bool = not (x == y)
     }
+
+    instance Hash[HijrahEra] {
+        def hash(x: HijrahEra): Int = Time/Chrono/HijrahEra.hashCode(x)
+    }    
 
 }
 
@@ -64,6 +74,13 @@ namespace Time/Chrono/HijrahEra {
         import java.time.chrono.HijrahEra.getValue();
         let x1 = marshal(x);
         getValue(x1) as & Pure 
+
+
+    pub def hashCode(x: HijrahEra): Int32 =
+        import java.lang.Enum.hashCode();
+        let en1 = marshal(x) as ##java.lang.Enum;
+        hashCode(en1) as & Pure
+
 
     /// 
     pub def getDisplayName(x: HijrahEra, style: TextStyle, locale: Locale): String = 

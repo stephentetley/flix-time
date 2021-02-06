@@ -32,6 +32,16 @@ namespace Time/Chrono {
             let JapaneseEra(x1) = x;
             toString(x1) as & Pure
     }
+    
+    instance Eq[JapaneseEra] {
+        def eq(x: JapaneseEra, y: JapaneseEra): Bool = Time/Chrono/JapaneseEra.equals(x, y)
+
+        def neq(x: JapaneseEra, y: JapaneseEra): Bool = not (x == y)
+    }
+
+    instance Hash[JapaneseEra] {
+        def hash(x: JapaneseEra): Int = Time/Chrono/JapaneseEra.hashCode(x)
+    } 
 }
 
 namespace Time/Chrono/JapaneseEra {
@@ -73,5 +83,16 @@ namespace Time/Chrono/JapaneseEra {
         import java.time.chrono.JapaneseEra.getValue();
         let JapaneseEra(x1) = x;
         getValue(x1) as & Pure 
+
+    pub def equals(x: JapaneseEra, y: JapaneseEra): Bool = 
+        import java.lang.Object.equals(##java.lang.Object);
+        let JapaneseEra(x1) = x;
+        let JapaneseEra(y1) = y;
+        equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: JapaneseEra): Int32 = 
+        import java.lang.Object.hashCode();
+        let JapaneseEra(x1) = x;
+        hashCode(x1 as ##java.lang.Object) as & Pure
 
 }
