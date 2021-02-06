@@ -87,27 +87,6 @@ namespace Time {
             Year(of(getMAX_VALUE())) as & Pure
     }
 
-
-
-    /// Note - Temporal is an experiment...
-    instance Temporal[Year] {
-        def marshal(x: Year): ##java.time.temporal.Temporal = 
-            let Year(x1) = x;
-            x1 as ##java.time.temporal.Temporal
-        
-        def unmarshal(x: ##java.time.temporal.Temporal): Year = 
-            let x1 = x as ##java.time.Year;
-            Year(x1)
-
-        def plus[b: TemporalAmount](x: Year, y: b): Year = 
-            import java.time.temporal.Temporal.plus(##java.time.temporal.TemporalAmount);
-            let Year(x1) = x;
-            let t1 = x1 as ##java.time.temporal.Temporal;
-            let y1 = Time/Temporal/TemporalAmount.marshal(y);
-            Year(plus(t1, y1) as ##java.time.Year) as & Pure
-
-    }
-
 }
 
 namespace Time/Year {

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/// Notes - should provide methods from TemporalField interface
+
 
 namespace Time/Temporal {
 
@@ -30,8 +32,14 @@ namespace Time/Temporal {
 
 namespace Time/Temporal/IsoField {
 
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
     use Time/Temporal.IsoField;
     use Time/Temporal.IsoField.{IsoField};
+    use Time.Month;
+    use Time.Year;
+    use Time.Year.{Year};
+    use Time/Temporal.ChronoUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
 
@@ -51,9 +59,66 @@ namespace Time/Temporal/IsoField {
         import get java.time.temporal.IsoFields:WEEK_OF_WEEK_BASED_YEAR as getWEEK_OF_WEEK_BASED_YEAR;
         IsoField(getWEEK_OF_WEEK_BASED_YEAR()) as & Pure
 
+    pub def getDisplayName(x: IsoField, locale: Locale): String =
+        import java.time.temporal.TemporalField.getDisplayName(##java.util.Locale);
+        let IsoField(x1) = x;
+        let Locale(locale1) = locale;
+        getDisplayName(x1, locale1) as & Pure
+
+
     pub def range(x: IsoField): ValueRange =
         import java.time.temporal.TemporalField.range();
         let IsoField(x1) = x;
         ValueRange(range(x1)) as & Pure
+
+    pub def isTimeBased(x: IsoField): Bool = 
+        import java.time.temporal.TemporalField.isTimeBased();
+        let IsoField(x1) = x;
+        isTimeBased(x1) as & Pure
+
+    pub def isDateBased(x: IsoField): Bool = 
+        import java.time.temporal.TemporalField.isDateBased();
+        let IsoField(x1) = x;
+        isDateBased(x1) as & Pure
+
+    pub def getRangeUnit(x: IsoField): ChronoUnit = 
+        import java.time.temporal.TemporalField.getRangeUnit();
+        let IsoField(x1) = x;
+        let ans = getRangeUnit(x1) as ##java.time.temporal.ChronoUnit & Pure;
+        Time/Temporal/ChronoUnit.unmarshal(ans)
+        
+    pub def getBaseUnit(x: IsoField): ChronoUnit = 
+        import java.time.temporal.TemporalField.getBaseUnit();
+        let IsoField(x1) = x;
+        let ans = getBaseUnit(x1) as ##java.time.temporal.ChronoUnit & Pure;
+        Time/Temporal/ChronoUnit.unmarshal(ans)
+
+    /// TODO needs corresponding function for every type that implements TemporalAccessor!
+    pub def isSupportedByMonth(x: IsoField, m: Month): Bool = 
+        import java.time.temporal.TemporalField.isSupportedBy(##java.time.temporal.TemporalAccessor);
+        let IsoField(x1) = x;
+        let m1 = Time/Month.marshal(m);
+        isSupportedBy(x1, m1 as ##java.time.temporal.TemporalAccessor) as & Pure
+
+    pub def isSupportedByYear(x: IsoField, y: Year): Bool = 
+        import java.time.temporal.TemporalField.isSupportedBy(##java.time.temporal.TemporalAccessor);
+        let IsoField(x1) = x;
+        let Year(y1) = y;
+        isSupportedBy(x1, y1 as ##java.time.temporal.TemporalAccessor) as & Pure  
+
+    /// TODO needs corresponding function for every type that implements TemporalAccessor!
+    pub def getFromMonth(x: IsoField, m: Month): Int64 = 
+        import java.time.temporal.TemporalField.getFrom(##java.time.temporal.TemporalAccessor);
+        let IsoField(x1) = x;
+        let m1 = Time/Month.marshal(m);
+        getFrom(x1, m1 as ##java.time.temporal.TemporalAccessor) as & Pure
+
+    pub def getFromYear(x: IsoField, y: Year): Int64 = 
+        import java.time.temporal.TemporalField.getFrom(##java.time.temporal.TemporalAccessor);
+        let IsoField(x1) = x;
+        let Year(y1) = y;
+        getFrom(x1, y1 as ##java.time.temporal.TemporalAccessor) as & Pure        
+
+        
 
 }
