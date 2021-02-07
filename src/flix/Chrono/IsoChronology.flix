@@ -14,16 +14,42 @@
  * limitations under the License.
  */
 
+namespace Time/Chrono {
+
+    pub opaque type IsoChronology = ##java.time.chrono.IsoChronology
+
+}
 
 namespace Time/Chrono/IsoChronology {
 
-    def getInstance(): ##java.time.chrono.IsoChronology & Impure = 
-        import get java.time.chrono.IsoChronology:INSTANCE      as getINSTANCE;
-        getINSTANCE()
+    use Time/Chrono.IsoChronology;
+    use Time/Chrono.IsoChronology.{IsoChronology};    
+    use Time/Chrono.IsoEra;
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
 
-    pub def getCalendarType(): String & Impure = 
+    pub def getInstance(): IsoChronology & Impure = 
+        import get java.time.chrono.IsoChronology:INSTANCE      as getINSTANCE;
+        IsoChronology(getINSTANCE())
+
+    pub def getCalendarType(x: IsoChronology): String = 
         import java.time.chrono.IsoChronology.getCalendarType();
-        let x1 = getInstance();
-        getCalendarType(x1)
+        let IsoChronology(x1) = x;
+        getCalendarType(x1) as & Pure
+
+    pub def dateNow(x: IsoChronology): LocalDate & Impure = 
+        import java.time.chrono.IsoChronology.dateNow();
+        let IsoChronology(x1) = x;
+        LocalDate(dateNow(x1))
+
+    pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
+        import java.time.chrono.IsoChronology.eraOf(Int32);
+        let IsoChronology(x1) = x;
+        Time/Chrono/IsoEra.unmarshal(eraOf(x1, i)) as & Pure
+
+    pub def getId(x: IsoChronology): String = 
+        import java.time.chrono.IsoChronology.getId();
+        let IsoChronology(x1) = x;
+        getId(x1) as & Pure
 
 }

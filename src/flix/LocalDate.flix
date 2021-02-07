@@ -95,10 +95,19 @@ namespace Time/LocalDate {
 
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
+    use Time/Chrono.HijrahDate;
+    use Time/Chrono.HijrahDate.{HijrahDate};
+    use Time/Chrono.JapaneseDate;
+    use Time/Chrono.JapaneseDate.{JapaneseDate};
+    use Time/Chrono.MinguoDate;
+    use Time/Chrono.MinguoDate.{MinguoDate};
+    use Time/Chrono.ThaiBuddhistDate;
+    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate};
     use Time/Chrono.IsoEra;
-    use Time.DayOfWeek;
     use Time/Format.DateFormatter;
     use Time/Format.DateFormatter.{DateFormatter};
+    use Time/Temporal.ChronoUnit;
+    use Time.DayOfWeek;
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
     use Time.LocalTime;
@@ -108,7 +117,6 @@ namespace Time/LocalDate {
     use Time.OffsetDateTime.{OffsetDateTime};
     use Time.OffsetTime;
     use Time.OffsetTime.{OffsetTime};
-    use Time/Temporal.ChronoUnit;
     use Time.ZonedDateTime;
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
@@ -184,6 +192,27 @@ namespace Time/LocalDate {
         let Instant(x1) = x;
         let ZoneId(z1) = zoneId;
         LocalDate(ofInstant(x1, z1)) as & Pure
+
+
+    pub def fromHijrahDate(x: HijrahDate): LocalDate =
+        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        let HijrahDate(x1) = x;
+        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+
+    pub def fromJapaneseDate(x: JapaneseDate): LocalDate =
+        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        let JapaneseDate(x1) = x;
+        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+
+    pub def fromMinguoDate(x: MinguoDate): LocalDate =
+        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        let MinguoDate(x1) = x;
+        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+
+    pub def fromThaiBuddhistDate(x: ThaiBuddhistDate): LocalDate =
+        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        let ThaiBuddhistDate(x1) = x;
+        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
     /// 
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.

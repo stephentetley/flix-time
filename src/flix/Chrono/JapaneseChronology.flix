@@ -42,7 +42,6 @@ namespace Time/Chrono/JapaneseChronology {
         let JapaneseChronology(x1) = x;
         getCalendarType(x1) as & Pure
 
-
     pub def dateNow(x: JapaneseChronology): JapaneseDate & Impure = 
         import java.time.chrono.JapaneseChronology.dateNow();
         let JapaneseChronology(x1) = x;

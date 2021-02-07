@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/// Notes - implements ChronoLocalDate
+
 namespace Time/Chrono {
     
     ///
@@ -48,6 +50,32 @@ namespace Time/Chrono/JapaneseDate {
 
     use Time/Chrono.JapaneseDate;
     use Time/Chrono.JapaneseDate.{JapaneseDate};
+    use Time/Chrono.HijrahDate;
+    use Time/Chrono.HijrahDate.{HijrahDate};
+    use Time/Chrono.MinguoDate;
+    use Time/Chrono.MinguoDate.{MinguoDate};
+    use Time/Chrono.ThaiBuddhistDate;
+    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate};
+    use Time/Chrono.JapaneseChronology;
+    use Time/Chrono.JapaneseChronology.{JapaneseChronology};
+    use Time/Chrono.JapaneseEra;
+    use Time/Chrono.JapaneseEra.{JapaneseEra};
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
+
+    
+    ///
+    /// Returns ___
+    ///
+    pub def new(x: {prolepticYear: Int32, month: Int32, dayOfMonth: Int32}): JapaneseDate  =
+        import java.time.chrono.JapaneseDate:of(Int32, Int32, Int32);
+        JapaneseDate(of(x.prolepticYear, x.month, x.dayOfMonth)) as & Pure
+
+    pub def newWithJapaneseEra(x: {era: JapaneseEra, yearOfEra: Int32, month: Int32, dayOfMonth: Int32}): JapaneseDate  =
+        import java.time.chrono.JapaneseDate:of(##java.time.chrono.JapaneseEra, Int32, Int32, Int32);
+        let JapaneseEra(era1) = x.era;
+        JapaneseDate(of(era1, x.yearOfEra, x.month, x.dayOfMonth)) as & Pure
+
 
     ///
     /// Returns ___
@@ -56,6 +84,25 @@ namespace Time/Chrono/JapaneseDate {
         import java.time.chrono.JapaneseDate:now();
         JapaneseDate(now())
 
+    pub def fromLocalDate(x: LocalDate): JapaneseDate = 
+        import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
+        let LocalDate(x1) = x;
+        JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+
+    pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
+        import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
+        let HijrahDate(x1) = x;
+        JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+
+    pub def fromMinguoDate(x: MinguoDate): JapaneseDate = 
+        import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
+        let MinguoDate(x1) = x;
+        JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+
+    pub def fromThaiBuddhistDate(x: ThaiBuddhistDate): JapaneseDate = 
+        import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
+        let ThaiBuddhistDate(x1) = x;
+        JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
     pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
         import java.time.chrono.JapaneseDate.equals(##java.lang.Object);
@@ -67,5 +114,37 @@ namespace Time/Chrono/JapaneseDate {
         import java.time.chrono.JapaneseDate.hashCode();
         let JapaneseDate(x1) = x;
         hashCode(x1) as & Pure
+
+
+    pub def getChronology(x: JapaneseDate): JapaneseChronology = 
+        import java.time.chrono.JapaneseDate.getChronology();
+        let JapaneseDate(x1) = x;
+        JapaneseChronology(getChronology(x1)) as & Pure
+
+
+    pub def getEra(x: JapaneseDate): JapaneseEra = 
+        import java.time.chrono.JapaneseDate.getEra();
+        let JapaneseDate(x1) = x;
+        JapaneseEra(getEra(x1)) as & Pure
+
+
+
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def isBefore(x: JapaneseDate, y: JapaneseDate): Bool =
+        import java.time.chrono.ChronoLocalDate.isBefore(##java.time.chrono.ChronoLocalDate);
+        let JapaneseDate(x1) = x;
+        let JapaneseDate(y1) = y;
+        isBefore(x1 as ##java.time.chrono.ChronoLocalDate,  y1 as ##java.time.chrono.ChronoLocalDate) as & Pure
+
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def isAfter(x: JapaneseDate, y: JapaneseDate): Bool =
+        import java.time.chrono.ChronoLocalDate.isAfter(##java.time.chrono.ChronoLocalDate);
+        let JapaneseDate(x1) = x;
+        let JapaneseDate(y1) = y;
+        isAfter(x1 as ##java.time.chrono.ChronoLocalDate, y1 as ##java.time.chrono.ChronoLocalDate) as & Pure
 
 }
