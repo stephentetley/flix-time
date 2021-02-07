@@ -60,6 +60,7 @@ namespace Time/Chrono/JapaneseDate {
     use Time/Chrono.JapaneseChronology.{JapaneseChronology};
     use Time/Chrono.JapaneseEra;
     use Time/Chrono.JapaneseEra.{JapaneseEra};
+    use Time/Temporal.ChronoField;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
 
@@ -127,6 +128,40 @@ namespace Time/Chrono/JapaneseDate {
         let JapaneseDate(x1) = x;
         JapaneseEra(getEra(x1)) as & Pure
 
+    pub def lengthOfMonth(x: JapaneseDate): Int32 = 
+        import java.time.chrono.JapaneseDate.lengthOfMonth();
+        let JapaneseDate(x1) = x;
+        lengthOfMonth(x1) as & Pure
+    
+    pub def getDayOfWeek(x: JapaneseDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek), -1)
+        
+    pub def getDayOfMonth(x: JapaneseDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth), -1)
+    
+    pub def getDayOfYear(x: JapaneseDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear), -1)
+
+    pub def getMonthOfYear(x: JapaneseDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear), -1)
+
+    pub def getYear(x: JapaneseDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.Year), -1)
+
+    pub def getYearOfEra(x: JapaneseDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra), -1)
+
+
+    def getChronoFieldHelper(x: JapaneseDate, field: ChronoField): Result[Int32, String] =
+        import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField);
+        try {
+            let JapaneseDate(x1) = x;
+            let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+            Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1)) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
+        }
+        
 
 
     ///
