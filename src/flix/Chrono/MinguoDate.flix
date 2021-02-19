@@ -47,6 +47,7 @@ namespace Time/Chrono/MinguoDate {
 
     use Time/Chrono.MinguoDate;
     use Time/Chrono.MinguoDate.{MinguoDate};
+    use Time/Temporal.ChronoField;
 
     ///
     /// Returns ___
@@ -66,5 +67,34 @@ namespace Time/Chrono/MinguoDate {
         import java.time.chrono.MinguoDate.hashCode();
         let MinguoDate(x1) = x;
         hashCode(x1) as & Pure
+
+    pub def getDayOfWeek(x: MinguoDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek), -1)
+        
+    pub def getDayOfMonth(x: MinguoDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth), -1)
+    
+    pub def getDayOfYear(x: MinguoDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear), -1)
+
+    pub def getMonthOfYear(x: MinguoDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear), -1)
+
+    pub def getYear(x: MinguoDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.Year), -1)
+
+    pub def getYearOfEra(x: MinguoDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra), -1)
+
+
+    def getChronoFieldHelper(x: MinguoDate, field: ChronoField): Result[Int32, String] =
+        import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField);
+        try {
+            let MinguoDate(x1) = x;
+            let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+            Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1)) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
+        }
 
 }

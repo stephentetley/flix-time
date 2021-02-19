@@ -24,6 +24,13 @@ namespace Time/Chrono/ThaiBuddhistChronology {
 
     use Time/Chrono.ThaiBuddhistChronology;
     use Time/Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology};
+    use Time/Chrono.ThaiBuddhistDate;
+    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate};
+    use Time/Chrono.ThaiBuddhistEra;
+    use Time.Clock;
+    use Time.Clock.{Clock};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     pub def getInstance(): ThaiBuddhistChronology & Impure = 
         import get java.time.chrono.ThaiBuddhistChronology:INSTANCE      as getINSTANCE;
@@ -33,5 +40,30 @@ namespace Time/Chrono/ThaiBuddhistChronology {
         import java.time.chrono.ThaiBuddhistChronology.getCalendarType();
         let ThaiBuddhistChronology(x1) = x;
         getCalendarType(x1) as & Pure
+
+    pub def dateNow(x: ThaiBuddhistChronology): ThaiBuddhistDate & Impure = 
+        import java.time.chrono.ThaiBuddhistChronology.dateNow();
+        let ThaiBuddhistChronology(x1) = x;
+        ThaiBuddhistDate(dateNow(x1))
+
+    pub def dateNowWithClock(x: ThaiBuddhistChronology, clock: Clock): ThaiBuddhistDate & Impure =
+        import java.time.chrono.ThaiBuddhistChronology.dateNow(##java.time.Clock);
+        let ThaiBuddhistChronology(x1) = x;
+        let Clock(clock1) = clock;
+        ThaiBuddhistDate(dateNow(x1, clock1))
+
+    ///
+    /// Returns the current date from the system clock in the specified time zone.
+    ///
+    pub def dateNowWithZoneId(x: ThaiBuddhistChronology, zone: ZoneId): ThaiBuddhistDate & Impure =
+        import java.time.chrono.ThaiBuddhistChronology.dateNow(##java.time.ZoneId);
+        let ThaiBuddhistChronology(x1) = x;
+        let ZoneId(zone1) = zone;
+        ThaiBuddhistDate(dateNow(x1, zone1))
+
+    pub def eraOf(x: ThaiBuddhistChronology, i: Int32): ThaiBuddhistEra = 
+        import java.time.chrono.ThaiBuddhistChronology.eraOf(Int32);
+        let ThaiBuddhistChronology(x1) = x;
+        Time/Chrono/ThaiBuddhistEra.unmarshal(eraOf(x1, i) as & Pure)
 
 }

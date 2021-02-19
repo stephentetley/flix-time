@@ -24,6 +24,13 @@ namespace Time/Chrono/MinguoChronology {
 
     use Time/Chrono.MinguoChronology;
     use Time/Chrono.MinguoChronology.{MinguoChronology};
+    use Time/Chrono.MinguoDate;
+    use Time/Chrono.MinguoDate.{MinguoDate};
+    use Time/Chrono.MinguoEra;
+    use Time.Clock;
+    use Time.Clock.{Clock};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     pub def getInstance(): MinguoChronology & Impure =
         import get java.time.chrono.MinguoChronology:INSTANCE      as getINSTANCE;
@@ -33,5 +40,31 @@ namespace Time/Chrono/MinguoChronology {
         import java.time.chrono.MinguoChronology.getCalendarType();
         let MinguoChronology(x1) = x;
         getCalendarType(x1) as & Pure
+
+
+    pub def dateNow(x: MinguoChronology): MinguoDate & Impure = 
+        import java.time.chrono.MinguoChronology.dateNow();
+        let MinguoChronology(x1) = x;
+        MinguoDate(dateNow(x1))
+
+    pub def dateNowWithClock(x: MinguoChronology, clock: Clock): MinguoDate & Impure =
+        import java.time.chrono.MinguoChronology.dateNow(##java.time.Clock);
+        let MinguoChronology(x1) = x;
+        let Clock(clock1) = clock;
+        MinguoDate(dateNow(x1, clock1))
+
+    ///
+    /// Returns the current date from the system clock in the specified time zone.
+    ///
+    pub def dateNowWithZoneId(x: MinguoChronology, zone: ZoneId): MinguoDate & Impure =
+        import java.time.chrono.MinguoChronology.dateNow(##java.time.ZoneId);
+        let MinguoChronology(x1) = x;
+        let ZoneId(zone1) = zone;
+        MinguoDate(dateNow(x1, zone1))
+
+    pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
+        import java.time.chrono.MinguoChronology.eraOf(Int32);
+        let MinguoChronology(x1) = x;
+        Time/Chrono/MinguoEra.unmarshal(eraOf(x1, i) as & Pure)
 
 }

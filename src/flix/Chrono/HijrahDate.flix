@@ -51,6 +51,7 @@ namespace Time/Chrono/HijrahDate {
     use Time/Chrono.HijrahChronology;
     use Time/Chrono.HijrahChronology.{HijrahChronology};
     use Time/Chrono.HijrahEra;
+    use Time/Temporal.ChronoField;
     use Time/Temporal.ChronoUnit;
     use Time.Clock;
     use Time.Clock.{Clock};
@@ -118,6 +119,36 @@ namespace Time/Chrono/HijrahDate {
         import java.time.chrono.HijrahDate.lengthOfYear();
         let HijrahDate(x1) = x;
         lengthOfYear(x1) as & Pure
+
+    pub def getDayOfWeek(x: HijrahDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek), -1)
+        
+    pub def getDayOfMonth(x: HijrahDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth), -1)
+    
+    pub def getDayOfYear(x: HijrahDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear), -1)
+
+    pub def getMonthOfYear(x: HijrahDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear), -1)
+
+    pub def getYear(x: HijrahDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.Year), -1)
+
+    pub def getYearOfEra(x: HijrahDate): Int32 = 
+        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra), -1)
+
+
+    def getChronoFieldHelper(x: HijrahDate, field: ChronoField): Result[Int32, String] =
+        import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField);
+        try {
+            let HijrahDate(x1) = x;
+            let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+            Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1)) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
+        }
+
 
     pub def plusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
         import java.time.chrono.HijrahDate.plus(Int64, ##java.time.temporal.TemporalUnit);

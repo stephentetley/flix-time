@@ -31,6 +31,10 @@ namespace Time/Chrono/JapaneseChronology {
     use Time/Chrono.JapaneseDate.{JapaneseDate};
     use Time/Chrono.JapaneseEra;
     use Time/Chrono.JapaneseEra.{JapaneseEra};
+    use Time.Clock;
+    use Time.Clock.{Clock};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
 
     pub def getInstance(): JapaneseChronology & Impure = 
@@ -46,6 +50,21 @@ namespace Time/Chrono/JapaneseChronology {
         import java.time.chrono.JapaneseChronology.dateNow();
         let JapaneseChronology(x1) = x;
         JapaneseDate(dateNow(x1))
+
+    pub def dateNowWithClock(x: JapaneseChronology, clock: Clock): JapaneseDate & Impure =
+        import java.time.chrono.JapaneseChronology.dateNow(##java.time.Clock);
+        let JapaneseChronology(x1) = x;
+        let Clock(clock1) = clock;
+        JapaneseDate(dateNow(x1, clock1))
+
+    ///
+    /// Returns the current date from the system clock in the specified time zone.
+    ///
+    pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate & Impure =
+        import java.time.chrono.JapaneseChronology.dateNow(##java.time.ZoneId);
+        let JapaneseChronology(x1) = x;
+        let ZoneId(zone1) = zone;
+        JapaneseDate(dateNow(x1, zone1))
 
     pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
         import java.time.chrono.JapaneseChronology.eraOf(Int32);

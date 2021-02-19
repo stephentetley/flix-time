@@ -28,6 +28,10 @@ namespace Time/Chrono/HijrahChronology {
     use Time/Chrono.HijrahDate;
     use Time/Chrono.HijrahDate.{HijrahDate};
     use Time/Chrono.HijrahEra;
+    use Time.Clock;
+    use Time.Clock.{Clock};
+    use Time.ZoneId;
+    use Time.ZoneId.{ZoneId};
 
     pub def getInstance(): HijrahChronology & Impure =
         import get java.time.chrono.HijrahChronology:INSTANCE as getINSTANCE;
@@ -50,6 +54,21 @@ namespace Time/Chrono/HijrahChronology {
         let HijrahChronology(x1) = x;
         HijrahDate(dateNow(x1))
 
+    pub def dateNowWithClock(x: HijrahChronology, clock: Clock): HijrahDate & Impure =
+        import java.time.chrono.HijrahChronology.dateNow(##java.time.Clock);
+        let HijrahChronology(x1) = x;
+        let Clock(clock1) = clock;
+        HijrahDate(dateNow(x1, clock1))
+
+    ///
+    /// Returns the current date from the system clock in the specified time zone.
+    ///
+    pub def dateNowWithZoneId(x: HijrahChronology, zone: ZoneId): HijrahDate & Impure =
+        import java.time.chrono.HijrahChronology.dateNow(##java.time.ZoneId);
+        let HijrahChronology(x1) = x;
+        let ZoneId(zone1) = zone;
+        HijrahDate(dateNow(x1, zone1))
+
     pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): HijrahDate = 
         import java.time.chrono.HijrahChronology.dateEpochDay(Int64);
         let HijrahChronology(x1) = x;
@@ -62,9 +81,8 @@ namespace Time/Chrono/HijrahChronology {
 
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra = 
         import java.time.chrono.HijrahChronology.eraOf(Int32);
-        use Time/Chrono/HijrahEra.{unmarshal};
         let HijrahChronology(x1) = x;
-        unmarshal(eraOf(x1, i) as & Pure)
+        Time/Chrono/HijrahEra.unmarshal(eraOf(x1, i) as & Pure)
 
     /// pub def getId(x: HijrahChronology): String = 
     ///     import java.time.chrono.HijrahChronology.getId();
