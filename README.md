@@ -6,6 +6,4 @@ Note - this depends on `Locale.flix` in the the project:
 
 https://github.com/stephentetley/flix-sandbox
 
-https://github.com/stephentetley/flix-sandbox/blob/master/src/flix/I18n/Locale/Locale.flix
-
-
+https://github.com/stephentetley/flix-sandbox/blob/master/src/flix/I18n/Locale.flix

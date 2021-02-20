@@ -109,6 +109,8 @@ namespace Time/DayOfWeek {
     use Time.DayOfWeek;
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
     use Time/Format.TextStyle;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
 
 
     /// 
@@ -215,4 +217,9 @@ namespace Time/DayOfWeek {
         unmarshal(x2)
 
 
+    pub def range(x: DayOfWeek): ValueRange = 
+        import java.time.DayOfWeek.range(##java.time.temporal.TemporalField);
+        let x1 = marshal(x);
+        let field1 = Time/Temporal/ChronoField.marshal(Time/Temporal/ChronoField.DayOfWeek);
+        ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField)) as & Pure
 }

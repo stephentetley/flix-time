@@ -25,7 +25,7 @@ namespace Time {
     ///
     /// Returns the given Clock `x` as a String.
     ///
-    /// This uses the `java.lang.Object.toString()` method - the result is not expected to be user friendly.
+    /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
     ///
     instance ToString[Clock] {
         def toString(x: Clock): String =
@@ -45,12 +45,18 @@ namespace Time {
         def neq(x: Clock, y: Clock): Bool = not (x == y)
     }
 
+    instance Hash[Clock] {
+        def hash(x: Clock): Int = Time/Clock.hashCode(x)
+    }
+
 }
 
 namespace Time/Clock {
 
     use Time.Clock;
     use Time.Clock.{Clock};
+    use Time.Instant;
+    use Time.Instant.{Instant};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -67,5 +73,42 @@ namespace Time/Clock {
     pub def systemUTC(): Clock & Impure =
         import java.time.Clock:systemUTC();
         Clock(systemUTC())
+
+    pub def hashCode(x: Clock): Int32 =
+        import java.time.Clock.hashCode();
+        let Clock(x1) = x;
+        hashCode(x1) as & Pure
+
+    pub def millis(x: Clock): Int64 & Impure =
+        import java.time.Clock.millis();
+        let Clock(x1) = x;
+        millis(x1)
+
+    pub def instant(x: Clock): Instant & Impure =
+        import java.time.Clock.instant();
+        let Clock(x1) = x;
+        Instant(instant(x1))
+
+
+    pub def tickMillis(zoneId: ZoneId): Clock & Impure =
+        import java.time.Clock:tickMillis(##java.time.ZoneId);
+        let ZoneId(zoneId1) = zoneId;
+        Clock(tickMillis(zoneId1))
+
+    pub def tickSeconds(zoneId: ZoneId): Clock & Impure =
+        import java.time.Clock:tickSeconds(##java.time.ZoneId);
+        let ZoneId(zoneId1) = zoneId;
+        Clock(tickSeconds(zoneId1))
+
+    pub def tickMinutes(zoneId: ZoneId): Clock & Impure =
+        import java.time.Clock:tickMinutes(##java.time.ZoneId);
+        let ZoneId(zoneId1) = zoneId;
+        Clock(tickMinutes(zoneId1))
+    
+    pub def withZone(x: Clock, zoneId: ZoneId): Clock & Impure =
+        import java.time.Clock.withZone(##java.time.ZoneId);
+        let Clock(x1) = x;
+        let ZoneId(zoneId1) = zoneId;
+        Clock(withZone(x1, zoneId1))
 
 }

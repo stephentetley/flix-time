@@ -52,7 +52,7 @@ namespace Time {
             let ZoneOffset(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: ZoneOffset, y: ZoneOffset): Bool = (x == y)
+        def neq(x: ZoneOffset, y: ZoneOffset): Bool = not (x == y)
     }
 
     instance Hash[ZoneOffset] {
