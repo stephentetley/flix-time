@@ -34,6 +34,8 @@ namespace Time/Format/DateFormatter {
     
     use Time/Format.DateFormatter;
     use Time/Format.DateFormatter.{DateFormatter};
+    use Time/Format.DecimalStyle;
+    use Time/Format.DecimalStyle.{DecimalStyle};
 
     pub def basic_iso_date(): DateFormatter =
         import get java.time.format.DateTimeFormatter:BASIC_ISO_DATE as get_basic_iso_date;
@@ -69,5 +71,9 @@ namespace Time/Format/DateFormatter {
             case _: ##java.lang.IllegalArgumentException => None
         }
 
-    
+    pub def getDecimalStyle(x: DateFormatter): DecimalStyle =
+        import java.time.format.DateTimeFormatter.getDecimalStyle();
+        let DateFormatter(x1) = x;
+        DecimalStyle(getDecimalStyle(x1)) as & Pure
+
 }

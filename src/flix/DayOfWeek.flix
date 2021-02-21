@@ -222,4 +222,5 @@ namespace Time/DayOfWeek {
         let x1 = marshal(x);
         let field1 = Time/Temporal/ChronoField.marshal(Time/Temporal/ChronoField.DayOfWeek);
         ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField)) as & Pure
+
 }

@@ -34,6 +34,8 @@ namespace Time/Format/DateTimeFormatter {
 
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Format.DecimalStyle;
+    use Time/Format.DecimalStyle.{DecimalStyle};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -81,5 +83,9 @@ namespace Time/Format/DateTimeFormatter {
         let ZoneId(z1) = zone;
         DateTimeFormatter(x1.withZone(z1)) as & Pure
 
-    
+    pub def getDecimalStyle(x: DateTimeFormatter): DecimalStyle =
+        import java.time.format.DateTimeFormatter.getDecimalStyle();
+        let DateTimeFormatter(x1) = x;
+        DecimalStyle(getDecimalStyle(x1)) as & Pure   
+
 }

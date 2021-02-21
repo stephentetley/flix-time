@@ -32,8 +32,13 @@ namespace Time/Format {
 
 namespace Time/Format/TimeFormatter {
 
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
+
     use Time/Format.TimeFormatter;
     use Time/Format.TimeFormatter.{TimeFormatter};
+    use Time/Format.DecimalStyle;
+    use Time/Format.DecimalStyle.{DecimalStyle};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -69,5 +74,20 @@ namespace Time/Format/TimeFormatter {
         let ZoneId(z1) = zone;
         TimeFormatter(x1.withZone(z1)) as & Pure
 
+    pub def getDecimalStyle(x: TimeFormatter): DecimalStyle =
+        import java.time.format.DateTimeFormatter.getDecimalStyle();
+        let TimeFormatter(x1) = x;
+        DecimalStyle(getDecimalStyle(x1)) as & Pure
+    
+    pub def getLocale(x: TimeFormatter): Locale =
+        import java.time.format.DateTimeFormatter.getLocale();
+        let TimeFormatter(x1) = x;
+        Locale(getLocale(x1)) as & Pure
+
+    pub def withLocale(x: TimeFormatter, locale: Locale): TimeFormatter =
+        import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale);
+        let TimeFormatter(x1) = x;
+        let Locale(locale1) = locale;
+        TimeFormatter(withLocale(x1, locale1)) as & Pure
 
 }

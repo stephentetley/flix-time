@@ -29,8 +29,8 @@ namespace Time {
     instance ToString[Instant] {
         def toString(x: Instant): String =
             import java.time.Instant.toString();
-            let Instant(t) = x;
-            t.toString() as & Pure
+            let Instant(x1) = x;
+            toString(x1) as & Pure
     }
 
     ///
@@ -256,13 +256,66 @@ namespace Time/Instant {
         let tu1 = cu1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1) as & Pure
 
-    pub def range(cf: ChronoField, x: Instant): ValueRange = 
-        /// Note the import path `java.time.Instant.range` causes a parse error.
+    pub def range(x: Instant, field: ChronoField): ValueRange = 
         import java.time.Instant.range(##java.time.temporal.TemporalField);
         let Instant(x1) = x;
-        let cf1 = Time/Temporal/ChronoField.marshal(cf);
-        let tf1 = cf1 as ##java.time.temporal.TemporalField;
-        ValueRange(range(x1, tf1)) as & Pure
+        let field1 = Time/Temporal/ChronoField.marshal(field);
+        let tfield1 = field1 as ##java.time.temporal.TemporalField;
+        ValueRange(range(x1, tfield1)) as & Pure
 
+
+    def truncatedTo(x: Instant, unit: ChronoUnit): Option[Instant] = 
+        import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit);
+        try {
+            let Instant(x1) = x;
+            let unit1 = Time/Temporal/ChronoUnit.marshal(unit);
+            let tunit1 = unit1 as ##java.time.temporal.TemporalUnit;
+            Some(Instant(truncatedTo(x1, tunit1))) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
+    
+    pub def truncatedToNanos(x: Instant): Instant = 
+        match truncatedTo(x, Time/Temporal/ChronoUnit.Nanos) { 
+            case Some(x1) => x1
+            case None => x          /// Should be impossible!
+        }
+    
+    pub def truncatedToMillis(x: Instant): Instant = 
+        match truncatedTo(x, Time/Temporal/ChronoUnit.Millis) { 
+            case Some(x1) => x1
+            case None => x          /// Should be impossible!
+        }
+
+    pub def truncatedToSeconds(x: Instant): Instant = 
+        match truncatedTo(x, Time/Temporal/ChronoUnit.Seconds) { 
+            case Some(x1) => x1
+            case None => x          /// Should be impossible!
+        }
+
+    pub def truncatedToMinutes(x: Instant): Instant = 
+        match truncatedTo(x, Time/Temporal/ChronoUnit.Minutes) { 
+            case Some(x1) => x1
+            case None => x          /// Should be impossible!
+        }
+
+    pub def truncatedToHours(x: Instant): Instant = 
+        match truncatedTo(x, Time/Temporal/ChronoUnit.Hours) { 
+            case Some(x1) => x1
+            case None => x          /// Should be impossible!
+        }
+
+    pub def truncatedToHalfDays(x: Instant): Instant = 
+        match truncatedTo(x, Time/Temporal/ChronoUnit.HalfDays) { 
+            case Some(x1) => x1
+            case None => x          /// Should be impossible!
+        }
+
+
+    pub def truncatedToDays(x: Instant): Instant = 
+        match truncatedTo(x, Time/Temporal/ChronoUnit.Days) { 
+            case Some(x1) => x1
+            case None => x          /// Should be impossible!
+        }
 
 }
