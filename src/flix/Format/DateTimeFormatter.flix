@@ -36,30 +36,31 @@ namespace Time/Format/DateTimeFormatter {
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
+    use Time/Format.ResolverStyle;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
     /// Formatters
 
     pub def iso_local_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_LOCAL_DATE_TIME as get_iso_local_date;
-        DateTimeFormatter(get_iso_local_date()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_LOCAL_DATE_TIME as getISO_LOCAL_DATE_TIME;
+        DateTimeFormatter(getISO_LOCAL_DATE_TIME()) as & Pure
 
     pub def iso_offset_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_OFFSET_DATE_TIME as get_iso_offset_date_time;
-        DateTimeFormatter(get_iso_offset_date_time()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_OFFSET_DATE_TIME as getISO_OFFSET_DATE_TIME;
+        DateTimeFormatter(getISO_OFFSET_DATE_TIME()) as & Pure
 
     pub def iso_zoned_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_ZONED_DATE_TIME as get_iso_zoned_date_time;
-        DateTimeFormatter(get_iso_zoned_date_time()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_ZONED_DATE_TIME as getISO_ZONED_DATE_TIME;
+        DateTimeFormatter(getISO_ZONED_DATE_TIME()) as & Pure
 
     pub def iso_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_DATE_TIME as get_iso_date_time;
-        DateTimeFormatter(get_iso_date_time()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_DATE_TIME as getISO_DATE_TIME;
+        DateTimeFormatter(getISO_DATE_TIME()) as & Pure
 
     pub def rfc_1123_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:RFC_1123_DATE_TIME as get_rfc_1123_date_time;
-        DateTimeFormatter(get_rfc_1123_date_time()) as & Pure
+        import get java.time.format.DateTimeFormatter:RFC_1123_DATE_TIME as getRFC_1123_DATE_TIME;
+        DateTimeFormatter(getRFC_1123_DATE_TIME()) as & Pure
 
 
     pub def fromPattern(pattern: String): Option[DateTimeFormatter] =
@@ -86,6 +87,24 @@ namespace Time/Format/DateTimeFormatter {
     pub def getDecimalStyle(x: DateTimeFormatter): DecimalStyle =
         import java.time.format.DateTimeFormatter.getDecimalStyle();
         let DateTimeFormatter(x1) = x;
-        DecimalStyle(getDecimalStyle(x1)) as & Pure   
+        DecimalStyle(getDecimalStyle(x1)) as & Pure
+
+    pub def putDecimalStyle(x: DateTimeFormatter, style: DecimalStyle): DateTimeFormatter =
+        import java.time.format.DateTimeFormatter.withDecimalStyle(##java.time.format.DecimalStyle);
+        let DateTimeFormatter(x1) = x;
+        let DecimalStyle(style1) = style;
+        DateTimeFormatter(withDecimalStyle(x1, style1)) as & Pure   
+
+
+    pub def getResolverStyle(x: DateTimeFormatter): ResolverStyle =
+        import java.time.format.DateTimeFormatter.getResolverStyle();
+        let DateTimeFormatter(x1) = x;
+        Time/Format/ResolverStyle.unmarshal(getResolverStyle(x1)) as & Pure
+
+    pub def putResolverStyle(x: DateTimeFormatter, style: ResolverStyle): DateTimeFormatter =
+        import java.time.format.DateTimeFormatter.withResolverStyle(##java.time.format.ResolverStyle);
+        let DateTimeFormatter(x1) = x;
+        let style1 = Time/Format/ResolverStyle.marshal(style);
+        DateTimeFormatter(withResolverStyle(x1, style1)) as & Pure  
 
 }

@@ -36,37 +36,38 @@ namespace Time/Format/DateFormatter {
     use Time/Format.DateFormatter.{DateFormatter};
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
+    use Time/Format.ResolverStyle;
 
     pub def basic_iso_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:BASIC_ISO_DATE as get_basic_iso_date;
-        DateFormatter(get_basic_iso_date()) as & Pure
+        import get java.time.format.DateTimeFormatter:BASIC_ISO_DATE as getBASIC_ISO_DATE;
+        DateFormatter(getBASIC_ISO_DATE()) as & Pure
 
     pub def iso_local_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_LOCAL_DATE as get_iso_local_date;
-        DateFormatter(get_iso_local_date()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_LOCAL_DATE as getISO_LOCAL_DATE;
+        DateFormatter(getISO_LOCAL_DATE()) as & Pure
 
     pub def iso_offset_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_OFFSET_DATE as get_iso_offset_date;
-        DateFormatter(get_iso_offset_date()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_OFFSET_DATE as getISO_OFFSET_DATE;
+        DateFormatter(getISO_OFFSET_DATE()) as & Pure
 
     pub def iso_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_DATE as get_iso_date;
-        DateFormatter(get_iso_date()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_DATE as getISO_DATE;
+        DateFormatter(getISO_DATE()) as & Pure
 
     pub def iso_oridinal_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_ORDINAL_DATE as get_iso_oridinal_date;
-        DateFormatter(get_iso_oridinal_date()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_ORDINAL_DATE as getISO_ORDINAL_DATE;
+        DateFormatter(getISO_ORDINAL_DATE()) as & Pure
 
     pub def iso_week_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_WEEK_DATE as get_iso_week_date;
-        DateFormatter(get_iso_week_date()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_WEEK_DATE as getISO_WEEK_DATE;
+        DateFormatter(getISO_WEEK_DATE()) as & Pure
 
 
     pub def fromPattern(pattern: String): Option[DateFormatter] =
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
         try {
-            Some(DateFormatter(pattern.strip().ofPattern())) as & Pure
+            Some(DateFormatter(ofPattern(strip(pattern)))) as & Pure
         } catch {
             case _: ##java.lang.IllegalArgumentException => None
         }
@@ -75,5 +76,10 @@ namespace Time/Format/DateFormatter {
         import java.time.format.DateTimeFormatter.getDecimalStyle();
         let DateFormatter(x1) = x;
         DecimalStyle(getDecimalStyle(x1)) as & Pure
+
+    pub def getResolverStyle(x: DateFormatter): ResolverStyle =
+        import java.time.format.DateTimeFormatter.getResolverStyle();
+        let DateFormatter(x1) = x;
+        Time/Format/ResolverStyle.unmarshal(getResolverStyle(x1)) as & Pure
 
 }

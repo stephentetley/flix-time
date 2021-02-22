@@ -38,21 +38,22 @@ namespace Time/Format/TimeFormatter {
     use Time/Format.TimeFormatter;
     use Time/Format.TimeFormatter.{TimeFormatter};
     use Time/Format.DecimalStyle;
+    use Time/Format.ResolverStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
     pub def iso_local_time(): TimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_LOCAL_TIME as get_iso_local_time;
-        TimeFormatter(get_iso_local_time()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_LOCAL_TIME as getISO_LOCAL_TIME;
+        TimeFormatter(getISO_LOCAL_TIME()) as & Pure
 
     pub def iso_offset_time(): TimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_OFFSET_TIME as get_iso_offset_time;
-        TimeFormatter(get_iso_offset_time()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_OFFSET_TIME as getISO_OFFSET_TIME;
+        TimeFormatter(getISO_OFFSET_TIME()) as & Pure
 
     pub def basic_iso_time(): TimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_TIME as get_iso_time;
-        TimeFormatter(get_iso_time()) as & Pure
+        import get java.time.format.DateTimeFormatter:ISO_TIME as getISO_TIME;
+        TimeFormatter(getISO_TIME()) as & Pure
 
     pub def fromPattern(pattern: String): Option[TimeFormatter] =
         try {
@@ -84,7 +85,13 @@ namespace Time/Format/TimeFormatter {
         let TimeFormatter(x1) = x;
         Locale(getLocale(x1)) as & Pure
 
-    pub def withLocale(x: TimeFormatter, locale: Locale): TimeFormatter =
+    pub def getResolverStyle(x: TimeFormatter): ResolverStyle =
+        import java.time.format.DateTimeFormatter.getResolverStyle();
+        let TimeFormatter(x1) = x;
+        Time/Format/ResolverStyle.unmarshal(getResolverStyle(x1)) as & Pure
+
+
+    pub def putLocale(x: TimeFormatter, locale: Locale): TimeFormatter =
         import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale);
         let TimeFormatter(x1) = x;
         let Locale(locale1) = locale;
