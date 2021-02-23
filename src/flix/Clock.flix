@@ -104,11 +104,17 @@ namespace Time/Clock {
         import java.time.Clock:tickMinutes(##java.time.ZoneId);
         let ZoneId(zoneId1) = zoneId;
         Clock(tickMinutes(zoneId1))
+
     
-    pub def withZone(x: Clock, zoneId: ZoneId): Clock & Impure =
+    pub def getZone(x: Clock): ZoneId =
+        import java.time.Clock.getZone();
+        let Clock(x1) = x;
+        ZoneId(getZone(x1)) as & Pure
+
+    pub def putZone(x: Clock, zoneId: ZoneId): Clock =
         import java.time.Clock.withZone(##java.time.ZoneId);
         let Clock(x1) = x;
         let ZoneId(zoneId1) = zoneId;
-        Clock(withZone(x1, zoneId1))
+        Clock(withZone(x1, zoneId1)) as & Pure
 
 }

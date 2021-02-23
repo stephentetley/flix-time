@@ -91,12 +91,16 @@ namespace Time/Instant {
 
     use Time.Instant;
     use Time.Instant.{Instant};
-    use Time.OffsetDateTime;
-    use Time.OffsetDateTime.{OffsetDateTime};
     use Time/Temporal.ChronoField;
     use Time/Temporal.ChronoUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
+    use Time.Duration;
+    use Time.Duration.{Duration};
+    use Time.OffsetDateTime;
+    use Time.OffsetDateTime.{OffsetDateTime};
+    use Time.Period;
+    use Time.Period.{Period};
     use Time.ZonedDateTime;
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
@@ -160,91 +164,93 @@ namespace Time/Instant {
     pub def atOffset(x: Instant, offset: ZoneOffset): OffsetDateTime =
         import java.time.Instant.atOffset(##java.time.ZoneOffset);
         let Instant(x1) = x;
-        let ZoneOffset(o1) = offset;
-        OffsetDateTime(x1.atOffset(o1)) as & Pure
+        let ZoneOffset(offset1) = offset;
+        OffsetDateTime(atOffset(x1, offset1)) as & Pure
 
     pub def atZone(x: Instant, zone: ZoneId): ZonedDateTime =
         import java.time.Instant.atZone(##java.time.ZoneId);
         let Instant(x1) = x;
-        let ZoneId(z1) = zone;
-        ZonedDateTime(x1.atZone(z1)) as & Pure
+        let ZoneId(zone1) = zone;
+        ZonedDateTime(atZone(x1, zone1)) as & Pure
 
 
     pub def getEpochSecond(x: Instant): Int64 =
         import java.time.Instant.getEpochSecond();
         let Instant(x1) = x;
-        x1.getEpochSecond() as & Pure
+        getEpochSecond(x1) as & Pure
 
     pub def getNano(x: Instant): Int32 =
         import java.time.Instant.getNano();
         let Instant(x1) = x;
-        x1.getNano() as & Pure
+        getNano(x1) as & Pure
 
 
     pub def compareTo(x: Instant, y: Instant): Int32 =
         import java.time.Instant.compareTo(##java.time.Instant);
         let Instant(x1) = x;
         let Instant(y1) = y;
-        x1.compareTo(y1) as & Pure
+        compareTo(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: Instant, y: Instant): Bool =
         import java.time.Instant.isBefore(##java.time.Instant);
-        let Instant(t1) = x;
-        let Instant(t2) = y;
-        t1.isBefore(t2) as & Pure
+        let Instant(x1) = x;
+        let Instant(y1) = y;
+        isBefore(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: Instant, y: Instant): Bool =
         import java.time.Instant.isAfter(##java.time.Instant);
-        let Instant(t1) = x;
-        let Instant(t2) = y;
-        t1.isAfter(t2) as & Pure
+        let Instant(x1) = x;
+        let Instant(y1) = y;
+        isAfter(x1, y1) as & Pure
 
     pub def plusSeconds(x: Instant, seconds: Int64): Instant =
         import java.time.Instant.plusSeconds(Int64);
         let Instant(x1) = x;
-        Instant(x1.plusSeconds(seconds)) as & Pure
+        Instant(plusSeconds(x1, seconds)) as & Pure
 
     pub def minusSeconds(x: Instant, seconds: Int64): Instant =
         import java.time.Instant.minusSeconds(Int64);
         let Instant(x1) = x;
-        Instant(x1.minusSeconds(seconds)) as & Pure
+        Instant(minusSeconds(x1, seconds)) as & Pure
 
     pub def plusMillis(x: Instant, millis: Int64): Instant =
         import java.time.Instant.plusMillis(Int64);
         let Instant(x1) = x;
-        Instant(x1.plusMillis(millis)) as & Pure
+        Instant(plusMillis(x1, millis)) as & Pure
 
     pub def minusMillis(x: Instant, millis: Int64): Instant =
         import java.time.Instant.minusMillis(Int64);
         let Instant(x1) = x;
-        Instant(x1.minusMillis(millis)) as & Pure
+        Instant(minusMillis(x1, millis)) as & Pure
 
     pub def plusNanos(x: Instant, nanos: Int64): Instant =
         import java.time.Instant.plusNanos(Int64);
         let Instant(x1) = x;
-        Instant(x1.plusNanos(nanos)) as & Pure
+        Instant(plusNanos(x1, nanos)) as & Pure
 
-    ///
-    /// Returns the given instant `x` plus `d` number of nano seconds.
-    ///
-    pub def plus(x: Instant, d: Int64): Instant =
-        import java.time.Instant.plusNanos(Int64);
-        let Instant(t) = x;
-        Instant(t.plusNanos(d)) as & Pure
 
-    ///
-    /// Returns the given instant `x` minus `d` number of nano seconds.
-    ///
-    pub def minus(x: Instant, d: Int64): Instant =
-        import java.time.Instant.minusNanos(Int64);
-        let Instant(t) = x;
-        Instant(t.minusNanos(d)) as & Pure
+    pub def plusDuration(x: Instant, d: Duration): Instant =
+        import java.time.Instant.plus(##java.time.temporal.TemporalAmount);
+        let Instant(x1) = x;
+        let Duration(d1) = d;
+        Instant(plus(x1, d1 as ##java.time.temporal.TemporalAmount)) as & Pure
+
+    /// Period.ofMonths and Period.ofYears fail (None)
+    pub def plusPeriod(x: Instant, p: Period): Option[Instant] =
+        import java.time.Instant.plus(##java.time.temporal.TemporalAmount);
+        try { 
+            let Instant(x1) = x;
+            let Period(p1) = p;
+            Some(Instant(plus(x1, p1 as ##java.time.temporal.TemporalAmount))) as & Pure
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
 
 
     pub def until(b: Instant, e: Instant, cu: ChronoUnit): Int64 = 
