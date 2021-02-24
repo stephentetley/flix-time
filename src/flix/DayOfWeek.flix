@@ -24,12 +24,12 @@ namespace Time {
     /// Days are reprepresented as an enum from Monday to Sunday.
     ///
     pub enum DayOfWeek {
-        case Monday,
-        case Tuesday,
-        case Wednesday,
-        case Thursday,
-        case Friday,
-        case Saturday,
+        case Monday
+        case Tuesday
+        case Wednesday
+        case Thursday
+        case Friday
+        case Saturday
         case Sunday
     }
 

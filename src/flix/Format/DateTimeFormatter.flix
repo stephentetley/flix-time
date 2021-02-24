@@ -36,6 +36,7 @@ namespace Time/Format/DateTimeFormatter {
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
+    use Time/Format/FormatStyle.FormatStyle;
     use Time/Format.ResolverStyle;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
@@ -67,22 +68,27 @@ namespace Time/Format/DateTimeFormatter {
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
         try {
-            Some(DateTimeFormatter(pattern.strip().ofPattern())) as & Pure
+            Some(DateTimeFormatter(ofPattern(strip(pattern)))) as & Pure
         } catch {
             case _: ##java.lang.IllegalArgumentException => None
         }
 
+    /// NOTE - should this have an "of" prefix?
+    pub def ofLocalizedDateTime(style: FormatStyle): DateTimeFormatter =
+        import java.time.format.DateTimeFormatter:ofLocalizedDateTime(##java.time.format.FormatStyle);
+        let style1 = Time/Format/FormatStyle.marshal(style);
+        DateTimeFormatter(ofLocalizedDateTime(style1)) as & Pure
 
     pub def getZone(x: DateTimeFormatter): ZoneId =
         import java.time.format.DateTimeFormatter.getZone();
         let DateTimeFormatter(x1) = x;
-        ZoneId(x1.getZone()) as & Pure
+        ZoneId(getZone(x1)) as & Pure
 
     pub def putZone(x: DateTimeFormatter, zone: ZoneId): DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId);
         let DateTimeFormatter(x1) = x;
         let ZoneId(z1) = zone;
-        DateTimeFormatter(x1.withZone(z1)) as & Pure
+        DateTimeFormatter(withZone(x1, z1)) as & Pure
 
     pub def getDecimalStyle(x: DateTimeFormatter): DecimalStyle =
         import java.time.format.DateTimeFormatter.getDecimalStyle();

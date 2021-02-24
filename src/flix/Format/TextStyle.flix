@@ -17,11 +17,11 @@
 namespace Time/Format {
 
     pub enum TextStyle {
-        case Full,
-        case FullStandalone,
-        case Narrow,
-        case NarrowStandalone,
-        case Short,
+        case Full
+        case FullStandalone
+        case Narrow
+        case NarrowStandalone
+        case Short
         case ShortStandalone
     }
     
