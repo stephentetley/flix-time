@@ -22,24 +22,24 @@ namespace Time/Chrono {
     }   
 
     instance ToString[ThaiBuddhistEra] {
-        def toString(x: ThaiBuddhistEra): String = match x {
+        pub def toString(x: ThaiBuddhistEra): String = match x {
             case BEFORE_BE  => "BEFORE_BE"
             case BE         => "BE"
         }
     }
 
     instance Eq[ThaiBuddhistEra] {
-        def eq(x: ThaiBuddhistEra, y: ThaiBuddhistEra): Bool = match (x, y) {
+        pub def eq(x: ThaiBuddhistEra, y: ThaiBuddhistEra): Bool = match (x, y) {
             case (BEFORE_BE, BEFORE_BE) => true
             case (BE, BE) => true
             case (_, _) => false
         }
 
-        def neq(x: ThaiBuddhistEra, y: ThaiBuddhistEra): Bool = not (x == y)
+        pub def neq(x: ThaiBuddhistEra, y: ThaiBuddhistEra): Bool = not (x == y)
     }
 
     instance Hash[ThaiBuddhistEra] {
-        def hash(x: ThaiBuddhistEra): Int = Time/Chrono/ThaiBuddhistEra.hashCode(x)
+        pub def hash(x: ThaiBuddhistEra): Int = Time/Chrono/ThaiBuddhistEra.hashCode(x)
     }    
 
 }

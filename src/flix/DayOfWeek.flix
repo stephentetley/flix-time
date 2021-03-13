@@ -34,7 +34,7 @@ namespace Time {
     }
 
     instance ToString[DayOfWeek] {
-        def toString(x: DayOfWeek): String = match x {
+        pub def toString(x: DayOfWeek): String = match x {
             case Monday => "Monday"
             case Tuesday => "Tuesday"
             case Wednesday => "Wednesday"
@@ -46,7 +46,7 @@ namespace Time {
     }
 
     instance FromString[DayOfWeek] {
-        def fromString(x: String): Option[DayOfWeek] = match x {
+        pub def fromString(x: String): Option[DayOfWeek] = match x {
             case "Monday" => Some(Monday)
             case "Tuesday" => Some(Tuesday)
             case "Wednesday" => Some(Wednesday)
@@ -59,16 +59,15 @@ namespace Time {
     }
 
     instance LowerBound[DayOfWeek] {
-        def minValue(): DayOfWeek = Monday
+        pub def minValue(): DayOfWeek = Monday
     }
 
     instance UpperBound[DayOfWeek] {
-        def maxValue(): DayOfWeek = Sunday
+        pub def maxValue(): DayOfWeek = Sunday
     }
 
     instance Eq[DayOfWeek] {
-
-        def eq(x: DayOfWeek, y: DayOfWeek): Bool = match (x, y) {
+        pub def eq(x: DayOfWeek, y: DayOfWeek): Bool = match (x, y) {
             case (Monday, Monday) => true
             case (Tuesday, Tuesday) => true
             case (Wednesday, Wednesday) => true
@@ -79,19 +78,19 @@ namespace Time {
             case (_, _) => false
         }
 
-        def neq(x: DayOfWeek, y: DayOfWeek): Bool = not (x == y)
+        pub def neq(x: DayOfWeek, y: DayOfWeek): Bool = not (x == y)
     }
 
     instance Hash[DayOfWeek] {
-        def hash(x: DayOfWeek): Int = Time/DayOfWeek.hashCode(x)
+        pub def hash(x: DayOfWeek): Int = Time/DayOfWeek.hashCode(x)
     }
 
     instance Order[DayOfWeek] {
-        def less(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0
-        def lessEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0 or x == y
-        def greater(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) > 0
-        def greaterEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) > 0 or x == y
-        def compare(x: DayOfWeek, y: DayOfWeek): Comparison = match Time/DayOfWeek.compareTo(x,y) { 
+        pub def less(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0
+        pub def lessEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0 or x == y
+        pub def greater(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) > 0
+        pub def greaterEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) > 0 or x == y
+        pub def compare(x: DayOfWeek, y: DayOfWeek): Comparison = match Time/DayOfWeek.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan

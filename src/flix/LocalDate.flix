@@ -27,7 +27,7 @@ namespace Time {
     /// Returns the given date `x` as a string using the Java builtin toString method.
     ///
     instance ToString[LocalDate] {
-        def toString(x: LocalDate): String =
+        pub def toString(x: LocalDate): String =
             import java.time.LocalDate.toString();
             let LocalDate(t) = x;
             t.toString() as & Pure
@@ -39,7 +39,7 @@ namespace Time {
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
     instance FromString[LocalDate] {
-        def fromString(s: String): Option[LocalDate] =
+        pub def fromString(s: String): Option[LocalDate] =
             import java.lang.String.strip();
             import java.time.LocalDate:parse(##java.lang.CharSequence);
             try {        
@@ -51,26 +51,26 @@ namespace Time {
     }
 
     instance Eq[LocalDate] {
-        def eq(x: LocalDate, y: LocalDate): Bool =
+        pub def eq(x: LocalDate, y: LocalDate): Bool =
             import java.time.LocalDate.equals(##java.lang.Object);
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: LocalDate, y: LocalDate): Bool = not (x == y)
+        pub def neq(x: LocalDate, y: LocalDate): Bool = not (x == y)
     }
 
     instance Hash[LocalDate] {
-        def hash(x: LocalDate): Int = Time/LocalDate.hashCode(x)
+        pub def hash(x: LocalDate): Int = Time/LocalDate.hashCode(x)
     }
 
 
     instance Order[LocalDate] {
-        def less(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) < 0
-        def lessEqual(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) < 0 or x == y
-        def greater(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) > 0
-        def greaterEqual(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) > 0 or x == y
-        def compare(x: LocalDate, y: LocalDate): Comparison = match Time/LocalDate.compareTo(x,y) { 
+        pub def less(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) < 0
+        pub def lessEqual(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) < 0 or x == y
+        pub def greater(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) > 0
+        pub def greaterEqual(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.compareTo(x,y) > 0 or x == y
+        pub def compare(x: LocalDate, y: LocalDate): Comparison = match Time/LocalDate.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan
@@ -78,13 +78,13 @@ namespace Time {
     }
 
     instance LowerBound[LocalDate] {
-        def minValue(): LocalDate =
+        pub def minValue(): LocalDate =
             import get java.time.LocalDate:MIN as getMIN;
             LocalDate(getMIN()) as & Pure
     }
 
     instance UpperBound[LocalDate] {
-        def maxValue(): LocalDate =
+        pub def maxValue(): LocalDate =
             import get java.time.LocalDate:MAX as getMAX;
             LocalDate(getMAX()) as & Pure
     }

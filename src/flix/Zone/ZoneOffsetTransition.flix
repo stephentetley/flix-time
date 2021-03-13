@@ -23,7 +23,7 @@ namespace Time/Zone {
     pub opaque type ZoneOffsetTransition = ##java.time.zone.ZoneOffsetTransition
 
     instance ToString[ZoneOffsetTransition] {
-        def toString(x: ZoneOffsetTransition): String =
+        pub def toString(x: ZoneOffsetTransition): String =
             import java.time.zone.ZoneOffsetTransition.toString();
             let ZoneOffsetTransition(x1) = x;
             toString(x1) as & Pure

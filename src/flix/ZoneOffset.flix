@@ -25,14 +25,14 @@ namespace Time {
     /// Returns the given ZoneOffset `x` as a String.
     ///
     instance ToString[ZoneOffset] {
-        def toString(x: ZoneOffset): String =
+        pub def toString(x: ZoneOffset): String =
             import java.time.ZoneOffset.toString();
             let ZoneOffset(z) = x;
             z.toString() as & Pure
     }
     
     instance FromString[ZoneOffset] {
-        def fromString(offsetId: String): Option[ZoneOffset] =
+        pub def fromString(offsetId: String): Option[ZoneOffset] =
             import java.lang.String.strip();
             import java.time.ZoneOffset:of(String);
             import java.time.Period:parse(##java.lang.CharSequence);
@@ -46,25 +46,25 @@ namespace Time {
 
     
     instance Eq[ZoneOffset] {
-        def eq(x: ZoneOffset, y: ZoneOffset): Bool =
+        pub def eq(x: ZoneOffset, y: ZoneOffset): Bool =
             import java.time.ZoneOffset.equals(##java.lang.Object);
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: ZoneOffset, y: ZoneOffset): Bool = not (x == y)
+        pub def neq(x: ZoneOffset, y: ZoneOffset): Bool = not (x == y)
     }
 
     instance Hash[ZoneOffset] {
-        def hash(x: ZoneOffset): Int = Time/ZoneOffset.hashCode(x)
+        pub def hash(x: ZoneOffset): Int = Time/ZoneOffset.hashCode(x)
     }
 
     instance Order[ZoneOffset] {
-        def less(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) < 0
-        def lessEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) < 0 or x == y
-        def greater(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) > 0
-        def greaterEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) > 0 or x == y
-        def compare(x: ZoneOffset, y: ZoneOffset): Comparison = match Time/ZoneOffset.compareTo(x,y) { 
+        pub def less(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) < 0
+        pub def lessEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) < 0 or x == y
+        pub def greater(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) > 0
+        pub def greaterEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) > 0 or x == y
+        pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison = match Time/ZoneOffset.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan
@@ -73,13 +73,13 @@ namespace Time {
     
 
     instance LowerBound[ZoneOffset] {
-        def minValue(): ZoneOffset =
+        pub def minValue(): ZoneOffset =
             import get java.time.ZoneOffset:MIN as getMIN;
             ZoneOffset(getMIN()) as & Pure
     }
 
     instance UpperBound[ZoneOffset] {
-        def maxValue(): ZoneOffset =
+        pub def maxValue(): ZoneOffset =
             import get java.time.ZoneOffset:MAX as getMAX;
             ZoneOffset(getMAX()) as & Pure
     }

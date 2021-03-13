@@ -28,6 +28,11 @@ namespace Time/Format {
             let DateFormatter(x1) = x;
             x1.toString() as & Pure
     }
+
+    instance FromString[DateFormatter] {
+        pub def fromString(x: String): Option[DateFormatter] = Time/Format/DateFormatter.fromPattern(x)
+    }
+
 }
 
 namespace Time/Format/DateFormatter {
@@ -71,6 +76,8 @@ namespace Time/Format/DateFormatter {
         } catch {
             case _: ##java.lang.IllegalArgumentException => None
         }
+
+
 
     pub def getDecimalStyle(x: DateFormatter): DecimalStyle =
         import java.time.format.DateTimeFormatter.getDecimalStyle();

@@ -27,20 +27,19 @@ namespace Time/Chrono {
     /// Returns the given JapaneseEra `x` as a String.
     ///
     instance ToString[JapaneseEra] {
-        def toString(x: JapaneseEra): String =
+        pub def toString(x: JapaneseEra): String =
             import java.time.chrono.JapaneseEra.toString();
             let JapaneseEra(x1) = x;
             toString(x1) as & Pure
     }
     
     instance Eq[JapaneseEra] {
-        def eq(x: JapaneseEra, y: JapaneseEra): Bool = Time/Chrono/JapaneseEra.equals(x, y)
-
-        def neq(x: JapaneseEra, y: JapaneseEra): Bool = not (x == y)
+        pub def eq(x: JapaneseEra, y: JapaneseEra): Bool = Time/Chrono/JapaneseEra.equals(x, y)
+        pub def neq(x: JapaneseEra, y: JapaneseEra): Bool = not (x == y)
     }
 
     instance Hash[JapaneseEra] {
-        def hash(x: JapaneseEra): Int = Time/Chrono/JapaneseEra.hashCode(x)
+        pub def hash(x: JapaneseEra): Int = Time/Chrono/JapaneseEra.hashCode(x)
     } 
 }
 

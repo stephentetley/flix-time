@@ -27,7 +27,7 @@ namespace Time {
     /// Returns the given time `x` as a string using __.
     ///
     instance ToString[OffsetTime] {
-        def toString(x: OffsetTime): String =
+        pub def toString(x: OffsetTime): String =
             import java.time.OffsetTime.toString();
             let OffsetTime(x1) = x;
             x1.toString() as & Pure
@@ -39,7 +39,7 @@ namespace Time {
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
     instance FromString[OffsetTime] {
-        def fromString(s: String): Option[OffsetTime] =
+        pub def fromString(s: String): Option[OffsetTime] =
             import java.lang.String.strip();
             import java.time.OffsetTime:parse(##java.lang.CharSequence);
             try {
@@ -51,25 +51,25 @@ namespace Time {
     }
 
     instance Eq[OffsetTime] {
-        def eq(x: OffsetTime, y: OffsetTime): Bool =
+        pub def eq(x: OffsetTime, y: OffsetTime): Bool =
             import java.time.OffsetTime.equals(##java.lang.Object);
             let OffsetTime(x1) = x;
             let OffsetTime(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: OffsetTime, y: OffsetTime): Bool = not (x == y)
+        pub def neq(x: OffsetTime, y: OffsetTime): Bool = not (x == y)
     }
 
     instance Hash[OffsetTime] {
-        def hash(x: OffsetTime): Int = Time/OffsetTime.hashCode(x)
+        pub def hash(x: OffsetTime): Int = Time/OffsetTime.hashCode(x)
     }
 
     instance Order[OffsetTime] {
-        def less(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) < 0
-        def lessEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) < 0 or x == y
-        def greater(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) > 0
-        def greaterEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) > 0 or x == y
-        def compare(x: OffsetTime, y: OffsetTime): Comparison = match Time/OffsetTime.compareTo(x,y) { 
+        pub def less(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) < 0
+        pub def lessEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) < 0 or x == y
+        pub def greater(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) > 0
+        pub def greaterEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) > 0 or x == y
+        pub def compare(x: OffsetTime, y: OffsetTime): Comparison = match Time/OffsetTime.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan
@@ -77,13 +77,13 @@ namespace Time {
     }
 
     instance LowerBound[OffsetTime] {
-        def minValue(): OffsetTime =
+        pub def minValue(): OffsetTime =
             import get java.time.OffsetTime:MIN as getMIN;
             OffsetTime(getMIN()) as & Pure
     }
 
     instance UpperBound[OffsetTime] {
-        def maxValue(): OffsetTime =
+        pub def maxValue(): OffsetTime =
             import get java.time.OffsetTime:MAX as getMAX;
             OffsetTime(getMAX()) as & Pure
     }

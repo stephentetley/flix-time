@@ -25,20 +25,19 @@ namespace Time/Chrono {
     /// Returns the given HijrahDate `x` as a String.
     ///
     instance ToString[HijrahDate] {
-        def toString(x: HijrahDate): String =
+        pub def toString(x: HijrahDate): String =
             import java.time.chrono.HijrahDate.toString();
             let HijrahDate(x1) = x;
             toString(x1) as & Pure
     }
 
     instance Eq[HijrahDate] {
-        def eq(x: HijrahDate, y: HijrahDate): Bool = Time/Chrono/HijrahDate.equals(x, y)
-
-        def neq(x: HijrahDate, y: HijrahDate): Bool = not (x == y)
+        pub def eq(x: HijrahDate, y: HijrahDate): Bool = Time/Chrono/HijrahDate.equals(x, y)
+        pub def neq(x: HijrahDate, y: HijrahDate): Bool = not (x == y)
     }
     
     instance Hash[HijrahDate] {
-        def hash(x: HijrahDate): Int = Time/Chrono/HijrahDate.hashCode(x)
+        pub def hash(x: HijrahDate): Int = Time/Chrono/HijrahDate.hashCode(x)
     }  
 
 }

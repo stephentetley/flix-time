@@ -27,20 +27,19 @@ namespace Time/Chrono {
     /// Returns the given JapaneseDate `x` as a String.
     ///
     instance ToString[JapaneseDate] {
-        def toString(x: JapaneseDate): String =
+        pub def toString(x: JapaneseDate): String =
             import java.time.chrono.JapaneseDate.toString();
             let JapaneseDate(x1) = x;
             toString(x1) as & Pure
     }
 
     instance Eq[JapaneseDate] {
-        def eq(x: JapaneseDate, y: JapaneseDate): Bool = Time/Chrono/JapaneseDate.equals(x, y)
-
-        def neq(x: JapaneseDate, y: JapaneseDate): Bool = not (x == y)
+        pub def eq(x: JapaneseDate, y: JapaneseDate): Bool = Time/Chrono/JapaneseDate.equals(x, y)
+        pub def neq(x: JapaneseDate, y: JapaneseDate): Bool = not (x == y)
     }
     
     instance Hash[JapaneseDate] {
-        def hash(x: JapaneseDate): Int = Time/Chrono/JapaneseDate.hashCode(x)
+        pub def hash(x: JapaneseDate): Int = Time/Chrono/JapaneseDate.hashCode(x)
     }  
 
 }

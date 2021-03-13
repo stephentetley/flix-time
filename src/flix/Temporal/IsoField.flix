@@ -22,7 +22,7 @@ namespace Time/Temporal {
     pub opaque type IsoField = ##java.time.temporal.TemporalField
 
     instance ToString[IsoField] {
-        def toString(x: IsoField): String = 
+        pub def toString(x: IsoField): String =
             import java.time.temporal.TemporalField.toString() as toString;
             let IsoField(x1) = x;
             toString(x1) as & Pure
@@ -30,14 +30,12 @@ namespace Time/Temporal {
 
     
     instance Eq[IsoField] {
-        def eq(x: IsoField, y: IsoField): Bool = Time/Temporal/IsoField.equals(x, y)
-  
-
-        def neq(x: IsoField, y: IsoField): Bool = not (x == y)
+        pub def eq(x: IsoField, y: IsoField): Bool = Time/Temporal/IsoField.equals(x, y)
+        pub def neq(x: IsoField, y: IsoField): Bool = not (x == y)
     }
 
     instance Hash[IsoField] {
-        def hash(x: IsoField): Int = Time/Temporal/IsoField.hashCode(x)
+        pub def hash(x: IsoField): Int = Time/Temporal/IsoField.hashCode(x)
     }
 
 }

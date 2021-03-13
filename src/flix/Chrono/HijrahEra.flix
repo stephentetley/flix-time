@@ -21,21 +21,21 @@ namespace Time/Chrono {
     }   
 
     instance ToString[HijrahEra] {
-        def toString(x: HijrahEra): String = match x {
+        pub def toString(x: HijrahEra): String = match x {
             case AH => "AH"
         }
     }
 
     instance Eq[HijrahEra] {
-        def eq(x: HijrahEra, y: HijrahEra): Bool = match (x, y) {
+        pub def eq(x: HijrahEra, y: HijrahEra): Bool = match (x, y) {
             case (AH, AH) => true
         }
 
-        def neq(x: HijrahEra, y: HijrahEra): Bool = not (x == y)
+        pub def neq(x: HijrahEra, y: HijrahEra): Bool = not (x == y)
     }
 
     instance Hash[HijrahEra] {
-        def hash(x: HijrahEra): Int = Time/Chrono/HijrahEra.hashCode(x)
+        pub def hash(x: HijrahEra): Int = Time/Chrono/HijrahEra.hashCode(x)
     }    
 
 }

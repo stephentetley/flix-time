@@ -22,24 +22,24 @@ namespace Time/Chrono {
     }   
     
     instance ToString[IsoEra] {
-        def toString(x: IsoEra): String = match x {
+        pub def toString(x: IsoEra): String = match x {
             case BCE => "CE"
             case CE => "CE"
         }
     }
 
     instance Eq[IsoEra] {
-        def eq(x: IsoEra, y: IsoEra): Bool = match (x, y) {
+        pub def eq(x: IsoEra, y: IsoEra): Bool = match (x, y) {
             case (BCE, BCE) => true
             case (CE, CE) => true
             case (_, _) => true
         }
 
-        def neq(x: IsoEra, y: IsoEra): Bool = not (x == y)
+        pub def neq(x: IsoEra, y: IsoEra): Bool = not (x == y)
     }
 
     instance Hash[IsoEra] {
-        def hash(x: IsoEra): Int = Time/Chrono/IsoEra.hashCode(x)
+        pub def hash(x: IsoEra): Int = Time/Chrono/IsoEra.hashCode(x)
     }    
 
 }

@@ -29,7 +29,7 @@ namespace Time {
     /// The format of the output string is in ISO-8601 duration format.
     ///
     instance ToString[Duration] {
-        def toString(x: Duration): String =
+        pub def toString(x: Duration): String =
             import java.time.Duration.toString();
             let Duration(x1) = x;
             toString(x1) as & Pure
@@ -41,7 +41,7 @@ namespace Time {
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
     instance FromString[Duration] {
-        def fromString(s: String): Option[Duration] =
+        pub def fromString(s: String): Option[Duration] =
             import java.lang.String.strip();
             import java.time.Duration:parse(##java.lang.CharSequence);
             try {
@@ -53,27 +53,25 @@ namespace Time {
     }
 
     instance Eq[Duration] {
-
-        def eq(x: Duration, y: Duration): Bool =
+        pub def eq(x: Duration, y: Duration): Bool =
             import java.time.Duration.equals(##java.lang.Object);
             let Duration(x1) = x;
             let Duration(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: Duration, y: Duration): Bool = not (x == y)
+        pub def neq(x: Duration, y: Duration): Bool = not (x == y)
     }
 
     instance Hash[Duration] {
-        def hash(x: Duration): Int = Time/Duration.hashCode(x)
+        pub def hash(x: Duration): Int = Time/Duration.hashCode(x)
     }
 
     instance Order[Duration] {
-        
-        def less(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) < 0        
-        def lessEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) < 0 or x == y
-        def greater(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0        
-        def greaterEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0 or x == y
-        def compare(x: Duration, y: Duration): Comparison = match Time/Duration.compareTo(x,y) { 
+        pub def less(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) < 0
+        pub def lessEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) < 0 or x == y
+        pub def greater(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0
+        pub def greaterEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0 or x == y
+        pub def compare(x: Duration, y: Duration): Comparison = match Time/Duration.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan
@@ -81,7 +79,7 @@ namespace Time {
     }
 
     instance Add[Duration] {
-        def add(x: Duration, y: Duration): Duration =
+        pub def add(x: Duration, y: Duration): Duration =
             import java.time.Duration.plus(##java.time.Duration);
             let Duration(x1) = x;
             let Duration(y1) = y;
@@ -89,7 +87,7 @@ namespace Time {
     }
 
     instance Sub[Duration] {
-        def sub(x: Duration, y: Duration): Duration =
+        pub def sub(x: Duration, y: Duration): Duration =
             import java.time.Duration.minus(##java.time.Duration);
             let Duration(x1) = x;
             let Duration(y1) = y;
@@ -97,16 +95,16 @@ namespace Time {
     }
 
     instance Neg[Duration] {
-        def neg(x: Duration): Duration =
+        pub def neg(x: Duration): Duration =
             import java.time.Duration.negated();
             let Duration(x1) = x;
             Duration(x1.negated()) as & Pure
     }
 
-    /// Addition
+    /// Monoid is addition
     instance Monoid[Duration] {
-        def empty(): Duration = Time/Duration.zero()
-        def combine(x: Duration, y: Duration): Duration = Add.add(x, y)
+        pub def empty(): Duration = Time/Duration.zero()
+        pub def combine(x: Duration, y: Duration): Duration = Add.add(x, y)
     }
 }
 

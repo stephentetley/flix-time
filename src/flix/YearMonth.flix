@@ -36,7 +36,7 @@ namespace Time {
     /// Returns the year ...
     ///
     instance FromString[YearMonth] {
-        def fromString(s: String): Option[YearMonth] = try {
+        pub def fromString(s: String): Option[YearMonth] = try {
             import java.lang.String.strip();
             import java.time.YearMonth:parse(##java.lang.CharSequence);
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
@@ -48,25 +48,25 @@ namespace Time {
 
 
     instance Eq[YearMonth] {
-        def eq(x: YearMonth, y: YearMonth): Bool =
+        pub def eq(x: YearMonth, y: YearMonth): Bool =
             import java.time.YearMonth.equals(##java.lang.Object);
             let YearMonth(x1) = x;
             let YearMonth(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: YearMonth, y: YearMonth): Bool = not (x == y)
+        pub def neq(x: YearMonth, y: YearMonth): Bool = not (x == y)
     }
 
     instance Hash[YearMonth] {
-        def hash(x: YearMonth): Int = Time/YearMonth.hashCode(x)
+        pub def hash(x: YearMonth): Int = Time/YearMonth.hashCode(x)
     }
 
     instance Order[YearMonth] {
-        def less(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) < 0
-        def lessEqual(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) < 0 or x == y
-        def greater(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) > 0
-        def greaterEqual(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) > 0 or x == y
-        def compare(x: YearMonth, y: YearMonth): Comparison = match Time/YearMonth.compareTo(x,y) { 
+        pub def less(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) < 0
+        pub def lessEqual(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) < 0 or x == y
+        pub def greater(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) > 0
+        pub def greaterEqual(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.compareTo(x,y) > 0 or x == y
+        pub def compare(x: YearMonth, y: YearMonth): Comparison = match Time/YearMonth.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan

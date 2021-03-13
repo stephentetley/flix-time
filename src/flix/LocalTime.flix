@@ -27,7 +27,7 @@ namespace Time {
     /// Returns the given time `x` as a string using __.
     ///
     instance ToString[LocalTime] {
-        def toString(x: LocalTime): String =
+        pub def toString(x: LocalTime): String =
             import java.time.LocalTime.toString();
             let LocalTime(t) = x;
             t.toString() as & Pure
@@ -39,7 +39,7 @@ namespace Time {
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
     instance FromString[LocalTime] {
-        def fromString(s: String): Option[LocalTime] =
+        pub def fromString(s: String): Option[LocalTime] =
             import java.lang.String.strip();
             import java.time.LocalTime:parse(##java.lang.CharSequence);
             try {
@@ -52,25 +52,25 @@ namespace Time {
 
 
     instance Eq[LocalTime] {
-        def eq(x: LocalTime, y: LocalTime): Bool =
+        pub def eq(x: LocalTime, y: LocalTime): Bool =
             import java.time.LocalTime.equals(##java.lang.Object);
             let LocalTime(x1) = x;
             let LocalTime(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: LocalTime, y: LocalTime): Bool = not (x == y)
+        pub def neq(x: LocalTime, y: LocalTime): Bool = not (x == y)
     }
     
     instance Hash[LocalTime] {
-        def hash(x: LocalTime): Int = Time/LocalTime.hashCode(x)
+        pub def hash(x: LocalTime): Int = Time/LocalTime.hashCode(x)
     }
 
     instance Order[LocalTime] {
-        def less(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) < 0
-        def lessEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) < 0 or x == y
-        def greater(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) > 0
-        def greaterEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) > 0 or x == y
-        def compare(x: LocalTime, y: LocalTime): Comparison = match Time/LocalTime.compareTo(x,y) { 
+        pub def less(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) < 0
+        pub def lessEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) < 0 or x == y
+        pub def greater(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) > 0
+        pub def greaterEqual(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.compareTo(x,y) > 0 or x == y
+        pub def compare(x: LocalTime, y: LocalTime): Comparison = match Time/LocalTime.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan
@@ -78,13 +78,13 @@ namespace Time {
     }
 
     instance LowerBound[LocalTime] {
-        def minValue(): LocalTime =
+        pub def minValue(): LocalTime =
             import get java.time.LocalTime:MIN as getMIN;
             LocalTime(getMIN()) as & Pure
     }
     
     instance UpperBound[LocalTime] {
-        def maxValue(): LocalTime =
+        pub def maxValue(): LocalTime =
             import get java.time.LocalTime:MAX as getMAX;
             LocalTime(getMAX()) as & Pure
     }

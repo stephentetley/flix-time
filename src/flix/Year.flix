@@ -26,7 +26,7 @@ namespace Time {
     pub opaque type Year = ##java.time.Year
 
     instance ToString[Year] {
-        def toString(x: Year): String = 
+        pub def toString(x: Year): String =
             import java.time.Year.toString();
             let Year(x1) = x;
             x1.toString() as & Pure
@@ -36,7 +36,7 @@ namespace Time {
     /// Returns the year ...
     ///
     instance FromString[Year] {
-        def fromString(s: String): Option[Year] =
+        pub def fromString(s: String): Option[Year] =
             import java.lang.String.strip();
             import java.time.Year:parse(##java.lang.CharSequence);
             try {
@@ -48,25 +48,25 @@ namespace Time {
     }
 
     instance Eq[Year] {
-        def eq(x: Year, y: Year): Bool =
+        pub def eq(x: Year, y: Year): Bool =
             import java.time.Year.equals(##java.lang.Object);
             let Year(x1) = x;
             let Year(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: Year, y: Year): Bool = not (x == y)
+        pub def neq(x: Year, y: Year): Bool = not (x == y)
     }
 
     instance Hash[Year] {
-        def hash(x: Year): Int = Time/Year.hashCode(x)
+        pub def hash(x: Year): Int = Time/Year.hashCode(x)
     }
 
     instance Order[Year] {
-        def less(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) < 0
-        def lessEqual(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) < 0 or x == y
-        def greater(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) > 0
-        def greaterEqual(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) > 0 or x == y
-        def compare(x: Year, y: Year): Comparison = match Time/Year.compareTo(x,y) { 
+        pub def less(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) < 0
+        pub def lessEqual(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) < 0 or x == y
+        pub def greater(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) > 0
+        pub def greaterEqual(x: Year, y: Year): Bool = Time/Year.compareTo(x,y) > 0 or x == y
+        pub def compare(x: Year, y: Year): Comparison = match Time/Year.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan
@@ -74,14 +74,14 @@ namespace Time {
     }
     
     instance LowerBound[Year] {
-        def minValue(): Year = 
+        pub def minValue(): Year =
             import get java.time.Year:MIN_VALUE as getMIN_VALUE;
             import java.time.Year:of(Int32);
             Year(of(getMIN_VALUE())) as & Pure
     }
 
     instance UpperBound[Year] {
-        def maxValue(): Year = 
+        pub def maxValue(): Year =
             import get java.time.Year:MAX_VALUE as getMAX_VALUE;
             import java.time.Year:of(Int32);
             Year(of(getMAX_VALUE())) as & Pure

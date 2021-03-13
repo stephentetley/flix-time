@@ -25,7 +25,7 @@ namespace Time {
 
 
     instance ToString[MonthDay] {
-        def toString(x: MonthDay): String =
+        pub def toString(x: MonthDay): String =
             import java.time.MonthDay.toString();
             let MonthDay(x1) = x;
             x1.toString() as & Pure
@@ -35,7 +35,7 @@ namespace Time {
     /// Returns the month / day ...
     ///
     instance FromString[MonthDay] {
-        def fromString(s: String): Option[MonthDay] = try {
+        pub def fromString(s: String): Option[MonthDay] = try {
             import java.lang.String.strip();
             import java.time.MonthDay:parse(##java.lang.CharSequence);
             let cs = s.strip() as ##java.lang.CharSequence & Pure;
@@ -46,25 +46,25 @@ namespace Time {
     }
 
     instance Eq[MonthDay] {
-        def eq(x: MonthDay, y: MonthDay): Bool =
+        pub def eq(x: MonthDay, y: MonthDay): Bool =
             import java.time.MonthDay.equals(##java.lang.Object);
             let MonthDay(x1) = x;
             let MonthDay(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
         
-        def neq(x: MonthDay, y: MonthDay): Bool = not (x == y)
+        pub def neq(x: MonthDay, y: MonthDay): Bool = not (x == y)
     }
 
     instance Hash[MonthDay] {
-        def hash(x: MonthDay): Int = Time/MonthDay.hashCode(x)
+        pub def hash(x: MonthDay): Int = Time/MonthDay.hashCode(x)
     }
 
     instance Order[MonthDay] {
-        def less(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) < 0
-        def lessEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) < 0 or x == y
-        def greater(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) > 0
-        def greaterEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) > 0 or x == y
-        def compare(x: MonthDay, y: MonthDay): Comparison = match Time/MonthDay.compareTo(x,y) { 
+        pub def less(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) < 0
+        pub def lessEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) < 0 or x == y
+        pub def greater(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) > 0
+        pub def greaterEqual(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.compareTo(x,y) > 0 or x == y
+        pub def compare(x: MonthDay, y: MonthDay): Comparison = match Time/MonthDay.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan

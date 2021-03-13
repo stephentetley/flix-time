@@ -23,7 +23,7 @@ namespace Time/Format {
     }
     
     instance ToString[ResolverStyle] {
-        def toString(x: ResolverStyle): String = match x {
+        pub def toString(x: ResolverStyle): String = match x {
             case Lenient => "Lenient"
             case Smart => "Smart"
             case Strict => "Strict"

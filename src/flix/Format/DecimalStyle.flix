@@ -19,14 +19,14 @@ namespace Time/Format {
     pub opaque type DecimalStyle = ##java.time.format.DecimalStyle
     
     instance ToString[DecimalStyle] {
-        def toString(x: DecimalStyle): String =
+        pub def toString(x: DecimalStyle): String =
             import java.time.format.DecimalStyle.toString();
             let DecimalStyle(x1) = x;
             toString(x1) as & Pure
     }
     
     instance Hash[DecimalStyle] {
-        def hash(x: DecimalStyle): Int32 = Time/Format/DecimalStyle.hashCode(x)
+        pub def hash(x: DecimalStyle): Int32 = Time/Format/DecimalStyle.hashCode(x)
     } 
     
 

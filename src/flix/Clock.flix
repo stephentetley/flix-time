@@ -28,7 +28,7 @@ namespace Time {
     /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
     ///
     instance ToString[Clock] {
-        def toString(x: Clock): String =
+        pub def toString(x: Clock): String =
             import java.lang.Object.toString();
             let Clock(x1) = x;
             let o1 = x1 as ##java.lang.Object;
@@ -36,17 +36,17 @@ namespace Time {
     }
 
     instance Eq[Clock] {
-        def eq(x: Clock, y: Clock): Bool =
+        pub def eq(x: Clock, y: Clock): Bool =
             import java.time.Clock.equals(##java.lang.Object);
             let Clock(x1) = x;
             let Clock(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: Clock, y: Clock): Bool = not (x == y)
+        pub def neq(x: Clock, y: Clock): Bool = not (x == y)
     }
 
     instance Hash[Clock] {
-        def hash(x: Clock): Int = Time/Clock.hashCode(x)
+        pub def hash(x: Clock): Int = Time/Clock.hashCode(x)
     }
 
 }

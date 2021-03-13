@@ -19,7 +19,7 @@ namespace Time/Format/FormatStyle {
 
     /// NOTE - this is inconsistent with other enums in the Time/Format namespace.
     /// Apparently the scope context of constructors is the declared namespace.
-    /// The scope is not further refined by the enums name.
+    /// The scope context is not further refined by the enum's name.
     /// This has implications for the design of the Time/Format namespace that we
     /// need to think about...
     pub enum FormatStyle {
@@ -30,7 +30,7 @@ namespace Time/Format/FormatStyle {
     }
     
     instance ToString[FormatStyle] {
-        def toString(x: FormatStyle): String = match x {
+        pub def toString(x: FormatStyle): String = match x {
             case Full => "Full"
             case Long => "Long"
             case Medium => "Medium"

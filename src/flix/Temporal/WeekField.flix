@@ -20,21 +20,19 @@ namespace Time/Temporal {
     pub opaque type WeekField = ##java.time.temporal.WeekFields
 
     instance ToString[WeekField] {
-        def toString(x: WeekField): String = 
+        pub def toString(x: WeekField): String =
             import java.time.temporal.WeekFields.toString() as toString;
             let WeekField(x1) = x;
             toString(x1) as & Pure
     }
     
     instance Eq[WeekField] {
-        def eq(x: WeekField, y: WeekField): Bool = Time/Temporal/WeekField.equals(x, y)
-  
-
-        def neq(x: WeekField, y: WeekField): Bool = not (x == y)
+        pub def eq(x: WeekField, y: WeekField): Bool = Time/Temporal/WeekField.equals(x, y)
+        pub def neq(x: WeekField, y: WeekField): Bool = not (x == y)
     }
 
     instance Hash[WeekField] {
-        def hash(x: WeekField): Int = Time/Temporal/WeekField.hashCode(x)
+        pub def hash(x: WeekField): Int = Time/Temporal/WeekField.hashCode(x)
     }
 
 }

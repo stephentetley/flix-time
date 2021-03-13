@@ -26,7 +26,7 @@ namespace Time {
     /// Returns the given date-time `x` as a String using ISO-8601 representation.
     ///
     instance ToString[ZonedDateTime] {
-        def toString(x: ZonedDateTime): String =
+        pub def toString(x: ZonedDateTime): String =
             import java.time.ZonedDateTime.toString();
             let ZonedDateTime(x1) = x;
             x1.toString() as & Pure
@@ -38,7 +38,7 @@ namespace Time {
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
     instance FromString[ZonedDateTime] {
-        def fromString(s: String): Option[ZonedDateTime] =
+        pub def fromString(s: String): Option[ZonedDateTime] =
             import java.lang.String.strip();
             import java.time.ZonedDateTime:parse(##java.lang.CharSequence);
             try {
@@ -50,25 +50,25 @@ namespace Time {
     }
 
     instance Eq[ZonedDateTime] {
-        def eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
+        pub def eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
             import java.time.ZonedDateTime.equals(##java.lang.Object);
             let ZonedDateTime(x1) = x;
             let ZonedDateTime(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: ZonedDateTime, y: ZonedDateTime): Bool = not (x == y)
+        pub def neq(x: ZonedDateTime, y: ZonedDateTime): Bool = not (x == y)
     }
 
     instance Hash[ZonedDateTime] {
-        def hash(x: ZonedDateTime): Int = Time/ZonedDateTime.hashCode(x)
+        pub def hash(x: ZonedDateTime): Int = Time/ZonedDateTime.hashCode(x)
     }
 
     instance Order[ZonedDateTime] {
-        def less(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) < 0
-        def lessEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) < 0 or x == y
-        def greater(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) > 0
-        def greaterEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) > 0 or x == y
-        def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison = match Time/ZonedDateTime.compareTo(x,y) { 
+        pub def less(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) < 0
+        pub def lessEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) < 0 or x == y
+        pub def greater(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) > 0
+        pub def greaterEqual(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.compareTo(x,y) > 0 or x == y
+        pub def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison = match Time/ZonedDateTime.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan

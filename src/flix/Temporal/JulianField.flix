@@ -20,21 +20,19 @@ namespace Time/Temporal {
     pub opaque type JulianField = ##java.time.temporal.TemporalField
 
     instance ToString[JulianField] {
-        def toString(x: JulianField): String = 
+        pub def toString(x: JulianField): String =
             import java.time.temporal.TemporalField.toString() as toString;
             let JulianField(x1) = x;
             toString(x1) as & Pure
     }
     
     instance Eq[JulianField] {
-        def eq(x: JulianField, y: JulianField): Bool = Time/Temporal/JulianField.equals(x, y)
-  
-
-        def neq(x: JulianField, y: JulianField): Bool = not (x == y)
+        pub def eq(x: JulianField, y: JulianField): Bool = Time/Temporal/JulianField.equals(x, y)
+        pub def neq(x: JulianField, y: JulianField): Bool = not (x == y)
     }
 
     instance Hash[JulianField] {
-        def hash(x: JulianField): Int = Time/Temporal/JulianField.hashCode(x)
+        pub def hash(x: JulianField): Int = Time/Temporal/JulianField.hashCode(x)
     }
 
 }

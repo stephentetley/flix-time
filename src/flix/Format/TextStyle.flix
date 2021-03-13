@@ -26,7 +26,7 @@ namespace Time/Format {
     }
     
     instance ToString[TextStyle] {
-        def toString(x: TextStyle): String = match x {
+        pub def toString(x: TextStyle): String = match x {
             case Full => "Full"
             case FullStandalone => "FullStandalone"
             case Narrow => "Narrow"

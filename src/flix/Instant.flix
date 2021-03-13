@@ -27,7 +27,7 @@ namespace Time {
     /// Returns the given instant `x` as a String using ISO-8601 representation.
     ///
     instance ToString[Instant] {
-        def toString(x: Instant): String =
+        pub def toString(x: Instant): String =
             import java.time.Instant.toString();
             let Instant(x1) = x;
             toString(x1) as & Pure
@@ -39,7 +39,7 @@ namespace Time {
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
     instance FromString[Instant] {
-        def fromString(s: String): Option[Instant] =
+        pub def fromString(s: String): Option[Instant] =
             import java.lang.String.strip();
             import java.time.Instant:parse(##java.lang.CharSequence);
             try {
@@ -51,25 +51,25 @@ namespace Time {
     }
 
     instance Eq[Instant] {
-        def eq(x: Instant, y: Instant): Bool =
+        pub def eq(x: Instant, y: Instant): Bool =
             import java.time.Instant.equals(##java.lang.Object);
             let Instant(x1) = x;
             let Instant(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
         
-        def neq(x: Instant, y: Instant): Bool = not (x == y)
+        pub def neq(x: Instant, y: Instant): Bool = not (x == y)
     }
 
     instance Hash[Instant] {
-        def hash(x: Instant): Int = Time/Instant.hashCode(x)
+        pub def hash(x: Instant): Int = Time/Instant.hashCode(x)
     }
 
     instance Order[Instant] {
-        def less(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) < 0
-        def lessEqual(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) < 0 or x == y
-        def greater(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) > 0
-        def greaterEqual(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) > 0 or x == y
-        def compare(x: Instant, y: Instant): Comparison = match Time/Instant.compareTo(x,y) { 
+        pub def less(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) < 0
+        pub def lessEqual(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) < 0 or x == y
+        pub def greater(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) > 0
+        pub def greaterEqual(x: Instant, y: Instant): Bool = Time/Instant.compareTo(x,y) > 0 or x == y
+        pub def compare(x: Instant, y: Instant): Comparison = match Time/Instant.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan
@@ -77,11 +77,11 @@ namespace Time {
     }
 
     instance LowerBound[Instant] {
-        def minValue(): Instant = Time/Instant.min()            
+        pub def minValue(): Instant = Time/Instant.min()
     }
 
     instance UpperBound[Instant] {
-        def maxValue(): Instant = Time/Instant.max()
+        pub def maxValue(): Instant = Time/Instant.max()
     }
 
 

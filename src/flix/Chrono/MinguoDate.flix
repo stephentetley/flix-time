@@ -25,20 +25,19 @@ namespace Time/Chrono {
     /// Returns the given MinguoDate `x` as a String.
     ///
     instance ToString[MinguoDate] {
-        def toString(x: MinguoDate): String =
+        pub def toString(x: MinguoDate): String =
             import java.time.chrono.MinguoDate.toString();
             let MinguoDate(x1) = x;
             toString(x1) as & Pure
     }
 
     instance Eq[MinguoDate] {
-        def eq(x: MinguoDate, y: MinguoDate): Bool = Time/Chrono/MinguoDate.equals(x, y)
-
-        def neq(x: MinguoDate, y: MinguoDate): Bool = not (x == y)
+        pub def eq(x: MinguoDate, y: MinguoDate): Bool = Time/Chrono/MinguoDate.equals(x, y)
+        pub def neq(x: MinguoDate, y: MinguoDate): Bool = not (x == y)
     }
     
     instance Hash[MinguoDate] {
-        def hash(x: MinguoDate): Int = Time/Chrono/MinguoDate.hashCode(x)
+        pub def hash(x: MinguoDate): Int = Time/Chrono/MinguoDate.hashCode(x)
     } 
 }
 

@@ -23,7 +23,7 @@ namespace Time/Zone {
     pub opaque type ZoneRules = ##java.time.zone.ZoneRules
 
     instance ToString[ZoneRules] {
-        def toString(x: ZoneRules): String =
+        pub def toString(x: ZoneRules): String =
             import java.time.zone.ZoneRules.toString();
             let ZoneRules(x1) = x;
             toString(x1) as & Pure

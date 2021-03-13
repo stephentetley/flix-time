@@ -51,7 +51,7 @@ namespace Time/Temporal {
     }
 
     instance ToString[ChronoField] {
-        def toString(x: ChronoField): String = match x {
+        pub def toString(x: ChronoField): String = match x {
             case NanoOfSecond => "NanoOfSecond"
             case NanoOfDay => "NanoOfDay"
             case MicroOfSecond => "MicroOfSecond"
@@ -86,7 +86,7 @@ namespace Time/Temporal {
     }
 
     instance FromString[ChronoField] {
-        def fromString(x: String): Option[ChronoField] = match x {
+        pub def fromString(x: String): Option[ChronoField] = match x {
             case "NanoOfSecond" => Some(NanoOfSecond)
             case "NanoOfDay" => Some(NanoOfDay)
             case "MicroOfSecond" => Some(MicroOfSecond)
@@ -122,7 +122,7 @@ namespace Time/Temporal {
     }
 
     instance Eq[ChronoField] {
-        def eq(x: ChronoField, y: ChronoField): Bool = match (x,y) { 
+        pub def eq(x: ChronoField, y: ChronoField): Bool = match (x,y) {
             case (NanoOfSecond, NanoOfSecond) => true
             case (NanoOfDay, NanoOfDay) => true
             case (MicroOfSecond, MicroOfSecond) => true
@@ -156,19 +156,19 @@ namespace Time/Temporal {
             case (_,_) => false
         }
 
-        def neq(x: ChronoField, y: ChronoField): Bool = not (x == y)
+        pub def neq(x: ChronoField, y: ChronoField): Bool = not (x == y)
     }
 
     instance Hash[ChronoField] {
-        def hash(x: ChronoField): Int = Time/Temporal/ChronoField.hashCode(x)
+        pub def hash(x: ChronoField): Int = Time/Temporal/ChronoField.hashCode(x)
     }
 
     instance Order[ChronoField] {
-        def less(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) < 0
-        def lessEqual(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) < 0 or x == y
-        def greater(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) > 0
-        def greaterEqual(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) > 0 or x == y
-        def compare(x: ChronoField, y: ChronoField): Comparison = match Time/Temporal/ChronoField.compareTo(x,y) { 
+        pub def less(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) < 0
+        pub def lessEqual(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) < 0 or x == y
+        pub def greater(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) > 0
+        pub def greaterEqual(x: ChronoField, y: ChronoField): Bool = Time/Temporal/ChronoField.compareTo(x,y) > 0 or x == y
+        pub def compare(x: ChronoField, y: ChronoField): Comparison = match Time/Temporal/ChronoField.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan

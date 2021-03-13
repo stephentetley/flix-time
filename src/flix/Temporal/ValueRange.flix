@@ -20,20 +20,19 @@ namespace Time/Temporal {
     pub opaque type ValueRange = ##java.time.temporal.ValueRange
 
     instance ToString[ValueRange] {
-        def toString(x: ValueRange): String = 
+        pub def toString(x: ValueRange): String =
             import java.time.temporal.ValueRange.toString() as toString;
             let ValueRange(x1) = x;
             toString(x1) as & Pure
     }
 
     instance Eq[ValueRange] {
-        def eq(x: ValueRange, y: ValueRange): Bool = Time/Temporal/ValueRange.equals(x, y)
-
-        def neq(x: ValueRange, y: ValueRange): Bool = not (x == y)
+        pub def eq(x: ValueRange, y: ValueRange): Bool = Time/Temporal/ValueRange.equals(x, y)
+        pub def neq(x: ValueRange, y: ValueRange): Bool = not (x == y)
     }
 
     instance Hash[ValueRange] {
-        def hash(x: ValueRange): Int = Time/Temporal/ValueRange.hashCode(x)
+        pub def hash(x: ValueRange): Int = Time/Temporal/ValueRange.hashCode(x)
     }
 
 }

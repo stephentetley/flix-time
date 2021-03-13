@@ -26,7 +26,7 @@ namespace Time {
     pub opaque type Period = ##java.time.Period
 
     instance ToString[Period] {
-        def toString(x: Period): String = 
+        pub def toString(x: Period): String =
             import java.time.Period.toString();
             let Period(t) = x;
             t.toString() as & Pure
@@ -38,7 +38,7 @@ namespace Time {
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
     instance FromString[Period] {
-        def fromString(s: String): Option[Period] =
+        pub def fromString(s: String): Option[Period] =
             import java.lang.String.strip();
             import java.time.Period:parse(##java.lang.CharSequence);
             try {
@@ -50,22 +50,22 @@ namespace Time {
     }
 
     instance Eq[Period] {
-        def eq(x: Period, y: Period): Bool =
+        pub def eq(x: Period, y: Period): Bool =
             import java.time.Period.equals(##java.lang.Object);
             let Period(x1) = x;
             let Period(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
         
-        def neq(x: Period, y: Period): Bool = not (x == y)
+        pub def neq(x: Period, y: Period): Bool = not (x == y)
     }
 
 
     instance Hash[Period] {
-        def hash(x: Period): Int = Time/Period.hashCode(x)
+        pub def hash(x: Period): Int = Time/Period.hashCode(x)
     }
 
     instance Add[Period] {
-        def add(x: Period, y: Period): Period =
+        pub def add(x: Period, y: Period): Period =
             import java.time.Period.plus(##java.time.temporal.TemporalAmount);
             let Period(x1) = x;
             let Period(y1) = y;
@@ -74,7 +74,7 @@ namespace Time {
     }
 
     instance Sub[Period] {
-        def sub(x: Period, y: Period): Period =
+        pub def sub(x: Period, y: Period): Period =
             import java.time.Period.minus(##java.time.temporal.TemporalAmount);
             let Period(x1) = x;
             let Period(y1) = y;
@@ -92,8 +92,8 @@ namespace Time {
 
     /// Addition
     instance Monoid[Period] {
-        def empty(): Period = Time/Period.zero()
-        def combine(x: Period, y: Period): Period = Add.add(x, y)
+        pub def empty(): Period = Time/Period.zero()
+        pub def combine(x: Period, y: Period): Period = Add.add(x, y)
     }
 
 }

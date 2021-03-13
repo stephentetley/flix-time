@@ -26,14 +26,14 @@ namespace Time {
     /// Returns the given ZoneId `x` as a String.
     ///
     instance ToString[ZoneId] {
-        def toString(x: ZoneId): String =
+        pub def toString(x: ZoneId): String =
             import java.time.ZoneId.toString();
             let ZoneId(z) = x;
             z.toString() as & Pure
     }
 
     instance FromString[ZoneId] {
-        def fromString(zoneIdentifier: String): Option[ZoneId] =
+        pub def fromString(zoneIdentifier: String): Option[ZoneId] =
             import java.lang.String.strip();
             import java.time.ZoneId:of(String) as of;
             try {
@@ -46,18 +46,18 @@ namespace Time {
 
 
     instance Eq[ZoneId] {
-        def eq(x: ZoneId, y: ZoneId): Bool =
+        pub def eq(x: ZoneId, y: ZoneId): Bool =
             import java.time.ZoneId.equals(##java.lang.Object);
             let ZoneId(x1) = x;
             let ZoneId(y1) = y;
             x1.equals(y1 as ##java.lang.Object) as & Pure
 
-        def neq(x: ZoneId, y: ZoneId): Bool = not (x == y)
+        pub def neq(x: ZoneId, y: ZoneId): Bool = not (x == y)
     }
 
 
     instance Hash[ZoneId] {
-        def hash(x: ZoneId): Int = Time/ZoneId.hashCode(x)
+        pub def hash(x: ZoneId): Int = Time/ZoneId.hashCode(x)
     }
 
     pub opaque type ZonePrefix = String

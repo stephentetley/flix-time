@@ -37,7 +37,7 @@ namespace Time/Temporal {
     }
 
     instance ToString[ChronoUnit] {
-        def toString(x: ChronoUnit): String = match x {
+        pub def toString(x: ChronoUnit): String = match x {
             case Nanos => "Nanos"
             case Micros => "Micros"
             case Millis => "Millis"
@@ -58,7 +58,7 @@ namespace Time/Temporal {
     }
 
     instance FromString[ChronoUnit] {
-        def fromString(x: String): Option[ChronoUnit] = match x {
+        pub def fromString(x: String): Option[ChronoUnit] = match x {
             case "Nanos" => Some(Nanos)
             case "Micros" => Some(Micros)
             case "Millis" => Some(Millis)
@@ -80,7 +80,7 @@ namespace Time/Temporal {
     }
 
     instance Eq[ChronoUnit] {
-        def eq(x: ChronoUnit, y: ChronoUnit): Bool = match (x,y) { 
+        pub def eq(x: ChronoUnit, y: ChronoUnit): Bool = match (x,y) {
             case (Nanos, Nanos) => true
             case (Micros, Micros) => true
             case (Millis, Millis) => true
@@ -100,19 +100,19 @@ namespace Time/Temporal {
             case (_,_) => false
         }
 
-        def neq(x: ChronoUnit, y: ChronoUnit): Bool = not (x == y)
+        pub def neq(x: ChronoUnit, y: ChronoUnit): Bool = not (x == y)
     }
 
     instance Hash[ChronoUnit] {
-        def hash(x: ChronoUnit): Int = Time/Temporal/ChronoUnit.hashCode(x)
+        pub def hash(x: ChronoUnit): Int = Time/Temporal/ChronoUnit.hashCode(x)
     }
 
     instance Order[ChronoUnit] {
-        def less(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) < 0
-        def lessEqual(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) < 0 or x == y
-        def greater(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) > 0
-        def greaterEqual(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) > 0 or x == y
-        def compare(x: ChronoUnit, y: ChronoUnit): Comparison = match Time/Temporal/ChronoUnit.compareTo(x,y) { 
+        pub def less(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) < 0
+        pub def lessEqual(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) < 0 or x == y
+        pub def greater(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) > 0
+        pub def greaterEqual(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) > 0 or x == y
+        pub def compare(x: ChronoUnit, y: ChronoUnit): Comparison = match Time/Temporal/ChronoUnit.compareTo(x,y) {
             case x if x < 0 => LessThan
             case x if x == 0 => EqualTo
             case _ => GreaterThan

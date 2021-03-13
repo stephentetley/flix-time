@@ -22,24 +22,24 @@ namespace Time/Chrono {
     }   
 
     instance ToString[MinguoEra] {
-        def toString(x: MinguoEra): String = match x {
+        pub def toString(x: MinguoEra): String = match x {
             case BEFORE_ROC => "BEFORE_ROC"
             case ROC        => "ROC"
         }
     }
 
     instance Eq[MinguoEra] {
-        def eq(x: MinguoEra, y: MinguoEra): Bool = match (x, y) {
+        pub def eq(x: MinguoEra, y: MinguoEra): Bool = match (x, y) {
             case (BEFORE_ROC, BEFORE_ROC) => true
             case (ROC, ROC) => true
             case (_, _) => false
         }
 
-        def neq(x: MinguoEra, y: MinguoEra): Bool = not (x == y)
+        pub def neq(x: MinguoEra, y: MinguoEra): Bool = not (x == y)
     }
 
     instance Hash[MinguoEra] {
-        def hash(x: MinguoEra): Int = Time/Chrono/MinguoEra.hashCode(x)
+        pub def hash(x: MinguoEra): Int = Time/Chrono/MinguoEra.hashCode(x)
     }    
 
 }
