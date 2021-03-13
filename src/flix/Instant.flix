@@ -55,7 +55,7 @@ namespace Time {
             import java.time.Instant.equals(##java.lang.Object);
             let Instant(x1) = x;
             let Instant(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
+            equals(x1, y1 as ##java.lang.Object) as & Pure
         
         pub def neq(x: Instant, y: Instant): Bool = not (x == y)
     }

@@ -29,12 +29,30 @@ namespace Time/Zone {
             toString(x1) as & Pure
     }
 
+    instance Eq[ZoneRules] {
+        pub def eq(x: ZoneRules, y: ZoneRules): Bool = Time/Zone/ZoneRules.equals(x, y)
+
+        pub def neq(x: ZoneRules, y: ZoneRules): Bool = not (x == y)
+    }
+
+    instance Hash[ZoneRules] {
+        pub def hash(x: ZoneRules): Int = Time/Zone/ZoneRules.hashCode(x)
+    }
+
 }
 
 namespace Time/Zone/ZoneRules {
 
     use Time/Zone.ZoneRules;
     use Time/Zone.ZoneRules.{ZoneRules};
+    use Time/Zone.ZoneOffsetTransition;
+    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition};
+    use Time.Duration;
+    use Time.Duration.{Duration};
+    use Time.Instant;
+    use Time.Instant.{Instant};
+    use Time.LocalDateTime;
+    use Time.LocalDateTime.{LocalDateTime};
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
@@ -43,5 +61,41 @@ namespace Time/Zone/ZoneRules {
         let ZoneOffset(x1) = offset;
         ZoneRules(of(x1)) as & Pure
 
+    pub def equals(x: ZoneRules, y: ZoneRules): Bool =
+        import java.time.zone.ZoneRules.equals(##java.lang.Object);
+        let ZoneRules(x1) = x;
+        let ZoneRules(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: ZoneRules): Int32 =
+        import java.time.zone.ZoneRules.hashCode();
+        let ZoneRules(x1) = x;
+        hashCode(x1) as & Pure
+
+    pub def getDaylightSavings(x: ZoneRules, instant: Instant): Duration =
+        import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant);
+        let ZoneRules(x1) = x;
+        let Instant(instant1) = instant;
+        Duration(getDaylightSavings(x1, instant1)) as & Pure
+
+    pub def isDaylightSavings(x: ZoneRules, instant: Instant): Bool =
+        import java.time.zone.ZoneRules.isDaylightSavings(##java.time.Instant);
+        let ZoneRules(x1) = x;
+        let Instant(instant1) = instant;
+        isDaylightSavings(x1, instant1) as & Pure
+
+    pub def isValidOffset(x: ZoneRules, localDateTime: LocalDateTime, offset: ZoneOffset): Bool =
+        import java.time.zone.ZoneRules.isValidOffset(##java.time.LocalDateTime, ##java.time.ZoneOffset);
+        let ZoneRules(x1) = x;
+        let LocalDateTime(localDateTime1) = localDateTime;
+        let ZoneOffset(offset1) = offset;
+        isValidOffset(x1, localDateTime1, offset1) as & Pure
+
+
+    pub def previousTransition(x: ZoneRules, instant: Instant): ZoneOffsetTransition =
+        import java.time.zone.ZoneRules.previousTransition(##java.time.Instant);
+        let ZoneRules(x1) = x;
+        let Instant(instant1) = instant;
+        ZoneOffsetTransition(previousTransition(x1, instant1)) as & Pure
 
 }

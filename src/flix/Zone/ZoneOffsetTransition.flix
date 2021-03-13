@@ -29,6 +29,28 @@ namespace Time/Zone {
             toString(x1) as & Pure
     }
 
+    instance Eq[ZoneOffsetTransition] {
+        pub def eq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.equals(x, y)
+
+        pub def neq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = not (x == y)
+    }
+
+    instance Hash[ZoneOffsetTransition] {
+        pub def hash(x: ZoneOffsetTransition): Int = Time/Zone/ZoneOffsetTransition.hashCode(x)
+    }
+
+    instance Order[ZoneOffsetTransition] {
+        pub def less(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.compareTo(x,y) < 0
+        pub def lessEqual(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.compareTo(x,y) < 0 or x == y
+        pub def greater(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.compareTo(x,y) > 0
+        pub def greaterEqual(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.compareTo(x,y) > 0 or x == y
+        pub def compare(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Comparison = match Time/Zone/ZoneOffsetTransition.compareTo(x,y) {
+            case x if x < 0 => LessThan
+            case x if x == 0 => EqualTo
+            case _ => GreaterThan
+        }
+    }
+
 }
 
 namespace Time/Zone/ZoneOffsetTransition {
@@ -48,4 +70,35 @@ namespace Time/Zone/ZoneOffsetTransition {
         ZoneOffsetTransition(of(dt1, b1, a1)) as & Pure
 
 
+    pub def equals(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool =
+        import java.time.zone.ZoneOffsetTransition.equals(##java.lang.Object);
+        let ZoneOffsetTransition(x1) = x;
+        let ZoneOffsetTransition(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
+
+    pub def hashCode(x: ZoneOffsetTransition): Int32 =
+        import java.time.zone.ZoneOffsetTransition.hashCode();
+        let ZoneOffsetTransition(x1) = x;
+        hashCode(x1) as & Pure
+
+    pub def compareTo(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Int32 =
+        import java.time.zone.ZoneOffsetTransition.compareTo(##java.time.zone.ZoneOffsetTransition);
+        let ZoneOffsetTransition(x1) = x;
+        let ZoneOffsetTransition(y1) = y;
+        compareTo(x1, y1) as & Pure
+
+    pub def isGap(x: ZoneOffsetTransition): Bool =
+        import java.time.zone.ZoneOffsetTransition.isGap();
+        let ZoneOffsetTransition(x1) = x;
+        isGap(x1) as & Pure
+
+    pub def isOverlap(x: ZoneOffsetTransition): Bool =
+        import java.time.zone.ZoneOffsetTransition.isOverlap();
+        let ZoneOffsetTransition(x1) = x;
+        isOverlap(x1) as & Pure
+
+    pub def toEpochSecond(x: ZoneOffsetTransition): Int64 =
+        import java.time.zone.ZoneOffsetTransition.toEpochSecond();
+        let ZoneOffsetTransition(x1) = x;
+        toEpochSecond(x1) as & Pure
 }
