@@ -45,8 +45,8 @@ namespace Time/Zone {
         pub def greater(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.compareTo(x,y) > 0
         pub def greaterEqual(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.compareTo(x,y) > 0 or x == y
         pub def compare(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Comparison = match Time/Zone/ZoneOffsetTransition.compareTo(x,y) {
-            case x if x < 0 => LessThan
-            case x if x == 0 => EqualTo
+            case n if n < 0 => LessThan
+            case n if n == 0 => EqualTo
             case _ => GreaterThan
         }
     }

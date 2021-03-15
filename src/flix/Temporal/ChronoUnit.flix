@@ -113,8 +113,8 @@ namespace Time/Temporal {
         pub def greater(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) > 0
         pub def greaterEqual(x: ChronoUnit, y: ChronoUnit): Bool = Time/Temporal/ChronoUnit.compareTo(x,y) > 0 or x == y
         pub def compare(x: ChronoUnit, y: ChronoUnit): Comparison = match Time/Temporal/ChronoUnit.compareTo(x,y) {
-            case x if x < 0 => LessThan
-            case x if x == 0 => EqualTo
+            case n if n < 0 => LessThan
+            case n if n == 0 => EqualTo
             case _ => GreaterThan
         }
     }

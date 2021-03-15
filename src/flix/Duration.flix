@@ -57,7 +57,7 @@ namespace Time {
             import java.time.Duration.equals(##java.lang.Object);
             let Duration(x1) = x;
             let Duration(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
+            equals(x1, y1 as ##java.lang.Object) as & Pure
 
         pub def neq(x: Duration, y: Duration): Bool = not (x == y)
     }
@@ -72,8 +72,8 @@ namespace Time {
         pub def greater(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0
         pub def greaterEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0 or x == y
         pub def compare(x: Duration, y: Duration): Comparison = match Time/Duration.compareTo(x,y) {
-            case x if x < 0 => LessThan
-            case x if x == 0 => EqualTo
+            case n if n < 0 => LessThan
+            case n if n == 0 => EqualTo
             case _ => GreaterThan
         }
     }

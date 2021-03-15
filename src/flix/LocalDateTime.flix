@@ -70,8 +70,8 @@ namespace Time {
         pub def greater(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compareTo(x,y) > 0
         pub def greaterEqual(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.compareTo(x,y) > 0 or x == y
         pub def compare(x: LocalDateTime, y: LocalDateTime): Comparison = match Time/LocalDateTime.compareTo(x,y) {
-            case x if x < 0 => LessThan
-            case x if x == 0 => EqualTo
+            case n if n < 0 => LessThan
+            case n if n == 0 => EqualTo
             case _ => GreaterThan
         }
     }

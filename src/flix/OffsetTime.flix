@@ -55,7 +55,7 @@ namespace Time {
             import java.time.OffsetTime.equals(##java.lang.Object);
             let OffsetTime(x1) = x;
             let OffsetTime(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
+            equals(x1, y1 as ##java.lang.Object) as & Pure
 
         pub def neq(x: OffsetTime, y: OffsetTime): Bool = not (x == y)
     }
@@ -70,8 +70,8 @@ namespace Time {
         pub def greater(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) > 0
         pub def greaterEqual(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.compareTo(x,y) > 0 or x == y
         pub def compare(x: OffsetTime, y: OffsetTime): Comparison = match Time/OffsetTime.compareTo(x,y) {
-            case x if x < 0 => LessThan
-            case x if x == 0 => EqualTo
+            case n if n < 0 => LessThan
+            case n if n == 0 => EqualTo
             case _ => GreaterThan
         }
     }

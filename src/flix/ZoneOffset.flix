@@ -35,7 +35,6 @@ namespace Time {
         pub def fromString(offsetId: String): Option[ZoneOffset] =
             import java.lang.String.strip();
             import java.time.ZoneOffset:of(String);
-            import java.time.Period:parse(##java.lang.CharSequence);
             try {
                 let s1 = offsetId.strip() as & Pure;
                 Some(ZoneOffset(of(s1))) as & Pure
@@ -65,8 +64,8 @@ namespace Time {
         pub def greater(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) > 0
         pub def greaterEqual(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.compareTo(x,y) > 0 or x == y
         pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison = match Time/ZoneOffset.compareTo(x,y) {
-            case x if x < 0 => LessThan
-            case x if x == 0 => EqualTo
+            case n if n < 0 => LessThan
+            case n if n == 0 => EqualTo
             case _ => GreaterThan
         }
     }

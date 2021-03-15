@@ -69,8 +69,8 @@ namespace Time {
         pub def greater(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compareTo(x,y) > 0
         pub def greaterEqual(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.compareTo(x,y) > 0 or x == y
         pub def compare(x: OffsetDateTime, y: OffsetDateTime): Comparison = match Time/OffsetDateTime.compareTo(x,y) {
-            case x if x < 0 => LessThan
-            case x if x == 0 => EqualTo
+            case n if n < 0 => LessThan
+            case n if n == 0 => EqualTo
             case _ => GreaterThan
         }
     }
