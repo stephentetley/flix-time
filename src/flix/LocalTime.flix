@@ -52,13 +52,7 @@ namespace Time {
 
 
     instance Eq[LocalTime] {
-        pub def eq(x: LocalTime, y: LocalTime): Bool =
-            import java.time.LocalTime.equals(##java.lang.Object);
-            let LocalTime(x1) = x;
-            let LocalTime(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: LocalTime, y: LocalTime): Bool = not (x == y)
+        pub def eq(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.equals(x, y)
     }
     
     instance Hash[LocalTime] {
@@ -203,6 +197,11 @@ namespace Time/LocalTime {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+    pub def equals(x: LocalTime, y: LocalTime): Bool =
+        import java.time.LocalTime.equals(##java.lang.Object);
+        let LocalTime(x1) = x;
+        let LocalTime(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: LocalTime): Int32 = 
         import java.time.LocalTime.hashCode();

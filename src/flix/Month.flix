@@ -84,8 +84,6 @@ namespace Time {
             case (December, December) => true
             case (_, _) => false
         }
-
-        pub def neq(x: Month, y: Month): Bool = not (x == y)
     }
 
     instance Hash[Month] {

@@ -34,8 +34,6 @@ namespace Time/Chrono {
             case (BE, BE) => true
             case (_, _) => false
         }
-
-        pub def neq(x: ThaiBuddhistEra, y: ThaiBuddhistEra): Bool = not (x == y)
     }
 
     instance Hash[ThaiBuddhistEra] {

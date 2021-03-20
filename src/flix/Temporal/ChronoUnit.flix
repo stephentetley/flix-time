@@ -99,8 +99,6 @@ namespace Time/Temporal {
             case (Forever, Forever) => true
             case (_,_) => false
         }
-
-        pub def neq(x: ChronoUnit, y: ChronoUnit): Bool = not (x == y)
     }
 
     instance Hash[ChronoUnit] {

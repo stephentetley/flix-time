@@ -46,13 +46,7 @@ namespace Time {
 
 
     instance Eq[ZoneId] {
-        pub def eq(x: ZoneId, y: ZoneId): Bool =
-            import java.time.ZoneId.equals(##java.lang.Object);
-            let ZoneId(x1) = x;
-            let ZoneId(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: ZoneId, y: ZoneId): Bool = not (x == y)
+        pub def eq(x: ZoneId, y: ZoneId): Bool = Time/ZoneId.equals(x, y)
     }
 
 
@@ -98,6 +92,11 @@ namespace Time/ZoneId {
             case _: ##java.time.zone.ZoneRulesException => None
         }
 
+    pub def equals(x: ZoneId, y: ZoneId): Bool =
+        import java.time.ZoneId.equals(##java.lang.Object);
+        let ZoneId(x1) = x;
+        let ZoneId(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: ZoneId): Int32 = 
         import java.time.ZoneId.hashCode();

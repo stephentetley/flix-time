@@ -28,7 +28,6 @@ namespace Time/Temporal {
 
     instance Eq[ValueRange] {
         pub def eq(x: ValueRange, y: ValueRange): Bool = Time/Temporal/ValueRange.equals(x, y)
-        pub def neq(x: ValueRange, y: ValueRange): Bool = not (x == y)
     }
 
     instance Hash[ValueRange] {

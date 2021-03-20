@@ -51,13 +51,7 @@ namespace Time {
     }
 
     instance Eq[LocalDate] {
-        pub def eq(x: LocalDate, y: LocalDate): Bool =
-            import java.time.LocalDate.equals(##java.lang.Object);
-            let LocalDate(x1) = x;
-            let LocalDate(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: LocalDate, y: LocalDate): Bool = not (x == y)
+        pub def eq(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.equals(x, y)
     }
 
     instance Hash[LocalDate] {
@@ -225,8 +219,8 @@ namespace Time/LocalDate {
         import java.time.LocalDate:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Some(LocalDate(cs.parse(fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
+            Some(LocalDate(parse(cs, fmtr))) as & Pure
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
@@ -238,7 +232,13 @@ namespace Time/LocalDate {
         import java.time.LocalDate.format(##java.time.format.DateTimeFormatter);
         let LocalDate(x1) = x;
         let DateFormatter(fmtr) = formatter;
-        x1.format(fmtr) as & Pure
+        format(x1, fmtr) as & Pure
+
+    pub def equals(x: LocalDate, y: LocalDate): Bool =
+        import java.time.LocalDate.equals(##java.lang.Object);
+        let LocalDate(x1) = x;
+        let LocalDate(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
 
     pub def hashCode(x: LocalDate): Int32 = 

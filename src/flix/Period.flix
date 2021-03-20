@@ -50,13 +50,7 @@ namespace Time {
     }
 
     instance Eq[Period] {
-        pub def eq(x: Period, y: Period): Bool =
-            import java.time.Period.equals(##java.lang.Object);
-            let Period(x1) = x;
-            let Period(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-        
-        pub def neq(x: Period, y: Period): Bool = not (x == y)
+        pub def eq(x: Period, y: Period): Bool = Time/Period.equals(x, y)
     }
 
 
@@ -139,6 +133,13 @@ namespace Time/Period {
         import java.time.Period.toTotalMonths();
         let Period(x1) = x;
         toTotalMonths(x1) as & Pure
+
+    pub def equals(x: Period, y: Period): Bool =
+        import java.time.Period.equals(##java.lang.Object);
+        let Period(x1) = x;
+        let Period(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
+
 
     pub def hashCode(x: Period): Int32 = 
         import java.time.Period.hashCode();

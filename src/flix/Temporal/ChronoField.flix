@@ -155,8 +155,6 @@ namespace Time/Temporal {
             case (OffsetSeconds, OffsetSeconds) => true
             case (_,_) => false
         }
-
-        pub def neq(x: ChronoField, y: ChronoField): Bool = not (x == y)
     }
 
     instance Hash[ChronoField] {

@@ -51,13 +51,7 @@ namespace Time {
     }
 
     instance Eq[Instant] {
-        pub def eq(x: Instant, y: Instant): Bool =
-            import java.time.Instant.equals(##java.lang.Object);
-            let Instant(x1) = x;
-            let Instant(y1) = y;
-            equals(x1, y1 as ##java.lang.Object) as & Pure
-        
-        pub def neq(x: Instant, y: Instant): Bool = not (x == y)
+        pub def eq(x: Instant, y: Instant): Bool = Time/Instant.equals(x, y)
     }
 
     instance Hash[Instant] {
@@ -153,6 +147,11 @@ namespace Time/Instant {
         let Instant(x1) = x;
         toEpochMilli(x1) as & Pure
 
+    pub def equals(x: Instant, y: Instant): Bool =
+        import java.time.Instant.equals(##java.lang.Object);
+        let Instant(x1) = x;
+        let Instant(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: Instant): Int32 = 
         import java.time.Instant.hashCode();

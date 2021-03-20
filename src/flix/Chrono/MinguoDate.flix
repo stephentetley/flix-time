@@ -33,7 +33,6 @@ namespace Time/Chrono {
 
     instance Eq[MinguoDate] {
         pub def eq(x: MinguoDate, y: MinguoDate): Bool = Time/Chrono/MinguoDate.equals(x, y)
-        pub def neq(x: MinguoDate, y: MinguoDate): Bool = not (x == y)
     }
     
     instance Hash[MinguoDate] {

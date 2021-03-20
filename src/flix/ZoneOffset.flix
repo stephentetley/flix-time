@@ -45,13 +45,7 @@ namespace Time {
 
     
     instance Eq[ZoneOffset] {
-        pub def eq(x: ZoneOffset, y: ZoneOffset): Bool =
-            import java.time.ZoneOffset.equals(##java.lang.Object);
-            let ZoneOffset(x1) = x;
-            let ZoneOffset(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: ZoneOffset, y: ZoneOffset): Bool = not (x == y)
+        pub def eq(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.equals(x, y)
     }
 
     instance Hash[ZoneOffset] {
@@ -115,6 +109,12 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset:ofTotalSeconds(Int32);
         ZoneOffset(ofTotalSeconds(seconds)) as & Pure
 
+
+    pub def equals(x: ZoneOffset, y: ZoneOffset): Bool =
+        import java.time.ZoneOffset.equals(##java.lang.Object);
+        let ZoneOffset(x1) = x;
+        let ZoneOffset(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: ZoneOffset): Int32 = 
         import java.time.ZoneOffset.hashCode();

@@ -31,8 +31,6 @@ namespace Time/Zone {
 
     instance Eq[ZoneOffsetTransition] {
         pub def eq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.equals(x, y)
-
-        pub def neq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = not (x == y)
     }
 
     instance Hash[ZoneOffsetTransition] {

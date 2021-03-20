@@ -36,13 +36,7 @@ namespace Time {
     }
 
     instance Eq[Clock] {
-        pub def eq(x: Clock, y: Clock): Bool =
-            import java.time.Clock.equals(##java.lang.Object);
-            let Clock(x1) = x;
-            let Clock(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: Clock, y: Clock): Bool = not (x == y)
+        pub def eq(x: Clock, y: Clock): Bool = Time/Clock.equals(x, y)
     }
 
     instance Hash[Clock] {
@@ -73,6 +67,12 @@ namespace Time/Clock {
     pub def systemUTC(): Clock & Impure =
         import java.time.Clock:systemUTC();
         Clock(systemUTC())
+
+    pub def equals(x: Clock, y: Clock): Bool =
+        import java.time.Clock.equals(##java.lang.Object);
+        let Clock(x1) = x;
+        let Clock(y1) = y;
+        x1.equals(y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: Clock): Int32 =
         import java.time.Clock.hashCode();

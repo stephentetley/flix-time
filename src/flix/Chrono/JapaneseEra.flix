@@ -35,7 +35,6 @@ namespace Time/Chrono {
     
     instance Eq[JapaneseEra] {
         pub def eq(x: JapaneseEra, y: JapaneseEra): Bool = Time/Chrono/JapaneseEra.equals(x, y)
-        pub def neq(x: JapaneseEra, y: JapaneseEra): Bool = not (x == y)
     }
 
     instance Hash[JapaneseEra] {

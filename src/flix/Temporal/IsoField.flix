@@ -31,7 +31,6 @@ namespace Time/Temporal {
     
     instance Eq[IsoField] {
         pub def eq(x: IsoField, y: IsoField): Bool = Time/Temporal/IsoField.equals(x, y)
-        pub def neq(x: IsoField, y: IsoField): Bool = not (x == y)
     }
 
     instance Hash[IsoField] {

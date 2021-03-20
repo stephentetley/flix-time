@@ -77,8 +77,6 @@ namespace Time {
             case (Sunday, Sunday) => true
             case (_, _) => false
         }
-
-        pub def neq(x: DayOfWeek, y: DayOfWeek): Bool = not (x == y)
     }
 
     instance Hash[DayOfWeek] {

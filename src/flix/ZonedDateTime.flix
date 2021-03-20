@@ -50,13 +50,7 @@ namespace Time {
     }
 
     instance Eq[ZonedDateTime] {
-        pub def eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
-            import java.time.ZonedDateTime.equals(##java.lang.Object);
-            let ZonedDateTime(x1) = x;
-            let ZonedDateTime(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: ZonedDateTime, y: ZonedDateTime): Bool = not (x == y)
+        pub def eq(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.equals(x, y)
     }
 
     instance Hash[ZonedDateTime] {
@@ -177,6 +171,11 @@ namespace Time/ZonedDateTime {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+    pub def equals(x: ZonedDateTime, y: ZonedDateTime): Bool =
+        import java.time.ZonedDateTime.equals(##java.lang.Object);
+        let ZonedDateTime(x1) = x;
+        let ZonedDateTime(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: ZonedDateTime): Int32 = 
         import java.time.ZonedDateTime.hashCode();

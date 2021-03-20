@@ -53,13 +53,7 @@ namespace Time {
     }
 
     instance Eq[Duration] {
-        pub def eq(x: Duration, y: Duration): Bool =
-            import java.time.Duration.equals(##java.lang.Object);
-            let Duration(x1) = x;
-            let Duration(y1) = y;
-            equals(x1, y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: Duration, y: Duration): Bool = not (x == y)
+        pub def eq(x: Duration, y: Duration): Bool = Time/Duration.equals(x, y)
     }
 
     instance Hash[Duration] {
@@ -232,6 +226,13 @@ namespace Time/Duration {
         let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         Duration(x.of(tu1)) as & Pure
+
+
+    pub def equals(x: Duration, y: Duration): Bool =
+        import java.time.Duration.equals(##java.lang.Object);
+        let Duration(x1) = x;
+        let Duration(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: Duration): Int32 = 
         import java.time.Duration.hashCode();

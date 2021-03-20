@@ -28,7 +28,6 @@ namespace Time/Temporal {
     
     instance Eq[JulianField] {
         pub def eq(x: JulianField, y: JulianField): Bool = Time/Temporal/JulianField.equals(x, y)
-        pub def neq(x: JulianField, y: JulianField): Bool = not (x == y)
     }
 
     instance Hash[JulianField] {

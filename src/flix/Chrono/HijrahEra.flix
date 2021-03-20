@@ -30,8 +30,6 @@ namespace Time/Chrono {
         pub def eq(x: HijrahEra, y: HijrahEra): Bool = match (x, y) {
             case (AH, AH) => true
         }
-
-        pub def neq(x: HijrahEra, y: HijrahEra): Bool = not (x == y)
     }
 
     instance Hash[HijrahEra] {

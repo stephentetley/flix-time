@@ -31,8 +31,6 @@ namespace Time/Zone {
 
     instance Eq[ZoneRules] {
         pub def eq(x: ZoneRules, y: ZoneRules): Bool = Time/Zone/ZoneRules.equals(x, y)
-
-        pub def neq(x: ZoneRules, y: ZoneRules): Bool = not (x == y)
     }
 
     instance Hash[ZoneRules] {

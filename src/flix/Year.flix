@@ -48,13 +48,7 @@ namespace Time {
     }
 
     instance Eq[Year] {
-        pub def eq(x: Year, y: Year): Bool =
-            import java.time.Year.equals(##java.lang.Object);
-            let Year(x1) = x;
-            let Year(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: Year, y: Year): Bool = not (x == y)
+        pub def eq(x: Year, y: Year): Bool = Time/Year.equals(x, y)
     }
 
     instance Hash[Year] {
@@ -153,7 +147,14 @@ namespace Time/Year {
         import java.time.Year.format(##java.time.format.DateTimeFormatter);
         let Year(x1) = x;
         let DateFormatter(fmtr) = formatter;
-        x1.format(fmtr) as & Pure
+        format(x1, fmtr) as & Pure
+
+    pub def equals(x: Year, y: Year): Bool =
+        import java.time.Year.equals(##java.lang.Object);
+        let Year(x1) = x;
+        let Year(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
+
 
     pub def hashCode(x: Year): Int32 = 
         import java.time.Year.hashCode();

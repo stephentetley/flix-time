@@ -34,8 +34,6 @@ namespace Time/Chrono {
             case (CE, CE) => true
             case (_, _) => true
         }
-
-        pub def neq(x: IsoEra, y: IsoEra): Bool = not (x == y)
     }
 
     instance Hash[IsoEra] {

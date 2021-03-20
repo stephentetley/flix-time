@@ -35,7 +35,6 @@ namespace Time/Chrono {
 
     instance Eq[JapaneseDate] {
         pub def eq(x: JapaneseDate, y: JapaneseDate): Bool = Time/Chrono/JapaneseDate.equals(x, y)
-        pub def neq(x: JapaneseDate, y: JapaneseDate): Bool = not (x == y)
     }
     
     instance Hash[JapaneseDate] {

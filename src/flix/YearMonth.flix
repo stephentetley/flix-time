@@ -48,13 +48,7 @@ namespace Time {
 
 
     instance Eq[YearMonth] {
-        pub def eq(x: YearMonth, y: YearMonth): Bool =
-            import java.time.YearMonth.equals(##java.lang.Object);
-            let YearMonth(x1) = x;
-            let YearMonth(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-
-        pub def neq(x: YearMonth, y: YearMonth): Bool = not (x == y)
+        pub def eq(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.equals(x, y)
     }
 
     instance Hash[YearMonth] {
@@ -123,6 +117,11 @@ namespace Time/YearMonth {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+    pub def equals(x: YearMonth, y: YearMonth): Bool =
+        import java.time.YearMonth.equals(##java.lang.Object);
+        let YearMonth(x1) = x;
+        let YearMonth(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: YearMonth): Int32 = 
         import java.time.YearMonth.hashCode();

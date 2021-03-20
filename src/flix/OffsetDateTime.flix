@@ -50,13 +50,7 @@ namespace Time {
     }
 
     instance Eq[OffsetDateTime] {
-        pub def eq(x: OffsetDateTime, y: OffsetDateTime): Bool =
-            import java.time.OffsetDateTime.equals(##java.lang.Object);
-            let OffsetDateTime(x1) = x;
-            let OffsetDateTime(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-        
-        pub def neq(x: OffsetDateTime, y: OffsetDateTime): Bool = not (x == y)
+        pub def eq(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.equals(x, y)
     }
 
     instance Hash[OffsetDateTime] {
@@ -245,6 +239,11 @@ namespace Time/OffsetDateTime {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+    pub def equals(x: OffsetDateTime, y: OffsetDateTime): Bool =
+        import java.time.OffsetDateTime.equals(##java.lang.Object);
+        let OffsetDateTime(x1) = x;
+        let OffsetDateTime(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: OffsetDateTime): Int32 = 
         import java.time.OffsetDateTime.hashCode();

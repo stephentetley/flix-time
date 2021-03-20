@@ -46,13 +46,7 @@ namespace Time {
     }
 
     instance Eq[MonthDay] {
-        pub def eq(x: MonthDay, y: MonthDay): Bool =
-            import java.time.MonthDay.equals(##java.lang.Object);
-            let MonthDay(x1) = x;
-            let MonthDay(y1) = y;
-            x1.equals(y1 as ##java.lang.Object) as & Pure
-        
-        pub def neq(x: MonthDay, y: MonthDay): Bool = not (x == y)
+        pub def eq(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.equals(x, y)
     }
 
     instance Hash[MonthDay] {
@@ -127,6 +121,11 @@ namespace Time/MonthDay {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
+    pub def equals(x: MonthDay, y: MonthDay): Bool =
+        import java.time.MonthDay.equals(##java.lang.Object);
+        let MonthDay(x1) = x;
+        let MonthDay(y1) = y;
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: MonthDay): Int32 = 
         import java.time.MonthDay.hashCode();

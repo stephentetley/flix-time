@@ -33,7 +33,6 @@ namespace Time/Chrono {
 
     instance Eq[HijrahDate] {
         pub def eq(x: HijrahDate, y: HijrahDate): Bool = Time/Chrono/HijrahDate.equals(x, y)
-        pub def neq(x: HijrahDate, y: HijrahDate): Bool = not (x == y)
     }
     
     instance Hash[HijrahDate] {

@@ -28,7 +28,6 @@ namespace Time/Temporal {
     
     instance Eq[WeekField] {
         pub def eq(x: WeekField, y: WeekField): Bool = Time/Temporal/WeekField.equals(x, y)
-        pub def neq(x: WeekField, y: WeekField): Bool = not (x == y)
     }
 
     instance Hash[WeekField] {
