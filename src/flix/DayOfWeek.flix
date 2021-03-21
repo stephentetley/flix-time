@@ -84,10 +84,6 @@ namespace Time {
     }
 
     instance Order[DayOfWeek] {
-        pub def less(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0
-        pub def lessEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) < 0 or x == y
-        pub def greater(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) > 0
-        pub def greaterEqual(x: DayOfWeek, y: DayOfWeek): Bool = Time/DayOfWeek.compareTo(x,y) > 0 or x == y
         pub def compare(x: DayOfWeek, y: DayOfWeek): Comparison = match Time/DayOfWeek.compareTo(x,y) {
             case n if n < 0 => LessThan
             case n if n == 0 => EqualTo

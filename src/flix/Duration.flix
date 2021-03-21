@@ -61,10 +61,6 @@ namespace Time {
     }
 
     instance Order[Duration] {
-        pub def less(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) < 0
-        pub def lessEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) < 0 or x == y
-        pub def greater(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0
-        pub def greaterEqual(x: Duration, y: Duration): Bool = Time/Duration.compareTo(x,y) > 0 or x == y
         pub def compare(x: Duration, y: Duration): Comparison = match Time/Duration.compareTo(x,y) {
             case n if n < 0 => LessThan
             case n if n == 0 => EqualTo

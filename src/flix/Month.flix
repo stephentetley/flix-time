@@ -91,10 +91,6 @@ namespace Time {
     }
 
     instance Order[Month] {
-        pub def less(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) < 0
-        pub def lessEqual(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) < 0 or x == y
-        pub def greater(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) > 0
-        pub def greaterEqual(x: Month, y: Month): Bool = Time/Month.compareTo(x,y) > 0 or x == y
         pub def compare(x: Month, y: Month): Comparison = match Time/Month.compareTo(x,y) {
             case n if n < 0 => LessThan
             case n if n == 0 => EqualTo
