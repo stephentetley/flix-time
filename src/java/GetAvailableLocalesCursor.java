@@ -25,11 +25,11 @@ import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.Set;
 
-public class UnmarshalGetAvailableLocales {
+public class GetAvailableLocalesCursor {
 
     private Iterator<String> iter;
 
-    public UnmarshalGetAvailableLocales() throws Exception {
+    public GetAvailableLocalesCursor() throws Exception {
         Set<String> zoneIds = ZoneId.getAvailableZoneIds();
         this.iter = zoneIds.iterator();
     }

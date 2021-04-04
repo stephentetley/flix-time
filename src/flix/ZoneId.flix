@@ -114,18 +114,18 @@ namespace Time/ZoneId {
 
 
     pub def getAvailableZoneIds(): Set[String] & Impure = 
-        import new flix.runtime.spt.newtime.UnmarshalGetAvailableLocales() as newIter;
-        import flix.runtime.spt.newtime.UnmarshalGetAvailableLocales.hasNext();
-        import flix.runtime.spt.newtime.UnmarshalGetAvailableLocales.next();
-        let iter = newIter();
-        let step = () ->
-            if (iter.hasNext() == false)
-                None
-            else {
-                let s = iter.next();
-                Some(s)
-                };
-        List.unfoldWithIter(step) |> List.toSet
+        import new flix.runtime.spt.newtime.GetAvailableLocalesCursor() as newCursor;
+        import flix.runtime.spt.newtime.GetAvailableLocalesCursor.hasNext() as ffiHasNext;
+        import flix.runtime.spt.newtime.GetAvailableLocalesCursor.next() as ffiNext;
+        let iter = newCursor();
+        let cursorAlg =  {
+              hasNext = () -> ffiHasNext(iter)
+            , next = Cursor.guardThunk(_ -> ffiNext(iter), "next failed")
+            , finalize = () -> () as & Impure
+        };
+        Cursor.makeCursor(cursorAlg)
+            |> Cursor.toSet
+            |> flip(Result.getWithDefault, Set#{})
 
 
 }
