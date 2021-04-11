@@ -124,7 +124,7 @@ namespace Time/ZoneId {
             , finalize = () -> () as & Impure
         };
         Cursor.makeCursor(cursorAlg)
-            |> Cursor.toSet
+            |> Cursor.toSet!
             |> flip(Result.getWithDefault, Set#{})
 
 
