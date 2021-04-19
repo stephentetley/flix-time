@@ -76,6 +76,21 @@ namespace Time {
             import get java.time.OffsetDateTime:MAX as getMAX;
             OffsetDateTime(getMAX()) as & Pure
     }
+
+    instance Boxable[OffsetDateTime] {
+        pub def box(x: OffsetDateTime): Boxed = {
+            let OffsetDateTime(x1) = x;
+            let value = x1 as ##java.lang.Object;
+            let compare = (o1, o2) -> Order.compare(OffsetDateTime(o1 as ##java.time.OffsetDateTime), OffsetDateTime(o2 as ##java.time.OffsetDateTime));
+            let toString = o -> ToString.toString(OffsetDateTime(o as ##java.time.OffsetDateTime));
+            BoxedObject(value, compare, toString)
+        }
+        pub def unbox(x: Boxed): OffsetDateTime = match x {
+            case BoxedObject(v, _, _) => OffsetDateTime(v as ##java.time.OffsetDateTime)
+            case _                    => ?bug
+        }
+    }
+
 }
 
 namespace Time/OffsetDateTime {

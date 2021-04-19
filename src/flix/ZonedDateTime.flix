@@ -64,7 +64,21 @@ namespace Time {
             case _ => GreaterThan
         }
     }
-    
+
+    instance Boxable[ZonedDateTime] {
+        pub def box(x: ZonedDateTime): Boxed = {
+            let ZonedDateTime(x1) = x;
+            let value = x1 as ##java.lang.Object;
+            let compare = (o1, o2) -> Order.compare(ZonedDateTime(o1 as ##java.time.ZonedDateTime), ZonedDateTime(o2 as ##java.time.ZonedDateTime));
+            let toString = o -> ToString.toString(ZonedDateTime(o as ##java.time.ZonedDateTime));
+            BoxedObject(value, compare, toString)
+        }
+        pub def unbox(x: Boxed): ZonedDateTime = match x {
+            case BoxedObject(v, _, _) => ZonedDateTime(v as ##java.time.ZonedDateTime)
+            case _                    => ?bug
+        }
+    }
+
 }
 
 namespace Time/ZonedDateTime {

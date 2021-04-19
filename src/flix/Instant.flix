@@ -74,7 +74,19 @@ namespace Time {
         pub def maxValue(): Instant = Time/Instant.max()
     }
 
-
+    instance Boxable[Instant] {
+        pub def box(x: Instant): Boxed = {
+            let Instant(x1) = x;
+            let value = x1 as ##java.lang.Object;
+            let compare = (o1, o2) -> Order.compare(Instant(o1 as ##java.time.Instant), Instant(o2 as ##java.time.Instant));
+            let toString = o -> ToString.toString(Instant(o as ##java.time.Instant));
+            BoxedObject(value, compare, toString)
+        }
+        pub def unbox(x: Boxed): Instant = match x {
+            case BoxedObject(v, _, _) => Instant(v as ##java.time.Instant)
+            case _                    => ?bug
+        }
+    }
 }   
 
 namespace Time/Instant {

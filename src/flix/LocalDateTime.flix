@@ -78,6 +78,20 @@ namespace Time {
             LocalDateTime(getMAX()) as & Pure
     }
 
+    instance Boxable[LocalDateTime] {
+        pub def box(x: LocalDateTime): Boxed = {
+            let LocalDateTime(x1) = x;
+            let value = x1 as ##java.lang.Object;
+            let compare = (o1, o2) -> Order.compare(LocalDateTime(o1 as ##java.time.LocalDateTime), LocalDateTime(o2 as ##java.time.LocalDateTime));
+            let toString = o -> ToString.toString(LocalDateTime(o as ##java.time.LocalDateTime));
+            BoxedObject(value, compare, toString)
+        }
+        pub def unbox(x: Boxed): LocalDateTime = match x {
+            case BoxedObject(v, _, _) => LocalDateTime(v as ##java.time.LocalDateTime)
+            case _                    => ?bug
+        }
+    }
+
 }
 
 namespace Time/LocalDateTime {

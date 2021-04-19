@@ -73,6 +73,21 @@ namespace Time {
             ZoneOffset(getMAX()) as & Pure
     }
 
+    instance Boxable[ZoneOffset] {
+        pub def box(x: ZoneOffset): Boxed = {
+            let ZoneOffset(x1) = x;
+            let value = x1 as ##java.lang.Object;
+            let compare = (o1, o2) -> Order.compare(ZoneOffset(o1 as ##java.time.ZoneOffset), ZoneOffset(o2 as ##java.time.ZoneOffset));
+            let toString = o -> ToString.toString(ZoneOffset(o as ##java.time.ZoneOffset));
+            BoxedObject(value, compare, toString)
+        }
+        pub def unbox(x: Boxed): ZoneOffset = match x {
+            case BoxedObject(v, _, _) => ZoneOffset(v as ##java.time.ZoneOffset)
+            case _                    => ?bug
+        }
+    }
+
+
 }
 
 namespace Time/ZoneOffset {
