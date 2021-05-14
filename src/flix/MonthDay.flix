@@ -28,7 +28,7 @@ namespace Time {
         pub def toString(x: MonthDay): String =
             import java.time.MonthDay.toString();
             let MonthDay(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
     }
 
     ///
@@ -98,7 +98,7 @@ namespace Time/MonthDay {
         import java.time.MonthDay.format(##java.time.format.DateTimeFormatter);
         let MonthDay(x1) = x;
         let DateFormatter(fmtr) = formatter;
-        x1.format(fmtr) as & Pure
+        format(x1, fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a MonthDay, leading or trailing whitespace is trimmed.
@@ -135,40 +135,40 @@ namespace Time/MonthDay {
         import java.time.MonthDay.compareTo(##java.time.MonthDay);
         let MonthDay(x1) = x;
         let MonthDay(y1) = y;
-        x1.compareTo(y1) as & Pure
+        compareTo(x1, y1) as & Pure
 
     pub def getDayOfMonth(x: MonthDay): Int32 =
         import java.time.MonthDay.getDayOfMonth();
         let MonthDay(x1) = x;
-        x1.getDayOfMonth() as & Pure
+        getDayOfMonth(x1) as & Pure
 
     pub def putDayOfMonth(x: MonthDay, dayOfMonth: Int32): MonthDay =
         import java.time.MonthDay.withDayOfMonth(Int32);
         let MonthDay(x1) = x;
-        MonthDay(x1.withDayOfMonth(dayOfMonth)) as & Pure
+        MonthDay(withDayOfMonth(x1, dayOfMonth)) as & Pure
 
     pub def getMonth(x: MonthDay): Month =
         import java.time.MonthDay.getMonth();
         use Time/Month.{unmarshal};
         let MonthDay(x1) = x;
-        x1.getMonth().unmarshal() as & Pure
+        unmarshal(getMonth(x1)) as & Pure
 
     pub def putMonth(x: MonthDay, month: Month): MonthDay =
         import java.time.MonthDay.with(##java.time.Month);
         use Time/Month.{marshal};
         let MonthDay(x1) = x;
-        let m1 = month.marshal();
-        MonthDay(x1.with(m1)) as & Pure
+        let m1 = marshal(month);
+        MonthDay(with(x1, m1)) as & Pure
 
     pub def getMonthValue(x: MonthDay): Int32 =
         import java.time.MonthDay.getMonthValue();
         let MonthDay(x1) = x;
-        x1.getMonthValue() as & Pure
+        getMonthValue(x1) as & Pure
 
     pub def putMonthValue(x: MonthDay, month: Int32): MonthDay =
         import java.time.MonthDay.withMonth(Int32);
         let MonthDay(x1) = x;
-        MonthDay(x1.withMonth(month)) as & Pure
+        MonthDay(withMonth(x1, month)) as & Pure
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -177,7 +177,7 @@ namespace Time/MonthDay {
         import java.time.MonthDay.isBefore(##java.time.MonthDay);
         let MonthDay(x1) = x;
         let MonthDay(y1) = y;
-        x1.isBefore(y1) as & Pure
+        isBefore(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -186,7 +186,7 @@ namespace Time/MonthDay {
         import java.time.MonthDay.isAfter(##java.time.MonthDay);
         let MonthDay(x1) = x;
         let MonthDay(y1) = y;
-        x1.isAfter(y1) as & Pure
+        isAfter(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `year` is valid for the MonthDay `x`.
@@ -194,6 +194,6 @@ namespace Time/MonthDay {
     pub def isValidYear(x: MonthDay, year: Int32): Bool =
         import java.time.MonthDay.isValidYear(Int32);
         let MonthDay(x1) = x;
-        x1.isValidYear(year) as & Pure
+        isValidYear(x1, year) as & Pure
 
 }

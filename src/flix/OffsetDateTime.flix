@@ -29,7 +29,7 @@ namespace Time {
         pub def toString(x: OffsetDateTime): String =
             import java.time.OffsetDateTime.toString();
             let OffsetDateTime(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
     }
 
     ///
@@ -42,7 +42,7 @@ namespace Time {
             import java.lang.String.strip();
             import java.time.OffsetDateTime:parse(##java.lang.CharSequence);
             try {
-                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(OffsetDateTime(parse(cs))) as & Pure
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -141,8 +141,8 @@ namespace Time/OffsetDateTime {
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetDateTime & Impure =
         import java.time.OffsetDateTime:now(##java.time.ZoneId);
-        let ZoneId(z) = zone;
-        OffsetDateTime(now(z))
+        let ZoneId(z1) = zone;
+        OffsetDateTime(now(z1))
 
 
 
@@ -175,12 +175,12 @@ namespace Time/OffsetDateTime {
     pub def toEpochSecond(x: OffsetDateTime): Int64 =
         import java.time.OffsetDateTime.toEpochSecond();
         let OffsetDateTime(x1) = x;
-        x1.toEpochSecond() as & Pure
+        toEpochSecond(x1) as & Pure
 
     pub def toInstant(x: OffsetDateTime): Instant =
         import java.time.OffsetDateTime.toInstant();
         let OffsetDateTime(x1) = x;
-        Instant(x1.toInstant()) as & Pure
+        Instant(toInstant(x1)) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -188,7 +188,7 @@ namespace Time/OffsetDateTime {
     pub def toLocalDate(x: OffsetDateTime): LocalDate =
         import java.time.OffsetDateTime.toLocalDate();
         let OffsetDateTime(x1) = x;
-        LocalDate(x1.toLocalDate()) as & Pure
+        LocalDate(toLocalDate(x1)) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -196,7 +196,7 @@ namespace Time/OffsetDateTime {
     pub def toLocalTime(x: OffsetDateTime): LocalTime =
         import java.time.OffsetDateTime.toLocalTime();
         let OffsetDateTime(x1) = x;
-        LocalTime(x1.toLocalTime()) as & Pure
+        LocalTime(toLocalTime(x1)) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -204,7 +204,7 @@ namespace Time/OffsetDateTime {
     pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
         import java.time.OffsetDateTime.toLocalDateTime();
         let OffsetDateTime(x1) = x;
-        LocalDateTime(x1.toLocalDateTime()) as & Pure
+        LocalDateTime(toLocalDateTime(x1)) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -212,7 +212,7 @@ namespace Time/OffsetDateTime {
     pub def toOffsetTime(x: OffsetDateTime): OffsetTime =
         import java.time.OffsetDateTime.toOffsetTime();
         let OffsetDateTime(x1) = x;
-        OffsetTime(x1.toOffsetTime()) as & Pure
+        OffsetTime(toOffsetTime(x1)) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -220,7 +220,7 @@ namespace Time/OffsetDateTime {
     pub def toZonedDateTime(x: OffsetDateTime): ZonedDateTime =
         import java.time.OffsetDateTime.toZonedDateTime();
         let OffsetDateTime(x1) = x;
-        ZonedDateTime(x1.toZonedDateTime()) as & Pure
+        ZonedDateTime(toZonedDateTime(x1)) as & Pure
 
 
 
@@ -231,7 +231,7 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.format(##java.time.format.DateTimeFormatter);
         let OffsetDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
-        x1.format(fmtr) as & Pure
+        format(x1, fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
@@ -244,8 +244,8 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Some(OffsetDateTime(cs.parse(fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
+            Some(OffsetDateTime(parse(cs, fmtr))) as & Pure
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
@@ -265,7 +265,7 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.compareTo(##java.time.OffsetDateTime);
         let OffsetDateTime(x1) = x;
         let OffsetDateTime(y1) = y;
-        x1.compareTo(y1) as & Pure
+        compareTo(x1, y1) as & Pure
 
 
     ///
@@ -275,7 +275,7 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.isBefore(##java.time.OffsetDateTime);
         let OffsetDateTime(x1) = x;
         let OffsetDateTime(y1) = y;
-        x1.isBefore(y1) as & Pure
+        isBefore(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -284,97 +284,97 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.isAfter(##java.time.OffsetDateTime);
         let OffsetDateTime(x1) = x;
         let OffsetDateTime(y1) = y;
-        x1.isAfter(y1) as & Pure
+        isAfter(x1, y1) as & Pure
 
     pub def plusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusYears(Int64) as plus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.plus(years)) as & Pure
+        OffsetDateTime(plus(x1, years)) as & Pure
 
     pub def minusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusYears(Int64) as minus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.minus(years)) as & Pure
+        OffsetDateTime(minus(x1, years)) as & Pure
 
     pub def plusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusMonths(Int64) as plus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.plus(months)) as & Pure
+        OffsetDateTime(plus(x1, months)) as & Pure
 
     pub def minusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusMonths(Int64) as minus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.minus(months)) as & Pure
+        OffsetDateTime(minus(x1, months)) as & Pure
 
     pub def plusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusWeeks(Int64) as plus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.plus(weeks)) as & Pure
+        OffsetDateTime(plus(x1, weeks)) as & Pure
 
     pub def minusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusWeeks(Int64) as minus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.minus(weeks)) as & Pure
+        OffsetDateTime(minus(x1, weeks)) as & Pure
 
     pub def plusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusDays(Int64) as plus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.plus(days)) as & Pure
+        OffsetDateTime(plus(x1, days)) as & Pure
 
     pub def minusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusDays(Int64) as minus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.minus(days)) as & Pure
+        OffsetDateTime(minus(x1, days)) as & Pure
 
     pub def plusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusHours(Int64) as plus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.plus(hours)) as & Pure
+        OffsetDateTime(plus(x1, hours)) as & Pure
 
     pub def minusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusHours(Int64) as minus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.minus(hours)) as & Pure
+        OffsetDateTime(minus(x1, hours)) as & Pure
 
     pub def plusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusMinutes(Int64) as plus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.plus(minutes)) as & Pure
+        OffsetDateTime(plus(x1, minutes)) as & Pure
 
     pub def minusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusMinutes(Int64) as minus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.minus(minutes)) as & Pure
+        OffsetDateTime(minus(x1, minutes)) as & Pure
 
     pub def plusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusSeconds(Int64) as plus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.plus(seconds)) as & Pure
+        OffsetDateTime(plus(x1, seconds)) as & Pure
 
     pub def minusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusSeconds(Int64) as minus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.minus(seconds)) as & Pure
+        OffsetDateTime(minus(x1, seconds)) as & Pure
 
     pub def plusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusNanos(Int64) as plus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.plus(nanos)) as & Pure
+        OffsetDateTime(plus(x1, nanos)) as & Pure
 
     pub def minusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusNanos(Int64) as minus;
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.minus(nanos)) as & Pure
+        OffsetDateTime(minus(x1, nanos)) as & Pure
 
     pub def getYear(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getYear();
         let OffsetDateTime(x1) = x;
-        x1.getYear() as & Pure
+        getYear(x1) as & Pure
 
     pub def putYear(x: OffsetDateTime, year: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withYear(Int32);
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.withYear(year)) as & Pure
+        OffsetDateTime(withYear(x1, year)) as & Pure
 
     /// TODO - probably Month is worth an enum
     /// Current we use 1 (January) - 12 (December)
@@ -382,85 +382,85 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.getMonth();
         import java.time.Month.getValue();
         let OffsetDateTime(x1) = x;
-        x1.getMonth().getValue() as & Pure
+        getValue(getMonth(x1)) as & Pure
 
     pub def putMonth(x: OffsetDateTime, month: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withMonth(Int32);
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.withMonth(month)) as & Pure
+        OffsetDateTime(withMonth(x1, month)) as & Pure
 
     pub def getDayOfYear(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getDayOfYear();
         let OffsetDateTime(x1) = x;
-        x1.getDayOfYear() as & Pure
+        getDayOfYear(x1) as & Pure
 
     pub def putDayOfYear(x: OffsetDateTime, dayOfYear: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withDayOfYear(Int32);
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.withDayOfYear(dayOfYear)) as & Pure
+        OffsetDateTime(withDayOfYear(x1, dayOfYear)) as & Pure
 
     pub def getDayOfMonth(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getDayOfMonth();
         let OffsetDateTime(x1) = x;
-        x1.getDayOfMonth() as & Pure
+        getDayOfMonth(x1) as & Pure
 
     pub def putDayOfMonth(x: OffsetDateTime, dayOfMonth: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withDayOfMonth(Int32);
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.withDayOfMonth(dayOfMonth)) as & Pure
+        OffsetDateTime(withDayOfMonth(x1, dayOfMonth)) as & Pure
 
-    /// TODO - probably DayOfWeek is worth an enum
+    /// TODO - probably should marshal to DayOfWeek
     /// Current we use 1 (Monday) - 7 (Sunday)
     pub def getDayOfWeek(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getDayOfWeek();
         import java.time.DayOfWeek.getValue();
         let OffsetDateTime(x1) = x;
-        x1.getDayOfWeek().getValue() as & Pure
+        getValue(getDayOfWeek(x1)) as & Pure
 
     pub def getHour(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getHour();
         let OffsetDateTime(x1) = x;
-        x1.getHour() as & Pure
+        getHour(x1) as & Pure
 
     pub def putHour(x: OffsetDateTime, hour: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withHour(Int32);
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.withHour(hour)) as & Pure
+        OffsetDateTime(withHour(x1, hour)) as & Pure
 
     pub def getMinute(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getMinute();
         let OffsetDateTime(x1) = x;
-        x1.getMinute() as & Pure
+        getMinute(x1) as & Pure
 
     pub def putMinute(x: OffsetDateTime, minute: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withMinute(Int32);
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.withMinute(minute)) as & Pure
+        OffsetDateTime(withMinute(x1, minute)) as & Pure
 
     pub def getSecond(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getSecond();
         let OffsetDateTime(x1) = x;
-        x1.getSecond() as & Pure
+        getSecond(x1) as & Pure
 
     pub def putSecond(x: OffsetDateTime, second: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withSecond(Int32);
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.withSecond(second)) as & Pure
+        OffsetDateTime(withSecond(x1, second)) as & Pure
 
     pub def getNano(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getNano();
         let OffsetDateTime(x1) = x;
-        x1.getNano() as & Pure
+        getNano(x1) as & Pure
 
     pub def putNano(x: OffsetDateTime, nano: Int32): OffsetDateTime =
         import java.time.OffsetDateTime.withNano(Int32);
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(x1.withNano(nano)) as & Pure
+        OffsetDateTime(withNano(x1, nano)) as & Pure
 
     pub def getOffset(x: OffsetDateTime): ZoneOffset =
         import java.time.OffsetDateTime.getOffset();
         let OffsetDateTime(x1) = x;
-        ZoneOffset(x1.getOffset()) as & Pure
+        ZoneOffset(getOffset(x1)) as & Pure
 
     pub def putOffsetSameInstant(x: OffsetDateTime, offset: ZoneOffset): OffsetDateTime = 
         import java.time.OffsetDateTime.withOffsetSameInstant(##java.time.ZoneOffset);
@@ -481,7 +481,7 @@ namespace Time/OffsetDateTime {
         let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        b1.until(te1, tu1) as & Pure
+        until(b1, te1, tu1) as & Pure
 
 
 }

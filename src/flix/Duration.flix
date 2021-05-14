@@ -73,7 +73,7 @@ namespace Time {
             import java.time.Duration.plus(##java.time.Duration);
             let Duration(x1) = x;
             let Duration(y1) = y;
-            Duration(x1.plus(y1)) as & Pure
+            Duration(plus(x1, y1)) as & Pure
     }
 
     instance Sub[Duration] {
@@ -81,14 +81,14 @@ namespace Time {
             import java.time.Duration.minus(##java.time.Duration);
             let Duration(x1) = x;
             let Duration(y1) = y;
-            Duration(x1.minus(y1)) as & Pure
+            Duration(minus(x1, y1)) as & Pure
     }
 
     instance Neg[Duration] {
         pub def neg(x: Duration): Duration =
             import java.time.Duration.negated();
             let Duration(x1) = x;
-            Duration(x1.negated()) as & Pure
+            Duration(negated(x1)) as & Pure
     }
 
     /// Monoid is addition
@@ -138,7 +138,7 @@ namespace Time/Duration {
     pub def toDays(x: Duration): Int64 =
         import java.time.Duration.toDays();
         let Duration(x1) = x;
-        x1.toDays() as & Pure
+        toDays(x1) as & Pure
 
     ///
     /// Construct a Duration from the supplied number of hours.
@@ -153,7 +153,7 @@ namespace Time/Duration {
     pub def toHours(x: Duration): Int64 =
         import java.time.Duration.toHours();
         let Duration(x1) = x;
-        x1.toHours() as & Pure
+        toHours(x1) as & Pure
 
     ///
     /// Construct a Duration from the supplied number of minutes.
@@ -168,7 +168,7 @@ namespace Time/Duration {
     pub def toMinutes(x: Duration): Int64 =
         import java.time.Duration.toMinutes();
         let Duration(x1) = x;
-        x1.toMinutes() as & Pure
+        toMinutes(x1) as & Pure
 
     ///
     /// Construct a Duration from the supplied number of seconds.
@@ -183,7 +183,7 @@ namespace Time/Duration {
     pub def toSeconds(x: Duration): Int64 =
         import java.time.Duration.toSeconds();
         let Duration(x1) = x;
-        x1.toSeconds() as & Pure
+        toSeconds(x1) as & Pure
 
     ///
     /// Construct a Duration from the supplied number of milliseconds.
@@ -199,7 +199,7 @@ namespace Time/Duration {
     pub def toMillis(x: Duration): Int64 =
         import java.time.Duration.toMillis();
         let Duration(x1) = x;
-        x1.toMillis() as & Pure
+        toMillis(x1) as & Pure
 
     ///
     /// Return the number of nanoseconds in Duration `x`.
@@ -214,14 +214,14 @@ namespace Time/Duration {
     pub def toNanos(x: Duration): Int64 =
         import java.time.Duration.toNanos();
         let Duration(x1) = x;
-        x1.toNanos() as & Pure
+        toNanos(x1) as & Pure
 
 
     pub def fromChrono(x: Int64, unit: ChronoUnit): Duration =
         import java.time.Duration:of(Int64, ##java.time.temporal.TemporalUnit);
         let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        Duration(x.of(tu1)) as & Pure
+        Duration(of(x, tu1)) as & Pure
 
 
     pub def equals(x: Duration, y: Duration): Bool =
@@ -242,22 +242,22 @@ namespace Time/Duration {
         import java.time.Duration.compareTo(##java.time.Duration);
         let Duration(x1) = x;
         let Duration(y1) = y;
-        x1.compareTo(y1) as & Pure
+        compareTo(x1, y1) as & Pure
 
     
 
     pub def isZero(x: Duration): Bool =
         import java.time.Duration.isZero();
         let Duration(x1) = x;
-        x1.isZero() as & Pure
+        isZero(x1) as & Pure
 
     pub def isPositive(x: Duration): Bool =
-        not x.isNegative()
+        not isNegative(x)
 
     pub def isNegative(x: Duration): Bool =
         import java.time.Duration.isNegative();
         let Duration(x1) = x;
-        x1.isNegative() as & Pure
+        isNegative(x1) as & Pure
 
 
     ///
@@ -266,7 +266,7 @@ namespace Time/Duration {
     pub def getNano(x: Duration): Int32 =
         import java.time.Duration.getNano();
         let Duration(x1) = x;
-        x1.getNano() as & Pure
+        getNano(x1) as & Pure
 
     ///
     /// Set the nano part of the duration `x` to `seconds``.
@@ -274,7 +274,7 @@ namespace Time/Duration {
     pub def putNano(x: Duration, nanos: Int32): Duration =
         import java.time.Duration.withNanos(Int32);
         let Duration(x1) = x;
-        Duration(x1.withNanos(nanos)) as & Pure
+        Duration(withNanos(x1, nanos)) as & Pure
 
     ///
     /// Get the second part of the duration `x`.
@@ -282,7 +282,7 @@ namespace Time/Duration {
     pub def getSeconds(x: Duration): Int64 =
         import java.time.Duration.getSeconds();
         let Duration(x1) = x;
-        x1.getSeconds() as & Pure
+        getSeconds(x1) as & Pure
 
     ///
     /// Set the seconds part of the duration `x` to `seconds``.
@@ -290,7 +290,7 @@ namespace Time/Duration {
     pub def putSeconds(x: Duration, seconds: Int64): Duration =
         import java.time.Duration.withSeconds(Int64);
         let Duration(x1) = x;
-        Duration(x1.withSeconds(seconds)) as & Pure
+        Duration(withSeconds(x1, seconds)) as & Pure
 
     ///
     /// Returns the absolute value of `x`.
@@ -298,78 +298,78 @@ namespace Time/Duration {
     pub def abs(x: Duration): Duration =
         import java.time.Duration.abs();
         let Duration(x1) = x;
-        Duration(x1.abs()) as & Pure
+        Duration(abs(x1)) as & Pure
 
 
     pub def multipliedBy(x: Duration, y: Int64): Duration =
         import java.time.Duration.multipliedBy(Int64);
         let Duration(x1) = x;
-        Duration(x1.multipliedBy(y)) as & Pure
+        Duration(multipliedBy(x1, y)) as & Pure
 
     pub def dividedBy(x: Duration, y: Int64): Duration =
         import java.time.Duration.dividedBy(Int64);
         let Duration(x1) = x;
-        Duration(x1.dividedBy(y)) as & Pure
+        Duration(dividedBy(x1, y)) as & Pure
 
     pub def plusDays(x: Duration, days: Int64): Duration =
         import java.time.Duration.plusDays(Int64);
         let Duration(x1) = x;
-        Duration(x1.plusDays(days)) as & Pure
+        Duration(plusDays(x1, days)) as & Pure
 
     pub def minusDays(x: Duration, days: Int64): Duration =
         import java.time.Duration.minusDays(Int64);
         let Duration(x1) = x;
-        Duration(x1.minusDays(days)) as & Pure
+        Duration(minusDays(x1, days)) as & Pure
 
     pub def plusHours(x: Duration, hours: Int64): Duration =
         import java.time.Duration.plusHours(Int64);
         let Duration(x1) = x;
-        Duration(x1.plusHours(hours)) as & Pure
+        Duration(plusHours(x1, hours)) as & Pure
 
     pub def minusHours(x: Duration, hours: Int64): Duration =
         import java.time.Duration.minusHours(Int64);
         let Duration(x1) = x;
-        Duration(x1.minusHours(hours)) as & Pure
+        Duration(minusHours(x1, hours)) as & Pure
 
     pub def plusMinutes(x: Duration, minutes: Int64): Duration =
         import java.time.Duration.plusMinutes(Int64);
         let Duration(x1) = x;
-        Duration(x1.plusMinutes(minutes)) as & Pure
+        Duration(plusMinutes(x1, minutes)) as & Pure
 
     pub def minusMinutes(x: Duration, minutes: Int64): Duration =
         import java.time.Duration.minusMinutes(Int64);
         let Duration(x1) = x;
-        Duration(x1.minusMinutes(minutes)) as & Pure
+        Duration(minusMinutes(x1, minutes)) as & Pure
 
     pub def plusSeconds(x: Duration, seconds: Int64): Duration =
         import java.time.Duration.plusSeconds(Int64);
         let Duration(x1) = x;
-        Duration(x1.plusSeconds(seconds)) as & Pure
+        Duration(plusSeconds(x1, seconds)) as & Pure
 
     pub def minusSeconds(x: Duration, seconds: Int64): Duration =
         import java.time.Duration.minusSeconds(Int64);
         let Duration(x1) = x;
-        Duration(x1.minusSeconds(seconds)) as & Pure
+        Duration(minusSeconds(x1, seconds)) as & Pure
 
     pub def plusMillis(x: Duration, millis: Int64): Duration =
         import java.time.Duration.plusMillis(Int64);
         let Duration(x1) = x;
-        Duration(x1.plusMillis(millis)) as & Pure
+        Duration(plusMillis(x1, millis)) as & Pure
 
     pub def minusMillis(x: Duration, millis: Int64): Duration =
         import java.time.Duration.minusMillis(Int64);
         let Duration(x1) = x;
-        Duration(x1.minusMillis(millis)) as & Pure
+        Duration(minusMillis(x1, millis)) as & Pure
 
     pub def plusNanos(x: Duration, nanos: Int64): Duration =
         import java.time.Duration.plusNanos(Int64);
         let Duration(x1) = x;
-        Duration(x1.plusNanos(nanos)) as & Pure
+        Duration(plusNanos(x1, nanos)) as & Pure
 
     pub def minusNanos(x: Duration, nanos: Int64): Duration =
         import java.time.Duration.minusNanos(Int64);
         let Duration(x1) = x;
-        Duration(x1.minusNanos(nanos)) as & Pure
+        Duration(minusNanos(x1, nanos)) as & Pure
 
     def truncatedTo(x: Duration, unit: ChronoUnit): Option[Duration] = 
         import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit);

@@ -43,7 +43,7 @@ namespace Time {
             import java.lang.String.strip();
             import java.time.Instant:parse(##java.lang.CharSequence);
             try {
-                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(Instant(parse(cs))) as & Pure
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None

@@ -72,7 +72,7 @@ namespace Time/Clock {
         import java.time.Clock.equals(##java.lang.Object);
         let Clock(x1) = x;
         let Clock(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: Clock): Int32 =
         import java.time.Clock.hashCode();

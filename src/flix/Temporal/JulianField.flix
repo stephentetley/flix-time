@@ -75,3 +75,4 @@ namespace Time/Temporal/JulianField {
         ValueRange(range(x1)) as & Pure
 
 }
+

@@ -195,7 +195,7 @@ namespace Time/DayOfWeek {
         let x1 = marshal(x);
         let s1 = Time/Format/TextStyle.marshal(style);
         let Locale(l1) = locale;
-        x1.getDisplayName(s1, l1) as & Pure
+        getDisplayName(x1, s1, l1) as & Pure
 
     pub def getName(x: DayOfWeek): String =
         import java.lang.Enum.name();
