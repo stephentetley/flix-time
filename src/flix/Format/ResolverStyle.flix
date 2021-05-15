@@ -17,8 +17,8 @@
 namespace Time/Format {
 
     pub enum ResolverStyle {
-        case Lenient,
-        case Smart,
+        case Lenient
+        case Smart
         case Strict
     }
     

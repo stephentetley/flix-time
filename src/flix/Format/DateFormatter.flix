@@ -37,10 +37,13 @@ namespace Time/Format {
 
 namespace Time/Format/DateFormatter {
     
+    use I18n.Locale;
+
     use Time/Format.DateFormatter;
     use Time/Format.DateFormatter.{DateFormatter};
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
+    use Time/Format.FormatStyle;
     use Time/Format.ResolverStyle;
 
     pub def basic_iso_date(): DateFormatter =
@@ -69,24 +72,33 @@ namespace Time/Format/DateFormatter {
 
     /// Should this be called `new`?
     pub def ofPattern(pattern: String): Option[DateFormatter] =
-        import java.lang.String.strip();
-        import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
-        try {
-            Some(DateFormatter(ofPattern(strip(pattern)))) as & Pure
-        } catch {
-            case _: ##java.lang.IllegalArgumentException => None
-        }
+        Option.map(DateFormatter, Time/Format/Internal/Prim.ofPattern(pattern))
 
+    pub def ofLocalizedDate(style: FormatStyle): DateFormatter =
+        import java.time.format.DateTimeFormatter:ofLocalizedDate(##java.time.format.FormatStyle);
+        let style1 = Time/Format/FormatStyle.toNative(style);
+        DateFormatter(ofLocalizedDate(style1)) as & Pure
 
+    
+    pub def getLocale(x: DateFormatter): Locale =
+        let DateFormatter(x1) = x;
+        Time/Format/Internal/Prim.getLocale(x1)
+
+    pub def putLocale(x: DateFormatter, locale: Locale): DateFormatter =
+        let DateFormatter(x1) = x;
+        DateFormatter(Time/Format/Internal/Prim.putLocale(x1, locale))
 
     pub def getDecimalStyle(x: DateFormatter): DecimalStyle =
-        import java.time.format.DateTimeFormatter.getDecimalStyle();
         let DateFormatter(x1) = x;
-        DecimalStyle(getDecimalStyle(x1)) as & Pure
+        Time/Format/Internal/Prim.getDecimalStyle(x1)
+
+    pub def putDecimalStyle(x: DateFormatter, style: DecimalStyle): DateFormatter =
+        let DateFormatter(x1) = x;
+        DateFormatter(Time/Format/Internal/Prim.putDecimalStyle(x1, style))
+
 
     pub def getResolverStyle(x: DateFormatter): ResolverStyle =
-        import java.time.format.DateTimeFormatter.getResolverStyle();
         let DateFormatter(x1) = x;
-        Time/Format/ResolverStyle.fromNative(getResolverStyle(x1)) as & Pure
+        Time/Format/Internal/Prim.getResolverStyle(x1)
 
 }

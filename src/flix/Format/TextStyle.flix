@@ -27,12 +27,12 @@ namespace Time/Format {
     
     instance ToString[TextStyle] {
         pub def toString(x: TextStyle): String = match x {
-            case Full => "Full"
-            case FullStandalone => "FullStandalone"
-            case Narrow => "Narrow"
-            case NarrowStandalone => "NarrowStandalone"
-            case Short => "Short"
-            case ShortStandalone => "ShortStandalone"
+            case Time/Format/TextStyle.Full => "Full"
+            case Time/Format/TextStyle.FullStandalone => "FullStandalone"
+            case Time/Format/TextStyle.Narrow => "Narrow"
+            case Time/Format/TextStyle.NarrowStandalone => "NarrowStandalone"
+            case Time/Format/TextStyle.Short => "Short"
+            case Time/Format/TextStyle.ShortStandalone => "ShortStandalone"
         }
     }
 

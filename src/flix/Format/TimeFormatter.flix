@@ -41,8 +41,9 @@ namespace Time/Format/TimeFormatter {
     use Time/Format.TimeFormatter;
     use Time/Format.TimeFormatter.{TimeFormatter};
     use Time/Format.DecimalStyle;
-    use Time/Format.ResolverStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
+    use Time/Format.FormatStyle;
+    use Time/Format.ResolverStyle;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -59,13 +60,13 @@ namespace Time/Format/TimeFormatter {
         TimeFormatter(getISO_TIME()) as & Pure
 
     pub def ofPattern(pattern: String): Option[TimeFormatter] =
-        try {
-            import java.lang.String.strip();
-            import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
-            Some(TimeFormatter(ofPattern(strip(pattern)))) as & Pure
-        } catch {
-            case _: ##java.lang.IllegalArgumentException => None
-        }
+        Option.map(TimeFormatter, Time/Format/Internal/Prim.ofPattern(pattern))
+    
+    pub def ofLocalizedTime(style: FormatStyle): TimeFormatter =
+        import java.time.format.DateTimeFormatter:ofLocalizedTime(##java.time.format.FormatStyle);
+        let style1 = Time/Format/FormatStyle.toNative(style);
+        TimeFormatter(ofLocalizedTime(style1)) as & Pure
+
 
     pub def getZone(x: TimeFormatter): ZoneId =
         import java.time.format.DateTimeFormatter.getZone();
@@ -79,25 +80,24 @@ namespace Time/Format/TimeFormatter {
         TimeFormatter(withZone(x1, z1)) as & Pure
 
     pub def getDecimalStyle(x: TimeFormatter): DecimalStyle =
-        import java.time.format.DateTimeFormatter.getDecimalStyle();
         let TimeFormatter(x1) = x;
-        DecimalStyle(getDecimalStyle(x1)) as & Pure
-    
-    pub def getLocale(x: TimeFormatter): Locale =
-        import java.time.format.DateTimeFormatter.getLocale();
+        Time/Format/Internal/Prim.getDecimalStyle(x1)
+
+    pub def putDecimalStyle(x: TimeFormatter, style: DecimalStyle): TimeFormatter =
         let TimeFormatter(x1) = x;
-        Locale(getLocale(x1)) as & Pure
+        TimeFormatter(Time/Format/Internal/Prim.putDecimalStyle(x1, style))
 
     pub def getResolverStyle(x: TimeFormatter): ResolverStyle =
-        import java.time.format.DateTimeFormatter.getResolverStyle();
         let TimeFormatter(x1) = x;
-        Time/Format/ResolverStyle.fromNative(getResolverStyle(x1)) as & Pure
+        Time/Format/Internal/Prim.getResolverStyle(x1)
 
+    
+    pub def getLocale(x: TimeFormatter): Locale =
+        let TimeFormatter(x1) = x;
+        Time/Format/Internal/Prim.getLocale(x1)  as & Pure
 
     pub def putLocale(x: TimeFormatter, locale: Locale): TimeFormatter =
-        import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale);
         let TimeFormatter(x1) = x;
-        let Locale(locale1) = locale;
-        TimeFormatter(withLocale(x1, locale1)) as & Pure
+        TimeFormatter(Time/Format/Internal/Prim.putLocale(x1, locale)) as & Pure
 
 }

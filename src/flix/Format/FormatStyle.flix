@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-
-namespace Time/Format/FormatStyle {
+namespace Time/Format {
 
 
     pub enum FormatStyle {
@@ -27,12 +26,19 @@ namespace Time/Format/FormatStyle {
     
     instance ToString[FormatStyle] {
         pub def toString(x: FormatStyle): String = match x {
-            case Full => "Full"
-            case Long => "Long"
-            case Medium => "Medium"
-            case Short => "Short"
+            case Time/Format/FormatStyle.Full => "Full"
+            case Time/Format/FormatStyle.Long => "Long"
+            case Time/Format/FormatStyle.Medium => "Medium"
+            case Time/Format/FormatStyle.Short => "Short"
         }
     }
+
+}
+
+namespace Time/Format/FormatStyle {
+
+    use Time/Format.FormatStyle;
+    use Time/Format.FormatStyle.{Full, Long, Medium, Short};
 
     pub def toNative(x: FormatStyle): ##java.time.format.FormatStyle = 
         import get java.time.format.FormatStyle:FULL            as getFULL;

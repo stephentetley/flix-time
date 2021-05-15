@@ -36,11 +36,13 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatter {
 
+    use I18n.Locale;
+
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
-    use Time/Format/FormatStyle.FormatStyle;
+    use Time/Format.FormatStyle;
     use Time/Format.ResolverStyle;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
@@ -69,19 +71,20 @@ namespace Time/Format/DateTimeFormatter {
 
 
     pub def ofPattern(pattern: String): Option[DateTimeFormatter] =
-        import java.lang.String.strip();
-        import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
-        try {
-            Some(DateTimeFormatter(ofPattern(strip(pattern)))) as & Pure
-        } catch {
-            case _: ##java.lang.IllegalArgumentException => None
-        }
+        Option.map(DateTimeFormatter, Time/Format/Internal/Prim.ofPattern(pattern))
 
-    /// NOTE - should this have an "of" prefix?
+    
     pub def ofLocalizedDateTime(style: FormatStyle): DateTimeFormatter =
         import java.time.format.DateTimeFormatter:ofLocalizedDateTime(##java.time.format.FormatStyle);
         let style1 = Time/Format/FormatStyle.toNative(style);
         DateTimeFormatter(ofLocalizedDateTime(style1)) as & Pure
+
+    pub def ofLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter =
+        import java.time.format.DateTimeFormatter:ofLocalizedDateTime(##java.time.format.FormatStyle, ##java.time.format.FormatStyle);
+        let d1 = Time/Format/FormatStyle.toNative(dateStyle);
+        let t1 = Time/Format/FormatStyle.toNative(timeStyle);
+        DateTimeFormatter(ofLocalizedDateTime(d1, t1)) as & Pure
+
 
     pub def getZone(x: DateTimeFormatter): ZoneId =
         import java.time.format.DateTimeFormatter.getZone();
@@ -94,22 +97,26 @@ namespace Time/Format/DateTimeFormatter {
         let ZoneId(z1) = zone;
         DateTimeFormatter(withZone(x1, z1)) as & Pure
 
-    pub def getDecimalStyle(x: DateTimeFormatter): DecimalStyle =
-        import java.time.format.DateTimeFormatter.getDecimalStyle();
+    
+    pub def getLocale(x: DateTimeFormatter): Locale =
         let DateTimeFormatter(x1) = x;
-        DecimalStyle(getDecimalStyle(x1)) as & Pure
+        Time/Format/Internal/Prim.getLocale(x1)  as & Pure
+
+    pub def putLocale(x: DateTimeFormatter, locale: Locale): DateTimeFormatter =
+        let DateTimeFormatter(x1) = x;
+        DateTimeFormatter(Time/Format/Internal/Prim.putLocale(x1, locale)) as & Pure
+
+    pub def getDecimalStyle(x: DateTimeFormatter): DecimalStyle =
+        let DateTimeFormatter(x1) = x;
+        Time/Format/Internal/Prim.getDecimalStyle(x1)
 
     pub def putDecimalStyle(x: DateTimeFormatter, style: DecimalStyle): DateTimeFormatter =
-        import java.time.format.DateTimeFormatter.withDecimalStyle(##java.time.format.DecimalStyle);
         let DateTimeFormatter(x1) = x;
-        let DecimalStyle(style1) = style;
-        DateTimeFormatter(withDecimalStyle(x1, style1)) as & Pure   
-
+        DateTimeFormatter(Time/Format/Internal/Prim.putDecimalStyle(x1, style))
 
     pub def getResolverStyle(x: DateTimeFormatter): ResolverStyle =
-        import java.time.format.DateTimeFormatter.getResolverStyle();
         let DateTimeFormatter(x1) = x;
-        Time/Format/ResolverStyle.fromNative(getResolverStyle(x1)) as & Pure
+        Time/Format/Internal/Prim.getResolverStyle(x1)
 
     pub def putResolverStyle(x: DateTimeFormatter, style: ResolverStyle): DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withResolverStyle(##java.time.format.ResolverStyle);
