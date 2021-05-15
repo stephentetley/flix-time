@@ -69,7 +69,7 @@ namespace Time/Temporal/ValueRange {
         import java.time.temporal.ValueRange.equals(##java.lang.Object);
         let ValueRange(x1) = x;
         let ValueRange(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: ValueRange): Int32 = 
         import java.time.temporal.ValueRange.hashCode();

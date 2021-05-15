@@ -179,8 +179,8 @@ namespace Time/Chrono/HijrahDate {
         let HijrahDate(b1) = b;
         let HijrahDate(e1) = e;
         let te1 = e1 as ##java.time.temporal.Temporal;
-        let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
-        until(b1, te1, unit1) as & Pure
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
+        until(b1, te1, u1) as & Pure
 
     pub def withVariant(x: HijrahDate, chronology: HijrahChronology): HijrahDate = 
         import java.time.chrono.HijrahDate.withVariant(##java.time.chrono.HijrahChronology);

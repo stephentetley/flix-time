@@ -50,7 +50,7 @@ namespace Time/Temporal/WeekField {
         let firstDayOfWeek1 = Time/DayOfWeek.marshal(x.firstDayOfWeek);
         WeekField(of(firstDayOfWeek1, x.minimalDaysInFirstWeek)) as & Pure
 
-    pub def newWithLocal(x: Locale): WeekField = 
+    pub def ofLocale(x: Locale): WeekField = 
         import java.time.temporal.WeekFields:of(##java.util.Locale);
         let Locale(x1) = x;
         WeekField(of(x1)) as & Pure
@@ -87,25 +87,25 @@ namespace Time/Temporal/WeekField {
     pub def weekBasedYear(x: WeekField): ChronoField = 
         import java.time.temporal.WeekFields.weekBasedYear();
         let WeekField(x1) = x;
-        let jcf = weekBasedYear(x1) as ##java.time.temporal.ChronoField & Pure;
-        Time/Temporal/ChronoField.unmarshal(jcf)
+        let cx1 = weekBasedYear(x1) as ##java.time.temporal.ChronoField & Pure;
+        Time/Temporal/ChronoField.unmarshal(cx1)
 
     pub def weekOfMonth(x: WeekField): ChronoField = 
         import java.time.temporal.WeekFields.weekOfMonth();
         let WeekField(x1) = x;
-        let jcf = weekOfMonth(x1) as ##java.time.temporal.ChronoField & Pure;
-        Time/Temporal/ChronoField.unmarshal(jcf)
+        let cx1 = weekOfMonth(x1) as ##java.time.temporal.ChronoField & Pure;
+        Time/Temporal/ChronoField.unmarshal(cx1)
 
     pub def weekOfWeekBasedYear(x: WeekField): ChronoField = 
         import java.time.temporal.WeekFields.weekOfWeekBasedYear();
         let WeekField(x1) = x;
-        let jcf = weekOfWeekBasedYear(x1) as ##java.time.temporal.ChronoField & Pure;
-        Time/Temporal/ChronoField.unmarshal(jcf)
+        let cx1 = weekOfWeekBasedYear(x1) as ##java.time.temporal.ChronoField & Pure;
+        Time/Temporal/ChronoField.unmarshal(cx1)
 
     pub def weekOfYear(x: WeekField): ChronoField = 
         import java.time.temporal.WeekFields.weekOfYear();
         let WeekField(x1) = x;
-        let jcf = weekOfYear(x1) as ##java.time.temporal.ChronoField & Pure;
-        Time/Temporal/ChronoField.unmarshal(jcf)
+        let cx1 = weekOfYear(x1) as ##java.time.temporal.ChronoField & Pure;
+        Time/Temporal/ChronoField.unmarshal(cx1)
 
 }

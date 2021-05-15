@@ -258,19 +258,22 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();
-        Duration(x.marshal().getDuration()) as & Pure
+        let x1 = marshal(x);
+        Duration(getDuration(x1)) as & Pure
 
     pub def isDurationEstimated(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isDurationEstimated();
-        x.marshal().isDurationEstimated() as & Pure
+        let x1 = marshal(x);
+        isDurationEstimated(x1) as & Pure
 
     pub def isDateBased(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isDateBased();
-        x.marshal().isDateBased() as & Pure
+        let x1 = marshal(x);
+        isDateBased(x1) as & Pure
 
     pub def isTimeBased(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isTimeBased();
-        x.marshal().isTimeBased() as & Pure
-
+        let x1 = marshal(x);
+        isTimeBased(x1) as & Pure
 
 }
