@@ -28,16 +28,16 @@ namespace Time {
     instance ToString[ZoneId] {
         pub def toString(x: ZoneId): String =
             import java.time.ZoneId.toString();
-            let ZoneId(z) = x;
-            z.toString() as & Pure
+            let ZoneId(x1) = x;
+            toString(x1) as & Pure
     }
 
     instance FromString[ZoneId] {
-        pub def fromString(zoneIdentifier: String): Option[ZoneId] =
+        pub def fromString(s: String): Option[ZoneId] =
             import java.lang.String.strip();
             import java.time.ZoneId:of(String) as of;
             try {
-                Some(ZoneId(zoneIdentifier.strip().of())) as & Pure
+                Some(ZoneId(of(strip(s)))) as & Pure
             } catch {
                 case _: ##java.time.DateTimeException => None
                 case _: ##java.time.zone.ZoneRulesException => None
@@ -69,9 +69,9 @@ namespace Time/ZoneId {
 
     pub def new(prefix: Option[ZonePrefix], offset: ZoneOffset): ZoneId =
         import java.time.ZoneId:ofOffset(String, ##java.time.ZoneOffset);
-        let p1 = match prefix {
-            case Some(p) => { let ZonePrefix(s) = p; s }
-            case None => ""
+        let p1 = match prefix { 
+            case Some(ZonePrefix(s)) => s
+            case _ => ""
         };
         let ZoneOffset(o1) = offset;
         ZoneId(ofOffset(p1, o1)) as & Pure
@@ -110,7 +110,7 @@ namespace Time/ZoneId {
     pub def getTimeZoneId(x: ZoneId): String =
         import java.time.ZoneId.getId();
         let ZoneId(x1) = x;
-        x1.getId() as & Pure
+        getId(x1) as & Pure
 
 
     pub def getAvailableZoneIds(): Set[String] & Impure = 

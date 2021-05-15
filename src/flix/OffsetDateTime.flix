@@ -159,18 +159,18 @@ namespace Time/OffsetDateTime {
         ZonedDateTime(atZoneSimilarLocal(x1, z1)) as & Pure
     
 
-    pub def fromLocalDateTime(dateTime: LocalDateTime, offset: ZoneOffset): OffsetDateTime =
+    pub def ofLocalDateTime(dateTime: LocalDateTime, offset: ZoneOffset): OffsetDateTime =
         import java.time.OffsetDateTime:of(##java.time.LocalDateTime, ##java.time.ZoneOffset);
-        let LocalDateTime(dt) = dateTime;
-        let ZoneOffset(o) = offset;
-        OffsetDateTime(of(dt, o)) as & Pure
+        let LocalDateTime(dt1) = dateTime;
+        let ZoneOffset(o1) = offset;
+        OffsetDateTime(of(dt1, o1)) as & Pure
 
-    pub def fromLocalDateLocalTime(date: LocalDate, time: LocalTime, offset: ZoneOffset): OffsetDateTime =
+    pub def ofLocalDateLocalTime(date: LocalDate, time: LocalTime, offset: ZoneOffset): OffsetDateTime =
         import java.time.OffsetDateTime:of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneOffset);
-        let LocalDate(d) = date;
-        let LocalTime(t) = time;
-        let ZoneOffset(o) = offset;
-        OffsetDateTime(of(d, t, o)) as & Pure
+        let LocalDate(d1) = date;
+        let LocalTime(t1) = time;
+        let ZoneOffset(o1) = offset;
+        OffsetDateTime(of(d1, t1, o1)) as & Pure
 
     pub def toEpochSecond(x: OffsetDateTime): Int64 =
         import java.time.OffsetDateTime.toEpochSecond();

@@ -83,22 +83,22 @@ namespace Time/Chrono/JapaneseDate {
         import java.time.chrono.JapaneseDate:now();
         JapaneseDate(now())
 
-    pub def fromLocalDate(x: LocalDate): JapaneseDate = 
+    pub def ofLocalDate(x: LocalDate): JapaneseDate = 
         import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
         let LocalDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
-    pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
+    pub def ofHijrahDate(x: HijrahDate): JapaneseDate = 
         import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
         let HijrahDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
-    pub def fromMinguoDate(x: MinguoDate): JapaneseDate = 
+    pub def ofMinguoDate(x: MinguoDate): JapaneseDate = 
         import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
         let MinguoDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
-    pub def fromThaiBuddhistDate(x: ThaiBuddhistDate): JapaneseDate = 
+    pub def ofThaiBuddhistDate(x: ThaiBuddhistDate): JapaneseDate = 
         import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
         let ThaiBuddhistDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure

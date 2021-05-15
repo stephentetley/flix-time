@@ -27,17 +27,17 @@ namespace Time {
     instance ToString[ZoneOffset] {
         pub def toString(x: ZoneOffset): String =
             import java.time.ZoneOffset.toString();
-            let ZoneOffset(z) = x;
-            z.toString() as & Pure
+            let ZoneOffset(x1) = x;
+            toString(x1) as & Pure
     }
     
     instance FromString[ZoneOffset] {
-        pub def fromString(offsetId: String): Option[ZoneOffset] =
+        pub def fromString(x: String): Option[ZoneOffset] =
             import java.lang.String.strip();
             import java.time.ZoneOffset:of(String);
             try {
-                let s1 = offsetId.strip() as & Pure;
-                Some(ZoneOffset(of(s1))) as & Pure
+                let x1 = strip(x) as & Pure;
+                Some(ZoneOffset(of(x1))) as & Pure
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
             }
@@ -104,19 +104,19 @@ namespace Time/ZoneOffset {
         ZoneOffset(getUTC()) as & Pure
 
 
-    pub def fromHours(hours: Int32): ZoneOffset =
+    pub def ofHours(hours: Int32): ZoneOffset =
         import java.time.ZoneOffset:ofHours(Int32);
         ZoneOffset(ofHours(hours)) as & Pure
 
-    pub def fromHoursMinutes(hours: Int32, minutes: Int32): ZoneOffset =
+    pub def ofHoursMinutes(hours: Int32, minutes: Int32): ZoneOffset =
         import java.time.ZoneOffset:ofHoursMinutes(Int32, Int32);
         ZoneOffset(ofHoursMinutes(hours, minutes)) as & Pure
 
-    pub def fromHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): ZoneOffset =
+    pub def ofHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): ZoneOffset =
         import java.time.ZoneOffset:ofHoursMinutesSeconds(Int32, Int32, Int32);
         ZoneOffset(ofHoursMinutesSeconds(hours, minutes, seconds)) as & Pure
 
-    pub def fromTotalSeconds(seconds: Int32): ZoneOffset =
+    pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
         import java.time.ZoneOffset:ofTotalSeconds(Int32);
         ZoneOffset(ofTotalSeconds(seconds)) as & Pure
 
@@ -125,7 +125,7 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset.equals(##java.lang.Object);
         let ZoneOffset(x1) = x;
         let ZoneOffset(y1) = y;
-        x1.equals(y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object) as & Pure
 
     pub def hashCode(x: ZoneOffset): Int32 = 
         import java.time.ZoneOffset.hashCode();
@@ -137,11 +137,11 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset);
         let ZoneOffset(x1) = x;
         let ZoneOffset(y1) = y;
-        x1.compareTo(y1) as & Pure
+        compareTo(x1, y1) as & Pure
 
     pub def getId(x: ZoneOffset): String =
         import java.time.ZoneOffset.getId();
         let ZoneOffset(x1) = x;
-        x1.getId() as & Pure
+        getId(x1) as & Pure
         
 }

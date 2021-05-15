@@ -25,7 +25,11 @@ namespace Time/Format {
         pub def toString(x: DateTimeFormatter): String =
             import java.time.format.DateTimeFormatter.toString();
             let DateTimeFormatter(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
+    }
+
+    instance FromString[DateTimeFormatter] {
+        pub def fromString(x: String): Option[DateTimeFormatter] = Time/Format/DateTimeFormatter.ofPattern(x)
     }
 
 }
@@ -64,7 +68,7 @@ namespace Time/Format/DateTimeFormatter {
         DateTimeFormatter(getRFC_1123_DATE_TIME()) as & Pure
 
 
-    pub def fromPattern(pattern: String): Option[DateTimeFormatter] =
+    pub def ofPattern(pattern: String): Option[DateTimeFormatter] =
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
         try {

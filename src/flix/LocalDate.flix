@@ -188,29 +188,29 @@ namespace Time/LocalDate {
         OffsetDateTime(atTime(x1, t1)) as & Pure
 
 
-    pub def fromInstant(x: Instant, zoneId: ZoneId): LocalDate =
+    pub def ofInstant(x: Instant, zoneId: ZoneId): LocalDate =
         import java.time.LocalDate:ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;
         let ZoneId(z1) = zoneId;
         LocalDate(ofInstant(x1, z1)) as & Pure
 
 
-    pub def fromHijrahDate(x: HijrahDate): LocalDate =
+    pub def ofHijrahDate(x: HijrahDate): LocalDate =
         import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
         let HijrahDate(x1) = x;
         LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
-    pub def fromJapaneseDate(x: JapaneseDate): LocalDate =
+    pub def ofJapaneseDate(x: JapaneseDate): LocalDate =
         import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
         let JapaneseDate(x1) = x;
         LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
-    pub def fromMinguoDate(x: MinguoDate): LocalDate =
+    pub def ofMinguoDate(x: MinguoDate): LocalDate =
         import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
         let MinguoDate(x1) = x;
         LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
-    pub def fromThaiBuddhistDate(x: ThaiBuddhistDate): LocalDate =
+    pub def ofThaiBuddhistDate(x: ThaiBuddhistDate): LocalDate =
         import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
         let ThaiBuddhistDate(x1) = x;
         LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
@@ -254,7 +254,7 @@ namespace Time/LocalDate {
         hashCode(x1) as & Pure
         
 
-    pub def fromEpochDay(x: Int64): LocalDate =
+    pub def ofEpochDay(x: Int64): LocalDate =
         import java.time.LocalDate:ofEpochDay(Int64);
         LocalDate(ofEpochDay(x)) as & Pure
 

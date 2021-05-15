@@ -29,7 +29,7 @@ namespace Time {
         pub def toString(x: ZonedDateTime): String =
             import java.time.ZonedDateTime.toString();
             let ZonedDateTime(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
     }
 
     ///
@@ -42,7 +42,7 @@ namespace Time {
             import java.lang.String.strip();
             import java.time.ZonedDateTime:parse(##java.lang.CharSequence);
             try {
-                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(ZonedDateTime(parse(cs))) as & Pure
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -113,14 +113,14 @@ namespace Time/ZonedDateTime {
     ///
     pub def nowWithZoneId(zone: ZoneId): ZonedDateTime & Impure =
         import java.time.ZonedDateTime:now(##java.time.ZoneId);
-        let ZoneId(z) = zone;
-        ZonedDateTime(now(z))
+        let ZoneId(z1) = zone;
+        ZonedDateTime(now(z1))
 
-    pub def fromLocalDateTime(dateTime: LocalDateTime, zone: ZoneId): ZonedDateTime =
+    pub def ofLocalDateTime(dateTime: LocalDateTime, zone: ZoneId): ZonedDateTime =
         import java.time.ZonedDateTime:of(##java.time.LocalDateTime, ##java.time.ZoneId);
-        let LocalDateTime(dt) = dateTime;
-        let ZoneId(z) = zone;
-        ZonedDateTime(of(dt, z)) as & Pure
+        let LocalDateTime(dt1) = dateTime;
+        let ZoneId(z1) = zone;
+        ZonedDateTime(of(dt1, z1)) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -128,14 +128,14 @@ namespace Time/ZonedDateTime {
     pub def toLocalDateTime(x: ZonedDateTime): LocalDateTime =
         import java.time.ZonedDateTime.toLocalDateTime();
         let ZonedDateTime(x1) = x;
-        LocalDateTime(x1.toLocalDateTime()) as & Pure
+        LocalDateTime(toLocalDateTime(x1)) as & Pure
 
-    pub def fromLocalDateLocalTime(date: LocalDate, time: LocalTime, zone: ZoneId): ZonedDateTime =
+    pub def ofLocalDateLocalTime(date: LocalDate, time: LocalTime, zone: ZoneId): ZonedDateTime =
         import java.time.ZonedDateTime:of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId);
-        let LocalDate(d) = date;
-        let LocalTime(t) = time;
-        let ZoneId(z) = zone;
-        ZonedDateTime(of(d, t, z)) as & Pure
+        let LocalDate(d1) = date;
+        let LocalTime(t1) = time;
+        let ZoneId(z1) = zone;
+        ZonedDateTime(of(d1, t1, z1)) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -143,7 +143,7 @@ namespace Time/ZonedDateTime {
     pub def toLocalDate(x: ZonedDateTime): LocalDate =
         import java.time.ZonedDateTime.toLocalDate();
         let ZonedDateTime(x1) = x;
-        LocalDate(x1.toLocalDate()) as & Pure
+        LocalDate(toLocalDate(x1)) as & Pure
 
     ///
     /// Returns the given date-time `x` as __.
@@ -151,7 +151,7 @@ namespace Time/ZonedDateTime {
     pub def toLocalTime(x: ZonedDateTime): LocalTime =
         import java.time.ZonedDateTime.toLocalTime();
         let ZonedDateTime(x1) = x;
-        LocalTime(x1.toLocalTime()) as & Pure
+        LocalTime(toLocalTime(x1)) as & Pure
 
 
 
@@ -162,7 +162,7 @@ namespace Time/ZonedDateTime {
         import java.time.ZonedDateTime.format(##java.time.format.DateTimeFormatter);
         let ZonedDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
-        x1.format(fmtr) as & Pure
+        format(x1, fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.
@@ -175,8 +175,8 @@ namespace Time/ZonedDateTime {
         import java.time.ZonedDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Some(ZonedDateTime(cs.parse(fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
+            Some(ZonedDateTime(parse(cs, fmtr))) as & Pure
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
@@ -202,7 +202,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(y1) = y;
         let cx1 = x1 as ##java.time.chrono.ChronoZonedDateTime;
         let cy1 = y1 as ##java.time.chrono.ChronoZonedDateTime;
-        cx1.compareTo(cy1) as & Pure
+        compareTo(cx1, cy1) as & Pure
 
 
     ///
@@ -212,8 +212,9 @@ namespace Time/ZonedDateTime {
         import java.time.chrono.ChronoZonedDateTime.isBefore(##java.time.chrono.ChronoZonedDateTime);
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
-        let zx1 = x1 as ##java.time.chrono.ChronoZonedDateTime;
-        zx1.isBefore(y1 as ##java.time.chrono.ChronoZonedDateTime) as & Pure
+        let cx1 = x1 as ##java.time.chrono.ChronoZonedDateTime;
+        let cy1 = y1 as ##java.time.chrono.ChronoZonedDateTime;
+        isBefore(cx1, cy1) as & Pure
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -222,174 +223,175 @@ namespace Time/ZonedDateTime {
         import java.time.chrono.ChronoZonedDateTime.isAfter(##java.time.chrono.ChronoZonedDateTime);
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
-        let zx1 = x1 as ##java.time.chrono.ChronoZonedDateTime;
-        zx1.isAfter(y1 as ##java.time.chrono.ChronoZonedDateTime) as & Pure
+        let cx1 = x1 as ##java.time.chrono.ChronoZonedDateTime;
+        let cy1 = y1 as ##java.time.chrono.ChronoZonedDateTime;
+        isAfter(cx1, cy1) as & Pure
 
     pub def plusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.plusYears(Int64) as plus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.plus(years)) as & Pure
+        ZonedDateTime(plus(x1, years)) as & Pure
 
     pub def minusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.minusYears(Int64) as minus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.minus(years)) as & Pure
+        ZonedDateTime(minus(x1, years)) as & Pure
 
     pub def plusMonths(x: ZonedDateTime, months: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.plusMonths(Int64) as plus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.plus(months)) as & Pure
+        ZonedDateTime(plus(x1, months)) as & Pure
 
     pub def minusMonths(x: ZonedDateTime, months: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.minusMonths(Int64) as minus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.minus(months)) as & Pure
+        ZonedDateTime(minus(x1, months)) as & Pure
 
     pub def plusWeeks(x: ZonedDateTime, weeks: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.plusWeeks(Int64) as plus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.plus(weeks)) as & Pure
+        ZonedDateTime(plus(x1, weeks)) as & Pure
 
     pub def minusWeeks(x: ZonedDateTime, weeks: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.minusWeeks(Int64) as minus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.minus(weeks)) as & Pure
+        ZonedDateTime(minus(x1, weeks)) as & Pure
 
     pub def plusDays(x: ZonedDateTime, days: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.plusDays(Int64) as plus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.plus(days)) as & Pure
+        ZonedDateTime(plus(x1, days)) as & Pure
 
     pub def minusDays(x: ZonedDateTime, days: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.minusDays(Int64) as minus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.minus(days)) as & Pure
+        ZonedDateTime(minus(x1, days)) as & Pure
 
     pub def plusHours(x: ZonedDateTime, hours: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.plusHours(Int64) as plus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.plus(hours)) as & Pure
+        ZonedDateTime(plus(x1, hours)) as & Pure
 
     pub def minusHours(x: ZonedDateTime, hours: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.minusHours(Int64) as minus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.minus(hours)) as & Pure
+        ZonedDateTime(minus(x1, hours)) as & Pure
 
     pub def plusMinutes(x: ZonedDateTime, minutes: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.plusMinutes(Int64) as plus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.plus(minutes)) as & Pure
+        ZonedDateTime(plus(x1, minutes)) as & Pure
 
     pub def minusMinutes(x: ZonedDateTime, minutes: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.minusMinutes(Int64) as minus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.minus(minutes)) as & Pure
+        ZonedDateTime(minus(x1, minutes)) as & Pure
 
     pub def plusSeconds(x: ZonedDateTime, seconds: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.plusSeconds(Int64) as plus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.plus(seconds)) as & Pure
+        ZonedDateTime(plus(x1, seconds)) as & Pure
 
     pub def minusSeconds(x: ZonedDateTime, seconds: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.minusSeconds(Int64) as minus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.minus(seconds)) as & Pure
+        ZonedDateTime(minus(x1, seconds)) as & Pure
 
     pub def plusNanos(x: ZonedDateTime, nanos: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.plusNanos(Int64) as plus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.plus(nanos)) as & Pure
+        ZonedDateTime(plus(x1, nanos)) as & Pure
 
     pub def minusNanos(x: ZonedDateTime, nanos: Int64): ZonedDateTime =
         import java.time.ZonedDateTime.minusNanos(Int64) as minus;
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.minus(nanos)) as & Pure
+        ZonedDateTime(minus(x1, nanos)) as & Pure
 
     pub def getYear(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getYear();
         let ZonedDateTime(x1) = x;
-        x1.getYear() as & Pure
+        getYear(x1) as & Pure
 
     pub def putYear(x: ZonedDateTime, year: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withYear(Int32);
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.withYear(year)) as & Pure
+        ZonedDateTime(withYear(x1, year)) as & Pure
 
     pub def getMonth(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getMonth();
         import java.time.Month.getValue();
         let ZonedDateTime(x1) = x;
-        x1.getMonth().getValue() as & Pure
+        getValue(getMonth(x1)) as & Pure
 
     pub def putMonth(x: ZonedDateTime, month: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withMonth(Int32);
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.withMonth(month)) as & Pure
+        ZonedDateTime(withMonth(x1, month)) as & Pure
 
     pub def getDayOfYear(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getDayOfYear();
         let ZonedDateTime(x1) = x;
-        x1.getDayOfYear() as & Pure
+        getDayOfYear(x1) as & Pure
 
     pub def putDayOfYear(x: ZonedDateTime, dayOfYear: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfYear(Int32);
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.withDayOfYear(dayOfYear)) as & Pure
+        ZonedDateTime(withDayOfYear(x1, dayOfYear)) as & Pure
 
     pub def getDayOfMonth(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getDayOfMonth();
         let ZonedDateTime(x1) = x;
-        x1.getDayOfMonth() as & Pure
+        getDayOfMonth(x1) as & Pure
 
     pub def putDayOfMonth(x: ZonedDateTime, dayOfMonth: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfMonth(Int32);
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.withDayOfMonth(dayOfMonth)) as & Pure
+        ZonedDateTime(withDayOfMonth(x1, dayOfMonth)) as & Pure
 
     pub def getDayOfWeek(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getDayOfWeek();
         import java.time.DayOfWeek.getValue();
         let ZonedDateTime(x1) = x;
-        x1.getDayOfWeek().getValue() as & Pure
+        getValue(getDayOfWeek(x1)) as & Pure
 
     pub def getHour(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getHour();
         let ZonedDateTime(x1) = x;
-        x1.getHour() as & Pure
+        getHour(x1) as & Pure
 
     pub def putHour(x: ZonedDateTime, hour: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withHour(Int32);
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.withHour(hour)) as & Pure
+        ZonedDateTime(withHour(x1, hour)) as & Pure
 
     pub def getMinute(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getMinute();
         let ZonedDateTime(x1) = x;
-        x1.getMinute() as & Pure
+        getMinute(x1) as & Pure
 
     pub def putMinute(x: ZonedDateTime, minute: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withMinute(Int32);
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.withMinute(minute)) as & Pure
+        ZonedDateTime(withMinute(x1, minute)) as & Pure
 
     pub def getSecond(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getSecond();
         let ZonedDateTime(x1) = x;
-        x1.getSecond() as & Pure
+        getSecond(x1) as & Pure
 
     pub def putSecond(x: ZonedDateTime, second: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withSecond(Int32);
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.withSecond(second)) as & Pure
+        ZonedDateTime(withSecond(x1, second)) as & Pure
 
     pub def getNano(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getNano();
         let ZonedDateTime(x1) = x;
-        x1.getNano() as & Pure
+        getNano(x1) as & Pure
 
     pub def putNano(x: ZonedDateTime, nano: Int32): ZonedDateTime =
         import java.time.ZonedDateTime.withNano(Int32);
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(x1.withNano(nano)) as & Pure
+        ZonedDateTime(withNano(x1, nano)) as & Pure
 
 }

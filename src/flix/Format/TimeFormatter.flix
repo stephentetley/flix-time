@@ -25,9 +25,12 @@ namespace Time/Format {
         pub def toString(x: TimeFormatter): String =
             import java.time.format.DateTimeFormatter.toString();
             let TimeFormatter(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
     }
 
+    instance FromString[TimeFormatter] {
+        pub def fromString(x: String): Option[TimeFormatter] = Time/Format/TimeFormatter.ofPattern(x)
+    }
 }
 
 namespace Time/Format/TimeFormatter {
@@ -55,11 +58,11 @@ namespace Time/Format/TimeFormatter {
         import get java.time.format.DateTimeFormatter:ISO_TIME as getISO_TIME;
         TimeFormatter(getISO_TIME()) as & Pure
 
-    pub def fromPattern(pattern: String): Option[TimeFormatter] =
+    pub def ofPattern(pattern: String): Option[TimeFormatter] =
         try {
             import java.lang.String.strip();
             import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
-            Some(TimeFormatter(pattern.strip().ofPattern())) as & Pure
+            Some(TimeFormatter(ofPattern(strip(pattern)))) as & Pure
         } catch {
             case _: ##java.lang.IllegalArgumentException => None
         }
@@ -67,13 +70,13 @@ namespace Time/Format/TimeFormatter {
     pub def getZone(x: TimeFormatter): ZoneId =
         import java.time.format.DateTimeFormatter.getZone();
         let TimeFormatter(x1) = x;
-        ZoneId(x1.getZone()) as & Pure
+        ZoneId(getZone(x1)) as & Pure
 
     pub def putZone(x: TimeFormatter, zone: ZoneId): TimeFormatter =
         import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId);
         let TimeFormatter(x1) = x;
         let ZoneId(z1) = zone;
-        TimeFormatter(x1.withZone(z1)) as & Pure
+        TimeFormatter(withZone(x1, z1)) as & Pure
 
     pub def getDecimalStyle(x: TimeFormatter): DecimalStyle =
         import java.time.format.DateTimeFormatter.getDecimalStyle();

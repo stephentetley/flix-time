@@ -140,13 +140,13 @@ namespace Time/Instant {
         import get java.time.Instant:MAX as getMAX;
         Instant(getMAX()) as & Pure
     
-    pub def fromEpochSecond(epochSecond: Int64): Instant =
+    pub def ofEpochSecond(epochSecond: Int64): Instant =
         import java.time.Instant:ofEpochSecond(Int64);
         Instant(ofEpochSecond(epochSecond)) as & Pure
 
     
 
-    pub def fromEpochMilli(epochMilli: Int64): Instant =
+    pub def ofEpochMilli(epochMilli: Int64): Instant =
         import java.time.Instant:ofEpochMilli(Int64);
         Instant(ofEpochMilli(epochMilli)) as & Pure
 

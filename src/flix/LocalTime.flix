@@ -144,25 +144,25 @@ namespace Time/LocalTime {
         LocalTime(getNOON()) as & Pure
 
 
-    pub def fromHoursMinutes(hours: Int32, minutes: Int32): LocalTime =
+    pub def ofHoursMinutes(hours: Int32, minutes: Int32): LocalTime =
         import java.time.LocalTime:of(Int32, Int32);
         LocalTime(of(hours, minutes)) as & Pure
 
-    pub def fromHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): LocalTime =
+    pub def ofHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): LocalTime =
         import java.time.LocalTime:of(Int32, Int32, Int32);
         LocalTime(of(hours, minutes, seconds)) as & Pure
 
-    pub def fromHoursMinutesSecondsNanos(hours: Int32, minutes: Int32, seconds: Int32, nanos: Int32): LocalTime =
+    pub def ofHoursMinutesSecondsNanos(hours: Int32, minutes: Int32, seconds: Int32, nanos: Int32): LocalTime =
         import java.time.LocalTime:of(Int32, Int32, Int32, Int32);
         LocalTime(of(hours, minutes, seconds, nanos)) as & Pure
 
-    pub def fromInstant(x: Instant, zone: ZoneId): LocalTime =
+    pub def ofInstant(x: Instant, zone: ZoneId): LocalTime =
         import java.time.LocalTime:ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;
         let ZoneId(z1) = zone;
         LocalTime(ofInstant(x1, z1)) as & Pure
 
-    pub def fromSecondOfDay(secondOfDay: Int64): LocalTime =
+    pub def ofSecondOfDay(secondOfDay: Int64): LocalTime =
         import java.time.LocalTime:ofSecondOfDay(Int64);
         LocalTime(ofSecondOfDay(secondOfDay)) as & Pure
 
@@ -171,7 +171,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = time;
         toSecondOfDay(x1) as & Pure
 
-    pub def fromNanoOfDay(nanoOfDay: Int64): LocalTime =
+    pub def ofNanoOfDay(nanoOfDay: Int64): LocalTime =
         import java.time.LocalTime:ofNanoOfDay(Int64);
         LocalTime(ofNanoOfDay(nanoOfDay)) as & Pure
 

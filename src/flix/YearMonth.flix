@@ -29,7 +29,7 @@ namespace Time {
         pub def toString(x: YearMonth): String =
             import java.time.YearMonth.toString();
             let YearMonth(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
     }
 
     ///
@@ -39,7 +39,7 @@ namespace Time {
         pub def fromString(s: String): Option[YearMonth] = try {
             import java.lang.String.strip();
             import java.time.YearMonth:parse(##java.lang.CharSequence);
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
             Some(YearMonth(parse(cs))) as & Pure
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
@@ -94,7 +94,7 @@ namespace Time/YearMonth {
         import java.time.YearMonth.format(##java.time.format.DateTimeFormatter);
         let YearMonth(x1) = x;
         let DateFormatter(fmtr) = formatter;
-        x1.format(fmtr) as & Pure
+        format(x1, fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a YearMonth, leading or trailing whitespace is trimmed.
@@ -107,8 +107,8 @@ namespace Time/YearMonth {
         import java.time.YearMonth:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Some(YearMonth(cs.parse(fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
+            Some(YearMonth(parse(cs, fmtr))) as & Pure
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
@@ -132,7 +132,7 @@ namespace Time/YearMonth {
         import java.time.YearMonth.compareTo(##java.time.YearMonth);
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        x1.compareTo(y1) as & Pure
+        compareTo(x1, y1) as & Pure
 
 
     ///
@@ -142,7 +142,7 @@ namespace Time/YearMonth {
         import java.time.YearMonth.isBefore(##java.time.YearMonth);
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        x1.isBefore(y1) as & Pure
+        isBefore(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -151,7 +151,7 @@ namespace Time/YearMonth {
         import java.time.YearMonth.isAfter(##java.time.YearMonth);
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        x1.isAfter(y1) as & Pure
+        isAfter(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is a leap year.
@@ -159,7 +159,7 @@ namespace Time/YearMonth {
     pub def isLeapYear(x: YearMonth): Bool =
         import java.time.YearMonth.isLeapYear();
         let YearMonth(x1) = x;
-        x1.isLeapYear() as & Pure
+        isLeapYear(x1) as & Pure
 
     ///
     /// Returns `true` if `x` is a leap year.
@@ -167,7 +167,7 @@ namespace Time/YearMonth {
     pub def isValidDay(x: YearMonth, dayOfMonth: Int32): Bool =
         import java.time.YearMonth.isValidDay(Int32);
         let YearMonth(x1) = x;
-        x1.isValidDay(dayOfMonth) as & Pure
+        isValidDay(x1, dayOfMonth) as & Pure
 
     ///
     /// Returns the length of the month.
@@ -175,7 +175,7 @@ namespace Time/YearMonth {
     pub def lengthOfMonth(x: YearMonth): Int32 =
         import java.time.YearMonth.lengthOfMonth();
         let YearMonth(x1) = x;
-        x1.lengthOfMonth() as & Pure
+        lengthOfMonth(x1) as & Pure
 
     ///
     /// Returns the length of the year.
@@ -183,35 +183,34 @@ namespace Time/YearMonth {
     pub def lengthOfYear(x: YearMonth): Int32 =
         import java.time.YearMonth.lengthOfYear();
         let YearMonth(x1) = x;
-        x1.lengthOfYear() as & Pure
-
+        lengthOfYear(x1) as & Pure
 
     pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
         import java.time.YearMonth.plusMonths(Int64);
         let YearMonth(x1) = x;
-        YearMonth(x1.plusMonths(months)) as & Pure
+        YearMonth(plusMonths(x1, months)) as & Pure
 
     pub def minusMonths(x: YearMonth, months: Int64): YearMonth =
         import java.time.YearMonth.minusMonths(Int64);
         let YearMonth(x1) = x;
-        YearMonth(x1.minusMonths(months)) as & Pure
+        YearMonth(minusMonths(x1, months)) as & Pure
 
     pub def plusYears(x: YearMonth, years: Int64): YearMonth =
         import java.time.YearMonth.plusYears(Int64);
         let YearMonth(x1) = x;
-        YearMonth(x1.plusYears(years)) as & Pure
+        YearMonth(plusYears(x1, years)) as & Pure
 
     pub def minusYears(x: YearMonth, years: Int64): YearMonth =
         import java.time.YearMonth.minusYears(Int64);
         let YearMonth(x1) = x;
-        YearMonth(x1.minusYears(years)) as & Pure
+        YearMonth(minusYears(x1, years)) as & Pure
 
 
     pub def getMonth(x: YearMonth): Month =
         import java.time.YearMonth.getMonth();
         use Time/Month.{unmarshal};
         let YearMonth(x1) = x;
-        x1.getMonth().unmarshal() as & Pure
+        getMonth(x1).unmarshal() as & Pure
 
     pub def putMonth(x: YearMonth, month: Month): YearMonth =
         newWithMonth({year = getYear(x), month = month})
@@ -219,21 +218,21 @@ namespace Time/YearMonth {
     pub def getMonthValue(x: YearMonth): Int32 =
         import java.time.YearMonth.getMonthValue();
         let YearMonth(x1) = x;
-        x1.getMonthValue() as & Pure
+        getMonthValue(x1) as & Pure
 
     pub def putMonthValue(x: YearMonth, month: Int32): YearMonth =
         import java.time.YearMonth.withMonth(Int32);
         let YearMonth(x1) = x;
-        YearMonth(x1.withMonth(month)) as & Pure
+        YearMonth(withMonth(x1, month)) as & Pure
 
     pub def getYear(x: YearMonth): Int32 =
         import java.time.YearMonth.getYear();
         let YearMonth(x1) = x;
-        x1.getYear() as & Pure
+        getYear(x1) as & Pure
 
     pub def putYear(x: YearMonth, year: Int32): YearMonth =
         import java.time.YearMonth.withYear(Int32);
         let YearMonth(x1) = x;
-        YearMonth(x1.withYear(year)) as & Pure
+        YearMonth(withYear(x1, year)) as & Pure
 
 }

@@ -26,11 +26,11 @@ namespace Time/Format {
         pub def toString(x: DateFormatter): String =
             import java.time.format.DateTimeFormatter.toString();
             let DateFormatter(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
     }
 
     instance FromString[DateFormatter] {
-        pub def fromString(x: String): Option[DateFormatter] = Time/Format/DateFormatter.fromPattern(x)
+        pub def fromString(x: String): Option[DateFormatter] = Time/Format/DateFormatter.ofPattern(x)
     }
 
 }
@@ -67,8 +67,8 @@ namespace Time/Format/DateFormatter {
         import get java.time.format.DateTimeFormatter:ISO_WEEK_DATE as getISO_WEEK_DATE;
         DateFormatter(getISO_WEEK_DATE()) as & Pure
 
-
-    pub def fromPattern(pattern: String): Option[DateFormatter] =
+    /// Should this be called `new`?
+    pub def ofPattern(pattern: String): Option[DateFormatter] =
         import java.lang.String.strip();
         import java.time.format.DateTimeFormatter:ofPattern(String) as ofPattern;
         try {

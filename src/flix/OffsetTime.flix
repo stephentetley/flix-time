@@ -30,7 +30,7 @@ namespace Time {
         pub def toString(x: OffsetTime): String =
             import java.time.OffsetTime.toString();
             let OffsetTime(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
     }
 
     ///
@@ -43,7 +43,7 @@ namespace Time {
             import java.lang.String.strip();
             import java.time.OffsetTime:parse(##java.lang.CharSequence);
             try {
-                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(OffsetTime(parse(cs))) as & Pure
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -133,18 +133,18 @@ namespace Time/OffsetTime {
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetTime & Impure =
         import java.time.OffsetTime:now(##java.time.ZoneId);
-        let ZoneId(z) = zone;
-        OffsetTime(now(z))
+        let ZoneId(z1) = zone;
+        OffsetTime(now(z1))
 
 
-    pub def fromLocalTime(x: LocalTime, offset: ZoneOffset): OffsetTime =
+    pub def ofLocalTime(x: LocalTime, offset: ZoneOffset): OffsetTime =
         import java.time.OffsetTime:of(##java.time.LocalTime, ##java.time.ZoneOffset);
         let LocalTime(x1) = x;
         let ZoneOffset(o1) = offset;
         OffsetTime(of(x1, o1)) as & Pure
 
 
-    pub def fromInstant(x: Instant, zone: ZoneId): OffsetTime =
+    pub def ofInstant(x: Instant, zone: ZoneId): OffsetTime =
         import java.time.OffsetTime:ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;
         let ZoneId(z1) = zone;
@@ -159,7 +159,7 @@ namespace Time/OffsetTime {
         import java.time.OffsetTime.format(##java.time.format.DateTimeFormatter);
         let OffsetTime(x1) = x;
         let TimeFormatter(fmtr) = formatter;
-        x1.format(fmtr) as & Pure
+        format(x1, fmtr) as & Pure
 
     ///
     /// Parse the string `s` as a OffsetTime, leading or trailing whitespace is trimmed.
@@ -172,8 +172,8 @@ namespace Time/OffsetTime {
         import java.time.OffsetTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let TimeFormatter(fmtr) = formatter;
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Some(OffsetTime(cs.parse(fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
+            Some(OffsetTime(parse(cs, fmtr))) as & Pure
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
@@ -196,7 +196,7 @@ namespace Time/OffsetTime {
         import java.time.OffsetTime.compareTo(##java.time.OffsetTime);
         let OffsetTime(x1) = x;
         let OffsetTime(y1) = y;
-        x1.compareTo(y1) as & Pure
+        compareTo(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -205,7 +205,7 @@ namespace Time/OffsetTime {
         import java.time.OffsetTime.isBefore(##java.time.OffsetTime);
         let OffsetTime(x1) = x;
         let OffsetTime(y1) = y;
-        x1.isBefore(y1) as & Pure
+        isBefore(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -214,92 +214,92 @@ namespace Time/OffsetTime {
         import java.time.OffsetTime.isAfter(##java.time.OffsetTime);
         let OffsetTime(x1) = x;
         let OffsetTime(y1) = y;
-        x1.isAfter(y1) as & Pure
+        isAfter(x1, y1) as & Pure
 
     pub def plusHours(x: OffsetTime, hours: Int64): OffsetTime =
         import java.time.OffsetTime.plusHours(Int64) as plus;
         let OffsetTime(x1) = x;
-        OffsetTime(x1.plus(hours)) as & Pure
+        OffsetTime(plus(x1, hours)) as & Pure
 
     pub def minusHours(x: OffsetTime, hours: Int64): OffsetTime =
         import java.time.OffsetTime.minusHours(Int64) as minus;
         let OffsetTime(x1) = x;
-        OffsetTime(x1.minus(hours)) as & Pure
+        OffsetTime(minus(x1, hours)) as & Pure
 
     pub def plusMinutes(x: OffsetTime, minutes: Int64): OffsetTime =
         import java.time.OffsetTime.plusMinutes(Int64) as plus;
         let OffsetTime(x1) = x;
-        OffsetTime(x1.plus(minutes)) as & Pure
+        OffsetTime(plus(x1, minutes)) as & Pure
 
     pub def minusMinutes(x: OffsetTime, minutes: Int64): OffsetTime =
         import java.time.OffsetTime.minusMinutes(Int64) as minus;
         let OffsetTime(x1) = x;
-        OffsetTime(x1.minus(minutes)) as & Pure
+        OffsetTime(minus(x1, minutes)) as & Pure
 
     pub def plusSeconds(x: OffsetTime, seconds: Int64): OffsetTime =
         import java.time.OffsetTime.plusSeconds(Int64) as plus;
         let OffsetTime(x1) = x;
-        OffsetTime(x1.plus(seconds)) as & Pure
+        OffsetTime(plus(x1, seconds)) as & Pure
 
     pub def minusSeconds(x: OffsetTime, seconds: Int64): OffsetTime =
         import java.time.OffsetTime.minusSeconds(Int64) as minus;
         let OffsetTime(x1) = x;
-        OffsetTime(x1.minus(seconds)) as & Pure
+        OffsetTime(minus(x1, seconds)) as & Pure
 
     pub def plusNanos(x: OffsetTime, nanos: Int64): OffsetTime =
         import java.time.OffsetTime.plusNanos(Int64) as plus;
         let OffsetTime(x1) = x;
-        OffsetTime(x1.plus(nanos)) as & Pure
+        OffsetTime(plus(x1, nanos)) as & Pure
 
     pub def minusNanos(x: OffsetTime, nanos: Int64): OffsetTime =
         import java.time.OffsetTime.minusNanos(Int64) as minus;
         let OffsetTime(x1) = x;
-        OffsetTime(x1.minus(nanos)) as & Pure
+        OffsetTime(minus(x1, nanos)) as & Pure
 
     pub def getHour(x: OffsetTime): Int32 =
         import java.time.OffsetTime.getHour();
         let OffsetTime(x1) = x;
-        x1.getHour() as & Pure
+        getHour(x1) as & Pure
 
     pub def putHour(x: OffsetTime, hour: Int32): OffsetTime =
         import java.time.OffsetTime.withHour(Int32);
         let OffsetTime(x1) = x;
-        OffsetTime(x1.withHour(hour)) as & Pure
+        OffsetTime(withHour(x1, hour)) as & Pure
 
     pub def getMinute(x: OffsetTime): Int32 =
         import java.time.OffsetTime.getMinute();
         let OffsetTime(x1) = x;
-        x1.getMinute() as & Pure
+        getMinute(x1) as & Pure
 
     pub def putMinute(x: OffsetTime, minute: Int32): OffsetTime =
         import java.time.OffsetTime.withMinute(Int32);
         let OffsetTime(x1) = x;
-        OffsetTime(x1.withMinute(minute)) as & Pure
+        OffsetTime(withMinute(x1, minute)) as & Pure
 
     pub def getSecond(x: OffsetTime): Int32 =
         import java.time.OffsetTime.getSecond();
         let OffsetTime(x1) = x;
-        x1.getSecond() as & Pure
+        getSecond(x1) as & Pure
 
     pub def putSecond(x: OffsetTime, second: Int32): OffsetTime =
         import java.time.OffsetTime.withSecond(Int32);
         let OffsetTime(x1) = x;
-        OffsetTime(x1.withSecond(second)) as & Pure
+        OffsetTime(withSecond(x1, second)) as & Pure
 
     pub def getNano(x: OffsetTime): Int32 =
         import java.time.OffsetTime.getNano();
         let OffsetTime(x1) = x;
-        x1.getNano() as & Pure
+        getNano(x1) as & Pure
 
     pub def putNano(x: OffsetTime, nano: Int32): OffsetTime =
         import java.time.OffsetTime.withNano(Int32);
         let OffsetTime(x1) = x;
-        OffsetTime(x1.withNano(nano)) as & Pure
+        OffsetTime(withNano(x1, nano)) as & Pure
 
     pub def getOffset(x: OffsetTime): ZoneOffset =
         import java.time.OffsetTime.getOffset();
         let OffsetTime(x1) = x;
-        ZoneOffset(x1.getOffset()) as & Pure
+        ZoneOffset(getOffset(x1)) as & Pure
 
     pub def putOffsetSameInstant(x: OffsetTime, offset: ZoneOffset): OffsetTime = 
         import java.time.OffsetTime.withOffsetSameInstant(##java.time.ZoneOffset);
@@ -320,6 +320,6 @@ namespace Time/OffsetTime {
         let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        b1.until(te1, tu1) as & Pure
+        until(b1, te1, tu1) as & Pure
 
 }

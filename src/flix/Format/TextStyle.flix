@@ -84,16 +84,20 @@ namespace Time/Format/TextStyle {
             case x1 if primEquals(x1, getSHORT_STANDALONE())    => ShortStandalone
         } as & Pure
 
+    
     pub def asStandalone(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asStandalone();
-        x.marshal().asStandalone().unmarshal() as & Pure
+        let x1 = marshal(x);
+        unmarshal(asStandalone(x1)) as & Pure
     
     pub def asNormal(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asNormal();
-        x.marshal().asNormal().unmarshal() as & Pure
+        let x1 = marshal(x);
+        unmarshal(asNormal(x1)) as & Pure
 
     pub def isStandalone(x: TextStyle): Bool =
         import java.time.format.TextStyle.isStandalone();
-        x.marshal().isStandalone() as & Pure
+        let x1 = marshal(x);
+        isStandalone(x1) as & Pure
 
 }

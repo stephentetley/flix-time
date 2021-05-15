@@ -128,7 +128,7 @@ namespace Time/Duration {
     ///
     /// Construct a Duration from the supplied number of days.
     ///
-    pub def fromDays(days: Int64): Duration =
+    pub def ofDays(days: Int64): Duration =
         import java.time.Duration:ofDays(Int64);
         Duration(ofDays(days)) as & Pure
 
@@ -143,7 +143,7 @@ namespace Time/Duration {
     ///
     /// Construct a Duration from the supplied number of hours.
     ///
-    pub def fromHours(hours: Int64): Duration =
+    pub def ofHours(hours: Int64): Duration =
         import java.time.Duration:ofHours(Int64);
         Duration(ofHours(hours)) as & Pure
 
@@ -158,7 +158,7 @@ namespace Time/Duration {
     ///
     /// Construct a Duration from the supplied number of minutes.
     ///
-    pub def fromMinutes(minutes: Int64): Duration =
+    pub def ofMinutes(minutes: Int64): Duration =
         import java.time.Duration:ofMinutes(Int64);
         Duration(ofMinutes(minutes)) as & Pure
 
@@ -173,7 +173,7 @@ namespace Time/Duration {
     ///
     /// Construct a Duration from the supplied number of seconds.
     ///
-    pub def fromSeconds(seconds: Int64): Duration =
+    pub def ofSeconds(seconds: Int64): Duration =
         import java.time.Duration:ofSeconds(Int64);
         Duration(ofSeconds(seconds)) as & Pure
 
@@ -188,7 +188,7 @@ namespace Time/Duration {
     ///
     /// Construct a Duration from the supplied number of milliseconds.
     ///
-    pub def fromMillis(millis: Int64): Duration =
+    pub def ofMillis(millis: Int64): Duration =
         import java.time.Duration:ofMillis(Int64);
         Duration(ofMillis(millis)) as & Pure
 
@@ -204,7 +204,7 @@ namespace Time/Duration {
     ///
     /// Return the number of nanoseconds in Duration `x`.
     ///
-    pub def fromNanos(nanos: Int64): Duration =
+    pub def ofNanos(nanos: Int64): Duration =
         import java.time.Duration:ofNanos(Int64);
         Duration(ofNanos(nanos)) as & Pure
 
@@ -217,7 +217,7 @@ namespace Time/Duration {
         toNanos(x1) as & Pure
 
 
-    pub def fromChrono(x: Int64, unit: ChronoUnit): Duration =
+    pub def ofChrono(x: Int64, unit: ChronoUnit): Duration =
         import java.time.Duration:of(Int64, ##java.time.temporal.TemporalUnit);
         let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;

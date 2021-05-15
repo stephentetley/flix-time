@@ -28,8 +28,8 @@ namespace Time {
     instance ToString[Period] {
         pub def toString(x: Period): String =
             import java.time.Period.toString();
-            let Period(t) = x;
-            t.toString() as & Pure
+            let Period(x1) = x;
+            toString(x1) as & Pure
     }
 
     ///
@@ -42,7 +42,7 @@ namespace Time {
             import java.lang.String.strip();
             import java.time.Period:parse(##java.lang.CharSequence);
             try {
-                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(Period(parse(cs))) as & Pure
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -63,8 +63,8 @@ namespace Time {
             import java.time.Period.plus(##java.time.temporal.TemporalAmount);
             let Period(x1) = x;
             let Period(y1) = y;
-            let ta1 = y1 as ##java.time.temporal.TemporalAmount;
-            Period(x1.plus(ta1)) as & Pure
+            let ty1 = y1 as ##java.time.temporal.TemporalAmount;
+            Period(plus(x1, ty1)) as & Pure
     }
 
     instance Sub[Period] {
@@ -72,15 +72,15 @@ namespace Time {
             import java.time.Period.minus(##java.time.temporal.TemporalAmount);
             let Period(x1) = x;
             let Period(y1) = y;
-            let ta1 = y1 as ##java.time.temporal.TemporalAmount;
-            Period(x1.minus(ta1)) as & Pure
+            let ty1 = y1 as ##java.time.temporal.TemporalAmount;
+            Period(minus(x1, ty1 as ##java.time.temporal.TemporalAmount)) as & Pure
     }
 
     instance Neg[Period] {
         pub def neg(x: Period): Period =
             import java.time.Period.negated();
             let Period(x1) = x;
-            Period(x1.negated()) as & Pure
+            Period(negated(x1)) as & Pure
     }
 
 
@@ -113,19 +113,19 @@ namespace Time/Period {
         import get java.time.Period:ZERO as getZERO;
         Period(getZERO()) as & Pure
 
-    pub def fromYears(years: Int32): Period =
+    pub def ofYears(years: Int32): Period =
         import java.time.Period:ofYears(Int32);
         Period(ofYears(years)) as & Pure
 
-    pub def fromMonths(months: Int32): Period =
+    pub def ofMonths(months: Int32): Period =
         import java.time.Period:ofMonths(Int32);
         Period(ofMonths(months)) as & Pure
 
-    pub def fromWeeks(weeks: Int32): Period =
+    pub def ofWeeks(weeks: Int32): Period =
         import java.time.Period:ofWeeks(Int32);
         Period(ofWeeks(weeks)) as & Pure
 
-    pub def fromDays(days: Int32): Period =
+    pub def ofDays(days: Int32): Period =
         import java.time.Period:ofDays(Int32);
         Period(ofDays(days)) as & Pure
 
@@ -150,7 +150,7 @@ namespace Time/Period {
      pub def normalize(x: Period): Period =
         import java.time.Period.normalized();
         let Period(x1) = x;
-        Period(x1.normalized()) as & Pure
+        Period(normalized(x1)) as & Pure
 
 
 
@@ -161,82 +161,81 @@ namespace Time/Period {
     pub def isZero(x: Period): Bool =
         import java.time.Period.isZero();
         let Period(x1) = x;
-        x1.isZero() as & Pure
+        isZero(x1) as & Pure
 
     pub def isPositive(x: Period): Bool =
-        not x.isNegative()
+        not isNegative(x)
 
     pub def isNegative(x: Period): Bool =
         import java.time.Period.isNegative();
         let Period(x1) = x;
-        x1.isNegative() as & Pure
+        isNegative(x1) as & Pure
 
 
     pub def plusYears(x: Period, years: Int64): Period =
         import java.time.Period.plusYears(Int64) as plus;
         let Period(x1) = x;
-        Period(x1.plus(years)) as & Pure
+        Period(plus(x1, years)) as & Pure
 
     pub def minusYears(x: Period, years: Int64): Period =
         import java.time.Period.minusYears(Int64) as minus;
         let Period(x1) = x;
-        Period(x1.minus(years)) as & Pure
+        Period(minus(x1, years)) as & Pure
 
     pub def plusMonths(x: Period, months: Int64): Period =
         import java.time.Period.plusMonths(Int64) as plus;
         let Period(x1) = x;
-        Period(x1.plus(months)) as & Pure
+        Period(plus(x1, months)) as & Pure
 
     pub def minusMonths(x: Period, months: Int64): Period =
         import java.time.Period.minusMonths(Int64) as minus;
         let Period(x1) = x;
-        Period(x1.minus(months)) as & Pure
+        Period(minus(x1, months)) as & Pure
 
     pub def plusDays(x: Period, days: Int64): Period =
         import java.time.Period.plusDays(Int64) as plus;
         let Period(x1) = x;
-        Period(x1.plus(days)) as & Pure
+        Period(plus(x1, days)) as & Pure
 
     pub def minusDays(x: Period, days: Int64): Period =
         import java.time.Period.minusDays(Int64) as minus;
         let Period(x1) = x;
-        Period(x1.minus(days)) as & Pure
+        Period(minus(x1, days)) as & Pure
 
     pub def getYears(x: Period): Int32 =
         import java.time.Period.getYears();
         let Period(x1) = x;
-        x1.getYears() as & Pure
+        getYears(x1) as & Pure
 
     pub def putYears(x: Period, years: Int32): Period =
         import java.time.Period.withYears(Int32);
         let Period(x1) = x;
-        Period(x1.withYears(years)) as & Pure
+        Period(withYears(x1, years)) as & Pure
 
     pub def getMonths(x: Period): Int32 =
         import java.time.Period.getMonths();
         let Period(x1) = x;
-        x1.getMonths() as & Pure
+        getMonths(x1) as & Pure
 
     pub def putMonths(x: Period, months: Int32): Period =
         import java.time.Period.withMonths(Int32);
         let Period(x1) = x;
-        Period(x1.withMonths(months)) as & Pure
+        Period(withMonths(x1, months)) as & Pure
 
     pub def getDays(x: Period): Int32 =
         import java.time.Period.getDays();
         let Period(x1) = x;
-        x1.getDays() as & Pure
+        getDays(x1) as & Pure
 
     pub def putDays(x: Period, days: Int32): Period =
         import java.time.Period.withDays(Int32);
         let Period(x1) = x;
-        Period(x1.withDays(days)) as & Pure
+        Period(withDays(x1, days)) as & Pure
 
     pub def between(b: LocalDate, e: LocalDate): Period = 
         import java.time.Period:between(##java.time.LocalDate, ##java.time.LocalDate);
         let LocalDate(b1) = b;
         let LocalDate(e1) = e;
         Period(between(b1, e1)) as & Pure
-
 
 }

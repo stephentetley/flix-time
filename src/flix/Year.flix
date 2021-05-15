@@ -29,7 +29,7 @@ namespace Time {
         pub def toString(x: Year): String =
             import java.time.Year.toString();
             let Year(x1) = x;
-            x1.toString() as & Pure
+            toString(x1) as & Pure
     }
 
     ///
@@ -40,7 +40,7 @@ namespace Time {
             import java.lang.String.strip();
             import java.time.Year:parse(##java.lang.CharSequence);
             try {
-                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(Year(parse(cs))) as & Pure
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -130,8 +130,8 @@ namespace Time/Year {
         import java.time.Year:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Some(Year(cs.parse(fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
+            Some(Year(parse(cs, fmtr))) as & Pure
         } catch {
             case _: ##java.lang.Exception => None
         }
@@ -197,7 +197,7 @@ namespace Time/Year {
         import java.time.Year.compareTo(##java.time.Year);
         let Year(x1) = x;
         let Year(y1) = y;
-        x1.compareTo(y1) as & Pure
+        compareTo(x1, y1) as & Pure
 
 
     ///
@@ -207,7 +207,7 @@ namespace Time/Year {
         import java.time.Year.isBefore(##java.time.Year);
         let Year(x1) = x;
         let Year(y1) = y;
-        x1.isBefore(y1) as & Pure
+        isBefore(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -216,7 +216,7 @@ namespace Time/Year {
         import java.time.Year.isAfter(##java.time.Year);
         let Year(x1) = x;
         let Year(y1) = y;
-        x1.isAfter(y1) as & Pure
+        isAfter(x1, y1) as & Pure
 
     ///
     /// Returns `true` if `x` is a leap year.
@@ -224,7 +224,7 @@ namespace Time/Year {
     pub def isLeap(x: Year): Bool =
         import java.time.Year.isLeap();
         let Year(x1) = x;
-        x1.isLeap() as & Pure
+        isLeap(x1) as & Pure
 
     ///
     /// Returns `true` if `x` is a leap year.
@@ -240,7 +240,7 @@ namespace Time/Year {
     pub def length(x: Year): Int32 =
         import java.time.Year.length();
         let Year(x1) = x;
-        x1.length() as & Pure
+        length(x1) as & Pure
 
     ///
     /// Returns `true` if `x` is a leap year.
@@ -250,5 +250,4 @@ namespace Time/Year {
         let Year(x1) = x;
         Year(plusYears(x1, yearsToAdd)) as & Pure
     
-
 }
