@@ -414,7 +414,7 @@ namespace Time/LocalDateTime {
         import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let LocalDateTime(b1) = b;
         let LocalDateTime(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let u1 = Time/Temporal/ChronoUnit.toNative(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1) as & Pure

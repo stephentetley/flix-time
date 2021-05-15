@@ -409,7 +409,7 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         OffsetDateTime(withDayOfMonth(x1, dayOfMonth)) as & Pure
 
-    /// TODO - probably should marshal to DayOfWeek
+    /// TODO - probably should toNative to DayOfWeek
     /// Current we use 1 (Monday) - 7 (Sunday)
     pub def getDayOfWeek(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getDayOfWeek();
@@ -478,7 +478,7 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let OffsetDateTime(b1) = b;
         let OffsetDateTime(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let u1 = Time/Temporal/ChronoUnit.toNative(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1) as & Pure

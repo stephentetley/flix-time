@@ -146,7 +146,7 @@ namespace Time/DayOfWeek {
         case _ => None
     }
 
-    pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek =
+    pub def toNative(x: DayOfWeek): ##java.time.DayOfWeek =
         import get java.time.DayOfWeek:MONDAY       as getMONDAY;
         import get java.time.DayOfWeek:TUESDAY      as getTUESDAY;
         import get java.time.DayOfWeek:WEDNESDAY    as getWEDNESDAY;
@@ -171,7 +171,7 @@ namespace Time/DayOfWeek {
         equals(x1, y1) as & Pure
 
 
-    pub def unmarshal(x: ##java.time.DayOfWeek): Time.DayOfWeek =
+    pub def fromNative(x: ##java.time.DayOfWeek): Time.DayOfWeek =
 
         import get java.time.DayOfWeek:MONDAY       as getMONDAY;
         import get java.time.DayOfWeek:TUESDAY      as getTUESDAY;
@@ -192,19 +192,19 @@ namespace Time/DayOfWeek {
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: I18n.Locale): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
-        let x1 = marshal(x);
-        let s1 = Time/Format/TextStyle.marshal(style);
+        let x1 = toNative(x);
+        let s1 = Time/Format/TextStyle.toNative(style);
         let Locale(l1) = locale;
         getDisplayName(x1, s1, l1) as & Pure
 
     pub def getName(x: DayOfWeek): String =
         import java.lang.Enum.name();
-        let en1 = marshal(x) as ##java.lang.Enum;
+        let en1 = toNative(x) as ##java.lang.Enum;
         name(en1) as & Pure
 
     pub def hashCode(x: DayOfWeek): Int32 =
         import java.lang.Enum.hashCode();
-        let en1 = marshal(x) as ##java.lang.Enum;
+        let en1 = toNative(x) as ##java.lang.Enum;
         hashCode(en1) as & Pure
 
 
@@ -212,21 +212,21 @@ namespace Time/DayOfWeek {
 
     pub def plus(x:DayOfWeek, y: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64);
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         let x2 = plus(x1, y) as & Pure;
-        unmarshal(x2)
+        fromNative(x2)
 
     pub def minus(x:DayOfWeek, y: Int64): DayOfWeek = 
         import java.time.DayOfWeek.minus(Int64);
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         let x2 = minus(x1, y) as & Pure;
-        unmarshal(x2)
+        fromNative(x2)
 
 
     pub def range(x: DayOfWeek): ValueRange = 
         import java.time.DayOfWeek.range(##java.time.temporal.TemporalField);
-        let x1 = marshal(x);
-        let field1 = Time/Temporal/ChronoField.marshal(Time/Temporal/ChronoField.DayOfWeek);
+        let x1 = toNative(x);
+        let field1 = Time/Temporal/ChronoField.toNative(Time/Temporal/ChronoField.DayOfWeek);
         ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField)) as & Pure
 
 }

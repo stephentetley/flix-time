@@ -46,7 +46,7 @@ namespace Time/Format/TextStyle {
     use Time.Error.{IllegalArgumentException};
 
 
-    pub def marshal(x: TextStyle): ##java.time.format.TextStyle = 
+    pub def toNative(x: TextStyle): ##java.time.format.TextStyle = 
         import get java.time.format.TextStyle:FULL              as getFULL;
         import get java.time.format.TextStyle:FULL_STANDALONE   as getFULL_STANDALONE;
         import get java.time.format.TextStyle:NARROW            as getNARROW;
@@ -68,7 +68,7 @@ namespace Time/Format/TextStyle {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def unmarshal(x: ##java.time.format.TextStyle): TextStyle = 
+    pub def fromNative(x: ##java.time.format.TextStyle): TextStyle = 
         import get java.time.format.TextStyle:FULL              as getFULL;
         import get java.time.format.TextStyle:FULL_STANDALONE   as getFULL_STANDALONE;
         import get java.time.format.TextStyle:NARROW            as getNARROW;
@@ -87,17 +87,17 @@ namespace Time/Format/TextStyle {
     
     pub def asStandalone(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asStandalone();
-        let x1 = marshal(x);
-        unmarshal(asStandalone(x1)) as & Pure
+        let x1 = toNative(x);
+        fromNative(asStandalone(x1)) as & Pure
     
     pub def asNormal(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asNormal();
-        let x1 = marshal(x);
-        unmarshal(asNormal(x1)) as & Pure
+        let x1 = toNative(x);
+        fromNative(asNormal(x1)) as & Pure
 
     pub def isStandalone(x: TextStyle): Bool =
         import java.time.format.TextStyle.isStandalone();
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         isStandalone(x1) as & Pure
 
 }

@@ -165,7 +165,7 @@ namespace Time/Temporal/ChronoUnit {
         case _ =>   None
     }
 
-    pub def marshal(x: ChronoUnit): ##java.time.temporal.ChronoUnit = 
+    pub def toNative(x: ChronoUnit): ##java.time.temporal.ChronoUnit = 
         import get java.time.temporal.ChronoUnit:NANOS      as getNANOS;
         import get java.time.temporal.ChronoUnit:MICROS     as getMICROS;
         import get java.time.temporal.ChronoUnit:MILLIS     as getMILLIS;
@@ -207,7 +207,7 @@ namespace Time/Temporal/ChronoUnit {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def unmarshal(x: ##java.time.temporal.ChronoUnit): ChronoUnit = 
+    pub def fromNative(x: ##java.time.temporal.ChronoUnit): ChronoUnit = 
         import get java.time.temporal.ChronoUnit:NANOS      as getNANOS;
         import get java.time.temporal.ChronoUnit:MICROS     as getMICROS;
         import get java.time.temporal.ChronoUnit:MILLIS     as getMILLIS;
@@ -247,33 +247,33 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def hashCode(x: ChronoUnit): Int32 =
         import java.lang.Enum.hashCode();
-        let en1 = marshal(x) as ##java.lang.Enum;
+        let en1 = toNative(x) as ##java.lang.Enum;
         hashCode(en1) as & Pure
 
     pub def compareTo(x: ChronoUnit, y: ChronoUnit): Int32 = 
         import java.lang.Enum.compareTo(##java.lang.Enum);
-        let x1 = marshal(x) as ##java.lang.Enum;
-        let y1 = marshal(y) as ##java.lang.Enum;
+        let x1 = toNative(x) as ##java.lang.Enum;
+        let y1 = toNative(y) as ##java.lang.Enum;
         compareTo(x1, y1) as & Pure
 
     pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         Duration(getDuration(x1)) as & Pure
 
     pub def isDurationEstimated(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isDurationEstimated();
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         isDurationEstimated(x1) as & Pure
 
     pub def isDateBased(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isDateBased();
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         isDateBased(x1) as & Pure
 
     pub def isTimeBased(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isTimeBased();
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         isTimeBased(x1) as & Pure
 
 }

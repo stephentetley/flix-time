@@ -91,7 +91,7 @@ namespace Time/Format/TimeFormatter {
     pub def getResolverStyle(x: TimeFormatter): ResolverStyle =
         import java.time.format.DateTimeFormatter.getResolverStyle();
         let TimeFormatter(x1) = x;
-        Time/Format/ResolverStyle.unmarshal(getResolverStyle(x1)) as & Pure
+        Time/Format/ResolverStyle.fromNative(getResolverStyle(x1)) as & Pure
 
 
     pub def putLocale(x: TimeFormatter, locale: Locale): TimeFormatter =

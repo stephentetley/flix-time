@@ -154,7 +154,7 @@ namespace Time/Chrono/JapaneseDate {
         import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField);
         try {
             let JapaneseDate(x1) = x;
-            let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+            let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
             Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1)) as & Pure
         } catch {
             case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")

@@ -50,7 +50,7 @@ namespace Time/Chrono/HijrahEra {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
 
-    pub def marshal(x: HijrahEra): ##java.time.chrono.HijrahEra = 
+    pub def toNative(x: HijrahEra): ##java.time.chrono.HijrahEra = 
         import get java.time.chrono.HijrahEra:AH      as getAH;
         match x {
             case AH         => getAH()            
@@ -62,7 +62,7 @@ namespace Time/Chrono/HijrahEra {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def unmarshal(x: ##java.time.chrono.HijrahEra): HijrahEra = 
+    pub def fromNative(x: ##java.time.chrono.HijrahEra): HijrahEra = 
         import get java.time.chrono.HijrahEra:AH as getAH;
         match x {
             case x1 if primEquals(x1, getAH())     => AH
@@ -70,28 +70,28 @@ namespace Time/Chrono/HijrahEra {
 
     pub def getValue(x: HijrahEra): Int32 = 
         import java.time.chrono.HijrahEra.getValue();
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         getValue(x1) as & Pure 
 
 
     pub def hashCode(x: HijrahEra): Int32 =
         import java.lang.Enum.hashCode();
-        let en1 = marshal(x) as ##java.lang.Enum;
+        let en1 = toNative(x) as ##java.lang.Enum;
         hashCode(en1) as & Pure
 
 
     /// 
     pub def getDisplayName(x: HijrahEra, style: TextStyle, locale: Locale): String = 
         import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
-        let x1 = marshal(x);
-        let style1 = Time/Format/TextStyle.marshal(style);
+        let x1 = toNative(x);
+        let style1 = Time/Format/TextStyle.toNative(style);
         let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1) as & Pure
         
     pub def range(x: HijrahEra, field: ChronoField): ValueRange = 
         import java.time.chrono.HijrahEra.range(##java.time.temporal.TemporalField);
-        let x1 = marshal(x);
-        let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+        let x1 = toNative(x);
+        let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
         ValueRange(range(x1, field1) as & Pure)
 
 }

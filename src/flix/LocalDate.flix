@@ -131,7 +131,7 @@ namespace Time/LocalDate {
 
     pub def newWithMonth(x: {year: Int32, month: Month, dayOfMonth: Int32}): LocalDate =
         import java.time.LocalDate:of(Int32, ##java.time.Month, Int32);
-        let m1 = Time/Month.marshal(x.month);
+        let m1 = Time/Month.toNative(x.month);
         LocalDate(of(x.year, m1, x.dayOfMonth)) as & Pure
 
 
@@ -338,10 +338,10 @@ namespace Time/LocalDate {
         LocalDate(minus(x1, years)) as & Pure
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
-        use Time/DayOfWeek.{unmarshal};
+        use Time/DayOfWeek.{fromNative};
         import java.time.LocalDate.getDayOfWeek();
         let LocalDate(x1) = x;
-        unmarshal(getDayOfWeek(x1)) as & Pure
+        fromNative(getDayOfWeek(x1)) as & Pure
 
     pub def getDayOfMonth(x: LocalDate): Int32 =
         import java.time.LocalDate.getDayOfMonth();
@@ -390,7 +390,7 @@ namespace Time/LocalDate {
         import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let LocalDate(b1) = b;
         let LocalDate(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let u1 = Time/Temporal/ChronoUnit.toNative(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1) as & Pure
@@ -413,7 +413,7 @@ namespace Time/LocalDate {
     pub def getIsoEra(x: LocalDate): IsoEra = 
         import java.time.LocalDate.getEra();
         let LocalDate(x1) = x;
-        Time/Chrono/IsoEra.unmarshal(getEra(x1)) as & Pure
+        Time/Chrono/IsoEra.fromNative(getEra(x1)) as & Pure
 
 
 }

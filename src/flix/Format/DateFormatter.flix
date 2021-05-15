@@ -87,6 +87,6 @@ namespace Time/Format/DateFormatter {
     pub def getResolverStyle(x: DateFormatter): ResolverStyle =
         import java.time.format.DateTimeFormatter.getResolverStyle();
         let DateFormatter(x1) = x;
-        Time/Format/ResolverStyle.unmarshal(getResolverStyle(x1)) as & Pure
+        Time/Format/ResolverStyle.fromNative(getResolverStyle(x1)) as & Pure
 
 }

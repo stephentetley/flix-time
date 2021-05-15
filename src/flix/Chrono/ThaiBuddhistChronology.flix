@@ -64,6 +64,6 @@ namespace Time/Chrono/ThaiBuddhistChronology {
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): ThaiBuddhistEra = 
         import java.time.chrono.ThaiBuddhistChronology.eraOf(Int32);
         let ThaiBuddhistChronology(x1) = x;
-        Time/Chrono/ThaiBuddhistEra.unmarshal(eraOf(x1, i) as & Pure)
+        Time/Chrono/ThaiBuddhistEra.fromNative(eraOf(x1, i) as & Pure)
 
 }

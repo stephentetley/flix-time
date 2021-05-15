@@ -79,7 +79,7 @@ namespace Time/YearMonth {
 
     pub def newWithMonth(x: {year: Int, month: Month}): YearMonth =
         import java.time.YearMonth:of(Int32, ##java.time.Month);
-        let m1 = Time/Month.marshal(x.month);
+        let m1 = Time/Month.toNative(x.month);
         YearMonth(of(x.year, m1)) as & Pure
 
     pub def now(): YearMonth & Impure =         
@@ -208,9 +208,9 @@ namespace Time/YearMonth {
 
     pub def getMonth(x: YearMonth): Month =
         import java.time.YearMonth.getMonth();
-        use Time/Month.{unmarshal};
+        use Time/Month.{fromNative};
         let YearMonth(x1) = x;
-        getMonth(x1).unmarshal() as & Pure
+        getMonth(x1).fromNative() as & Pure
 
     pub def putMonth(x: YearMonth, month: Month): YearMonth =
         newWithMonth({year = getYear(x), month = month})

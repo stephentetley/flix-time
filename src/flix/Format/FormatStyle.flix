@@ -17,11 +17,7 @@
 
 namespace Time/Format/FormatStyle {
 
-    /// NOTE - this is inconsistent with other enums in the Time/Format namespace.
-    /// Apparently the scope context of constructors is the declared namespace.
-    /// The scope context is not further refined by the enum's name.
-    /// This has implications for the design of the Time/Format namespace that we
-    /// need to think about...
+
     pub enum FormatStyle {
         case Full
         case Long
@@ -38,7 +34,7 @@ namespace Time/Format/FormatStyle {
         }
     }
 
-    pub def marshal(x: FormatStyle): ##java.time.format.FormatStyle = 
+    pub def toNative(x: FormatStyle): ##java.time.format.FormatStyle = 
         import get java.time.format.FormatStyle:FULL            as getFULL;
         import get java.time.format.FormatStyle:LONG            as getLONG;
         import get java.time.format.FormatStyle:MEDIUM          as getMEDIUM;
@@ -56,7 +52,7 @@ namespace Time/Format/FormatStyle {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def unmarshal(x: ##java.time.format.FormatStyle): FormatStyle = 
+    pub def fromNative(x: ##java.time.format.FormatStyle): FormatStyle = 
         import get java.time.format.FormatStyle:FULL            as getFULL;
         import get java.time.format.FormatStyle:LONG            as getLONG;
         import get java.time.format.FormatStyle:MEDIUM          as getMEDIUM;

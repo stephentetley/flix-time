@@ -248,7 +248,7 @@ namespace Time/Temporal/ChronoField {
         case _ =>   None
     }
 
-    pub def marshal(x: ChronoField): ##java.time.temporal.ChronoField = 
+    pub def toNative(x: ChronoField): ##java.time.temporal.ChronoField = 
         import get java.time.temporal.ChronoField:NANO_OF_SECOND                as getNANO_OF_SECOND;
         import get java.time.temporal.ChronoField:NANO_OF_DAY                   as getNANO_OF_DAY;
         import get java.time.temporal.ChronoField:MICRO_OF_SECOND               as getMICRO_OF_SECOND;
@@ -318,7 +318,7 @@ namespace Time/Temporal/ChronoField {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def unmarshal(x: ##java.time.temporal.ChronoField): ChronoField = 
+    pub def fromNative(x: ##java.time.temporal.ChronoField): ChronoField = 
         import get java.time.temporal.ChronoField:NANO_OF_SECOND                as getNANO_OF_SECOND;
         import get java.time.temporal.ChronoField:NANO_OF_DAY                   as getNANO_OF_DAY;
         import get java.time.temporal.ChronoField:MICRO_OF_SECOND               as getMICRO_OF_SECOND;
@@ -387,12 +387,12 @@ namespace Time/Temporal/ChronoField {
  
     pub def hashCode(x: ChronoField): Int32 =
         import java.lang.Enum.hashCode();
-        let en1 = marshal(x) as ##java.lang.Enum;
+        let en1 = toNative(x) as ##java.lang.Enum;
         hashCode(en1) as & Pure
 
     pub def compareTo(x: ChronoField, y: ChronoField): Int32 = 
         import java.lang.Enum.compareTo(##java.lang.Enum);
-        let x1 = marshal(x) as ##java.lang.Enum;
-        let y1 = marshal(y) as ##java.lang.Enum;
+        let x1 = toNative(x) as ##java.lang.Enum;
+        let y1 = toNative(y) as ##java.lang.Enum;
         compareTo(x1, y1) as & Pure
 }

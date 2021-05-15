@@ -45,7 +45,7 @@ namespace Time/Chrono/HijrahChronology {
     pub def dateWithEra(x: HijrahChronology, r: {era: HijrahEra, yearOfEra: Int32, month: Int32, dayOfMonth: Int32}): HijrahDate = 
         import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32);
         let HijrahChronology(x1) = x;
-        let era1 = Time/Chrono/HijrahEra.marshal(r.era) as ##java.time.chrono.Era;
+        let era1 = Time/Chrono/HijrahEra.toNative(r.era) as ##java.time.chrono.Era;
         HijrahDate(date(x1, era1, r.yearOfEra, r.month, r.dayOfMonth) as & Pure)
 
 
@@ -82,7 +82,7 @@ namespace Time/Chrono/HijrahChronology {
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra = 
         import java.time.chrono.HijrahChronology.eraOf(Int32);
         let HijrahChronology(x1) = x;
-        Time/Chrono/HijrahEra.unmarshal(eraOf(x1, i) as & Pure)
+        Time/Chrono/HijrahEra.fromNative(eraOf(x1, i) as & Pure)
 
     /// pub def getId(x: HijrahChronology): String = 
     ///     import java.time.chrono.HijrahChronology.getId();

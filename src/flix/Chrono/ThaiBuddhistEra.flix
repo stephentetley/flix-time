@@ -54,7 +54,7 @@ namespace Time/Chrono/ThaiBuddhistEra {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
 
-    pub def marshal(x: ThaiBuddhistEra): ##java.time.chrono.ThaiBuddhistEra = 
+    pub def toNative(x: ThaiBuddhistEra): ##java.time.chrono.ThaiBuddhistEra = 
         import get java.time.chrono.ThaiBuddhistEra:BEFORE_BE     as getBEFORE_BE;
         import get java.time.chrono.ThaiBuddhistEra:BE            as getBE;
         match x {
@@ -68,7 +68,7 @@ namespace Time/Chrono/ThaiBuddhistEra {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def unmarshal(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
+    pub def fromNative(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
         import get java.time.chrono.ThaiBuddhistEra:BEFORE_BE     as getBEFORE_BE;
         import get java.time.chrono.ThaiBuddhistEra:BE            as getBE;
         match x {
@@ -78,28 +78,28 @@ namespace Time/Chrono/ThaiBuddhistEra {
 
     pub def getValue(x: ThaiBuddhistEra): Int32 = 
         import java.time.chrono.ThaiBuddhistEra.getValue();
-        let x1 = marshal(x);
+        let x1 = toNative(x);
         getValue(x1) as & Pure 
 
 
     pub def hashCode(x: ThaiBuddhistEra): Int32 =
         import java.lang.Enum.hashCode();
-        let en1 = marshal(x) as ##java.lang.Enum;
+        let en1 = toNative(x) as ##java.lang.Enum;
         hashCode(en1) as & Pure
 
 
     /// 
     pub def getDisplayName(x: ThaiBuddhistEra, style: TextStyle, locale: Locale): String = 
         import java.time.chrono.ThaiBuddhistEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
-        let x1 = marshal(x);
-        let style1 = Time/Format/TextStyle.marshal(style);
+        let x1 = toNative(x);
+        let style1 = Time/Format/TextStyle.toNative(style);
         let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1) as & Pure
         
     pub def range(x: ThaiBuddhistEra, field: ChronoField): ValueRange = 
         import java.time.chrono.Era.range(##java.time.temporal.TemporalField);
-        let x1 = marshal(x) as ##java.time.chrono.Era;
-        let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+        let x1 = toNative(x) as ##java.time.chrono.Era;
+        let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
         ValueRange(range(x1, field1) as & Pure)
 
 }

@@ -219,7 +219,7 @@ namespace Time/Duration {
 
     pub def ofChrono(x: Int64, unit: ChronoUnit): Duration =
         import java.time.Duration:of(Int64, ##java.time.temporal.TemporalUnit);
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+        let u1 = Time/Temporal/ChronoUnit.toNative(unit);
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         Duration(of(x, tu1)) as & Pure
 
@@ -375,7 +375,7 @@ namespace Time/Duration {
         import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit);
         try {
             let Duration(x1) = x;
-            let unit1 = Time/Temporal/ChronoUnit.marshal(unit);
+            let unit1 = Time/Temporal/ChronoUnit.toNative(unit);
             let tunit1 = unit1 as ##java.time.temporal.TemporalUnit;
             Some(Duration(truncatedTo(x1, tunit1))) as & Pure
         } catch {

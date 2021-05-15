@@ -80,7 +80,7 @@ namespace Time/Format/DateTimeFormatter {
     /// NOTE - should this have an "of" prefix?
     pub def ofLocalizedDateTime(style: FormatStyle): DateTimeFormatter =
         import java.time.format.DateTimeFormatter:ofLocalizedDateTime(##java.time.format.FormatStyle);
-        let style1 = Time/Format/FormatStyle.marshal(style);
+        let style1 = Time/Format/FormatStyle.toNative(style);
         DateTimeFormatter(ofLocalizedDateTime(style1)) as & Pure
 
     pub def getZone(x: DateTimeFormatter): ZoneId =
@@ -109,12 +109,12 @@ namespace Time/Format/DateTimeFormatter {
     pub def getResolverStyle(x: DateTimeFormatter): ResolverStyle =
         import java.time.format.DateTimeFormatter.getResolverStyle();
         let DateTimeFormatter(x1) = x;
-        Time/Format/ResolverStyle.unmarshal(getResolverStyle(x1)) as & Pure
+        Time/Format/ResolverStyle.fromNative(getResolverStyle(x1)) as & Pure
 
     pub def putResolverStyle(x: DateTimeFormatter, style: ResolverStyle): DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withResolverStyle(##java.time.format.ResolverStyle);
         let DateTimeFormatter(x1) = x;
-        let style1 = Time/Format/ResolverStyle.marshal(style);
+        let style1 = Time/Format/ResolverStyle.toNative(style);
         DateTimeFormatter(withResolverStyle(x1, style1)) as & Pure  
 
 }

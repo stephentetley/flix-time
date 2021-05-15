@@ -39,7 +39,7 @@ namespace Time/Format/ResolverStyle {
     
 
 
-    pub def marshal(x: ResolverStyle): ##java.time.format.ResolverStyle = 
+    pub def toNative(x: ResolverStyle): ##java.time.format.ResolverStyle = 
         import get java.time.format.ResolverStyle:LENIENT       as getLENIENT;
         import get java.time.format.ResolverStyle:SMART         as getSMART;
         import get java.time.format.ResolverStyle:STRICT        as getSTRICT;
@@ -55,7 +55,7 @@ namespace Time/Format/ResolverStyle {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def unmarshal(x: ##java.time.format.ResolverStyle): ResolverStyle = 
+    pub def fromNative(x: ##java.time.format.ResolverStyle): ResolverStyle = 
         import get java.time.format.ResolverStyle:LENIENT       as getLENIENT;
         import get java.time.format.ResolverStyle:SMART         as getSMART;
         import get java.time.format.ResolverStyle:STRICT        as getSTRICT;

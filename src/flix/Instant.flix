@@ -264,7 +264,7 @@ namespace Time/Instant {
         import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let Instant(b1) = b;
         let Instant(e1) = e;
-        let cu1 = Time/Temporal/ChronoUnit.marshal(cu);
+        let cu1 = Time/Temporal/ChronoUnit.toNative(cu);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = cu1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1) as & Pure
@@ -272,7 +272,7 @@ namespace Time/Instant {
     pub def range(x: Instant, field: ChronoField): ValueRange = 
         import java.time.Instant.range(##java.time.temporal.TemporalField);
         let Instant(x1) = x;
-        let field1 = Time/Temporal/ChronoField.marshal(field);
+        let field1 = Time/Temporal/ChronoField.toNative(field);
         let tfield1 = field1 as ##java.time.temporal.TemporalField;
         ValueRange(range(x1, tfield1)) as & Pure
 
@@ -281,7 +281,7 @@ namespace Time/Instant {
         import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit);
         try {
             let Instant(x1) = x;
-            let unit1 = Time/Temporal/ChronoUnit.marshal(unit);
+            let unit1 = Time/Temporal/ChronoUnit.toNative(unit);
             let tunit1 = unit1 as ##java.time.temporal.TemporalUnit;
             Some(Instant(truncatedTo(x1, tunit1))) as & Pure
         } catch {
