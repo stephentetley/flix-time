@@ -111,11 +111,8 @@ namespace Time/Temporal {
     }
 
     instance Order[ChronoUnit] {
-        pub def compare(x: ChronoUnit, y: ChronoUnit): Comparison = match Time/Temporal/ChronoUnit.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: ChronoUnit, y: ChronoUnit): Comparison = 
+            Time/Temporal/ChronoUnit.compareTo(x,y) |> Comparison.fromInt
     }
 
 }

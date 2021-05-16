@@ -38,11 +38,8 @@ namespace Time/Zone {
     }
 
     instance Order[ZoneOffsetTransition] {
-        pub def compare(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Comparison = match Time/Zone/ZoneOffsetTransition.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Comparison = 
+            Time/Zone/ZoneOffsetTransition.compareTo(x,y) |> Comparison.fromInt
     }
 
 }

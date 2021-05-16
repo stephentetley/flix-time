@@ -84,11 +84,8 @@ namespace Time {
     }
 
     instance Order[DayOfWeek] {
-        pub def compare(x: DayOfWeek, y: DayOfWeek): Comparison = match Time/DayOfWeek.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: DayOfWeek, y: DayOfWeek): Comparison = 
+            Time/DayOfWeek.compareTo(x,y) |> Comparison.fromInt
     }
 
     instance Boxable[DayOfWeek] {

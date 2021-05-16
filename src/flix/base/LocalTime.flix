@@ -60,11 +60,8 @@ namespace Time {
     }
 
     instance Order[LocalTime] {
-        pub def compare(x: LocalTime, y: LocalTime): Comparison = match Time/LocalTime.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: LocalTime, y: LocalTime): Comparison = 
+            Time/LocalTime.compareTo(x,y) |> Comparison.fromInt
     }
 
     instance LowerBound[LocalTime] {

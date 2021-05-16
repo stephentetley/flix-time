@@ -162,11 +162,8 @@ namespace Time/Temporal {
     }
 
     instance Order[ChronoField] {
-        pub def compare(x: ChronoField, y: ChronoField): Comparison = match Time/Temporal/ChronoField.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: ChronoField, y: ChronoField): Comparison = 
+            Time/Temporal/ChronoField.compareTo(x,y) |> Comparison.fromInt
     }
 }
 

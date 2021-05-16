@@ -53,24 +53,17 @@ namespace Time {
     }
 
     instance Order[ZoneOffset] {
-        pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison = match Time/ZoneOffset.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison = 
+            Time/ZoneOffset.compareTo(x,y) |> Comparison.fromInt
     }
     
 
     instance LowerBound[ZoneOffset] {
-        pub def minValue(): ZoneOffset =
-            import get java.time.ZoneOffset:MIN as getMIN;
-            ZoneOffset(getMIN()) as & Pure
+        pub def minValue(): ZoneOffset = Time/ZoneOffset.min()
     }
 
     instance UpperBound[ZoneOffset] {
-        pub def maxValue(): ZoneOffset =
-            import get java.time.ZoneOffset:MAX as getMAX;
-            ZoneOffset(getMAX()) as & Pure
+        pub def maxValue(): ZoneOffset = Time/ZoneOffset.max()
     }
 
     instance Boxable[ZoneOffset] {
@@ -102,6 +95,14 @@ namespace Time/ZoneOffset {
     pub def utc(): ZoneOffset =
         import get java.time.ZoneOffset:UTC as getUTC;
         ZoneOffset(getUTC()) as & Pure
+
+    pub def min(): ZoneOffset =
+        import get java.time.ZoneOffset:MIN as getMIN;
+        ZoneOffset(getMIN()) as & Pure
+
+    pub def max(): ZoneOffset =
+        import get java.time.ZoneOffset:MAX as getMAX;
+        ZoneOffset(getMAX()) as & Pure
 
 
     pub def ofHours(hours: Int32): ZoneOffset =

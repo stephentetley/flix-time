@@ -91,11 +91,8 @@ namespace Time {
     }
 
     instance Order[Month] {
-        pub def compare(x: Month, y: Month): Comparison = match Time/Month.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: Month, y: Month): Comparison = 
+            Time/Month.compareTo(x,y) |> Comparison.fromInt
     }
 
     instance Boxable[Month] {

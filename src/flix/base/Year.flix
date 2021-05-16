@@ -56,11 +56,8 @@ namespace Time {
     }
 
     instance Order[Year] {
-        pub def compare(x: Year, y: Year): Comparison = match Time/Year.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: Year, y: Year): Comparison = 
+            Time/Year.compareTo(x,y) |> Comparison.fromInt
     }
     
     instance LowerBound[Year] {
@@ -331,11 +328,15 @@ namespace Time/Year {
         let field = Time/Internal/ChronoField.getYEAR() as ##java.time.temporal.TemporalField;
         withHelper(x, field, i)
 
-    /// TODO this must be limited to 0 or 1 (better yet enum IsoEra but that is in the wrong package)
-    /// Otherwise it throws a runtime error.
-    pub def withEra(x: Year, i: Int64): Year = 
+    
+    pub def withEraBCE(x: Year): Year = 
         let field = Time/Internal/ChronoField.getERA() as ##java.time.temporal.TemporalField;
-        withHelper(x, field, i)
+        withHelper(x, field, 0i64)
+
+    pub def withEraCE(x: Year): Year = 
+        let field = Time/Internal/ChronoField.getERA() as ##java.time.temporal.TemporalField;
+        withHelper(x, field, 1i64)
+
 
     pub def withYearOfEra(x: Year, i: Int64): Year = 
         let field = Time/Internal/ChronoField.getYEAR_OF_ERA() as ##java.time.temporal.TemporalField;

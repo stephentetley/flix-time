@@ -59,11 +59,8 @@ namespace Time {
     }
 
     instance Order[Instant] {
-        pub def compare(x: Instant, y: Instant): Comparison = match Time/Instant.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: Instant, y: Instant): Comparison =
+            Time/Instant.compareTo(x,y) |> Comparison.fromInt
     }
 
     instance LowerBound[Instant] {

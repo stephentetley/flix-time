@@ -58,11 +58,8 @@ namespace Time {
     }
 
     instance Order[ZonedDateTime] {
-        pub def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison = match Time/ZonedDateTime.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison = 
+            Time/ZonedDateTime.compareTo(x,y) |> Comparison.fromInt
     }
 
     instance Boxable[ZonedDateTime] {

@@ -54,11 +54,8 @@ namespace Time {
     }
 
     instance Order[MonthDay] {
-        pub def compare(x: MonthDay, y: MonthDay): Comparison = match Time/MonthDay.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: MonthDay, y: MonthDay): Comparison = 
+            Time/MonthDay.compareTo(x,y) |> Comparison.fromInt
     }
 
 }

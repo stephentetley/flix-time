@@ -59,11 +59,8 @@ namespace Time {
     }
 
     instance Order[OffsetTime] {
-        pub def compare(x: OffsetTime, y: OffsetTime): Comparison = match Time/OffsetTime.compareTo(x,y) {
-            case n if n < 0 => LessThan
-            case n if n == 0 => EqualTo
-            case _ => GreaterThan
-        }
+        pub def compare(x: OffsetTime, y: OffsetTime): Comparison = 
+            Time/OffsetTime.compareTo(x,y) |> Comparison.fromInt
     }
 
     instance LowerBound[OffsetTime] {
