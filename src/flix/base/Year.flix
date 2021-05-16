@@ -243,11 +243,88 @@ namespace Time/Year {
         length(x1) as & Pure
 
     ///
-    /// Returns `true` if `x` is a leap year.
+    /// _
     ///
     pub def plusYears(x: Year, yearsToAdd: Int64): Year =
         import java.time.Year.plusYears(Int64);
         let Year(x1) = x;
         Year(plusYears(x1, yearsToAdd)) as & Pure
+
+    ///
+    /// _
+    ///
+    pub def minusYears(x: Year, yearsToSubtract: Int64): Year =
+        import java.time.Year.minusYears(Int64);
+        let Year(x1) = x;
+        Year(minusYears(x1, yearsToSubtract)) as & Pure    
+
+    pub def plusDecades(x: Year, i: Int64): Year =
+        let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
+        plusHelper(x, i, unit)
     
+    pub def minusDecades(x: Year, i: Int64): Year =
+        let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
+        minusHelper(x, i, unit)
+
+    pub def plusCenturies(x: Year, i: Int64): Year =
+        let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
+        plusHelper(x, i, unit)
+    
+    pub def minusCenturies(x: Year, i: Int64): Year =
+        let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
+        minusHelper(x, i, unit)
+
+    pub def plusMillennia(x: Year, i: Int64): Year =
+        let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
+        plusHelper(x, i, unit)
+    
+    pub def minusMillenia(x: Year, i: Int64): Year =
+        let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
+        minusHelper(x, i, unit)
+
+    pub def plusEras(x: Year, i: Int64): Year =
+        let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
+        plusHelper(x, i, unit)
+    
+    pub def minusEras(x: Year, i: Int64): Year =
+        let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
+        minusHelper(x, i, unit)
+
+    def plusHelper(x: Year, amountToAdd: Int64, unit: ##java.time.temporal.TemporalUnit): Year =
+        import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit);
+        let Year(x1) = x;
+        Year(plus(x1, amountToAdd, unit)) as & Pure
+    
+    def minusHelper(x: Year, amountToSubtract: Int64, unit: ##java.time.temporal.TemporalUnit): Year =
+        import java.time.Year.minus(Int64, ##java.time.temporal.TemporalUnit);
+        let Year(x1) = x;
+        Year(minus(x1, amountToSubtract, unit)) as & Pure
+
+    pub def yearsBetween(x: Year, y: Year): Int64 = 
+        let unit = Time/Internal/ChronoUnit.getYEARS() as ##java.time.temporal.TemporalUnit;
+        betweenHelper(x, y, unit)
+
+    pub def decadesBetween(x: Year, y: Year): Int64 = 
+        let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
+        betweenHelper(x, y, unit)
+
+    pub def centuriesBetween(x: Year, y: Year): Int64 = 
+        let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
+        betweenHelper(x, y, unit)
+
+    pub def millenniaBetween(x: Year, y: Year): Int64 = 
+        let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
+        betweenHelper(x, y, unit)
+
+    pub def erasBetween(x: Year, y: Year): Int64 = 
+        let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
+        betweenHelper(x, y, unit)
+
+    def betweenHelper(x:Year, y: Year, unit: ##java.time.temporal.TemporalUnit): Int64 = 
+        import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
+        let Year(x1) = x;
+        let Year(y1) = y;
+        let ty1 = y1 as ##java.time.temporal.Temporal;
+        until(x1, ty1, unit) as & Pure
+
 }

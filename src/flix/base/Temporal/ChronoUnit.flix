@@ -15,6 +15,11 @@
  */
 
 
+/// DEPRECATED
+/// It is planned to replace this with direct functions see Year.
+/// This will remove the problem that not all ChronoUnits in the enum work for 
+/// operations on a given type.
+
 namespace Time/Temporal {
 
     pub enum ChronoUnit {

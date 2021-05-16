@@ -98,6 +98,8 @@ namespace Time/LocalDate {
 
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
+    use Time/Format.DateFormatter;
+    use Time/Format.DateFormatter.{DateFormatter};
     use Time/Temporal.ChronoUnit;
     use Time.DayOfWeek;
     use Time.LocalDateTime;
