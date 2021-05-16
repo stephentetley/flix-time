@@ -88,6 +88,13 @@ namespace Time/Chrono/JapaneseDate {
         let LocalDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
+
+    pub def toLocalDate(x: JapaneseDate): LocalDate =
+        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        let JapaneseDate(x1) = x;
+        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+
+
     pub def ofHijrahDate(x: HijrahDate): JapaneseDate = 
         import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
         let HijrahDate(x1) = x;

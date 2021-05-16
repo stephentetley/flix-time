@@ -52,7 +52,9 @@ namespace Time/Chrono/IsoEra {
     use Time/Format.TextStyle;
     use Time/Temporal.ChronoField;
     use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
+    use Time/Temporal.ValueRange.{ValueRange};    
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
 
     pub def toNative(x: IsoEra): ##java.time.chrono.IsoEra = 
         import get java.time.chrono.IsoEra:BCE      as getBCE;
@@ -101,5 +103,11 @@ namespace Time/Chrono/IsoEra {
         let x1 = toNative(x);
         let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
         ValueRange(range(x1 as ##java.time.chrono.Era, field1) as & Pure)
+
+    pub def getEra(x: LocalDate): IsoEra = 
+        import java.time.LocalDate.getEra();
+        let LocalDate(x1) = x;
+        fromNative(getEra(x1)) as & Pure
+
 
 }

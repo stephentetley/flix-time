@@ -98,17 +98,6 @@ namespace Time/LocalDate {
 
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
-    use Time/Chrono.HijrahDate;
-    use Time/Chrono.HijrahDate.{HijrahDate};
-    use Time/Chrono.JapaneseDate;
-    use Time/Chrono.JapaneseDate.{JapaneseDate};
-    use Time/Chrono.MinguoDate;
-    use Time/Chrono.MinguoDate.{MinguoDate};
-    use Time/Chrono.ThaiBuddhistDate;
-    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate};
-    use Time/Chrono.IsoEra;
-    use Time/Format.DateFormatter;
-    use Time/Format.DateFormatter.{DateFormatter};
     use Time/Temporal.ChronoUnit;
     use Time.DayOfWeek;
     use Time.LocalDateTime;
@@ -195,25 +184,7 @@ namespace Time/LocalDate {
         LocalDate(ofInstant(x1, z1)) as & Pure
 
 
-    pub def ofHijrahDate(x: HijrahDate): LocalDate =
-        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
-        let HijrahDate(x1) = x;
-        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
-    pub def ofJapaneseDate(x: JapaneseDate): LocalDate =
-        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
-        let JapaneseDate(x1) = x;
-        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
-
-    pub def ofMinguoDate(x: MinguoDate): LocalDate =
-        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
-        let MinguoDate(x1) = x;
-        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
-
-    pub def ofThaiBuddhistDate(x: ThaiBuddhistDate): LocalDate =
-        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
-        let ThaiBuddhistDate(x1) = x;
-        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
     /// 
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
@@ -416,10 +387,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         lengthOfYear(x1) as & Pure
 
-    pub def getIsoEra(x: LocalDate): IsoEra = 
-        import java.time.LocalDate.getEra();
-        let LocalDate(x1) = x;
-        Time/Chrono/IsoEra.fromNative(getEra(x1)) as & Pure
+
 
 
 }

@@ -46,6 +46,8 @@ namespace Time/Chrono/MinguoDate {
     use Time/Chrono.MinguoDate;
     use Time/Chrono.MinguoDate.{MinguoDate};
     use Time/Temporal.ChronoField;
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
 
     ///
     /// Returns ___
@@ -65,6 +67,13 @@ namespace Time/Chrono/MinguoDate {
         import java.time.chrono.MinguoDate.hashCode();
         let MinguoDate(x1) = x;
         hashCode(x1) as & Pure
+
+
+
+    pub def toLocalDate(x: MinguoDate): LocalDate =
+        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        let MinguoDate(x1) = x;
+        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
     pub def getDayOfWeek(x: MinguoDate): Int32 = 
         Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek), -1)

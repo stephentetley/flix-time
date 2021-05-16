@@ -53,6 +53,8 @@ namespace Time/Chrono/HijrahDate {
     use Time/Temporal.ChronoUnit;
     use Time.Clock;
     use Time.Clock.{Clock};
+    use Time.LocalDate;
+    use Time.LocalDate.{LocalDate};
     use Time.Period;    
     use Time.Period.{Period};
     use Time.ZoneId;
@@ -92,6 +94,11 @@ namespace Time/Chrono/HijrahDate {
         let HijrahDate(x1) = x;
         hashCode(x1) as & Pure
 
+
+    pub def toLocalDate(x: HijrahDate): LocalDate =
+        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        let HijrahDate(x1) = x;
+        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
     pub def getChronology(x: HijrahDate): HijrahChronology = 
         import java.time.chrono.HijrahDate.getChronology();
