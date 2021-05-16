@@ -99,15 +99,17 @@ namespace Time/OffsetDateTime {
     use Time.OffsetDateTime.{OffsetDateTime};
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Temporal.ChronoUnit;
+    use Time.DayOfWeek;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
+    use Time.Month;
     use Time.OffsetTime;
     use Time.OffsetTime.{OffsetTime};
-    use Time/Temporal.ChronoUnit;
     use Time.ZonedDateTime;
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
@@ -121,10 +123,10 @@ namespace Time/OffsetDateTime {
         let ZoneOffset(o1) = x.offset;
         OffsetDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond, o1)) as & Pure
 
-
+    /// TODO - potentially remove getFields...
     pub def getFields(x: OffsetDateTime): {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, 
                                             second: Int32, nanoSecond: Int32, offset: ZoneOffset} =
-        { year = x.getYear(), month = x.getMonth(), dayOfMonth = x.getDayOfMonth()
+        { year = x.getYear(), month = x.getMonthValue(), dayOfMonth = x.getDayOfMonth()
         , hour = x.getHour(), minute = x.getMinute(), second = x.getSecond()
         , nanoSecond = x.getNano(), offset = x.getOffset() }
     
@@ -376,9 +378,12 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         OffsetDateTime(withYear(x1, year)) as & Pure
 
-    /// TODO - probably Month is worth an enum
-    /// Current we use 1 (January) - 12 (December)
-    pub def getMonth(x: OffsetDateTime): Int32 =
+    pub def getMonth(x: OffsetDateTime): Month =
+        import java.time.OffsetDateTime.getMonth();
+        let OffsetDateTime(x1) = x;
+        Time/Month.fromNative(getMonth(x1)) as & Pure
+
+    pub def getMonthValue(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getMonth();
         import java.time.Month.getValue();
         let OffsetDateTime(x1) = x;
@@ -409,13 +414,10 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         OffsetDateTime(withDayOfMonth(x1, dayOfMonth)) as & Pure
 
-    /// TODO - probably should toNative to DayOfWeek
-    /// Current we use 1 (Monday) - 7 (Sunday)
-    pub def getDayOfWeek(x: OffsetDateTime): Int32 =
+    pub def getDayOfWeek(x: OffsetDateTime): DayOfWeek =
         import java.time.OffsetDateTime.getDayOfWeek();
-        import java.time.DayOfWeek.getValue();
         let OffsetDateTime(x1) = x;
-        getValue(getDayOfWeek(x1)) as & Pure
+        Time/DayOfWeek.fromNative(getDayOfWeek(x1)) as & Pure
 
     pub def getHour(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getHour();

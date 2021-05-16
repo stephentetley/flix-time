@@ -87,12 +87,14 @@ namespace Time/ZonedDateTime {
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time.DayOfWeek;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
+    use Time.Month;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -317,7 +319,12 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withYear(x1, year)) as & Pure
 
-    pub def getMonth(x: ZonedDateTime): Int32 =
+    pub def getMonth(x: ZonedDateTime): Month =
+        import java.time.ZonedDateTime.getMonth();
+        let ZonedDateTime(x1) = x;
+        Time/Month.fromNative(getMonth(x1)) as & Pure
+
+    pub def getMonthValue(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getMonth();
         import java.time.Month.getValue();
         let ZonedDateTime(x1) = x;
@@ -348,11 +355,10 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withDayOfMonth(x1, dayOfMonth)) as & Pure
 
-    pub def getDayOfWeek(x: ZonedDateTime): Int32 =
+    pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
         import java.time.ZonedDateTime.getDayOfWeek();
-        import java.time.DayOfWeek.getValue();
         let ZonedDateTime(x1) = x;
-        getValue(getDayOfWeek(x1)) as & Pure
+        Time/DayOfWeek.fromNative(getDayOfWeek(x1)) as & Pure
 
     pub def getHour(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getHour();

@@ -18,21 +18,21 @@
 namespace Time/Temporal {
 
     pub enum ChronoUnit {
-        case Nanos,
-        case Micros,
-        case Millis,
-        case Seconds,
-        case Minutes,
-        case Hours,
-        case HalfDays,
-        case Days,
-        case Weeks,
-        case Months,
-        case Years,
-        case Decades,
-        case Centuries,
-        case Millenia,
-        case Eras,
+        case Nanos
+        case Micros
+        case Millis
+        case Seconds
+        case Minutes
+        case Hours
+        case HalfDays
+        case Days
+        case Weeks
+        case Months
+        case Years
+        case Decades
+        case Centuries
+        case Millennia
+        case Eras
         case Forever
     }
 
@@ -51,7 +51,7 @@ namespace Time/Temporal {
             case Years => "Years"
             case Decades => "Decades"
             case Centuries => "Centuries"
-            case Millenia => "Millenia"
+            case Millennia => "Millennia"
             case Eras => "Eras"
             case Forever => "Forever"
         }
@@ -72,7 +72,7 @@ namespace Time/Temporal {
             case "Years" => Some(Years)
             case "Decades" => Some(Decades)
             case "Centuries" => Some(Centuries)
-            case "Millenia" => Some(Millenia)
+            case "Millennia" => Some(Millennia)
             case "Eras" => Some(Eras)
             case "Forever" => Some(Forever)
             case _ => None
@@ -94,7 +94,7 @@ namespace Time/Temporal {
             case (Years, Years) => true
             case (Decades, Decades) => true
             case (Centuries, Centuries) => true
-            case (Millenia, Millenia) => true
+            case (Millennia, Millennia) => true
             case (Eras, Eras) => true
             case (Forever, Forever) => true
             case (_,_) => false
@@ -122,7 +122,7 @@ namespace Time/Temporal/ChronoUnit {
     use Time/Temporal.ChronoUnit;
     use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes,
             Hours, HalfDays, Days, Weeks, Months, Years, Decades, Centuries,
-            Millenia, Eras, Forever};
+            Millennia, Eras, Forever};
     use Time.Duration;
     use Time.Duration.{Duration};
 
@@ -140,7 +140,7 @@ namespace Time/Temporal/ChronoUnit {
         case Years => 10
         case Decades => 11
         case Centuries => 12
-        case Millenia => 13
+        case Millennia => 13
         case Eras => 14
         case Forever => 15
     }
@@ -159,7 +159,7 @@ namespace Time/Temporal/ChronoUnit {
         case 10 => Some(Years)
         case 11 => Some(Decades)
         case 12 => Some(Centuries)
-        case 13 => Some(Millenia)
+        case 13 => Some(Millennia)
         case 14 => Some(Eras)
         case 15 => Some(Forever)
         case _ =>   None
@@ -196,7 +196,7 @@ namespace Time/Temporal/ChronoUnit {
             case Years      => getYEARS()
             case Decades    => getDECADES()
             case Centuries  => getCENTURIES()
-            case Millenia   => getMILLENNIA()
+            case Millennia   => getMILLENNIA()
             case Eras       => getERAS()
             case Forever    => getFOREVER()
         } as & Pure
@@ -238,7 +238,7 @@ namespace Time/Temporal/ChronoUnit {
             case x1 if primEquals(x1, getYEARS())       => Years
             case x1 if primEquals(x1, getDECADES())     => Decades
             case x1 if primEquals(x1, getCENTURIES())   => Centuries
-            case x1 if primEquals(x1, getMILLENNIA())   => Millenia
+            case x1 if primEquals(x1, getMILLENNIA())   => Millennia
             case x1 if primEquals(x1, getERAS())        => Eras
             case x1 if primEquals(x1, getFOREVER())     => Forever
         } as & Pure

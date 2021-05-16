@@ -134,9 +134,9 @@ namespace Time/LocalDate {
         let m1 = Time/Month.toNative(x.month);
         LocalDate(of(x.year, m1, x.dayOfMonth)) as & Pure
 
-
+    /// TODO - potentially remove getFields...
     pub def getFields(x: LocalDate): {year: Int32, month: Int32, dayOfMonth: Int32} = 
-        {year = x.getYear(), month = x.getMonth(), dayOfMonth = x.getDayOfMonth()}
+        {year = x.getYear(), month = x.getMonthValue(), dayOfMonth = x.getDayOfMonth()}
 
 
     ///
@@ -365,7 +365,13 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         LocalDate(withDayOfYear(x1, dayOfYear)) as & Pure
 
-    pub def getMonth(x: LocalDate): Int32 =
+    pub def getMonth(x: LocalDate): Month =
+        import java.time.LocalDate.getMonth();
+        let LocalDate(x1) = x;
+        Time/Month.fromNative(getMonth(x1)) as & Pure
+
+
+    pub def getMonthValue(x: LocalDate): Int32 =
         import java.time.LocalDate.getMonth();
         import java.time.Month.getValue();
         let LocalDate(x1) = x;

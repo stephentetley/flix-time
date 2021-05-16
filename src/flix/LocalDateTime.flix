@@ -100,10 +100,12 @@ namespace Time/LocalDateTime {
     use Time.LocalDateTime.{LocalDateTime};
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time.DayOfWeek;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
+    use Time.Month;
     use Time/Temporal.ChronoUnit;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
@@ -122,8 +124,9 @@ namespace Time/LocalDateTime {
         import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32);
         LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond)) as & Pure
 
+    /// TODO - potentially remove getFields...
     pub def getFields(x: LocalDateTime): {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32} = 
-        { year = x.getYear(), month = x.getMonth(), dayOfMonth = x.getDayOfMonth()
+        { year = x.getYear(), month = x.getMonthValue(), dayOfMonth = x.getDayOfMonth()
         , hour = x.getHour(), minute = x.getMinute(), second = x.getSecond()
         , nanoSecond = x.getNano() }
 
@@ -333,11 +336,17 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         LocalDateTime(withYear(x1, year)) as & Pure
 
-    pub def getMonth(x: LocalDateTime): Int32 =
+    pub def getMonth(x: LocalDateTime): Month =
+        import java.time.LocalDateTime.getMonth();
+        let LocalDateTime(x1) = x;
+        Time/Month.fromNative(getMonth(x1)) as & Pure
+
+    pub def getMonthValue(x: LocalDateTime): Int32 =
         import java.time.LocalDateTime.getMonth();
         import java.time.Month.getValue();
         let LocalDateTime(x1) = x;
         getValue(getMonth(x1)) as & Pure
+
 
     pub def putMonth(x: LocalDateTime, month: Int32): LocalDateTime =
         import java.time.LocalDateTime.withMonth(Int32);
@@ -364,11 +373,10 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         LocalDateTime(withDayOfMonth(x1, dayOfMonth)) as & Pure
 
-    pub def getDayOfWeek(x: LocalDateTime): Int32 =
+    pub def getDayOfWeek(x: LocalDateTime): DayOfWeek =
         import java.time.LocalDateTime.getDayOfWeek();
-        import java.time.DayOfWeek.getValue();
         let LocalDateTime(x1) = x;
-        getValue(getDayOfWeek(x1)) as & Pure
+        Time/DayOfWeek.fromNative(getDayOfWeek(x1)) as & Pure
 
     pub def getHour(x: LocalDateTime): Int32 =
         import java.time.LocalDateTime.getHour();
