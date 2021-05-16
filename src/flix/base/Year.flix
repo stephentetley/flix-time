@@ -327,4 +327,24 @@ namespace Time/Year {
         let ty1 = y1 as ##java.time.temporal.Temporal;
         until(x1, ty1, unit) as & Pure
 
+    pub def withYear(x: Year, i: Int64): Year = 
+        let field = Time/Internal/ChronoField.getYEAR() as ##java.time.temporal.TemporalField;
+        withHelper(x, field, i)
+
+    /// TODO this must be limited to 0 or 1 (better yet enum IsoEra but that is in the wrong package)
+    /// Otherwise it throws a runtime error.
+    pub def withEra(x: Year, i: Int64): Year = 
+        let field = Time/Internal/ChronoField.getERA() as ##java.time.temporal.TemporalField;
+        withHelper(x, field, i)
+
+    pub def withYearOfEra(x: Year, i: Int64): Year = 
+        let field = Time/Internal/ChronoField.getYEAR_OF_ERA() as ##java.time.temporal.TemporalField;
+        withHelper(x, field, i)
+
+    def withHelper(x:Year, field: ##java.time.temporal.TemporalField, i: Int64): Year = 
+        import java.time.Year.with(##java.time.temporal.TemporalField, Int64) as withX;
+        let Year(x1) = x;
+        Year(withX(x1, field, i)) as & Pure
+
+
 }
