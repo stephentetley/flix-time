@@ -55,7 +55,7 @@ namespace Time {
     }
 
     instance Hash[Instant] {
-        pub def hash(x: Instant): Int = Time/Instant.hashCode(x)
+        pub def hash(x: Instant): Int32 = Time/Instant.hashCode(x)
     }
 
     instance Order[Instant] {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-// Add this to you working Flix repository with the path:
+// Add this to your Flix sandbox with the path:
 // main/src/flix/runtime/spt/newtime
 
 // Used by Time/ZoneId
@@ -25,13 +25,15 @@ import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.Set;
 
-public class GetAvailableLocalesCursor {
+public class StringIterator {
 
     private Iterator<String> iter;
 
-    public GetAvailableLocalesCursor() throws Exception {
+    protected StringIterator(Iterator<String> iter1) { this.iter = iter1; }
+
+    public static StringIterator newGetAvailableZoneIdsIterator() throws Exception {
         Set<String> zoneIds = ZoneId.getAvailableZoneIds();
-        this.iter = zoneIds.iterator();
+        return new StringIterator(zoneIds.iterator());
     }
 
     public boolean hasNext() {

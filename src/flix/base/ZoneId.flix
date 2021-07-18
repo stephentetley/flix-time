@@ -112,20 +112,29 @@ namespace Time/ZoneId {
         let ZoneId(x1) = x;
         getId(x1) as & Pure
 
+    pub def getAvailableZoneIds(): Result[Set[String], String] & Impure =
+        getAvailableZoneIdsIter()
+            |> Iterator.toList
+            |> Result.sequence
+            |> Result.map(List.toSet)
 
-    pub def getAvailableZoneIds(): Set[String] & Impure = 
-        import new flix.runtime.spt.newtime.GetAvailableLocalesCursor() as newCursor;
-        import flix.runtime.spt.newtime.GetAvailableLocalesCursor.hasNext() as ffiHasNext;
-        import flix.runtime.spt.newtime.GetAvailableLocalesCursor.next() as ffiNext;
-        let iter = newCursor();
-        let cursorAlg =  {
-              hasNext = () -> ffiHasNext(iter)
-            , next = Cursor.guardThunk(_ -> ffiNext(iter), "next failed")
-            , finalize = () -> () as & Impure
+
+    def getAvailableZoneIdsIter(): Iterator[Result[String, String]] & Impure =
+        import flix.runtime.spt.newtime.StringIterator:newGetAvailableZoneIdsIterator();
+        import flix.runtime.spt.newtime.StringIterator.hasNext();
+        import flix.runtime.spt.newtime.StringIterator.next();
+        let primIter = newGetAvailableZoneIdsIterator();
+        let iterDone = () -> if (hasNext(primIter)) false else true;
+        let iterNext = () -> {
+            try {
+                let s1 = next(primIter);
+                Ok(s1)
+            } catch {
+                case _: ##java.lang.Exception => Err("getAvailableZoneIdsIter[next]")
+          }
         };
-        Cursor.makeCursor(cursorAlg)
-            |> Cursor.toSet!
-            |> flip(Result.getWithDefault, Set#{})
+        Iterator(iterDone, iterNext)
+
 
 
 }
