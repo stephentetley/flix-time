@@ -95,18 +95,7 @@ namespace Time {
             Time/Month.compareTo(x,y) |> Comparison.fromInt
     }
 
-    instance Boxable[Month] {
-        pub def box(x: Month): Boxed = {
-            let value = x as ##java.lang.Object;
-            let compare = (o1, o2) -> Order.compare(o1 as Month, o2 as Month);
-            let toString = o -> ToString.toString(o as Month);
-            BoxedObject(value, compare, toString)
-        }
-        pub def unbox(x: Boxed): Month = match x {
-            case BoxedObject(v, _, _) => v as Month
-            case _                    => ?bug
-        }
-    }
+    instance Boxable[Month]
 }
 
 namespace Time/Month {

@@ -75,19 +75,7 @@ namespace Time {
             OffsetTime(getMAX()) as & Pure
     }
 
-    instance Boxable[OffsetTime] {
-        pub def box(x: OffsetTime): Boxed = {
-            let OffsetTime(x1) = x;
-            let value = x1 as ##java.lang.Object;
-            let compare = (o1, o2) -> Order.compare(OffsetTime(o1 as ##java.time.OffsetTime), OffsetTime(o2 as ##java.time.OffsetTime));
-            let toString = o -> ToString.toString(OffsetTime(o as ##java.time.OffsetTime));
-            BoxedObject(value, compare, toString)
-        }
-        pub def unbox(x: Boxed): OffsetTime = match x {
-            case BoxedObject(v, _, _) => OffsetTime(v as ##java.time.OffsetTime)
-            case _                    => ?bug
-        }
-    }
+    instance Boxable[OffsetTime]
 
 
 }

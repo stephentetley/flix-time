@@ -76,19 +76,7 @@ namespace Time {
             LocalTime(getMAX()) as & Pure
     }
 
-    instance Boxable[LocalTime] {
-        pub def box(x: LocalTime): Boxed = {
-            let LocalTime(x1) = x;
-            let value = x1 as ##java.lang.Object;
-            let compare = (o1, o2) -> Order.compare(LocalTime(o1 as ##java.time.LocalTime), LocalTime(o2 as ##java.time.LocalTime));
-            let toString = o -> ToString.toString(LocalTime(o as ##java.time.LocalTime));
-            BoxedObject(value, compare, toString)
-        }
-        pub def unbox(x: Boxed): LocalTime = match x {
-            case BoxedObject(v, _, _) => LocalTime(v as ##java.time.LocalTime)
-            case _                    => ?bug
-        }
-    }
+    instance Boxable[LocalTime]
 
 }
 

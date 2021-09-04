@@ -88,18 +88,7 @@ namespace Time {
             Time/DayOfWeek.compareTo(x,y) |> Comparison.fromInt
     }
 
-    instance Boxable[DayOfWeek] {
-        pub def box(x: DayOfWeek): Boxed = {
-            let value = x as ##java.lang.Object;
-            let compare = (o1, o2) -> Order.compare(o1 as DayOfWeek, o2 as DayOfWeek);
-            let toString = o -> ToString.toString(o as DayOfWeek);
-            BoxedObject(value, compare, toString)
-        }
-        pub def unbox(x: Boxed): DayOfWeek = match x {
-            case BoxedObject(v, _, _) => v as DayOfWeek
-            case _                    => ?bug
-        }
-    }
+    instance Boxable[DayOfWeek]
 
 }
 
