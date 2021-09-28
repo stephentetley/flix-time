@@ -91,19 +91,19 @@ namespace Time/LocalTime {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
-    pub def new(x: {hour: Int32, minute: Int32}): LocalTime =
+    pub def new(x: {hour :: Int32, minute :: Int32}): LocalTime =
         import java.time.LocalTime:of(Int32, Int32);
         LocalTime(of(x.hour, x.minute)) as & Pure
 
-    pub def newWithSecond(x: {hour: Int32, minute: Int32, second: Int32}): LocalTime =
+    pub def newWithSecond(x: {hour :: Int32, minute :: Int32, second :: Int32}): LocalTime =
         import java.time.LocalTime:of(Int32, Int32, Int32);
         LocalTime(of(x.hour, x.minute, x.second)) as & Pure
 
-    pub def newWithSecondAndNano(x: {hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32}): LocalTime =
+    pub def newWithSecondAndNano(x: {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalTime =
         import java.time.LocalTime:of(Int32, Int32, Int32, Int32);
         LocalTime(of(x.hour, x.minute, x.second, x.nanoSecond)) as & Pure
 
-    pub def getFields(x: LocalTime): {hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32} =
+    pub def getFields(x: LocalTime): {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32} =
         {hour = x.getHour(), minute = x.getMinute(), second = x.getSecond(), nanoSecond= x.getNano()}
 
     ///

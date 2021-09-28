@@ -96,11 +96,11 @@ namespace Time/Instant {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    pub def new(x: {epochSecond: Int64, nano: Int64}): Instant =
+    pub def new(x: {epochSecond :: Int64, nano :: Int64}): Instant =
         import java.time.Instant:ofEpochSecond(Int64, Int64);
         Instant(ofEpochSecond(x.epochSecond, x.nano)) as & Pure
 
-    pub def getFields(x: Instant): {epochSecond: Int64, nano: Int32} = 
+    pub def getFields(x: Instant): {epochSecond :: Int64, nano :: Int32} =
         {epochSecond = x.getEpochSecond(), nano = x.getNano()}
 
     ///

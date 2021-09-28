@@ -70,11 +70,11 @@ namespace Time/MonthDay {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
-    pub def new(x: {month: Int32, dayOfMonth: Int32}): MonthDay =
+    pub def new(x: {month :: Int32, dayOfMonth :: Int32}): MonthDay =
         import java.time.MonthDay:of(Int32, Int32);
         MonthDay(of(x.month, x.dayOfMonth)) as & Pure
 
-    pub def newWithMonth(x: {month: Month, dayOfMonth: Int32}): MonthDay =
+    pub def newWithMonth(x: {month :: Month, dayOfMonth :: Int32}): MonthDay =
         import java.time.MonthDay:of(##java.time.Month, Int32);
         let m1 = Time/Month.toNative(x.month);
         MonthDay(of(m1, x.dayOfMonth)) as & Pure

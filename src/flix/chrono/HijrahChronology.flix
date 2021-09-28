@@ -37,12 +37,13 @@ namespace Time/Chrono/HijrahChronology {
         import get java.time.chrono.HijrahChronology:INSTANCE as getINSTANCE;
         HijrahChronology(getINSTANCE())
 
-    pub def date(x: HijrahChronology, r: {prolepticYear: Int32, month: Int32, dayOfMonth: Int32}): HijrahDate = 
+    pub def date(x: HijrahChronology, r: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
         import java.time.chrono.HijrahChronology.date(Int32, Int32, Int32);
         let HijrahChronology(x1) = x;
         HijrahDate(date(x1, r.prolepticYear, r.month, r.dayOfMonth) as & Pure)
 
-    pub def dateWithEra(x: HijrahChronology, r: {era: HijrahEra, yearOfEra: Int32, month: Int32, dayOfMonth: Int32}): HijrahDate = 
+    pub def dateWithEra(x: HijrahChronology,
+                        r: {era :: HijrahEra, yearOfEra :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
         import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32);
         let HijrahChronology(x1) = x;
         let era1 = Time/Chrono/HijrahEra.toNative(r.era) as ##java.time.chrono.Era;

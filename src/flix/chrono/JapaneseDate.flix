@@ -66,11 +66,11 @@ namespace Time/Chrono/JapaneseDate {
     ///
     /// Returns ___
     ///
-    pub def new(x: {prolepticYear: Int32, month: Int32, dayOfMonth: Int32}): JapaneseDate  =
+    pub def new(x: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): JapaneseDate  =
         import java.time.chrono.JapaneseDate:of(Int32, Int32, Int32);
         JapaneseDate(of(x.prolepticYear, x.month, x.dayOfMonth)) as & Pure
 
-    pub def newWithJapaneseEra(x: {era: JapaneseEra, yearOfEra: Int32, month: Int32, dayOfMonth: Int32}): JapaneseDate  =
+    pub def newWithJapaneseEra(x: {era :: JapaneseEra, yearOfEra :: Int32, month :: Int32, dayOfMonth :: Int32}): JapaneseDate  =
         import java.time.chrono.JapaneseDate:of(##java.time.chrono.JapaneseEra, Int32, Int32, Int32);
         let JapaneseEra(era1) = x.era;
         JapaneseDate(of(era1, x.yearOfEra, x.month, x.dayOfMonth)) as & Pure

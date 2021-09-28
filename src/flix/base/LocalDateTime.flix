@@ -97,20 +97,23 @@ namespace Time/LocalDateTime {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    pub def new(x: {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32}): LocalDateTime =
+    pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
         import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32);
         LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute)) as & Pure
 
-    pub def newWithSecond(x: {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32}): LocalDateTime =
+    pub def newWithSecond(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
+                                hour :: Int32, minute :: Int32, second :: Int32}): LocalDateTime =
         import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32);
         LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second)) as & Pure
 
-    pub def newWithSecondAndNano(x: {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32}): LocalDateTime =
+    pub def newWithSecondAndNano(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
+                                        hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalDateTime =
         import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32);
         LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond)) as & Pure
 
     /// TODO - potentially remove getFields...
-    pub def getFields(x: LocalDateTime): {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32} = 
+    pub def getFields(x: LocalDateTime): {year :: Int32, month :: Int32, dayOfMonth :: Int32,
+                                            hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32} =
         { year = x.getYear(), month = x.getMonthValue(), dayOfMonth = x.getDayOfMonth()
         , hour = x.getHour(), minute = x.getMinute(), second = x.getSecond()
         , nanoSecond = x.getNano() }

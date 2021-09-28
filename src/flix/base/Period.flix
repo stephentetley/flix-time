@@ -99,11 +99,11 @@ namespace Time/Period {
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
 
-    pub def new(x: {years: Int32, months: Int32, days: Int32}): Period =
+    pub def new(x: {years :: Int32, months :: Int32, days :: Int32}): Period =
         import java.time.Period:of(Int32, Int32, Int32);
         Period(of(x.years, x.months, x.days)) as & Pure
 
-    pub def getFields(x: Period): {years: Int32, months: Int32, days: Int32} = 
+    pub def getFields(x: Period): {years :: Int32, months :: Int32, days :: Int32} =
         { years = x.getYears(), months = x.getMonths(), days = x.getDays() }
 
     ///

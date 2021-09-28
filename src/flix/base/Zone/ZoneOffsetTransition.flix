@@ -53,7 +53,7 @@ namespace Time/Zone/ZoneOffsetTransition {
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
 
-    pub def new(x: {transition: LocalDateTime, before: ZoneOffset, after: ZoneOffset}): ZoneOffsetTransition =
+    pub def new(x: {transition :: LocalDateTime, before :: ZoneOffset, after :: ZoneOffset}): ZoneOffsetTransition =
         import java.time.zone.ZoneOffsetTransition:of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset);
         let LocalDateTime(dt1) = x.transition;
         let ZoneOffset(b1) = x.before;

@@ -70,11 +70,11 @@ namespace Time/YearMonth {
     use Time.YearMonth;
     use Time.YearMonth.{YearMonth};
 
-    pub def new(x: {year: Int32, month: Int32}): YearMonth =
+    pub def new(x: {year :: Int32, month :: Int32}): YearMonth =
         import java.time.YearMonth:of(Int32, Int32);
         YearMonth(of(x.year, x.month)) as & Pure
 
-    pub def newWithMonth(x: {year: Int, month: Month}): YearMonth =
+    pub def newWithMonth(x: {year :: Int, month :: Month}): YearMonth =
         import java.time.YearMonth:of(Int32, ##java.time.Month);
         let m1 = Time/Month.toNative(x.month);
         YearMonth(of(x.year, m1)) as & Pure

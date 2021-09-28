@@ -45,7 +45,7 @@ namespace Time/Temporal/WeekField {
     use Time.DayOfWeek;
     use Time/Temporal.ChronoField;
 
-    pub def new(x: {firstDayOfWeek: DayOfWeek, minimalDaysInFirstWeek: Int32}): WeekField = 
+    pub def new(x: {firstDayOfWeek :: DayOfWeek, minimalDaysInFirstWeek :: Int32}): WeekField =
         import java.time.temporal.WeekFields:of(##java.time.DayOfWeek, Int32);
         let firstDayOfWeek1 = Time/DayOfWeek.toNative(x.firstDayOfWeek);
         WeekField(of(firstDayOfWeek1, x.minimalDaysInFirstWeek)) as & Pure

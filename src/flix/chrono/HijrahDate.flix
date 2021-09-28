@@ -60,7 +60,7 @@ namespace Time/Chrono/HijrahDate {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
-    pub def new(x: {prolepticYear: Int32, month: Int32, dayOfMonth: Int32}): HijrahDate =
+    pub def new(x: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
         import java.time.chrono.HijrahDate:of(Int32, Int32, Int32);
         HijrahDate(of(x.prolepticYear, x.month, x.dayOfMonth)) as & Pure
 

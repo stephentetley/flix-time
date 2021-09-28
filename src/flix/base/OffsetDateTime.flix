@@ -102,15 +102,15 @@ namespace Time/OffsetDateTime {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    pub def new(x: {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, 
-                    second: Int32, nanoSecond: Int32, offset: ZoneOffset}): OffsetDateTime =
+    pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
+                    second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetDateTime =
         import java.time.OffsetDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
         let ZoneOffset(o1) = x.offset;
         OffsetDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond, o1)) as & Pure
 
     /// TODO - potentially remove getFields...
-    pub def getFields(x: OffsetDateTime): {year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, 
-                                            second: Int32, nanoSecond: Int32, offset: ZoneOffset} =
+    pub def getFields(x: OffsetDateTime): {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
+                                            second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset} =
         { year = x.getYear(), month = x.getMonthValue(), dayOfMonth = x.getDayOfMonth()
         , hour = x.getHour(), minute = x.getMinute(), second = x.getSecond()
         , nanoSecond = x.getNano(), offset = x.getOffset() }
