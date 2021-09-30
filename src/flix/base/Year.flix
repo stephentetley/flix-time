@@ -122,7 +122,7 @@ namespace Time/Year {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(s: String, formatter: DateFormatter): Option[Year] =
+    pub def parse(formatter: DateFormatter, s: String): Option[Year] =
         import java.lang.String.strip();
         import java.time.Year:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
@@ -136,7 +136,7 @@ namespace Time/Year {
     ///
     /// Returns the Year `x` as a String using `formatter`.
     ///
-    pub def format(x: Year, formatter: DateFormatter): String =
+    pub def format(formatter: DateFormatter, x: Year): String =
         import java.time.Year.format(##java.time.format.DateTimeFormatter);
         let Year(x1) = x;
         let DateFormatter(fmtr) = formatter;

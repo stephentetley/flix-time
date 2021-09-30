@@ -91,7 +91,7 @@ namespace Time/MonthDay {
     ///
     /// Returns MonthDay `x` as a String using `formatter`.
     ///
-    pub def format(x: MonthDay, formatter: DateFormatter): String =
+    pub def format(formatter: DateFormatter, x: MonthDay): String =
         import java.time.MonthDay.format(##java.time.format.DateTimeFormatter);
         let MonthDay(x1) = x;
         let DateFormatter(fmtr) = formatter;
@@ -103,7 +103,7 @@ namespace Time/MonthDay {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(s: String, formatter: DateFormatter): Option[MonthDay] =
+    pub def parse(formatter: DateFormatter, s: String): Option[MonthDay] =
         import java.lang.String.strip();
         import java.time.MonthDay:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {

@@ -87,7 +87,7 @@ namespace Time/YearMonth {
     ///
     /// Returns YearMonth `x` as a String using `formatter`.
     ///
-    pub def format(x: YearMonth, formatter: DateFormatter): String =
+    pub def format(formatter: DateFormatter, x: YearMonth): String =
         import java.time.YearMonth.format(##java.time.format.DateTimeFormatter);
         let YearMonth(x1) = x;
         let DateFormatter(fmtr) = formatter;
@@ -99,7 +99,7 @@ namespace Time/YearMonth {
     ///
     /// A successful parse is wrapped with `Some(_)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(s: String, formatter: DateFormatter): Option[YearMonth] =
+    pub def parse(formatter: DateFormatter, s: String): Option[YearMonth] =
         import java.lang.String.strip();
         import java.time.YearMonth:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {

@@ -145,7 +145,7 @@ namespace Time/ZonedDateTime {
     ///
     /// Returns ZonedDateTime `x` as a String using `formatter`.
     ///
-    pub def format(x: ZonedDateTime, formatter: DateTimeFormatter): String =
+    pub def format(formatter: DateTimeFormatter, x: ZonedDateTime): String =
         import java.time.ZonedDateTime.format(##java.time.format.DateTimeFormatter);
         let ZonedDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
@@ -157,7 +157,7 @@ namespace Time/ZonedDateTime {
     ///
     /// A successful parse is wrapped with `Some(_)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(s: String, formatter: DateTimeFormatter): Option[ZonedDateTime] =
+    pub def parse(formatter: DateTimeFormatter, s: String): Option[ZonedDateTime] =
         import java.lang.String.strip();
         import java.time.ZonedDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {

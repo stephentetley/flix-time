@@ -174,7 +174,7 @@ namespace Time/LocalDateTime {
     ///
     /// Returns LocalDateTime `x` as a String using `formatter`.
     ///
-    pub def format(x: LocalDateTime, formatter: DateTimeFormatter): String =
+    pub def format(formatter: DateTimeFormatter, x: LocalDateTime): String =
         import java.time.LocalDateTime.format(##java.time.format.DateTimeFormatter);
         let LocalDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
@@ -186,7 +186,7 @@ namespace Time/LocalDateTime {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(s: String, formatter: DateTimeFormatter): Option[LocalDateTime] =
+    pub def parse(formatter: DateTimeFormatter, s: String): Option[LocalDateTime] =
         import java.lang.String.strip();
         import java.time.LocalDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {

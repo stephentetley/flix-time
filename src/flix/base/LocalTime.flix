@@ -169,7 +169,7 @@ namespace Time/LocalTime {
     ///
     /// Returns the given LocalTime `x` as a String using `formatter`.
     ///
-    pub def format(x: LocalTime, formatter: TimeFormatter): String =
+    pub def format(formatter: TimeFormatter, x: LocalTime): String =
         import java.time.LocalTime.format(##java.time.format.DateTimeFormatter);
         let LocalTime(x1) = x;
         let TimeFormatter(fmtr) = formatter;
@@ -181,7 +181,7 @@ namespace Time/LocalTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(s: String, formatter: TimeFormatter): Option[LocalTime] =
+    pub def parse(formatter: TimeFormatter, s: String): Option[LocalTime] =
         import java.lang.String.strip();
         import java.time.LocalTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {

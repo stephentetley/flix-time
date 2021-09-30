@@ -180,7 +180,7 @@ namespace Time/LocalDate {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(s: String, formatter: DateFormatter): Option[LocalDate] =
+    pub def parse(formatter: DateFormatter, s: String): Option[LocalDate] =
         import java.lang.String.strip();
         import java.time.LocalDate:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
@@ -194,7 +194,7 @@ namespace Time/LocalDate {
     ///
     /// Returns LocalDate `x` as a String using `formatter`.
     ///
-    pub def format(x: LocalDate, formatter: DateFormatter): String =
+    pub def format(formatter: DateFormatter, x: LocalDate): String =
         import java.time.LocalDate.format(##java.time.format.DateTimeFormatter);
         let LocalDate(x1) = x;
         let DateFormatter(fmtr) = formatter;

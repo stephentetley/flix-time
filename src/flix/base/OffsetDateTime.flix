@@ -214,7 +214,7 @@ namespace Time/OffsetDateTime {
     ///
     /// Returns OffsetDateTime `x` as a String using `formatter`.
     ///
-    pub def format(x: OffsetDateTime, formatter: DateTimeFormatter): String =
+    pub def format(formatter: DateTimeFormatter, x: OffsetDateTime): String =
         import java.time.OffsetDateTime.format(##java.time.format.DateTimeFormatter);
         let OffsetDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
@@ -226,7 +226,7 @@ namespace Time/OffsetDateTime {
     ///
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(s: String, formatter: DateTimeFormatter): Option[OffsetDateTime] =
+    pub def parse(formatter: DateTimeFormatter, s: String): Option[OffsetDateTime] =
         import java.lang.String.strip();
         import java.time.OffsetDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
