@@ -121,7 +121,7 @@ namespace Time/Month {
         case December => 12
     }
 
-    pub def fromInt32(n: Int32): Month = match (n % 12) {
+    pub def fromInt32(n: Int32): Month = match (n `Mod.mod` 12) {
         case 1 => January
         case 2 => February
         case 3 => March

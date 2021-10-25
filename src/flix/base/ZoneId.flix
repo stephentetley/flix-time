@@ -60,6 +60,9 @@ namespace Time {
 
 namespace Time/ZoneId {
 
+    use X.Cursor;
+    use X.Cursor.{Cursor};
+
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
     use Time.ZonePrefix;
@@ -112,29 +115,18 @@ namespace Time/ZoneId {
         let ZoneId(x1) = x;
         getId(x1) as & Pure
 
-    pub def getAvailableZoneIds(): Result[Set[String], String] & Impure =
-        getAvailableZoneIdsIter()
-            |> Iterator.toList
-            |> Result.sequence
-            |> Result.map(List.toSet)
-
-
-    def getAvailableZoneIdsIter(): Iterator[Result[String, String]] & Impure =
-        import flix.runtime.spt.newtime.StringIterator:newGetAvailableZoneIdsIterator();
-        import flix.runtime.spt.newtime.StringIterator.hasNext();
-        import flix.runtime.spt.newtime.StringIterator.next();
-        let primIter = newGetAvailableZoneIdsIterator();
-        let iterDone = () -> if (hasNext(primIter)) false else true;
-        let iterNext = () -> {
-            try {
-                let s1 = next(primIter);
-                Ok(s1)
-            } catch {
-                case _: ##java.lang.Exception => Err("getAvailableZoneIdsIter[next]")
-          }
+    pub def getAvailableZoneIds(): Set[String] & Impure =
+        import flix.runtime.spt.newtime.StringIterator:newGetAvailableZoneIdsIterator() as newCursor;
+        import flix.runtime.spt.newtime.StringIterator.hasNext() as ffiHasNext;
+        import flix.runtime.spt.newtime.StringIterator.next() as ffiNext;
+        let iter = newCursor();
+        let cursorAlg =  {
+              hasNext = () -> ffiHasNext(iter)
+            , next = X/Cursor.guardThunk(_ -> ffiNext(iter), "next failed")
+            , finalize = () -> () as & Impure
         };
-        Iterator(iterDone, iterNext)
-
-
+        X/Cursor.makeCursor(cursorAlg)
+            |> X/Cursor.toSet!
+            |> flip(Result.getWithDefault, Set#{})
 
 }
