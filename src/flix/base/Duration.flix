@@ -45,7 +45,7 @@ namespace Time {
             import java.lang.String.strip();
             import java.time.Duration:parse(##java.lang.CharSequence);
             try {
-                let cs = s.strip() as ##java.lang.CharSequence & Pure;
+                let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(Duration(parse(cs))) as & Pure
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -113,7 +113,7 @@ namespace Time/Duration {
     /// nanoseconds adjustment.
     ///
     pub def getFields(x: Duration): {seconds :: Int64, nanos :: Int32} =
-        {seconds = x.getSeconds(), nanos = x.getNano()}
+        {seconds = getSeconds(x), nanos = getNano(x)}
 
     ///
     /// Construct a zero length Duration.

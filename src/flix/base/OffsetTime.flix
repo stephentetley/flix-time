@@ -102,8 +102,7 @@ namespace Time/OffsetTime {
         OffsetTime(of(x.hour, x.minute, x.second, x.nanoSecond, o1)) as & Pure
 
     pub def getFields(x: OffsetTime): { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset} =
-        { hour = x.getHour(), minute = x.getMinute(), second = x.getSecond()
-        , nanoSecond = x.getNano(), offset = x.getOffset() }
+        { hour = getHour(x), minute = getMinute(x), second = getSecond(x), nanoSecond = getNano(x), offset = getOffset(x) }
         
 
     ///

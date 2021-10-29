@@ -113,7 +113,7 @@ namespace Time/LocalDate {
 
     /// TODO - potentially remove getFields...
     pub def getFields(x: LocalDate): {year :: Int32, month :: Int32, dayOfMonth :: Int32} =
-        {year = x.getYear(), month = x.getMonthValue(), dayOfMonth = x.getDayOfMonth()}
+        {year = getYear(x), month = getMonthValue(x), dayOfMonth = getDayOfMonth(x)}
 
 
     ///

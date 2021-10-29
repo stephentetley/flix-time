@@ -114,9 +114,9 @@ namespace Time/LocalDateTime {
     /// TODO - potentially remove getFields...
     pub def getFields(x: LocalDateTime): {year :: Int32, month :: Int32, dayOfMonth :: Int32,
                                             hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32} =
-        { year = x.getYear(), month = x.getMonthValue(), dayOfMonth = x.getDayOfMonth()
-        , hour = x.getHour(), minute = x.getMinute(), second = x.getSecond()
-        , nanoSecond = x.getNano() }
+        { year = getYear(x), month = getMonthValue(x), dayOfMonth = getDayOfMonth(x)
+        , hour = getHour(x), minute = getMinute(x), second = getSecond(x)
+        , nanoSecond = getNano(x) }
 
     ///
     /// Returns the current date-time from the system clock.

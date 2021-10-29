@@ -101,7 +101,7 @@ namespace Time/Instant {
         Instant(ofEpochSecond(x.epochSecond, x.nano)) as & Pure
 
     pub def getFields(x: Instant): {epochSecond :: Int64, nano :: Int32} =
-        {epochSecond = x.getEpochSecond(), nano = x.getNano()}
+        {epochSecond = getEpochSecond(x), nano = getNano(x)}
 
     ///
     /// Returns the current time from the system clock.

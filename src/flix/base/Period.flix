@@ -104,7 +104,7 @@ namespace Time/Period {
         Period(of(x.years, x.months, x.days)) as & Pure
 
     pub def getFields(x: Period): {years :: Int32, months :: Int32, days :: Int32} =
-        { years = x.getYears(), months = x.getMonths(), days = x.getDays() }
+        { years = getYears(x), months = getMonths(x), days = getDays(x) }
 
     ///
     /// The period of zero.

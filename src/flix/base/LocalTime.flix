@@ -104,7 +104,7 @@ namespace Time/LocalTime {
         LocalTime(of(x.hour, x.minute, x.second, x.nanoSecond)) as & Pure
 
     pub def getFields(x: LocalTime): {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32} =
-        {hour = x.getHour(), minute = x.getMinute(), second = x.getSecond(), nanoSecond= x.getNano()}
+        {hour = getHour(x), minute = getMinute(x), second = getSecond(x), nanoSecond= getNano(x)}
 
     ///
     /// Returns the current time from the system clock.

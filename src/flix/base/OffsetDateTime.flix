@@ -111,9 +111,9 @@ namespace Time/OffsetDateTime {
     /// TODO - potentially remove getFields...
     pub def getFields(x: OffsetDateTime): {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
                                             second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset} =
-        { year = x.getYear(), month = x.getMonthValue(), dayOfMonth = x.getDayOfMonth()
-        , hour = x.getHour(), minute = x.getMinute(), second = x.getSecond()
-        , nanoSecond = x.getNano(), offset = x.getOffset() }
+        { year = getYear(x), month = getMonthValue(x), dayOfMonth = getDayOfMonth(x)
+        , hour = getHour(x), minute = getMinute(x), second = getSecond(x)
+        , nanoSecond = getNano(x), offset = getOffset(x) }
     
 
     ///

@@ -38,7 +38,7 @@ namespace Time {
         pub def fromString(s: String): Option[MonthDay] = try {
             import java.lang.String.strip();
             import java.time.MonthDay:parse(##java.lang.CharSequence);
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
             Some(MonthDay(parse(cs))) as & Pure
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
@@ -108,8 +108,8 @@ namespace Time/MonthDay {
         import java.time.MonthDay:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
-            let cs = s.strip() as ##java.lang.CharSequence & Pure;
-            Some(MonthDay(cs.parse(fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence & Pure;
+            Some(MonthDay(parse(cs, fmtr))) as & Pure
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
