@@ -207,7 +207,7 @@ namespace Time/YearMonth {
         import java.time.YearMonth.getMonth();
         use Time/Month.{fromNative};
         let YearMonth(x1) = x;
-        getMonth(x1).fromNative() as & Pure
+        (getMonth(x1) |> fromNative) as & Pure
 
     pub def putMonth(x: YearMonth, month: Month): YearMonth =
         newWithMonth({year = getYear(x), month = month})
