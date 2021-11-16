@@ -116,17 +116,26 @@ namespace Time/ZoneId {
         getId(x1) as & Pure
 
     pub def getAvailableZoneIds(): Set[String] & Impure =
-        import flix.runtime.spt.newtime.StringIterator:newGetAvailableZoneIdsIterator() as newCursor;
-        import flix.runtime.spt.newtime.StringIterator.hasNext() as ffiHasNext;
-        import flix.runtime.spt.newtime.StringIterator.next() as ffiNext;
-        let iter = newCursor();
-        let cursorAlg =  {
-              hasNext = () -> ffiHasNext(iter)
-            , next = X/Cursor.guardThunk(_ -> ffiNext(iter), "next failed")
-            , finalize = () -> () as & Impure
-        };
-        X/Cursor.makeCursor(cursorAlg)
-            |> X/Cursor.toSet!
-            |> flip(Result.getWithDefault, Set#{})
+        import java.time.ZoneId:getAvailableZoneIds();
+        import java.util.Set.iterator();
+        try {
+            let sjava = getAvailableZoneIds();
+            let iter = iterator(sjava);
+            let xs = iterateListOfString(iter, ks -> ks);
+            List.toSet(xs)
+        } catch {
+            case _: ##java.lang.Exception => Set.empty()
+        }
+
+
+    def iterateListOfString(iter: ##java.util.Iterator, k: List[String] -> List[String]): List[String] & Impure =
+        import java.util.Iterator.hasNext();
+        import java.util.Iterator.next();
+        if (hasNext(iter))
+            let entry = next(iter) as String;
+            iterateListOfString(iter, ks -> k(entry :: ks))
+        else
+            k(Nil)
+
 
 }
