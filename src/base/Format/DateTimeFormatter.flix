@@ -100,11 +100,11 @@ namespace Time/Format/DateTimeFormatter {
     
     pub def getLocale(x: DateTimeFormatter): Locale =
         let DateTimeFormatter(x1) = x;
-        Time/Format/Internal/Prim.getLocale(x1)  as & Pure
+        Time/Format/Internal/Prim.getLocale(x1)
 
     pub def putLocale(x: DateTimeFormatter, locale: Locale): DateTimeFormatter =
         let DateTimeFormatter(x1) = x;
-        DateTimeFormatter(Time/Format/Internal/Prim.putLocale(x1, locale)) as & Pure
+        DateTimeFormatter(Time/Format/Internal/Prim.putLocale(x1, locale))
 
     pub def getDecimalStyle(x: DateTimeFormatter): DecimalStyle =
         let DateTimeFormatter(x1) = x;

@@ -94,10 +94,10 @@ namespace Time/Format/TimeFormatter {
     
     pub def getLocale(x: TimeFormatter): Locale =
         let TimeFormatter(x1) = x;
-        Time/Format/Internal/Prim.getLocale(x1)  as & Pure
+        Time/Format/Internal/Prim.getLocale(x1)
 
     pub def putLocale(x: TimeFormatter, locale: Locale): TimeFormatter =
         let TimeFormatter(x1) = x;
-        TimeFormatter(Time/Format/Internal/Prim.putLocale(x1, locale)) as & Pure
+        TimeFormatter(Time/Format/Internal/Prim.putLocale(x1, locale))
 
 }
