@@ -44,16 +44,16 @@ namespace Time/Temporal/JulianField {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def dayOfQuarter(): JulianField = 
-        import get java.time.temporal.JulianFields:JULIAN_DAY as getJULIAN_DAY;
+        import static get java.time.temporal.JulianFields.JULIAN_DAY as getJULIAN_DAY;
         JulianField(getJULIAN_DAY()) as & Pure
 
 
     pub def modifiedJulianDay(): JulianField = 
-        import get java.time.temporal.JulianFields:MODIFIED_JULIAN_DAY as getMODIFIED_JULIAN_DAY;
+        import static get java.time.temporal.JulianFields.MODIFIED_JULIAN_DAY as getMODIFIED_JULIAN_DAY;
         JulianField(getMODIFIED_JULIAN_DAY()) as & Pure
 
     pub def rataDie(): JulianField = 
-        import get java.time.temporal.JulianFields:RATA_DIE as getRATA_DIE;
+        import static get java.time.temporal.JulianFields.RATA_DIE as getRATA_DIE;
         JulianField(getRATA_DIE()) as & Pure
 
 

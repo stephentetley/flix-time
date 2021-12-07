@@ -40,7 +40,7 @@ namespace Time {
     instance FromString[OffsetDateTime] {
         pub def fromString(s: String): Option[OffsetDateTime] =
             import java.lang.String.strip();
-            import java.time.OffsetDateTime:parse(##java.lang.CharSequence);
+            import static java.time.OffsetDateTime.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(OffsetDateTime(parse(cs))) as & Pure
@@ -64,13 +64,13 @@ namespace Time {
 
     instance LowerBound[OffsetDateTime] {
         pub def minValue(): OffsetDateTime =
-            import get java.time.OffsetDateTime:MIN as getMIN;
+            import static get java.time.OffsetDateTime.MIN as getMIN;
             OffsetDateTime(getMIN()) as & Pure
     }
     
     instance UpperBound[OffsetDateTime] {
         pub def maxValue(): OffsetDateTime =
-            import get java.time.OffsetDateTime:MAX as getMAX;
+            import static get java.time.OffsetDateTime.MAX as getMAX;
             OffsetDateTime(getMAX()) as & Pure
     }
 
@@ -104,7 +104,7 @@ namespace Time/OffsetDateTime {
 
     pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
                     second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetDateTime =
-        import java.time.OffsetDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
+        import static java.time.OffsetDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
         let ZoneOffset(o1) = x.offset;
         OffsetDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond, o1)) as & Pure
 
@@ -120,14 +120,14 @@ namespace Time/OffsetDateTime {
     /// Returns the current date-time from the system clock using the system zone id.
     ///
     pub def now(): OffsetDateTime & Impure =
-        import java.time.OffsetDateTime:now();
+        import static java.time.OffsetDateTime.now();
         OffsetDateTime(now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetDateTime & Impure =
-        import java.time.OffsetDateTime:now(##java.time.ZoneId);
+        import static java.time.OffsetDateTime.now(##java.time.ZoneId);
         let ZoneId(z1) = zone;
         OffsetDateTime(now(z1))
 
@@ -147,13 +147,13 @@ namespace Time/OffsetDateTime {
     
 
     pub def ofLocalDateTime(dateTime: LocalDateTime, offset: ZoneOffset): OffsetDateTime =
-        import java.time.OffsetDateTime:of(##java.time.LocalDateTime, ##java.time.ZoneOffset);
+        import static java.time.OffsetDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneOffset);
         let LocalDateTime(dt1) = dateTime;
         let ZoneOffset(o1) = offset;
         OffsetDateTime(of(dt1, o1)) as & Pure
 
     pub def ofLocalDateLocalTime(date: LocalDate, time: LocalTime, offset: ZoneOffset): OffsetDateTime =
-        import java.time.OffsetDateTime:of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneOffset);
+        import static java.time.OffsetDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneOffset);
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
         let ZoneOffset(o1) = offset;
@@ -228,7 +228,7 @@ namespace Time/OffsetDateTime {
     ///
     pub def parse(formatter: DateTimeFormatter, s: String): Option[OffsetDateTime] =
         import java.lang.String.strip();
-        import java.time.OffsetDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.OffsetDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;

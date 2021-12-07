@@ -61,7 +61,7 @@ namespace Time/Chrono/HijrahDate {
     use Time.ZoneId.{ZoneId};
 
     pub def new(x: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
-        import java.time.chrono.HijrahDate:of(Int32, Int32, Int32);
+        import static java.time.chrono.HijrahDate.of(Int32, Int32, Int32);
         HijrahDate(of(x.prolepticYear, x.month, x.dayOfMonth)) as & Pure
 
 
@@ -69,16 +69,16 @@ namespace Time/Chrono/HijrahDate {
     /// Returns ___
     ///
     pub def now(): HijrahDate & Impure =
-        import java.time.chrono.HijrahDate:now();
+        import static java.time.chrono.HijrahDate.now();
         HijrahDate(now())
 
     pub def nowWithClock(x: Clock): HijrahDate & Impure =
-        import java.time.chrono.HijrahDate:now(##java.time.Clock);
+        import static java.time.chrono.HijrahDate.now(##java.time.Clock);
         let Clock(x1) = x;
         HijrahDate(now(x1))
 
     pub def nowWithZoneId(x: ZoneId): HijrahDate & Impure =
-        import java.time.chrono.HijrahDate:now(##java.time.ZoneId);
+        import static java.time.chrono.HijrahDate.now(##java.time.ZoneId);
         let ZoneId(x1) = x;
         HijrahDate(now(x1))
 
@@ -96,7 +96,7 @@ namespace Time/Chrono/HijrahDate {
 
 
     pub def toLocalDate(x: HijrahDate): LocalDate =
-        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor);
         let HijrahDate(x1) = x;
         LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 

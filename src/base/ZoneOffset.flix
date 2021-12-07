@@ -34,7 +34,7 @@ namespace Time {
     instance FromString[ZoneOffset] {
         pub def fromString(x: String): Option[ZoneOffset] =
             import java.lang.String.strip();
-            import java.time.ZoneOffset:of(String);
+            import static java.time.ZoneOffset.of(String);
             try {
                 let x1 = strip(x) as & Pure;
                 Some(ZoneOffset(of(x1))) as & Pure
@@ -81,32 +81,32 @@ namespace Time/ZoneOffset {
     /// ___
     ///
     pub def utc(): ZoneOffset =
-        import get java.time.ZoneOffset:UTC as getUTC;
+        import static get java.time.ZoneOffset.UTC as getUTC;
         ZoneOffset(getUTC()) as & Pure
 
     pub def min(): ZoneOffset =
-        import get java.time.ZoneOffset:MIN as getMIN;
+        import static get java.time.ZoneOffset.MIN as getMIN;
         ZoneOffset(getMIN()) as & Pure
 
     pub def max(): ZoneOffset =
-        import get java.time.ZoneOffset:MAX as getMAX;
+        import static get java.time.ZoneOffset.MAX as getMAX;
         ZoneOffset(getMAX()) as & Pure
 
 
     pub def ofHours(hours: Int32): ZoneOffset =
-        import java.time.ZoneOffset:ofHours(Int32);
+        import static java.time.ZoneOffset.ofHours(Int32);
         ZoneOffset(ofHours(hours)) as & Pure
 
     pub def ofHoursMinutes(hours: Int32, minutes: Int32): ZoneOffset =
-        import java.time.ZoneOffset:ofHoursMinutes(Int32, Int32);
+        import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32);
         ZoneOffset(ofHoursMinutes(hours, minutes)) as & Pure
 
     pub def ofHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): ZoneOffset =
-        import java.time.ZoneOffset:ofHoursMinutesSeconds(Int32, Int32, Int32);
+        import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32);
         ZoneOffset(ofHoursMinutesSeconds(hours, minutes, seconds)) as & Pure
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
-        import java.time.ZoneOffset:ofTotalSeconds(Int32);
+        import static java.time.ZoneOffset.ofTotalSeconds(Int32);
         ZoneOffset(ofTotalSeconds(seconds)) as & Pure
 
 

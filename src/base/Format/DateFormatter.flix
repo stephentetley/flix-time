@@ -47,27 +47,27 @@ namespace Time/Format/DateFormatter {
     use Time/Format.ResolverStyle;
 
     pub def basic_iso_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:BASIC_ISO_DATE as getBASIC_ISO_DATE;
+        import static get java.time.format.DateTimeFormatter.BASIC_ISO_DATE as getBASIC_ISO_DATE;
         DateFormatter(getBASIC_ISO_DATE()) as & Pure
 
     pub def iso_local_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_LOCAL_DATE as getISO_LOCAL_DATE;
+        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_DATE as getISO_LOCAL_DATE;
         DateFormatter(getISO_LOCAL_DATE()) as & Pure
 
     pub def iso_offset_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_OFFSET_DATE as getISO_OFFSET_DATE;
+        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_DATE as getISO_OFFSET_DATE;
         DateFormatter(getISO_OFFSET_DATE()) as & Pure
 
     pub def iso_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_DATE as getISO_DATE;
+        import static get java.time.format.DateTimeFormatter.ISO_DATE as getISO_DATE;
         DateFormatter(getISO_DATE()) as & Pure
 
     pub def iso_oridinal_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_ORDINAL_DATE as getISO_ORDINAL_DATE;
+        import static get java.time.format.DateTimeFormatter.ISO_ORDINAL_DATE as getISO_ORDINAL_DATE;
         DateFormatter(getISO_ORDINAL_DATE()) as & Pure
 
     pub def iso_week_date(): DateFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_WEEK_DATE as getISO_WEEK_DATE;
+        import static get java.time.format.DateTimeFormatter.ISO_WEEK_DATE as getISO_WEEK_DATE;
         DateFormatter(getISO_WEEK_DATE()) as & Pure
 
     /// Should this be called `new`?
@@ -75,7 +75,7 @@ namespace Time/Format/DateFormatter {
         Option.map(DateFormatter, Time/Format/Internal/Prim.ofPattern(pattern))
 
     pub def ofLocalizedDate(style: FormatStyle): DateFormatter =
-        import java.time.format.DateTimeFormatter:ofLocalizedDate(##java.time.format.FormatStyle);
+        import static java.time.format.DateTimeFormatter.ofLocalizedDate(##java.time.format.FormatStyle);
         let style1 = Time/Format/FormatStyle.toNative(style);
         DateFormatter(ofLocalizedDate(style1)) as & Pure
 

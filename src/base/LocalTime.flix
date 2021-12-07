@@ -41,7 +41,7 @@ namespace Time {
     instance FromString[LocalTime] {
         pub def fromString(s: String): Option[LocalTime] =
             import java.lang.String.strip();
-            import java.time.LocalTime:parse(##java.lang.CharSequence);
+            import static java.time.LocalTime.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(LocalTime(parse(cs))) as & Pure
@@ -66,13 +66,13 @@ namespace Time {
 
     instance LowerBound[LocalTime] {
         pub def minValue(): LocalTime =
-            import get java.time.LocalTime:MIN as getMIN;
+            import static get java.time.LocalTime.MIN as getMIN;
             LocalTime(getMIN()) as & Pure
     }
     
     instance UpperBound[LocalTime] {
         pub def maxValue(): LocalTime =
-            import get java.time.LocalTime:MAX as getMAX;
+            import static get java.time.LocalTime.MAX as getMAX;
             LocalTime(getMAX()) as & Pure
     }
 
@@ -92,15 +92,15 @@ namespace Time/LocalTime {
     use Time.ZoneId.{ZoneId};
 
     pub def new(x: {hour :: Int32, minute :: Int32}): LocalTime =
-        import java.time.LocalTime:of(Int32, Int32);
+        import static java.time.LocalTime.of(Int32, Int32);
         LocalTime(of(x.hour, x.minute)) as & Pure
 
     pub def newWithSecond(x: {hour :: Int32, minute :: Int32, second :: Int32}): LocalTime =
-        import java.time.LocalTime:of(Int32, Int32, Int32);
+        import static java.time.LocalTime.of(Int32, Int32, Int32);
         LocalTime(of(x.hour, x.minute, x.second)) as & Pure
 
     pub def newWithSecondAndNano(x: {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalTime =
-        import java.time.LocalTime:of(Int32, Int32, Int32, Int32);
+        import static java.time.LocalTime.of(Int32, Int32, Int32, Int32);
         LocalTime(of(x.hour, x.minute, x.second, x.nanoSecond)) as & Pure
 
     pub def getFields(x: LocalTime): {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32} =
@@ -110,7 +110,7 @@ namespace Time/LocalTime {
     /// Returns the current time from the system clock.
     ///
     pub def now(): LocalTime & Impure =
-        import java.time.LocalTime:now();
+        import static java.time.LocalTime.now();
         LocalTime(now())
 
 
@@ -118,37 +118,37 @@ namespace Time/LocalTime {
     /// ___
     ///
     pub def midnight(): LocalTime =
-        import get java.time.LocalTime:MIDNIGHT as getMIDNIGHT;
+        import static get java.time.LocalTime.MIDNIGHT as getMIDNIGHT;
         LocalTime(getMIDNIGHT()) as & Pure
 
     ///
     /// ___
     ///
     pub def noon(): LocalTime =
-        import get java.time.LocalTime:NOON as getNOON;
+        import static get java.time.LocalTime.NOON as getNOON;
         LocalTime(getNOON()) as & Pure
 
 
     pub def ofHoursMinutes(hours: Int32, minutes: Int32): LocalTime =
-        import java.time.LocalTime:of(Int32, Int32);
+        import static java.time.LocalTime.of(Int32, Int32);
         LocalTime(of(hours, minutes)) as & Pure
 
     pub def ofHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): LocalTime =
-        import java.time.LocalTime:of(Int32, Int32, Int32);
+        import static java.time.LocalTime.of(Int32, Int32, Int32);
         LocalTime(of(hours, minutes, seconds)) as & Pure
 
     pub def ofHoursMinutesSecondsNanos(hours: Int32, minutes: Int32, seconds: Int32, nanos: Int32): LocalTime =
-        import java.time.LocalTime:of(Int32, Int32, Int32, Int32);
+        import static java.time.LocalTime.of(Int32, Int32, Int32, Int32);
         LocalTime(of(hours, minutes, seconds, nanos)) as & Pure
 
     pub def ofInstant(x: Instant, zone: ZoneId): LocalTime =
-        import java.time.LocalTime:ofInstant(##java.time.Instant, ##java.time.ZoneId);
+        import static java.time.LocalTime.ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;
         let ZoneId(z1) = zone;
         LocalTime(ofInstant(x1, z1)) as & Pure
 
     pub def ofSecondOfDay(secondOfDay: Int64): LocalTime =
-        import java.time.LocalTime:ofSecondOfDay(Int64);
+        import static java.time.LocalTime.ofSecondOfDay(Int64);
         LocalTime(ofSecondOfDay(secondOfDay)) as & Pure
 
     pub def toSecondOfDay(time: LocalTime): Int32 =
@@ -157,7 +157,7 @@ namespace Time/LocalTime {
         toSecondOfDay(x1) as & Pure
 
     pub def ofNanoOfDay(nanoOfDay: Int64): LocalTime =
-        import java.time.LocalTime:ofNanoOfDay(Int64);
+        import static java.time.LocalTime.ofNanoOfDay(Int64);
         LocalTime(ofNanoOfDay(nanoOfDay)) as & Pure
 
     pub def toNanoOfDay(time: LocalTime): Int64 =
@@ -183,7 +183,7 @@ namespace Time/LocalTime {
     ///
     pub def parse(formatter: TimeFormatter, s: String): Option[LocalTime] =
         import java.lang.String.strip();
-        import java.time.LocalTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.LocalTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let TimeFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;

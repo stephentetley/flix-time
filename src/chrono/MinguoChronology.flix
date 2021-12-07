@@ -33,7 +33,7 @@ namespace Time/Chrono/MinguoChronology {
     use Time.ZoneId.{ZoneId};
 
     pub def getInstance(): MinguoChronology & Impure =
-        import get java.time.chrono.MinguoChronology:INSTANCE      as getINSTANCE;
+        import static get java.time.chrono.MinguoChronology.INSTANCE      as getINSTANCE;
         MinguoChronology(getINSTANCE())
 
     pub def getCalendarType(x: MinguoChronology): String = 

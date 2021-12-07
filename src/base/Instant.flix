@@ -41,7 +41,7 @@ namespace Time {
     instance FromString[Instant] {
         pub def fromString(s: String): Option[Instant] =
             import java.lang.String.strip();
-            import java.time.Instant:parse(##java.lang.CharSequence);
+            import static java.time.Instant.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(Instant(parse(cs))) as & Pure
@@ -97,7 +97,7 @@ namespace Time/Instant {
     use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(x: {epochSecond :: Int64, nano :: Int64}): Instant =
-        import java.time.Instant:ofEpochSecond(Int64, Int64);
+        import static java.time.Instant.ofEpochSecond(Int64, Int64);
         Instant(ofEpochSecond(x.epochSecond, x.nano)) as & Pure
 
     pub def getFields(x: Instant): {epochSecond :: Int64, nano :: Int32} =
@@ -107,33 +107,32 @@ namespace Time/Instant {
     /// Returns the current time from the system clock.
     ///
     pub def now(): Instant & Impure =
-        import java.time.Instant:now();
+        import static java.time.Instant.now();
         Instant(now())
 
     ///
     /// Returns the start of epoch instant - 1970-01-01T00:00:00Z
     ///
     pub def epoch(): Instant =
-        import get java.time.Instant:EPOCH as getEPOCH;
+        import static get java.time.Instant.EPOCH as getEPOCH;
         Instant(getEPOCH()) as & Pure
 
     pub def min(): Instant =
-        import get java.time.Instant:MIN as getMIN;
+        import static get java.time.Instant.MIN as getMIN;
         Instant(getMIN()) as & Pure
     
-
     pub def max(): Instant =
-        import get java.time.Instant:MAX as getMAX;
+        import static get java.time.Instant.MAX as getMAX;
         Instant(getMAX()) as & Pure
     
     pub def ofEpochSecond(epochSecond: Int64): Instant =
-        import java.time.Instant:ofEpochSecond(Int64);
+        import static java.time.Instant.ofEpochSecond(Int64);
         Instant(ofEpochSecond(epochSecond)) as & Pure
 
     
 
     pub def ofEpochMilli(epochMilli: Int64): Instant =
-        import java.time.Instant:ofEpochMilli(Int64);
+        import static java.time.Instant.ofEpochMilli(Int64);
         Instant(ofEpochMilli(epochMilli)) as & Pure
 
     pub def toEpochMilli(x: Instant): Int64 =

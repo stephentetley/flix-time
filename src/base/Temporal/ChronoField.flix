@@ -246,36 +246,36 @@ namespace Time/Temporal/ChronoField {
     }
 
     pub def toNative(x: ChronoField): ##java.time.temporal.ChronoField = 
-        import get java.time.temporal.ChronoField:NANO_OF_SECOND                as getNANO_OF_SECOND;
-        import get java.time.temporal.ChronoField:NANO_OF_DAY                   as getNANO_OF_DAY;
-        import get java.time.temporal.ChronoField:MICRO_OF_SECOND               as getMICRO_OF_SECOND;
-        import get java.time.temporal.ChronoField:MICRO_OF_DAY                  as getMICRO_OF_DAY;
-        import get java.time.temporal.ChronoField:MILLI_OF_SECOND               as getMILLI_OF_SECOND;
-        import get java.time.temporal.ChronoField:MILLI_OF_DAY                  as getMILLI_OF_DAY;
-        import get java.time.temporal.ChronoField:SECOND_OF_MINUTE              as getSECOND_OF_MINUTE;
-        import get java.time.temporal.ChronoField:SECOND_OF_DAY                 as getSECOND_OF_DAY;
-        import get java.time.temporal.ChronoField:MINUTE_OF_HOUR                as getMINUTE_OF_HOUR;        
-        import get java.time.temporal.ChronoField:MINUTE_OF_DAY                 as getMINUTE_OF_DAY;
-        import get java.time.temporal.ChronoField:HOUR_OF_AMPM                  as getHOUR_OF_AMPM;
-        import get java.time.temporal.ChronoField:CLOCK_HOUR_OF_AMPM            as getCLOCK_HOUR_OF_AMPM;
-        import get java.time.temporal.ChronoField:HOUR_OF_DAY                   as getHOUR_OF_DAY;
-        import get java.time.temporal.ChronoField:CLOCK_HOUR_OF_DAY             as getCLOCK_HOUR_OF_DAY;
-        import get java.time.temporal.ChronoField:AMPM_OF_DAY                   as getAMPM_OF_DAY;
-        import get java.time.temporal.ChronoField:DAY_OF_WEEK                   as getDAY_OF_WEEK;
-        import get java.time.temporal.ChronoField:ALIGNED_DAY_OF_WEEK_IN_MONTH  as getALIGNED_DAY_OF_WEEK_IN_MONTH;
-        import get java.time.temporal.ChronoField:ALIGNED_DAY_OF_WEEK_IN_YEAR   as getALIGNED_DAY_OF_WEEK_IN_YEAR;
-        import get java.time.temporal.ChronoField:DAY_OF_MONTH                  as getDAY_OF_MONTH;
-        import get java.time.temporal.ChronoField:DAY_OF_YEAR                   as getDAY_OF_YEAR;
-        import get java.time.temporal.ChronoField:EPOCH_DAY                     as getEPOCH_DAY;
-        import get java.time.temporal.ChronoField:ALIGNED_WEEK_OF_MONTH         as getALIGNED_WEEK_OF_MONTH;
-        import get java.time.temporal.ChronoField:ALIGNED_WEEK_OF_YEAR          as getALIGNED_WEEK_OF_YEAR;
-        import get java.time.temporal.ChronoField:MONTH_OF_YEAR                 as getMONTH_OF_YEAR;
-        import get java.time.temporal.ChronoField:PROLEPTIC_MONTH               as getPROLEPTIC_MONTH;
-        import get java.time.temporal.ChronoField:YEAR_OF_ERA                   as getYEAR_OF_ERA;
-        import get java.time.temporal.ChronoField:YEAR                          as getYEAR;
-        import get java.time.temporal.ChronoField:ERA                           as getERA;
-        import get java.time.temporal.ChronoField:INSTANT_SECONDS               as getINSTANT_SECONDS;
-        import get java.time.temporal.ChronoField:OFFSET_SECONDS                as getOFFSET_SECONDS;
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND                as getNANO_OF_SECOND;
+        import static get java.time.temporal.ChronoField.NANO_OF_DAY                   as getNANO_OF_DAY;
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND               as getMICRO_OF_SECOND;
+        import static get java.time.temporal.ChronoField.MICRO_OF_DAY                  as getMICRO_OF_DAY;
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND               as getMILLI_OF_SECOND;
+        import static get java.time.temporal.ChronoField.MILLI_OF_DAY                  as getMILLI_OF_DAY;
+        import static get java.time.temporal.ChronoField.SECOND_OF_MINUTE              as getSECOND_OF_MINUTE;
+        import static get java.time.temporal.ChronoField.SECOND_OF_DAY                 as getSECOND_OF_DAY;
+        import static get java.time.temporal.ChronoField.MINUTE_OF_HOUR                as getMINUTE_OF_HOUR;
+        import static get java.time.temporal.ChronoField.MINUTE_OF_DAY                 as getMINUTE_OF_DAY;
+        import static get java.time.temporal.ChronoField.HOUR_OF_AMPM                  as getHOUR_OF_AMPM;
+        import static get java.time.temporal.ChronoField.CLOCK_HOUR_OF_AMPM            as getCLOCK_HOUR_OF_AMPM;
+        import static get java.time.temporal.ChronoField.HOUR_OF_DAY                   as getHOUR_OF_DAY;
+        import static get java.time.temporal.ChronoField.CLOCK_HOUR_OF_DAY             as getCLOCK_HOUR_OF_DAY;
+        import static get java.time.temporal.ChronoField.AMPM_OF_DAY                   as getAMPM_OF_DAY;
+        import static get java.time.temporal.ChronoField.DAY_OF_WEEK                   as getDAY_OF_WEEK;
+        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH  as getALIGNED_DAY_OF_WEEK_IN_MONTH;
+        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR   as getALIGNED_DAY_OF_WEEK_IN_YEAR;
+        import static get java.time.temporal.ChronoField.DAY_OF_MONTH                  as getDAY_OF_MONTH;
+        import static get java.time.temporal.ChronoField.DAY_OF_YEAR                   as getDAY_OF_YEAR;
+        import static get java.time.temporal.ChronoField.EPOCH_DAY                     as getEPOCH_DAY;
+        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH         as getALIGNED_WEEK_OF_MONTH;
+        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR          as getALIGNED_WEEK_OF_YEAR;
+        import static get java.time.temporal.ChronoField.MONTH_OF_YEAR                 as getMONTH_OF_YEAR;
+        import static get java.time.temporal.ChronoField.PROLEPTIC_MONTH               as getPROLEPTIC_MONTH;
+        import static get java.time.temporal.ChronoField.YEAR_OF_ERA                   as getYEAR_OF_ERA;
+        import static get java.time.temporal.ChronoField.YEAR                          as getYEAR;
+        import static get java.time.temporal.ChronoField.ERA                           as getERA;
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS               as getINSTANT_SECONDS;
+        import static get java.time.temporal.ChronoField.OFFSET_SECONDS                as getOFFSET_SECONDS;
         match x {
             case NanoOfSecond               => getNANO_OF_SECOND()
             case NanoOfDay                  => getNANO_OF_DAY()
@@ -316,36 +316,36 @@ namespace Time/Temporal/ChronoField {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.temporal.ChronoField): ChronoField = 
-        import get java.time.temporal.ChronoField:NANO_OF_SECOND                as getNANO_OF_SECOND;
-        import get java.time.temporal.ChronoField:NANO_OF_DAY                   as getNANO_OF_DAY;
-        import get java.time.temporal.ChronoField:MICRO_OF_SECOND               as getMICRO_OF_SECOND;
-        import get java.time.temporal.ChronoField:MICRO_OF_DAY                  as getMICRO_OF_DAY;
-        import get java.time.temporal.ChronoField:MILLI_OF_SECOND               as getMILLI_OF_SECOND;
-        import get java.time.temporal.ChronoField:MILLI_OF_DAY                  as getMILLI_OF_DAY;
-        import get java.time.temporal.ChronoField:SECOND_OF_MINUTE              as getSECOND_OF_MINUTE;
-        import get java.time.temporal.ChronoField:SECOND_OF_DAY                 as getSECOND_OF_DAY;
-        import get java.time.temporal.ChronoField:MINUTE_OF_HOUR                as getMINUTE_OF_HOUR;        
-        import get java.time.temporal.ChronoField:MINUTE_OF_DAY                 as getMINUTE_OF_DAY;
-        import get java.time.temporal.ChronoField:HOUR_OF_AMPM                  as getHOUR_OF_AMPM;
-        import get java.time.temporal.ChronoField:CLOCK_HOUR_OF_AMPM            as getCLOCK_HOUR_OF_AMPM;
-        import get java.time.temporal.ChronoField:HOUR_OF_DAY                   as getHOUR_OF_DAY;
-        import get java.time.temporal.ChronoField:CLOCK_HOUR_OF_DAY             as getCLOCK_HOUR_OF_DAY;
-        import get java.time.temporal.ChronoField:AMPM_OF_DAY                   as getAMPM_OF_DAY;
-        import get java.time.temporal.ChronoField:DAY_OF_WEEK                   as getDAY_OF_WEEK;
-        import get java.time.temporal.ChronoField:ALIGNED_DAY_OF_WEEK_IN_MONTH  as getALIGNED_DAY_OF_WEEK_IN_MONTH;
-        import get java.time.temporal.ChronoField:ALIGNED_DAY_OF_WEEK_IN_YEAR   as getALIGNED_DAY_OF_WEEK_IN_YEAR;
-        import get java.time.temporal.ChronoField:DAY_OF_MONTH                  as getDAY_OF_MONTH;
-        import get java.time.temporal.ChronoField:DAY_OF_YEAR                   as getDAY_OF_YEAR;
-        import get java.time.temporal.ChronoField:EPOCH_DAY                     as getEPOCH_DAY;
-        import get java.time.temporal.ChronoField:ALIGNED_WEEK_OF_MONTH         as getALIGNED_WEEK_OF_MONTH;
-        import get java.time.temporal.ChronoField:ALIGNED_WEEK_OF_YEAR          as getALIGNED_WEEK_OF_YEAR;
-        import get java.time.temporal.ChronoField:MONTH_OF_YEAR                 as getMONTH_OF_YEAR;
-        import get java.time.temporal.ChronoField:PROLEPTIC_MONTH               as getPROLEPTIC_MONTH;
-        import get java.time.temporal.ChronoField:YEAR_OF_ERA                   as getYEAR_OF_ERA;
-        import get java.time.temporal.ChronoField:YEAR                          as getYEAR;
-        import get java.time.temporal.ChronoField:ERA                           as getERA;
-        import get java.time.temporal.ChronoField:INSTANT_SECONDS               as getINSTANT_SECONDS;
-        import get java.time.temporal.ChronoField:OFFSET_SECONDS                as getOFFSET_SECONDS;
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND                as getNANO_OF_SECOND;
+        import static get java.time.temporal.ChronoField.NANO_OF_DAY                   as getNANO_OF_DAY;
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND               as getMICRO_OF_SECOND;
+        import static get java.time.temporal.ChronoField.MICRO_OF_DAY                  as getMICRO_OF_DAY;
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND               as getMILLI_OF_SECOND;
+        import static get java.time.temporal.ChronoField.MILLI_OF_DAY                  as getMILLI_OF_DAY;
+        import static get java.time.temporal.ChronoField.SECOND_OF_MINUTE              as getSECOND_OF_MINUTE;
+        import static get java.time.temporal.ChronoField.SECOND_OF_DAY                 as getSECOND_OF_DAY;
+        import static get java.time.temporal.ChronoField.MINUTE_OF_HOUR                as getMINUTE_OF_HOUR;
+        import static get java.time.temporal.ChronoField.MINUTE_OF_DAY                 as getMINUTE_OF_DAY;
+        import static get java.time.temporal.ChronoField.HOUR_OF_AMPM                  as getHOUR_OF_AMPM;
+        import static get java.time.temporal.ChronoField.CLOCK_HOUR_OF_AMPM            as getCLOCK_HOUR_OF_AMPM;
+        import static get java.time.temporal.ChronoField.HOUR_OF_DAY                   as getHOUR_OF_DAY;
+        import static get java.time.temporal.ChronoField.CLOCK_HOUR_OF_DAY             as getCLOCK_HOUR_OF_DAY;
+        import static get java.time.temporal.ChronoField.AMPM_OF_DAY                   as getAMPM_OF_DAY;
+        import static get java.time.temporal.ChronoField.DAY_OF_WEEK                   as getDAY_OF_WEEK;
+        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH  as getALIGNED_DAY_OF_WEEK_IN_MONTH;
+        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR   as getALIGNED_DAY_OF_WEEK_IN_YEAR;
+        import static get java.time.temporal.ChronoField.DAY_OF_MONTH                  as getDAY_OF_MONTH;
+        import static get java.time.temporal.ChronoField.DAY_OF_YEAR                   as getDAY_OF_YEAR;
+        import static get java.time.temporal.ChronoField.EPOCH_DAY                     as getEPOCH_DAY;
+        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH         as getALIGNED_WEEK_OF_MONTH;
+        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR          as getALIGNED_WEEK_OF_YEAR;
+        import static get java.time.temporal.ChronoField.MONTH_OF_YEAR                 as getMONTH_OF_YEAR;
+        import static get java.time.temporal.ChronoField.PROLEPTIC_MONTH               as getPROLEPTIC_MONTH;
+        import static get java.time.temporal.ChronoField.YEAR_OF_ERA                   as getYEAR_OF_ERA;
+        import static get java.time.temporal.ChronoField.YEAR                          as getYEAR;
+        import static get java.time.temporal.ChronoField.ERA                           as getERA;
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS               as getINSTANT_SECONDS;
+        import static get java.time.temporal.ChronoField.OFFSET_SECONDS                as getOFFSET_SECONDS;
         match x {
             case x1 if primEquals(x1, getNANO_OF_SECOND())                  => NanoOfSecond
             case x1 if primEquals(x1, getNANO_OF_DAY())                     => NanoOfDay

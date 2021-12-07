@@ -47,12 +47,12 @@ namespace Time/Format/TextStyle {
 
 
     pub def toNative(x: TextStyle): ##java.time.format.TextStyle = 
-        import get java.time.format.TextStyle:FULL              as getFULL;
-        import get java.time.format.TextStyle:FULL_STANDALONE   as getFULL_STANDALONE;
-        import get java.time.format.TextStyle:NARROW            as getNARROW;
-        import get java.time.format.TextStyle:NARROW_STANDALONE as getNARROW_STANDALONE;	
-        import get java.time.format.TextStyle:SHORT             as getSHORT;
-        import get java.time.format.TextStyle:SHORT_STANDALONE  as getSHORT_STANDALONE;
+        import static get java.time.format.TextStyle.FULL              as getFULL;
+        import static get java.time.format.TextStyle.FULL_STANDALONE   as getFULL_STANDALONE;
+        import static get java.time.format.TextStyle.NARROW            as getNARROW;
+        import static get java.time.format.TextStyle.NARROW_STANDALONE as getNARROW_STANDALONE;	
+        import static get java.time.format.TextStyle.SHORT             as getSHORT;
+        import static get java.time.format.TextStyle.SHORT_STANDALONE  as getSHORT_STANDALONE;
         match x {
             case Full               => getFULL()
             case FullStandalone     => getFULL_STANDALONE()
@@ -69,12 +69,12 @@ namespace Time/Format/TextStyle {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.format.TextStyle): TextStyle = 
-        import get java.time.format.TextStyle:FULL              as getFULL;
-        import get java.time.format.TextStyle:FULL_STANDALONE   as getFULL_STANDALONE;
-        import get java.time.format.TextStyle:NARROW            as getNARROW;
-        import get java.time.format.TextStyle:NARROW_STANDALONE as getNARROW_STANDALONE;	
-        import get java.time.format.TextStyle:SHORT             as getSHORT;
-        import get java.time.format.TextStyle:SHORT_STANDALONE  as getSHORT_STANDALONE;
+        import static get java.time.format.TextStyle.FULL              as getFULL;
+        import static get java.time.format.TextStyle.FULL_STANDALONE   as getFULL_STANDALONE;
+        import static get java.time.format.TextStyle.NARROW            as getNARROW;
+        import static get java.time.format.TextStyle.NARROW_STANDALONE as getNARROW_STANDALONE;	
+        import static get java.time.format.TextStyle.SHORT             as getSHORT;
+        import static get java.time.format.TextStyle.SHORT_STANDALONE  as getSHORT_STANDALONE;
         match x {
             case x1 if primEquals(x1, getFULL())                => Full
             case x1 if primEquals(x1, getFULL_STANDALONE())     => FullStandalone

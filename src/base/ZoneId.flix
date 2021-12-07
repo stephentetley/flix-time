@@ -35,7 +35,7 @@ namespace Time {
     instance FromString[ZoneId] {
         pub def fromString(s: String): Option[ZoneId] =
             import java.lang.String.strip();
-            import java.time.ZoneId:of(String) as of;
+            import static java.time.ZoneId.of(String) as of;
             try {
                 Some(ZoneId(of(strip(s)))) as & Pure
             } catch {
@@ -71,7 +71,7 @@ namespace Time/ZoneId {
     use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(prefix: Option[ZonePrefix], offset: ZoneOffset): ZoneId =
-        import java.time.ZoneId:ofOffset(String, ##java.time.ZoneOffset);
+        import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset);
         let p1 = match prefix { 
             case Some(ZonePrefix(s)) => s
             case _ => ""
@@ -87,7 +87,7 @@ namespace Time/ZoneId {
 
 
     pub def systemDefault(): Option[ZoneId] & Impure =
-        import java.time.ZoneId:systemDefault() as systemDefaultZoneId;
+        import static java.time.ZoneId.systemDefault() as systemDefaultZoneId;
         try {
             Some(ZoneId(systemDefaultZoneId()))
         } catch {
@@ -116,7 +116,7 @@ namespace Time/ZoneId {
         getId(x1) as & Pure
 
     pub def getAvailableZoneIds(): Set[String] & Impure =
-        import java.time.ZoneId:getAvailableZoneIds();
+        import static java.time.ZoneId.getAvailableZoneIds();
         import java.util.Set.iterator();
         try {
             let sjava = getAvailableZoneIds();

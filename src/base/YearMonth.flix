@@ -38,7 +38,7 @@ namespace Time {
     instance FromString[YearMonth] {
         pub def fromString(s: String): Option[YearMonth] = try {
             import java.lang.String.strip();
-            import java.time.YearMonth:parse(##java.lang.CharSequence);
+            import static java.time.YearMonth.parse(##java.lang.CharSequence);
             let cs = strip(s) as ##java.lang.CharSequence & Pure;
             Some(YearMonth(parse(cs))) as & Pure
         } catch {
@@ -71,16 +71,16 @@ namespace Time/YearMonth {
     use Time.YearMonth.{YearMonth};
 
     pub def new(x: {year :: Int32, month :: Int32}): YearMonth =
-        import java.time.YearMonth:of(Int32, Int32);
+        import static java.time.YearMonth.of(Int32, Int32);
         YearMonth(of(x.year, x.month)) as & Pure
 
     pub def newWithMonth(x: {year :: Int, month :: Month}): YearMonth =
-        import java.time.YearMonth:of(Int32, ##java.time.Month);
+        import static java.time.YearMonth.of(Int32, ##java.time.Month);
         let m1 = Time/Month.toNative(x.month);
         YearMonth(of(x.year, m1)) as & Pure
 
     pub def now(): YearMonth & Impure =         
-        import java.time.YearMonth:now();
+        import static java.time.YearMonth.now();
         YearMonth(now())
 
 
@@ -101,7 +101,7 @@ namespace Time/YearMonth {
     ///
     pub def parse(formatter: DateFormatter, s: String): Option[YearMonth] =
         import java.lang.String.strip();
-        import java.time.YearMonth:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.YearMonth.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;

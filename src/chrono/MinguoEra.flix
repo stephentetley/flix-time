@@ -55,8 +55,8 @@ namespace Time/Chrono/MinguoEra {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def toNative(x: MinguoEra): ##java.time.chrono.MinguoEra = 
-        import get java.time.chrono.MinguoEra:BEFORE_ROC    as getBEFORE_ROC;
-        import get java.time.chrono.MinguoEra:ROC           as getROC;
+        import static get java.time.chrono.MinguoEra.BEFORE_ROC    as getBEFORE_ROC;
+        import static get java.time.chrono.MinguoEra.ROC           as getROC;
         match x {
             case BEFORE_ROC => getBEFORE_ROC()
             case ROC        => getROC() 
@@ -69,8 +69,8 @@ namespace Time/Chrono/MinguoEra {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.chrono.MinguoEra): MinguoEra =
-        import get java.time.chrono.MinguoEra:BEFORE_ROC    as getBEFORE_ROC;
-        import get java.time.chrono.MinguoEra:ROC           as getROC;
+        import static get java.time.chrono.MinguoEra.BEFORE_ROC    as getBEFORE_ROC;
+        import static get java.time.chrono.MinguoEra.ROC           as getROC;
         match x {
             case x1 if primEquals(x1, getBEFORE_ROC())  => BEFORE_ROC
             case x1 if primEquals(x1, getROC())         => ROC

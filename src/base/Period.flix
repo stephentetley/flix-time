@@ -40,7 +40,7 @@ namespace Time {
     instance FromString[Period] {
         pub def fromString(s: String): Option[Period] =
             import java.lang.String.strip();
-            import java.time.Period:parse(##java.lang.CharSequence);
+            import static java.time.Period.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(Period(parse(cs))) as & Pure
@@ -100,7 +100,7 @@ namespace Time/Period {
     use Time.LocalDate.{LocalDate};
 
     pub def new(x: {years :: Int32, months :: Int32, days :: Int32}): Period =
-        import java.time.Period:of(Int32, Int32, Int32);
+        import static java.time.Period.of(Int32, Int32, Int32);
         Period(of(x.years, x.months, x.days)) as & Pure
 
     pub def getFields(x: Period): {years :: Int32, months :: Int32, days :: Int32} =
@@ -110,23 +110,23 @@ namespace Time/Period {
     /// The period of zero.
     ///
     pub def zero(): Period =
-        import get java.time.Period:ZERO as getZERO;
+        import static get java.time.Period.ZERO as getZERO;
         Period(getZERO()) as & Pure
 
     pub def ofYears(years: Int32): Period =
-        import java.time.Period:ofYears(Int32);
+        import static java.time.Period.ofYears(Int32);
         Period(ofYears(years)) as & Pure
 
     pub def ofMonths(months: Int32): Period =
-        import java.time.Period:ofMonths(Int32);
+        import static java.time.Period.ofMonths(Int32);
         Period(ofMonths(months)) as & Pure
 
     pub def ofWeeks(weeks: Int32): Period =
-        import java.time.Period:ofWeeks(Int32);
+        import static java.time.Period.ofWeeks(Int32);
         Period(ofWeeks(weeks)) as & Pure
 
     pub def ofDays(days: Int32): Period =
-        import java.time.Period:ofDays(Int32);
+        import static java.time.Period.ofDays(Int32);
         Period(ofDays(days)) as & Pure
 
     pub def toTotalMonths(x: Period): Int64 = 
@@ -233,7 +233,7 @@ namespace Time/Period {
         Period(withDays(x1, days)) as & Pure
 
     pub def between(b: LocalDate, e: LocalDate): Period = 
-        import java.time.Period:between(##java.time.LocalDate, ##java.time.LocalDate);
+        import static java.time.Period.between(##java.time.LocalDate, ##java.time.LocalDate);
         let LocalDate(b1) = b;
         let LocalDate(e1) = e;
         Period(between(b1, e1)) as & Pure

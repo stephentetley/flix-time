@@ -131,13 +131,13 @@ namespace Time/DayOfWeek {
     }
 
     pub def toNative(x: DayOfWeek): ##java.time.DayOfWeek =
-        import get java.time.DayOfWeek:MONDAY       as getMONDAY;
-        import get java.time.DayOfWeek:TUESDAY      as getTUESDAY;
-        import get java.time.DayOfWeek:WEDNESDAY    as getWEDNESDAY;
-        import get java.time.DayOfWeek:THURSDAY     as getTHURSDAY;
-        import get java.time.DayOfWeek:FRIDAY       as getFRIDAY;
-        import get java.time.DayOfWeek:SATURDAY     as getSATURDAY;
-        import get java.time.DayOfWeek:SUNDAY       as getSUNDAY;
+        import static get java.time.DayOfWeek.MONDAY       as getMONDAY;
+        import static get java.time.DayOfWeek.TUESDAY      as getTUESDAY;
+        import static get java.time.DayOfWeek.WEDNESDAY    as getWEDNESDAY;
+        import static get java.time.DayOfWeek.THURSDAY     as getTHURSDAY;
+        import static get java.time.DayOfWeek.FRIDAY       as getFRIDAY;
+        import static get java.time.DayOfWeek.SATURDAY     as getSATURDAY;
+        import static get java.time.DayOfWeek.SUNDAY       as getSUNDAY;
         match x {
             case Monday     => getMONDAY()
             case Tuesday    => getTUESDAY()
@@ -157,13 +157,13 @@ namespace Time/DayOfWeek {
 
     pub def fromNative(x: ##java.time.DayOfWeek): Time.DayOfWeek =
 
-        import get java.time.DayOfWeek:MONDAY       as getMONDAY;
-        import get java.time.DayOfWeek:TUESDAY      as getTUESDAY;
-        import get java.time.DayOfWeek:WEDNESDAY    as getWEDNESDAY;
-        import get java.time.DayOfWeek:THURSDAY     as getTHURSDAY;
-        import get java.time.DayOfWeek:FRIDAY       as getFRIDAY;
-        import get java.time.DayOfWeek:SATURDAY     as getSATURDAY;
-        import get java.time.DayOfWeek:SUNDAY       as getSUNDAY;
+        import static get java.time.DayOfWeek.MONDAY       as getMONDAY;
+        import static get java.time.DayOfWeek.TUESDAY      as getTUESDAY;
+        import static get java.time.DayOfWeek.WEDNESDAY    as getWEDNESDAY;
+        import static get java.time.DayOfWeek.THURSDAY     as getTHURSDAY;
+        import static get java.time.DayOfWeek.FRIDAY       as getFRIDAY;
+        import static get java.time.DayOfWeek.SATURDAY     as getSATURDAY;
+        import static get java.time.DayOfWeek.SUNDAY       as getSUNDAY;
         match x {
             case x1 if primEquals(x1, getMONDAY())      => Monday
             case x1 if primEquals(x1, getTUESDAY())     => Tuesday

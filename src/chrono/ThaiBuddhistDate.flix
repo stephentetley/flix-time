@@ -53,7 +53,7 @@ namespace Time/Chrono/ThaiBuddhistDate {
     /// Returns ___
     ///
     pub def now(): ThaiBuddhistDate & Impure =
-        import java.time.chrono.ThaiBuddhistDate:now();
+        import static java.time.chrono.ThaiBuddhistDate.now();
         ThaiBuddhistDate(now())
 
 
@@ -70,7 +70,7 @@ namespace Time/Chrono/ThaiBuddhistDate {
 
 
     pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
-        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor);
         let ThaiBuddhistDate(x1) = x;
         LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 

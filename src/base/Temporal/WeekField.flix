@@ -46,21 +46,21 @@ namespace Time/Temporal/WeekField {
     use Time/Temporal.ChronoField;
 
     pub def new(x: {firstDayOfWeek :: DayOfWeek, minimalDaysInFirstWeek :: Int32}): WeekField =
-        import java.time.temporal.WeekFields:of(##java.time.DayOfWeek, Int32);
+        import static java.time.temporal.WeekFields.of(##java.time.DayOfWeek, Int32);
         let firstDayOfWeek1 = Time/DayOfWeek.toNative(x.firstDayOfWeek);
         WeekField(of(firstDayOfWeek1, x.minimalDaysInFirstWeek)) as & Pure
 
     pub def ofLocale(x: Locale): WeekField = 
-        import java.time.temporal.WeekFields:of(##java.util.Locale);
+        import static java.time.temporal.WeekFields.of(##java.util.Locale);
         let Locale(x1) = x;
         WeekField(of(x1)) as & Pure
 
     pub def iso(): WeekField = 
-        import get java.time.temporal.WeekFields:ISO as getISO;
+        import static get java.time.temporal.WeekFields.ISO as getISO;
         WeekField(getISO()) as & Pure
 
      pub def sundayStart(): WeekField = 
-        import get java.time.temporal.WeekFields:SUNDAY_START as getSUNDAY_START;
+        import static get java.time.temporal.WeekFields.SUNDAY_START as getSUNDAY_START;
         WeekField(getSUNDAY_START()) as & Pure
 
     pub def getFirstDayOfWeek(x: WeekField): DayOfWeek =

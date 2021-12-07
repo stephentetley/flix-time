@@ -53,7 +53,7 @@ namespace Time/Chrono/MinguoDate {
     /// Returns ___
     ///
     pub def now(): MinguoDate & Impure =
-        import java.time.chrono.MinguoDate:now();
+        import static java.time.chrono.MinguoDate.now();
         MinguoDate(now())
 
 
@@ -71,7 +71,7 @@ namespace Time/Chrono/MinguoDate {
 
 
     pub def toLocalDate(x: MinguoDate): LocalDate =
-        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor);
         let MinguoDate(x1) = x;
         LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 

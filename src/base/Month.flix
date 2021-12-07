@@ -137,18 +137,18 @@ namespace Time/Month {
     }
 
     pub def toNative(x: Month): ##java.time.Month = 
-        import get java.time.Month:JANUARY      as getJANUARY;
-        import get java.time.Month:FEBRUARY     as getFEBRUARY;
-        import get java.time.Month:MARCH        as getMARCH;
-        import get java.time.Month:APRIL        as getAPRIL;
-        import get java.time.Month:MAY          as getMAY;
-        import get java.time.Month:JUNE         as getJUNE;
-        import get java.time.Month:JULY         as getJULY;
-        import get java.time.Month:AUGUST       as getAUGUST;
-        import get java.time.Month:SEPTEMBER    as getSEPTEMBER;
-        import get java.time.Month:OCTOBER      as getOCTOBER;
-        import get java.time.Month:NOVEMBER     as getNOVEMBER;
-        import get java.time.Month:DECEMBER     as getDECEMBER;
+        import static get java.time.Month.JANUARY      as getJANUARY;
+        import static get java.time.Month.FEBRUARY     as getFEBRUARY;
+        import static get java.time.Month.MARCH        as getMARCH;
+        import static get java.time.Month.APRIL        as getAPRIL;
+        import static get java.time.Month.MAY          as getMAY;
+        import static get java.time.Month.JUNE         as getJUNE;
+        import static get java.time.Month.JULY         as getJULY;
+        import static get java.time.Month.AUGUST       as getAUGUST;
+        import static get java.time.Month.SEPTEMBER    as getSEPTEMBER;
+        import static get java.time.Month.OCTOBER      as getOCTOBER;
+        import static get java.time.Month.NOVEMBER     as getNOVEMBER;
+        import static get java.time.Month.DECEMBER     as getDECEMBER;
         match x {
             case January    => getJANUARY()
             case February   => getFEBRUARY()
@@ -171,18 +171,18 @@ namespace Time/Month {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.Month): Month = 
-        import get java.time.Month:JANUARY      as getJANUARY;
-        import get java.time.Month:FEBRUARY     as getFEBRUARY;
-        import get java.time.Month:MARCH        as getMARCH;
-        import get java.time.Month:APRIL        as getAPRIL;
-        import get java.time.Month:MAY          as getMAY;
-        import get java.time.Month:JUNE         as getJUNE;
-        import get java.time.Month:JULY         as getJULY;
-        import get java.time.Month:AUGUST       as getAUGUST;
-        import get java.time.Month:SEPTEMBER    as getSEPTEMBER;
-        import get java.time.Month:OCTOBER      as getOCTOBER;
-        import get java.time.Month:NOVEMBER     as getNOVEMBER;
-        import get java.time.Month:DECEMBER     as getDECEMBER;
+        import static get java.time.Month.JANUARY      as getJANUARY;
+        import static get java.time.Month.FEBRUARY     as getFEBRUARY;
+        import static get java.time.Month.MARCH        as getMARCH;
+        import static get java.time.Month.APRIL        as getAPRIL;
+        import static get java.time.Month.MAY          as getMAY;
+        import static get java.time.Month.JUNE         as getJUNE;
+        import static get java.time.Month.JULY         as getJULY;
+        import static get java.time.Month.AUGUST       as getAUGUST;
+        import static get java.time.Month.SEPTEMBER    as getSEPTEMBER;
+        import static get java.time.Month.OCTOBER      as getOCTOBER;
+        import static get java.time.Month.NOVEMBER     as getNOVEMBER;
+        import static get java.time.Month.DECEMBER     as getDECEMBER;
         match x {
             case x1 if primEquals(x1, getJANUARY())     => January
             case x1 if primEquals(x1, getFEBRUARY())    => February

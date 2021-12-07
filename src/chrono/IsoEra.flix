@@ -57,8 +57,8 @@ namespace Time/Chrono/IsoEra {
     use Time.LocalDate.{LocalDate};
 
     pub def toNative(x: IsoEra): ##java.time.chrono.IsoEra = 
-        import get java.time.chrono.IsoEra:BCE      as getBCE;
-        import get java.time.chrono.IsoEra:CE       as getCE;
+        import static get java.time.chrono.IsoEra.BCE      as getBCE;
+        import static get java.time.chrono.IsoEra.CE       as getCE;
         match x {
             case BCE        => getBCE()
             case CE         => getCE()
@@ -71,8 +71,8 @@ namespace Time/Chrono/IsoEra {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.chrono.IsoEra): IsoEra = 
-        import get java.time.chrono.IsoEra:BCE      as getBCE;
-        import get java.time.chrono.IsoEra:CE       as getCE;
+        import static get java.time.chrono.IsoEra.BCE      as getBCE;
+        import static get java.time.chrono.IsoEra.CE       as getCE;
         match x {
             case x1 if primEquals(x1, getBCE())     => BCE
             case x1 if primEquals(x1, getCE())      => CE

@@ -33,7 +33,7 @@ namespace Time/Chrono/ThaiBuddhistChronology {
     use Time.ZoneId.{ZoneId};
 
     pub def getInstance(): ThaiBuddhistChronology & Impure = 
-        import get java.time.chrono.ThaiBuddhistChronology:INSTANCE      as getINSTANCE;
+        import static get java.time.chrono.ThaiBuddhistChronology.INSTANCE      as getINSTANCE;
         ThaiBuddhistChronology(getINSTANCE())
 
     pub def getCalendarType(x: ThaiBuddhistChronology): String  = 

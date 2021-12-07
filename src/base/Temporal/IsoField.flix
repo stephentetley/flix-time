@@ -53,19 +53,19 @@ namespace Time/Temporal/IsoField {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def dayOfQuarter(): IsoField = 
-        import get java.time.temporal.IsoFields:DAY_OF_QUARTER as getDAY_OF_QUARTER;
+        import static get java.time.temporal.IsoFields.DAY_OF_QUARTER as getDAY_OF_QUARTER;
         IsoField(getDAY_OF_QUARTER()) as & Pure
 
     pub def quarterOfYear(): IsoField = 
-        import get java.time.temporal.IsoFields:QUARTER_OF_YEAR as getQUARTER_OF_YEAR;
+        import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR as getQUARTER_OF_YEAR;
         IsoField(getQUARTER_OF_YEAR()) as & Pure
 
     pub def weekBasedYear(): IsoField = 
-        import get java.time.temporal.IsoFields:WEEK_BASED_YEAR as getWEEK_BASED_YEAR;
+        import static get java.time.temporal.IsoFields.WEEK_BASED_YEAR as getWEEK_BASED_YEAR;
         IsoField(getWEEK_BASED_YEAR()) as & Pure
 
     pub def weekOfWeekBasedYear(): IsoField = 
-        import get java.time.temporal.IsoFields:WEEK_OF_WEEK_BASED_YEAR as getWEEK_OF_WEEK_BASED_YEAR;
+        import static get java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR as getWEEK_OF_WEEK_BASED_YEAR;
         IsoField(getWEEK_OF_WEEK_BASED_YEAR()) as & Pure
 
     pub def equals(x: IsoField, y: IsoField): Bool =

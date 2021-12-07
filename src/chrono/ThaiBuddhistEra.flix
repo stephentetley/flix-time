@@ -55,8 +55,8 @@ namespace Time/Chrono/ThaiBuddhistEra {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def toNative(x: ThaiBuddhistEra): ##java.time.chrono.ThaiBuddhistEra = 
-        import get java.time.chrono.ThaiBuddhistEra:BEFORE_BE     as getBEFORE_BE;
-        import get java.time.chrono.ThaiBuddhistEra:BE            as getBE;
+        import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE     as getBEFORE_BE;
+        import static get java.time.chrono.ThaiBuddhistEra.BE            as getBE;
         match x {
             case BEFORE_BE  => getBEFORE_BE()
             case BE         => getBE() 
@@ -69,8 +69,8 @@ namespace Time/Chrono/ThaiBuddhistEra {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
-        import get java.time.chrono.ThaiBuddhistEra:BEFORE_BE     as getBEFORE_BE;
-        import get java.time.chrono.ThaiBuddhistEra:BE            as getBE;
+        import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE     as getBEFORE_BE;
+        import static get java.time.chrono.ThaiBuddhistEra.BE            as getBE;
         match x {
             case x1 if primEquals(x1, getBEFORE_BE())  => BEFORE_BE
             case x1 if primEquals(x1, getBE())         => BE

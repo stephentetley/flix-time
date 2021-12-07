@@ -40,9 +40,9 @@ namespace Time/Format/ResolverStyle {
 
 
     pub def toNative(x: ResolverStyle): ##java.time.format.ResolverStyle = 
-        import get java.time.format.ResolverStyle:LENIENT       as getLENIENT;
-        import get java.time.format.ResolverStyle:SMART         as getSMART;
-        import get java.time.format.ResolverStyle:STRICT        as getSTRICT;
+        import static get java.time.format.ResolverStyle.LENIENT       as getLENIENT;
+        import static get java.time.format.ResolverStyle.SMART         as getSMART;
+        import static get java.time.format.ResolverStyle.STRICT        as getSTRICT;
         match x {
             case Lenient            => getLENIENT()
             case Smart              => getSMART()
@@ -56,9 +56,9 @@ namespace Time/Format/ResolverStyle {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.format.ResolverStyle): ResolverStyle = 
-        import get java.time.format.ResolverStyle:LENIENT       as getLENIENT;
-        import get java.time.format.ResolverStyle:SMART         as getSMART;
-        import get java.time.format.ResolverStyle:STRICT        as getSTRICT;
+        import static get java.time.format.ResolverStyle.LENIENT       as getLENIENT;
+        import static get java.time.format.ResolverStyle.SMART         as getSMART;
+        import static get java.time.format.ResolverStyle.STRICT        as getSTRICT;
         match x {
             case x1 if primEquals(x1, getLENIENT())             => Lenient
             case x1 if primEquals(x1, getSMART())               => Smart

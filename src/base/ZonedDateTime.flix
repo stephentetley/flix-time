@@ -40,7 +40,7 @@ namespace Time {
     instance FromString[ZonedDateTime] {
         pub def fromString(s: String): Option[ZonedDateTime] =
             import java.lang.String.strip();
-            import java.time.ZonedDateTime:parse(##java.lang.CharSequence);
+            import static java.time.ZonedDateTime.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(ZonedDateTime(parse(cs))) as & Pure
@@ -84,7 +84,7 @@ namespace Time/ZonedDateTime {
     use Time.ZoneId.{ZoneId};
 
     pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, zone: ZoneId): ZonedDateTime =
-        import java.time.ZonedDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId);
+        import static java.time.ZonedDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId);
         let ZoneId(z1) = zone;
         ZonedDateTime(of(year, month, dayOfMonth, hour, minute, second, nanoSecond, z1)) as & Pure
 
@@ -92,19 +92,19 @@ namespace Time/ZonedDateTime {
     /// Returns the current date-time from the system clock using the system zone id.
     ///
     pub def now(): ZonedDateTime & Impure =
-        import java.time.ZonedDateTime:now();
+        import static java.time.ZonedDateTime.now();
         ZonedDateTime(now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): ZonedDateTime & Impure =
-        import java.time.ZonedDateTime:now(##java.time.ZoneId);
+        import static java.time.ZonedDateTime.now(##java.time.ZoneId);
         let ZoneId(z1) = zone;
         ZonedDateTime(now(z1))
 
     pub def ofLocalDateTime(dateTime: LocalDateTime, zone: ZoneId): ZonedDateTime =
-        import java.time.ZonedDateTime:of(##java.time.LocalDateTime, ##java.time.ZoneId);
+        import static java.time.ZonedDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneId);
         let LocalDateTime(dt1) = dateTime;
         let ZoneId(z1) = zone;
         ZonedDateTime(of(dt1, z1)) as & Pure
@@ -118,7 +118,7 @@ namespace Time/ZonedDateTime {
         LocalDateTime(toLocalDateTime(x1)) as & Pure
 
     pub def ofLocalDateLocalTime(date: LocalDate, time: LocalTime, zone: ZoneId): ZonedDateTime =
-        import java.time.ZonedDateTime:of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId);
+        import static java.time.ZonedDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId);
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
         let ZoneId(z1) = zone;
@@ -159,7 +159,7 @@ namespace Time/ZonedDateTime {
     ///
     pub def parse(formatter: DateTimeFormatter, s: String): Option[ZonedDateTime] =
         import java.lang.String.strip();
-        import java.time.ZonedDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.ZonedDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;

@@ -48,22 +48,22 @@ namespace Time/Format/TimeFormatter {
     use Time.ZoneId.{ZoneId};
 
     pub def iso_local_time(): TimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_LOCAL_TIME as getISO_LOCAL_TIME;
+        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_TIME as getISO_LOCAL_TIME;
         TimeFormatter(getISO_LOCAL_TIME()) as & Pure
 
     pub def iso_offset_time(): TimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_OFFSET_TIME as getISO_OFFSET_TIME;
+        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_TIME as getISO_OFFSET_TIME;
         TimeFormatter(getISO_OFFSET_TIME()) as & Pure
 
     pub def basic_iso_time(): TimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_TIME as getISO_TIME;
+        import static get java.time.format.DateTimeFormatter.ISO_TIME as getISO_TIME;
         TimeFormatter(getISO_TIME()) as & Pure
 
     pub def ofPattern(pattern: String): Option[TimeFormatter] =
         Option.map(TimeFormatter, Time/Format/Internal/Prim.ofPattern(pattern))
     
     pub def ofLocalizedTime(style: FormatStyle): TimeFormatter =
-        import java.time.format.DateTimeFormatter:ofLocalizedTime(##java.time.format.FormatStyle);
+        import static java.time.format.DateTimeFormatter.ofLocalizedTime(##java.time.format.FormatStyle);
         let style1 = Time/Format/FormatStyle.toNative(style);
         TimeFormatter(ofLocalizedTime(style1)) as & Pure
 

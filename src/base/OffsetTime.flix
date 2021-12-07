@@ -41,7 +41,7 @@ namespace Time {
     instance FromString[OffsetTime] {
         pub def fromString(s: String): Option[OffsetTime] =
             import java.lang.String.strip();
-            import java.time.OffsetTime:parse(##java.lang.CharSequence);
+            import static java.time.OffsetTime.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(OffsetTime(parse(cs))) as & Pure
@@ -65,13 +65,13 @@ namespace Time {
 
     instance LowerBound[OffsetTime] {
         pub def minValue(): OffsetTime =
-            import get java.time.OffsetTime:MIN as getMIN;
+            import static get java.time.OffsetTime.MIN as getMIN;
             OffsetTime(getMIN()) as & Pure
     }
 
     instance UpperBound[OffsetTime] {
         pub def maxValue(): OffsetTime =
-            import get java.time.OffsetTime:MAX as getMAX;
+            import static get java.time.OffsetTime.MAX as getMAX;
             OffsetTime(getMAX()) as & Pure
     }
 
@@ -97,7 +97,7 @@ namespace Time/OffsetTime {
     use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(x: { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetTime =
-        import java.time.OffsetTime:of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
+        import static java.time.OffsetTime.of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset);
         let ZoneOffset(o1) = x.offset;
         OffsetTime(of(x.hour, x.minute, x.second, x.nanoSecond, o1)) as & Pure
 
@@ -109,27 +109,27 @@ namespace Time/OffsetTime {
     /// Returns the current time from the system clock.
     ///
     pub def now(): OffsetTime & Impure =
-        import java.time.OffsetTime:now();
+        import static java.time.OffsetTime.now();
         OffsetTime(now())
 
     ///
     /// Returns the current time from the system clock.
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetTime & Impure =
-        import java.time.OffsetTime:now(##java.time.ZoneId);
+        import static java.time.OffsetTime.now(##java.time.ZoneId);
         let ZoneId(z1) = zone;
         OffsetTime(now(z1))
 
 
     pub def ofLocalTime(x: LocalTime, offset: ZoneOffset): OffsetTime =
-        import java.time.OffsetTime:of(##java.time.LocalTime, ##java.time.ZoneOffset);
+        import static java.time.OffsetTime.of(##java.time.LocalTime, ##java.time.ZoneOffset);
         let LocalTime(x1) = x;
         let ZoneOffset(o1) = offset;
         OffsetTime(of(x1, o1)) as & Pure
 
 
     pub def ofInstant(x: Instant, zone: ZoneId): OffsetTime =
-        import java.time.OffsetTime:ofInstant(##java.time.Instant, ##java.time.ZoneId);
+        import static java.time.OffsetTime.ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;
         let ZoneId(z1) = zone;
         OffsetTime(ofInstant(x1, z1)) as & Pure
@@ -153,7 +153,7 @@ namespace Time/OffsetTime {
     ///
     pub def parse(formatter: TimeFormatter, s: String): Option[OffsetTime] =
         import java.lang.String.strip();
-        import java.time.OffsetTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.OffsetTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let TimeFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;

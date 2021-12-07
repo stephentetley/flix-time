@@ -51,7 +51,7 @@ namespace Time/Chrono/HijrahEra {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def toNative(x: HijrahEra): ##java.time.chrono.HijrahEra = 
-        import get java.time.chrono.HijrahEra:AH      as getAH;
+        import static get java.time.chrono.HijrahEra.AH      as getAH;
         match x {
             case AH         => getAH()            
         } as & Pure
@@ -63,7 +63,7 @@ namespace Time/Chrono/HijrahEra {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.chrono.HijrahEra): HijrahEra = 
-        import get java.time.chrono.HijrahEra:AH as getAH;
+        import static get java.time.chrono.HijrahEra.AH as getAH;
         match x {
             case x1 if primEquals(x1, getAH())     => AH
         } as & Pure

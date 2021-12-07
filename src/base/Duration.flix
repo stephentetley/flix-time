@@ -43,7 +43,7 @@ namespace Time {
     instance FromString[Duration] {
         pub def fromString(s: String): Option[Duration] =
             import java.lang.String.strip();
-            import java.time.Duration:parse(##java.lang.CharSequence);
+            import static java.time.Duration.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(Duration(parse(cs))) as & Pure
@@ -105,7 +105,7 @@ namespace Time/Duration {
     /// Return a new duration.
     ///
     pub def new(x: {seconds :: Int64, nanos :: Int64}): Duration =
-        import java.time.Duration:ofSeconds(Int64, Int64);
+        import static java.time.Duration.ofSeconds(Int64, Int64);
         Duration(ofSeconds(x.seconds, x.nanos)) as & Pure
 
     ///
@@ -119,14 +119,14 @@ namespace Time/Duration {
     /// Construct a zero length Duration.
     ///
     pub def zero(): Duration =
-        import get java.time.Duration:ZERO as get_zero;
+        import static get java.time.Duration.ZERO as get_zero;
         Duration(get_zero()) as & Pure
 
     ///
     /// Construct a Duration from the supplied number of days.
     ///
     pub def ofDays(days: Int64): Duration =
-        import java.time.Duration:ofDays(Int64);
+        import static java.time.Duration.ofDays(Int64);
         Duration(ofDays(days)) as & Pure
 
     ///
@@ -141,7 +141,7 @@ namespace Time/Duration {
     /// Construct a Duration from the supplied number of hours.
     ///
     pub def ofHours(hours: Int64): Duration =
-        import java.time.Duration:ofHours(Int64);
+        import static java.time.Duration.ofHours(Int64);
         Duration(ofHours(hours)) as & Pure
 
     ///
@@ -156,7 +156,7 @@ namespace Time/Duration {
     /// Construct a Duration from the supplied number of minutes.
     ///
     pub def ofMinutes(minutes: Int64): Duration =
-        import java.time.Duration:ofMinutes(Int64);
+        import static java.time.Duration.ofMinutes(Int64);
         Duration(ofMinutes(minutes)) as & Pure
 
     ///
@@ -171,7 +171,7 @@ namespace Time/Duration {
     /// Construct a Duration from the supplied number of seconds.
     ///
     pub def ofSeconds(seconds: Int64): Duration =
-        import java.time.Duration:ofSeconds(Int64);
+        import static java.time.Duration.ofSeconds(Int64);
         Duration(ofSeconds(seconds)) as & Pure
 
     ///
@@ -186,7 +186,7 @@ namespace Time/Duration {
     /// Construct a Duration from the supplied number of milliseconds.
     ///
     pub def ofMillis(millis: Int64): Duration =
-        import java.time.Duration:ofMillis(Int64);
+        import static java.time.Duration.ofMillis(Int64);
         Duration(ofMillis(millis)) as & Pure
 
 
@@ -202,7 +202,7 @@ namespace Time/Duration {
     /// Return the number of nanoseconds in Duration `x`.
     ///
     pub def ofNanos(nanos: Int64): Duration =
-        import java.time.Duration:ofNanos(Int64);
+        import static java.time.Duration.ofNanos(Int64);
         Duration(ofNanos(nanos)) as & Pure
 
     ///
@@ -215,7 +215,7 @@ namespace Time/Duration {
 
 
     pub def ofChrono(x: Int64, unit: ChronoUnit): Duration =
-        import java.time.Duration:of(Int64, ##java.time.temporal.TemporalUnit);
+        import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit);
         let u1 = Time/Temporal/ChronoUnit.toNative(unit);
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         Duration(of(x, tu1)) as & Pure

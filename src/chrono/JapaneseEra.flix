@@ -49,7 +49,7 @@ namespace Time/Chrono/JapaneseEra {
     use Time/Chrono.JapaneseEra.{JapaneseEra};
 
     pub def new(japaneseEra: Int32): Option[JapaneseEra] =
-        import java.time.chrono.JapaneseEra:of(Int32);
+        import static java.time.chrono.JapaneseEra.of(Int32);
         try {
             Some(JapaneseEra(of(japaneseEra))) as & Pure
         } catch {
@@ -57,24 +57,24 @@ namespace Time/Chrono/JapaneseEra {
         }
 
     pub def heisei(): JapaneseEra = 
-        import get java.time.chrono.JapaneseEra:HEISEI as getHEISEI;
+        import static get java.time.chrono.JapaneseEra.HEISEI as getHEISEI;
         JapaneseEra(getHEISEI()) as & Pure
 
     pub def meiji(): JapaneseEra = 
-        import get java.time.chrono.JapaneseEra:MEIJI as getMEIJI;
+        import static get java.time.chrono.JapaneseEra.MEIJI as getMEIJI;
         JapaneseEra(getMEIJI()) as & Pure
 
     /// Java 13
     /// pub def reiwa(): JapaneseEra = 
-    ///     import get java.time.chrono.JapaneseEra:REIWA as getREIWA;
+    ///     import static get java.time.chrono.JapaneseEra.REIWA as getREIWA;
     ///     JapaneseEra(getREIWA()) as & Pure
 
     pub def showa(): JapaneseEra = 
-        import get java.time.chrono.JapaneseEra:SHOWA as getSHOWA;
+        import static get java.time.chrono.JapaneseEra.SHOWA as getSHOWA;
         JapaneseEra(getSHOWA()) as & Pure
 
     pub def taisho(): JapaneseEra = 
-        import get java.time.chrono.JapaneseEra:TAISHO as getTAISHO;
+        import static get java.time.chrono.JapaneseEra.TAISHO as getTAISHO;
         JapaneseEra(getTAISHO()) as & Pure
 
     pub def getValue(x: JapaneseEra): Int32 = 

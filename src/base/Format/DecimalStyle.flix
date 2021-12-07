@@ -38,11 +38,11 @@ namespace Time/Format/DecimalStyle {
     use Time/Format.DecimalStyle.{DecimalStyle};
 
     pub def standard(): DecimalStyle =
-        import get java.time.format.DecimalStyle:STANDARD as getSTANDARD;
+        import static get java.time.format.DecimalStyle.STANDARD as getSTANDARD;
         DecimalStyle(getSTANDARD()) as & Pure
 
     pub def new(): DecimalStyle = 
-        import java.time.format.DecimalStyle:ofDefaultLocale();
+        import static java.time.format.DecimalStyle.ofDefaultLocale();
         DecimalStyle(ofDefaultLocale()) as & Pure
 
     pub def hashCode(x: DecimalStyle): Int32 = 

@@ -55,17 +55,17 @@ namespace Time/Clock {
     use Time.ZoneId.{ZoneId};
 
     pub def system(x: ZoneId): Clock & Impure =
-        import java.time.Clock:system(##java.time.ZoneId);
+        import static java.time.Clock.system(##java.time.ZoneId);
         let ZoneId(x1) = x;
         Clock(system(x1))
 
 
     pub def systemDefaultZone(): Clock & Impure =
-        import java.time.Clock:systemDefaultZone();
+        import static java.time.Clock.systemDefaultZone();
         Clock(systemDefaultZone())
 
     pub def systemUTC(): Clock & Impure =
-        import java.time.Clock:systemUTC();
+        import static java.time.Clock.systemUTC();
         Clock(systemUTC())
 
     pub def equals(x: Clock, y: Clock): Bool =
@@ -91,17 +91,17 @@ namespace Time/Clock {
 
 
     pub def tickMillis(zoneId: ZoneId): Clock & Impure =
-        import java.time.Clock:tickMillis(##java.time.ZoneId);
+        import static java.time.Clock.tickMillis(##java.time.ZoneId);
         let ZoneId(zoneId1) = zoneId;
         Clock(tickMillis(zoneId1))
 
     pub def tickSeconds(zoneId: ZoneId): Clock & Impure =
-        import java.time.Clock:tickSeconds(##java.time.ZoneId);
+        import static java.time.Clock.tickSeconds(##java.time.ZoneId);
         let ZoneId(zoneId1) = zoneId;
         Clock(tickSeconds(zoneId1))
 
     pub def tickMinutes(zoneId: ZoneId): Clock & Impure =
-        import java.time.Clock:tickMinutes(##java.time.ZoneId);
+        import static java.time.Clock.tickMinutes(##java.time.ZoneId);
         let ZoneId(zoneId1) = zoneId;
         Clock(tickMinutes(zoneId1))
 

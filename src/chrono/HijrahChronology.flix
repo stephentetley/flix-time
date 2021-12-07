@@ -34,7 +34,7 @@ namespace Time/Chrono/HijrahChronology {
     use Time.ZoneId.{ZoneId};
 
     pub def getInstance(): HijrahChronology & Impure =
-        import get java.time.chrono.HijrahChronology:INSTANCE as getINSTANCE;
+        import static get java.time.chrono.HijrahChronology.INSTANCE as getINSTANCE;
         HijrahChronology(getINSTANCE())
 
     pub def date(x: HijrahChronology, r: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =

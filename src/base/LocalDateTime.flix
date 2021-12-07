@@ -41,7 +41,7 @@ namespace Time {
     instance FromString[LocalDateTime] {
         pub def fromString(s: String): Option[LocalDateTime] =
             import java.lang.String.strip();
-            import java.time.LocalDateTime:parse(##java.lang.CharSequence);
+            import static java.time.LocalDateTime.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(LocalDateTime(parse(cs))) as & Pure
@@ -65,13 +65,13 @@ namespace Time {
 
     instance LowerBound[LocalDateTime] {
         pub def minValue(): LocalDateTime =
-            import get java.time.LocalDateTime:MIN as getMIN;
+            import static get java.time.LocalDateTime.MIN as getMIN;
             LocalDateTime(getMIN()) as & Pure
     }
     
     instance UpperBound[LocalDateTime] {
         pub def maxValue(): LocalDateTime =
-            import get java.time.LocalDateTime:MAX as getMAX;
+            import static get java.time.LocalDateTime.MAX as getMAX;
             LocalDateTime(getMAX()) as & Pure
     }
 
@@ -98,17 +98,17 @@ namespace Time/LocalDateTime {
     use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
-        import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32);
+        import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32);
         LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute)) as & Pure
 
     pub def newWithSecond(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
                                 hour :: Int32, minute :: Int32, second :: Int32}): LocalDateTime =
-        import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32);
+        import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32);
         LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second)) as & Pure
 
     pub def newWithSecondAndNano(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
                                         hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalDateTime =
-        import java.time.LocalDateTime:of(Int32, Int32, Int32, Int32, Int32, Int32, Int32);
+        import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32);
         LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond)) as & Pure
 
     /// TODO - potentially remove getFields...
@@ -122,32 +122,32 @@ namespace Time/LocalDateTime {
     /// Returns the current date-time from the system clock.
     ///
     pub def now(): LocalDateTime & Impure =
-        import java.time.LocalDateTime:now();
+        import static java.time.LocalDateTime.now();
         LocalDateTime(now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): LocalDateTime & Impure =
-        import java.time.LocalDateTime:now(##java.time.ZoneId);
+        import static java.time.LocalDateTime.now(##java.time.ZoneId);
         let ZoneId(z) = zone;
         LocalDateTime(now(z))
 
 
 
     pub def ofLocalDateLocalTime(d: LocalDate, t: LocalTime): LocalDateTime =
-        import java.time.LocalDateTime:of(##java.time.LocalDate, ##java.time.LocalTime);
+        import static java.time.LocalDateTime.of(##java.time.LocalDate, ##java.time.LocalTime);
         let LocalDate(d1) = d;
         let LocalTime(t1) = t;
         LocalDateTime(of(d1, t1)) as & Pure
 
     pub def ofEpochSecond(epochSecond: Int64, nanoOfSecond: Int32, offset: ZoneOffset): LocalDateTime = 
-        import java.time.LocalDateTime:ofEpochSecond(Int64, Int32, ##java.time.ZoneOffset);
+        import static java.time.LocalDateTime.ofEpochSecond(Int64, Int32, ##java.time.ZoneOffset);
         let ZoneOffset(o1) = offset;
         LocalDateTime(ofEpochSecond(epochSecond, nanoOfSecond, o1)) as & Pure
 
     pub def ofInstant(x: Instant, zoneId: ZoneId): LocalDateTime = 
-        import java.time.LocalDateTime:ofInstant(##java.time.Instant, ##java.time.ZoneId);
+        import static java.time.LocalDateTime.ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;
         let ZoneId(z1) = zoneId;
         LocalDateTime(ofInstant(x1, z1)) as & Pure
@@ -188,7 +188,7 @@ namespace Time/LocalDateTime {
     ///
     pub def parse(formatter: DateTimeFormatter, s: String): Option[LocalDateTime] =
         import java.lang.String.strip();
-        import java.time.LocalDateTime:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;

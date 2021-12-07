@@ -46,7 +46,7 @@ namespace Time/Temporal/ValueRange {
     /// Return a new **Fixed** value range.
     ///
     pub def newFixedValueRange(x: {min :: Int64, max :: Int64}): ValueRange =
-        import java.time.temporal.ValueRange:of(Int64, Int64);
+        import static java.time.temporal.ValueRange.of(Int64, Int64);
         ValueRange(of(x.min, x.max)) as & Pure
 
 
@@ -54,14 +54,14 @@ namespace Time/Temporal/ValueRange {
     /// Return a new variable value range.
     ///
     pub def newVariableValueRange(x: {min :: Int64, maxSmallest :: Int64, maxLargest :: Int64}): ValueRange =
-        import java.time.temporal.ValueRange:of(Int64, Int64, Int64);
+        import static java.time.temporal.ValueRange.of(Int64, Int64, Int64);
         ValueRange(of(x.min, x.maxSmallest, x.maxLargest)) as & Pure
 
     ///
     /// Return a new fully variable value range.
     ///
     pub def newFullyVariableValueRange(x: {minSmallest :: Int64, minLargest :: Int64, maxSmallest :: Int64, maxLargest :: Int64}): ValueRange =
-        import java.time.temporal.ValueRange:of(Int64, Int64, Int64, Int64);
+        import static java.time.temporal.ValueRange.of(Int64, Int64, Int64, Int64);
         ValueRange(of(x.minSmallest, x.minLargest, x.maxSmallest, x.maxLargest)) as & Pure
 
 

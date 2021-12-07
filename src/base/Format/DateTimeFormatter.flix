@@ -50,23 +50,23 @@ namespace Time/Format/DateTimeFormatter {
     /// Formatters
 
     pub def iso_local_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_LOCAL_DATE_TIME as getISO_LOCAL_DATE_TIME;
+        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME as getISO_LOCAL_DATE_TIME;
         DateTimeFormatter(getISO_LOCAL_DATE_TIME()) as & Pure
 
     pub def iso_offset_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_OFFSET_DATE_TIME as getISO_OFFSET_DATE_TIME;
+        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME as getISO_OFFSET_DATE_TIME;
         DateTimeFormatter(getISO_OFFSET_DATE_TIME()) as & Pure
 
     pub def iso_zoned_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_ZONED_DATE_TIME as getISO_ZONED_DATE_TIME;
+        import static get java.time.format.DateTimeFormatter.ISO_ZONED_DATE_TIME as getISO_ZONED_DATE_TIME;
         DateTimeFormatter(getISO_ZONED_DATE_TIME()) as & Pure
 
     pub def iso_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:ISO_DATE_TIME as getISO_DATE_TIME;
+        import static get java.time.format.DateTimeFormatter.ISO_DATE_TIME as getISO_DATE_TIME;
         DateTimeFormatter(getISO_DATE_TIME()) as & Pure
 
     pub def rfc_1123_date_time(): DateTimeFormatter =
-        import get java.time.format.DateTimeFormatter:RFC_1123_DATE_TIME as getRFC_1123_DATE_TIME;
+        import static get java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME as getRFC_1123_DATE_TIME;
         DateTimeFormatter(getRFC_1123_DATE_TIME()) as & Pure
 
 
@@ -75,12 +75,12 @@ namespace Time/Format/DateTimeFormatter {
 
     
     pub def ofLocalizedDateTime(style: FormatStyle): DateTimeFormatter =
-        import java.time.format.DateTimeFormatter:ofLocalizedDateTime(##java.time.format.FormatStyle);
+        import static java.time.format.DateTimeFormatter.ofLocalizedDateTime(##java.time.format.FormatStyle);
         let style1 = Time/Format/FormatStyle.toNative(style);
         DateTimeFormatter(ofLocalizedDateTime(style1)) as & Pure
 
     pub def ofLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter =
-        import java.time.format.DateTimeFormatter:ofLocalizedDateTime(##java.time.format.FormatStyle, ##java.time.format.FormatStyle);
+        import static java.time.format.DateTimeFormatter.ofLocalizedDateTime(##java.time.format.FormatStyle, ##java.time.format.FormatStyle);
         let d1 = Time/Format/FormatStyle.toNative(dateStyle);
         let t1 = Time/Format/FormatStyle.toNative(timeStyle);
         DateTimeFormatter(ofLocalizedDateTime(d1, t1)) as & Pure

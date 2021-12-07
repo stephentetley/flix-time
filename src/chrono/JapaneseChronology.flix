@@ -38,7 +38,7 @@ namespace Time/Chrono/JapaneseChronology {
 
 
     pub def getInstance(): JapaneseChronology & Impure = 
-        import get java.time.chrono.JapaneseChronology:INSTANCE as getINSTANCE;
+        import static get java.time.chrono.JapaneseChronology.INSTANCE as getINSTANCE;
         JapaneseChronology(getINSTANCE())
 
     pub def getCalendarType(x: JapaneseChronology): String = 

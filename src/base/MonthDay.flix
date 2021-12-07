@@ -37,7 +37,7 @@ namespace Time {
     instance FromString[MonthDay] {
         pub def fromString(s: String): Option[MonthDay] = try {
             import java.lang.String.strip();
-            import java.time.MonthDay:parse(##java.lang.CharSequence);
+            import static java.time.MonthDay.parse(##java.lang.CharSequence);
             let cs = strip(s) as ##java.lang.CharSequence & Pure;
             Some(MonthDay(parse(cs))) as & Pure
         } catch {
@@ -71,20 +71,20 @@ namespace Time/MonthDay {
     use Time.ZoneId.{ZoneId};
 
     pub def new(x: {month :: Int32, dayOfMonth :: Int32}): MonthDay =
-        import java.time.MonthDay:of(Int32, Int32);
+        import static java.time.MonthDay.of(Int32, Int32);
         MonthDay(of(x.month, x.dayOfMonth)) as & Pure
 
     pub def newWithMonth(x: {month :: Month, dayOfMonth :: Int32}): MonthDay =
-        import java.time.MonthDay:of(##java.time.Month, Int32);
+        import static java.time.MonthDay.of(##java.time.Month, Int32);
         let m1 = Time/Month.toNative(x.month);
         MonthDay(of(m1, x.dayOfMonth)) as & Pure
 
     pub def now(): MonthDay & Impure =         
-        import java.time.MonthDay:now();
+        import static java.time.MonthDay.now();
         MonthDay(now())
 
     pub def nowWithZoneId(x: ZoneId): MonthDay & Impure =         
-        import java.time.MonthDay:now(##java.time.ZoneId);
+        import static java.time.MonthDay.now(##java.time.ZoneId);
         let ZoneId(x1) = x;
         MonthDay(now(x1))
 
@@ -105,7 +105,7 @@ namespace Time/MonthDay {
     ///
     pub def parse(formatter: DateFormatter, s: String): Option[MonthDay] =
         import java.lang.String.strip();
-        import java.time.MonthDay:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.MonthDay.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;

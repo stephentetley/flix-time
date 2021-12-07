@@ -67,11 +67,11 @@ namespace Time/Chrono/JapaneseDate {
     /// Returns ___
     ///
     pub def new(x: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): JapaneseDate  =
-        import java.time.chrono.JapaneseDate:of(Int32, Int32, Int32);
+        import static java.time.chrono.JapaneseDate.of(Int32, Int32, Int32);
         JapaneseDate(of(x.prolepticYear, x.month, x.dayOfMonth)) as & Pure
 
     pub def newWithJapaneseEra(x: {era :: JapaneseEra, yearOfEra :: Int32, month :: Int32, dayOfMonth :: Int32}): JapaneseDate  =
-        import java.time.chrono.JapaneseDate:of(##java.time.chrono.JapaneseEra, Int32, Int32, Int32);
+        import static java.time.chrono.JapaneseDate.of(##java.time.chrono.JapaneseEra, Int32, Int32, Int32);
         let JapaneseEra(era1) = x.era;
         JapaneseDate(of(era1, x.yearOfEra, x.month, x.dayOfMonth)) as & Pure
 
@@ -80,33 +80,33 @@ namespace Time/Chrono/JapaneseDate {
     /// Returns ___
     ///
     pub def now(): JapaneseDate & Impure =
-        import java.time.chrono.JapaneseDate:now();
+        import static java.time.chrono.JapaneseDate.now();
         JapaneseDate(now())
 
     pub def ofLocalDate(x: LocalDate): JapaneseDate = 
-        import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
+        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor);
         let LocalDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
 
     pub def toLocalDate(x: JapaneseDate): LocalDate =
-        import java.time.LocalDate:from(##java.time.temporal.TemporalAccessor);
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor);
         let JapaneseDate(x1) = x;
         LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
 
     pub def ofHijrahDate(x: HijrahDate): JapaneseDate = 
-        import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
+        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor);
         let HijrahDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
     pub def ofMinguoDate(x: MinguoDate): JapaneseDate = 
-        import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
+        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor);
         let MinguoDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 
     pub def ofThaiBuddhistDate(x: ThaiBuddhistDate): JapaneseDate = 
-        import java.time.chrono.JapaneseDate:from(##java.time.temporal.TemporalAccessor);
+        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor);
         let ThaiBuddhistDate(x1) = x;
         JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
 

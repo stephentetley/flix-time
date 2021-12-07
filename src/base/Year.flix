@@ -38,7 +38,7 @@ namespace Time {
     instance FromString[Year] {
         pub def fromString(s: String): Option[Year] =
             import java.lang.String.strip();
-            import java.time.Year:parse(##java.lang.CharSequence);
+            import static java.time.Year.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(Year(parse(cs))) as & Pure
@@ -62,15 +62,15 @@ namespace Time {
     
     instance LowerBound[Year] {
         pub def minValue(): Year =
-            import get java.time.Year:MIN_VALUE as getMIN_VALUE;
-            import java.time.Year:of(Int32);
+            import static get java.time.Year.MIN_VALUE as getMIN_VALUE;
+            import static java.time.Year.of(Int32);
             Year(of(getMIN_VALUE())) as & Pure
     }
 
     instance UpperBound[Year] {
         pub def maxValue(): Year =
-            import get java.time.Year:MAX_VALUE as getMAX_VALUE;
-            import java.time.Year:of(Int32);
+            import static get java.time.Year.MAX_VALUE as getMAX_VALUE;
+            import static java.time.Year.of(Int32);
             Year(of(getMAX_VALUE())) as & Pure
     }
 
@@ -97,21 +97,21 @@ namespace Time/Year {
 
 
     pub def new(year: Int32): Year =
-        import java.time.Year:of(Int32);
+        import static java.time.Year.of(Int32);
         Year(of(year)) as & Pure
 
 
     pub def now(): Year & Impure =         
-        import java.time.Year:now();
+        import static java.time.Year.now();
         Year(now())
 
     pub def nowWithClock(x: Clock): Year & Impure =         
-        import java.time.Year:now(##java.time.Clock);
+        import static java.time.Year.now(##java.time.Clock);
         let Clock(x1) = x;
         Year(now(x1))
 
     pub def nowWithZoneId(x: ZoneId): Year & Impure =         
-        import java.time.Year:now(##java.time.ZoneId);
+        import static java.time.Year.now(##java.time.ZoneId);
         let ZoneId(x1) = x;
         Year(now(x1))
 
@@ -124,7 +124,7 @@ namespace Time/Year {
     ///
     pub def parse(formatter: DateFormatter, s: String): Option[Year] =
         import java.lang.String.strip();
-        import java.time.Year:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;
@@ -227,7 +227,7 @@ namespace Time/Year {
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeapYear(x: Int64): Bool =
-        import java.time.Year:isLeap(Int64);
+        import static java.time.Year.isLeap(Int64);
         isLeap(x) as & Pure
 
 

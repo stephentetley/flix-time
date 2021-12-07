@@ -41,10 +41,10 @@ namespace Time/Format/FormatStyle {
     use Time/Format.FormatStyle.{Full, Long, Medium, Short};
 
     pub def toNative(x: FormatStyle): ##java.time.format.FormatStyle = 
-        import get java.time.format.FormatStyle:FULL            as getFULL;
-        import get java.time.format.FormatStyle:LONG            as getLONG;
-        import get java.time.format.FormatStyle:MEDIUM          as getMEDIUM;
-        import get java.time.format.FormatStyle:SHORT           as getSHORT;
+        import static get java.time.format.FormatStyle.FULL            as getFULL;
+        import static get java.time.format.FormatStyle.LONG            as getLONG;
+        import static get java.time.format.FormatStyle.MEDIUM          as getMEDIUM;
+        import static get java.time.format.FormatStyle.SHORT           as getSHORT;
         match x {
             case Full               => getFULL()
             case Long               => getLONG()
@@ -59,10 +59,10 @@ namespace Time/Format/FormatStyle {
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.format.FormatStyle): FormatStyle = 
-        import get java.time.format.FormatStyle:FULL            as getFULL;
-        import get java.time.format.FormatStyle:LONG            as getLONG;
-        import get java.time.format.FormatStyle:MEDIUM          as getMEDIUM;
-        import get java.time.format.FormatStyle:SHORT           as getSHORT;
+        import static get java.time.format.FormatStyle.FULL            as getFULL;
+        import static get java.time.format.FormatStyle.LONG            as getLONG;
+        import static get java.time.format.FormatStyle.MEDIUM          as getMEDIUM;
+        import static get java.time.format.FormatStyle.SHORT           as getSHORT;
         match x {
             case x1 if primEquals(x1, getFULL())                => Full
             case x1 if primEquals(x1, getLONG())                => Long

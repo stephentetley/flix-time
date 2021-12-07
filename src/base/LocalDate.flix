@@ -41,7 +41,7 @@ namespace Time {
     instance FromString[LocalDate] {
         pub def fromString(s: String): Option[LocalDate] =
             import java.lang.String.strip();
-            import java.time.LocalDate:parse(##java.lang.CharSequence);
+            import static java.time.LocalDate.parse(##java.lang.CharSequence);
             try {        
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
                 Some(LocalDate(parse(cs))) as & Pure
@@ -66,13 +66,13 @@ namespace Time {
 
     instance LowerBound[LocalDate] {
         pub def minValue(): LocalDate =
-            import get java.time.LocalDate:MIN as getMIN;
+            import static get java.time.LocalDate.MIN as getMIN;
             LocalDate(getMIN()) as & Pure
     }
 
     instance UpperBound[LocalDate] {
         pub def maxValue(): LocalDate =
-            import get java.time.LocalDate:MAX as getMAX;
+            import static get java.time.LocalDate.MAX as getMAX;
             LocalDate(getMAX()) as & Pure
     }
 
@@ -103,11 +103,11 @@ namespace Time/LocalDate {
     use Time.ZoneId.{ZoneId};
 
     pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32}): LocalDate =
-        import java.time.LocalDate:of(Int32, Int32, Int32);
+        import static java.time.LocalDate.of(Int32, Int32, Int32);
         LocalDate(of(x.year, x.month, x.dayOfMonth)) as & Pure
 
     pub def newWithMonth(x: {year :: Int32, month :: Month, dayOfMonth :: Int32}): LocalDate =
-        import java.time.LocalDate:of(Int32, ##java.time.Month, Int32);
+        import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32);
         let m1 = Time/Month.toNative(x.month);
         LocalDate(of(x.year, m1, x.dayOfMonth)) as & Pure
 
@@ -120,14 +120,14 @@ namespace Time/LocalDate {
     /// Returns the current date from the system clock.
     ///
     pub def now(): LocalDate & Impure =
-        import java.time.LocalDate:now();
+        import static java.time.LocalDate.now();
         LocalDate(now())
 
     ///
     /// Returns the current date from the system clock using zoneId.
     ///
     pub def nowWithZoneId(zoneId: ZoneId): LocalDate & Impure =
-        import java.time.LocalDate:now(##java.time.ZoneId);
+        import static java.time.LocalDate.now(##java.time.ZoneId);
         let ZoneId(z1) = zoneId;
         LocalDate(now(z1))
 
@@ -136,7 +136,7 @@ namespace Time/LocalDate {
     /// ___
     ///
     pub def epoch(): LocalDate =
-        import get java.time.LocalDate:EPOCH as getEPOCH;
+        import static get java.time.LocalDate.EPOCH as getEPOCH;
         LocalDate(getEPOCH()) as & Pure
 
 
@@ -166,13 +166,10 @@ namespace Time/LocalDate {
 
 
     pub def ofInstant(x: Instant, zoneId: ZoneId): LocalDate =
-        import java.time.LocalDate:ofInstant(##java.time.Instant, ##java.time.ZoneId);
+        import static java.time.LocalDate.ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;
         let ZoneId(z1) = zoneId;
         LocalDate(ofInstant(x1, z1)) as & Pure
-
-
-
 
     /// 
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
@@ -182,7 +179,7 @@ namespace Time/LocalDate {
     ///
     pub def parse(formatter: DateFormatter, s: String): Option[LocalDate] =
         import java.lang.String.strip();
-        import java.time.LocalDate:parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateFormatter(fmtr) = formatter;
             let cs = strip(s) as ##java.lang.CharSequence & Pure;
@@ -214,7 +211,7 @@ namespace Time/LocalDate {
         
 
     pub def ofEpochDay(x: Int64): LocalDate =
-        import java.time.LocalDate:ofEpochDay(Int64);
+        import static java.time.LocalDate.ofEpochDay(Int64);
         LocalDate(ofEpochDay(x)) as & Pure
 
     pub def toEpochDay(x: LocalDate): Int64 = 
@@ -374,8 +371,5 @@ namespace Time/LocalDate {
         import java.time.LocalDate.lengthOfYear();
         let LocalDate(x1) = x;
         lengthOfYear(x1) as & Pure
-
-
-
 
 }
