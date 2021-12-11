@@ -83,11 +83,14 @@ namespace Time {
             Period(negated(x1)) as & Pure
     }
 
+    /// `combine` is addition
+    instance SemiGroup[Period] {
+        pub def combine(x: Period, y: Period): Period = Add.add(x, y)
+    }
 
     /// Addition
     instance Monoid[Period] {
         pub def empty(): Period = Time/Period.zero()
-        pub def combine(x: Period, y: Period): Period = Add.add(x, y)
     }
 
 }

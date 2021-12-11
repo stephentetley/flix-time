@@ -76,22 +76,28 @@ namespace Time/Chrono/ThaiBuddhistDate {
 
 
     pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek)
+            |> Result.getWithDefault(-1)
         
     pub def getDayOfMonth(x: ThaiBuddhistDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth)
+            |> Result.getWithDefault(-1)
     
     pub def getDayOfYear(x: ThaiBuddhistDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear)
+            |> Result.getWithDefault(-1)
 
     pub def getMonthOfYear(x: ThaiBuddhistDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear)
+            |> Result.getWithDefault(-1)
 
     pub def getYear(x: ThaiBuddhistDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.Year), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.Year)
+            |> Result.getWithDefault(-1)
 
     pub def getYearOfEra(x: ThaiBuddhistDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra)
+            |> Result.getWithDefault(-1)
 
 
     def getChronoFieldHelper(x: ThaiBuddhistDate, field: ChronoField): Result[Int32, String] =

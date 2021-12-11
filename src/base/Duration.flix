@@ -88,10 +88,14 @@ namespace Time {
             Duration(negated(x1)) as & Pure
     }
 
+    /// `combine` is addition
+    instance SemiGroup[Duration] {
+        pub def combine(x: Duration, y: Duration): Duration = Add.add(x, y)
+    }
+
     /// Monoid is addition
     instance Monoid[Duration] {
         pub def empty(): Duration = Time/Duration.zero()
-        pub def combine(x: Duration, y: Duration): Duration = Add.add(x, y)
     }
 }
 

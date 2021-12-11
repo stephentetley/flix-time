@@ -139,23 +139,28 @@ namespace Time/Chrono/JapaneseDate {
         lengthOfMonth(x1) as & Pure
     
     pub def getDayOfWeek(x: JapaneseDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek)
+            |> Result.getWithDefault(-1)
         
     pub def getDayOfMonth(x: JapaneseDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth), -1)
-    
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth)
+            |> Result.getWithDefault(-1)
+
     pub def getDayOfYear(x: JapaneseDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear)
+            |> Result.getWithDefault(-1)
 
     pub def getMonthOfYear(x: JapaneseDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear)
+            |> Result.getWithDefault(-1)
 
     pub def getYear(x: JapaneseDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.Year), -1)
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.Year)
+            |> Result.getWithDefault(-1)
 
     pub def getYearOfEra(x: JapaneseDate): Int32 = 
-        Result.getWithDefault(getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra), -1)
-
+        getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra)
+            |> Result.getWithDefault(-1)
 
     def getChronoFieldHelper(x: JapaneseDate, field: ChronoField): Result[Int32, String] =
         import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField);
