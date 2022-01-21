@@ -30,7 +30,7 @@ namespace Time {
             let ZoneOffset(x1) = x;
             toString(x1) as & Pure
     }
-    
+
     instance FromString[ZoneOffset] {
         pub def fromString(x: String): Option[ZoneOffset] =
             import java.lang.String.strip();
@@ -43,20 +43,20 @@ namespace Time {
             }
     }
 
-    
+
     instance Eq[ZoneOffset] {
         pub def eq(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.equals(x, y)
     }
 
     instance Hash[ZoneOffset] {
-        pub def hash(x: ZoneOffset): Int = Time/ZoneOffset.hashCode(x)
+        pub def hash(x: ZoneOffset): Int32 = Time/ZoneOffset.hashCode(x)
     }
 
     instance Order[ZoneOffset] {
-        pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison = 
-            Time/ZoneOffset.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison =
+            Time/ZoneOffset.compareTo(x,y) |> Comparison.fromInt32
     }
-    
+
 
     instance LowerBound[ZoneOffset] {
         pub def minValue(): ZoneOffset = Time/ZoneOffset.min()
@@ -116,7 +116,7 @@ namespace Time/ZoneOffset {
         let ZoneOffset(y1) = y;
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
-    pub def hashCode(x: ZoneOffset): Int32 = 
+    pub def hashCode(x: ZoneOffset): Int32 =
         import java.time.ZoneOffset.hashCode();
         let ZoneOffset(x1) = x;
         hashCode(x1) as & Pure
@@ -132,5 +132,5 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset.getId();
         let ZoneOffset(x1) = x;
         getId(x1) as & Pure
-        
+
 }

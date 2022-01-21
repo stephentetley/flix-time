@@ -54,12 +54,12 @@ namespace Time {
     }
 
     instance Hash[OffsetDateTime] {
-        pub def hash(x: OffsetDateTime): Int = Time/OffsetDateTime.hashCode(x)
+        pub def hash(x: OffsetDateTime): Int32 = Time/OffsetDateTime.hashCode(x)
     }
 
     instance Order[OffsetDateTime] {
-        pub def compare(x: OffsetDateTime, y: OffsetDateTime): Comparison = 
-            Time/OffsetDateTime.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: OffsetDateTime, y: OffsetDateTime): Comparison =
+            Time/OffsetDateTime.compareTo(x,y) |> Comparison.fromInt32
     }
 
     instance LowerBound[OffsetDateTime] {
@@ -67,7 +67,7 @@ namespace Time {
             import static get java.time.OffsetDateTime.MIN as getMIN;
             OffsetDateTime(getMIN()) as & Pure
     }
-    
+
     instance UpperBound[OffsetDateTime] {
         pub def maxValue(): OffsetDateTime =
             import static get java.time.OffsetDateTime.MAX as getMAX;
@@ -114,7 +114,7 @@ namespace Time/OffsetDateTime {
         { year = getYear(x), month = getMonthValue(x), dayOfMonth = getDayOfMonth(x)
         , hour = getHour(x), minute = getMinute(x), second = getSecond(x)
         , nanoSecond = getNano(x), offset = getOffset(x) }
-    
+
 
     ///
     /// Returns the current date-time from the system clock using the system zone id.
@@ -133,18 +133,18 @@ namespace Time/OffsetDateTime {
 
 
 
-    pub def atZoneSameInstant(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime = 
+    pub def atZoneSameInstant(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSameInstant(##java.time.ZoneId);
         let OffsetDateTime(x1) = x;
         let ZoneId(z1) = zoneId;
         ZonedDateTime(atZoneSameInstant(x1, z1)) as & Pure
-    
-    pub def atZoneSimilarLocal(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime = 
+
+    pub def atZoneSimilarLocal(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSimilarLocal(##java.time.ZoneId);
         let OffsetDateTime(x1) = x;
         let ZoneId(z1) = zoneId;
         ZonedDateTime(atZoneSimilarLocal(x1, z1)) as & Pure
-    
+
 
     pub def ofLocalDateTime(dateTime: LocalDateTime, offset: ZoneOffset): OffsetDateTime =
         import static java.time.OffsetDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneOffset);
@@ -164,10 +164,12 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         toEpochSecond(x1) as & Pure
 
+/*
     pub def toInstant(x: OffsetDateTime): Instant =
         import java.time.OffsetDateTime.toInstant();
         let OffsetDateTime(x1) = x;
         Instant(toInstant(x1)) as & Pure
+*/
 
     ///
     /// Returns the given date-time `x` as __.
@@ -243,7 +245,7 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(y1) = y;
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
-    pub def hashCode(x: OffsetDateTime): Int32 = 
+    pub def hashCode(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.hashCode();
         let OffsetDateTime(x1) = x;
         hashCode(x1) as & Pure
@@ -449,19 +451,19 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         ZoneOffset(getOffset(x1)) as & Pure
 
-    pub def putOffsetSameInstant(x: OffsetDateTime, offset: ZoneOffset): OffsetDateTime = 
+    pub def putOffsetSameInstant(x: OffsetDateTime, offset: ZoneOffset): OffsetDateTime =
         import java.time.OffsetDateTime.withOffsetSameInstant(##java.time.ZoneOffset);
         let OffsetDateTime(x1) = x;
         let ZoneOffset(o1) = offset;
         OffsetDateTime(withOffsetSameInstant(x1, o1)) as & Pure
-    
-    pub def putOffsetSameLocal(x: OffsetDateTime, offset: ZoneOffset): OffsetDateTime = 
+
+    pub def putOffsetSameLocal(x: OffsetDateTime, offset: ZoneOffset): OffsetDateTime =
         import java.time.OffsetDateTime.withOffsetSameLocal(##java.time.ZoneOffset);
         let OffsetDateTime(x1) = x;
         let ZoneOffset(o1) = offset;
         OffsetDateTime(withOffsetSameLocal(x1, o1)) as & Pure
 
-    pub def until(b: OffsetDateTime, e: OffsetDateTime, unit: ChronoUnit): Int64 = 
+    pub def until(b: OffsetDateTime, e: OffsetDateTime, unit: ChronoUnit): Int64 =
         import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let OffsetDateTime(b1) = b;
         let OffsetDateTime(e1) = e;

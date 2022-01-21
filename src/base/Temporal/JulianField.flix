@@ -31,7 +31,7 @@ namespace Time/Temporal {
     }
 
     instance Hash[JulianField] {
-        pub def hash(x: JulianField): Int = Time/Temporal/JulianField.hashCode(x)
+        pub def hash(x: JulianField): Int32 = Time/Temporal/JulianField.hashCode(x)
     }
 
 }

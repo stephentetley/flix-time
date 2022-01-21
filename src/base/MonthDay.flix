@@ -50,12 +50,12 @@ namespace Time {
     }
 
     instance Hash[MonthDay] {
-        pub def hash(x: MonthDay): Int = Time/MonthDay.hashCode(x)
+        pub def hash(x: MonthDay): Int32 = Time/MonthDay.hashCode(x)
     }
 
     instance Order[MonthDay] {
-        pub def compare(x: MonthDay, y: MonthDay): Comparison = 
-            Time/MonthDay.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: MonthDay, y: MonthDay): Comparison =
+            Time/MonthDay.compareTo(x,y) |> Comparison.fromInt32
     }
 
 }
@@ -79,11 +79,11 @@ namespace Time/MonthDay {
         let m1 = Time/Month.toNative(x.month);
         MonthDay(of(m1, x.dayOfMonth)) as & Pure
 
-    pub def now(): MonthDay & Impure =         
+    pub def now(): MonthDay & Impure =
         import static java.time.MonthDay.now();
         MonthDay(now())
 
-    pub def nowWithZoneId(x: ZoneId): MonthDay & Impure =         
+    pub def nowWithZoneId(x: ZoneId): MonthDay & Impure =
         import static java.time.MonthDay.now(##java.time.ZoneId);
         let ZoneId(x1) = x;
         MonthDay(now(x1))
@@ -120,7 +120,7 @@ namespace Time/MonthDay {
         let MonthDay(y1) = y;
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
-    pub def hashCode(x: MonthDay): Int32 = 
+    pub def hashCode(x: MonthDay): Int32 =
         import java.time.MonthDay.hashCode();
         let MonthDay(x1) = x;
         hashCode(x1) as & Pure

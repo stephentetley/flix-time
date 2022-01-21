@@ -34,12 +34,12 @@ namespace Time/Zone {
     }
 
     instance Hash[ZoneOffsetTransition] {
-        pub def hash(x: ZoneOffsetTransition): Int = Time/Zone/ZoneOffsetTransition.hashCode(x)
+        pub def hash(x: ZoneOffsetTransition): Int32 = Time/Zone/ZoneOffsetTransition.hashCode(x)
     }
 
     instance Order[ZoneOffsetTransition] {
         pub def compare(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Comparison = 
-            Time/Zone/ZoneOffsetTransition.compareTo(x,y) |> Comparison.fromInt
+            Time/Zone/ZoneOffsetTransition.compareTo(x,y) |> Comparison.fromInt32
     }
 
 }

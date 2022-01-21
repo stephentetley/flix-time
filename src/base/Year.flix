@@ -52,14 +52,14 @@ namespace Time {
     }
 
     instance Hash[Year] {
-        pub def hash(x: Year): Int = Time/Year.hashCode(x)
+        pub def hash(x: Year): Int32 = Time/Year.hashCode(x)
     }
 
     instance Order[Year] {
-        pub def compare(x: Year, y: Year): Comparison = 
-            Time/Year.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: Year, y: Year): Comparison =
+            Time/Year.compareTo(x,y) |> Comparison.fromInt32
     }
-    
+
     instance LowerBound[Year] {
         pub def minValue(): Year =
             import static get java.time.Year.MIN_VALUE as getMIN_VALUE;
@@ -77,7 +77,7 @@ namespace Time {
 }
 
 namespace Time/Year {
-    
+
     use Time.Year;
     use Time.Year.{Year};
 
@@ -101,22 +101,22 @@ namespace Time/Year {
         Year(of(year)) as & Pure
 
 
-    pub def now(): Year & Impure =         
+    pub def now(): Year & Impure =
         import static java.time.Year.now();
         Year(now())
 
-    pub def nowWithClock(x: Clock): Year & Impure =         
+    pub def nowWithClock(x: Clock): Year & Impure =
         import static java.time.Year.now(##java.time.Clock);
         let Clock(x1) = x;
         Year(now(x1))
 
-    pub def nowWithZoneId(x: ZoneId): Year & Impure =         
+    pub def nowWithZoneId(x: ZoneId): Year & Impure =
         import static java.time.Year.now(##java.time.ZoneId);
         let ZoneId(x1) = x;
         Year(now(x1))
 
 
-    /// 
+    ///
     /// Parse the string `s` as a Year, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     ///
@@ -149,7 +149,7 @@ namespace Time/Year {
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
 
-    pub def hashCode(x: Year): Int32 = 
+    pub def hashCode(x: Year): Int32 =
         import java.time.Year.hashCode();
         let Year(x1) = x;
         hashCode(x1) as & Pure
@@ -170,7 +170,7 @@ namespace Time/Year {
             Some(YearMonth(atMonth(x1, month))) as & Pure
         } catch {
             case _: ##java.lang.Exception => None
-        }  
+        }
 
     pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
         import java.time.Year.atMonth(##java.time.Month);
@@ -180,15 +180,15 @@ namespace Time/Year {
             Some(YearMonth(atMonth(x1, m1))) as & Pure
         } catch {
             case _: ##java.lang.Exception => None
-        }        
-    
+        }
+
     pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
         import java.time.Year.atMonthDay(##java.time.MonthDay);
         let Year(x1) = x;
         let MonthDay(m1) = monthDay;
         LocalDate(atMonthDay(x1, m1)) as & Pure
-        
-    
+
+
 
     pub def compareTo(x: Year, y: Year): Int32 =
         import java.time.Year.compareTo(##java.time.Year);
@@ -253,12 +253,12 @@ namespace Time/Year {
     pub def minusYears(x: Year, yearsToSubtract: Int64): Year =
         import java.time.Year.minusYears(Int64);
         let Year(x1) = x;
-        Year(minusYears(x1, yearsToSubtract)) as & Pure    
+        Year(minusYears(x1, yearsToSubtract)) as & Pure
 
     pub def plusDecades(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
         plusHelper(x, i, unit)
-    
+
     pub def minusDecades(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
         minusHelper(x, i, unit)
@@ -266,7 +266,7 @@ namespace Time/Year {
     pub def plusCenturies(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
         plusHelper(x, i, unit)
-    
+
     pub def minusCenturies(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
         minusHelper(x, i, unit)
@@ -274,7 +274,7 @@ namespace Time/Year {
     pub def plusMillennia(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
         plusHelper(x, i, unit)
-    
+
     pub def minusMillenia(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
         minusHelper(x, i, unit)
@@ -282,7 +282,7 @@ namespace Time/Year {
     pub def plusEras(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
         plusHelper(x, i, unit)
-    
+
     pub def minusEras(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
         minusHelper(x, i, unit)
@@ -291,58 +291,58 @@ namespace Time/Year {
         import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit);
         let Year(x1) = x;
         Year(plus(x1, amountToAdd, unit)) as & Pure
-    
+
     def minusHelper(x: Year, amountToSubtract: Int64, unit: ##java.time.temporal.TemporalUnit): Year =
         import java.time.Year.minus(Int64, ##java.time.temporal.TemporalUnit);
         let Year(x1) = x;
         Year(minus(x1, amountToSubtract, unit)) as & Pure
 
-    pub def yearsBetween(x: Year, y: Year): Int64 = 
+    pub def yearsBetween(x: Year, y: Year): Int64 =
         let unit = Time/Internal/ChronoUnit.getYEARS() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
-    pub def decadesBetween(x: Year, y: Year): Int64 = 
+    pub def decadesBetween(x: Year, y: Year): Int64 =
         let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
-    pub def centuriesBetween(x: Year, y: Year): Int64 = 
+    pub def centuriesBetween(x: Year, y: Year): Int64 =
         let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
-    pub def millenniaBetween(x: Year, y: Year): Int64 = 
+    pub def millenniaBetween(x: Year, y: Year): Int64 =
         let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
-    pub def erasBetween(x: Year, y: Year): Int64 = 
+    pub def erasBetween(x: Year, y: Year): Int64 =
         let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
-    def betweenHelper(x:Year, y: Year, unit: ##java.time.temporal.TemporalUnit): Int64 = 
+    def betweenHelper(x:Year, y: Year, unit: ##java.time.temporal.TemporalUnit): Int64 =
         import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let Year(x1) = x;
         let Year(y1) = y;
         let ty1 = y1 as ##java.time.temporal.Temporal;
         until(x1, ty1, unit) as & Pure
 
-    pub def withYear(x: Year, i: Int64): Year = 
+    pub def withYear(x: Year, i: Int64): Year =
         let field = Time/Internal/ChronoField.getYEAR() as ##java.time.temporal.TemporalField;
         withHelper(x, field, i)
 
-    
-    pub def withEraBCE(x: Year): Year = 
+
+    pub def withEraBCE(x: Year): Year =
         let field = Time/Internal/ChronoField.getERA() as ##java.time.temporal.TemporalField;
         withHelper(x, field, 0i64)
 
-    pub def withEraCE(x: Year): Year = 
+    pub def withEraCE(x: Year): Year =
         let field = Time/Internal/ChronoField.getERA() as ##java.time.temporal.TemporalField;
         withHelper(x, field, 1i64)
 
 
-    pub def withYearOfEra(x: Year, i: Int64): Year = 
+    pub def withYearOfEra(x: Year, i: Int64): Year =
         let field = Time/Internal/ChronoField.getYEAR_OF_ERA() as ##java.time.temporal.TemporalField;
         withHelper(x, field, i)
 
-    def withHelper(x:Year, field: ##java.time.temporal.TemporalField, i: Int64): Year = 
+    def withHelper(x:Year, field: ##java.time.temporal.TemporalField, i: Int64): Year =
         import java.time.Year.with(##java.time.temporal.TemporalField, Int64) as withX;
         let Year(x1) = x;
         Year(withX(x1, field, i)) as & Pure

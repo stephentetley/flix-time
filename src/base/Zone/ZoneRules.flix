@@ -34,7 +34,7 @@ namespace Time/Zone {
     }
 
     instance Hash[ZoneRules] {
-        pub def hash(x: ZoneRules): Int = Time/Zone/ZoneRules.hashCode(x)
+        pub def hash(x: ZoneRules): Int32 = Time/Zone/ZoneRules.hashCode(x)
     }
 
 }
@@ -45,10 +45,10 @@ namespace Time/Zone/ZoneRules {
     use Time/Zone.ZoneRules.{ZoneRules};
     use Time/Zone.ZoneOffsetTransition;
     use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition};
-    use Time.Duration;
-    use Time.Duration.{Duration};
-    use Time.Instant;
-    use Time.Instant.{Instant};
+//    use Time.Duration;
+//    use Time.Duration.{Duration};
+//    use Time.Instant;
+//    use Time.Instant.{Instant};
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
     use Time.ZoneOffset;
@@ -70,6 +70,7 @@ namespace Time/Zone/ZoneRules {
         let ZoneRules(x1) = x;
         hashCode(x1) as & Pure
 
+/*
     pub def getDaylightSavings(x: ZoneRules, instant: Instant): Duration =
         import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant);
         let ZoneRules(x1) = x;
@@ -81,6 +82,7 @@ namespace Time/Zone/ZoneRules {
         let ZoneRules(x1) = x;
         let Instant(instant1) = instant;
         isDaylightSavings(x1, instant1) as & Pure
+*/
 
     pub def isValidOffset(x: ZoneRules, localDateTime: LocalDateTime, offset: ZoneOffset): Bool =
         import java.time.zone.ZoneRules.isValidOffset(##java.time.LocalDateTime, ##java.time.ZoneOffset);
@@ -89,11 +91,12 @@ namespace Time/Zone/ZoneRules {
         let ZoneOffset(offset1) = offset;
         isValidOffset(x1, localDateTime1, offset1) as & Pure
 
-
+/*
     pub def previousTransition(x: ZoneRules, instant: Instant): ZoneOffsetTransition =
         import java.time.zone.ZoneRules.previousTransition(##java.time.Instant);
         let ZoneRules(x1) = x;
         let Instant(instant1) = instant;
         ZoneOffsetTransition(previousTransition(x1, instant1)) as & Pure
+*/
 
 }

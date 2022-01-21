@@ -31,7 +31,7 @@ namespace Time/Temporal {
     }
 
     instance Hash[WeekField] {
-        pub def hash(x: WeekField): Int = Time/Temporal/WeekField.hashCode(x)
+        pub def hash(x: WeekField): Int32 = Time/Temporal/WeekField.hashCode(x)
     }
 
 }

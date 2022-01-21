@@ -51,7 +51,7 @@ namespace Time {
 
 
     instance Hash[ZoneId] {
-        pub def hash(x: ZoneId): Int = Time/ZoneId.hashCode(x)
+        pub def hash(x: ZoneId): Int32 = Time/ZoneId.hashCode(x)
     }
 
     pub opaque type ZonePrefix = String
@@ -72,7 +72,7 @@ namespace Time/ZoneId {
 
     pub def new(prefix: Option[ZonePrefix], offset: ZoneOffset): ZoneId =
         import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset);
-        let p1 = match prefix { 
+        let p1 = match prefix {
             case Some(ZonePrefix(s)) => s
             case _ => ""
         };
@@ -101,7 +101,7 @@ namespace Time/ZoneId {
         let ZoneId(y1) = y;
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
-    pub def hashCode(x: ZoneId): Int32 = 
+    pub def hashCode(x: ZoneId): Int32 =
         import java.time.ZoneId.hashCode();
         let ZoneId(x1) = x;
         hashCode(x1) as & Pure

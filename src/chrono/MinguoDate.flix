@@ -36,7 +36,7 @@ namespace Time/Chrono {
     }
     
     instance Hash[MinguoDate] {
-        pub def hash(x: MinguoDate): Int = Time/Chrono/MinguoDate.hashCode(x)
+        pub def hash(x: MinguoDate): Int32 = Time/Chrono/MinguoDate.hashCode(x)
     } 
 }
 

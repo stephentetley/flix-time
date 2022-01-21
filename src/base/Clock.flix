@@ -40,7 +40,7 @@ namespace Time {
     }
 
     instance Hash[Clock] {
-        pub def hash(x: Clock): Int = Time/Clock.hashCode(x)
+        pub def hash(x: Clock): Int32 = Time/Clock.hashCode(x)
     }
 
 }

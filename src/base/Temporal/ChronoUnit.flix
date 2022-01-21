@@ -17,7 +17,7 @@
 
 /// DEPRECATED
 /// It is planned to replace this with direct functions see Year.
-/// This will remove the problem that not all ChronoUnits in the enum work for 
+/// This will remove the problem that not all ChronoUnits in the enum work for
 /// operations on a given type.
 
 namespace Time/Temporal {
@@ -107,12 +107,12 @@ namespace Time/Temporal {
     }
 
     instance Hash[ChronoUnit] {
-        pub def hash(x: ChronoUnit): Int = Time/Temporal/ChronoUnit.hashCode(x)
+        pub def hash(x: ChronoUnit): Int32 = Time/Temporal/ChronoUnit.hashCode(x)
     }
 
     instance Order[ChronoUnit] {
-        pub def compare(x: ChronoUnit, y: ChronoUnit): Comparison = 
-            Time/Temporal/ChronoUnit.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: ChronoUnit, y: ChronoUnit): Comparison =
+            Time/Temporal/ChronoUnit.compareTo(x,y) |> Comparison.fromInt32
     }
 
 }
@@ -125,8 +125,8 @@ namespace Time/Temporal/ChronoUnit {
     use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes,
             Hours, HalfDays, Days, Weeks, Months, Years, Decades, Centuries,
             Millennia, Eras, Forever};
-    use Time.Duration;
-    use Time.Duration.{Duration};
+//    use Time.Duration;
+//    use Time.Duration.{Duration};
 
     pub def fromEnum(x: ChronoUnit): Int32 = match x {
         case Nanos => 0
@@ -134,7 +134,7 @@ namespace Time/Temporal/ChronoUnit {
         case Millis => 2
         case Seconds => 3
         case Minutes => 4
-        case Hours => 5 
+        case Hours => 5
         case HalfDays => 6
         case Days => 7
         case Weeks => 8
@@ -167,7 +167,7 @@ namespace Time/Temporal/ChronoUnit {
         case _ =>   None
     }
 
-    pub def toNative(x: ChronoUnit): ##java.time.temporal.ChronoUnit = 
+    pub def toNative(x: ChronoUnit): ##java.time.temporal.ChronoUnit =
         import static get java.time.temporal.ChronoUnit.NANOS      as getNANOS;
         import static get java.time.temporal.ChronoUnit.MICROS     as getMICROS;
         import static get java.time.temporal.ChronoUnit.MILLIS     as getMILLIS;
@@ -209,7 +209,7 @@ namespace Time/Temporal/ChronoUnit {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def fromNative(x: ##java.time.temporal.ChronoUnit): ChronoUnit = 
+    pub def fromNative(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
         import static get java.time.temporal.ChronoUnit.NANOS      as getNANOS;
         import static get java.time.temporal.ChronoUnit.MICROS     as getMICROS;
         import static get java.time.temporal.ChronoUnit.MILLIS     as getMILLIS;
@@ -245,19 +245,20 @@ namespace Time/Temporal/ChronoUnit {
             case x1 if primEquals(x1, getFOREVER())     => Forever
         } as & Pure
 
-    
+
 
     pub def hashCode(x: ChronoUnit): Int32 =
         import java.lang.Enum.hashCode();
         let en1 = toNative(x) as ##java.lang.Enum;
         hashCode(en1) as & Pure
 
-    pub def compareTo(x: ChronoUnit, y: ChronoUnit): Int32 = 
+    pub def compareTo(x: ChronoUnit, y: ChronoUnit): Int32 =
         import java.lang.Enum.compareTo(##java.lang.Enum);
         let x1 = toNative(x) as ##java.lang.Enum;
         let y1 = toNative(y) as ##java.lang.Enum;
         compareTo(x1, y1) as & Pure
 
+/*
     pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();
         let x1 = toNative(x);
@@ -277,5 +278,6 @@ namespace Time/Temporal/ChronoUnit {
         import java.time.temporal.ChronoUnit.isTimeBased();
         let x1 = toNative(x);
         isTimeBased(x1) as & Pure
+*/
 
 }

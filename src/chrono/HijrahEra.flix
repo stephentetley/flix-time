@@ -33,7 +33,7 @@ namespace Time/Chrono {
     }
 
     instance Hash[HijrahEra] {
-        pub def hash(x: HijrahEra): Int = Time/Chrono/HijrahEra.hashCode(x)
+        pub def hash(x: HijrahEra): Int32 = Time/Chrono/HijrahEra.hashCode(x)
     }    
 
 }

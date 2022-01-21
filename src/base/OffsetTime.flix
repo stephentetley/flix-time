@@ -55,12 +55,12 @@ namespace Time {
     }
 
     instance Hash[OffsetTime] {
-        pub def hash(x: OffsetTime): Int = Time/OffsetTime.hashCode(x)
+        pub def hash(x: OffsetTime): Int32 = Time/OffsetTime.hashCode(x)
     }
 
     instance Order[OffsetTime] {
-        pub def compare(x: OffsetTime, y: OffsetTime): Comparison = 
-            Time/OffsetTime.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: OffsetTime, y: OffsetTime): Comparison =
+            Time/OffsetTime.compareTo(x,y) |> Comparison.fromInt32
     }
 
     instance LowerBound[OffsetTime] {
@@ -103,7 +103,7 @@ namespace Time/OffsetTime {
 
     pub def getFields(x: OffsetTime): { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset} =
         { hour = getHour(x), minute = getMinute(x), second = getSecond(x), nanoSecond = getNano(x), offset = getOffset(x) }
-        
+
 
     ///
     /// Returns the current time from the system clock.
@@ -168,7 +168,7 @@ namespace Time/OffsetTime {
         let OffsetTime(y1) = y;
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
-    pub def hashCode(x: OffsetTime): Int32 = 
+    pub def hashCode(x: OffsetTime): Int32 =
         import java.time.OffsetTime.hashCode();
         let OffsetTime(x1) = x;
         hashCode(x1) as & Pure
@@ -285,19 +285,19 @@ namespace Time/OffsetTime {
         let OffsetTime(x1) = x;
         ZoneOffset(getOffset(x1)) as & Pure
 
-    pub def putOffsetSameInstant(x: OffsetTime, offset: ZoneOffset): OffsetTime = 
+    pub def putOffsetSameInstant(x: OffsetTime, offset: ZoneOffset): OffsetTime =
         import java.time.OffsetTime.withOffsetSameInstant(##java.time.ZoneOffset);
         let OffsetTime(x1) = x;
         let ZoneOffset(o1) = offset;
         OffsetTime(withOffsetSameInstant(x1, o1)) as & Pure
-    
-    pub def putOffsetSameLocal(x: OffsetTime, offset: ZoneOffset): OffsetTime = 
+
+    pub def putOffsetSameLocal(x: OffsetTime, offset: ZoneOffset): OffsetTime =
         import java.time.OffsetTime.withOffsetSameLocal(##java.time.ZoneOffset);
         let OffsetTime(x1) = x;
         let ZoneOffset(o1) = offset;
         OffsetTime(withOffsetSameLocal(x1, o1)) as & Pure
 
-    pub def until(b: OffsetTime, e: OffsetTime, unit: ChronoUnit): Int64 = 
+    pub def until(b: OffsetTime, e: OffsetTime, unit: ChronoUnit): Int64 =
         import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let OffsetTime(b1) = b;
         let OffsetTime(e1) = e;

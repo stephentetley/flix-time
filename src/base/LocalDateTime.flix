@@ -55,12 +55,12 @@ namespace Time {
     }
 
     instance Hash[LocalDateTime] {
-        pub def hash(x: LocalDateTime): Int = Time/LocalDateTime.hashCode(x)
+        pub def hash(x: LocalDateTime): Int32 = Time/LocalDateTime.hashCode(x)
     }
 
     instance Order[LocalDateTime] {
-        pub def compare(x: LocalDateTime, y: LocalDateTime): Comparison = 
-            Time/LocalDateTime.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: LocalDateTime, y: LocalDateTime): Comparison =
+            Time/LocalDateTime.compareTo(x,y) |> Comparison.fromInt32
     }
 
     instance LowerBound[LocalDateTime] {
@@ -68,7 +68,7 @@ namespace Time {
             import static get java.time.LocalDateTime.MIN as getMIN;
             LocalDateTime(getMIN()) as & Pure
     }
-    
+
     instance UpperBound[LocalDateTime] {
         pub def maxValue(): LocalDateTime =
             import static get java.time.LocalDateTime.MAX as getMAX;
@@ -141,17 +141,18 @@ namespace Time/LocalDateTime {
         let LocalTime(t1) = t;
         LocalDateTime(of(d1, t1)) as & Pure
 
-    pub def ofEpochSecond(epochSecond: Int64, nanoOfSecond: Int32, offset: ZoneOffset): LocalDateTime = 
+    pub def ofEpochSecond(epochSecond: Int64, nanoOfSecond: Int32, offset: ZoneOffset): LocalDateTime =
         import static java.time.LocalDateTime.ofEpochSecond(Int64, Int32, ##java.time.ZoneOffset);
         let ZoneOffset(o1) = offset;
         LocalDateTime(ofEpochSecond(epochSecond, nanoOfSecond, o1)) as & Pure
 
-    pub def ofInstant(x: Instant, zoneId: ZoneId): LocalDateTime = 
+/*
+    pub def ofInstant(x: Instant, zoneId: ZoneId): LocalDateTime =
         import static java.time.LocalDateTime.ofInstant(##java.time.Instant, ##java.time.ZoneId);
         let Instant(x1) = x;
         let ZoneId(z1) = zoneId;
         LocalDateTime(ofInstant(x1, z1)) as & Pure
-
+*/
 
     ///
     /// Returns the given date-time `x` as __.
@@ -203,7 +204,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(y1) = y;
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
-    pub def hashCode(x: LocalDateTime): Int32 = 
+    pub def hashCode(x: LocalDateTime): Int32 =
         import java.time.LocalDateTime.hashCode();
         let LocalDateTime(x1) = x;
         hashCode(x1) as & Pure
@@ -406,7 +407,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         LocalDateTime(withNano(x1, nano)) as & Pure
 
-    pub def until(b: LocalDateTime, e: LocalDateTime, unit: ChronoUnit): Int64 = 
+    pub def until(b: LocalDateTime, e: LocalDateTime, unit: ChronoUnit): Int64 =
         import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
         let LocalDateTime(b1) = b;
         let LocalDateTime(e1) = e;

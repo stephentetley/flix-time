@@ -34,7 +34,7 @@ namespace Time/Temporal {
     }
 
     instance Hash[IsoField] {
-        pub def hash(x: IsoField): Int = Time/Temporal/IsoField.hashCode(x)
+        pub def hash(x: IsoField): Int32 = Time/Temporal/IsoField.hashCode(x)
     }
 
 }

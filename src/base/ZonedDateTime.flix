@@ -54,12 +54,12 @@ namespace Time {
     }
 
     instance Hash[ZonedDateTime] {
-        pub def hash(x: ZonedDateTime): Int = Time/ZonedDateTime.hashCode(x)
+        pub def hash(x: ZonedDateTime): Int32 = Time/ZonedDateTime.hashCode(x)
     }
 
     instance Order[ZonedDateTime] {
-        pub def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison = 
-            Time/ZonedDateTime.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison =
+            Time/ZonedDateTime.compareTo(x,y) |> Comparison.fromInt32
     }
 
     instance Boxable[ZonedDateTime]
@@ -174,7 +174,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(y1) = y;
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
-    pub def hashCode(x: ZonedDateTime): Int32 = 
+    pub def hashCode(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.hashCode();
         let ZonedDateTime(x1) = x;
         hashCode(x1) as & Pure

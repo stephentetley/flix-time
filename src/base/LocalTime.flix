@@ -56,12 +56,12 @@ namespace Time {
     }
     
     instance Hash[LocalTime] {
-        pub def hash(x: LocalTime): Int = Time/LocalTime.hashCode(x)
+        pub def hash(x: LocalTime): Int32 = Time/LocalTime.hashCode(x)
     }
 
     instance Order[LocalTime] {
         pub def compare(x: LocalTime, y: LocalTime): Comparison = 
-            Time/LocalTime.compareTo(x,y) |> Comparison.fromInt
+            Time/LocalTime.compareTo(x,y) |> Comparison.fromInt32
     }
 
     instance LowerBound[LocalTime] {

@@ -31,7 +31,7 @@ namespace Time/Temporal {
     }
 
     instance Hash[ValueRange] {
-        pub def hash(x: ValueRange): Int = Time/Temporal/ValueRange.hashCode(x)
+        pub def hash(x: ValueRange): Int32 = Time/Temporal/ValueRange.hashCode(x)
     }
 
 }

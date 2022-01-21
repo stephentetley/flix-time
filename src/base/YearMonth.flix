@@ -23,7 +23,7 @@ namespace Time {
     pub opaque type YearMonth = ##java.time.YearMonth
 
     ///
-    /// 
+    ///
     ///
     instance ToString[YearMonth] {
         pub def toString(x: YearMonth): String =
@@ -52,14 +52,14 @@ namespace Time {
     }
 
     instance Hash[YearMonth] {
-        pub def hash(x: YearMonth): Int = Time/YearMonth.hashCode(x)
+        pub def hash(x: YearMonth): Int32 = Time/YearMonth.hashCode(x)
     }
 
     instance Order[YearMonth] {
-        pub def compare(x: YearMonth, y: YearMonth): Comparison = 
-            Time/YearMonth.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: YearMonth, y: YearMonth): Comparison =
+            Time/YearMonth.compareTo(x,y) |> Comparison.fromInt32
     }
-    
+
 }
 
 namespace Time/YearMonth {
@@ -74,12 +74,12 @@ namespace Time/YearMonth {
         import static java.time.YearMonth.of(Int32, Int32);
         YearMonth(of(x.year, x.month)) as & Pure
 
-    pub def newWithMonth(x: {year :: Int, month :: Month}): YearMonth =
+    pub def newWithMonth(x: {year :: Int32, month :: Month}): YearMonth =
         import static java.time.YearMonth.of(Int32, ##java.time.Month);
         let m1 = Time/Month.toNative(x.month);
         YearMonth(of(x.year, m1)) as & Pure
 
-    pub def now(): YearMonth & Impure =         
+    pub def now(): YearMonth & Impure =
         import static java.time.YearMonth.now();
         YearMonth(now())
 
@@ -116,7 +116,7 @@ namespace Time/YearMonth {
         let YearMonth(y1) = y;
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
-    pub def hashCode(x: YearMonth): Int32 = 
+    pub def hashCode(x: YearMonth): Int32 =
         import java.time.YearMonth.hashCode();
         let YearMonth(x1) = x;
         hashCode(x1) as & Pure

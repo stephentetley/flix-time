@@ -158,12 +158,12 @@ namespace Time/Temporal {
     }
 
     instance Hash[ChronoField] {
-        pub def hash(x: ChronoField): Int = Time/Temporal/ChronoField.hashCode(x)
+        pub def hash(x: ChronoField): Int32 = Time/Temporal/ChronoField.hashCode(x)
     }
 
     instance Order[ChronoField] {
         pub def compare(x: ChronoField, y: ChronoField): Comparison = 
-            Time/Temporal/ChronoField.compareTo(x,y) |> Comparison.fromInt
+            Time/Temporal/ChronoField.compareTo(x,y) |> Comparison.fromInt32
     }
 }
 

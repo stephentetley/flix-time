@@ -32,7 +32,7 @@ namespace Time {
         case November,
         case December
     }
-    
+
     instance ToString[Month] {
         pub def toString(x: Month): String = match x {
             case January => "January"
@@ -87,12 +87,12 @@ namespace Time {
     }
 
     instance Hash[Month] {
-        pub def hash(x: Month): Int = Time/Month.hashCode(x)
+        pub def hash(x: Month): Int32 = Time/Month.hashCode(x)
     }
 
     instance Order[Month] {
-        pub def compare(x: Month, y: Month): Comparison = 
-            Time/Month.compareTo(x,y) |> Comparison.fromInt
+        pub def compare(x: Month, y: Month): Comparison =
+            Time/Month.compareTo(x,y) |> Comparison.fromInt32
     }
 
     instance Boxable[Month]
@@ -136,7 +136,7 @@ namespace Time/Month {
         case _  => December
     }
 
-    pub def toNative(x: Month): ##java.time.Month = 
+    pub def toNative(x: Month): ##java.time.Month =
         import static get java.time.Month.JANUARY      as getJANUARY;
         import static get java.time.Month.FEBRUARY     as getFEBRUARY;
         import static get java.time.Month.MARCH        as getMARCH;
@@ -170,7 +170,7 @@ namespace Time/Month {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
-    pub def fromNative(x: ##java.time.Month): Month = 
+    pub def fromNative(x: ##java.time.Month): Month =
         import static get java.time.Month.JANUARY      as getJANUARY;
         import static get java.time.Month.FEBRUARY     as getFEBRUARY;
         import static get java.time.Month.MARCH        as getMARCH;
@@ -217,20 +217,20 @@ namespace Time/Month {
         let en1 = toNative(x) as ##java.lang.Enum;
         hashCode(en1) as & Pure
 
-    pub def compareTo(x: Month, y: Month): Int32 = 
+    pub def compareTo(x: Month, y: Month): Int32 =
         import java.lang.Enum.compareTo(##java.lang.Enum);
         let x1 = toNative(x) as ##java.lang.Enum;
         let y1 = toNative(y) as ##java.lang.Enum;
         compareTo(x1, y1) as & Pure
 
 
-    pub def plus(x:Month, y: Int64): Month = 
+    pub def plus(x:Month, y: Int64): Month =
         import java.time.Month.plus(Int64);
         let x1 = toNative(x);
         let x2 = plus(x1, y) as & Pure;
         fromNative(x2)
 
-    pub def minus(x:Month, y: Int64): Month = 
+    pub def minus(x:Month, y: Int64): Month =
         import java.time.Month.minus(Int64);
         let x1 = toNative(x);
         let x2 = minus(x1, y) as & Pure;

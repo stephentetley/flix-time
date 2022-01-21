@@ -38,7 +38,7 @@ namespace Time/Chrono {
     }
     
     instance Hash[JapaneseDate] {
-        pub def hash(x: JapaneseDate): Int = Time/Chrono/JapaneseDate.hashCode(x)
+        pub def hash(x: JapaneseDate): Int32 = Time/Chrono/JapaneseDate.hashCode(x)
     }  
 
 }

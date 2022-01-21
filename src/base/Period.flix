@@ -55,7 +55,7 @@ namespace Time {
 
 
     instance Hash[Period] {
-        pub def hash(x: Period): Int = Time/Period.hashCode(x)
+        pub def hash(x: Period): Int32 = Time/Period.hashCode(x)
     }
 
     instance Add[Period] {
@@ -132,7 +132,7 @@ namespace Time/Period {
         import static java.time.Period.ofDays(Int32);
         Period(ofDays(days)) as & Pure
 
-    pub def toTotalMonths(x: Period): Int64 = 
+    pub def toTotalMonths(x: Period): Int64 =
         import java.time.Period.toTotalMonths();
         let Period(x1) = x;
         toTotalMonths(x1) as & Pure
@@ -144,7 +144,7 @@ namespace Time/Period {
         equals(x1, y1 as ##java.lang.Object) as & Pure
 
 
-    pub def hashCode(x: Period): Int32 = 
+    pub def hashCode(x: Period): Int32 =
         import java.time.Period.hashCode();
         let Period(x1) = x;
         hashCode(x1) as & Pure
@@ -235,7 +235,7 @@ namespace Time/Period {
         let Period(x1) = x;
         Period(withDays(x1, days)) as & Pure
 
-    pub def between(b: LocalDate, e: LocalDate): Period = 
+    pub def between(b: LocalDate, e: LocalDate): Period =
         import static java.time.Period.between(##java.time.LocalDate, ##java.time.LocalDate);
         let LocalDate(b1) = b;
         let LocalDate(e1) = e;

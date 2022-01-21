@@ -80,12 +80,12 @@ namespace Time {
     }
 
     instance Hash[DayOfWeek] {
-        pub def hash(x: DayOfWeek): Int = Time/DayOfWeek.hashCode(x)
+        pub def hash(x: DayOfWeek): Int32 = Time/DayOfWeek.hashCode(x)
     }
 
     instance Order[DayOfWeek] {
         pub def compare(x: DayOfWeek, y: DayOfWeek): Comparison = 
-            Time/DayOfWeek.compareTo(x,y) |> Comparison.fromInt
+            Time/DayOfWeek.compareTo(x,y) |> Comparison.fromInt32
     }
 
     instance Boxable[DayOfWeek]
