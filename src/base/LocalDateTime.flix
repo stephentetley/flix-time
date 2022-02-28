@@ -40,7 +40,7 @@ namespace Time {
     ///
     instance FromString[LocalDateTime] {
         pub def fromString(s: String): Option[LocalDateTime] =
-            import java.lang.String.strip();
+            import java.lang.String.strip(): String & Pure;
             import static java.time.LocalDateTime.parse(##java.lang.CharSequence);
             try {
                 let cs = strip(s) as ##java.lang.CharSequence & Pure;
@@ -188,7 +188,7 @@ namespace Time/LocalDateTime {
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
     pub def parse(formatter: DateTimeFormatter, s: String): Option[LocalDateTime] =
-        import java.lang.String.strip();
+        import java.lang.String.strip(): String & Pure;
         import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
         try {
             let DateTimeFormatter(fmtr) = formatter;

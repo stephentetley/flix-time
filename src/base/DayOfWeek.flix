@@ -131,13 +131,13 @@ namespace Time/DayOfWeek {
     }
 
     pub def toNative(x: DayOfWeek): ##java.time.DayOfWeek =
-        import static get java.time.DayOfWeek.MONDAY       as getMONDAY;
-        import static get java.time.DayOfWeek.TUESDAY      as getTUESDAY;
-        import static get java.time.DayOfWeek.WEDNESDAY    as getWEDNESDAY;
-        import static get java.time.DayOfWeek.THURSDAY     as getTHURSDAY;
-        import static get java.time.DayOfWeek.FRIDAY       as getFRIDAY;
-        import static get java.time.DayOfWeek.SATURDAY     as getSATURDAY;
-        import static get java.time.DayOfWeek.SUNDAY       as getSUNDAY;
+        import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as getMONDAY;
+        import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek & Pure as getTUESDAY;
+        import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek & Pure as getWEDNESDAY;
+        import static get java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek & Pure as getTHURSDAY;
+        import static get java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek & Pure as getFRIDAY;
+        import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek & Pure as getSATURDAY;
+        import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek & Pure as getSUNDAY;
         match x {
             case Monday     => getMONDAY()
             case Tuesday    => getTUESDAY()
@@ -146,24 +146,24 @@ namespace Time/DayOfWeek {
             case Friday     => getFRIDAY()
             case Saturday   => getSATURDAY()
             case Sunday     => getSUNDAY() 
-        } as & Pure
+        }
 
     def primEquals(x: ##java.time.DayOfWeek, y: ##java.time.DayOfWeek): Bool =
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
-        equals(x1, y1) as & Pure
+        equals(x1, y1)
 
 
     pub def fromNative(x: ##java.time.DayOfWeek): Time.DayOfWeek =
 
-        import static get java.time.DayOfWeek.MONDAY       as getMONDAY;
-        import static get java.time.DayOfWeek.TUESDAY      as getTUESDAY;
-        import static get java.time.DayOfWeek.WEDNESDAY    as getWEDNESDAY;
-        import static get java.time.DayOfWeek.THURSDAY     as getTHURSDAY;
-        import static get java.time.DayOfWeek.FRIDAY       as getFRIDAY;
-        import static get java.time.DayOfWeek.SATURDAY     as getSATURDAY;
-        import static get java.time.DayOfWeek.SUNDAY       as getSUNDAY;
+        import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as getMONDAY;
+        import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek & Pure as getTUESDAY;
+        import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek & Pure as getWEDNESDAY;
+        import static get java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek & Pure as getTHURSDAY;
+        import static get java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek & Pure  as getFRIDAY;
+        import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek & Pure as getSATURDAY;
+        import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek & Pure as getSUNDAY;
         match x {
             case x1 if primEquals(x1, getMONDAY())      => Monday
             case x1 if primEquals(x1, getTUESDAY())     => Tuesday
@@ -172,45 +172,45 @@ namespace Time/DayOfWeek {
             case x1 if primEquals(x1, getFRIDAY())      => Friday
             case x1 if primEquals(x1, getSATURDAY())    => Saturday
             case x1 if primEquals(x1, getSUNDAY())      => Sunday
-        } as & Pure
+        }
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: I18n.Locale): String =
-        import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
+        import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = toNative(x);
         let s1 = Time/Format/TextStyle.toNative(style);
         let Locale(l1) = locale;
-        getDisplayName(x1, s1, l1) as & Pure
+        getDisplayName(x1, s1, l1)
 
     pub def getName(x: DayOfWeek): String =
-        import java.lang.Enum.name();
+        import java.lang.Enum.name(): String & Pure;
         let en1 = toNative(x) as ##java.lang.Enum;
-        name(en1) as & Pure
+        name(en1)
 
     pub def hashCode(x: DayOfWeek): Int32 =
-        import java.lang.Enum.hashCode();
+        import java.lang.Enum.hashCode(): Int32 & Pure;
         let en1 = toNative(x) as ##java.lang.Enum;
-        hashCode(en1) as & Pure
+        hashCode(en1)
 
 
     pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
 
     pub def plus(x:DayOfWeek, y: Int64): DayOfWeek =
-        import java.time.DayOfWeek.plus(Int64);
+        import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek & Pure;
         let x1 = toNative(x);
-        let x2 = plus(x1, y) as & Pure;
+        let x2 = plus(x1, y);
         fromNative(x2)
 
     pub def minus(x:DayOfWeek, y: Int64): DayOfWeek = 
-        import java.time.DayOfWeek.minus(Int64);
+        import java.time.DayOfWeek.minus(Int64): ##java.time.DayOfWeek & Pure;
         let x1 = toNative(x);
-        let x2 = minus(x1, y) as & Pure;
+        let x2 = minus(x1, y);
         fromNative(x2)
 
 
     pub def range(x: DayOfWeek): ValueRange = 
-        import java.time.DayOfWeek.range(##java.time.temporal.TemporalField);
+        import java.time.DayOfWeek.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
         let x1 = toNative(x);
         let field1 = Time/Temporal/ChronoField.toNative(Time/Temporal/ChronoField.DayOfWeek);
-        ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField)) as & Pure
+        ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField))
 
 }

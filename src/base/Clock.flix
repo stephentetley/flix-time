@@ -29,10 +29,10 @@ namespace Time {
     ///
     instance ToString[Clock] {
         pub def toString(x: Clock): String =
-            import java.lang.Object.toString();
+            import java.lang.Object.toString(): String & Pure;
             let Clock(x1) = x;
             let o1 = x1 as ##java.lang.Object;
-            toString(o1) as & Pure
+            toString(o1)
     }
 
     instance Eq[Clock] {
@@ -55,66 +55,66 @@ namespace Time/Clock {
     use Time.ZoneId.{ZoneId};
 
     pub def system(x: ZoneId): Clock & Impure =
-        import static java.time.Clock.system(##java.time.ZoneId);
+        import static java.time.Clock.system(##java.time.ZoneId): ##java.time.Clock & Impure;
         let ZoneId(x1) = x;
         Clock(system(x1))
 
 
     pub def systemDefaultZone(): Clock & Impure =
-        import static java.time.Clock.systemDefaultZone();
+        import static java.time.Clock.systemDefaultZone(): ##java.time.Clock & Impure;
         Clock(systemDefaultZone())
 
     pub def systemUTC(): Clock & Impure =
-        import static java.time.Clock.systemUTC();
+        import static java.time.Clock.systemUTC(): ##java.time.Clock & Impure;
         Clock(systemUTC())
 
     pub def equals(x: Clock, y: Clock): Bool =
-        import java.time.Clock.equals(##java.lang.Object);
+        import java.time.Clock.equals(##java.lang.Object): Bool & Pure;
         let Clock(x1) = x;
         let Clock(y1) = y;
-        equals(x1, y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object)
 
     pub def hashCode(x: Clock): Int32 =
-        import java.time.Clock.hashCode();
+        import java.time.Clock.hashCode(): Int32 & Pure;
         let Clock(x1) = x;
         hashCode(x1) as & Pure
 
     pub def millis(x: Clock): Int64 & Impure =
-        import java.time.Clock.millis();
+        import java.time.Clock.millis(): Int64 & Pure;
         let Clock(x1) = x;
         millis(x1)
 
     pub def instant(x: Clock): Instant & Impure =
-        import java.time.Clock.instant();
+        import java.time.Clock.instant(): ##java.time.Instant & Pure;
         let Clock(x1) = x;
         Instant(instant(x1))
 
 
     pub def tickMillis(zoneId: ZoneId): Clock & Impure =
-        import static java.time.Clock.tickMillis(##java.time.ZoneId);
+        import static java.time.Clock.tickMillis(##java.time.ZoneId): ##java.time.Clock & Impure;
         let ZoneId(zoneId1) = zoneId;
         Clock(tickMillis(zoneId1))
 
     pub def tickSeconds(zoneId: ZoneId): Clock & Impure =
-        import static java.time.Clock.tickSeconds(##java.time.ZoneId);
+        import static java.time.Clock.tickSeconds(##java.time.ZoneId): ##java.time.Clock & Impure;
         let ZoneId(zoneId1) = zoneId;
         Clock(tickSeconds(zoneId1))
 
     pub def tickMinutes(zoneId: ZoneId): Clock & Impure =
-        import static java.time.Clock.tickMinutes(##java.time.ZoneId);
+        import static java.time.Clock.tickMinutes(##java.time.ZoneId): ##java.time.Clock & Impure;
         let ZoneId(zoneId1) = zoneId;
         Clock(tickMinutes(zoneId1))
 
     
     pub def getZone(x: Clock): ZoneId =
-        import java.time.Clock.getZone();
+        import java.time.Clock.getZone(): ##java.time.ZoneId & Pure;
         let Clock(x1) = x;
-        ZoneId(getZone(x1)) as & Pure
+        ZoneId(getZone(x1))
 
     pub def putZone(x: Clock, zoneId: ZoneId): Clock =
-        import java.time.Clock.withZone(##java.time.ZoneId);
+        import java.time.Clock.withZone(##java.time.ZoneId): ##java.time.Clock & Pure;
         let Clock(x1) = x;
         let ZoneId(zoneId1) = zoneId;
-        Clock(withZone(x1, zoneId1)) as & Pure
+        Clock(withZone(x1, zoneId1))
 
 }

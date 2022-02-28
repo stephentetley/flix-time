@@ -168,22 +168,22 @@ namespace Time/Temporal/ChronoUnit {
     }
 
     pub def toNative(x: ChronoUnit): ##java.time.temporal.ChronoUnit =
-        import static get java.time.temporal.ChronoUnit.NANOS      as getNANOS;
-        import static get java.time.temporal.ChronoUnit.MICROS     as getMICROS;
-        import static get java.time.temporal.ChronoUnit.MILLIS     as getMILLIS;
-        import static get java.time.temporal.ChronoUnit.SECONDS    as getSECONDS;
-        import static get java.time.temporal.ChronoUnit.MINUTES    as getMINUTES;
-        import static get java.time.temporal.ChronoUnit.HOURS      as getHOURS;
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS  as getHALF_DAYS;
-        import static get java.time.temporal.ChronoUnit.DAYS       as getDAYS;
-        import static get java.time.temporal.ChronoUnit.WEEKS      as getWEEKS;
-        import static get java.time.temporal.ChronoUnit.MONTHS     as getMONTHS;
-        import static get java.time.temporal.ChronoUnit.YEARS      as getYEARS;
-        import static get java.time.temporal.ChronoUnit.DECADES    as getDECADES;
-        import static get java.time.temporal.ChronoUnit.CENTURIES  as getCENTURIES;
-        import static get java.time.temporal.ChronoUnit.MILLENNIA  as getMILLENNIA;
-        import static get java.time.temporal.ChronoUnit.ERAS       as getERAS;
-        import static get java.time.temporal.ChronoUnit.FOREVER    as getFOREVER;
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as getMICROS;
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as getMILLIS;
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as getSECONDS;
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as getMINUTES;
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as getHOURS;
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as getHALF_DAYS;
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as getDAYS;
+        import static get java.time.temporal.ChronoUnit.WEEKS: ##java.time.temporal.ChronoUnit & Pure as getWEEKS;
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as getMONTHS;
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as getYEARS;
+        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as getDECADES;
+        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as getCENTURIES;
+        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as getMILLENNIA;
+        import static get java.time.temporal.ChronoUnit.ERAS: ##java.time.temporal.ChronoUnit & Pure as getERAS;
+        import static get java.time.temporal.ChronoUnit.FOREVER: ##java.time.temporal.ChronoUnit & Pure as getFOREVER;
         match x {
             case Nanos      => getNANOS()
             case Micros     => getMICROS()
@@ -201,31 +201,31 @@ namespace Time/Temporal/ChronoUnit {
             case Millennia   => getMILLENNIA()
             case Eras       => getERAS()
             case Forever    => getFOREVER()
-        } as & Pure
+        }
 
     def primEquals(x: ##java.time.temporal.ChronoUnit, y: ##java.time.temporal.ChronoUnit): Bool =
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1) as & Pure
 
     pub def fromNative(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
-        import static get java.time.temporal.ChronoUnit.NANOS      as getNANOS;
-        import static get java.time.temporal.ChronoUnit.MICROS     as getMICROS;
-        import static get java.time.temporal.ChronoUnit.MILLIS     as getMILLIS;
-        import static get java.time.temporal.ChronoUnit.SECONDS    as getSECONDS;
-        import static get java.time.temporal.ChronoUnit.MINUTES    as getMINUTES;
-        import static get java.time.temporal.ChronoUnit.HOURS      as getHOURS;
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS  as getHALF_DAYS;
-        import static get java.time.temporal.ChronoUnit.DAYS       as getDAYS;
-        import static get java.time.temporal.ChronoUnit.WEEKS      as getWEEKS;
-        import static get java.time.temporal.ChronoUnit.MONTHS     as getMONTHS;
-        import static get java.time.temporal.ChronoUnit.YEARS      as getYEARS;
-        import static get java.time.temporal.ChronoUnit.DECADES    as getDECADES;
-        import static get java.time.temporal.ChronoUnit.CENTURIES  as getCENTURIES;
-        import static get java.time.temporal.ChronoUnit.MILLENNIA  as getMILLENNIA;
-        import static get java.time.temporal.ChronoUnit.ERAS       as getERAS;
-        import static get java.time.temporal.ChronoUnit.FOREVER    as getFOREVER;
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as getMICROS;
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as getMILLIS;
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as getSECONDS;
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as getMINUTES;
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as getHOURS;
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as getHALF_DAYS;
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as getDAYS;
+        import static get java.time.temporal.ChronoUnit.WEEKS: ##java.time.temporal.ChronoUnit & Pure as getWEEKS;
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as getMONTHS;
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as getYEARS;
+        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as getDECADES;
+        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as getCENTURIES;
+        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as getMILLENNIA;
+        import static get java.time.temporal.ChronoUnit.ERAS: ##java.time.temporal.ChronoUnit & Pure as getERAS;
+        import static get java.time.temporal.ChronoUnit.FOREVER: ##java.time.temporal.ChronoUnit & Pure as getFOREVER;
         match x {
             case x1 if primEquals(x1, getNANOS())       => Nanos
             case x1 if primEquals(x1, getMICROS())      => Micros
@@ -243,20 +243,20 @@ namespace Time/Temporal/ChronoUnit {
             case x1 if primEquals(x1, getMILLENNIA())   => Millennia
             case x1 if primEquals(x1, getERAS())        => Eras
             case x1 if primEquals(x1, getFOREVER())     => Forever
-        } as & Pure
+        }
 
 
 
     pub def hashCode(x: ChronoUnit): Int32 =
-        import java.lang.Enum.hashCode();
+        import java.lang.Enum.hashCode(): Int32 & Pure;
         let en1 = toNative(x) as ##java.lang.Enum;
-        hashCode(en1) as & Pure
+        hashCode(en1)
 
     pub def compareTo(x: ChronoUnit, y: ChronoUnit): Int32 =
-        import java.lang.Enum.compareTo(##java.lang.Enum);
+        import java.lang.Enum.compareTo(##java.lang.Enum): Int32 & Pure;
         let x1 = toNative(x) as ##java.lang.Enum;
         let y1 = toNative(y) as ##java.lang.Enum;
-        compareTo(x1, y1) as & Pure
+        compareTo(x1, y1)
 
 /*
     pub def getDuration(x: ChronoUnit): Duration =

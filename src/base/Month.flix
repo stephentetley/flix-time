@@ -137,18 +137,18 @@ namespace Time/Month {
     }
 
     pub def toNative(x: Month): ##java.time.Month =
-        import static get java.time.Month.JANUARY      as getJANUARY;
-        import static get java.time.Month.FEBRUARY     as getFEBRUARY;
-        import static get java.time.Month.MARCH        as getMARCH;
-        import static get java.time.Month.APRIL        as getAPRIL;
-        import static get java.time.Month.MAY          as getMAY;
-        import static get java.time.Month.JUNE         as getJUNE;
-        import static get java.time.Month.JULY         as getJULY;
-        import static get java.time.Month.AUGUST       as getAUGUST;
-        import static get java.time.Month.SEPTEMBER    as getSEPTEMBER;
-        import static get java.time.Month.OCTOBER      as getOCTOBER;
-        import static get java.time.Month.NOVEMBER     as getNOVEMBER;
-        import static get java.time.Month.DECEMBER     as getDECEMBER;
+        import static get java.time.Month.JANUARY: ##java.time.Month & Pure as getJANUARY;
+        import static get java.time.Month.FEBRUARY: ##java.time.Month & Pure as getFEBRUARY;
+        import static get java.time.Month.MARCH: ##java.time.Month & Pure as getMARCH;
+        import static get java.time.Month.APRIL: ##java.time.Month & Pure as getAPRIL;
+        import static get java.time.Month.MAY: ##java.time.Month & Pure as getMAY;
+        import static get java.time.Month.JUNE: ##java.time.Month & Pure as getJUNE;
+        import static get java.time.Month.JULY: ##java.time.Month & Pure as getJULY;
+        import static get java.time.Month.AUGUST: ##java.time.Month & Pure as getAUGUST;
+        import static get java.time.Month.SEPTEMBER: ##java.time.Month & Pure as getSEPTEMBER;
+        import static get java.time.Month.OCTOBER: ##java.time.Month & Pure as getOCTOBER;
+        import static get java.time.Month.NOVEMBER: ##java.time.Month & Pure as getNOVEMBER;
+        import static get java.time.Month.DECEMBER: ##java.time.Month & Pure as getDECEMBER;
         match x {
             case January    => getJANUARY()
             case February   => getFEBRUARY()
@@ -162,27 +162,27 @@ namespace Time/Month {
             case October    => getOCTOBER()
             case November   => getNOVEMBER()
             case December   => getDECEMBER()
-        } as & Pure
+        }
 
     def primEquals(x: ##java.time.Month, y: ##java.time.Month): Bool =
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
-        equals(x1, y1) as & Pure
+        equals(x1, y1)
 
     pub def fromNative(x: ##java.time.Month): Month =
-        import static get java.time.Month.JANUARY      as getJANUARY;
-        import static get java.time.Month.FEBRUARY     as getFEBRUARY;
-        import static get java.time.Month.MARCH        as getMARCH;
-        import static get java.time.Month.APRIL        as getAPRIL;
-        import static get java.time.Month.MAY          as getMAY;
-        import static get java.time.Month.JUNE         as getJUNE;
-        import static get java.time.Month.JULY         as getJULY;
-        import static get java.time.Month.AUGUST       as getAUGUST;
-        import static get java.time.Month.SEPTEMBER    as getSEPTEMBER;
-        import static get java.time.Month.OCTOBER      as getOCTOBER;
-        import static get java.time.Month.NOVEMBER     as getNOVEMBER;
-        import static get java.time.Month.DECEMBER     as getDECEMBER;
+        import static get java.time.Month.JANUARY: ##java.time.Month & Pure as getJANUARY;
+        import static get java.time.Month.FEBRUARY: ##java.time.Month & Pure as getFEBRUARY;
+        import static get java.time.Month.MARCH: ##java.time.Month & Pure as getMARCH;
+        import static get java.time.Month.APRIL: ##java.time.Month & Pure as getAPRIL;
+        import static get java.time.Month.MAY: ##java.time.Month & Pure as getMAY;
+        import static get java.time.Month.JUNE: ##java.time.Month & Pure as getJUNE;
+        import static get java.time.Month.JULY: ##java.time.Month & Pure as getJULY;
+        import static get java.time.Month.AUGUST: ##java.time.Month & Pure as getAUGUST;
+        import static get java.time.Month.SEPTEMBER: ##java.time.Month & Pure as getSEPTEMBER;
+        import static get java.time.Month.OCTOBER: ##java.time.Month & Pure as getOCTOBER;
+        import static get java.time.Month.NOVEMBER: ##java.time.Month & Pure as getNOVEMBER;
+        import static get java.time.Month.DECEMBER: ##java.time.Month & Pure as getDECEMBER;
         match x {
             case x1 if primEquals(x1, getJANUARY())     => January
             case x1 if primEquals(x1, getFEBRUARY())    => February
@@ -196,44 +196,44 @@ namespace Time/Month {
             case x1 if primEquals(x1, getOCTOBER())     => October
             case x1 if primEquals(x1, getNOVEMBER())    => November
             case x1 if primEquals(x1, getDECEMBER())    => December
-        } as & Pure
+        }
 
 
     pub def getDisplayName(x: Month, style: TextStyle, locale: I18n.Locale): String =
-        import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
+        import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = toNative(x);
         let s1 = Time/Format/TextStyle.toNative(style);
         let Locale(l1) = locale;
-        getDisplayName(x1, s1, l1) as & Pure
+        getDisplayName(x1, s1, l1)
 
     pub def getName(x: Month): String =
-        import java.lang.Enum.name();
+        import java.lang.Enum.name(): String & Pure;
         let en1 = toNative(x) as ##java.lang.Enum;
-        name(en1) as & Pure
+        name(en1)
 
 
     pub def hashCode(x: Month): Int32 =
-        import java.lang.Enum.hashCode();
+        import java.lang.Enum.hashCode(): Int32 & Pure;
         let en1 = toNative(x) as ##java.lang.Enum;
-        hashCode(en1) as & Pure
+        hashCode(en1)
 
     pub def compareTo(x: Month, y: Month): Int32 =
-        import java.lang.Enum.compareTo(##java.lang.Enum);
+        import java.lang.Enum.compareTo(##java.lang.Enum): Int32 & Pure;
         let x1 = toNative(x) as ##java.lang.Enum;
         let y1 = toNative(y) as ##java.lang.Enum;
-        compareTo(x1, y1) as & Pure
+        compareTo(x1, y1)
 
 
     pub def plus(x:Month, y: Int64): Month =
-        import java.time.Month.plus(Int64);
+        import java.time.Month.plus(Int64): ##java.time.Month & Pure;
         let x1 = toNative(x);
-        let x2 = plus(x1, y) as & Pure;
+        let x2 = plus(x1, y);
         fromNative(x2)
 
     pub def minus(x:Month, y: Int64): Month =
-        import java.time.Month.minus(Int64);
+        import java.time.Month.minus(Int64): ##java.time.Month & Pure;
         let x1 = toNative(x);
-        let x2 = minus(x1, y) as & Pure;
+        let x2 = minus(x1, y);
         fromNative(x2)
 
 }

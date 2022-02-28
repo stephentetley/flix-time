@@ -27,9 +27,9 @@ namespace Time {
     ///
     instance ToString[YearMonth] {
         pub def toString(x: YearMonth): String =
-            import java.time.YearMonth.toString();
+            import java.time.YearMonth.toString(): String & Pure;
             let YearMonth(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
 
     ///
@@ -37,10 +37,10 @@ namespace Time {
     ///
     instance FromString[YearMonth] {
         pub def fromString(s: String): Option[YearMonth] = try {
-            import java.lang.String.strip();
-            import static java.time.YearMonth.parse(##java.lang.CharSequence);
-            let cs = strip(s) as ##java.lang.CharSequence & Pure;
-            Some(YearMonth(parse(cs))) as & Pure
+            import java.lang.String.strip(): String & Pure;
+            import static java.time.YearMonth.parse(##java.lang.CharSequence): ##java.time.YearMonth & Pure;
+            let cs = strip(s) as ##java.lang.CharSequence;
+            Some(YearMonth(parse(cs)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
@@ -71,16 +71,16 @@ namespace Time/YearMonth {
     use Time.YearMonth.{YearMonth};
 
     pub def new(x: {year :: Int32, month :: Int32}): YearMonth =
-        import static java.time.YearMonth.of(Int32, Int32);
-        YearMonth(of(x.year, x.month)) as & Pure
+        import static java.time.YearMonth.of(Int32, Int32): ##java.time.YearMonth & Pure;
+        YearMonth(of(x.year, x.month))
 
     pub def newWithMonth(x: {year :: Int32, month :: Month}): YearMonth =
-        import static java.time.YearMonth.of(Int32, ##java.time.Month);
+        import static java.time.YearMonth.of(Int32, ##java.time.Month): ##java.time.YearMonth & Pure;
         let m1 = Time/Month.toNative(x.month);
-        YearMonth(of(x.year, m1)) as & Pure
+        YearMonth(of(x.year, m1))
 
     pub def now(): YearMonth & Impure =
-        import static java.time.YearMonth.now();
+        import static java.time.YearMonth.now(): ##java.time.YearMonth & Impure;
         YearMonth(now())
 
 
@@ -88,10 +88,10 @@ namespace Time/YearMonth {
     /// Returns YearMonth `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateFormatter, x: YearMonth): String =
-        import java.time.YearMonth.format(##java.time.format.DateTimeFormatter);
+        import java.time.YearMonth.format(##java.time.format.DateTimeFormatter): String & Pure;
         let YearMonth(x1) = x;
         let DateFormatter(fmtr) = formatter;
-        format(x1, fmtr) as & Pure
+        format(x1, fmtr)
 
     ///
     /// Parse the string `s` as a YearMonth, leading or trailing whitespace is trimmed.
@@ -100,136 +100,136 @@ namespace Time/YearMonth {
     /// A successful parse is wrapped with `Some(_)`, a parse failure is indicated by `None`.
     ///
     pub def parse(formatter: DateFormatter, s: String): Option[YearMonth] =
-        import java.lang.String.strip();
-        import static java.time.YearMonth.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import java.lang.String.strip(): String & Pure;
+        import static java.time.YearMonth.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.YearMonth & Pure;
         try {
             let DateFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence & Pure;
-            Some(YearMonth(parse(cs, fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence;
+            Some(YearMonth(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
 
     pub def equals(x: YearMonth, y: YearMonth): Bool =
-        import java.time.YearMonth.equals(##java.lang.Object);
+        import java.time.YearMonth.equals(##java.lang.Object): Bool & Pure;
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        equals(x1, y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object)
 
     pub def hashCode(x: YearMonth): Int32 =
-        import java.time.YearMonth.hashCode();
+        import java.time.YearMonth.hashCode(): Int32 & Pure;
         let YearMonth(x1) = x;
-        hashCode(x1) as & Pure
+        hashCode(x1)
 
 
     ///
     /// Returns ...
     ///
     pub def compareTo(x: YearMonth, y: YearMonth): Int32 =
-        import java.time.YearMonth.compareTo(##java.time.YearMonth);
+        import java.time.YearMonth.compareTo(##java.time.YearMonth): Int32 & Pure;
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        compareTo(x1, y1) as & Pure
+        compareTo(x1, y1)
 
 
     ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: YearMonth, y: YearMonth): Bool =
-        import java.time.YearMonth.isBefore(##java.time.YearMonth);
+        import java.time.YearMonth.isBefore(##java.time.YearMonth): Bool & Pure;
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        isBefore(x1, y1) as & Pure
+        isBefore(x1, y1)
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: YearMonth, y: YearMonth): Bool =
-        import java.time.YearMonth.isAfter(##java.time.YearMonth);
+        import java.time.YearMonth.isAfter(##java.time.YearMonth): Bool & Pure;
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        isAfter(x1, y1) as & Pure
+        isAfter(x1, y1)
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeapYear(x: YearMonth): Bool =
-        import java.time.YearMonth.isLeapYear();
+        import java.time.YearMonth.isLeapYear(): Bool & Pure;
         let YearMonth(x1) = x;
-        isLeapYear(x1) as & Pure
+        isLeapYear(x1)
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isValidDay(x: YearMonth, dayOfMonth: Int32): Bool =
-        import java.time.YearMonth.isValidDay(Int32);
+        import java.time.YearMonth.isValidDay(Int32): Bool & Pure;
         let YearMonth(x1) = x;
-        isValidDay(x1, dayOfMonth) as & Pure
+        isValidDay(x1, dayOfMonth)
 
     ///
     /// Returns the length of the month.
     ///
     pub def lengthOfMonth(x: YearMonth): Int32 =
-        import java.time.YearMonth.lengthOfMonth();
+        import java.time.YearMonth.lengthOfMonth(): Int32 & Pure;
         let YearMonth(x1) = x;
-        lengthOfMonth(x1) as & Pure
+        lengthOfMonth(x1)
 
     ///
     /// Returns the length of the year.
     ///
     pub def lengthOfYear(x: YearMonth): Int32 =
-        import java.time.YearMonth.lengthOfYear();
+        import java.time.YearMonth.lengthOfYear(): Int32 & Pure;
         let YearMonth(x1) = x;
-        lengthOfYear(x1) as & Pure
+        lengthOfYear(x1)
 
     pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
-        import java.time.YearMonth.plusMonths(Int64);
+        import java.time.YearMonth.plusMonths(Int64): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
-        YearMonth(plusMonths(x1, months)) as & Pure
+        YearMonth(plusMonths(x1, months))
 
     pub def minusMonths(x: YearMonth, months: Int64): YearMonth =
-        import java.time.YearMonth.minusMonths(Int64);
+        import java.time.YearMonth.minusMonths(Int64): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
-        YearMonth(minusMonths(x1, months)) as & Pure
+        YearMonth(minusMonths(x1, months))
 
     pub def plusYears(x: YearMonth, years: Int64): YearMonth =
-        import java.time.YearMonth.plusYears(Int64);
+        import java.time.YearMonth.plusYears(Int64): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
-        YearMonth(plusYears(x1, years)) as & Pure
+        YearMonth(plusYears(x1, years))
 
     pub def minusYears(x: YearMonth, years: Int64): YearMonth =
-        import java.time.YearMonth.minusYears(Int64);
+        import java.time.YearMonth.minusYears(Int64): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
-        YearMonth(minusYears(x1, years)) as & Pure
+        YearMonth(minusYears(x1, years))
 
 
     pub def getMonth(x: YearMonth): Month =
-        import java.time.YearMonth.getMonth();
+        import java.time.YearMonth.getMonth(): ##java.time.Month & Pure;
         use Time/Month.{fromNative};
         let YearMonth(x1) = x;
-        (getMonth(x1) |> fromNative) as & Pure
+        (getMonth(x1) |> fromNative)
 
     pub def putMonth(x: YearMonth, month: Month): YearMonth =
         newWithMonth({year = getYear(x), month = month})
 
     pub def getMonthValue(x: YearMonth): Int32 =
-        import java.time.YearMonth.getMonthValue();
+        import java.time.YearMonth.getMonthValue(): Int32 & Pure;
         let YearMonth(x1) = x;
-        getMonthValue(x1) as & Pure
+        getMonthValue(x1)
 
     pub def putMonthValue(x: YearMonth, month: Int32): YearMonth =
-        import java.time.YearMonth.withMonth(Int32);
+        import java.time.YearMonth.withMonth(Int32): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
-        YearMonth(withMonth(x1, month)) as & Pure
+        YearMonth(withMonth(x1, month))
 
     pub def getYear(x: YearMonth): Int32 =
-        import java.time.YearMonth.getYear();
+        import java.time.YearMonth.getYear(): Int32 & Pure;
         let YearMonth(x1) = x;
-        getYear(x1) as & Pure
+        getYear(x1)
 
     pub def putYear(x: YearMonth, year: Int32): YearMonth =
-        import java.time.YearMonth.withYear(Int32);
+        import java.time.YearMonth.withYear(Int32): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
-        YearMonth(withYear(x1, year)) as & Pure
+        YearMonth(withYear(x1, year))
 
 }

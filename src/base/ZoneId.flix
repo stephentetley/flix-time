@@ -27,17 +27,17 @@ namespace Time {
     ///
     instance ToString[ZoneId] {
         pub def toString(x: ZoneId): String =
-            import java.time.ZoneId.toString();
+            import java.time.ZoneId.toString(): String & Pure;
             let ZoneId(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
 
     instance FromString[ZoneId] {
         pub def fromString(s: String): Option[ZoneId] =
-            import java.lang.String.strip();
-            import static java.time.ZoneId.of(String) as of;
+            import java.lang.String.strip(): String & Pure;
+            import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
             try {
-                Some(ZoneId(of(strip(s)))) as & Pure
+                Some(ZoneId(of(strip(s))))
             } catch {
                 case _: ##java.time.DateTimeException => None
                 case _: ##java.time.zone.ZoneRulesException => None
@@ -71,13 +71,13 @@ namespace Time/ZoneId {
     use Time.ZoneOffset.{ZoneOffset};
 
     pub def new(prefix: Option[ZonePrefix], offset: ZoneOffset): ZoneId =
-        import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset);
+        import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId & Pure;
         let p1 = match prefix {
             case Some(ZonePrefix(s)) => s
             case _ => ""
         };
         let ZoneOffset(o1) = offset;
-        ZoneId(ofOffset(p1, o1)) as & Pure
+        ZoneId(ofOffset(p1, o1))
 
     pub def gmt(): ZonePrefix = ZonePrefix("GMT")
 
@@ -87,37 +87,37 @@ namespace Time/ZoneId {
 
 
     pub def systemDefault(): Option[ZoneId] & Impure =
-        import static java.time.ZoneId.systemDefault() as systemDefaultZoneId;
+        import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId & Impure;
         try {
-            Some(ZoneId(systemDefaultZoneId()))
+            Some(ZoneId(systemDefault()))
         } catch {
             case _: ##java.time.DateTimeException => None
             case _: ##java.time.zone.ZoneRulesException => None
         }
 
     pub def equals(x: ZoneId, y: ZoneId): Bool =
-        import java.time.ZoneId.equals(##java.lang.Object);
+        import java.time.ZoneId.equals(##java.lang.Object): Bool & Pure;
         let ZoneId(x1) = x;
         let ZoneId(y1) = y;
-        equals(x1, y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object)
 
     pub def hashCode(x: ZoneId): Int32 =
-        import java.time.ZoneId.hashCode();
+        import java.time.ZoneId.hashCode(): Int32 & Pure;
         let ZoneId(x1) = x;
-        hashCode(x1) as & Pure
+        hashCode(x1)
 
 
     ///
     /// Returns the unique ID of the time zone.
     ///
     pub def getTimeZoneId(x: ZoneId): String =
-        import java.time.ZoneId.getId();
+        import java.time.ZoneId.getId(): String & Pure;
         let ZoneId(x1) = x;
-        getId(x1) as & Pure
+        getId(x1)
 
     pub def getAvailableZoneIds(): Set[String] & Impure =
-        import static java.time.ZoneId.getAvailableZoneIds();
-        import java.util.Set.iterator();
+        import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set & Impure;
+        import java.util.Set.iterator(): ##java.util.Iterator & Impure;
         try {
             let sjava = getAvailableZoneIds();
             let iter = iterator(sjava);
@@ -129,8 +129,8 @@ namespace Time/ZoneId {
 
 
     def iterateListOfString(iter: ##java.util.Iterator, k: List[String] -> List[String]): List[String] & Impure =
-        import java.util.Iterator.hasNext();
-        import java.util.Iterator.next();
+        import java.util.Iterator.hasNext(): Bool & Impure;
+        import java.util.Iterator.next(): ##java.lang.Object & Impure;
         if (hasNext(iter))
             let entry = next(iter) as String;
             iterateListOfString(iter, ks -> k(entry :: ks))

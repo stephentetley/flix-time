@@ -25,7 +25,7 @@ namespace Time/Format/Internal/Prim {
 
     /// Should this be called `new`?
     pub def ofPattern(pattern: String): Option[##java.time.format.DateTimeFormatter] =
-        import java.lang.String.strip();
+        import java.lang.String.strip(): String & Pure;
         import static java.time.format.DateTimeFormatter.ofPattern(String) as ofPattern;
         try {
             Some(ofPattern(strip(pattern))) as & Pure
