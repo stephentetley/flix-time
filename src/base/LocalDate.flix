@@ -28,9 +28,9 @@ namespace Time {
     ///
     instance ToString[LocalDate] {
         pub def toString(x: LocalDate): String =
-            import java.time.LocalDate.toString();
+            import java.time.LocalDate.toString(): String & Pure;
             let LocalDate(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
 
     ///
@@ -41,10 +41,10 @@ namespace Time {
     instance FromString[LocalDate] {
         pub def fromString(s: String): Option[LocalDate] =
             import java.lang.String.strip(): String & Pure;
-            import static java.time.LocalDate.parse(##java.lang.CharSequence);
+            import static java.time.LocalDate.parse(##java.lang.CharSequence): ##java.time.LocalDate & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence & Pure;
-                Some(LocalDate(parse(cs))) as & Pure
+                let cs = strip(s) as ##java.lang.CharSequence;
+                Some(LocalDate(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
             }
@@ -66,14 +66,14 @@ namespace Time {
 
     instance LowerBound[LocalDate] {
         pub def minValue(): LocalDate =
-            import static get java.time.LocalDate.MIN as getMIN;
-            LocalDate(getMIN()) as & Pure
+            import static get java.time.LocalDate.MIN: ##java.time.LocalDate & Pure as getMIN;
+            LocalDate(getMIN())
     }
 
     instance UpperBound[LocalDate] {
         pub def maxValue(): LocalDate =
-            import static get java.time.LocalDate.MAX as getMAX;
-            LocalDate(getMAX()) as & Pure
+            import static get java.time.LocalDate.MAX: ##java.time.LocalDate & Pure as getMAX;
+            LocalDate(getMAX())
     }
 
     instance Boxable[LocalDate]
@@ -103,13 +103,13 @@ namespace Time/LocalDate {
     use Time.ZoneId.{ZoneId};
 
     pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32}): LocalDate =
-        import static java.time.LocalDate.of(Int32, Int32, Int32);
-        LocalDate(of(x.year, x.month, x.dayOfMonth)) as & Pure
+        import static java.time.LocalDate.of(Int32, Int32, Int32): ##java.time.LocalDate & Pure;
+        LocalDate(of(x.year, x.month, x.dayOfMonth))
 
     pub def newWithMonth(x: {year :: Int32, month :: Month, dayOfMonth :: Int32}): LocalDate =
-        import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32);
+        import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32): ##java.time.LocalDate & Pure;
         let m1 = Time/Month.toNative(x.month);
-        LocalDate(of(x.year, m1, x.dayOfMonth)) as & Pure
+        LocalDate(of(x.year, m1, x.dayOfMonth))
 
     /// TODO - potentially remove getFields...
     pub def getFields(x: LocalDate): {year :: Int32, month :: Int32, dayOfMonth :: Int32} =
@@ -120,14 +120,14 @@ namespace Time/LocalDate {
     /// Returns the current date from the system clock.
     ///
     pub def now(): LocalDate & Impure =
-        import static java.time.LocalDate.now();
+        import static java.time.LocalDate.now(): ##java.time.LocalDate & Impure;
         LocalDate(now())
 
     ///
     /// Returns the current date from the system clock using zoneId.
     ///
     pub def nowWithZoneId(zoneId: ZoneId): LocalDate & Impure =
-        import static java.time.LocalDate.now(##java.time.ZoneId);
+        import static java.time.LocalDate.now(##java.time.ZoneId): ##java.time.LocalDate & Impure;
         let ZoneId(z1) = zoneId;
         LocalDate(now(z1))
 
@@ -136,33 +136,33 @@ namespace Time/LocalDate {
     /// ___
     ///
     pub def epoch(): LocalDate =
-        import static get java.time.LocalDate.EPOCH as getEPOCH;
-        LocalDate(getEPOCH()) as & Pure
+        import static get java.time.LocalDate.EPOCH: ##java.time.LocalDate & Pure as getEPOCH;
+        LocalDate(getEPOCH())
 
 
 
     pub def atStartOfDay(x: LocalDate): LocalDateTime =
-        import java.time.LocalDate.atStartOfDay();
+        import java.time.LocalDate.atStartOfDay(): ##java.time.LocalDateTime & Pure;
         let LocalDate(x1) = x;
-        LocalDateTime(atStartOfDay(x1)) as & Pure
+        LocalDateTime(atStartOfDay(x1))
 
     pub def atStartOfDayWithZoneId(x: LocalDate, zoneId: ZoneId): ZonedDateTime =
-        import java.time.LocalDate.atStartOfDay(##java.time.ZoneId);
+        import java.time.LocalDate.atStartOfDay(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         let LocalDate(x1) = x;
         let ZoneId(z1) = zoneId;
-        ZonedDateTime(atStartOfDay(x1, z1)) as & Pure
+        ZonedDateTime(atStartOfDay(x1, z1))
 
     pub def atTimeWithLocalTime(x: LocalDate, t: LocalTime): LocalDateTime =
-        import java.time.LocalDate.atTime(##java.time.LocalTime);
+        import java.time.LocalDate.atTime(##java.time.LocalTime): ##java.time.LocalDateTime & Pure;
         let LocalDate(x1) = x;
         let LocalTime(t1) = t;
-        LocalDateTime(atTime(x1, t1)) as & Pure
+        LocalDateTime(atTime(x1, t1))
 
     pub def atTimeWithOffsetTime(x: LocalDate, t: OffsetTime): OffsetDateTime =
-        import java.time.LocalDate.atTime(##java.time.OffsetTime);
+        import java.time.LocalDate.atTime(##java.time.OffsetTime): ##java.time.OffsetDateTime & Pure;
         let LocalDate(x1) = x;
         let OffsetTime(t1) = t;
-        OffsetDateTime(atTime(x1, t1)) as & Pure
+        OffsetDateTime(atTime(x1, t1))
 
 /*
     pub def ofInstant(x: Instant, zoneId: ZoneId): LocalDate =
@@ -180,11 +180,11 @@ namespace Time/LocalDate {
     ///
     pub def parse(formatter: DateFormatter, s: String): Option[LocalDate] =
         import java.lang.String.strip(): String & Pure;
-        import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter);
+        import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate & Pure;
         try {
             let DateFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence & Pure;
-            Some(LocalDate(parse(cs, fmtr))) as & Pure
+            let cs = strip(s) as ##java.lang.CharSequence;
+            Some(LocalDate(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
@@ -193,32 +193,32 @@ namespace Time/LocalDate {
     /// Returns LocalDate `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateFormatter, x: LocalDate): String =
-        import java.time.LocalDate.format(##java.time.format.DateTimeFormatter);
+        import java.time.LocalDate.format(##java.time.format.DateTimeFormatter): String & Pure;
         let LocalDate(x1) = x;
         let DateFormatter(fmtr) = formatter;
-        format(x1, fmtr) as & Pure
+        format(x1, fmtr)
 
     pub def equals(x: LocalDate, y: LocalDate): Bool =
-        import java.time.LocalDate.equals(##java.lang.Object);
+        import java.time.LocalDate.equals(##java.lang.Object): Bool & Pure;
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        equals(x1, y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object)
 
 
     pub def hashCode(x: LocalDate): Int32 =
-        import java.time.LocalDate.hashCode();
+        import java.time.LocalDate.hashCode(): Int32 & Pure;
         let LocalDate(x1) = x;
-        hashCode(x1) as & Pure
+        hashCode(x1)
 
 
     pub def ofEpochDay(x: Int64): LocalDate =
-        import static java.time.LocalDate.ofEpochDay(Int64);
-        LocalDate(ofEpochDay(x)) as & Pure
+        import static java.time.LocalDate.ofEpochDay(Int64): ##java.time.LocalDate & Pure;
+        LocalDate(ofEpochDay(x))
 
     pub def toEpochDay(x: LocalDate): Int64 =
-        import java.time.chrono.ChronoLocalDate.toEpochDay();
+        import java.time.chrono.ChronoLocalDate.toEpochDay(): Int64 & Pure;
         let LocalDate(x1) = x;
-        toEpochDay(x1 as ##java.time.chrono.ChronoLocalDate) as & Pure
+        toEpochDay(x1 as ##java.time.chrono.ChronoLocalDate)
 
 
 
@@ -226,151 +226,147 @@ namespace Time/LocalDate {
     /// Returns `true` if `x` == `y`.
     ///
     pub def compareTo(x: LocalDate, y: LocalDate): Int32 =
-        import java.time.LocalDate.compareTo(##java.time.chrono.ChronoLocalDate);
+        import java.time.LocalDate.compareTo(##java.time.chrono.ChronoLocalDate): Int32 & Pure;
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        compareTo(x1, y1 as ##java.time.chrono.ChronoLocalDate) as & Pure
+        compareTo(x1, y1 as ##java.time.chrono.ChronoLocalDate)
 
 
     ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: LocalDate, y: LocalDate): Bool =
-        import java.time.LocalDate.isBefore(##java.time.chrono.ChronoLocalDate);
+        import java.time.LocalDate.isBefore(##java.time.chrono.ChronoLocalDate): Bool & Pure;
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        isBefore(x1, y1 as ##java.time.chrono.ChronoLocalDate) as & Pure
+        isBefore(x1, y1 as ##java.time.chrono.ChronoLocalDate)
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: LocalDate, y: LocalDate): Bool =
-        import java.time.LocalDate.isAfter(##java.time.chrono.ChronoLocalDate);
+        import java.time.LocalDate.isAfter(##java.time.chrono.ChronoLocalDate): Bool & Pure;
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        isAfter(x1, y1 as ##java.time.chrono.ChronoLocalDate) as & Pure
-
-
-
-
-    pub def plusDays(x: LocalDate, days: Int64): LocalDate =
-        import java.time.LocalDate.plusDays(Int64) as plus;
-        let LocalDate(x1) = x;
-        LocalDate(plus(x1, days)) as & Pure
-
-    pub def minusDays(x: LocalDate, days: Int64): LocalDate =
-        import java.time.LocalDate.minusDays(Int64) as minus;
-        let LocalDate(x1) = x;
-        LocalDate(minus(x1, days)) as & Pure
-
-    pub def plusWeeks(x: LocalDate, weeks: Int64): LocalDate =
-        import java.time.LocalDate.plusWeeks(Int64) as plus;
-        let LocalDate(x1) = x;
-        LocalDate(plus(x1, weeks)) as & Pure
-
-    pub def minusWeeks(x: LocalDate, weeks: Int64): LocalDate =
-        import java.time.LocalDate.minusWeeks(Int64) as minus;
-        let LocalDate(x1) = x;
-        LocalDate(minus(x1, weeks)) as & Pure
-
-    pub def plusMonths(x: LocalDate, months: Int64): LocalDate =
-        import java.time.LocalDate.plusMonths(Int64) as plus;
-        let LocalDate(x1) = x;
-        LocalDate(plus(x1, months)) as & Pure
-
-    pub def minusMonths(x: LocalDate, months: Int64): LocalDate =
-        import java.time.LocalDate.minusMonths(Int64) as minus;
-        let LocalDate(x1) = x;
-        LocalDate(minus(x1, months)) as & Pure
+        isAfter(x1, y1 as ##java.time.chrono.ChronoLocalDate)
 
 
     pub def plusYears(x: LocalDate, years: Int64): LocalDate =
-        import java.time.LocalDate.plusYears(Int64) as plus;
+        import java.time.LocalDate.plusYears(Int64): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
-        LocalDate(plus(x1, years)) as & Pure
+        LocalDate(plusYears(x1, years))
 
     pub def minusYears(x: LocalDate, years: Int64): LocalDate =
-        import java.time.LocalDate.minusYears(Int64) as minus;
+        import java.time.LocalDate.minusYears(Int64): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
-        LocalDate(minus(x1, years)) as & Pure
+        LocalDate(minusYears(x1, years))
+
+    pub def plusMonths(x: LocalDate, months: Int64): LocalDate =
+        import java.time.LocalDate.plusMonths(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(plusMonths(x1, months))
+
+    pub def minusMonths(x: LocalDate, months: Int64): LocalDate =
+        import java.time.LocalDate.minusMonths(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(minusMonths(x1, months))
+
+    pub def plusWeeks(x: LocalDate, weeks: Int64): LocalDate =
+        import java.time.LocalDate.plusWeeks(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(plusWeeks(x1, weeks))
+
+    pub def minusWeeks(x: LocalDate, weeks: Int64): LocalDate =
+        import java.time.LocalDate.minusWeeks(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(minusWeeks(x1, weeks))
+
+    pub def plusDays(x: LocalDate, days: Int64): LocalDate =
+        import java.time.LocalDate.plusDays(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(plusDays(x1, days))
+
+    pub def minusDays(x: LocalDate, days: Int64): LocalDate =
+        import java.time.LocalDate.minusDays(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(minusDays(x1, days))
+
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
         use Time/DayOfWeek.{fromNative};
-        import java.time.LocalDate.getDayOfWeek();
+        import java.time.LocalDate.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
         let LocalDate(x1) = x;
-        fromNative(getDayOfWeek(x1)) as & Pure
+        fromNative(getDayOfWeek(x1))
 
     pub def getDayOfMonth(x: LocalDate): Int32 =
-        import java.time.LocalDate.getDayOfMonth();
+        import java.time.LocalDate.getDayOfMonth(): Int32 & Pure;
         let LocalDate(x1) = x;
-        getDayOfMonth(x1) as & Pure
+        getDayOfMonth(x1)
 
     pub def putDayOfMonth(x: LocalDate, dayOfMonth: Int32): LocalDate =
-        import java.time.LocalDate.withDayOfMonth(Int32);
+        import java.time.LocalDate.withDayOfMonth(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
-        LocalDate(withDayOfMonth(x1, dayOfMonth)) as & Pure
-
-
+        LocalDate(withDayOfMonth(x1, dayOfMonth))
 
     pub def getDayOfYear(x: LocalDate): Int32 =
-        import java.time.LocalDate.getDayOfYear();
+        import java.time.LocalDate.getDayOfYear(): Int32 & Pure;
         let LocalDate(x1) = x;
-        getDayOfYear(x1) as & Pure
+        getDayOfYear(x1)
 
     pub def putDayOfYear(x: LocalDate, dayOfYear: Int32): LocalDate =
-        import java.time.LocalDate.withDayOfYear(Int32);
+        import java.time.LocalDate.withDayOfYear(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
-        LocalDate(withDayOfYear(x1, dayOfYear)) as & Pure
+        LocalDate(withDayOfYear(x1, dayOfYear))
 
     pub def getMonth(x: LocalDate): Month =
-        import java.time.LocalDate.getMonth();
+        import java.time.LocalDate.getMonth(): ##java.time.Month & Pure;
         let LocalDate(x1) = x;
-        Time/Month.fromNative(getMonth(x1)) as & Pure
+        Time/Month.fromNative(getMonth(x1))
 
 
     pub def getMonthValue(x: LocalDate): Int32 =
-        import java.time.LocalDate.getMonth();
-        import java.time.Month.getValue();
+        import java.time.LocalDate.getMonth(): ##java.time.Month & Pure;
+        import java.time.Month.getValue(): Int32 & Pure;
         let LocalDate(x1) = x;
-        getValue(getMonth(x1)) as & Pure
+        getValue(getMonth(x1))
 
     pub def putMonth(x: LocalDate, month: Int32): LocalDate =
-        import java.time.LocalDate.withMonth(Int32);
+        import java.time.LocalDate.withMonth(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
-        LocalDate(withMonth(x1, month)) as & Pure
+        LocalDate(withMonth(x1, month))
 
     pub def getYear(x: LocalDate): Int32 =
-        import java.time.LocalDate.getYear();
+        import java.time.LocalDate.getYear(): Int32 & Pure;
         let LocalDate(x1) = x;
-        getYear(x1) as & Pure
+        getYear(x1)
 
     pub def putYear(x: LocalDate, year: Int32): LocalDate =
-        import java.time.LocalDate.withYear(Int32);
+        import java.time.LocalDate.withYear(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
-        LocalDate(withYear(x1, year)) as & Pure
+        LocalDate(withYear(x1, year))
 
     pub def until(b: LocalDate, e: LocalDate, unit: ChronoUnit): Int64 =
-        import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit);
+        import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let LocalDate(b1) = b;
         let LocalDate(e1) = e;
         let u1 = Time/Temporal/ChronoUnit.toNative(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        until(b1, te1, tu1) as & Pure
+        until(b1, te1, tu1)
 
     pub def isLeapYear(x: LocalDate): Bool =
-        import java.time.LocalDate.isLeapYear();
+        import java.time.LocalDate.isLeapYear(): Bool & Pure;
         let LocalDate(x1) = x;
-        isLeapYear(x1) as & Pure
+        isLeapYear(x1)
 
     pub def lengthOfMonth(x: LocalDate): Int32 =
-        import java.time.LocalDate.lengthOfMonth();
+        import java.time.LocalDate.lengthOfMonth(): Int32 & Pure;
         let LocalDate(x1) = x;
-        lengthOfMonth(x1) as & Pure
+        lengthOfMonth(x1)
 
     pub def lengthOfYear(x: LocalDate): Int32 =
-        import java.time.LocalDate.lengthOfYear();
+        import java.time.LocalDate.lengthOfYear(): Int32 & Pure;
         let LocalDate(x1) = x;
-        lengthOfYear(x1) as & Pure
+        lengthOfYear(x1)
 
 }

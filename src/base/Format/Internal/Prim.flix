@@ -26,34 +26,34 @@ namespace Time/Format/Internal/Prim {
     /// Should this be called `new`?
     pub def ofPattern(pattern: String): Option[##java.time.format.DateTimeFormatter] =
         import java.lang.String.strip(): String & Pure;
-        import static java.time.format.DateTimeFormatter.ofPattern(String) as ofPattern;
+        import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter & Pure;
         try {
-            Some(ofPattern(strip(pattern))) as & Pure
+            Some(ofPattern(strip(pattern)))
         } catch {
             case _: ##java.lang.IllegalArgumentException => None
         }
 
     
     pub def getLocale(x: ##java.time.format.DateTimeFormatter): Locale =
-        import java.time.format.DateTimeFormatter.getLocale();
-        Locale(getLocale(x)) as & Pure
+        import java.time.format.DateTimeFormatter.getLocale(): ##java.util.Locale & Pure;
+        Locale(getLocale(x))
 
     pub def putLocale(x: ##java.time.format.DateTimeFormatter, locale: Locale): ##java.time.format.DateTimeFormatter =
-        import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale);
+        import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale): ##java.time.format.DateTimeFormatter & Pure;
         let Locale(locale1) = locale;
-        withLocale(x, locale1) as & Pure
+        withLocale(x, locale1)
 
     pub def getDecimalStyle(x: ##java.time.format.DateTimeFormatter): DecimalStyle =
-        import java.time.format.DateTimeFormatter.getDecimalStyle();
+        import java.time.format.DateTimeFormatter.getDecimalStyle(): ##java.time.format.DecimalStyle & Pure;
         DecimalStyle(getDecimalStyle(x)) as & Pure
 
     pub def putDecimalStyle(x: ##java.time.format.DateTimeFormatter, style: DecimalStyle):  ##java.time.format.DateTimeFormatter =
-        import java.time.format.DateTimeFormatter.withDecimalStyle(##java.time.format.DecimalStyle);
+        import java.time.format.DateTimeFormatter.withDecimalStyle(##java.time.format.DecimalStyle): ##java.time.format.DateTimeFormatter & Pure;
         let DecimalStyle(style1) = style;
-        withDecimalStyle(x, style1) as & Pure
+        withDecimalStyle(x, style1)
 
     pub def getResolverStyle(x: ##java.time.format.DateTimeFormatter): ResolverStyle =
-        import java.time.format.DateTimeFormatter.getResolverStyle();
-        Time/Format/ResolverStyle.fromNative(getResolverStyle(x)) as & Pure         
+        import java.time.format.DateTimeFormatter.getResolverStyle(): ##java.time.format.ResolverStyle & Pure;
+        Time/Format/ResolverStyle.fromNative(getResolverStyle(x))
 
 }

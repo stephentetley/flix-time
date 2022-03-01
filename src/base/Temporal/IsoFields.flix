@@ -53,19 +53,19 @@ namespace Time/Temporal/IsoFields {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def dayOfQuarter(): IsoFields = 
-        import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.IsoField & Pure as getDAY_OF_QUARTER;
+        import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField & Pure as getDAY_OF_QUARTER;
         IsoFields(getDAY_OF_QUARTER())
 
     pub def quarterOfYear(): IsoFields = 
-        import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.IsoField & Pure as getQUARTER_OF_YEAR;
+        import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField & Pure as getQUARTER_OF_YEAR;
         IsoFields(getQUARTER_OF_YEAR())
 
     pub def weekBasedYear(): IsoFields = 
-        import static get java.time.temporal.IsoFields.WEEK_BASED_YEAR: ##java.time.temporal.IsoField & Pure as getWEEK_BASED_YEAR;
+        import static get java.time.temporal.IsoFields.WEEK_BASED_YEAR: ##java.time.temporal.TemporalField & Pure as getWEEK_BASED_YEAR;
         IsoFields(getWEEK_BASED_YEAR())
 
     pub def weekOfWeekBasedYear(): IsoFields = 
-        import static get java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR: ##java.time.temporal.IsoField & Pure as getWEEK_OF_WEEK_BASED_YEAR;
+        import static get java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR: ##java.time.temporal.TemporalField & Pure as getWEEK_OF_WEEK_BASED_YEAR;
         IsoFields(getWEEK_OF_WEEK_BASED_YEAR())
 
     pub def equals(x: IsoFields, y: IsoFields): Bool =
@@ -81,7 +81,7 @@ namespace Time/Temporal/IsoFields {
 
 
     pub def getDisplayName(x: IsoFields, locale: Locale): String =
-        import java.time.temporal.TemporalField.getDisplayName(##java.util.Locale): ##java.time.temporal.TemporalField & Pure;
+        import java.time.temporal.TemporalField.getDisplayName(##java.util.Locale): String & Pure;
         let IsoFields(x1) = x;
         let Locale(locale1) = locale;
         getDisplayName(x1, locale1)

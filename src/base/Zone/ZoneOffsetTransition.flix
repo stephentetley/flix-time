@@ -89,7 +89,7 @@ namespace Time/Zone/ZoneOffsetTransition {
         isOverlap(x1)
 
     pub def toEpochSecond(x: ZoneOffsetTransition): Int64 =
-        import java.time.zone.ZoneOffsetTransition.toEpochSecond(): Bool & Pure;
+        import java.time.zone.ZoneOffsetTransition.toEpochSecond(): Int64 & Pure;
         let ZoneOffsetTransition(x1) = x;
         toEpochSecond(x1)
 }

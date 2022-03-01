@@ -62,14 +62,14 @@ namespace Time {
 
     instance LowerBound[Year] {
         pub def minValue(): Year =
-            import static get java.time.Year.MIN_VALUE: ##java.time.Year & Pure as getMIN_VALUE;
+            import static get java.time.Year.MIN_VALUE: Int32 & Pure as getMIN_VALUE;
             import static java.time.Year.of(Int32): ##java.time.Year & Pure;
             Year(of(getMIN_VALUE()))
     }
 
     instance UpperBound[Year] {
         pub def maxValue(): Year =
-            import static get java.time.Year.MAX_VALUE: ##java.time.Year & Pure as getMAX_VALUE;
+            import static get java.time.Year.MAX_VALUE: Int32 & Pure as getMAX_VALUE;
             import static java.time.Year.of(Int32): ##java.time.Year & Pure;
             Year(of(getMAX_VALUE()))
     }

@@ -18,67 +18,67 @@
 namespace Time/Internal/ChronoUnit {
 
     pub def getNANOS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.NANOS as getNANOS;
-        getNANOS() as & Pure
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;
+        getNANOS()
 
     pub def getMICROS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.MICROS as getMICROS;
-        getMICROS() as & Pure
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as getMICROS;
+        getMICROS()
 
     pub def getMILLIS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.MILLIS as getMILLIS;
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as getMILLIS;
         getMILLIS() as & Pure
 
     pub def getSECONDS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.SECONDS as getSECONDS;
-        getSECONDS() as & Pure
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as getSECONDS;
+        getSECONDS()
 
     pub def getMINUTES(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.MINUTES as getMINUTES;
-        getMINUTES() as & Pure
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as getMINUTES;
+        getMINUTES()
 
     pub def getHOURS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.HOURS as getHOURS;
-        getHOURS() as & Pure
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as getHOURS;
+        getHOURS()
 
     pub def getHALF_DAYS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS as getHALF_DAYS;
-        getHALF_DAYS() as & Pure
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as getHALF_DAYS;
+        getHALF_DAYS()
 
     pub def getDAYS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.DAYS as getDAYS;
-        getDAYS() as & Pure
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as getDAYS;
+        getDAYS()
 
     pub def getWEEKS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.WEEKS as getWEEKS;
-        getWEEKS() as & Pure
+        import static get java.time.temporal.ChronoUnit.WEEKS: ##java.time.temporal.ChronoUnit & Pure as getWEEKS;
+        getWEEKS()
 
     pub def getMONTHS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.MONTHS as getMONTHS;
-        getMONTHS() as & Pure
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as getMONTHS;
+        getMONTHS()
 
     pub def getYEARS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.YEARS as getYEARS;
-        getYEARS() as & Pure
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as getYEARS;
+        getYEARS()
 
     pub def getDECADES(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.DECADES as getDECADES;
-        getDECADES() as & Pure
+        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as getDECADES;
+        getDECADES()
 
     pub def getCENTURIES(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.CENTURIES as getCENTURIES;
-        getCENTURIES() as & Pure
+        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as getCENTURIES;
+        getCENTURIES()
 
     pub def getMILLENNIA(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.MILLENNIA as getMILLENNIA;
-        getMILLENNIA() as & Pure
+        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as getMILLENNIA;
+        getMILLENNIA()
 
     pub def getERAS(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.ERAS as getERAS;
-        getERAS() as & Pure
+        import static get java.time.temporal.ChronoUnit.ERAS: ##java.time.temporal.ChronoUnit & Pure as getERAS;
+        getERAS()
 
     pub def getFOREVER(): ##java.time.temporal.ChronoUnit = 
-        import static get java.time.temporal.ChronoUnit.FOREVER as getFOREVER;
-        getFOREVER() as & Pure
+        import static get java.time.temporal.ChronoUnit.FOREVER: ##java.time.temporal.ChronoUnit & Pure as getFOREVER;
+        getFOREVER()
 
 }

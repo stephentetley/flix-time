@@ -17,21 +17,13 @@
 namespace Time/Format {
 
 
-    pub enum FormatStyle {
+    pub enum FormatStyle with Eq, Order, ToString{
         case Full
         case Long
         case Medium
         case Short
     }
     
-    instance ToString[FormatStyle] {
-        pub def toString(x: FormatStyle): String = match x {
-            case Time/Format/FormatStyle.Full => "Full"
-            case Time/Format/FormatStyle.Long => "Long"
-            case Time/Format/FormatStyle.Medium => "Medium"
-            case Time/Format/FormatStyle.Short => "Short"
-        }
-    }
 
 }
 
@@ -41,34 +33,32 @@ namespace Time/Format/FormatStyle {
     use Time/Format.FormatStyle.{Full, Long, Medium, Short};
 
     pub def toNative(x: FormatStyle): ##java.time.format.FormatStyle = 
-        import static get java.time.format.FormatStyle.FULL            as getFULL;
-        import static get java.time.format.FormatStyle.LONG            as getLONG;
-        import static get java.time.format.FormatStyle.MEDIUM          as getMEDIUM;
-        import static get java.time.format.FormatStyle.SHORT           as getSHORT;
+        import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle & Pure as getFULL;
+        import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle & Pure as getLONG;
+        import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle & Pure as getMEDIUM;
+        import static get java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle & Pure as getSHORT;
         match x {
             case Full               => getFULL()
             case Long               => getLONG()
             case Medium             => getMEDIUM()
             case Short              => getSHORT()
-        } as & Pure
+        }
 
     def primEquals(x: ##java.time.format.FormatStyle, y: ##java.time.format.FormatStyle): Bool =
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
-        equals(x1, y1) as & Pure
+        equals(x1, y1)
 
     pub def fromNative(x: ##java.time.format.FormatStyle): FormatStyle = 
-        import static get java.time.format.FormatStyle.FULL            as getFULL;
-        import static get java.time.format.FormatStyle.LONG            as getLONG;
-        import static get java.time.format.FormatStyle.MEDIUM          as getMEDIUM;
-        import static get java.time.format.FormatStyle.SHORT           as getSHORT;
+        import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle & Pure as getFULL;
+        import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle & Pure as getLONG;
+        import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle & Pure as getMEDIUM;
+        import static get java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle & Pure as getSHORT;
         match x {
             case x1 if primEquals(x1, getFULL())                => Full
             case x1 if primEquals(x1, getLONG())                => Long
             case x1 if primEquals(x1, getMEDIUM())              => Medium
             case x1 if primEquals(x1, getSHORT())               => Short
-        } as & Pure
-
-
+        }
 }

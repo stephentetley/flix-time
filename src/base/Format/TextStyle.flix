@@ -16,7 +16,7 @@
 
 namespace Time/Format {
 
-    pub enum TextStyle {
+    pub enum TextStyle with Eq, Order, ToString {
         case Full
         case FullStandalone
         case Narrow
@@ -24,17 +24,7 @@ namespace Time/Format {
         case Short
         case ShortStandalone
     }
-    
-    instance ToString[TextStyle] {
-        pub def toString(x: TextStyle): String = match x {
-            case Time/Format/TextStyle.Full => "Full"
-            case Time/Format/TextStyle.FullStandalone => "FullStandalone"
-            case Time/Format/TextStyle.Narrow => "Narrow"
-            case Time/Format/TextStyle.NarrowStandalone => "NarrowStandalone"
-            case Time/Format/TextStyle.Short => "Short"
-            case Time/Format/TextStyle.ShortStandalone => "ShortStandalone"
-        }
-    }
+
 
 }
 
@@ -47,12 +37,12 @@ namespace Time/Format/TextStyle {
 
 
     pub def toNative(x: TextStyle): ##java.time.format.TextStyle = 
-        import static get java.time.format.TextStyle.FULL              as getFULL;
-        import static get java.time.format.TextStyle.FULL_STANDALONE   as getFULL_STANDALONE;
-        import static get java.time.format.TextStyle.NARROW            as getNARROW;
-        import static get java.time.format.TextStyle.NARROW_STANDALONE as getNARROW_STANDALONE;	
-        import static get java.time.format.TextStyle.SHORT             as getSHORT;
-        import static get java.time.format.TextStyle.SHORT_STANDALONE  as getSHORT_STANDALONE;
+        import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle & Pure as getFULL;
+        import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle & Pure as getFULL_STANDALONE;
+        import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle & Pure as getNARROW;
+        import static get java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle & Pure as getNARROW_STANDALONE;	
+        import static get java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle & Pure as getSHORT;
+        import static get java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle & Pure as getSHORT_STANDALONE;
         match x {
             case Full               => getFULL()
             case FullStandalone     => getFULL_STANDALONE()
@@ -60,21 +50,21 @@ namespace Time/Format/TextStyle {
             case NarrowStandalone   => getNARROW_STANDALONE()
             case Short              => getSHORT()
             case ShortStandalone    => getSHORT_STANDALONE() 
-        } as & Pure
+        }
 
     def primEquals(x: ##java.time.format.TextStyle, y: ##java.time.format.TextStyle): Bool =
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
-        equals(x1, y1) as & Pure
+        equals(x1, y1)
 
     pub def fromNative(x: ##java.time.format.TextStyle): TextStyle = 
-        import static get java.time.format.TextStyle.FULL              as getFULL;
-        import static get java.time.format.TextStyle.FULL_STANDALONE   as getFULL_STANDALONE;
-        import static get java.time.format.TextStyle.NARROW            as getNARROW;
-        import static get java.time.format.TextStyle.NARROW_STANDALONE as getNARROW_STANDALONE;	
-        import static get java.time.format.TextStyle.SHORT             as getSHORT;
-        import static get java.time.format.TextStyle.SHORT_STANDALONE  as getSHORT_STANDALONE;
+        import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle & Pure as getFULL;
+        import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle & Pure as getFULL_STANDALONE;
+        import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle & Pure as getNARROW;
+        import static get java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle & Pure as getNARROW_STANDALONE;	
+        import static get java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle & Pure as getSHORT;
+        import static get java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle & Pure as getSHORT_STANDALONE;
         match x {
             case x1 if primEquals(x1, getFULL())                => Full
             case x1 if primEquals(x1, getFULL_STANDALONE())     => FullStandalone
@@ -82,22 +72,22 @@ namespace Time/Format/TextStyle {
             case x1 if primEquals(x1, getNARROW_STANDALONE())   => NarrowStandalone
             case x1 if primEquals(x1, getSHORT())               => Short
             case x1 if primEquals(x1, getSHORT_STANDALONE())    => ShortStandalone
-        } as & Pure
+        }
 
     
     pub def asStandalone(x: TextStyle): TextStyle =
-        import java.time.format.TextStyle.asStandalone();
+        import java.time.format.TextStyle.asStandalone(): ##java.time.format.TextStyle & Pure;
         let x1 = toNative(x);
-        fromNative(asStandalone(x1)) as & Pure
+        fromNative(asStandalone(x1))
     
     pub def asNormal(x: TextStyle): TextStyle =
-        import java.time.format.TextStyle.asNormal();
+        import java.time.format.TextStyle.asNormal(): ##java.time.format.TextStyle & Pure;
         let x1 = toNative(x);
-        fromNative(asNormal(x1)) as & Pure
+        fromNative(asNormal(x1))
 
     pub def isStandalone(x: TextStyle): Bool =
-        import java.time.format.TextStyle.isStandalone();
+        import java.time.format.TextStyle.isStandalone(): Bool & Pure;
         let x1 = toNative(x);
-        isStandalone(x1) as & Pure
+        isStandalone(x1)
 
 }

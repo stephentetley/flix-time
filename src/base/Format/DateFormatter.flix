@@ -24,9 +24,9 @@ namespace Time/Format {
 
     instance ToString[DateFormatter] {
         pub def toString(x: DateFormatter): String =
-            import java.time.format.DateTimeFormatter.toString();
+            import java.time.format.DateTimeFormatter.toString(): String & Pure;
             let DateFormatter(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
 
     instance FromString[DateFormatter] {
@@ -47,37 +47,37 @@ namespace Time/Format/DateFormatter {
     use Time/Format.ResolverStyle;
 
     pub def basic_iso_date(): DateFormatter =
-        import static get java.time.format.DateTimeFormatter.BASIC_ISO_DATE as getBASIC_ISO_DATE;
-        DateFormatter(getBASIC_ISO_DATE()) as & Pure
+        import static get java.time.format.DateTimeFormatter.BASIC_ISO_DATE: ##java.time.format.DateTimeFormatter & Pure as getBASIC_ISO_DATE;
+        DateFormatter(getBASIC_ISO_DATE())
 
     pub def iso_local_date(): DateFormatter =
-        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_DATE as getISO_LOCAL_DATE;
-        DateFormatter(getISO_LOCAL_DATE()) as & Pure
+        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_DATE: ##java.time.format.DateTimeFormatter & Pure as getISO_LOCAL_DATE;
+        DateFormatter(getISO_LOCAL_DATE())
 
     pub def iso_offset_date(): DateFormatter =
-        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_DATE as getISO_OFFSET_DATE;
-        DateFormatter(getISO_OFFSET_DATE()) as & Pure
+        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_DATE: ##java.time.format.DateTimeFormatter & Pure as getISO_OFFSET_DATE;
+        DateFormatter(getISO_OFFSET_DATE())
 
     pub def iso_date(): DateFormatter =
-        import static get java.time.format.DateTimeFormatter.ISO_DATE as getISO_DATE;
-        DateFormatter(getISO_DATE()) as & Pure
+        import static get java.time.format.DateTimeFormatter.ISO_DATE: ##java.time.format.DateTimeFormatter & Pure as getISO_DATE;
+        DateFormatter(getISO_DATE())
 
     pub def iso_oridinal_date(): DateFormatter =
-        import static get java.time.format.DateTimeFormatter.ISO_ORDINAL_DATE as getISO_ORDINAL_DATE;
-        DateFormatter(getISO_ORDINAL_DATE()) as & Pure
+        import static get java.time.format.DateTimeFormatter.ISO_ORDINAL_DATE: ##java.time.format.DateTimeFormatter & Pure as getISO_ORDINAL_DATE;
+        DateFormatter(getISO_ORDINAL_DATE())
 
     pub def iso_week_date(): DateFormatter =
-        import static get java.time.format.DateTimeFormatter.ISO_WEEK_DATE as getISO_WEEK_DATE;
-        DateFormatter(getISO_WEEK_DATE()) as & Pure
+        import static get java.time.format.DateTimeFormatter.ISO_WEEK_DATE: ##java.time.format.DateTimeFormatter & Pure as getISO_WEEK_DATE;
+        DateFormatter(getISO_WEEK_DATE())
 
     /// Should this be called `new`?
     pub def ofPattern(pattern: String): Option[DateFormatter] =
         Option.map(DateFormatter, Time/Format/Internal/Prim.ofPattern(pattern))
 
     pub def ofLocalizedDate(style: FormatStyle): DateFormatter =
-        import static java.time.format.DateTimeFormatter.ofLocalizedDate(##java.time.format.FormatStyle);
+        import static java.time.format.DateTimeFormatter.ofLocalizedDate(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
         let style1 = Time/Format/FormatStyle.toNative(style);
-        DateFormatter(ofLocalizedDate(style1)) as & Pure
+        DateFormatter(ofLocalizedDate(style1))
 
     
     pub def getLocale(x: DateFormatter): Locale =

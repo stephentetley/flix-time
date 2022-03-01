@@ -340,7 +340,7 @@ namespace Time/ZonedDateTime {
         ZonedDateTime(withDayOfMonth(x1, dayOfMonth))
 
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
-        import java.time.ZonedDateTime.getDayOfWeek(): Int32 & Pure;
+        import java.time.ZonedDateTime.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
         let ZonedDateTime(x1) = x;
         Time/DayOfWeek.fromNative(getDayOfWeek(x1))
 

@@ -133,7 +133,7 @@ namespace Time/Period {
         Period(ofDays(days))
 
     pub def toTotalMonths(x: Period): Int64 =
-        import java.time.Period.toTotalMonths(): Int32 & Pure;
+        import java.time.Period.toTotalMonths(): Int64 & Pure;
         let Period(x1) = x;
         toTotalMonths(x1)
 

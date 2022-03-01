@@ -198,7 +198,7 @@ namespace Time/Temporal/ChronoUnit {
             case Years      => getYEARS()
             case Decades    => getDECADES()
             case Centuries  => getCENTURIES()
-            case Millennia   => getMILLENNIA()
+            case Millennia  => getMILLENNIA()
             case Eras       => getERAS()
             case Forever    => getFOREVER()
         }

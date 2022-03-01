@@ -68,6 +68,7 @@ namespace Time/Clock {
         import static java.time.Clock.systemUTC(): ##java.time.Clock & Impure;
         Clock(systemUTC())
 
+    /// TODO - no equals?
     pub def equals(x: Clock, y: Clock): Bool =
         import java.time.Clock.equals(##java.lang.Object): Bool & Pure;
         let Clock(x1) = x;
@@ -80,12 +81,12 @@ namespace Time/Clock {
         hashCode(x1) as & Pure
 
     pub def millis(x: Clock): Int64 & Impure =
-        import java.time.Clock.millis(): Int64 & Pure;
+        import java.time.Clock.millis(): Int64 & Impure;
         let Clock(x1) = x;
         millis(x1)
 
     pub def instant(x: Clock): Instant & Impure =
-        import java.time.Clock.instant(): ##java.time.Instant & Pure;
+        import java.time.Clock.instant(): ##java.time.Instant & Impure;
         let Clock(x1) = x;
         Instant(instant(x1))
 

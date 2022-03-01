@@ -152,7 +152,7 @@ namespace Time/LocalTime {
         LocalTime(ofSecondOfDay(secondOfDay))
 
     pub def toSecondOfDay(time: LocalTime): Int32 =
-        import java.time.LocalTime.toSecondOfDay(): Int32 & pure;
+        import java.time.LocalTime.toSecondOfDay(): Int32 & Pure;
         let LocalTime(x1) = time;
         toSecondOfDay(x1)
 

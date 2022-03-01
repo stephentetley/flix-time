@@ -20,9 +20,9 @@ namespace Time/Format {
     
     instance ToString[DecimalStyle] {
         pub def toString(x: DecimalStyle): String =
-            import java.time.format.DecimalStyle.toString();
+            import java.time.format.DecimalStyle.toString(): String & Pure;
             let DecimalStyle(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
     
     instance Hash[DecimalStyle] {
@@ -38,15 +38,15 @@ namespace Time/Format/DecimalStyle {
     use Time/Format.DecimalStyle.{DecimalStyle};
 
     pub def standard(): DecimalStyle =
-        import static get java.time.format.DecimalStyle.STANDARD as getSTANDARD;
-        DecimalStyle(getSTANDARD()) as & Pure
+        import static get java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle & Pure as getSTANDARD;
+        DecimalStyle(getSTANDARD())
 
-    pub def new(): DecimalStyle = 
-        import static java.time.format.DecimalStyle.ofDefaultLocale();
-        DecimalStyle(ofDefaultLocale()) as & Pure
+    pub def new(): DecimalStyle & Impure = 
+        import static java.time.format.DecimalStyle.ofDefaultLocale(): ##java.time.format.DecimalStyle & Impure;
+        DecimalStyle(ofDefaultLocale())
 
     pub def hashCode(x: DecimalStyle): Int32 = 
-        import java.time.format.DecimalStyle.hashCode();
+        import java.time.format.DecimalStyle.hashCode(): Int32 & Pure;
         let DecimalStyle(x1) = x;
-        hashCode(x1) as & Pure
+        hashCode(x1)
 }

@@ -23,9 +23,9 @@ namespace Time/Format {
 
     instance ToString[TimeFormatter] {
         pub def toString(x: TimeFormatter): String =
-            import java.time.format.DateTimeFormatter.toString();
+            import java.time.format.DateTimeFormatter.toString(): String & Pure;
             let TimeFormatter(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
 
     instance FromString[TimeFormatter] {
@@ -48,36 +48,36 @@ namespace Time/Format/TimeFormatter {
     use Time.ZoneId.{ZoneId};
 
     pub def iso_local_time(): TimeFormatter =
-        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_TIME as getISO_LOCAL_TIME;
-        TimeFormatter(getISO_LOCAL_TIME()) as & Pure
+        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_TIME: ##java.time.format.DateTimeFormatter & Pure as getISO_LOCAL_TIME;
+        TimeFormatter(getISO_LOCAL_TIME())
 
     pub def iso_offset_time(): TimeFormatter =
-        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_TIME as getISO_OFFSET_TIME;
-        TimeFormatter(getISO_OFFSET_TIME()) as & Pure
+        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_TIME: ##java.time.format.DateTimeFormatter & Pure as getISO_OFFSET_TIME;
+        TimeFormatter(getISO_OFFSET_TIME())
 
     pub def basic_iso_time(): TimeFormatter =
-        import static get java.time.format.DateTimeFormatter.ISO_TIME as getISO_TIME;
-        TimeFormatter(getISO_TIME()) as & Pure
+        import static get java.time.format.DateTimeFormatter.ISO_TIME: ##java.time.format.DateTimeFormatter & Pure as getISO_TIME;
+        TimeFormatter(getISO_TIME())
 
     pub def ofPattern(pattern: String): Option[TimeFormatter] =
         Option.map(TimeFormatter, Time/Format/Internal/Prim.ofPattern(pattern))
     
     pub def ofLocalizedTime(style: FormatStyle): TimeFormatter =
-        import static java.time.format.DateTimeFormatter.ofLocalizedTime(##java.time.format.FormatStyle);
+        import static java.time.format.DateTimeFormatter.ofLocalizedTime(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
         let style1 = Time/Format/FormatStyle.toNative(style);
-        TimeFormatter(ofLocalizedTime(style1)) as & Pure
+        TimeFormatter(ofLocalizedTime(style1))
 
 
     pub def getZone(x: TimeFormatter): ZoneId =
-        import java.time.format.DateTimeFormatter.getZone();
+        import java.time.format.DateTimeFormatter.getZone(): ##java.time.ZoneId & Pure;
         let TimeFormatter(x1) = x;
-        ZoneId(getZone(x1)) as & Pure
+        ZoneId(getZone(x1))
 
     pub def putZone(x: TimeFormatter, zone: ZoneId): TimeFormatter =
-        import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId);
+        import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId): ##java.time.format.DateTimeFormatter & Pure;
         let TimeFormatter(x1) = x;
         let ZoneId(z1) = zone;
-        TimeFormatter(withZone(x1, z1)) as & Pure
+        TimeFormatter(withZone(x1, z1))
 
     pub def getDecimalStyle(x: TimeFormatter): DecimalStyle =
         let TimeFormatter(x1) = x;

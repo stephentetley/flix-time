@@ -288,7 +288,7 @@ namespace Time/OffsetDateTime {
     pub def plusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusMonths(Int64): ##java.time.OffsetDateTime & Pure;
         let OffsetDateTime(x1) = x;
-        OffsetDateTimeMonths(plus(x1, months))
+        OffsetDateTime(plusMonths(x1, months))
 
     pub def minusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.minusMonths(Int64): ##java.time.OffsetDateTime & Pure;
@@ -366,12 +366,12 @@ namespace Time/OffsetDateTime {
         OffsetDateTime(withYear(x1, year))
 
     pub def getMonth(x: OffsetDateTime): Month =
-        import java.time.OffsetDateTime.getMonth(): Int32 & Pure;
+        import java.time.OffsetDateTime.getMonth(): ##java.time.Month & Pure;
         let OffsetDateTime(x1) = x;
         Time/Month.fromNative(getMonth(x1))
 
     pub def getMonthValue(x: OffsetDateTime): Int32 =
-        import java.time.OffsetDateTime.getMonth(): ##jabva.time.Month & Pure;
+        import java.time.OffsetDateTime.getMonth(): ##java.time.Month & Pure;
         import java.time.Month.getValue(): Int32 & Pure;
         let OffsetDateTime(x1) = x;
         getValue(getMonth(x1))
