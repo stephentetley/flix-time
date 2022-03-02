@@ -81,7 +81,7 @@ namespace Time/ZoneOffset {
     ///
     pub def utc(): ZoneOffset =
         import static get java.time.ZoneOffset.UTC: ##java.time.ZoneOffset & Pure as getUTC;
-        ZoneOffset(getUTC()) as & Pure
+        ZoneOffset(getUTC())
 
     pub def min(): ZoneOffset =
         import static get java.time.ZoneOffset.MIN: ##java.time.ZoneOffset & Pure as getMIN;
@@ -125,7 +125,7 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset): Int32 & Pure;
         let ZoneOffset(x1) = x;
         let ZoneOffset(y1) = y;
-        compareTo(x1, y1) as & Pure
+        compareTo(x1, y1)
 
     pub def getId(x: ZoneOffset): String =
         import java.time.ZoneOffset.getId(): String & Pure;

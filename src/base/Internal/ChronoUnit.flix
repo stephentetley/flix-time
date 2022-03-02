@@ -27,7 +27,7 @@ namespace Time/Internal/ChronoUnit {
 
     pub def getMILLIS(): ##java.time.temporal.ChronoUnit = 
         import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as getMILLIS;
-        getMILLIS() as & Pure
+        getMILLIS()
 
     pub def getSECONDS(): ##java.time.temporal.ChronoUnit = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as getSECONDS;

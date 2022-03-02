@@ -45,7 +45,7 @@ namespace Time/Format/Internal/Prim {
 
     pub def getDecimalStyle(x: ##java.time.format.DateTimeFormatter): DecimalStyle =
         import java.time.format.DateTimeFormatter.getDecimalStyle(): ##java.time.format.DecimalStyle & Pure;
-        DecimalStyle(getDecimalStyle(x)) as & Pure
+        DecimalStyle(getDecimalStyle(x))
 
     pub def putDecimalStyle(x: ##java.time.format.DateTimeFormatter, style: DecimalStyle):  ##java.time.format.DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withDecimalStyle(##java.time.format.DecimalStyle): ##java.time.format.DateTimeFormatter & Pure;

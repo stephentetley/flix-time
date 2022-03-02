@@ -23,7 +23,7 @@ namespace Time/Temporal {
         pub def toString(x: ValueRange): String =
             import java.time.temporal.ValueRange.toString(): String & Pure;
             let ValueRange(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
 
     instance Eq[ValueRange] {

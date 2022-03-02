@@ -42,7 +42,7 @@ namespace Time {
             import java.lang.String.strip(): String & Pure;
             import static java.time.ZonedDateTime.parse(##java.lang.CharSequence): ##java.time.ZonedDateTime & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence & Pure;
+                let cs = strip(s) as ##java.lang.CharSequence;
                 Some(ZonedDateTime(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -161,7 +161,7 @@ namespace Time/ZonedDateTime {
         import static java.time.ZonedDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.ZonedDateTime & Pure;
         try {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence & Pure;
+            let cs = strip(s) as ##java.lang.CharSequence;
             Some(ZonedDateTime(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None

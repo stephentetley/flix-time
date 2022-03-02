@@ -98,7 +98,7 @@ namespace Time/Year {
 
     pub def new(year: Int32): Year =
         import static java.time.Year.of(Int32): ##java.time.Year & Pure;
-        Year(of(year)) as & Pure
+        Year(of(year))
 
 
     pub def now(): Year & Impure =
@@ -253,7 +253,7 @@ namespace Time/Year {
     pub def minusYears(x: Year, yearsToSubtract: Int64): Year =
         import java.time.Year.minusYears(Int64): ##java.time.Year & Pure;
         let Year(x1) = x;
-        Year(minusYears(x1, yearsToSubtract)) as & Pure
+        Year(minusYears(x1, yearsToSubtract))
 
     pub def plusDecades(x: Year, i: Int64): Year =
         let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;

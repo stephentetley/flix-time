@@ -68,7 +68,7 @@ namespace Time/Zone/ZoneRules {
     pub def hashCode(x: ZoneRules): Int32 =
         import java.time.zone.ZoneRules.hashCode(): Int32 & Pure;
         let ZoneRules(x1) = x;
-        hashCode(x1) as & Pure
+        hashCode(x1)
 
 /*
     pub def getDaylightSavings(x: ZoneRules, instant: Instant): Duration =
@@ -81,7 +81,7 @@ namespace Time/Zone/ZoneRules {
         import java.time.zone.ZoneRules.isDaylightSavings(##java.time.Instant): ...;
         let ZoneRules(x1) = x;
         let Instant(instant1) = instant;
-        isDaylightSavings(x1, instant1) as & Pure
+        isDaylightSavings(x1, instant1)
 */
 
     pub def isValidOffset(x: ZoneRules, localDateTime: LocalDateTime, offset: ZoneOffset): Bool =

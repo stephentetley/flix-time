@@ -24,7 +24,7 @@ namespace Time/Temporal {
         pub def toString(x: WeekFields): String =
             import java.time.temporal.WeekFields.toString(): String & Pure;
             let WeekFields(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
     
     instance Eq[WeekFields] {

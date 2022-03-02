@@ -78,7 +78,7 @@ namespace Time/Clock {
     pub def hashCode(x: Clock): Int32 =
         import java.time.Clock.hashCode(): Int32 & Pure;
         let Clock(x1) = x;
-        hashCode(x1) as & Pure
+        hashCode(x1)
 
     pub def millis(x: Clock): Int64 & Impure =
         import java.time.Clock.millis(): Int64 & Impure;

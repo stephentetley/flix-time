@@ -203,7 +203,7 @@ namespace Time/OffsetTime {
     pub def plusHours(x: OffsetTime, hours: Int64): OffsetTime =
         import java.time.OffsetTime.plusHours(Int64): ##java.time.OffsetTime & Pure;
         let OffsetTime(x1) = x;
-        OffsetTime(plusHours(x1, hours)) as & Pure
+        OffsetTime(plusHours(x1, hours))
 
     pub def minusHours(x: OffsetTime, hours: Int64): OffsetTime =
         import java.time.OffsetTime.minusHours(Int64): ##java.time.OffsetTime & Pure;

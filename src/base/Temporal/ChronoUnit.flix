@@ -207,7 +207,7 @@ namespace Time/Temporal/ChronoUnit {
         import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
-        equals(x1, y1) as & Pure
+        equals(x1, y1)
 
     pub def fromNative(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
         import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;
