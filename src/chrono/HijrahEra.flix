@@ -16,21 +16,9 @@
 
 namespace Time/Chrono {
 
-    pub enum HijrahEra {
+    pub enum HijrahEra with Eq, Order, ToString {
         case AH
     }   
-
-    instance ToString[HijrahEra] {
-        pub def toString(x: HijrahEra): String = match x {
-            case AH => "AH"
-        }
-    }
-
-    instance Eq[HijrahEra] {
-        pub def eq(x: HijrahEra, y: HijrahEra): Bool = match (x, y) {
-            case (AH, AH) => true
-        }
-    }
 
     instance Hash[HijrahEra] {
         pub def hash(x: HijrahEra): Int32 = Time/Chrono/HijrahEra.hashCode(x)
@@ -51,47 +39,47 @@ namespace Time/Chrono/HijrahEra {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def toNative(x: HijrahEra): ##java.time.chrono.HijrahEra = 
-        import static get java.time.chrono.HijrahEra.AH      as getAH;
+        import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra & Pure as getAH;
         match x {
             case AH         => getAH()            
-        } as & Pure
+        }
 
     def primEquals(x: ##java.time.chrono.HijrahEra, y: ##java.time.chrono.HijrahEra): Bool =
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
-        equals(x1, y1) as & Pure
+        equals(x1, y1)
 
     pub def fromNative(x: ##java.time.chrono.HijrahEra): HijrahEra = 
-        import static get java.time.chrono.HijrahEra.AH as getAH;
+        import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra & Pure as getAH;
         match x {
             case x1 if primEquals(x1, getAH())     => AH
-        } as & Pure
+        }
 
     pub def getValue(x: HijrahEra): Int32 = 
-        import java.time.chrono.HijrahEra.getValue();
+        import java.time.chrono.HijrahEra.getValue(): Int32 & Pure;
         let x1 = toNative(x);
-        getValue(x1) as & Pure 
+        getValue(x1)
 
 
     pub def hashCode(x: HijrahEra): Int32 =
-        import java.lang.Enum.hashCode();
+        import java.lang.Enum.hashCode(): Int32 & Pure;
         let en1 = toNative(x) as ##java.lang.Enum;
-        hashCode(en1) as & Pure
+        hashCode(en1)
 
 
     /// 
     pub def getDisplayName(x: HijrahEra, style: TextStyle, locale: Locale): String = 
-        import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
+        import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = toNative(x);
         let style1 = Time/Format/TextStyle.toNative(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1, style1, locale1) as & Pure
+        getDisplayName(x1, style1, locale1)
         
     pub def range(x: HijrahEra, field: ChronoField): ValueRange = 
-        import java.time.chrono.HijrahEra.range(##java.time.temporal.TemporalField);
+        import java.time.chrono.HijrahEra.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
         let x1 = toNative(x);
         let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
-        ValueRange(range(x1, field1) as & Pure)
+        ValueRange(range(x1, field1))
 
 }

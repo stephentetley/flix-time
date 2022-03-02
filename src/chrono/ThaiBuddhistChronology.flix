@@ -33,21 +33,21 @@ namespace Time/Chrono/ThaiBuddhistChronology {
     use Time.ZoneId.{ZoneId};
 
     pub def getInstance(): ThaiBuddhistChronology & Impure = 
-        import static get java.time.chrono.ThaiBuddhistChronology.INSTANCE      as getINSTANCE;
+        import static get java.time.chrono.ThaiBuddhistChronology.INSTANCE: ##java.time.chrono.ThaiBuddhistChronology & Impure as getINSTANCE;
         ThaiBuddhistChronology(getINSTANCE())
 
     pub def getCalendarType(x: ThaiBuddhistChronology): String  = 
-        import java.time.chrono.ThaiBuddhistChronology.getCalendarType();
+        import java.time.chrono.ThaiBuddhistChronology.getCalendarType(): String & Pure;
         let ThaiBuddhistChronology(x1) = x;
-        getCalendarType(x1) as & Pure
+        getCalendarType(x1)
 
     pub def dateNow(x: ThaiBuddhistChronology): ThaiBuddhistDate & Impure = 
-        import java.time.chrono.ThaiBuddhistChronology.dateNow();
+        import java.time.chrono.ThaiBuddhistChronology.dateNow(): ##java.time.chrono.ThaiBuddhistDate & Impure;
         let ThaiBuddhistChronology(x1) = x;
         ThaiBuddhistDate(dateNow(x1))
 
     pub def dateNowWithClock(x: ThaiBuddhistChronology, clock: Clock): ThaiBuddhistDate & Impure =
-        import java.time.chrono.ThaiBuddhistChronology.dateNow(##java.time.Clock);
+        import java.time.chrono.ThaiBuddhistChronology.dateNow(##java.time.Clock): ##java.time.chrono.ThaiBuddhistDate & Impure;
         let ThaiBuddhistChronology(x1) = x;
         let Clock(clock1) = clock;
         ThaiBuddhistDate(dateNow(x1, clock1))
@@ -56,14 +56,14 @@ namespace Time/Chrono/ThaiBuddhistChronology {
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: ThaiBuddhistChronology, zone: ZoneId): ThaiBuddhistDate & Impure =
-        import java.time.chrono.ThaiBuddhistChronology.dateNow(##java.time.ZoneId);
+        import java.time.chrono.ThaiBuddhistChronology.dateNow(##java.time.ZoneId): ##java.time.chrono.ThaiBuddhistDate & Impure;
         let ThaiBuddhistChronology(x1) = x;
         let ZoneId(zone1) = zone;
         ThaiBuddhistDate(dateNow(x1, zone1))
 
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): ThaiBuddhistEra = 
-        import java.time.chrono.ThaiBuddhistChronology.eraOf(Int32);
+        import java.time.chrono.ThaiBuddhistChronology.eraOf(Int32): ##java.time.chrono.ThaiBuddhistEra & Pure;
         let ThaiBuddhistChronology(x1) = x;
-        Time/Chrono/ThaiBuddhistEra.fromNative(eraOf(x1, i) as & Pure)
+        Time/Chrono/ThaiBuddhistEra.fromNative(eraOf(x1, i))
 
 }

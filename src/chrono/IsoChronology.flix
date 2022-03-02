@@ -29,27 +29,27 @@ namespace Time/Chrono/IsoChronology {
     use Time.LocalDate.{LocalDate};
 
     pub def getInstance(): IsoChronology & Impure = 
-        import static get java.time.chrono.IsoChronology.INSTANCE      as getINSTANCE;
+        import static get java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology & Impure as getINSTANCE;
         IsoChronology(getINSTANCE())
 
     pub def getCalendarType(x: IsoChronology): String = 
-        import java.time.chrono.IsoChronology.getCalendarType();
+        import java.time.chrono.IsoChronology.getCalendarType(): String & Pure;
         let IsoChronology(x1) = x;
-        getCalendarType(x1) as & Pure
+        getCalendarType(x1)
 
     pub def dateNow(x: IsoChronology): LocalDate & Impure = 
-        import java.time.chrono.IsoChronology.dateNow();
+        import java.time.chrono.IsoChronology.dateNow(): ##java.time.LocalDate & Impure;
         let IsoChronology(x1) = x;
         LocalDate(dateNow(x1))
 
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
-        import java.time.chrono.IsoChronology.eraOf(Int32);
+        import java.time.chrono.IsoChronology.eraOf(Int32): ##java.time.chrono.IsoEra & Pure;
         let IsoChronology(x1) = x;
-        Time/Chrono/IsoEra.fromNative(eraOf(x1, i)) as & Pure
+        Time/Chrono/IsoEra.fromNative(eraOf(x1, i))
 
     pub def getId(x: IsoChronology): String = 
-        import java.time.chrono.IsoChronology.getId();
+        import java.time.chrono.IsoChronology.getId(): String & Pure;
         let IsoChronology(x1) = x;
-        getId(x1) as & Pure
+        getId(x1)
 
 }

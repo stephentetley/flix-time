@@ -26,9 +26,9 @@ namespace Time/Chrono {
     ///
     instance ToString[MinguoDate] {
         pub def toString(x: MinguoDate): String =
-            import java.time.chrono.MinguoDate.toString();
+            import java.time.chrono.MinguoDate.toString(): String & Pure;
             let MinguoDate(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
 
     instance Eq[MinguoDate] {
@@ -53,27 +53,27 @@ namespace Time/Chrono/MinguoDate {
     /// Returns ___
     ///
     pub def now(): MinguoDate & Impure =
-        import static java.time.chrono.MinguoDate.now();
+        import static java.time.chrono.MinguoDate.now(): ##java.time.chrono.MinguoDate & Impure;
         MinguoDate(now())
 
 
     pub def equals(x: MinguoDate, y: MinguoDate): Bool = 
-        import java.time.chrono.MinguoDate.equals(##java.lang.Object);
+        import java.time.chrono.MinguoDate.equals(##java.lang.Object): Bool & Pure;
         let MinguoDate(x1) = x;
         let MinguoDate(y1) = y;
-        equals(x1, y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object)
 
     pub def hashCode(x: MinguoDate): Int32 = 
-        import java.time.chrono.MinguoDate.hashCode();
+        import java.time.chrono.MinguoDate.hashCode(): Int32 & Pure;
         let MinguoDate(x1) = x;
-        hashCode(x1) as & Pure
+        hashCode(x1)
 
 
 
     pub def toLocalDate(x: MinguoDate): LocalDate =
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor);
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate & Pure as fromDate;
         let MinguoDate(x1) = x;
-        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+        LocalDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
 
     pub def getDayOfWeek(x: MinguoDate): Int32 = 
         getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek)
@@ -101,11 +101,11 @@ namespace Time/Chrono/MinguoDate {
 
 
     def getChronoFieldHelper(x: MinguoDate, field: ChronoField): Result[Int32, String] =
-        import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField);
+        import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 & Pure;
         try {
             let MinguoDate(x1) = x;
             let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
-            Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1)) as & Pure
+            Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1))
         } catch {
             case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
         }

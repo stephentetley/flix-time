@@ -16,26 +16,12 @@
 
 namespace Time/Chrono {
 
-    pub enum IsoEra {
+    pub enum IsoEra with Eq, Order, ToString {
         case BCE
         case CE
     }   
     
-    instance ToString[IsoEra] {
-        pub def toString(x: IsoEra): String = match x {
-            case BCE => "CE"
-            case CE => "CE"
-        }
-    }
-
-    instance Eq[IsoEra] {
-        pub def eq(x: IsoEra, y: IsoEra): Bool = match (x, y) {
-            case (BCE, BCE) => true
-            case (CE, CE) => true
-            case (_, _) => true
-        }
-    }
-
+    
     instance Hash[IsoEra] {
         pub def hash(x: IsoEra): Int32 = Time/Chrono/IsoEra.hashCode(x)
     }    
@@ -57,57 +43,57 @@ namespace Time/Chrono/IsoEra {
     use Time.LocalDate.{LocalDate};
 
     pub def toNative(x: IsoEra): ##java.time.chrono.IsoEra = 
-        import static get java.time.chrono.IsoEra.BCE      as getBCE;
-        import static get java.time.chrono.IsoEra.CE       as getCE;
+        import static get java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra & Pure as getBCE;
+        import static get java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra & Pure as getCE;
         match x {
             case BCE        => getBCE()
             case CE         => getCE()
-        } as & Pure
+        }
 
     def primEquals(x: ##java.time.chrono.IsoEra, y: ##java.time.chrono.IsoEra): Bool =
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
-        equals(x1, y1) as & Pure
+        equals(x1, y1)
 
     pub def fromNative(x: ##java.time.chrono.IsoEra): IsoEra = 
-        import static get java.time.chrono.IsoEra.BCE      as getBCE;
-        import static get java.time.chrono.IsoEra.CE       as getCE;
+        import static get java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra & Pure as getBCE;
+        import static get java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra & Pure as getCE;
         match x {
             case x1 if primEquals(x1, getBCE())     => BCE
             case x1 if primEquals(x1, getCE())      => CE
-        } as & Pure
+        }
 
     pub def getValue(x: IsoEra): Int32 = 
-        import java.time.chrono.IsoEra.getValue();
+        import java.time.chrono.IsoEra.getValue(): Int32 & Pure;
         let x1 = toNative(x);
-        getValue(x1) as & Pure 
+        getValue(x1)
 
 
     pub def hashCode(x: IsoEra): Int32 =
-        import java.lang.Enum.hashCode();
+        import java.lang.Enum.hashCode(): Int32 & Pure;
         let en1 = toNative(x) as ##java.lang.Enum;
-        hashCode(en1) as & Pure
+        hashCode(en1)
 
 
     /// 
     pub def getDisplayName(x: IsoEra, style: TextStyle, locale: Locale): String = 
-        import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
+        import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = toNative(x);
         let style1 = Time/Format/TextStyle.toNative(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1 as ##java.time.chrono.Era, style1, locale1) as & Pure
+        getDisplayName(x1 as ##java.time.chrono.Era, style1, locale1)
         
     pub def range(x: IsoEra, field: ChronoField): ValueRange = 
-        import java.time.chrono.Era.range(##java.time.temporal.TemporalField);
+        import java.time.chrono.Era.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
         let x1 = toNative(x);
         let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
-        ValueRange(range(x1 as ##java.time.chrono.Era, field1) as & Pure)
+        ValueRange(range(x1 as ##java.time.chrono.Era, field1))
 
     pub def getEra(x: LocalDate): IsoEra = 
-        import java.time.LocalDate.getEra();
+        import java.time.LocalDate.getEra(): ##java.time.chrono.IsoEra & Pure;
         let LocalDate(x1) = x;
-        fromNative(getEra(x1)) as & Pure
+        fromNative(getEra(x1))
 
 
 }

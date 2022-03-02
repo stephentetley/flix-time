@@ -16,25 +16,11 @@
 
 namespace Time/Chrono {
 
-    pub enum ThaiBuddhistEra {
+    pub enum ThaiBuddhistEra with Eq, Order, ToString {
         case BEFORE_BE
         case BE
     }   
 
-    instance ToString[ThaiBuddhistEra] {
-        pub def toString(x: ThaiBuddhistEra): String = match x {
-            case BEFORE_BE  => "BEFORE_BE"
-            case BE         => "BE"
-        }
-    }
-
-    instance Eq[ThaiBuddhistEra] {
-        pub def eq(x: ThaiBuddhistEra, y: ThaiBuddhistEra): Bool = match (x, y) {
-            case (BEFORE_BE, BEFORE_BE) => true
-            case (BE, BE) => true
-            case (_, _) => false
-        }
-    }
 
     instance Hash[ThaiBuddhistEra] {
         pub def hash(x: ThaiBuddhistEra): Int32 = Time/Chrono/ThaiBuddhistEra.hashCode(x)
@@ -55,51 +41,51 @@ namespace Time/Chrono/ThaiBuddhistEra {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def toNative(x: ThaiBuddhistEra): ##java.time.chrono.ThaiBuddhistEra = 
-        import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE     as getBEFORE_BE;
-        import static get java.time.chrono.ThaiBuddhistEra.BE            as getBE;
+        import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra & Pure as getBEFORE_BE;
+        import static get java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra & Pure as getBE;
         match x {
             case BEFORE_BE  => getBEFORE_BE()
             case BE         => getBE() 
-        } as & Pure
+        }
 
     def primEquals(x: ##java.time.chrono.ThaiBuddhistEra, y: ##java.time.chrono.ThaiBuddhistEra): Bool =
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Object;
         let y1 = y as ##java.lang.Object;
-        equals(x1, y1) as & Pure
+        equals(x1, y1)
 
     pub def fromNative(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
-        import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE     as getBEFORE_BE;
-        import static get java.time.chrono.ThaiBuddhistEra.BE            as getBE;
+        import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra & Pure as getBEFORE_BE;
+        import static get java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra & Pure as getBE;
         match x {
             case x1 if primEquals(x1, getBEFORE_BE())  => BEFORE_BE
             case x1 if primEquals(x1, getBE())         => BE
-        } as & Pure
+        }
 
     pub def getValue(x: ThaiBuddhistEra): Int32 = 
-        import java.time.chrono.ThaiBuddhistEra.getValue();
+        import java.time.chrono.ThaiBuddhistEra.getValue(): Int32 & Pure;
         let x1 = toNative(x);
-        getValue(x1) as & Pure 
+        getValue(x1)
 
 
     pub def hashCode(x: ThaiBuddhistEra): Int32 =
-        import java.lang.Enum.hashCode();
+        import java.lang.Enum.hashCode(): Int32 & Pure;
         let en1 = toNative(x) as ##java.lang.Enum;
-        hashCode(en1) as & Pure
+        hashCode(en1)
 
 
     /// 
     pub def getDisplayName(x: ThaiBuddhistEra, style: TextStyle, locale: Locale): String = 
-        import java.time.chrono.ThaiBuddhistEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale);
+        import java.time.chrono.ThaiBuddhistEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = toNative(x);
         let style1 = Time/Format/TextStyle.toNative(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1, style1, locale1) as & Pure
+        getDisplayName(x1, style1, locale1)
         
     pub def range(x: ThaiBuddhistEra, field: ChronoField): ValueRange = 
-        import java.time.chrono.Era.range(##java.time.temporal.TemporalField);
+        import java.time.chrono.Era.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
         let x1 = toNative(x) as ##java.time.chrono.Era;
         let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
-        ValueRange(range(x1, field1) as & Pure)
+        ValueRange(range(x1, field1))
 
 }

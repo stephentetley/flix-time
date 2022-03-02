@@ -28,9 +28,9 @@ namespace Time/Chrono {
     ///
     instance ToString[JapaneseEra] {
         pub def toString(x: JapaneseEra): String =
-            import java.time.chrono.JapaneseEra.toString();
+            import java.time.chrono.JapaneseEra.toString(): String & Pure;
             let JapaneseEra(x1) = x;
-            toString(x1) as & Pure
+            toString(x1) 
     }
     
     instance Eq[JapaneseEra] {
@@ -49,48 +49,48 @@ namespace Time/Chrono/JapaneseEra {
     use Time/Chrono.JapaneseEra.{JapaneseEra};
 
     pub def new(japaneseEra: Int32): Option[JapaneseEra] =
-        import static java.time.chrono.JapaneseEra.of(Int32);
+        import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra & Pure;
         try {
-            Some(JapaneseEra(of(japaneseEra))) as & Pure
+            Some(JapaneseEra(of(japaneseEra)))
         } catch {
             case _: ##java.time.DateTimeException => None
         }
 
     pub def heisei(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.HEISEI as getHEISEI;
-        JapaneseEra(getHEISEI()) as & Pure
+        import static get java.time.chrono.JapaneseEra.HEISEI: ##java.time.chrono.JapaneseEra & Pure as getHEISEI;
+        JapaneseEra(getHEISEI())
 
     pub def meiji(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.MEIJI as getMEIJI;
-        JapaneseEra(getMEIJI()) as & Pure
+        import static get java.time.chrono.JapaneseEra.MEIJI: ##java.time.chrono.JapaneseEra & Pure as getMEIJI;
+        JapaneseEra(getMEIJI())
 
     /// Java 13
     /// pub def reiwa(): JapaneseEra = 
-    ///     import static get java.time.chrono.JapaneseEra.REIWA as getREIWA;
-    ///     JapaneseEra(getREIWA()) as & Pure
+    ///     import static get java.time.chrono.JapaneseEra.REIWA: ##java.time.chrono.JapaneseEra & Pure as getREIWA;
+    ///     JapaneseEra(getREIWA())
 
     pub def showa(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.SHOWA as getSHOWA;
-        JapaneseEra(getSHOWA()) as & Pure
+        import static get java.time.chrono.JapaneseEra.SHOWA: ##java.time.chrono.JapaneseEra & Pure as getSHOWA;
+        JapaneseEra(getSHOWA())
 
     pub def taisho(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.TAISHO as getTAISHO;
-        JapaneseEra(getTAISHO()) as & Pure
+        import static get java.time.chrono.JapaneseEra.TAISHO: ##java.time.chrono.JapaneseEra & Pure as getTAISHO;
+        JapaneseEra(getTAISHO())
 
     pub def getValue(x: JapaneseEra): Int32 = 
-        import java.time.chrono.JapaneseEra.getValue();
+        import java.time.chrono.JapaneseEra.getValue(): Int32 & Pure;
         let JapaneseEra(x1) = x;
-        getValue(x1) as & Pure 
+        getValue(x1)
 
     pub def equals(x: JapaneseEra, y: JapaneseEra): Bool = 
-        import java.lang.Object.equals(##java.lang.Object);
+        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
         let JapaneseEra(x1) = x;
         let JapaneseEra(y1) = y;
-        equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object) as & Pure
+        equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object)
 
     pub def hashCode(x: JapaneseEra): Int32 = 
-        import java.lang.Object.hashCode();
+        import java.lang.Object.hashCode(): Int32 & Pure;
         let JapaneseEra(x1) = x;
-        hashCode(x1 as ##java.lang.Object) as & Pure
+        hashCode(x1 as ##java.lang.Object)
 
 }

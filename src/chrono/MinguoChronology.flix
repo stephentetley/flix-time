@@ -33,22 +33,22 @@ namespace Time/Chrono/MinguoChronology {
     use Time.ZoneId.{ZoneId};
 
     pub def getInstance(): MinguoChronology & Impure =
-        import static get java.time.chrono.MinguoChronology.INSTANCE      as getINSTANCE;
+        import static get java.time.chrono.MinguoChronology.INSTANCE: ##java.time.chrono.MinguoChronology & Impure as getINSTANCE;
         MinguoChronology(getINSTANCE())
 
     pub def getCalendarType(x: MinguoChronology): String = 
-        import java.time.chrono.MinguoChronology.getCalendarType();
+        import java.time.chrono.MinguoChronology.getCalendarType(): String & Pure;
         let MinguoChronology(x1) = x;
-        getCalendarType(x1) as & Pure
+        getCalendarType(x1)
 
 
     pub def dateNow(x: MinguoChronology): MinguoDate & Impure = 
-        import java.time.chrono.MinguoChronology.dateNow();
+        import java.time.chrono.MinguoChronology.dateNow(): ##java.time.chrono.MinguoDate & Impure;
         let MinguoChronology(x1) = x;
         MinguoDate(dateNow(x1))
 
     pub def dateNowWithClock(x: MinguoChronology, clock: Clock): MinguoDate & Impure =
-        import java.time.chrono.MinguoChronology.dateNow(##java.time.Clock);
+        import java.time.chrono.MinguoChronology.dateNow(##java.time.Clock): ##java.time.chrono.MinguoDate & Impure;
         let MinguoChronology(x1) = x;
         let Clock(clock1) = clock;
         MinguoDate(dateNow(x1, clock1))
@@ -57,14 +57,14 @@ namespace Time/Chrono/MinguoChronology {
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: MinguoChronology, zone: ZoneId): MinguoDate & Impure =
-        import java.time.chrono.MinguoChronology.dateNow(##java.time.ZoneId);
+        import java.time.chrono.MinguoChronology.dateNow(##java.time.ZoneId): ##java.time.chrono.MinguoDate & Impure;
         let MinguoChronology(x1) = x;
         let ZoneId(zone1) = zone;
         MinguoDate(dateNow(x1, zone1))
 
     pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
-        import java.time.chrono.MinguoChronology.eraOf(Int32);
+        import java.time.chrono.MinguoChronology.eraOf(Int32): ##java.time.chrono.MinguoEra & Pure;
         let MinguoChronology(x1) = x;
-        Time/Chrono/MinguoEra.fromNative(eraOf(x1, i) as & Pure)
+        Time/Chrono/MinguoEra.fromNative(eraOf(x1, i))
 
 }

@@ -26,9 +26,9 @@ namespace Time/Chrono {
     ///
     instance ToString[ThaiBuddhistDate] {
         pub def toString(x: ThaiBuddhistDate): String =
-            import java.time.chrono.ThaiBuddhistDate.toString();
+            import java.time.chrono.ThaiBuddhistDate.toString(): String & Pure;
             let ThaiBuddhistDate(x1) = x;
-            toString(x1) as & Pure
+            toString(x1)
     }
 
     instance Eq[ThaiBuddhistDate] {
@@ -53,26 +53,26 @@ namespace Time/Chrono/ThaiBuddhistDate {
     /// Returns ___
     ///
     pub def now(): ThaiBuddhistDate & Impure =
-        import static java.time.chrono.ThaiBuddhistDate.now();
+        import static java.time.chrono.ThaiBuddhistDate.now(): ##java.time.chrono.ThaiBuddhistDate & Impure;
         ThaiBuddhistDate(now())
 
 
     pub def equals(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = 
-        import java.time.chrono.ThaiBuddhistDate.equals(##java.lang.Object);
+        import java.time.chrono.ThaiBuddhistDate.equals(##java.lang.Object): Bool & Pure;
         let ThaiBuddhistDate(x1) = x;
         let ThaiBuddhistDate(y1) = y;
-        equals(x1, y1 as ##java.lang.Object) as & Pure
+        equals(x1, y1 as ##java.lang.Object)
 
     pub def hashCode(x: ThaiBuddhistDate): Int32 = 
-        import java.time.chrono.ThaiBuddhistDate.hashCode();
+        import java.time.chrono.ThaiBuddhistDate.hashCode(): Int32 & Pure;
         let ThaiBuddhistDate(x1) = x;
-        hashCode(x1) as & Pure
+        hashCode(x1)
 
 
     pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor);
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate & Pure as fromDate;
         let ThaiBuddhistDate(x1) = x;
-        LocalDate(from(x1 as ##java.time.temporal.TemporalAccessor)) as & Pure
+        LocalDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
 
 
     pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
@@ -101,11 +101,11 @@ namespace Time/Chrono/ThaiBuddhistDate {
 
 
     def getChronoFieldHelper(x: ThaiBuddhistDate, field: ChronoField): Result[Int32, String] =
-        import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField);
+        import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 & Pure;
         try {
             let ThaiBuddhistDate(x1) = x;
             let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
-            Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1)) as & Pure
+            Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1))
         } catch {
             case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
         }
