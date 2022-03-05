@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/*
+
 namespace TestInstant {
 
     use ToString.toString;
@@ -26,3 +28,5 @@ namespace TestInstant {
     def toString01(): String = toString(Time/Instant.epoch())
 
 }
+
+*/

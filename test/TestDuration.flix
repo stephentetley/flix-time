@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/*
+
 namespace TestDuration {
 
     /////////////////////////////////////////////////////////////////////////////
@@ -152,3 +154,5 @@ namespace TestDuration {
     def isPositive02(): Bool = Time/Duration.isPositive(Time/Duration.fromSeconds(-1i64)) == false
 
 }
+
+*/
