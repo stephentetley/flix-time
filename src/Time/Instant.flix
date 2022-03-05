@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+/// TODO - clashes with Flix stdlib
 
+/*
 
 namespace Time {
 
@@ -317,3 +319,5 @@ namespace Time/Instant {
         }
 
 }
+
+*/
