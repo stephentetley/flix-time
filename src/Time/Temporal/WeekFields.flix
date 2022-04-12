@@ -41,8 +41,8 @@ namespace Time/Temporal/WeekFields {
 
     use Time/Temporal.WeekFields;
     use Time/Temporal.WeekFields.{WeekFields};
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use FlixSandbox/I18n.Locale;
+    use FlixSandbox/I18n.Locale.{Locale};
     use Time.DayOfWeek;
     use Time/Temporal.ChronoField;
 

@@ -41,8 +41,8 @@ namespace Time/Temporal {
 
 namespace Time/Temporal/IsoFields {
 
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use FlixSandbox/I18n.Locale;
+    use FlixSandbox/I18n.Locale.{Locale};
     use Time/Temporal.IsoFields;
     use Time/Temporal.IsoFields.{IsoFields};
     use Time.Month;

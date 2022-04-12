@@ -100,7 +100,8 @@ namespace Time {
 
 namespace Time/Month {
 
-    use I18n.Locale.{Locale};
+    use FlixSandbox/I18n.Locale;
+    use FlixSandbox/I18n.Locale.{Locale};
 
     use Time.Month;
     use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};
@@ -199,7 +200,7 @@ namespace Time/Month {
         }
 
 
-    pub def getDisplayName(x: Month, style: TextStyle, locale: I18n.Locale): String =
+    pub def getDisplayName(x: Month, style: TextStyle, locale: Locale): String =
         import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = toNative(x);
         let s1 = Time/Format/TextStyle.toNative(style);

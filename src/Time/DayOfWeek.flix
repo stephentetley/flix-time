@@ -94,7 +94,8 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
-    use I18n.Locale.{Locale};
+    use FlixSandbox/I18n.Locale;
+    use FlixSandbox/I18n.Locale.{Locale};
 
     use Time.DayOfWeek;
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
@@ -174,7 +175,7 @@ namespace Time/DayOfWeek {
             case x1 if primEquals(x1, getSUNDAY())      => Sunday
         }
 
-    pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: I18n.Locale): String =
+    pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = toNative(x);
         let s1 = Time/Format/TextStyle.toNative(style);

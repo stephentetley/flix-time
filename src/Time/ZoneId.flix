@@ -117,25 +117,13 @@ namespace Time/ZoneId {
 
     pub def getAvailableZoneIds(): Set[String] & Impure =
         import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set & Impure;
-        import java.util.Set.iterator(): ##java.util.Iterator & Impure;
         try {
-            let sjava = getAvailableZoneIds();
-            let iter = iterator(sjava);
-            let xs = iterateListOfString(iter, ks -> ks);
-            List.toSet(xs)
+            let s1 = getAvailableZoneIds();
+            FlixSandbox/Marshal.unmarshalSet(o -> o as String, s1)
         } catch {
             case _: ##java.lang.Exception => Set.empty()
         }
 
-
-    def iterateListOfString(iter: ##java.util.Iterator, k: List[String] -> List[String]): List[String] & Impure =
-        import java.util.Iterator.hasNext(): Bool & Impure;
-        import java.util.Iterator.next(): ##java.lang.Object & Impure;
-        if (hasNext(iter))
-            let entry = next(iter) as String;
-            iterateListOfString(iter, ks -> k(entry :: ks))
-        else
-            k(Nil)
 
 
 }

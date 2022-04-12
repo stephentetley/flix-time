@@ -17,8 +17,8 @@
 
 namespace Time/Format/Internal/Prim {
 
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use FlixSandbox/I18n.Locale;
+    use FlixSandbox/I18n.Locale.{Locale};
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
     use Time/Format.ResolverStyle;

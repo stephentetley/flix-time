@@ -36,7 +36,7 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatter {
 
-    use I18n.Locale;
+    use FlixSandbox/I18n.Locale;
 
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};

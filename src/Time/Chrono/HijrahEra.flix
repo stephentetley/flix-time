@@ -28,8 +28,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/HijrahEra {
 
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use FlixSandbox/I18n.Locale;
+    use FlixSandbox/I18n.Locale.{Locale};
 
     use Time/Chrono.HijrahEra;
     use Time/Chrono.HijrahEra.{AH};
