@@ -58,10 +58,10 @@ namespace Time/Clock {
         let Clock(x1) = x;
         x1
 
-    pub def system(x: ZoneId): Clock & Impure =
+    pub def system(zone: ZoneId): Clock & Impure =
         import static java.time.Clock.system(##java.time.ZoneId): ##java.time.Clock & Impure;
-        let ZoneId(x1) = x;
-        Clock(system(x1))
+        let ZoneId(zone1) = zone;
+        Clock(system(zone1))
 
 
     pub def systemDefaultZone(): Clock & Impure =
@@ -111,15 +111,15 @@ namespace Time/Clock {
         Clock(tickMinutes(zoneId1))
 
     
-    pub def getZone(x: Clock): ZoneId =
+    pub def getZone(c: Clock): ZoneId =
         import java.time.Clock.getZone(): ##java.time.ZoneId & Pure;
-        let Clock(x1) = x;
-        ZoneId(getZone(x1))
+        ZoneId(getZone(getClock(c)))
 
-    pub def putZone(x: Clock, zoneId: ZoneId): Clock =
+    pub def withZone(zone: {zone :: ZoneId}, x: Clock): Clock =
         import java.time.Clock.withZone(##java.time.ZoneId): ##java.time.Clock & Pure;
         let Clock(x1) = x;
-        let ZoneId(zoneId1) = zoneId;
-        Clock(withZone(x1, zoneId1))
+        Clock(withZone(x1, Time/ZoneId.getZoneId(zone.zone)))
+
+    /// let c2 = withZone(zone = z1, clock);
 
 }
