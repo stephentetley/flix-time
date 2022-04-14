@@ -46,14 +46,14 @@ namespace Time/Temporal/WeekFields {
     use Time.DayOfWeek;
     use Time/Temporal.ChronoField;
 
-    pub def new(x: {firstDayOfWeek :: DayOfWeek, minimalDaysInFirstWeek :: Int32}): WeekFields =
+    pub def of(r: {firstDayOfWeek :: DayOfWeek, minimalDaysInFirstWeek :: Int32}): WeekFields =
         import static java.time.temporal.WeekFields.of(##java.time.DayOfWeek, Int32): ##java.time.temporal.WeekFields & Pure;
-        let firstDayOfWeek1 = Time/DayOfWeek.toNative(x.firstDayOfWeek);
-        WeekFields(of(firstDayOfWeek1, x.minimalDaysInFirstWeek))
+        let firstDayOfWeek1 = Time/DayOfWeek.toNative(r.firstDayOfWeek);
+        WeekFields(of(firstDayOfWeek1, r.minimalDaysInFirstWeek))
 
-    pub def ofLocale(x: Locale): WeekFields = 
+    pub def ofLocale(locale: { locale :: Locale}): WeekFields = 
         import static java.time.temporal.WeekFields.of(##java.util.Locale): ##java.time.temporal.WeekFields & Pure;
-        let Locale(x1) = x;
+        let Locale(x1) = locale.locale;
         WeekFields(of(x1))
 
     pub def iso(): WeekFields = 

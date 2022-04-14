@@ -110,9 +110,9 @@ namespace Time/Duration {
     ///
     /// Return a new duration.
     ///
-    pub def new(x: {seconds :: Int64, nanos :: Int64}): Duration =
+    pub def of(r: {seconds :: Int64, nanos :: Int64}): Duration =
         import static java.time.Duration.ofSeconds(Int64, Int64);
-        Duration(ofSeconds(x.seconds, x.nanos)) as & Pure
+        Duration(ofSeconds(r.seconds, r.nanos)) as & Pure
 
     ///
     /// Return the components of Duration `x` as a count of seconds and the

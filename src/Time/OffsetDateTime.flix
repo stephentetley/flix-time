@@ -101,12 +101,16 @@ namespace Time/OffsetDateTime {
     use Time.ZoneId.{ZoneId};
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
+    
+    pub def getOffsetDateTime(x: OffsetDateTime): ##java.time.OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        x1
 
-    pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
+    pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
                     second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetDateTime =
         import static java.time.OffsetDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetDateTime & Pure;
-        let ZoneOffset(o1) = x.offset;
-        OffsetDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond, o1))
+        let ZoneOffset(o1) = r.offset;
+        OffsetDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, o1))
 
     /// TODO - potentially remove getFields...
     pub def getFields(x: OffsetDateTime): {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,

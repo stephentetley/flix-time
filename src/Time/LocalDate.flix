@@ -102,14 +102,19 @@ namespace Time/LocalDate {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
-    pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32}): LocalDate =
-        import static java.time.LocalDate.of(Int32, Int32, Int32): ##java.time.LocalDate & Pure;
-        LocalDate(of(x.year, x.month, x.dayOfMonth))
 
-    pub def newWithMonth(x: {year :: Int32, month :: Month, dayOfMonth :: Int32}): LocalDate =
+    pub def getLocalDate(x: LocalDate): ##java.time.LocalDate = 
+        let LocalDate(x1) = x;
+        x1
+
+    pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32}): LocalDate =
+        import static java.time.LocalDate.of(Int32, Int32, Int32): ##java.time.LocalDate & Pure;
+        LocalDate(of(r.year, r.month, r.dayOfMonth))
+
+    pub def ofWithMonth(r: {year :: Int32, month :: Month, dayOfMonth :: Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32): ##java.time.LocalDate & Pure;
-        let m1 = Time/Month.toNative(x.month);
-        LocalDate(of(x.year, m1, x.dayOfMonth))
+        let m1 = Time/Month.toNative(r.month);
+        LocalDate(of(r.year, m1, r.dayOfMonth))
 
     /// TODO - potentially remove getFields...
     pub def getFields(x: LocalDate): {year :: Int32, month :: Int32, dayOfMonth :: Int32} =

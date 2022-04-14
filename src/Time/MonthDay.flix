@@ -69,15 +69,19 @@ namespace Time/MonthDay {
     use Time.MonthDay.{MonthDay};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
+    
+    pub def getMonthDay(x: MonthDay): ##java.time.MonthDay = 
+        let MonthDay(x1) = x;
+        x1
 
-    pub def new(x: {month :: Int32, dayOfMonth :: Int32}): MonthDay =
+    pub def of(r: {month :: Int32, dayOfMonth :: Int32}): MonthDay =
         import static java.time.MonthDay.of(Int32, Int32): ##java.time.MonthDay & Pure;
-        MonthDay(of(x.month, x.dayOfMonth))
+        MonthDay(of(r.month, r.dayOfMonth))
 
-    pub def newWithMonth(x: {month :: Month, dayOfMonth :: Int32}): MonthDay =
+    pub def ofWithMonth(r: {month :: Month, dayOfMonth :: Int32}): MonthDay =
         import static java.time.MonthDay.of(##java.time.Month, Int32): ##java.time.MonthDay & Pure;
-        let m1 = Time/Month.toNative(x.month);
-        MonthDay(of(m1, x.dayOfMonth))
+        let m1 = Time/Month.toNative(r.month);
+        MonthDay(of(m1, r.dayOfMonth))
 
     pub def now(): MonthDay & Impure =
         import static java.time.MonthDay.now(): ##java.time.MonthDay & Impure;

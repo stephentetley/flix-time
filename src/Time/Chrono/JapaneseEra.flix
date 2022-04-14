@@ -48,10 +48,10 @@ namespace Time/Chrono/JapaneseEra {
     use Time/Chrono.JapaneseEra;
     use Time/Chrono.JapaneseEra.{JapaneseEra};
 
-    pub def new(japaneseEra: Int32): Option[JapaneseEra] =
+    pub def of(japaneseEra: {japaneseEra :: Int32}): Option[JapaneseEra] =
         import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra & Pure;
         try {
-            Some(JapaneseEra(of(japaneseEra)))
+            Some(JapaneseEra(of(japaneseEra.japaneseEra)))
         } catch {
             case _: ##java.time.DateTimeException => None
         }

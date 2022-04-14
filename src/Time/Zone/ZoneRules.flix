@@ -54,6 +54,10 @@ namespace Time/Zone/ZoneRules {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
+    pub def getZoneRules(x: ZoneRules): ##java.time.zone.ZoneRules = 
+        let ZoneRules(x1) = x;
+        x1
+
     pub def of(offset: ZoneOffset): ZoneRules =
         import static java.time.zone.ZoneRules.of(##java.time.ZoneOffset): ##java.time.zone.ZoneRules & Pure;
         let ZoneOffset(x1) = offset;

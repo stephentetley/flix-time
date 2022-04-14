@@ -70,14 +70,20 @@ namespace Time/YearMonth {
     use Time.YearMonth;
     use Time.YearMonth.{YearMonth};
 
-    pub def new(x: {year :: Int32, month :: Int32}): YearMonth =
-        import static java.time.YearMonth.of(Int32, Int32): ##java.time.YearMonth & Pure;
-        YearMonth(of(x.year, x.month))
 
-    pub def newWithMonth(x: {year :: Int32, month :: Month}): YearMonth =
+    pub def getYearMonth(x: YearMonth): ##java.time.YearMonth = 
+        let YearMonth(x1) = x;
+        x1
+
+
+    pub def of(r: {year :: Int32, month :: Int32}): YearMonth =
+        import static java.time.YearMonth.of(Int32, Int32): ##java.time.YearMonth & Pure;
+        YearMonth(of(r.year, r.month))
+
+    pub def ofWithMonth(r: {year :: Int32, month :: Month}): YearMonth =
         import static java.time.YearMonth.of(Int32, ##java.time.Month): ##java.time.YearMonth & Pure;
-        let m1 = Time/Month.toNative(x.month);
-        YearMonth(of(x.year, m1))
+        let m1 = Time/Month.toNative(r.month);
+        YearMonth(of(r.year, m1))
 
     pub def now(): YearMonth & Impure =
         import static java.time.YearMonth.now(): ##java.time.YearMonth & Impure;
@@ -210,7 +216,7 @@ namespace Time/YearMonth {
         (getMonth(x1) |> fromNative)
 
     pub def putMonth(x: YearMonth, month: Month): YearMonth =
-        newWithMonth({year = getYear(x), month = month})
+        ofWithMonth({year = getYear(x), month = month})
 
     pub def getMonthValue(x: YearMonth): Int32 =
         import java.time.YearMonth.getMonthValue(): Int32 & Pure;

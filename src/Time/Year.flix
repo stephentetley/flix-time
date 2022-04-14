@@ -95,6 +95,9 @@ namespace Time/Year {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
+    pub def getYear(x: Year): ##java.time.Year = 
+        let Year(x1) = x;
+        x1
 
     pub def of(isoYear: {isoYear :: Int32}): Year =
         import static java.time.Year.of(Int32): ##java.time.Year & Pure;

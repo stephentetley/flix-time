@@ -38,10 +38,10 @@ namespace Time/Format/DecimalStyle {
     use Time/Format.DecimalStyle.{DecimalStyle};
 
     pub def standard(): DecimalStyle =
-        import static get java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle & Pure as getSTANDARD;
-        DecimalStyle(getSTANDARD())
+        import static get java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle & Pure as get_STANDARD;
+        DecimalStyle(get_STANDARD())
 
-    pub def new(): DecimalStyle & Impure = 
+    pub def ofDefaultLocale(): DecimalStyle & Impure = 
         import static java.time.format.DecimalStyle.ofDefaultLocale(): ##java.time.format.DecimalStyle & Impure;
         DecimalStyle(ofDefaultLocale())
 

@@ -97,19 +97,25 @@ namespace Time/LocalDateTime {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    pub def new(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
-        import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
-        LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute))
 
-    pub def newWithSecond(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
+    pub def getLocalDateTime(x: LocalDateTime): ##java.time.LocalDateTime = 
+        let LocalDateTime(x1) = x;
+        x1
+
+
+    pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
+        import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
+        LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute))
+
+    pub def ofWithSecond(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
                                 hour :: Int32, minute :: Int32, second :: Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
-        LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second))
+        LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second))
 
-    pub def newWithSecondAndNano(x: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
+    pub def ofWithSecondAndNano(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
                                         hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
-        LocalDateTime(of(x.year, x.month, x.dayOfMonth, x.hour, x.minute, x.second, x.nanoSecond))
+        LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond))
 
     /// TODO - potentially remove getFields...
     pub def getFields(x: LocalDateTime): {year :: Int32, month :: Int32, dayOfMonth :: Int32,

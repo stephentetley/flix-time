@@ -96,10 +96,13 @@ namespace Time/OffsetTime {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    pub def new(x: { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetTime =
+    pub def getOffsetTime(x: OffsetTime): ##java.time.OffsetTime = 
+        let OffsetTime(x1) = x;
+        x1
+
+    pub def of(r: { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetTime =
         import static java.time.OffsetTime.of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetTime & Pure;
-        let ZoneOffset(o1) = x.offset;
-        OffsetTime(of(x.hour, x.minute, x.second, x.nanoSecond, o1))
+        OffsetTime(of(r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneOffset.getZoneOffset(r.offset)))
 
     pub def getFields(x: OffsetTime): { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset} =
         { hour = getHour(x), minute = getMinute(x), second = getSecond(x), nanoSecond = getNano(x), offset = getOffset(x) }

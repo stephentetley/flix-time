@@ -83,10 +83,14 @@ namespace Time/ZonedDateTime {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
-    pub def new(year: Int32, month: Int32, dayOfMonth: Int32, hour: Int32, minute: Int32, second: Int32, nanoSecond: Int32, zone: ZoneId): ZonedDateTime =
+    pub def getZonedDateTime(x: ZonedDateTime): ##java.time.ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        x1
+
+    pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, 
+                    minute :: Int32, second :: Int32, nanoSecond :: Int32, zoneId :: ZoneId}): ZonedDateTime =
         import static java.time.ZonedDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
-        let ZoneId(z1) = zone;
-        ZonedDateTime(of(year, month, dayOfMonth, hour, minute, second, nanoSecond, z1))
+        ZonedDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneId.getZoneId(r.zoneId)))
 
     ///
     /// Returns the current date-time from the system clock using the system zone id.

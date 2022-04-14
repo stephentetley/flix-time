@@ -65,6 +65,12 @@ namespace Time/ZoneOffset {
     use Time/Zone.ZoneRules;
     use Time/Zone.ZoneRules.{ZoneRules};
 
+
+    pub def getZoneOffset(x: ZoneOffset): ##java.time.ZoneOffset = 
+        let ZoneOffset(x1) = x;
+        x1
+
+
     ///
     /// ___
     ///

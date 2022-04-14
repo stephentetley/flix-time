@@ -53,12 +53,14 @@ namespace Time/Zone/ZoneOffsetTransition {
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
 
-    pub def new(x: {transition :: LocalDateTime, before :: ZoneOffset, after :: ZoneOffset}): ZoneOffsetTransition =
+    pub def getZoneOffsetTransition(x: ZoneOffsetTransition): ##java.time.zone.ZoneOffsetTransition = 
+        let ZoneOffsetTransition(x1) = x;
+        x1
+
+    pub def of(r: {transition :: LocalDateTime, before :: ZoneOffset, after :: ZoneOffset}): ZoneOffsetTransition =
         import static java.time.zone.ZoneOffsetTransition.of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset): ##java.time.zone.ZoneOffsetTransition & Pure;
-        let LocalDateTime(dt1) = x.transition;
-        let ZoneOffset(b1) = x.before;
-        let ZoneOffset(a1) = x.after;
-        ZoneOffsetTransition(of(dt1, b1, a1))
+        use Time/ZoneOffset.{getZoneOffset};
+        ZoneOffsetTransition(of(Time/LocalDateTime.getLocalDateTime(r.transition), getZoneOffset(r.before), getZoneOffset(r.after)))
 
 
     pub def equals(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool =

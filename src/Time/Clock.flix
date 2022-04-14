@@ -53,6 +53,10 @@ namespace Time/Clock {
     use Time.Instant.{Instant};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
+    
+    pub def getClock(x: Clock): ##java.time.Clock = 
+        let Clock(x1) = x;
+        x1
 
     pub def system(x: ZoneId): Clock & Impure =
         import static java.time.Clock.system(##java.time.ZoneId): ##java.time.Clock & Impure;

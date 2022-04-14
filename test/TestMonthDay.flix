@@ -23,6 +23,6 @@ namespace TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/MonthDay.new({month = 1, dayOfMonth = 1}))
+    def toString01(): String = toString(Time/MonthDay.of({month = 1, dayOfMonth = 1}))
 
 }

@@ -101,10 +101,15 @@ namespace Time/Period {
     use Time.Period.{Period};
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
+    
+    pub def getPeriod(x: Period): ##java.time.Period = 
+        let Period(x1) = x;
+        x1
 
-    pub def new(x: {years :: Int32, months :: Int32, days :: Int32}): Period =
+
+    pub def of(r: {years :: Int32, months :: Int32, days :: Int32}): Period =
         import static java.time.Period.of(Int32, Int32, Int32): ##java.time.Period & Pure;
-        Period(of(x.years, x.months, x.days))
+        Period(of(r.years, r.months, r.days))
 
     pub def getFields(x: Period): {years :: Int32, months :: Int32, days :: Int32} =
         { years = getYears(x), months = getMonths(x), days = getDays(x) }

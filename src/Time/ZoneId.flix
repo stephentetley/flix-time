@@ -56,6 +56,10 @@ namespace Time/ZoneId {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
+    pub def getZoneId(x: ZoneId): ##java.time.ZoneId = 
+        let ZoneId(x1) = x;
+        x1
+
     pub def ofZoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
         import java.lang.Throwable.getMessage(): String & Pure;

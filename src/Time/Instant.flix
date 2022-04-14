@@ -98,9 +98,9 @@ namespace Time/Instant {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    pub def new(x: {epochSecond :: Int64, nano :: Int64}): Instant =
+    pub def of(r: {epochSecond :: Int64, nano :: Int64}): Instant =
         import static java.time.Instant.ofEpochSecond(Int64, Int64);
-        Instant(ofEpochSecond(x.epochSecond, x.nano)) as & Pure
+        Instant(ofEpochSecond(r.epochSecond, r.nano)) as & Pure
 
     pub def getFields(x: Instant): {epochSecond :: Int64, nano :: Int32} =
         {epochSecond = getEpochSecond(x), nano = getNano(x)}
