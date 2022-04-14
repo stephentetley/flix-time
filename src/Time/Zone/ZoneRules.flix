@@ -54,7 +54,7 @@ namespace Time/Zone/ZoneRules {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    pub def new(offset: ZoneOffset): ZoneRules =
+    pub def of(offset: ZoneOffset): ZoneRules =
         import static java.time.zone.ZoneRules.of(##java.time.ZoneOffset): ##java.time.zone.ZoneRules & Pure;
         let ZoneOffset(x1) = offset;
         ZoneRules(of(x1))
@@ -70,6 +70,20 @@ namespace Time/Zone/ZoneRules {
         let ZoneRules(x1) = x;
         hashCode(x1)
 
+
+    pub def getOffsetWithLocalDateTime(ldt: LocalDateTime, x: ZoneRules): ZoneOffset =
+        import java.time.zone.ZoneRules.getOffset(##java.time.LocalDateTime): ##java.time.ZoneOffset & Pure;
+        let LocalDateTime(ldt1) = ldt;
+        let ZoneRules(x1) = x;
+        ZoneOffset(getOffset(x1, ldt1))
+
+    pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] =
+        import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List & Pure;
+        let LocalDateTime(ldt1) = ldt;
+        let ZoneRules(x1) = x;
+        let xs = getValidOffsets(x1, ldt1);
+        FlixSandbox/Marshal.unmarshalList(o -> ZoneOffset(o as ##java.time.ZoneOffset), xs) as & Pure
+
 /*
     pub def getDaylightSavings(x: ZoneRules, instant: Instant): Duration =
         import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant): ...;
@@ -84,12 +98,12 @@ namespace Time/Zone/ZoneRules {
         isDaylightSavings(x1, instant1)
 */
 
-    pub def isValidOffset(x: ZoneRules, localDateTime: LocalDateTime, offset: ZoneOffset): Bool =
+    pub def isValidOffset(ldt: LocalDateTime, offset: ZoneOffset, x: ZoneRules): Bool =
         import java.time.zone.ZoneRules.isValidOffset(##java.time.LocalDateTime, ##java.time.ZoneOffset): Bool & Pure;
         let ZoneRules(x1) = x;
-        let LocalDateTime(localDateTime1) = localDateTime;
+        let LocalDateTime(ldt1) = ldt;
         let ZoneOffset(offset1) = offset;
-        isValidOffset(x1, localDateTime1, offset1)
+        isValidOffset(x1, ldt1, offset1)
 
 /*
     pub def previousTransition(x: ZoneRules, instant: Instant): ZoneOffsetTransition =

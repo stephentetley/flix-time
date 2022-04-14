@@ -32,23 +32,9 @@ namespace Time {
             toString(x1)
     }
 
-    instance FromString[ZoneId] {
-        pub def fromString(s: String): Option[ZoneId] =
-            import java.lang.String.strip(): String & Pure;
-            import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
-            try {
-                Some(ZoneId(of(strip(s))))
-            } catch {
-                case _: ##java.time.DateTimeException => None
-                case _: ##java.time.zone.ZoneRulesException => None
-            }
-    }
-
-
     instance Eq[ZoneId] {
         pub def eq(x: ZoneId, y: ZoneId): Bool = Time/ZoneId.equals(x, y)
     }
-
 
     instance Hash[ZoneId] {
         pub def hash(x: ZoneId): Int32 = Time/ZoneId.hashCode(x)
@@ -70,13 +56,23 @@ namespace Time/ZoneId {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    pub def new(prefix: Option[ZonePrefix], offset: ZoneOffset): ZoneId =
+    pub def ofZoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
+        import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
+        import java.lang.Throwable.getMessage(): String & Pure;
+        try {
+            Ok(ZoneId(of(zoneId.zoneId)))
+        } catch {
+            case ex: ##java.time.DateTimeException       => Err(getMessage(ex as ##java.lang.Throwable))
+            case ex: ##java.time.zone.ZoneRulesException => Err(getMessage(ex as ##java.lang.Throwable))
+        }
+        
+    pub def ofPrefixOffset(r: {prefix :: Option[ZonePrefix], offset :: ZoneOffset}): ZoneId =
         import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId & Pure;
-        let p1 = match prefix {
+        let p1 = match r.prefix {
             case Some(ZonePrefix(s)) => s
             case _ => ""
         };
-        let ZoneOffset(o1) = offset;
+        let ZoneOffset(o1) = r.offset;
         ZoneId(ofOffset(p1, o1))
 
     pub def gmt(): ZonePrefix = ZonePrefix("GMT")

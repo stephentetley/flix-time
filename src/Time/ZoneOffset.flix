@@ -31,19 +31,6 @@ namespace Time {
             toString(x1)
     }
 
-    instance FromString[ZoneOffset] {
-        pub def fromString(x: String): Option[ZoneOffset] =
-            import java.lang.String.strip(): String & Pure;
-            import static java.time.ZoneOffset.of(String): ##java.time.ZoneOffset & Pure;
-            try {
-                let x1 = strip(x);
-                Some(ZoneOffset(of(x1)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
-    }
-
-
     instance Eq[ZoneOffset] {
         pub def eq(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.equals(x, y)
     }
@@ -75,34 +62,36 @@ namespace Time/ZoneOffset {
 
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
+    use Time/Zone.ZoneRules;
+    use Time/Zone.ZoneRules.{ZoneRules};
 
     ///
     /// ___
     ///
     pub def utc(): ZoneOffset =
-        import static get java.time.ZoneOffset.UTC: ##java.time.ZoneOffset & Pure as getUTC;
-        ZoneOffset(getUTC())
+        import static get java.time.ZoneOffset.UTC: ##java.time.ZoneOffset & Pure as get_UTC;
+        ZoneOffset(get_UTC())
 
     pub def min(): ZoneOffset =
-        import static get java.time.ZoneOffset.MIN: ##java.time.ZoneOffset & Pure as getMIN;
-        ZoneOffset(getMIN())
+        import static get java.time.ZoneOffset.MIN: ##java.time.ZoneOffset & Pure as get_MIN;
+        ZoneOffset(get_MIN())
 
     pub def max(): ZoneOffset =
-        import static get java.time.ZoneOffset.MAX: ##java.time.ZoneOffset & Pure as getMAX;
-        ZoneOffset(getMAX())
+        import static get java.time.ZoneOffset.MAX: ##java.time.ZoneOffset & Pure as get_MAX;
+        ZoneOffset(get_MAX())
 
 
     pub def ofHours(hours: Int32): ZoneOffset =
         import static java.time.ZoneOffset.ofHours(Int32): ##java.time.ZoneOffset & Pure;
         ZoneOffset(ofHours(hours))
 
-    pub def ofHoursMinutes(hours: Int32, minutes: Int32): ZoneOffset =
+    pub def ofHoursMinutes(r: {hours :: Int32, minutes :: Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): ##java.time.ZoneOffset & Pure;
-        ZoneOffset(ofHoursMinutes(hours, minutes))
+        ZoneOffset(ofHoursMinutes(r.hours, r.minutes))
 
-    pub def ofHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): ZoneOffset =
+    pub def ofHoursMinutesSeconds(r: {hours :: Int32, minutes :: Int32, seconds :: Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): ##java.time.ZoneOffset & Pure;
-        ZoneOffset(ofHoursMinutesSeconds(hours, minutes, seconds))
+        ZoneOffset(ofHoursMinutesSeconds(r.hours, r.minutes, r.seconds))
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
         import static java.time.ZoneOffset.ofTotalSeconds(Int32): ##java.time.ZoneOffset & Pure;
@@ -131,5 +120,15 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset.getId(): String & Pure;
         let ZoneOffset(x1) = x;
         getId(x1)
+
+    pub def getRules(x: ZoneOffset): ZoneRules =
+        import java.time.ZoneOffset.getRules(): ##java.time.zone.ZoneRules & Pure;
+        let ZoneOffset(x1) = x;
+        ZoneRules(getRules(x1))
+
+    pub def getTotalSeconds(x: ZoneOffset): Int32 =
+        import java.time.ZoneOffset.getTotalSeconds(): Int32 & Pure;
+        let ZoneOffset(x1) = x;
+        getTotalSeconds(x1)
 
 }

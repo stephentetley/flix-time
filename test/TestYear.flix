@@ -25,61 +25,61 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/Year.new(1970))
+    def toString01(): String = toString(Time/Year.of(isoYear = 1970))
 
     /////////////////////////////////////////////////////////////////////////////
     // minValue                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def minValue01(): Bool = minValue() == Time/Year.new(-999_999_999)
+    def minValue01(): Bool = minValue() == Time/Year.of(isoYear = -999_999_999)
 
     /////////////////////////////////////////////////////////////////////////////
     // maxValue                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def maxValue01(): Bool = maxValue() == Time/Year.new(999_999_999)
+    def maxValue01(): Bool = maxValue() == Time/Year.of(isoYear = 999_999_999)
 
     /////////////////////////////////////////////////////////////////////////////
     // less                                                                    //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def less01(): Bool = Time/Year.new(2020) < Time/Year.new(2021)
+    def less01(): Bool = Time/Year.of(isoYear = 2020) < Time/Year.of(isoYear = 2021)
 
     /////////////////////////////////////////////////////////////////////////////
     // lessEq                                                                  //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def lessEq01(): Bool = Time/Year.new(2020) <= Time/Year.new(2021)
+    def lessEq01(): Bool = Time/Year.of(isoYear = 2020) <= Time/Year.of(isoYear = 2021)
 
     /////////////////////////////////////////////////////////////////////////////
     // greater                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def greater01(): Bool = Time/Year.new(2021) > Time/Year.new(2020)
+    def greater01(): Bool = Time/Year.of(isoYear = 2021) > Time/Year.of(isoYear = 2020)
 
     /////////////////////////////////////////////////////////////////////////////
     // greaterEq                                                               //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def greaterEq01(): Bool = Time/Year.new(2021) >= Time/Year.new(2020)
+    def greaterEq01(): Bool = Time/Year.of(isoYear = 2021) >= Time/Year.of(isoYear = 2020)
 
     /////////////////////////////////////////////////////////////////////////////
     // compare                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def compare01(): Bool = Order.compare(Time/Year.new(2020), Time/Year.new(2021)) == LessThan
+    def compare01(): Bool = Order.compare(Time/Year.of(isoYear = 2020), Time/Year.of(isoYear = 2021)) == LessThan
 
     @test
-    def compare02(): Bool = Order.compare(Time/Year.new(2020), Time/Year.new(2020)) == EqualTo
+    def compare02(): Bool = Order.compare(Time/Year.of(isoYear = 2020), Time/Year.of(isoYear = 2020)) == EqualTo
 
     @test
-    def compare03(): Bool = Order.compare(Time/Year.new(2021), Time/Year.new(2020)) == GreaterThan
+    def compare03(): Bool = Order.compare(Time/Year.of(isoYear = 2021), Time/Year.of(isoYear = 2020)) == GreaterThan
 
 }
