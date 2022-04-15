@@ -91,7 +91,7 @@ namespace Time/Format/DateTimeFormatter {
         let DateTimeFormatter(x1) = x;
         ZoneId(getZone(x1))
 
-    pub def putZone(x: DateTimeFormatter, zone: ZoneId): DateTimeFormatter =
+    pub def withZone(x: DateTimeFormatter, zone: ZoneId): DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId): ##java.time.format.DateTimeFormatter & Pure;
         let DateTimeFormatter(x1) = x;
         let ZoneId(z1) = zone;
@@ -102,23 +102,23 @@ namespace Time/Format/DateTimeFormatter {
         let DateTimeFormatter(x1) = x;
         Time/Format/Internal/Prim.getLocale(x1)
 
-    pub def putLocale(x: DateTimeFormatter, locale: Locale): DateTimeFormatter =
+    pub def withLocale(x: DateTimeFormatter, locale: Locale): DateTimeFormatter =
         let DateTimeFormatter(x1) = x;
-        DateTimeFormatter(Time/Format/Internal/Prim.putLocale(x1, locale))
+        DateTimeFormatter(Time/Format/Internal/Prim.withLocale(x1, locale))
 
     pub def getDecimalStyle(x: DateTimeFormatter): DecimalStyle =
         let DateTimeFormatter(x1) = x;
         Time/Format/Internal/Prim.getDecimalStyle(x1)
 
-    pub def putDecimalStyle(x: DateTimeFormatter, style: DecimalStyle): DateTimeFormatter =
+    pub def withDecimalStyle(x: DateTimeFormatter, style: DecimalStyle): DateTimeFormatter =
         let DateTimeFormatter(x1) = x;
-        DateTimeFormatter(Time/Format/Internal/Prim.putDecimalStyle(x1, style))
+        DateTimeFormatter(Time/Format/Internal/Prim.withDecimalStyle(x1, style))
 
     pub def getResolverStyle(x: DateTimeFormatter): ResolverStyle =
         let DateTimeFormatter(x1) = x;
         Time/Format/Internal/Prim.getResolverStyle(x1)
 
-    pub def putResolverStyle(x: DateTimeFormatter, style: ResolverStyle): DateTimeFormatter =
+    pub def withResolverStyle(x: DateTimeFormatter, style: ResolverStyle): DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withResolverStyle(##java.time.format.ResolverStyle): ##java.time.format.DateTimeFormatter & Pure;
         let DateTimeFormatter(x1) = x;
         let style1 = Time/Format/ResolverStyle.toNative(style);

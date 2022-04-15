@@ -73,7 +73,7 @@ namespace Time/Format/TimeFormatter {
         let TimeFormatter(x1) = x;
         ZoneId(getZone(x1))
 
-    pub def putZone(x: TimeFormatter, zone: ZoneId): TimeFormatter =
+    pub def withZone(x: TimeFormatter, zone: ZoneId): TimeFormatter =
         import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId): ##java.time.format.DateTimeFormatter & Pure;
         let TimeFormatter(x1) = x;
         let ZoneId(z1) = zone;
@@ -83,9 +83,9 @@ namespace Time/Format/TimeFormatter {
         let TimeFormatter(x1) = x;
         Time/Format/Internal/Prim.getDecimalStyle(x1)
 
-    pub def putDecimalStyle(x: TimeFormatter, style: DecimalStyle): TimeFormatter =
+    pub def withDecimalStyle(x: TimeFormatter, style: DecimalStyle): TimeFormatter =
         let TimeFormatter(x1) = x;
-        TimeFormatter(Time/Format/Internal/Prim.putDecimalStyle(x1, style))
+        TimeFormatter(Time/Format/Internal/Prim.withDecimalStyle(x1, style))
 
     pub def getResolverStyle(x: TimeFormatter): ResolverStyle =
         let TimeFormatter(x1) = x;
@@ -96,8 +96,8 @@ namespace Time/Format/TimeFormatter {
         let TimeFormatter(x1) = x;
         Time/Format/Internal/Prim.getLocale(x1)
 
-    pub def putLocale(x: TimeFormatter, locale: Locale): TimeFormatter =
+    pub def withLocale(x: TimeFormatter, locale: Locale): TimeFormatter =
         let TimeFormatter(x1) = x;
-        TimeFormatter(Time/Format/Internal/Prim.putLocale(x1, locale))
+        TimeFormatter(Time/Format/Internal/Prim.withLocale(x1, locale))
 
 }

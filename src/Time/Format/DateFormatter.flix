@@ -84,17 +84,17 @@ namespace Time/Format/DateFormatter {
         let DateFormatter(x1) = x;
         Time/Format/Internal/Prim.getLocale(x1)
 
-    pub def putLocale(x: DateFormatter, locale: Locale): DateFormatter =
+    pub def withLocale(x: DateFormatter, locale: Locale): DateFormatter =
         let DateFormatter(x1) = x;
-        DateFormatter(Time/Format/Internal/Prim.putLocale(x1, locale))
+        DateFormatter(Time/Format/Internal/Prim.withLocale(x1, locale))
 
     pub def getDecimalStyle(x: DateFormatter): DecimalStyle =
         let DateFormatter(x1) = x;
         Time/Format/Internal/Prim.getDecimalStyle(x1)
 
-    pub def putDecimalStyle(x: DateFormatter, style: DecimalStyle): DateFormatter =
+    pub def withDecimalStyle(x: DateFormatter, style: DecimalStyle): DateFormatter =
         let DateFormatter(x1) = x;
-        DateFormatter(Time/Format/Internal/Prim.putDecimalStyle(x1, style))
+        DateFormatter(Time/Format/Internal/Prim.withDecimalStyle(x1, style))
 
 
     pub def getResolverStyle(x: DateFormatter): ResolverStyle =

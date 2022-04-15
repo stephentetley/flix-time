@@ -280,7 +280,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         getHour(x1)
 
-    pub def putHour(x: LocalTime, hour: Int32): LocalTime =
+    pub def withHour(x: LocalTime, hour: Int32): LocalTime =
         import java.time.LocalTime.withHour(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withHour(x1, hour))
@@ -290,7 +290,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         getMinute(x1)
 
-    pub def putMinute(x: LocalTime, minute: Int32): LocalTime =
+    pub def withMinute(x: LocalTime, minute: Int32): LocalTime =
         import java.time.LocalTime.withMinute(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withMinute(x1, minute))
@@ -300,7 +300,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         getSecond(x1)
 
-    pub def putSecond(x: LocalTime, second: Int32): LocalTime =
+    pub def withSecond(x: LocalTime, second: Int32): LocalTime =
         import java.time.LocalTime.withSecond(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withSecond(x1, second))
@@ -310,7 +310,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         getNano(x1)
 
-    pub def putNano(x: LocalTime, nano: Int32): LocalTime =
+    pub def withNano(x: LocalTime, nano: Int32): LocalTime =
         import java.time.LocalTime.withNano(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withNano(x1, nano))

@@ -215,7 +215,7 @@ namespace Time/Period {
         let Period(x1) = x;
         getYears(x1)
 
-    pub def putYears(x: Period, years: Int32): Period =
+    pub def withYears(x: Period, years: Int32): Period =
         import java.time.Period.withYears(Int32): ##java.time.Period & Pure;
         let Period(x1) = x;
         Period(withYears(x1, years))
@@ -225,7 +225,7 @@ namespace Time/Period {
         let Period(x1) = x;
         getMonths(x1)
 
-    pub def putMonths(x: Period, months: Int32): Period =
+    pub def withMonths(x: Period, months: Int32): Period =
         import java.time.Period.withMonths(Int32): ##java.time.Period & Pure;
         let Period(x1) = x;
         Period(withMonths(x1, months))
@@ -235,7 +235,7 @@ namespace Time/Period {
         let Period(x1) = x;
         getDays(x1)
 
-    pub def putDays(x: Period, days: Int32): Period =
+    pub def withDays(x: Period, days: Int32): Period =
         import java.time.Period.withDays(Int32): ##java.time.Period & Pure;
         let Period(x1) = x;
         Period(withDays(x1, days))

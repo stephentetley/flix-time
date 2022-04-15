@@ -143,7 +143,7 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         getDayOfMonth(x1)
 
-    pub def putDayOfMonth(x: MonthDay, dayOfMonth: Int32): MonthDay =
+    pub def withDayOfMonth(x: MonthDay, dayOfMonth: Int32): MonthDay =
         import java.time.MonthDay.withDayOfMonth(Int32): ##java.time.MonthDay & Pure;
         let MonthDay(x1) = x;
         MonthDay(withDayOfMonth(x1, dayOfMonth))
@@ -154,7 +154,7 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         fromNative(getMonth(x1))
 
-    pub def putMonth(x: MonthDay, month: Month): MonthDay =
+    pub def withMonth(x: MonthDay, month: Month): MonthDay =
         import java.time.MonthDay.with(##java.time.Month): ##java.time.MonthDay & Pure;
         use Time/Month.{toNative};
         let MonthDay(x1) = x;
@@ -166,7 +166,7 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         getMonthValue(x1)
 
-    pub def putMonthValue(x: MonthDay, month: Int32): MonthDay =
+    pub def withMonthValue(x: MonthDay, month: Int32): MonthDay =
         import java.time.MonthDay.withMonth(Int32): ##java.time.MonthDay & Pure;
         let MonthDay(x1) = x;
         MonthDay(withMonth(x1, month))

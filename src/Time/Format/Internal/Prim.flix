@@ -38,7 +38,7 @@ namespace Time/Format/Internal/Prim {
         import java.time.format.DateTimeFormatter.getLocale(): ##java.util.Locale & Pure;
         Locale(getLocale(x))
 
-    pub def putLocale(x: ##java.time.format.DateTimeFormatter, locale: Locale): ##java.time.format.DateTimeFormatter =
+    pub def withLocale(x: ##java.time.format.DateTimeFormatter, locale: Locale): ##java.time.format.DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale): ##java.time.format.DateTimeFormatter & Pure;
         let Locale(locale1) = locale;
         withLocale(x, locale1)
@@ -47,7 +47,7 @@ namespace Time/Format/Internal/Prim {
         import java.time.format.DateTimeFormatter.getDecimalStyle(): ##java.time.format.DecimalStyle & Pure;
         DecimalStyle(getDecimalStyle(x))
 
-    pub def putDecimalStyle(x: ##java.time.format.DateTimeFormatter, style: DecimalStyle):  ##java.time.format.DateTimeFormatter =
+    pub def withDecimalStyle(x: ##java.time.format.DateTimeFormatter, style: DecimalStyle):  ##java.time.format.DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withDecimalStyle(##java.time.format.DecimalStyle): ##java.time.format.DateTimeFormatter & Pure;
         let DecimalStyle(style1) = style;
         withDecimalStyle(x, style1)

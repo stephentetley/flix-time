@@ -274,7 +274,7 @@ namespace Time/ZDuration {
     ///
     /// Set the nano part of the duration `x` to `seconds``.
     ///
-    pub def putNano(x: ZDuration, nanos: Int32): ZDuration =
+    pub def withNano(x: ZDuration, nanos: Int32): ZDuration =
         import java.time.Duration.withNanos(Int32): ##java.time.Duration & Pure;
         let ZDuration(x1) = x;
         ZDuration(withNanos(x1, nanos))
@@ -290,7 +290,7 @@ namespace Time/ZDuration {
     ///
     /// Set the seconds part of the duration `x` to `seconds``.
     ///
-    pub def putSeconds(x: ZDuration, seconds: Int64): ZDuration =
+    pub def withSeconds(x: ZDuration, seconds: Int64): ZDuration =
         import java.time.Duration.withSeconds(Int64): ##java.time.Duration & Pure;
         let ZDuration(x1) = x;
         ZDuration(withSeconds(x1, seconds))

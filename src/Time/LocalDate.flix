@@ -308,7 +308,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         getDayOfMonth(x1)
 
-    pub def putDayOfMonth(x: LocalDate, dayOfMonth: Int32): LocalDate =
+    pub def withDayOfMonth(x: LocalDate, dayOfMonth: Int32): LocalDate =
         import java.time.LocalDate.withDayOfMonth(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
         LocalDate(withDayOfMonth(x1, dayOfMonth))
@@ -318,7 +318,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         getDayOfYear(x1)
 
-    pub def putDayOfYear(x: LocalDate, dayOfYear: Int32): LocalDate =
+    pub def withDayOfYear(x: LocalDate, dayOfYear: Int32): LocalDate =
         import java.time.LocalDate.withDayOfYear(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
         LocalDate(withDayOfYear(x1, dayOfYear))
@@ -335,7 +335,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         getValue(getMonth(x1))
 
-    pub def putMonth(x: LocalDate, month: Int32): LocalDate =
+    pub def withMonth(x: LocalDate, month: Int32): LocalDate =
         import java.time.LocalDate.withMonth(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
         LocalDate(withMonth(x1, month))
@@ -345,7 +345,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         getYear(x1)
 
-    pub def putYear(x: LocalDate, year: Int32): LocalDate =
+    pub def withYear(x: LocalDate, year: Int32): LocalDate =
         import java.time.LocalDate.withYear(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
         LocalDate(withYear(x1, year))

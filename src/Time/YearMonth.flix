@@ -215,7 +215,7 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         (getMonth(x1) |> fromNative)
 
-    pub def putMonth(x: YearMonth, month: Month): YearMonth =
+    pub def withMonth(x: YearMonth, month: Month): YearMonth =
         ofWithMonth({year = getYear(x), month = month})
 
     pub def getMonthValue(x: YearMonth): Int32 =
@@ -223,7 +223,7 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         getMonthValue(x1)
 
-    pub def putMonthValue(x: YearMonth, month: Int32): YearMonth =
+    pub def withMonthValue(x: YearMonth, month: Int32): YearMonth =
         import java.time.YearMonth.withMonth(Int32): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
         YearMonth(withMonth(x1, month))
@@ -233,7 +233,7 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         getYear(x1)
 
-    pub def putYear(x: YearMonth, year: Int32): YearMonth =
+    pub def withYear(x: YearMonth, year: Int32): YearMonth =
         import java.time.YearMonth.withYear(Int32): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
         YearMonth(withYear(x1, year))
