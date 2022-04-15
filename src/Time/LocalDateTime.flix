@@ -334,7 +334,7 @@ namespace Time/LocalDateTime {
     pub def getMonth(x: LocalDateTime): Month =
         import java.time.LocalDateTime.getMonth(): ##java.time.Month & Pure;
         let LocalDateTime(x1) = x;
-        Time/Month.fromNative(getMonth(x1))
+        Time/Month.unmarshal(getMonth(x1))
 
     pub def getMonthValue(x: LocalDateTime): Int32 =
         import java.time.LocalDateTime.getMonth(): ##java.time.Month & Pure;
@@ -371,7 +371,7 @@ namespace Time/LocalDateTime {
     pub def getDayOfWeek(x: LocalDateTime): DayOfWeek =
         import java.time.LocalDateTime.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
         let LocalDateTime(x1) = x;
-        Time/DayOfWeek.fromNative(getDayOfWeek(x1))
+        Time/DayOfWeek.unmarshal(getDayOfWeek(x1))
 
     pub def getHour(x: LocalDateTime): Int32 =
         import java.time.LocalDateTime.getHour(): Int32 & Pure;
@@ -417,7 +417,7 @@ namespace Time/LocalDateTime {
         import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let LocalDateTime(b1) = b;
         let LocalDateTime(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.toNative(unit);
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1)

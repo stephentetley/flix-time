@@ -31,7 +31,7 @@ namespace Time/Format/ResolverStyle {
     
 
 
-    pub def toNative(x: ResolverStyle): ##java.time.format.ResolverStyle = 
+    pub def marshal(x: ResolverStyle): ##java.time.format.ResolverStyle = 
         import static get java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle & Pure as getLENIENT;
         import static get java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle & Pure as getSMART;
         import static get java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle & Pure as getSTRICT;
@@ -42,12 +42,12 @@ namespace Time/Format/ResolverStyle {
         }
 
     def primEquals(x: ##java.time.format.ResolverStyle, y: ##java.time.format.ResolverStyle): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Object;
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
-    pub def fromNative(x: ##java.time.format.ResolverStyle): ResolverStyle = 
+    pub def unmarshal(x: ##java.time.format.ResolverStyle): ResolverStyle = 
         import static get java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle & Pure as getLENIENT;
         import static get java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle & Pure as getSMART;
         import static get java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle & Pure as getSTRICT;

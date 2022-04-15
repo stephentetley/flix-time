@@ -108,7 +108,7 @@ namespace Time/Chrono/HijrahDate {
     pub def getEra(x: HijrahDate): HijrahEra = 
         import java.time.chrono.HijrahDate.getEra(): ##java.time.chrono.HijrahEra & Pure;
         let HijrahDate(x1) = x;
-        Time/Chrono/HijrahEra.fromNative(getEra(x1))
+        Time/Chrono/HijrahEra.unmarshal(getEra(x1))
 
     pub def isLeapYear(x: HijrahDate): Bool = 
         import java.time.chrono.HijrahDate.isLeapYear(): Bool & Pure;
@@ -153,7 +153,7 @@ namespace Time/Chrono/HijrahDate {
         import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 & Pure;
         try {
             let HijrahDate(x1) = x;
-            let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
+            let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
             Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1))
         } catch {
             case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
@@ -163,13 +163,13 @@ namespace Time/Chrono/HijrahDate {
     pub def plusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
         import java.time.chrono.HijrahDate.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;
         let HijrahDate(x1) = x;
-        let unit1 = Time/Temporal/ChronoUnit.toNative(unit) as ##java.time.temporal.TemporalUnit;
+        let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
         HijrahDate(plus(x1, amount, unit1))
 
     pub def minusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
         import java.time.chrono.HijrahDate.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;
         let HijrahDate(x1) = x;
-        let unit1 = Time/Temporal/ChronoUnit.toNative(unit) as ##java.time.temporal.TemporalUnit;
+        let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
         HijrahDate(minus(x1, amount, unit1))
 
     pub def plusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
@@ -191,7 +191,7 @@ namespace Time/Chrono/HijrahDate {
         let HijrahDate(b1) = b;
         let HijrahDate(e1) = e;
         let te1 = e1 as ##java.time.temporal.Temporal;
-        let u1 = Time/Temporal/ChronoUnit.toNative(unit) as ##java.time.temporal.TemporalUnit;
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
         until(b1, te1, u1)
 
     pub def withVariant(x: HijrahDate, chronology: HijrahChronology): HijrahDate = 

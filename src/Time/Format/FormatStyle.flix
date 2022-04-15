@@ -32,7 +32,7 @@ namespace Time/Format/FormatStyle {
     use Time/Format.FormatStyle;
     use Time/Format.FormatStyle.{Full, Long, Medium, Short};
 
-    pub def toNative(x: FormatStyle): ##java.time.format.FormatStyle = 
+    pub def marshal(x: FormatStyle): ##java.time.format.FormatStyle = 
         import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle & Pure as getFULL;
         import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle & Pure as getLONG;
         import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle & Pure as getMEDIUM;
@@ -45,12 +45,12 @@ namespace Time/Format/FormatStyle {
         }
 
     def primEquals(x: ##java.time.format.FormatStyle, y: ##java.time.format.FormatStyle): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Object;
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
-    pub def fromNative(x: ##java.time.format.FormatStyle): FormatStyle = 
+    pub def unmarshal(x: ##java.time.format.FormatStyle): FormatStyle = 
         import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle & Pure as getFULL;
         import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle & Pure as getLONG;
         import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle & Pure as getMEDIUM;

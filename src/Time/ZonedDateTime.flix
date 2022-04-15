@@ -310,7 +310,7 @@ namespace Time/ZonedDateTime {
     pub def getMonth(x: ZonedDateTime): Month =
         import java.time.ZonedDateTime.getMonth(): ##java.time.Month & Pure;
         let ZonedDateTime(x1) = x;
-        Time/Month.fromNative(getMonth(x1))
+        Time/Month.unmarshal(getMonth(x1))
 
     pub def getMonthValue(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getMonth(): ##java.time.Month & Pure;
@@ -346,7 +346,7 @@ namespace Time/ZonedDateTime {
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
         import java.time.ZonedDateTime.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
         let ZonedDateTime(x1) = x;
-        Time/DayOfWeek.fromNative(getDayOfWeek(x1))
+        Time/DayOfWeek.unmarshal(getDayOfWeek(x1))
 
     pub def getHour(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getHour(): Int32 & Pure;

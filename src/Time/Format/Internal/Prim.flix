@@ -54,6 +54,6 @@ namespace Time/Format/Internal/Prim {
 
     pub def getResolverStyle(x: ##java.time.format.DateTimeFormatter): ResolverStyle =
         import java.time.format.DateTimeFormatter.getResolverStyle(): ##java.time.format.ResolverStyle & Pure;
-        Time/Format/ResolverStyle.fromNative(getResolverStyle(x))
+        Time/Format/ResolverStyle.unmarshal(getResolverStyle(x))
 
 }

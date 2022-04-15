@@ -251,7 +251,7 @@ namespace Time/ZInstant {
         import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let ZInstant(b1) = b;
         let ZInstant(e1) = e;
-        let cu1 = Time/Temporal/ChronoUnit.toNative(cu);
+        let cu1 = Time/Temporal/ChronoUnit.marshal(cu);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = cu1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1)
@@ -259,7 +259,7 @@ namespace Time/ZInstant {
     pub def range(x: ZInstant, field: ChronoField): ValueRange = 
         import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
         let ZInstant(x1) = x;
-        let field1 = Time/Temporal/ChronoField.toNative(field);
+        let field1 = Time/Temporal/ChronoField.marshal(field);
         let tfield1 = field1 as ##java.time.temporal.TemporalField;
         ValueRange(range(x1, tfield1))
 
@@ -268,7 +268,7 @@ namespace Time/ZInstant {
         import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant & Pure;
         try {
             let ZInstant(x1) = x;
-            let unit1 = Time/Temporal/ChronoUnit.toNative(unit);
+            let unit1 = Time/Temporal/ChronoUnit.marshal(unit);
             let tunit1 = unit1 as ##java.time.temporal.TemporalUnit;
             Some(ZInstant(truncatedTo(x1, tunit1)))
         } catch {

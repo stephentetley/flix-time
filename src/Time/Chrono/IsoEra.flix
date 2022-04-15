@@ -42,7 +42,7 @@ namespace Time/Chrono/IsoEra {
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
 
-    pub def toNative(x: IsoEra): ##java.time.chrono.IsoEra = 
+    pub def marshal(x: IsoEra): ##java.time.chrono.IsoEra = 
         import static get java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra & Pure as getBCE;
         import static get java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra & Pure as getCE;
         match x {
@@ -51,12 +51,12 @@ namespace Time/Chrono/IsoEra {
         }
 
     def primEquals(x: ##java.time.chrono.IsoEra, y: ##java.time.chrono.IsoEra): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Object;
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
-    pub def fromNative(x: ##java.time.chrono.IsoEra): IsoEra = 
+    pub def unmarshal(x: ##java.time.chrono.IsoEra): IsoEra = 
         import static get java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra & Pure as getBCE;
         import static get java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra & Pure as getCE;
         match x {
@@ -66,34 +66,34 @@ namespace Time/Chrono/IsoEra {
 
     pub def getValue(x: IsoEra): Int32 = 
         import java.time.chrono.IsoEra.getValue(): Int32 & Pure;
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         getValue(x1)
 
 
     pub def hashCode(x: IsoEra): Int32 =
         import java.lang.Enum.hashCode(): Int32 & Pure;
-        let en1 = toNative(x) as ##java.lang.Enum;
+        let en1 = marshal(x) as ##java.lang.Enum;
         hashCode(en1)
 
 
     /// 
     pub def getDisplayName(x: IsoEra, style: TextStyle, locale: Locale): String = 
         import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
-        let x1 = toNative(x);
-        let style1 = Time/Format/TextStyle.toNative(style);
+        let x1 = marshal(x);
+        let style1 = Time/Format/TextStyle.marshal(style);
         let Locale(locale1) = locale;
         getDisplayName(x1 as ##java.time.chrono.Era, style1, locale1)
         
     pub def range(x: IsoEra, field: ChronoField): ValueRange = 
         import java.time.chrono.Era.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-        let x1 = toNative(x);
-        let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
+        let x1 = marshal(x);
+        let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
         ValueRange(range(x1 as ##java.time.chrono.Era, field1))
 
     pub def getEra(x: LocalDate): IsoEra = 
         import java.time.LocalDate.getEra(): ##java.time.chrono.IsoEra & Pure;
         let LocalDate(x1) = x;
-        fromNative(getEra(x1))
+        unmarshal(getEra(x1))
 
 
 }

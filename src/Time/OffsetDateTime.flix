@@ -372,7 +372,7 @@ namespace Time/OffsetDateTime {
     pub def getMonth(x: OffsetDateTime): Month =
         import java.time.OffsetDateTime.getMonth(): ##java.time.Month & Pure;
         let OffsetDateTime(x1) = x;
-        Time/Month.fromNative(getMonth(x1))
+        Time/Month.unmarshal(getMonth(x1))
 
     pub def getMonthValue(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getMonth(): ##java.time.Month & Pure;
@@ -408,7 +408,7 @@ namespace Time/OffsetDateTime {
     pub def getDayOfWeek(x: OffsetDateTime): DayOfWeek =
         import java.time.OffsetDateTime.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
         let OffsetDateTime(x1) = x;
-        Time/DayOfWeek.fromNative(getDayOfWeek(x1))
+        Time/DayOfWeek.unmarshal(getDayOfWeek(x1))
 
     pub def getHour(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getHour(): Int32 & Pure;
@@ -471,7 +471,7 @@ namespace Time/OffsetDateTime {
         import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let OffsetDateTime(b1) = b;
         let OffsetDateTime(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.toNative(unit);
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1)

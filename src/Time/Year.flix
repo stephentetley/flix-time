@@ -179,7 +179,7 @@ namespace Time/Year {
         import java.time.Year.atMonth(##java.time.Month): ##java.time.YearMonth & Pure;
         try {
             let Year(x1) = x;
-            let m1 = Time/Month.toNative(month);
+            let m1 = Time/Month.marshal(month);
             Some(YearMonth(atMonth(x1, m1)))
         } catch {
             case _: ##java.lang.Exception => None

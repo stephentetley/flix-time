@@ -64,7 +64,7 @@ namespace Time/Format/TimeFormatter {
     
     pub def ofLocalizedTime(style: FormatStyle): TimeFormatter =
         import static java.time.format.DateTimeFormatter.ofLocalizedTime(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
-        let style1 = Time/Format/FormatStyle.toNative(style);
+        let style1 = Time/Format/FormatStyle.marshal(style);
         TimeFormatter(ofLocalizedTime(style1))
 
 

@@ -113,7 +113,7 @@ namespace Time/LocalDate {
 
     pub def ofWithMonth(r: {year :: Int32, month :: Month, dayOfMonth :: Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32): ##java.time.LocalDate & Pure;
-        let m1 = Time/Month.toNative(r.month);
+        let m1 = Time/Month.marshal(r.month);
         LocalDate(of(r.year, m1, r.dayOfMonth))
 
     /// TODO - potentially remove getFields...
@@ -298,10 +298,10 @@ namespace Time/LocalDate {
 
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
-        use Time/DayOfWeek.{fromNative};
+        use Time/DayOfWeek.{unmarshal};
         import java.time.LocalDate.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
         let LocalDate(x1) = x;
-        fromNative(getDayOfWeek(x1))
+        unmarshal(getDayOfWeek(x1))
 
     pub def getDayOfMonth(x: LocalDate): Int32 =
         import java.time.LocalDate.getDayOfMonth(): Int32 & Pure;
@@ -326,7 +326,7 @@ namespace Time/LocalDate {
     pub def getMonth(x: LocalDate): Month =
         import java.time.LocalDate.getMonth(): ##java.time.Month & Pure;
         let LocalDate(x1) = x;
-        Time/Month.fromNative(getMonth(x1))
+        Time/Month.unmarshal(getMonth(x1))
 
 
     pub def getMonthValue(x: LocalDate): Int32 =
@@ -354,7 +354,7 @@ namespace Time/LocalDate {
         import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let LocalDate(b1) = b;
         let LocalDate(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.toNative(unit);
+        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let te1 = e1 as ##java.time.temporal.Temporal;
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1)

@@ -80,7 +80,7 @@ namespace Time/MonthDay {
 
     pub def ofWithMonth(r: {month :: Month, dayOfMonth :: Int32}): MonthDay =
         import static java.time.MonthDay.of(##java.time.Month, Int32): ##java.time.MonthDay & Pure;
-        let m1 = Time/Month.toNative(r.month);
+        let m1 = Time/Month.marshal(r.month);
         MonthDay(of(m1, r.dayOfMonth))
 
     pub def now(): MonthDay & Impure =
@@ -150,15 +150,15 @@ namespace Time/MonthDay {
 
     pub def getMonth(x: MonthDay): Month =
         import java.time.MonthDay.getMonth(): ##java.time.Month & Pure;
-        use Time/Month.{fromNative};
+        use Time/Month.{unmarshal};
         let MonthDay(x1) = x;
-        fromNative(getMonth(x1))
+        unmarshal(getMonth(x1))
 
     pub def withMonth(x: MonthDay, month: Month): MonthDay =
         import java.time.MonthDay.with(##java.time.Month): ##java.time.MonthDay & Pure;
-        use Time/Month.{toNative};
+        use Time/Month.{marshal};
         let MonthDay(x1) = x;
-        let m1 = toNative(month);
+        let m1 = marshal(month);
         MonthDay(with(x1, m1))
 
     pub def getMonthValue(x: MonthDay): Int32 =

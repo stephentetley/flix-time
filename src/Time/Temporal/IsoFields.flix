@@ -106,19 +106,19 @@ namespace Time/Temporal/IsoFields {
         import java.time.temporal.TemporalField.getRangeUnit(): ##java.time.temporal.TemporalField & Pure;
         let IsoFields(x1) = x;
         let ans = getRangeUnit(x1) as ##java.time.temporal.ChronoUnit;
-        Time/Temporal/ChronoUnit.fromNative(ans)
+        Time/Temporal/ChronoUnit.unmarshal(ans)
         
     pub def getBaseUnit(x: IsoFields): ChronoUnit = 
         import java.time.temporal.TemporalField.getBaseUnit(): ##java.time.temporal.TemporalField & Pure;
         let IsoFields(x1) = x;
         let ans = getBaseUnit(x1) as ##java.time.temporal.ChronoUnit;
-        Time/Temporal/ChronoUnit.fromNative(ans)
+        Time/Temporal/ChronoUnit.unmarshal(ans)
 
     /// TODO needs corresponding function for every type that implements TemporalAccessor!
     pub def isSupportedByMonth(x: IsoFields, m: Month): Bool = 
         import java.time.temporal.TemporalField.isSupportedBy(##java.time.temporal.TemporalAccessor): Bool & Pure;
         let IsoFields(x1) = x;
-        let m1 = Time/Month.toNative(m);
+        let m1 = Time/Month.marshal(m);
         isSupportedBy(x1, m1 as ##java.time.temporal.TemporalAccessor)
 
     pub def isSupportedByYear(x: IsoFields, y: Year): Bool = 
@@ -131,7 +131,7 @@ namespace Time/Temporal/IsoFields {
     pub def getFromMonth(x: IsoFields, m: Month): Int64 = 
         import java.time.temporal.TemporalField.getFrom(##java.time.temporal.TemporalAccessor): Int64 & Pure;
         let IsoFields(x1) = x;
-        let m1 = Time/Month.toNative(m);
+        let m1 = Time/Month.marshal(m);
         getFrom(x1, m1 as ##java.time.temporal.TemporalAccessor)
 
     pub def getFromYear(x: IsoFields, y: Year): Int64 = 
@@ -144,7 +144,7 @@ namespace Time/Temporal/IsoFields {
     pub def rangeRefinedByMonth(x: IsoFields, m: Month): ValueRange = 
         import java.time.temporal.TemporalField.rangeRefinedBy(##java.time.temporal.TemporalAccessor): ##java.time.temporal.ValueRange & Pure;
         let IsoFields(x1) = x;
-        let m1 = Time/Month.toNative(m);
+        let m1 = Time/Month.marshal(m);
         ValueRange(rangeRefinedBy(x1, m1 as ##java.time.temporal.TemporalAccessor))
 
     pub def rangeRefinedByYear(x: IsoFields, y: Year): ValueRange = 

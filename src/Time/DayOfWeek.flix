@@ -23,7 +23,7 @@ namespace Time {
     ///
     /// Days are reprepresented as an enum from Monday to Sunday.
     ///
-    pub enum DayOfWeek {
+    pub enum DayOfWeek with Eq, Order, ToString, Boxable {
         case Monday
         case Tuesday
         case Wednesday
@@ -33,28 +33,20 @@ namespace Time {
         case Sunday
     }
 
-    instance ToString[DayOfWeek] {
-        pub def toString(x: DayOfWeek): String = match x {
-            case Monday => "Monday"
-            case Tuesday => "Tuesday"
-            case Wednesday => "Wednesday"
-            case Thursday => "Thursday"
-            case Friday => "Friday"
-            case Saturday => "Saturday"
-            case Sunday => "Sunday"
-        }
+    instance Hash[DayOfWeek] {
+        pub def hash(x: DayOfWeek): Int32 = Time/DayOfWeek.hashCode(x)
     }
 
     instance FromString[DayOfWeek] {
         pub def fromString(x: String): Option[DayOfWeek] = match x {
-            case "Monday" => Some(Monday)
-            case "Tuesday" => Some(Tuesday)
+            case "Monday"    => Some(Monday)
+            case "Tuesday"   => Some(Tuesday)
             case "Wednesday" => Some(Wednesday)
-            case "Thursday" => Some(Thursday)
-            case "Friday" => Some(Friday)
-            case "Saturday" => Some(Saturday)
-            case "Sunday" => Some(Sunday)
-            case _ => None
+            case "Thursday"  => Some(Thursday)
+            case "Friday"    => Some(Friday)
+            case "Saturday"  => Some(Saturday)
+            case "Sunday"    => Some(Sunday)
+            case _           => None
         }
     }
 
@@ -66,29 +58,7 @@ namespace Time {
         pub def maxValue(): DayOfWeek = Sunday
     }
 
-    instance Eq[DayOfWeek] {
-        pub def eq(x: DayOfWeek, y: DayOfWeek): Bool = match (x, y) {
-            case (Monday, Monday) => true
-            case (Tuesday, Tuesday) => true
-            case (Wednesday, Wednesday) => true
-            case (Thursday, Thursday) => true
-            case (Friday, Friday) => true
-            case (Saturday, Saturday) => true
-            case (Sunday, Sunday) => true
-            case (_, _) => false
-        }
-    }
 
-    instance Hash[DayOfWeek] {
-        pub def hash(x: DayOfWeek): Int32 = Time/DayOfWeek.hashCode(x)
-    }
-
-    instance Order[DayOfWeek] {
-        pub def compare(x: DayOfWeek, y: DayOfWeek): Comparison = 
-            Time/DayOfWeek.compareTo(x,y) |> Comparison.fromInt32
-    }
-
-    instance Boxable[DayOfWeek]
 
 }
 
@@ -131,65 +101,64 @@ namespace Time/DayOfWeek {
         case _ => None
     }
 
-    pub def toNative(x: DayOfWeek): ##java.time.DayOfWeek =
-        import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as getMONDAY;
-        import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek & Pure as getTUESDAY;
-        import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek & Pure as getWEDNESDAY;
-        import static get java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek & Pure as getTHURSDAY;
-        import static get java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek & Pure as getFRIDAY;
-        import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek & Pure as getSATURDAY;
-        import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek & Pure as getSUNDAY;
+    pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek =
+        import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as get_MONDAY;
+        import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek & Pure as get_TUESDAY;
+        import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek & Pure as get_WEDNESDAY;
+        import static get java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek & Pure as get_THURSDAY;
+        import static get java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek & Pure as get_FRIDAY;
+        import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek & Pure as get_SATURDAY;
+        import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek & Pure as get_SUNDAY;
         match x {
-            case Monday     => getMONDAY()
-            case Tuesday    => getTUESDAY()
-            case Wednesday  => getWEDNESDAY()
-            case Thursday   => getTHURSDAY()
-            case Friday     => getFRIDAY()
-            case Saturday   => getSATURDAY()
-            case Sunday     => getSUNDAY() 
+            case Monday     => get_MONDAY()
+            case Tuesday    => get_TUESDAY()
+            case Wednesday  => get_WEDNESDAY()
+            case Thursday   => get_THURSDAY()
+            case Friday     => get_FRIDAY()
+            case Saturday   => get_SATURDAY()
+            case Sunday     => get_SUNDAY() 
         }
 
     def primEquals(x: ##java.time.DayOfWeek, y: ##java.time.DayOfWeek): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Object;
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
 
-    pub def fromNative(x: ##java.time.DayOfWeek): Time.DayOfWeek =
-
-        import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as getMONDAY;
-        import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek & Pure as getTUESDAY;
-        import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek & Pure as getWEDNESDAY;
-        import static get java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek & Pure as getTHURSDAY;
-        import static get java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek & Pure  as getFRIDAY;
-        import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek & Pure as getSATURDAY;
-        import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek & Pure as getSUNDAY;
+    pub def unmarshal(x: ##java.time.DayOfWeek): Time.DayOfWeek =
+        import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as get_MONDAY;
+        import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek & Pure as get_TUESDAY;
+        import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek & Pure as get_WEDNESDAY;
+        import static get java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek & Pure as get_THURSDAY;
+        import static get java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek & Pure  as get_FRIDAY;
+        import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek & Pure as get_SATURDAY;
+        import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek & Pure as get_SUNDAY;
         match x {
-            case x1 if primEquals(x1, getMONDAY())      => Monday
-            case x1 if primEquals(x1, getTUESDAY())     => Tuesday
-            case x1 if primEquals(x1, getWEDNESDAY())   => Wednesday
-            case x1 if primEquals(x1, getTHURSDAY())    => Thursday
-            case x1 if primEquals(x1, getFRIDAY())      => Friday
-            case x1 if primEquals(x1, getSATURDAY())    => Saturday
-            case x1 if primEquals(x1, getSUNDAY())      => Sunday
+            case x1 if primEquals(x1, get_MONDAY())      => Monday
+            case x1 if primEquals(x1, get_TUESDAY())     => Tuesday
+            case x1 if primEquals(x1, get_WEDNESDAY())   => Wednesday
+            case x1 if primEquals(x1, get_THURSDAY())    => Thursday
+            case x1 if primEquals(x1, get_FRIDAY())      => Friday
+            case x1 if primEquals(x1, get_SATURDAY())    => Saturday
+            case x1 if primEquals(x1, get_SUNDAY())      => Sunday
         }
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
-        let x1 = toNative(x);
-        let s1 = Time/Format/TextStyle.toNative(style);
+        let x1 = marshal(x);
+        let s1 = Time/Format/TextStyle.marshal(style);
         let Locale(l1) = locale;
         getDisplayName(x1, s1, l1)
 
-    pub def getName(x: DayOfWeek): String =
+    pub def name(x: DayOfWeek): String =
         import java.lang.Enum.name(): String & Pure;
-        let en1 = toNative(x) as ##java.lang.Enum;
+        let en1 = marshal(x) as ##java.lang.Enum;
         name(en1)
 
     pub def hashCode(x: DayOfWeek): Int32 =
         import java.lang.Enum.hashCode(): Int32 & Pure;
-        let en1 = toNative(x) as ##java.lang.Enum;
+        let en1 = marshal(x) as ##java.lang.Enum;
         hashCode(en1)
 
 
@@ -197,21 +166,21 @@ namespace Time/DayOfWeek {
 
     pub def plus(x:DayOfWeek, y: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek & Pure;
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         let x2 = plus(x1, y);
-        fromNative(x2)
+        unmarshal(x2)
 
     pub def minus(x:DayOfWeek, y: Int64): DayOfWeek = 
         import java.time.DayOfWeek.minus(Int64): ##java.time.DayOfWeek & Pure;
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         let x2 = minus(x1, y);
-        fromNative(x2)
+        unmarshal(x2)
 
 
     pub def range(x: DayOfWeek): ValueRange = 
         import java.time.DayOfWeek.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-        let x1 = toNative(x);
-        let field1 = Time/Temporal/ChronoField.toNative(Time/Temporal/ChronoField.DayOfWeek);
+        let x1 = marshal(x);
+        let field1 = Time/Temporal/ChronoField.marshal(Time/Temporal/ChronoField.DayOfWeek);
         ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField))
 
 }

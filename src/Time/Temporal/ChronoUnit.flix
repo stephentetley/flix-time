@@ -167,7 +167,7 @@ namespace Time/Temporal/ChronoUnit {
         case _ =>   None
     }
 
-    pub def toNative(x: ChronoUnit): ##java.time.temporal.ChronoUnit =
+    pub def marshal(x: ChronoUnit): ##java.time.temporal.ChronoUnit =
         import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;
         import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as getMICROS;
         import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as getMILLIS;
@@ -204,12 +204,12 @@ namespace Time/Temporal/ChronoUnit {
         }
 
     def primEquals(x: ##java.time.temporal.ChronoUnit, y: ##java.time.temporal.ChronoUnit): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Object;
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
-    pub def fromNative(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
+    pub def unmarshal(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
         import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;
         import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as getMICROS;
         import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as getMILLIS;
@@ -249,34 +249,34 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def hashCode(x: ChronoUnit): Int32 =
         import java.lang.Enum.hashCode(): Int32 & Pure;
-        let en1 = toNative(x) as ##java.lang.Enum;
+        let en1 = marshal(x) as ##java.lang.Enum;
         hashCode(en1)
 
     pub def compareTo(x: ChronoUnit, y: ChronoUnit): Int32 =
         import java.lang.Enum.compareTo(##java.lang.Enum): Int32 & Pure;
-        let x1 = toNative(x) as ##java.lang.Enum;
-        let y1 = toNative(y) as ##java.lang.Enum;
+        let x1 = marshal(x) as ##java.lang.Enum;
+        let y1 = marshal(y) as ##java.lang.Enum;
         compareTo(x1, y1)
 
 /*
     pub def getDuration(x: ChronoUnit): Duration =
         import java.time.temporal.ChronoUnit.getDuration();
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         Duration(getDuration(x1)) as & Pure
 
     pub def isDurationEstimated(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isDurationEstimated();
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         isDurationEstimated(x1) as & Pure
 
     pub def isDateBased(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isDateBased();
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         isDateBased(x1) as & Pure
 
     pub def isTimeBased(x: ChronoUnit): Bool =
         import java.time.temporal.ChronoUnit.isTimeBased();
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         isTimeBased(x1) as & Pure
 */
 

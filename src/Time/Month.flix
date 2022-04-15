@@ -137,7 +137,7 @@ namespace Time/Month {
         case _  => December
     }
 
-    pub def toNative(x: Month): ##java.time.Month =
+    pub def marshal(x: Month): ##java.time.Month =
         import static get java.time.Month.JANUARY: ##java.time.Month & Pure as getJANUARY;
         import static get java.time.Month.FEBRUARY: ##java.time.Month & Pure as getFEBRUARY;
         import static get java.time.Month.MARCH: ##java.time.Month & Pure as getMARCH;
@@ -166,12 +166,12 @@ namespace Time/Month {
         }
 
     def primEquals(x: ##java.time.Month, y: ##java.time.Month): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Object;
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
-    pub def fromNative(x: ##java.time.Month): Month =
+    pub def unmarshal(x: ##java.time.Month): Month =
         import static get java.time.Month.JANUARY: ##java.time.Month & Pure as getJANUARY;
         import static get java.time.Month.FEBRUARY: ##java.time.Month & Pure as getFEBRUARY;
         import static get java.time.Month.MARCH: ##java.time.Month & Pure as getMARCH;
@@ -202,39 +202,39 @@ namespace Time/Month {
 
     pub def getDisplayName(x: Month, style: TextStyle, locale: Locale): String =
         import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
-        let x1 = toNative(x);
-        let s1 = Time/Format/TextStyle.toNative(style);
+        let x1 = marshal(x);
+        let s1 = Time/Format/TextStyle.marshal(style);
         let Locale(l1) = locale;
         getDisplayName(x1, s1, l1)
 
     pub def getName(x: Month): String =
         import java.lang.Enum.name(): String & Pure;
-        let en1 = toNative(x) as ##java.lang.Enum;
+        let en1 = marshal(x) as ##java.lang.Enum;
         name(en1)
 
 
     pub def hashCode(x: Month): Int32 =
         import java.lang.Enum.hashCode(): Int32 & Pure;
-        let en1 = toNative(x) as ##java.lang.Enum;
+        let en1 = marshal(x) as ##java.lang.Enum;
         hashCode(en1)
 
     pub def compareTo(x: Month, y: Month): Int32 =
         import java.lang.Enum.compareTo(##java.lang.Enum): Int32 & Pure;
-        let x1 = toNative(x) as ##java.lang.Enum;
-        let y1 = toNative(y) as ##java.lang.Enum;
+        let x1 = marshal(x) as ##java.lang.Enum;
+        let y1 = marshal(y) as ##java.lang.Enum;
         compareTo(x1, y1)
 
 
     pub def plus(x:Month, y: Int64): Month =
         import java.time.Month.plus(Int64): ##java.time.Month & Pure;
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         let x2 = plus(x1, y);
-        fromNative(x2)
+        unmarshal(x2)
 
     pub def minus(x:Month, y: Int64): Month =
         import java.time.Month.minus(Int64): ##java.time.Month & Pure;
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         let x2 = minus(x1, y);
-        fromNative(x2)
+        unmarshal(x2)
 
 }

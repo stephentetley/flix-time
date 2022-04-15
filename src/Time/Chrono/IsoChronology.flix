@@ -45,7 +45,7 @@ namespace Time/Chrono/IsoChronology {
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
         import java.time.chrono.IsoChronology.eraOf(Int32): ##java.time.chrono.IsoEra & Pure;
         let IsoChronology(x1) = x;
-        Time/Chrono/IsoEra.fromNative(eraOf(x1, i))
+        Time/Chrono/IsoEra.unmarshal(eraOf(x1, i))
 
     pub def getId(x: IsoChronology): String = 
         import java.time.chrono.IsoChronology.getId(): String & Pure;

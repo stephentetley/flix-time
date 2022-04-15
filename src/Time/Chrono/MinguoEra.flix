@@ -40,7 +40,7 @@ namespace Time/Chrono/MinguoEra {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
 
-    pub def toNative(x: MinguoEra): ##java.time.chrono.MinguoEra = 
+    pub def marshal(x: MinguoEra): ##java.time.chrono.MinguoEra = 
         import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra & Pure as getBEFORE_ROC;
         import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra & Pure as getROC;
         match x {
@@ -49,12 +49,12 @@ namespace Time/Chrono/MinguoEra {
         }
 
     def primEquals(x: ##java.time.chrono.MinguoEra, y: ##java.time.chrono.MinguoEra): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Object;
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
-    pub def fromNative(x: ##java.time.chrono.MinguoEra): MinguoEra =
+    pub def unmarshal(x: ##java.time.chrono.MinguoEra): MinguoEra =
         import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra & Pure as getBEFORE_ROC;
         import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra & Pure as getROC;
         match x {
@@ -64,28 +64,28 @@ namespace Time/Chrono/MinguoEra {
 
     pub def getValue(x: MinguoEra): Int32 = 
         import java.time.chrono.MinguoEra.getValue(): Int32 & Pure;
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         getValue(x1)
 
 
     pub def hashCode(x: MinguoEra): Int32 =
         import java.lang.Enum.hashCode(): Int32 & Pure;
-        let en1 = toNative(x) as ##java.lang.Enum;
+        let en1 = marshal(x) as ##java.lang.Enum;
         hashCode(en1)
 
 
     /// 
     pub def getDisplayName(x: MinguoEra, style: TextStyle, locale: Locale): String = 
         import java.time.chrono.MinguoEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
-        let x1 = toNative(x);
-        let style1 = Time/Format/TextStyle.toNative(style);
+        let x1 = marshal(x);
+        let style1 = Time/Format/TextStyle.marshal(style);
         let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1)
         
     pub def range(x: MinguoEra, field: ChronoField): ValueRange = 
         import java.time.chrono.Era.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-        let x1 = toNative(x) as ##java.time.chrono.Era;
-        let field1 = Time/Temporal/ChronoField.toNative(field) as ##java.time.temporal.TemporalField;
+        let x1 = marshal(x) as ##java.time.chrono.Era;
+        let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
         ValueRange(range(x1, field1))
 
 }

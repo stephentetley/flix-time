@@ -36,7 +36,7 @@ namespace Time/Format/TextStyle {
     use Time.Error.{IllegalArgumentException};
 
 
-    pub def toNative(x: TextStyle): ##java.time.format.TextStyle = 
+    pub def marshal(x: TextStyle): ##java.time.format.TextStyle = 
         import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle & Pure as getFULL;
         import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle & Pure as getFULL_STANDALONE;
         import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle & Pure as getNARROW;
@@ -53,12 +53,12 @@ namespace Time/Format/TextStyle {
         }
 
     def primEquals(x: ##java.time.format.TextStyle, y: ##java.time.format.TextStyle): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Object;
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
-    pub def fromNative(x: ##java.time.format.TextStyle): TextStyle = 
+    pub def unmarshal(x: ##java.time.format.TextStyle): TextStyle = 
         import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle & Pure as getFULL;
         import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle & Pure as getFULL_STANDALONE;
         import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle & Pure as getNARROW;
@@ -77,17 +77,17 @@ namespace Time/Format/TextStyle {
     
     pub def asStandalone(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asStandalone(): ##java.time.format.TextStyle & Pure;
-        let x1 = toNative(x);
-        fromNative(asStandalone(x1))
+        let x1 = marshal(x);
+        unmarshal(asStandalone(x1))
     
     pub def asNormal(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asNormal(): ##java.time.format.TextStyle & Pure;
-        let x1 = toNative(x);
-        fromNative(asNormal(x1))
+        let x1 = marshal(x);
+        unmarshal(asNormal(x1))
 
     pub def isStandalone(x: TextStyle): Bool =
         import java.time.format.TextStyle.isStandalone(): Bool & Pure;
-        let x1 = toNative(x);
+        let x1 = marshal(x);
         isStandalone(x1)
 
 }

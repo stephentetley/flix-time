@@ -76,13 +76,13 @@ namespace Time/Format/DateTimeFormatter {
     
     pub def ofLocalizedDateTime(style: FormatStyle): DateTimeFormatter =
         import static java.time.format.DateTimeFormatter.ofLocalizedDateTime(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
-        let style1 = Time/Format/FormatStyle.toNative(style);
+        let style1 = Time/Format/FormatStyle.marshal(style);
         DateTimeFormatter(ofLocalizedDateTime(style1))
 
     pub def ofLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter =
         import static java.time.format.DateTimeFormatter.ofLocalizedDateTime(##java.time.format.FormatStyle, ##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
-        let d1 = Time/Format/FormatStyle.toNative(dateStyle);
-        let t1 = Time/Format/FormatStyle.toNative(timeStyle);
+        let d1 = Time/Format/FormatStyle.marshal(dateStyle);
+        let t1 = Time/Format/FormatStyle.marshal(timeStyle);
         DateTimeFormatter(ofLocalizedDateTime(d1, t1))
 
 
@@ -121,7 +121,7 @@ namespace Time/Format/DateTimeFormatter {
     pub def withResolverStyle(x: DateTimeFormatter, style: ResolverStyle): DateTimeFormatter =
         import java.time.format.DateTimeFormatter.withResolverStyle(##java.time.format.ResolverStyle): ##java.time.format.DateTimeFormatter & Pure;
         let DateTimeFormatter(x1) = x;
-        let style1 = Time/Format/ResolverStyle.toNative(style);
+        let style1 = Time/Format/ResolverStyle.marshal(style);
         DateTimeFormatter(withResolverStyle(x1, style1))
 
 }
