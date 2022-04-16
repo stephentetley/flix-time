@@ -40,10 +40,9 @@ namespace Time {
     ///
     instance FromString[OffsetTime] {
         pub def fromString(s: String): Option[OffsetTime] =
-            import java.lang.String.strip(): String & Pure;
             import static java.time.OffsetTime.parse(##java.lang.CharSequence): ##java.time.OffsetTime & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence;
+                let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(OffsetTime(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -84,8 +83,9 @@ namespace Time/OffsetTime {
 
     use Time.OffsetTime;
     use Time.OffsetTime.{OffsetTime};
-    use Time/Format.TimeFormatter;
-    use Time/Format.TimeFormatter.{TimeFormatter};
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Format.TimeFormat;
     use Time.Instant;
     use Time.Instant.{Instant};
     use Time.LocalTime;
@@ -142,10 +142,10 @@ namespace Time/OffsetTime {
     ///
     /// Returns OffsetTime `x` as a String using `formatter`.
     ///
-    pub def format(formatter: TimeFormatter, x: OffsetTime): String =
+    pub def format(formatter: DateTimeFormatter[TimeFormat], x: OffsetTime): String =
         import java.time.OffsetTime.format(##java.time.format.DateTimeFormatter): String & Pure;
         let OffsetTime(x1) = x;
-        let TimeFormatter(fmtr) = formatter;
+        let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
     ///
@@ -154,12 +154,11 @@ namespace Time/OffsetTime {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(formatter: TimeFormatter, s: String): Option[OffsetTime] =
-        import java.lang.String.strip(): String & Pure;
+    pub def parse(formatter: DateTimeFormatter[TimeFormat], s: String): Option[OffsetTime] =
         import static java.time.OffsetTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.OffsetTime & Pure;
         try {
-            let TimeFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence;
+            let DateTimeFormatter(fmtr) = formatter;
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(OffsetTime(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None

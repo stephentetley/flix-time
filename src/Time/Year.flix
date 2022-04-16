@@ -37,10 +37,9 @@ namespace Time {
     ///
     instance FromString[Year] {
         pub def fromString(s: String): Option[Year] =
-            import java.lang.String.strip(): String & Pure;
             import static java.time.Year.parse(##java.lang.CharSequence): ##java.time.Year & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence;
+                let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(Year(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -81,8 +80,9 @@ namespace Time/Year {
     use Time.Year;
     use Time.Year.{Year};
 
-    use Time/Format.DateFormatter;
-    use Time/Format.DateFormatter.{DateFormatter};
+    use Time/Format.DateFormat;
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time.Clock;
     use Time.Clock.{Clock};
     use Time.LocalDate;
@@ -125,12 +125,11 @@ namespace Time/Year {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(formatter: DateFormatter, s: String): Option[Year] =
-        import java.lang.String.strip(): String & Pure;
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Option[Year] =
         import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.Year & Pure;
         try {
-            let DateFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence;
+            let DateTimeFormatter(fmtr) = formatter;
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(Year(parse(cs, fmtr)))
         } catch {
             case _: ##java.lang.Exception => None
@@ -139,10 +138,10 @@ namespace Time/Year {
     ///
     /// Returns the Year `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateFormatter, x: Year): String =
+    pub def format(formatter: DateTimeFormatter[DateFormat], x: Year): String =
         import java.time.Year.format(##java.time.format.DateTimeFormatter): String & Pure;
         let Year(x1) = x;
-        let DateFormatter(fmtr) = formatter;
+        let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
     pub def equals(x: Year, y: Year): Bool =

@@ -42,10 +42,9 @@ namespace Time {
     ///
     instance FromString[ZInstant] {
         pub def fromString(s: String): Option[ZInstant] =
-            import java.lang.String.strip(): String & Pure;
             import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence;
+                let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(ZInstant(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None

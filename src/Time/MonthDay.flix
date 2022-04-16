@@ -36,9 +36,8 @@ namespace Time {
     ///
     instance FromString[MonthDay] {
         pub def fromString(s: String): Option[MonthDay] = try {
-            import java.lang.String.strip(): String & Pure;
             import static java.time.MonthDay.parse(##java.lang.CharSequence): ##java.time.MonthDay & Pure;
-            let cs = strip(s) as ##java.lang.CharSequence;
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(MonthDay(parse(cs)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
@@ -62,8 +61,9 @@ namespace Time {
 
 namespace Time/MonthDay {
 
-    use Time/Format.DateFormatter;
-    use Time/Format.DateFormatter.{DateFormatter};
+    use Time/Format.DateFormat;
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time.Month;
     use Time.MonthDay;
     use Time.MonthDay.{MonthDay};
@@ -95,10 +95,10 @@ namespace Time/MonthDay {
     ///
     /// Returns MonthDay `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateFormatter, x: MonthDay): String =
+    pub def format(formatter: DateTimeFormatter[DateFormat], x: MonthDay): String =
         import java.time.MonthDay.format(##java.time.format.DateTimeFormatter): String & Pure;
         let MonthDay(x1) = x;
-        let DateFormatter(fmtr) = formatter;
+        let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
     ///
@@ -107,12 +107,11 @@ namespace Time/MonthDay {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(formatter: DateFormatter, s: String): Option[MonthDay] =
-        import java.lang.String.strip(): String & Pure;
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Option[MonthDay] =
         import static java.time.MonthDay.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.MonthDay & Pure;
         try {
-            let DateFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence;
+            let DateTimeFormatter(fmtr) = formatter;
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(MonthDay(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None

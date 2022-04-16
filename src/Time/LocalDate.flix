@@ -40,10 +40,9 @@ namespace Time {
     ///
     instance FromString[LocalDate] {
         pub def fromString(s: String): Option[LocalDate] =
-            import java.lang.String.strip(): String & Pure;
             import static java.time.LocalDate.parse(##java.lang.CharSequence): ##java.time.LocalDate & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence;
+                let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(LocalDate(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -84,8 +83,9 @@ namespace Time/LocalDate {
 
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
-    use Time/Format.DateFormatter;
-    use Time/Format.DateFormatter.{DateFormatter};
+    use Time/Format.DateFormat;
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Temporal.ChronoUnit;
     use Time.DayOfWeek;
     use Time.LocalDateTime;
@@ -101,6 +101,8 @@ namespace Time/LocalDate {
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
+    use Time.ZInstant;
+    use Time.ZInstant.{ZInstant};
 
 
     pub def getLocalDate(x: LocalDate): ##java.time.LocalDate = 
@@ -169,13 +171,13 @@ namespace Time/LocalDate {
         let OffsetTime(t1) = t;
         OffsetDateTime(atTime(x1, t1))
 
-/*
-    pub def ofInstant(x: Instant, zoneId: ZoneId): LocalDate =
-        import static java.time.LocalDate.ofInstant(##java.time.Instant, ##java.time.ZoneId);
-        let Instant(x1) = x;
+
+    pub def ofInstant(x: ZInstant, zoneId: ZoneId): LocalDate =
+        import static java.time.LocalDate.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDate & Pure;
+        let ZInstant(x1) = x;
         let ZoneId(z1) = zoneId;
-        LocalDate(ofInstant(x1, z1)) as & Pure
-*/
+        LocalDate(ofInstant(x1, z1))
+
 
     ///
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
@@ -183,12 +185,11 @@ namespace Time/LocalDate {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(formatter: DateFormatter, s: String): Option[LocalDate] =
-        import java.lang.String.strip(): String & Pure;
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Option[LocalDate] =
         import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate & Pure;
         try {
-            let DateFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence;
+            let DateTimeFormatter(fmtr) = formatter;
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(LocalDate(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
@@ -197,10 +198,10 @@ namespace Time/LocalDate {
     ///
     /// Returns LocalDate `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateFormatter, x: LocalDate): String =
+    pub def format(formatter: DateTimeFormatter[DateFormat], x: LocalDate): String =
         import java.time.LocalDate.format(##java.time.format.DateTimeFormatter): String & Pure;
         let LocalDate(x1) = x;
-        let DateFormatter(fmtr) = formatter;
+        let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
     pub def equals(x: LocalDate, y: LocalDate): Bool =

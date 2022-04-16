@@ -44,10 +44,9 @@ namespace Time {
     ///
     instance FromString[ZDuration] {
         pub def fromString(s: String): Option[ZDuration] =
-            import java.lang.String.strip(): String & Pure;
             import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence;
+                let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(ZDuration(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None

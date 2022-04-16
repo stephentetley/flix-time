@@ -39,10 +39,9 @@ namespace Time {
     ///
     instance FromString[OffsetDateTime] {
         pub def fromString(s: String): Option[OffsetDateTime] =
-            import java.lang.String.strip(): String & Pure;
             import static java.time.OffsetDateTime.parse(##java.lang.CharSequence): ##java.time.OffsetDateTime & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence;
+                let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(OffsetDateTime(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -234,11 +233,10 @@ namespace Time/OffsetDateTime {
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `None`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Option[OffsetDateTime] =
-        import java.lang.String.strip(): String & Pure;
         import static java.time.OffsetDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.OffsetDateTime & Pure;
         try {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence;
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(OffsetDateTime(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None

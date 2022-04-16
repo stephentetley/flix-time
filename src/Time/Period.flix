@@ -39,10 +39,9 @@ namespace Time {
     ///
     instance FromString[Period] {
         pub def fromString(s: String): Option[Period] =
-            import java.lang.String.strip(): String & Pure;
             import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence;
+                let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(Period(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None

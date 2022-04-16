@@ -40,10 +40,9 @@ namespace Time {
     ///
     instance FromString[LocalTime] {
         pub def fromString(s: String): Option[LocalTime] =
-            import java.lang.String.strip(): String & Pure;
             import static java.time.LocalTime.parse(##java.lang.CharSequence): ##java.time.LocalTime & Pure;
             try {
-                let cs = strip(s) as ##java.lang.CharSequence;
+                let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(LocalTime(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -84,8 +83,9 @@ namespace Time/LocalTime {
 
     use Time.Instant;
     use Time.Instant.{Instant};
-    use Time/Format.TimeFormatter;
-    use Time/Format.TimeFormatter.{TimeFormatter};
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Format.TimeFormat;
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.ZoneId;
@@ -173,10 +173,10 @@ namespace Time/LocalTime {
     ///
     /// Returns the given LocalTime `x` as a String using `formatter`.
     ///
-    pub def format(formatter: TimeFormatter, x: LocalTime): String =
+    pub def format(formatter: DateTimeFormatter[TimeFormat], x: LocalTime): String =
         import java.time.LocalTime.format(##java.time.format.DateTimeFormatter): String & Pure;
         let LocalTime(x1) = x;
-        let TimeFormatter(fmtr) = formatter;
+        let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
     
@@ -185,12 +185,11 @@ namespace Time/LocalTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: TimeFormatter, s: String): Option[LocalTime] =
-        import java.lang.String.strip(): String & Pure;
+    pub def parse(formatter: DateTimeFormatter[TimeFormat], s: String): Option[LocalTime] =
         import static java.time.LocalTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalTime & Pure;
         try {
-            let TimeFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence;
+            let DateTimeFormatter(fmtr) = formatter;
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(LocalTime(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None

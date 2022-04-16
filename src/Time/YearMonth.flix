@@ -36,10 +36,10 @@ namespace Time {
     /// Returns the year ...
     ///
     instance FromString[YearMonth] {
-        pub def fromString(s: String): Option[YearMonth] = try {
-            import java.lang.String.strip(): String & Pure;
-            import static java.time.YearMonth.parse(##java.lang.CharSequence): ##java.time.YearMonth & Pure;
-            let cs = strip(s) as ##java.lang.CharSequence;
+        pub def fromString(s: String): Option[YearMonth] = 
+        import static java.time.YearMonth.parse(##java.lang.CharSequence): ##java.time.YearMonth & Pure;        
+        try {
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(YearMonth(parse(cs)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
@@ -64,8 +64,9 @@ namespace Time {
 
 namespace Time/YearMonth {
 
-    use Time/Format.DateFormatter;
-    use Time/Format.DateFormatter.{DateFormatter};
+    use Time/Format.DateFormat;
+    use Time/Format.DateTimeFormatter;
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time.Month;
     use Time.YearMonth;
     use Time.YearMonth.{YearMonth};
@@ -93,10 +94,10 @@ namespace Time/YearMonth {
     ///
     /// Returns YearMonth `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateFormatter, x: YearMonth): String =
+    pub def format(formatter: DateTimeFormatter[DateFormat], x: YearMonth): String =
         import java.time.YearMonth.format(##java.time.format.DateTimeFormatter): String & Pure;
         let YearMonth(x1) = x;
-        let DateFormatter(fmtr) = formatter;
+        let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
     ///
@@ -105,12 +106,11 @@ namespace Time/YearMonth {
     ///
     /// A successful parse is wrapped with `Some(_)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(formatter: DateFormatter, s: String): Option[YearMonth] =
-        import java.lang.String.strip(): String & Pure;
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Option[YearMonth] =
         import static java.time.YearMonth.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.YearMonth & Pure;
         try {
-            let DateFormatter(fmtr) = formatter;
-            let cs = strip(s) as ##java.lang.CharSequence;
+            let DateTimeFormatter(fmtr) = formatter;
+            let cs = String.trim(s) as ##java.lang.CharSequence;
             Some(YearMonth(parse(cs, fmtr)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
