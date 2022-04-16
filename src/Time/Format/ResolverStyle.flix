@@ -16,7 +16,7 @@
 
 namespace Time/Format {
 
-    pub enum ResolverStyle with Eq, Order, ToString {
+    pub enum ResolverStyle with Eq, Order, ToString, Hash, Boxable {
         case Lenient
         case Smart
         case Strict

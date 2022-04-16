@@ -17,7 +17,7 @@
 namespace Time/Format {
 
 
-    pub enum FormatStyle with Eq, Order, ToString{
+    pub enum FormatStyle with Eq, Order, ToString, Hash, Boxable {
         case Full
         case Long
         case Medium
