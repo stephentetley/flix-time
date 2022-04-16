@@ -23,7 +23,7 @@ namespace Time {
     ///
     /// Days are reprepresented as an enum from Monday to Sunday.
     ///
-    pub enum DayOfWeek with Eq, Order, ToString, Boxable {
+    pub enum DayOfWeek with Eq, Order, ToString, Hash, Boxable {
         case Monday
         case Tuesday
         case Wednesday
@@ -31,10 +31,6 @@ namespace Time {
         case Friday
         case Saturday
         case Sunday
-    }
-
-    instance Hash[DayOfWeek] {
-        pub def hash(x: DayOfWeek): Int32 = Time/DayOfWeek.hashCode(x)
     }
 
     instance FromString[DayOfWeek] {
@@ -72,6 +68,23 @@ namespace Time/DayOfWeek {
     use Time/Format.TextStyle;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
+
+    /// 1 (Monday) to 7 (Sunday)
+    pub def of(i: Int32): Option[DayOfWeek] = match i {
+        case 1 => Some(Monday)
+        case 2 => Some(Tuesday)
+        case 3 => Some(Wednesday)
+        case 4 => Some(Thursday)
+        case 5 => Some(Friday)
+        case 6 => Some(Saturday)
+        case 7 => Some(Sunday)
+        case _ => None
+    }
+
+
+    /// `from` to work out...
+    /// Cannot get DayOfWeek from MonthDay (obviously)
+    /// Can get DayOfWeek from LocalDate
 
 
     /// 
@@ -156,13 +169,13 @@ namespace Time/DayOfWeek {
         let en1 = marshal(x) as ##java.lang.Enum;
         name(en1)
 
-    pub def hashCode(x: DayOfWeek): Int32 =
-        import java.lang.Enum.hashCode(): Int32 & Pure;
-        let en1 = marshal(x) as ##java.lang.Enum;
-        hashCode(en1)
+    /// pub def hashCode(x: DayOfWeek): Int32 =
+    ///     import java.lang.Enum.hashCode(): Int32 & Pure;
+    ///     let en1 = marshal(x) as ##java.lang.Enum;
+    ///     hashCode(en1)
 
 
-    pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Int32.compare(fromEnum(x), fromEnum(y))
+    pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Order.compare(x, y) |> Comparison.toInt 
 
     pub def plus(x:DayOfWeek, y: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek & Pure;
