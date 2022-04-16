@@ -15,10 +15,6 @@
  */
 
 
-/// DEPRECATED
-/// It is planned to replace this with direct functions see Year.
-/// This will remove the problem that not all ChronoUnits in the enum work for
-/// operations on a given type.
 
 namespace Time/Temporal {
 
@@ -41,26 +37,6 @@ namespace Time/Temporal {
         case Forever
     }
 
-    instance ToString[ChronoUnit] {
-        pub def toString(x: ChronoUnit): String = match x {
-            case Nanos => "Nanos"
-            case Micros => "Micros"
-            case Millis => "Millis"
-            case Seconds => "Seconds"
-            case Minutes => "Minutes"
-            case Hours => "Hours"
-            case HalfDays => "HalfDays"
-            case Days => "Days"
-            case Weeks => "Weeks"
-            case Months => "Months"
-            case Years => "Years"
-            case Decades => "Decades"
-            case Centuries => "Centuries"
-            case Millennia => "Millennia"
-            case Eras => "Eras"
-            case Forever => "Forever"
-        }
-    }
 
     instance FromString[ChronoUnit] {
         pub def fromString(x: String): Option[ChronoUnit] = match x {

@@ -17,7 +17,7 @@
 
 namespace Time/Temporal {
 
-    pub enum ChronoField {
+    pub enum ChronoField with Eq, Order, ToString, Hash, Boxable {
         case NanoOfSecond
         case NanoOfDay
         case MicroOfSecond
@@ -48,41 +48,6 @@ namespace Time/Temporal {
         case Era
         case InstantSeconds
         case OffsetSeconds
-    }
-
-    instance ToString[ChronoField] {
-        pub def toString(x: ChronoField): String = match x {
-            case NanoOfSecond => "NanoOfSecond"
-            case NanoOfDay => "NanoOfDay"
-            case MicroOfSecond => "MicroOfSecond"
-            case MicroOfDay => "MicroOfDay"
-            case MilliOfSecond => "MilliOfSecond"
-            case MilliOfDay => "MilliOfDay"
-            case SecondOfMinute => "SecondOfMinute"
-            case SecondOfDay => "SecondOfDay"
-            case MinuteOfHour => "MinuteOfHour"
-            case MinuteOfDay => "MinuteOfDay"
-            case HourOfAmPm => "HourOfAmPm"
-            case ClockHourOfAmPm => "ClockHourOfAmPm"
-            case HourOfDay => "HourOfDay"
-            case ClockHourOfDay => "ClockHourOfDay"
-            case AmPmOfDay => "AmPmOfDay"
-            case DayOfWeek => "DayOfWeek"
-            case AlignedDayOfWeekInMonth => "AlignedDayOfWeekInMonth"
-            case AlignedDayOfWeekInYear => "AlignedDayOfWeekInYear"
-            case DayOfMonth => "DayOfMonth"
-            case DayOfYear => "DayOfYear"
-            case EpochDay => "EpochDay"
-            case AlignedWeekOfMonth => "AlignedWeekOfMonth"
-            case AlignedWeekOfYear => "AlignedWeekOfYear"
-            case MonthOfYear => "MonthOfYear"
-            case ProlepticMonth => "ProlepticMonth"
-            case YearOfEra => "YearOfEra"
-            case Year => "Year"
-            case Era => "Era"
-            case InstantSeconds => "InstantSeconds"
-            case OffsetSeconds => "OffsetSeconds"
-        }
     }
 
     instance FromString[ChronoField] {
@@ -121,50 +86,6 @@ namespace Time/Temporal {
         }
     }
 
-    instance Eq[ChronoField] {
-        pub def eq(x: ChronoField, y: ChronoField): Bool = match (x,y) {
-            case (NanoOfSecond, NanoOfSecond) => true
-            case (NanoOfDay, NanoOfDay) => true
-            case (MicroOfSecond, MicroOfSecond) => true
-            case (MicroOfDay, MicroOfDay) => true
-            case (MilliOfSecond, MilliOfSecond) => true
-            case (MilliOfDay, MilliOfDay) => true
-            case (SecondOfMinute, SecondOfMinute) => true
-            case (SecondOfDay, SecondOfDay) => true
-            case (MinuteOfHour, MinuteOfHour) => true
-            case (MinuteOfDay, MinuteOfDay) => true
-            case (HourOfAmPm, HourOfAmPm) => true
-            case (ClockHourOfAmPm, ClockHourOfAmPm) => true
-            case (HourOfDay, HourOfDay) => true
-            case (ClockHourOfDay, ClockHourOfDay) => true
-            case (AmPmOfDay, AmPmOfDay) => true
-            case (DayOfWeek, DayOfWeek) => true
-            case (AlignedDayOfWeekInMonth, AlignedDayOfWeekInMonth) => true
-            case (AlignedDayOfWeekInYear, AlignedDayOfWeekInYear) => true
-            case (DayOfMonth, DayOfMonth) => true
-            case (DayOfYear, DayOfYear) => true
-            case (EpochDay, EpochDay) => true
-            case (AlignedWeekOfMonth, AlignedWeekOfMonth) => true
-            case (AlignedWeekOfYear, AlignedWeekOfYear) => true
-            case (MonthOfYear, MonthOfYear) => true
-            case (ProlepticMonth, ProlepticMonth) => true
-            case (YearOfEra, YearOfEra) => true
-            case (Year, Year) => true
-            case (Era, Era) => true
-            case (InstantSeconds, InstantSeconds) => true
-            case (OffsetSeconds, OffsetSeconds) => true
-            case (_,_) => false
-        }
-    }
-
-    instance Hash[ChronoField] {
-        pub def hash(x: ChronoField): Int32 = Time/Temporal/ChronoField.hashCode(x)
-    }
-
-    instance Order[ChronoField] {
-        pub def compare(x: ChronoField, y: ChronoField): Comparison = 
-            Time/Temporal/ChronoField.compareTo(x,y) |> Comparison.fromInt32
-    }
 }
 
 namespace Time/Temporal/ChronoField {

@@ -49,14 +49,36 @@ namespace Time/Clock {
 
     use Time.Clock;
     use Time.Clock.{Clock};
-    use Time.Instant;
-    use Time.Instant.{Instant};
+    use Time.ZDuration;
+    use Time.ZDuration.{ZDuration};
+    use Time.ZInstant;
+    use Time.ZInstant.{ZInstant};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
     
     pub def getClock(x: Clock): ##java.time.Clock = 
         let Clock(x1) = x;
         x1
+
+    /// Pure or Impure?
+    pub def fixed(inst: ZInstant, zone: ZoneId): Clock =
+        import static java.time.Clock.fixed(##java.time.Instant, ##java.time.ZoneId): ##java.time.Clock & Pure;
+        let ZInstant(inst1) = inst;
+        let ZoneId(zone1) = zone;
+        Clock(fixed(inst1, zone1))
+
+    pub def offset(d: ZDuration, c: Clock): Clock & Impure =
+        import static java.time.Clock.offset(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
+        let ZDuration(d1) = d;
+        let Clock(c1) = c;
+        Clock(offset(c1, d1))
+
+    pub def tick(d: ZDuration, c: Clock): Clock & Impure =
+        import static java.time.Clock.tick(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
+        let ZDuration(d1) = d;
+        let Clock(c1) = c;
+        Clock(tick(c1, d1))
+
 
     pub def system(zone: ZoneId): Clock & Impure =
         import static java.time.Clock.system(##java.time.ZoneId): ##java.time.Clock & Impure;
@@ -89,10 +111,10 @@ namespace Time/Clock {
         let Clock(x1) = x;
         millis(x1)
 
-    pub def instant(x: Clock): Instant & Impure =
+    pub def instant(x: Clock): ZInstant & Impure =
         import java.time.Clock.instant(): ##java.time.Instant & Impure;
         let Clock(x1) = x;
-        Instant(instant(x1))
+        ZInstant(instant(x1))
 
 
     pub def tickMillis(zoneId: ZoneId): Clock & Impure =
@@ -115,11 +137,11 @@ namespace Time/Clock {
         import java.time.Clock.getZone(): ##java.time.ZoneId & Pure;
         ZoneId(getZone(getClock(c)))
 
-    pub def withZone(zone: {zone :: ZoneId}, x: Clock): Clock =
+    pub def withZone(zone: ZoneId, c: Clock): Clock =
         import java.time.Clock.withZone(##java.time.ZoneId): ##java.time.Clock & Pure;
-        let Clock(x1) = x;
-        Clock(withZone(x1, Time/ZoneId.getZoneId(zone.zone)))
+        let Clock(c1) = c;
+        Clock(withZone(c1, Time/ZoneId.getZoneId(zone)))
 
-    /// let c2 = withZone(zone = z1, clock);
+    
 
 }

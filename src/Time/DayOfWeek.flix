@@ -169,24 +169,25 @@ namespace Time/DayOfWeek {
         let en1 = marshal(x) as ##java.lang.Enum;
         name(en1)
 
-    /// pub def hashCode(x: DayOfWeek): Int32 =
-    ///     import java.lang.Enum.hashCode(): Int32 & Pure;
-    ///     let en1 = marshal(x) as ##java.lang.Enum;
-    ///     hashCode(en1)
+    pub def getValue(x: DayOfWeek): Int32 =
+        import java.time.DayOfWeek.getValue(): Int32 & Pure;
+        let en1 = marshal(x);
+        getValue(en1)
+
 
 
     pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Order.compare(x, y) |> Comparison.toInt 
 
-    pub def plus(x:DayOfWeek, y: Int64): DayOfWeek =
+    pub def plus(x:DayOfWeek, days: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek & Pure;
         let x1 = marshal(x);
-        let x2 = plus(x1, y);
+        let x2 = plus(x1, days);
         unmarshal(x2)
 
-    pub def minus(x:DayOfWeek, y: Int64): DayOfWeek = 
+    pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
         import java.time.DayOfWeek.minus(Int64): ##java.time.DayOfWeek & Pure;
         let x1 = marshal(x);
-        let x2 = minus(x1, y);
+        let x2 = minus(x1, days);
         unmarshal(x2)
 
 

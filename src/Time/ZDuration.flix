@@ -143,6 +143,16 @@ namespace Time/ZDuration {
         toDays(x1)
 
     ///
+    /// Do we want `toDays` and `toDaysPart` ?
+    ///
+    /// Return the number of days in Duration `x`.
+    ///
+    pub def toDaysPart(x: ZDuration): Int64 =
+        import java.time.Duration.toDaysPart(): Int64 & Pure;
+        let ZDuration(x1) = x;
+        toDaysPart(x1)
+
+    ///
     /// Construct a Duration from the supplied number of hours.
     ///
     pub def ofHours(hours: Int64): ZDuration =
@@ -219,7 +229,7 @@ namespace Time/ZDuration {
         toNanos(x1)
 
 
-    pub def ofChrono(x: Int64, unit: ChronoUnit): ZDuration =
+    pub def ofWithChronoUnit(x: Int64, unit: ChronoUnit): ZDuration =
         import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
         let u1 = Time/Temporal/ChronoUnit.marshal(unit);
         let tu1 = u1 as ##java.time.temporal.TemporalUnit;

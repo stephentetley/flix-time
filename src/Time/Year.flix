@@ -83,6 +83,7 @@ namespace Time/Year {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Temporal/TemporalUnit.TemporalUnit;
     use Time.Clock;
     use Time.Clock.{Clock};
     use Time.LocalDate;
@@ -257,36 +258,49 @@ namespace Time/Year {
         let Year(x1) = x;
         Year(minusYears(x1, yearsToSubtract))
 
+    pub def plusAmount(x: Year, r: {amount :: Int64, tempUnit :: t}): Year with TemporalUnit[t] =
+        import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         
+        try {
+            let Year(x1) = x;
+            let tempUnit1 = Time/Temporal/TemporalUnit/TemporalUnit.castToNativeTemporalUnit(r.tempUnit);
+            Year(plus(x1, r.amount, tempUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+/*
     pub def plusDecades(x: Year, i: Int64): Year =
-        let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
         plusHelper(x, i, unit)
 
     pub def minusDecades(x: Year, i: Int64): Year =
-        let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
         minusHelper(x, i, unit)
 
     pub def plusCenturies(x: Year, i: Int64): Year =
-        let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
         plusHelper(x, i, unit)
 
     pub def minusCenturies(x: Year, i: Int64): Year =
-        let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
         minusHelper(x, i, unit)
 
     pub def plusMillennia(x: Year, i: Int64): Year =
-        let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
         plusHelper(x, i, unit)
 
     pub def minusMillenia(x: Year, i: Int64): Year =
-        let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
         minusHelper(x, i, unit)
 
     pub def plusEras(x: Year, i: Int64): Year =
-        let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
         plusHelper(x, i, unit)
 
     pub def minusEras(x: Year, i: Int64): Year =
-        let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
         minusHelper(x, i, unit)
 
     def plusHelper(x: Year, amountToAdd: Int64, unit: ##java.time.temporal.TemporalUnit): Year =
@@ -300,23 +314,23 @@ namespace Time/Year {
         Year(minus(x1, amountToSubtract, unit))
 
     pub def yearsBetween(x: Year, y: Year): Int64 =
-        let unit = Time/Internal/ChronoUnit.getYEARS() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getYEARS() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
     pub def decadesBetween(x: Year, y: Year): Int64 =
-        let unit = Time/Internal/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
     pub def centuriesBetween(x: Year, y: Year): Int64 =
-        let unit = Time/Internal/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
     pub def millenniaBetween(x: Year, y: Year): Int64 =
-        let unit = Time/Internal/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
     pub def erasBetween(x: Year, y: Year): Int64 =
-        let unit = Time/Internal/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
+        let unit = Time/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
         betweenHelper(x, y, unit)
 
     def betweenHelper(x:Year, y: Year, unit: ##java.time.temporal.TemporalUnit): Int64 =
@@ -348,6 +362,6 @@ namespace Time/Year {
         import java.time.Year.with(##java.time.temporal.TemporalField, Int64): ##java.time.Year & Pure as withX;
         let Year(x1) = x;
         Year(withX(x1, field, i))
-
+*/
 
 }
