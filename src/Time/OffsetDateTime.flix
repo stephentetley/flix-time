@@ -82,6 +82,7 @@ namespace Time/OffsetDateTime {
 
     use Time.OffsetDateTime;
     use Time.OffsetDateTime.{OffsetDateTime};
+    use Time/Format.DateTimeFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Temporal.ChronoUnit;
@@ -220,7 +221,7 @@ namespace Time/OffsetDateTime {
     ///
     /// Returns OffsetDateTime `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter, x: OffsetDateTime): String =
+    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: OffsetDateTime): String =
         import java.time.OffsetDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
         let OffsetDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
@@ -232,7 +233,7 @@ namespace Time/OffsetDateTime {
     ///
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(formatter: DateTimeFormatter, s: String): Option[OffsetDateTime] =
+    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Option[OffsetDateTime] =
         import java.lang.String.strip(): String & Pure;
         import static java.time.OffsetDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.OffsetDateTime & Pure;
         try {

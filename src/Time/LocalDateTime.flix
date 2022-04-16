@@ -85,7 +85,10 @@ namespace Time/LocalDateTime {
     use Time.LocalDateTime.{LocalDateTime};
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Format.DateTimeFormat;
     use Time.DayOfWeek;
+    use Time.ZInstant;
+    use Time.ZInstant.{ZInstant};
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.LocalTime;
@@ -152,13 +155,12 @@ namespace Time/LocalDateTime {
         let ZoneOffset(o1) = offset;
         LocalDateTime(ofEpochSecond(epochSecond, nanoOfSecond, o1))
 
-/*
-    pub def ofInstant(x: Instant, zoneId: ZoneId): LocalDateTime =
-        import static java.time.LocalDateTime.ofInstant(##java.time.Instant, ##java.time.ZoneId);
-        let Instant(x1) = x;
+    pub def ofInstant(x: ZInstant, zoneId: ZoneId): LocalDateTime =
+        import static java.time.LocalDateTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDateTime & Pure;
+        let ZInstant(x1) = x;
         let ZoneId(z1) = zoneId;
-        LocalDateTime(ofInstant(x1, z1)) as & Pure
-*/
+        LocalDateTime(ofInstant(x1, z1))
+
 
     ///
     /// Returns the given date-time `x` as __.
@@ -181,7 +183,7 @@ namespace Time/LocalDateTime {
     ///
     /// Returns LocalDateTime `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter, x: LocalDateTime): String =
+    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: LocalDateTime): String =
         import java.time.LocalDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
         let LocalDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
@@ -193,7 +195,7 @@ namespace Time/LocalDateTime {
     ///
     /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(formatter: DateTimeFormatter, s: String): Option[LocalDateTime] =
+    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Option[LocalDateTime] =
         import java.lang.String.strip(): String & Pure;
         import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDateTime & Pure;
         try {

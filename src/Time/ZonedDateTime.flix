@@ -72,6 +72,7 @@ namespace Time/ZonedDateTime {
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Format.DateTimeFormat;
     use Time.DayOfWeek;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
@@ -148,7 +149,7 @@ namespace Time/ZonedDateTime {
     ///
     /// Returns ZonedDateTime `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter, x: ZonedDateTime): String =
+    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: ZonedDateTime): String =
         import java.time.ZonedDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
         let ZonedDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
@@ -160,7 +161,7 @@ namespace Time/ZonedDateTime {
     ///
     /// A successful parse is wrapped with `Some(_)`, a parse failure is indicated by `None`.
     ///
-    pub def parse(formatter: DateTimeFormatter, s: String): Option[ZonedDateTime] =
+    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Option[ZonedDateTime] =
         import java.lang.String.strip(): String & Pure;
         import static java.time.ZonedDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.ZonedDateTime & Pure;
         try {
