@@ -45,10 +45,10 @@ namespace Time/Zone/ZoneRules {
     use Time/Zone.ZoneRules.{ZoneRules};
     use Time/Zone.ZoneOffsetTransition;
     use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition};
-//    use Time.Duration;
-//    use Time.Duration.{Duration};
-//    use Time.Instant;
-//    use Time.Instant.{Instant};
+    use Time.ZDuration;
+    use Time.ZDuration.{ZDuration};
+    use Time.ZInstant;
+    use Time.ZInstant.{ZInstant};
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
     use Time.ZoneOffset;
@@ -74,12 +74,26 @@ namespace Time/Zone/ZoneRules {
         let ZoneRules(x1) = x;
         hashCode(x1)
 
+    pub def getOffset(inst: ZInstant, x: ZoneRules): ZoneOffset =
+        import java.time.zone.ZoneRules.getOffset(##java.time.Instant): ##java.time.ZoneOffset & Pure;
+        let ZoneRules(x1) = x;
+        let ZInstant(inst1) = inst;
+        ZoneOffset(getOffset(x1, inst1))
+
 
     pub def getOffsetWithLocalDateTime(ldt: LocalDateTime, x: ZoneRules): ZoneOffset =
         import java.time.zone.ZoneRules.getOffset(##java.time.LocalDateTime): ##java.time.ZoneOffset & Pure;
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
         ZoneOffset(getOffset(x1, ldt1))
+
+
+    pub def getStandardOffset(inst: ZInstant, x: ZoneRules): ZoneOffset =
+        import java.time.zone.ZoneRules.getStandardOffset(##java.time.Instant): ##java.time.ZoneOffset & Pure;
+        let ZoneRules(x1) = x;
+        let ZInstant(inst1) = inst;
+        ZoneOffset(getStandardOffset(x1, inst1))
+
 
     pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] =
         import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List & Pure;
@@ -88,19 +102,18 @@ namespace Time/Zone/ZoneRules {
         let xs = getValidOffsets(x1, ldt1);
         FlixSandbox/Marshal.unmarshalList(o -> ZoneOffset(o as ##java.time.ZoneOffset), xs) as & Pure
 
-/*
-    pub def getDaylightSavings(x: ZoneRules, instant: Instant): Duration =
-        import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant): ...;
+    pub def getDaylightSavings(instant: ZInstant, x: ZoneRules): ZDuration =
+        import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant): ##java.time.Duration & Pure;
         let ZoneRules(x1) = x;
-        let Instant(instant1) = instant;
-        Duration(getDaylightSavings(x1, instant1))
+        let ZInstant(instant1) = instant;
+        ZDuration(getDaylightSavings(x1, instant1))
 
-    pub def isDaylightSavings(x: ZoneRules, instant: Instant): Bool =
-        import java.time.zone.ZoneRules.isDaylightSavings(##java.time.Instant): ...;
+    pub def isDaylightSavings(instant: ZInstant, x: ZoneRules): Bool =
+        import java.time.zone.ZoneRules.isDaylightSavings(##java.time.Instant): Bool & Pure;
         let ZoneRules(x1) = x;
-        let Instant(instant1) = instant;
+        let ZInstant(instant1) = instant;
         isDaylightSavings(x1, instant1)
-*/
+
 
     pub def isValidOffset(ldt: LocalDateTime, offset: ZoneOffset, x: ZoneRules): Bool =
         import java.time.zone.ZoneRules.isValidOffset(##java.time.LocalDateTime, ##java.time.ZoneOffset): Bool & Pure;
@@ -109,12 +122,16 @@ namespace Time/Zone/ZoneRules {
         let ZoneOffset(offset1) = offset;
         isValidOffset(x1, ldt1, offset1)
 
-/*
-    pub def previousTransition(x: ZoneRules, instant: Instant): ZoneOffsetTransition =
-        import java.time.zone.ZoneRules.previousTransition(##java.time.Instant);
-        let ZoneRules(x1) = x;
-        let Instant(instant1) = instant;
-        ZoneOffsetTransition(previousTransition(x1, instant1)) as & Pure
-*/
 
+    pub def previousTransition(instant: ZInstant, x: ZoneRules): ZoneOffsetTransition =
+        import java.time.zone.ZoneRules.previousTransition(##java.time.Instant): ##java.time.zone.ZoneOffsetTransition & Pure;
+        let ZoneRules(x1) = x;
+        let ZInstant(instant1) = instant;
+        ZoneOffsetTransition(previousTransition(x1, instant1))
+
+    pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = 
+        import java.time.zone.ZoneRules.getTransitions(): ##java.util.List & Pure;
+        let ZoneRules(x1) = x;
+        let xs = getTransitions(x1);
+        FlixSandbox/Marshal.unmarshalList(o -> ZoneOffsetTransition(o as ##java.time.zone.ZoneOffsetTransition), xs) as & Pure
 }
