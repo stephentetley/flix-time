@@ -255,12 +255,12 @@ namespace Time/ZInstant {
         let tu1 = cu1 as ##java.time.temporal.TemporalUnit;
         until(b1, te1, tu1)
 
-    pub def range(x: ZInstant, field: ChronoField): ValueRange = 
-        import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-        let ZInstant(x1) = x;
-        let field1 = Time/Temporal/ChronoField.marshal(field);
-        let tfield1 = field1 as ##java.time.temporal.TemporalField;
-        ValueRange(range(x1, tfield1))
+    /// pub def range(x: ZInstant, field: ChronoField): ValueRange = 
+    ///     import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
+    ///     let ZInstant(x1) = x;
+    ///     let field1 = Time/Temporal/ChronoField.marshal(field);
+    ///     let tfield1 = field1 as ##java.time.temporal.TemporalField;
+    ///     ValueRange(range(x1, tfield1))
 
 
     def truncatedTo(x: ZInstant, unit: ChronoUnit): Option[ZInstant] = 

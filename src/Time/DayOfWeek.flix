@@ -191,10 +191,10 @@ namespace Time/DayOfWeek {
         unmarshal(x2)
 
 
-    pub def range(x: DayOfWeek): ValueRange = 
-        import java.time.DayOfWeek.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-        let x1 = marshal(x);
-        let field1 = Time/Temporal/ChronoField.marshal(Time/Temporal/ChronoField.DayOfWeek);
-        ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField))
+    /// pub def range(x: DayOfWeek): ValueRange = 
+    ///     import java.time.DayOfWeek.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
+    ///     let x1 = marshal(x);
+    ///     let field1 = Time/Temporal/ChronoField.marshal(Time/Temporal/ChronoField.DayOfWeek);
+    ///     ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField))
 
 }

@@ -17,9 +17,6 @@
 
 namespace Time {
 
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAmount;
-
     ///
     /// A wrapper around java.time.Year.
     ///
@@ -83,7 +80,12 @@ namespace Time/Year {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Temporal/Temporal.Temporal;
+    use Time/Temporal/TemporalAmount.TemporalAmount;
+    use Time/Temporal/TemporalField.TemporalField;
     use Time/Temporal/TemporalUnit.TemporalUnit;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
     use Time.Clock;
     use Time.Clock.{Clock};
     use Time.LocalDate;
@@ -242,6 +244,12 @@ namespace Time/Year {
         let Year(x1) = x;
         length(x1)
 
+    pub def adjustInto(t: a, y: Year): a with Temporal[a] = 
+        import java.time.Year.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let Year(y1) = y;
+        let t1 = Time/Temporal/Temporal/Temporal.marshalToNativeTemporal(t);
+        Time/Temporal/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(y1, t1))
+
     ///
     /// _
     ///
@@ -258,110 +266,63 @@ namespace Time/Year {
         let Year(x1) = x;
         Year(minusYears(x1, yearsToSubtract))
 
-    pub def plusAmount(x: Year, r: {amount :: Int64, tempUnit :: t}): Year with TemporalUnit[t] =
+    class YearTemporalUnit[a] with TemporalUnit[a] {
+        pub def marshalToNativeTemporalUnit(x: a): ##java.time.temporal.TemporalUnit = 
+            Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(x)
+    }
+    
+    pub def plusAmount(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
         import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         
         try {
             let Year(x1) = x;
-            let tempUnit1 = Time/Temporal/TemporalUnit/TemporalUnit.castToNativeTemporalUnit(r.tempUnit);
-            Year(plus(x1, r.amount, tempUnit1))
+            let temporalUnit1 = Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            Year(plus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+    
+    pub def minusAmount(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
+        import java.time.Year.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         
+        try {
+            let Year(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            Year(minus(x1, r.amount, temporalUnit1))
         } catch {
             case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+    pub def plusTemporalAmount(x: Year, amount: a): Year with TemporalAmount[a] =
+        import java.time.Year.plus(##java.time.temporal.TemporalAmount): ##java.time.Year & Pure;         
+        try {
+            let Year(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            Year(plus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
-/*
-    pub def plusDecades(x: Year, i: Int64): Year =
-        let unit = Time/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
-        plusHelper(x, i, unit)
+    pub def minusTemporalAmount(x: Year, amount: a): Year with TemporalAmount[a] =
+        import java.time.Year.minus(##java.time.temporal.TemporalAmount): ##java.time.Year & Pure;         
+        try {
+            let Year(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            Year(minus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
-    pub def minusDecades(x: Year, i: Int64): Year =
-        let unit = Time/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
-        minusHelper(x, i, unit)
-
-    pub def plusCenturies(x: Year, i: Int64): Year =
-        let unit = Time/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
-        plusHelper(x, i, unit)
-
-    pub def minusCenturies(x: Year, i: Int64): Year =
-        let unit = Time/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
-        minusHelper(x, i, unit)
-
-    pub def plusMillennia(x: Year, i: Int64): Year =
-        let unit = Time/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
-        plusHelper(x, i, unit)
-
-    pub def minusMillenia(x: Year, i: Int64): Year =
-        let unit = Time/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
-        minusHelper(x, i, unit)
-
-    pub def plusEras(x: Year, i: Int64): Year =
-        let unit = Time/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
-        plusHelper(x, i, unit)
-
-    pub def minusEras(x: Year, i: Int64): Year =
-        let unit = Time/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
-        minusHelper(x, i, unit)
-
-    def plusHelper(x: Year, amountToAdd: Int64, unit: ##java.time.temporal.TemporalUnit): Year =
-        import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;
-        let Year(x1) = x;
-        Year(plus(x1, amountToAdd, unit))
-
-    def minusHelper(x: Year, amountToSubtract: Int64, unit: ##java.time.temporal.TemporalUnit): Year =
-        import java.time.Year.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;
-        let Year(x1) = x;
-        Year(minus(x1, amountToSubtract, unit))
-
-    pub def yearsBetween(x: Year, y: Year): Int64 =
-        let unit = Time/ChronoUnit.getYEARS() as ##java.time.temporal.TemporalUnit;
-        betweenHelper(x, y, unit)
-
-    pub def decadesBetween(x: Year, y: Year): Int64 =
-        let unit = Time/ChronoUnit.getDECADES() as ##java.time.temporal.TemporalUnit;
-        betweenHelper(x, y, unit)
-
-    pub def centuriesBetween(x: Year, y: Year): Int64 =
-        let unit = Time/ChronoUnit.getCENTURIES() as ##java.time.temporal.TemporalUnit;
-        betweenHelper(x, y, unit)
-
-    pub def millenniaBetween(x: Year, y: Year): Int64 =
-        let unit = Time/ChronoUnit.getMILLENNIA() as ##java.time.temporal.TemporalUnit;
-        betweenHelper(x, y, unit)
-
-    pub def erasBetween(x: Year, y: Year): Int64 =
-        let unit = Time/ChronoUnit.getERAS() as ##java.time.temporal.TemporalUnit;
-        betweenHelper(x, y, unit)
-
-    def betweenHelper(x:Year, y: Year, unit: ##java.time.temporal.TemporalUnit): Int64 =
-        import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let Year(x1) = x;
-        let Year(y1) = y;
-        let ty1 = y1 as ##java.time.temporal.Temporal;
-        until(x1, ty1, unit)
-
-    pub def withYear(x: Year, i: Int64): Year =
-        let field = Time/Internal/ChronoField.getYEAR() as ##java.time.temporal.TemporalField;
-        withHelper(x, field, i)
-
-
-    pub def withEraBCE(x: Year): Year =
-        let field = Time/Internal/ChronoField.getERA() as ##java.time.temporal.TemporalField;
-        withHelper(x, field, 0i64)
-
-    pub def withEraCE(x: Year): Year =
-        let field = Time/Internal/ChronoField.getERA() as ##java.time.temporal.TemporalField;
-        withHelper(x, field, 1i64)
-
-
-    pub def withYearOfEra(x: Year, i: Int64): Year =
-        let field = Time/Internal/ChronoField.getYEAR_OF_ERA() as ##java.time.temporal.TemporalField;
-        withHelper(x, field, i)
-
-    def withHelper(x:Year, field: ##java.time.temporal.TemporalField, i: Int64): Year =
-        import java.time.Year.with(##java.time.temporal.TemporalField, Int64): ##java.time.Year & Pure as withX;
-        let Year(x1) = x;
-        Year(withX(x1, field, i))
-*/
-
+    pub def range(field: a, x: Year): ValueRange with TemporalField[a] =
+        import java.time.Year.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let Year(x1) = x;
+            let field1 = Time/Temporal/TemporalField/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(x1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 }

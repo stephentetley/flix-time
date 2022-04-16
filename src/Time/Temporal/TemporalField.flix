@@ -15,13 +15,13 @@
  */
 
 
-namespace Time/Temporal/TemporalUnit {
+namespace Time/Temporal/TemporalField {
   
 
-    pub class TemporalUnit[a] with ToString[a] {
-        pub def marshalToNativeTemporalUnit(x: a): ##java.time.temporal.TemporalUnit
+    pub class TemporalField[a] with ToString[a] {
+        pub def marshalToNativeTemporalField(x: a): ##java.time.temporal.TemporalField
 
-        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): a
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): a
     }
 
 

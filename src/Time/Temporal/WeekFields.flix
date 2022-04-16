@@ -86,29 +86,29 @@ namespace Time/Temporal/WeekFields {
         hashCode(x1)
 
 
-    /// TODO not sure casting to ChronoField is wise... 
-    pub def weekBasedYear(x: WeekFields): ChronoField = 
-        import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField & Pure;
-        let WeekFields(x1) = x;
-        let cx1 = weekBasedYear(x1) as ##java.time.temporal.ChronoField;
-        Time/Temporal/ChronoField.unmarshal(cx1)
+    /// /// TODO not sure casting to ChronoField is wise... 
+    /// pub def weekBasedYear(x: WeekFields): ChronoField = 
+    ///     import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField & Pure;
+    ///     let WeekFields(x1) = x;
+    ///     let cx1 = weekBasedYear(x1) as ##java.time.temporal.ChronoField;
+    ///     Time/Temporal/ChronoField.unmarshal(cx1)
 
-    pub def weekOfMonth(x: WeekFields): ChronoField = 
-        import java.time.temporal.WeekFields.weekOfMonth(): ##java.time.temporal.TemporalField & Pure;
-        let WeekFields(x1) = x;
-        let cx1 = weekOfMonth(x1) as ##java.time.temporal.ChronoField;
-        Time/Temporal/ChronoField.unmarshal(cx1)
+    /// pub def weekOfMonth(x: WeekFields): ChronoField = 
+    ///     import java.time.temporal.WeekFields.weekOfMonth(): ##java.time.temporal.TemporalField & Pure;
+    ///     let WeekFields(x1) = x;
+    ///     let cx1 = weekOfMonth(x1) as ##java.time.temporal.ChronoField;
+    ///     Time/Temporal/ChronoField.unmarshal(cx1)
 
-    pub def weekOfWeekBasedYear(x: WeekFields): ChronoField = 
-        import java.time.temporal.WeekFields.weekOfWeekBasedYear(): ##java.time.temporal.TemporalField & Pure;
-        let WeekFields(x1) = x;
-        let cx1 = weekOfWeekBasedYear(x1) as ##java.time.temporal.ChronoField;
-        Time/Temporal/ChronoField.unmarshal(cx1)
+    /// pub def weekOfWeekBasedYear(x: WeekFields): ChronoField = 
+    ///     import java.time.temporal.WeekFields.weekOfWeekBasedYear(): ##java.time.temporal.TemporalField & Pure;
+    ///     let WeekFields(x1) = x;
+    ///     let cx1 = weekOfWeekBasedYear(x1) as ##java.time.temporal.ChronoField;
+    ///     Time/Temporal/ChronoField.unmarshal(cx1)
 
-    pub def weekOfYear(x: WeekFields): ChronoField = 
-        import java.time.temporal.WeekFields.weekOfYear(): ##java.time.temporal.TemporalField & Pure;
-        let WeekFields(x1) = x;
-        let cx1 = weekOfYear(x1) as ##java.time.temporal.ChronoField;
-        Time/Temporal/ChronoField.unmarshal(cx1)
+    /// pub def weekOfYear(x: WeekFields): ChronoField = 
+    ///     import java.time.temporal.WeekFields.weekOfYear(): ##java.time.temporal.TemporalField & Pure;
+    ///     let WeekFields(x1) = x;
+    ///     let cx1 = weekOfYear(x1) as ##java.time.temporal.ChronoField;
+    ///     Time/Temporal/ChronoField.unmarshal(cx1)
 
 }

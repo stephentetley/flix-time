@@ -82,4 +82,24 @@ namespace TestYear {
     @test
     def compare03(): Bool = Order.compare(Time/Year.of(isoYear = 2021), Time/Year.of(isoYear = 2020)) == GreaterThan
 
+    /////////////////////////////////////////////////////////////////////////////
+    // adjustInto                                                              //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def adjustInto01(): Time.Year = 
+        let t1 = Time/Year.of(isoYear = 2020);
+        let y1 = Time/Year.of(isoYear = 2021);
+        Time/Year.adjustInto(t1, y1)
+
+    /////////////////////////////////////////////////////////////////////////////
+    // adjustInto                                                              //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def range01(): Time/Temporal.ValueRange & Impure = 
+        let y1 = Time/Year.of(isoYear = 2020);        
+        let r1 = Time/Year.range(Time/Temporal/ChronoField.year(), y1);
+        println("range01(): ${r1}");
+        r1
 }

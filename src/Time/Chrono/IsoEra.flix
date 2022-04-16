@@ -84,11 +84,11 @@ namespace Time/Chrono/IsoEra {
         let Locale(locale1) = locale;
         getDisplayName(x1 as ##java.time.chrono.Era, style1, locale1)
         
-    pub def range(x: IsoEra, field: ChronoField): ValueRange = 
-        import java.time.chrono.Era.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-        let x1 = marshal(x);
-        let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
-        ValueRange(range(x1 as ##java.time.chrono.Era, field1))
+    /// pub def range(x: IsoEra, field: ChronoField): ValueRange = 
+    ///     import java.time.chrono.Era.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
+    ///     let x1 = marshal(x);
+    ///     let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+    ///     ValueRange(range(x1 as ##java.time.chrono.Era, field1))
 
     pub def getEra(x: LocalDate): IsoEra = 
         import java.time.LocalDate.getEra(): ##java.time.chrono.IsoEra & Pure;

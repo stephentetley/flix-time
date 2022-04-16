@@ -76,10 +76,10 @@ namespace Time/Chrono/HijrahEra {
         let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1)
         
-    pub def range(x: HijrahEra, field: ChronoField): ValueRange = 
-        import java.time.chrono.HijrahEra.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-        let x1 = marshal(x);
-        let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
-        ValueRange(range(x1, field1))
+    /// pub def range(x: HijrahEra, field: ChronoField): ValueRange = 
+    ///     import java.time.chrono.HijrahEra.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
+    ///     let x1 = marshal(x);
+    ///     let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+    ///     ValueRange(range(x1, field1))
 
 }
