@@ -68,6 +68,134 @@ namespace Time/Temporal/ChronoUnit {
             assertChronoUnit(x, get_MICROS, Micros) 
     }
 
+    /// Millis
+
+    pub enum Millis with ToString { case Millis }
+
+    pub def millis(): Millis = Millis
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Millis] {
+        pub def marshalToNativeTemporalUnit(_: Millis): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+            get_MILLIS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Millis = 
+            import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+            assertChronoUnit(x, get_MILLIS, Millis) 
+    }
+
+    /// Seconds
+
+    pub enum Seconds with ToString { case Seconds }
+
+    pub def seconds(): Seconds = Seconds
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Seconds] {
+        pub def marshalToNativeTemporalUnit(_: Seconds): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+            get_SECONDS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Seconds = 
+            import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+            assertChronoUnit(x, get_SECONDS, Seconds) 
+    }
+
+    /// Minutes
+
+    pub enum Minutes with ToString { case Minutes }
+
+    pub def minutes(): Minutes = Minutes
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Minutes] {
+        pub def marshalToNativeTemporalUnit(_: Minutes): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+            get_MINUTES() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Minutes = 
+            import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+            assertChronoUnit(x, get_MINUTES, Minutes) 
+    }
+
+    /// Hours
+
+    pub enum Hours with ToString { case Hours }
+
+    pub def hours(): Hours = Hours
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Hours] {
+        pub def marshalToNativeTemporalUnit(_: Hours): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+            get_HOURS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Hours = 
+            import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+            assertChronoUnit(x, get_HOURS, Hours) 
+    }
+
+    /// HalfDays
+
+    pub enum HalfDays with ToString { case HalfDays }
+
+    pub def halfDays(): HalfDays = HalfDays
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[HalfDays] {
+        pub def marshalToNativeTemporalUnit(_: HalfDays): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+            get_HALF_DAYS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): HalfDays = 
+            import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+            assertChronoUnit(x, get_HALF_DAYS, HalfDays) 
+    }
+
+    /// Days
+
+    pub enum Days with ToString { case Days }
+
+    pub def days(): Days = Days
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Days] {
+        pub def marshalToNativeTemporalUnit(_: Days): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+            get_DAYS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Days = 
+            import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+            assertChronoUnit(x, get_DAYS, Days) 
+    }
+
+    /// Weeks
+
+    pub enum Weeks with ToString { case Weeks }
+
+    pub def weeks(): Weeks = Weeks
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Weeks] {
+        pub def marshalToNativeTemporalUnit(_: Weeks): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.WEEKS: ##java.time.temporal.ChronoUnit & Pure as get_WEEKS;
+            get_WEEKS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Weeks = 
+            import static get java.time.temporal.ChronoUnit.WEEKS: ##java.time.temporal.ChronoUnit & Pure as get_WEEKS;
+            assertChronoUnit(x, get_WEEKS, Weeks) 
+    }
+
+    /// Months
+
+    pub enum Months with ToString { case Months }
+
+    pub def months(): Months = Months
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Months] {
+        pub def marshalToNativeTemporalUnit(_: Months): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+            get_MONTHS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Months = 
+            import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+            assertChronoUnit(x, get_MONTHS, Months) 
+    }
+
     /// Years
 
     pub enum Years with ToString { case Years }
@@ -84,233 +212,84 @@ namespace Time/Temporal/ChronoUnit {
             assertChronoUnit(x, get_YEARS, Years) 
     }
 
+    /// Decades
 
-/*
-    pub enum ChronoUnit {
-        case Nanos
-        case Micros
-        case Millis
-        case Seconds
-        case Minutes
-        case Hours
-        case HalfDays
-        case Days
-        case Weeks
-        case Months
-        case Years
-        case Decades
-        case Centuries
-        case Millennia
-        case Eras
-        case Forever
+    pub enum Decades with ToString { case Decades }
+
+    pub def decades(): Decades = Decades
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Decades] {
+        pub def marshalToNativeTemporalUnit(_: Decades): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as get_DECADES;
+            get_DECADES() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Decades = 
+            import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as get_DECADES;
+            assertChronoUnit(x, get_DECADES, Decades) 
     }
 
+    /// Centuries
 
-    instance FromString[ChronoUnit] {
-        pub def fromString(x: String): Option[ChronoUnit] = match x {
-            case "Nanos" => Some(Nanos)
-            case "Micros" => Some(Micros)
-            case "Millis" => Some(Millis)
-            case "Seconds" => Some(Seconds)
-            case "Minutes" => Some(Minutes)
-            case "Hours" => Some(Hours)
-            case "HalfDays" => Some(HalfDays)
-            case "Days" => Some(Days)
-            case "Weeks" => Some(Weeks)
-            case "Months" => Some(Months)
-            case "Years" => Some(Years)
-            case "Decades" => Some(Decades)
-            case "Centuries" => Some(Centuries)
-            case "Millennia" => Some(Millennia)
-            case "Eras" => Some(Eras)
-            case "Forever" => Some(Forever)
-            case _ => None
-        }
+    pub enum Centuries with ToString { case Centuries }
+
+    pub def centuries(): Centuries = Centuries
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Centuries] {
+        pub def marshalToNativeTemporalUnit(_: Centuries): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
+            get_CENTURIES() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Centuries = 
+            import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
+            assertChronoUnit(x, get_CENTURIES, Centuries) 
     }
 
-    instance Eq[ChronoUnit] {
-        pub def eq(x: ChronoUnit, y: ChronoUnit): Bool = match (x,y) {
-            case (Nanos, Nanos) => true
-            case (Micros, Micros) => true
-            case (Millis, Millis) => true
-            case (Seconds, Seconds) => true
-            case (Minutes, Minutes) => true
-            case (Hours, Hours) => true
-            case (HalfDays, HalfDays) => true
-            case (Days, Days) => true
-            case (Weeks, Weeks) => true
-            case (Months, Months) => true
-            case (Years, Years) => true
-            case (Decades, Decades) => true
-            case (Centuries, Centuries) => true
-            case (Millennia, Millennia) => true
-            case (Eras, Eras) => true
-            case (Forever, Forever) => true
-            case (_,_) => false
-        }
+    /// Millennia
+
+    pub enum Millennia with ToString { case Millennia }
+
+    pub def millennia(): Millennia = Millennia
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Millennia] {
+        pub def marshalToNativeTemporalUnit(_: Millennia): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
+            get_MILLENNIA() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Millennia = 
+            import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
+            assertChronoUnit(x, get_MILLENNIA, Millennia) 
     }
 
-    instance Hash[ChronoUnit] {
-        pub def hash(x: ChronoUnit): Int32 = Time/Temporal/ChronoUnit.hashCode(x)
+    /// Millennia
+
+    pub enum Eras with ToString { case Eras }
+
+    pub def eras(): Eras = Eras
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Eras] {
+        pub def marshalToNativeTemporalUnit(_: Eras): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.ERAS: ##java.time.temporal.ChronoUnit & Pure as get_ERAS;
+            get_ERAS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Eras = 
+            import static get java.time.temporal.ChronoUnit.ERAS: ##java.time.temporal.ChronoUnit & Pure as get_ERAS;
+            assertChronoUnit(x, get_ERAS, Eras) 
     }
 
-    instance Order[ChronoUnit] {
-        pub def compare(x: ChronoUnit, y: ChronoUnit): Comparison =
-            Time/Temporal/ChronoUnit.compareTo(x,y) |> Comparison.fromInt32
+    /// Forever
+
+    pub enum Forever with ToString { case Forever }
+
+    pub def forever(): Forever = Forever
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Forever] {
+        pub def marshalToNativeTemporalUnit(_: Forever): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.FOREVER: ##java.time.temporal.ChronoUnit & Pure as get_FOREVER;
+            get_FOREVER() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Forever = 
+            import static get java.time.temporal.ChronoUnit.FOREVER: ##java.time.temporal.ChronoUnit & Pure as get_FOREVER;
+            assertChronoUnit(x, get_FOREVER, Forever) 
     }
-
-    use Time/Temporal.ChronoUnit;
-    use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes,
-            Hours, HalfDays, Days, Weeks, Months, Years, Decades, Centuries,
-            Millennia, Eras, Forever};
-//    use Time.Duration;
-//    use Time.Duration.{Duration};
-
-    pub def fromEnum(x: ChronoUnit): Int32 = match x {
-        case Nanos => 0
-        case Micros => 1
-        case Millis => 2
-        case Seconds => 3
-        case Minutes => 4
-        case Hours => 5
-        case HalfDays => 6
-        case Days => 7
-        case Weeks => 8
-        case Months => 9
-        case Years => 10
-        case Decades => 11
-        case Centuries => 12
-        case Millennia => 13
-        case Eras => 14
-        case Forever => 15
-    }
-
-    pub def toEnum(x: Int32): Option[ChronoUnit] = match x {
-        case 0 => Some(Nanos)
-        case 1 => Some(Micros)
-        case 2 => Some(Millis)
-        case 3 => Some(Seconds)
-        case 4 => Some(Minutes)
-        case 5 => Some(Hours)
-        case 6 => Some(HalfDays)
-        case 7 => Some(Days)
-        case 8 => Some(Weeks)
-        case 9 => Some(Months)
-        case 10 => Some(Years)
-        case 11 => Some(Decades)
-        case 12 => Some(Centuries)
-        case 13 => Some(Millennia)
-        case 14 => Some(Eras)
-        case 15 => Some(Forever)
-        case _ =>   None
-    }
-
-    pub def marshal(x: ChronoUnit): ##java.time.temporal.ChronoUnit =
-        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;
-        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as getMICROS;
-        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as getMILLIS;
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as getSECONDS;
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as getMINUTES;
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as getHOURS;
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as getHALF_DAYS;
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as getDAYS;
-        import static get java.time.temporal.ChronoUnit.WEEKS: ##java.time.temporal.ChronoUnit & Pure as getWEEKS;
-        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as getMONTHS;
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as getYEARS;
-        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as getDECADES;
-        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as getCENTURIES;
-        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as getMILLENNIA;
-        import static get java.time.temporal.ChronoUnit.ERAS: ##java.time.temporal.ChronoUnit & Pure as getERAS;
-        import static get java.time.temporal.ChronoUnit.FOREVER: ##java.time.temporal.ChronoUnit & Pure as getFOREVER;
-        match x {
-            case Nanos      => getNANOS()
-            case Micros     => getMICROS()
-            case Millis     => getMILLIS()
-            case Seconds    => getSECONDS()
-            case Minutes    => getMINUTES()
-            case Hours      => getHOURS()
-            case HalfDays   => getHALF_DAYS()
-            case Days       => getDAYS()
-            case Weeks      => getWEEKS()
-            case Months     => getMONTHS()
-            case Years      => getYEARS()
-            case Decades    => getDECADES()
-            case Centuries  => getCENTURIES()
-            case Millennia  => getMILLENNIA()
-            case Eras       => getERAS()
-            case Forever    => getFOREVER()
-        }
-
-
-    pub def unmarshal(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
-        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;
-        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as getMICROS;
-        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as getMILLIS;
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as getSECONDS;
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as getMINUTES;
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as getHOURS;
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as getHALF_DAYS;
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as getDAYS;
-        import static get java.time.temporal.ChronoUnit.WEEKS: ##java.time.temporal.ChronoUnit & Pure as getWEEKS;
-        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as getMONTHS;
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as getYEARS;
-        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as getDECADES;
-        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as getCENTURIES;
-        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as getMILLENNIA;
-        import static get java.time.temporal.ChronoUnit.ERAS: ##java.time.temporal.ChronoUnit & Pure as getERAS;
-        import static get java.time.temporal.ChronoUnit.FOREVER: ##java.time.temporal.ChronoUnit & Pure as getFOREVER;
-        match x {
-            case x1 if primEquals(x1, getNANOS())       => Nanos
-            case x1 if primEquals(x1, getMICROS())      => Micros
-            case x1 if primEquals(x1, getMILLIS())      => Millis
-            case x1 if primEquals(x1, getSECONDS())     => Seconds
-            case x1 if primEquals(x1, getMINUTES())     => Minutes
-            case x1 if primEquals(x1, getHOURS())       => Hours
-            case x1 if primEquals(x1, getHALF_DAYS())   => HalfDays
-            case x1 if primEquals(x1, getDAYS())        => Days
-            case x1 if primEquals(x1, getWEEKS())       => Weeks
-            case x1 if primEquals(x1, getMONTHS())      => Months
-            case x1 if primEquals(x1, getYEARS())       => Years
-            case x1 if primEquals(x1, getDECADES())     => Decades
-            case x1 if primEquals(x1, getCENTURIES())   => Centuries
-            case x1 if primEquals(x1, getMILLENNIA())   => Millennia
-            case x1 if primEquals(x1, getERAS())        => Eras
-            case x1 if primEquals(x1, getFOREVER())     => Forever
-        }
-
-
-
-    pub def hashCode(x: ChronoUnit): Int32 =
-        import java.lang.Enum.hashCode(): Int32 & Pure;
-        let en1 = marshal(x) as ##java.lang.Enum;
-        hashCode(en1)
-
-    pub def compareTo(x: ChronoUnit, y: ChronoUnit): Int32 =
-        import java.lang.Enum.compareTo(##java.lang.Enum): Int32 & Pure;
-        let x1 = marshal(x) as ##java.lang.Enum;
-        let y1 = marshal(y) as ##java.lang.Enum;
-        compareTo(x1, y1)
-
-/*
-    pub def getDuration(x: ChronoUnit): Duration =
-        import java.time.temporal.ChronoUnit.getDuration();
-        let x1 = marshal(x);
-        Duration(getDuration(x1)) as & Pure
-
-    pub def isDurationEstimated(x: ChronoUnit): Bool =
-        import java.time.temporal.ChronoUnit.isDurationEstimated();
-        let x1 = marshal(x);
-        isDurationEstimated(x1) as & Pure
-
-    pub def isDateBased(x: ChronoUnit): Bool =
-        import java.time.temporal.ChronoUnit.isDateBased();
-        let x1 = marshal(x);
-        isDateBased(x1) as & Pure
-
-    pub def isTimeBased(x: ChronoUnit): Bool =
-        import java.time.temporal.ChronoUnit.isTimeBased();
-        let x1 = marshal(x);
-        isTimeBased(x1) as & Pure
-*/
 
 }
