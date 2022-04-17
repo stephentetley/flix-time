@@ -116,4 +116,24 @@ namespace TestYear {
         println("until01(): ${diff}");
         diff
 
+    /////////////////////////////////////////////////////////////////////////////
+    // fromTemporalAccessor                                                    //
+    /////////////////////////////////////////////////////////////////////////////
+    @test
+    def fromTemporalAccessor01(): Time.Year & Impure = 
+        let t1 = Time/Year.of(isoYear = 2020);
+        let t2 = Time/Year.fromTemporalAccessor(t1);
+        println("fromTemporalAccessor01(): ${t2}");
+        t2
+
+    /////////////////////////////////////////////////////////////////////////////
+    // withTemporalAdjuster                                                    //
+    /////////////////////////////////////////////////////////////////////////////
+    @test
+    def withTemporalAdjuster01(): Time.Year & Impure = 
+        let t1 = Time/Year.of(isoYear = 2020);
+        let t2 = Time/Year.of(isoYear = 2028);
+        let t3 = Time/Year.withTemporalAdjuster(t2, t1);
+        println("withTemporalAdjuster01(): ${t3}");
+        t2
 }

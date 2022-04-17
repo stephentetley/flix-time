@@ -39,8 +39,12 @@ namespace Time/Temporal {
 
     pub class TemporalUnit[a] with ToString[a] {
         pub def marshalToNativeTemporalUnit(x: a): ##java.time.temporal.TemporalUnit
-
         pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): a
     }    
+
+    pub class TemporalAdjuster[a] with ToString[a] {
+        pub def marshalToNativeTemporalAdjuster(x: a): ##java.time.temporal.TemporalAdjuster
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): a
+    }  
 
 }

@@ -17,8 +17,10 @@
 
 namespace Time {
 
-    use Time/Temporal.TemporalAccessor;
     use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+    
 
     ///
     /// A wrapper around java.time.Year.
@@ -89,6 +91,13 @@ namespace Time {
             Year(x as ##java.time.Year)
     }
 
+    instance TemporalAdjuster[Year] {
+        pub def marshalToNativeTemporalAdjuster(x: Year): ##java.time.temporal.TemporalAdjuster =         
+            Time/Year.getYear(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): Year = 
+            Year(x as ##java.time.Year)
+    }
 
 }
 
@@ -102,6 +111,7 @@ namespace Time/Year {
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Temporal.Temporal;
     use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
     use Time/Temporal.TemporalAmount;
     use Time/Temporal.TemporalField;
     use Time/Temporal.TemporalUnit;
@@ -373,5 +383,18 @@ namespace Time/Year {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    pub def withTemporalAdjuster(adj: a, x: Year): Year with TemporalAdjuster[a] =
+        import java.time.Year.with(##java.time.temporal.TemporalAdjuster): ##java.time.Year & Pure;         
+        try {
+            let Year(x1) = x;
+            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
+            Year(with(x1, adj1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
 
 }
