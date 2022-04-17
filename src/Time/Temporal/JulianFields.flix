@@ -17,6 +17,8 @@
 
 namespace Time/Temporal/JulianFields {
 
+    use Time/Temporal.TemporalField;
+
     def primEqualsJulianFields(x: ##java.time.temporal.JulianFields, y: ##java.time.temporal.JulianFields): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Enum;
@@ -40,7 +42,7 @@ namespace Time/Temporal/JulianFields {
 
     pub def julianDay(): JulianDay = JulianDay
 
-    instance Time/Temporal/TemporalField.TemporalField[JulianDay] {
+    instance TemporalField[JulianDay] {
         pub def marshalToNativeTemporalField(_: JulianDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.JulianFields.JULIAN_DAY: ##java.time.temporal.JulianFields & Pure as get_JULIAN_DAY;
             get_JULIAN_DAY() as ##java.time.temporal.TemporalField
@@ -56,7 +58,7 @@ namespace Time/Temporal/JulianFields {
 
     pub def modifiedJulianDay(): ModifiedJulianDay = ModifiedJulianDay
 
-    instance Time/Temporal/TemporalField.TemporalField[ModifiedJulianDay] {
+    instance TemporalField[ModifiedJulianDay] {
         pub def marshalToNativeTemporalField(_: ModifiedJulianDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.JulianFields.MODIFIED_JULIAN_DAY: ##java.time.temporal.JulianFields & Pure as get_MODIFIED_JULIAN_DAY;
             get_MODIFIED_JULIAN_DAY() as ##java.time.temporal.TemporalField
@@ -72,7 +74,7 @@ namespace Time/Temporal/JulianFields {
 
     pub def rataDie(): RataDie = RataDie
 
-    instance Time/Temporal/TemporalField.TemporalField[RataDie] {
+    instance TemporalField[RataDie] {
         pub def marshalToNativeTemporalField(_: RataDie): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.JulianFields.RATA_DIE: ##java.time.temporal.JulianFields & Pure as get_RATA_DIE;
             get_RATA_DIE() as ##java.time.temporal.TemporalField

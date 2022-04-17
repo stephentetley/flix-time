@@ -17,6 +17,9 @@
 
 namespace Time {
 
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.Temporal;
+
     ///
     /// A wrapper around java.time.Year.
     ///
@@ -70,6 +73,23 @@ namespace Time {
             Year(of(getMAX_VALUE()))
     }
 
+    instance TemporalAccessor[Year] {
+        pub def marshalToNativeTemporalAccessor(x: Year): ##java.time.temporal.TemporalAccessor =         
+            Time/Year.getYear(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): Year = 
+            Year(x as ##java.time.Year)
+    }
+
+    instance Temporal[Year] {
+        pub def marshalToNativeTemporal(x: Year): ##java.time.temporal.Temporal =         
+            Time/Year.getYear(x) as ##java.time.temporal.Temporal
+        
+        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): Year = 
+            Year(x as ##java.time.Year)
+    }
+
+
 }
 
 namespace Time/Year {
@@ -80,10 +100,11 @@ namespace Time/Year {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Temporal/Temporal.Temporal;
-    use Time/Temporal/TemporalAmount.TemporalAmount;
-    use Time/Temporal/TemporalField.TemporalField;
-    use Time/Temporal/TemporalUnit.TemporalUnit;
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAmount;
+    use Time/Temporal.TemporalField;
+    use Time/Temporal.TemporalUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.Clock;
@@ -120,6 +141,12 @@ namespace Time/Year {
         import static java.time.Year.now(##java.time.ZoneId): ##java.time.Year & Impure;
         let ZoneId(x1) = x;
         Year(now(x1))
+
+    pub def fromTemporalAccessor(x: a): Year with TemporalAccessor[a] = 
+        import static java.time.Year.from(##java.time.temporal.TemporalAccessor): ##java.time.Year & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        Year(fromTA(x1))
+
 
 
     ///
@@ -247,8 +274,8 @@ namespace Time/Year {
     pub def adjustInto(t: a, y: Year): a with Temporal[a] = 
         import java.time.Year.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let Year(y1) = y;
-        let t1 = Time/Temporal/Temporal/Temporal.marshalToNativeTemporal(t);
-        Time/Temporal/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(y1, t1))
+        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(y1, t1))
 
     ///
     /// _
@@ -268,14 +295,14 @@ namespace Time/Year {
 
     class YearTemporalUnit[a] with TemporalUnit[a] {
         pub def marshalToNativeTemporalUnit(x: a): ##java.time.temporal.TemporalUnit = 
-            Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(x)
+            Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(x)
     }
     
     pub def plusAmount(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
         import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         
         try {
             let Year(x1) = x;
-            let temporalUnit1 = Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
             Year(plus(x1, r.amount, temporalUnit1))
         } catch {
             case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
@@ -286,7 +313,7 @@ namespace Time/Year {
         import java.time.Year.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         
         try {
             let Year(x1) = x;
-            let temporalUnit1 = Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
             Year(minus(x1, r.amount, temporalUnit1))
         } catch {
             case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
@@ -297,7 +324,7 @@ namespace Time/Year {
         import java.time.Year.plus(##java.time.temporal.TemporalAmount): ##java.time.Year & Pure;         
         try {
             let Year(x1) = x;
-            let amount1 = Time/Temporal/TemporalAmount/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
             Year(plus(x1, amount1))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
@@ -308,7 +335,7 @@ namespace Time/Year {
         import java.time.Year.minus(##java.time.temporal.TemporalAmount): ##java.time.Year & Pure;         
         try {
             let Year(x1) = x;
-            let amount1 = Time/Temporal/TemporalAmount/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
             Year(minus(x1, amount1))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
@@ -319,7 +346,7 @@ namespace Time/Year {
         import java.time.Year.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let Year(x1) = x;
-            let field1 = Time/Temporal/TemporalField/TemporalField.marshalToNativeTemporalField(field);
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
             ValueRange(range(x1, field1))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
@@ -331,7 +358,7 @@ namespace Time/Year {
         import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let b1 = getYear(r.start);
         let e1 = getYear(r.end) as ##java.time.temporal.Temporal;
-        let units1 = Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(units);
+        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
         until(b1, e1, units1)
 
 
@@ -340,7 +367,7 @@ namespace Time/Year {
         import java.time.Year.with(##java.time.temporal.TemporalField, Int64): ##java.time.Year & Pure;         
         try {
             let Year(x1) = x;
-            let field1 = Time/Temporal/TemporalField/TemporalField.marshalToNativeTemporalField(field);
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
             Year(with(x1, field1, i))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")

@@ -80,9 +80,7 @@ namespace Time/ZInstant {
 
     use Time.ZInstant;
     use Time.ZInstant.{ZInstant};
-    use Time/Temporal.ChronoField;
-    use Time/Temporal.ChronoUnit;
-    use Time/Temporal/TemporalUnit.TemporalUnit;
+    use Time/Temporal.TemporalUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.ZDuration;
@@ -255,7 +253,7 @@ namespace Time/ZInstant {
         import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let b1 = getInstant(r.start);
         let e1 = getInstant(r.end) as ##java.time.temporal.Temporal;
-        let units1 = Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(units);
+        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
         until(b1, e1, units1)
 
     /// pub def range(x: ZInstant, field: ChronoField): ValueRange = 

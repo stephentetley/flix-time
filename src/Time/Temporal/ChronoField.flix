@@ -17,6 +17,8 @@
 
 namespace Time/Temporal/ChronoField {
 
+    use Time/Temporal.TemporalField;
+
     def primEquals(x: ##java.time.temporal.ChronoField, y: ##java.time.temporal.ChronoField): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Enum;
@@ -41,7 +43,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def nanoOfSecond(): NanoOfSecond = NanoOfSecond
 
-    instance Time/Temporal/TemporalField.TemporalField[NanoOfSecond] {
+    instance TemporalField[NanoOfSecond] {
         pub def marshalToNativeTemporalField(_: NanoOfSecond): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
             get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField
@@ -57,7 +59,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def nanoOfDay(): NanoOfDay = NanoOfDay
 
-    instance Time/Temporal/TemporalField.TemporalField[NanoOfDay] {
+    instance TemporalField[NanoOfDay] {
         pub def marshalToNativeTemporalField(_: NanoOfDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.NANO_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_DAY;
             get_NANO_OF_DAY() as ##java.time.temporal.TemporalField
@@ -73,7 +75,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def microOfSecond(): MicroOfSecond = MicroOfSecond
 
-    instance Time/Temporal/TemporalField.TemporalField[MicroOfSecond] {
+    instance TemporalField[MicroOfSecond] {
         pub def marshalToNativeTemporalField(_: MicroOfSecond): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
             get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField
@@ -89,7 +91,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def microOfDay(): MicroOfDay = MicroOfDay
 
-    instance Time/Temporal/TemporalField.TemporalField[MicroOfDay] {
+    instance TemporalField[MicroOfDay] {
         pub def marshalToNativeTemporalField(_: MicroOfDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.MICRO_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_DAY;
             get_MICRO_OF_DAY() as ##java.time.temporal.TemporalField
@@ -105,7 +107,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def milliOfSecond(): MilliOfSecond = MilliOfSecond
 
-    instance Time/Temporal/TemporalField.TemporalField[MilliOfSecond] {
+    instance TemporalField[MilliOfSecond] {
         pub def marshalToNativeTemporalField(_: MilliOfSecond): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
             get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField
@@ -121,7 +123,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def milliOfDay(): MilliOfDay = MilliOfDay
 
-    instance Time/Temporal/TemporalField.TemporalField[MilliOfDay] {
+    instance TemporalField[MilliOfDay] {
         pub def marshalToNativeTemporalField(_: MilliOfDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.MILLI_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_DAY;
             get_MILLI_OF_DAY() as ##java.time.temporal.TemporalField
@@ -137,7 +139,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def secondOfMinute(): SecondOfMinute = SecondOfMinute
 
-    instance Time/Temporal/TemporalField.TemporalField[SecondOfMinute] {
+    instance TemporalField[SecondOfMinute] {
         pub def marshalToNativeTemporalField(_: SecondOfMinute): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.SECOND_OF_MINUTE: ##java.time.temporal.ChronoField & Pure as get_SECOND_OF_MINUTE;
             get_SECOND_OF_MINUTE() as ##java.time.temporal.TemporalField
@@ -153,7 +155,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def secondOfDay(): SecondOfDay = SecondOfDay
 
-    instance Time/Temporal/TemporalField.TemporalField[SecondOfDay] {
+    instance TemporalField[SecondOfDay] {
         pub def marshalToNativeTemporalField(_: SecondOfDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.SECOND_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_SECOND_OF_DAY;
             get_SECOND_OF_DAY() as ##java.time.temporal.TemporalField
@@ -169,7 +171,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def minuteOfHour(): MinuteOfHour = MinuteOfHour
 
-    instance Time/Temporal/TemporalField.TemporalField[MinuteOfHour] {
+    instance TemporalField[MinuteOfHour] {
         pub def marshalToNativeTemporalField(_: MinuteOfHour): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.MINUTE_OF_HOUR: ##java.time.temporal.ChronoField & Pure as get_MINUTE_OF_HOUR;
             get_MINUTE_OF_HOUR() as ##java.time.temporal.TemporalField
@@ -185,7 +187,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def minuteOfDay(): MinuteOfDay = MinuteOfDay
 
-    instance Time/Temporal/TemporalField.TemporalField[MinuteOfDay] {
+    instance TemporalField[MinuteOfDay] {
         pub def marshalToNativeTemporalField(_: MinuteOfDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.MINUTE_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_MINUTE_OF_DAY;
             get_MINUTE_OF_DAY() as ##java.time.temporal.TemporalField
@@ -201,7 +203,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def hourOfAmPm(): HourOfAmPm = HourOfAmPm
 
-    instance Time/Temporal/TemporalField.TemporalField[HourOfAmPm] {
+    instance TemporalField[HourOfAmPm] {
         pub def marshalToNativeTemporalField(_: HourOfAmPm): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.HOUR_OF_AMPM: ##java.time.temporal.ChronoField & Pure as get_HOUR_OF_AMPM;
             get_HOUR_OF_AMPM() as ##java.time.temporal.TemporalField
@@ -217,7 +219,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def clockHourOfAmPm(): ClockHourOfAmPm = ClockHourOfAmPm
 
-    instance Time/Temporal/TemporalField.TemporalField[ClockHourOfAmPm] {
+    instance TemporalField[ClockHourOfAmPm] {
         pub def marshalToNativeTemporalField(_: ClockHourOfAmPm): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.CLOCK_HOUR_OF_AMPM: ##java.time.temporal.ChronoField & Pure as get_CLOCK_HOUR_OF_AMPM;
             get_CLOCK_HOUR_OF_AMPM() as ##java.time.temporal.TemporalField
@@ -233,7 +235,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def hourOfDay(): HourOfDay = HourOfDay
 
-    instance Time/Temporal/TemporalField.TemporalField[HourOfDay] {
+    instance TemporalField[HourOfDay] {
         pub def marshalToNativeTemporalField(_: HourOfDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.HOUR_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_HOUR_OF_DAY;
             get_HOUR_OF_DAY() as ##java.time.temporal.TemporalField
@@ -249,7 +251,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def clockHourOfDay(): ClockHourOfDay = ClockHourOfDay
 
-    instance Time/Temporal/TemporalField.TemporalField[ClockHourOfDay] {
+    instance TemporalField[ClockHourOfDay] {
         pub def marshalToNativeTemporalField(_: ClockHourOfDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.CLOCK_HOUR_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_CLOCK_HOUR_OF_DAY;
             get_CLOCK_HOUR_OF_DAY() as ##java.time.temporal.TemporalField
@@ -265,7 +267,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def amPmOfDay(): AmPmOfDay = AmPmOfDay
 
-    instance Time/Temporal/TemporalField.TemporalField[AmPmOfDay] {
+    instance TemporalField[AmPmOfDay] {
         pub def marshalToNativeTemporalField(_: AmPmOfDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;
             get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField
@@ -281,7 +283,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def dayOfWeek(): DayOfWeek = DayOfWeek
 
-    instance Time/Temporal/TemporalField.TemporalField[DayOfWeek] {
+    instance TemporalField[DayOfWeek] {
         pub def marshalToNativeTemporalField(_: DayOfWeek): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.DAY_OF_WEEK: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_WEEK;
             get_DAY_OF_WEEK() as ##java.time.temporal.TemporalField
@@ -297,7 +299,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def alignedDayOfWeekInMonth(): AlignedDayOfWeekInMonth = AlignedDayOfWeekInMonth
 
-    instance Time/Temporal/TemporalField.TemporalField[AlignedDayOfWeekInMonth] {
+    instance TemporalField[AlignedDayOfWeekInMonth] {
         pub def marshalToNativeTemporalField(_: AlignedDayOfWeekInMonth): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
             get_ALIGNED_DAY_OF_WEEK_IN_MONTH() as ##java.time.temporal.TemporalField
@@ -313,7 +315,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def alignedDayOfWeekInYear(): AlignedDayOfWeekInYear = AlignedDayOfWeekInYear
 
-    instance Time/Temporal/TemporalField.TemporalField[AlignedDayOfWeekInYear] {
+    instance TemporalField[AlignedDayOfWeekInYear] {
         pub def marshalToNativeTemporalField(_: AlignedDayOfWeekInYear): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_DAY_OF_WEEK_IN_YEAR;
             get_ALIGNED_DAY_OF_WEEK_IN_YEAR() as ##java.time.temporal.TemporalField
@@ -329,7 +331,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def dayOfMonth(): DayOfMonth = DayOfMonth
 
-    instance Time/Temporal/TemporalField.TemporalField[DayOfMonth] {
+    instance TemporalField[DayOfMonth] {
         pub def marshalToNativeTemporalField(_: DayOfMonth): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.DAY_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_MONTH;
             get_DAY_OF_MONTH() as ##java.time.temporal.TemporalField
@@ -345,7 +347,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def dayOfYear(): DayOfYear = DayOfYear
 
-    instance Time/Temporal/TemporalField.TemporalField[DayOfYear] {
+    instance TemporalField[DayOfYear] {
         pub def marshalToNativeTemporalField(_: DayOfYear): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.DAY_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_YEAR;
             get_DAY_OF_YEAR() as ##java.time.temporal.TemporalField
@@ -361,7 +363,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def epochDay(): EpochDay = EpochDay
 
-    instance Time/Temporal/TemporalField.TemporalField[EpochDay] {
+    instance TemporalField[EpochDay] {
         pub def marshalToNativeTemporalField(_: EpochDay): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;
             get_EPOCH_DAY() as ##java.time.temporal.TemporalField
@@ -377,7 +379,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def alignedWeekOfMonth(): AlignedWeekOfMonth = AlignedWeekOfMonth
 
-    instance Time/Temporal/TemporalField.TemporalField[AlignedWeekOfMonth] {
+    instance TemporalField[AlignedWeekOfMonth] {
         pub def marshalToNativeTemporalField(_: AlignedWeekOfMonth): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_WEEK_OF_MONTH;
             get_ALIGNED_WEEK_OF_MONTH() as ##java.time.temporal.TemporalField
@@ -393,7 +395,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def alignedWeekOfYear(): AlignedWeekOfYear = AlignedWeekOfYear
 
-    instance Time/Temporal/TemporalField.TemporalField[AlignedWeekOfYear] {
+    instance TemporalField[AlignedWeekOfYear] {
         pub def marshalToNativeTemporalField(_: AlignedWeekOfYear): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_WEEK_OF_YEAR;
             get_ALIGNED_WEEK_OF_YEAR() as ##java.time.temporal.TemporalField
@@ -409,7 +411,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def monthOfYear(): MonthOfYear = MonthOfYear
 
-    instance Time/Temporal/TemporalField.TemporalField[MonthOfYear] {
+    instance TemporalField[MonthOfYear] {
         pub def marshalToNativeTemporalField(_: MonthOfYear): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.MONTH_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_MONTH_OF_YEAR;
             get_MONTH_OF_YEAR() as ##java.time.temporal.TemporalField
@@ -425,7 +427,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def prolepticMonth(): ProlepticMonth = ProlepticMonth
 
-    instance Time/Temporal/TemporalField.TemporalField[ProlepticMonth] {
+    instance TemporalField[ProlepticMonth] {
         pub def marshalToNativeTemporalField(_: ProlepticMonth): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.PROLEPTIC_MONTH: ##java.time.temporal.ChronoField & Pure as get_PROLEPTIC_MONTH;
             get_PROLEPTIC_MONTH() as ##java.time.temporal.TemporalField
@@ -441,7 +443,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def yearOfEra(): YearOfEra = YearOfEra
 
-    instance Time/Temporal/TemporalField.TemporalField[YearOfEra] {
+    instance TemporalField[YearOfEra] {
         pub def marshalToNativeTemporalField(_: YearOfEra): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.YEAR_OF_ERA: ##java.time.temporal.ChronoField & Pure as get_YEAR_OF_ERA;
             get_YEAR_OF_ERA() as ##java.time.temporal.TemporalField
@@ -457,7 +459,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def year(): Year = Year
 
-    instance Time/Temporal/TemporalField.TemporalField[Year] {
+    instance TemporalField[Year] {
         pub def marshalToNativeTemporalField(_: Year): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.YEAR: ##java.time.temporal.ChronoField & Pure as get_YEAR;
             get_YEAR() as ##java.time.temporal.TemporalField
@@ -473,7 +475,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def era(): Era = Era
 
-    instance Time/Temporal/TemporalField.TemporalField[Era] {
+    instance TemporalField[Era] {
         pub def marshalToNativeTemporalField(_: Era): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField & Pure as get_ERA;
             get_ERA() as ##java.time.temporal.TemporalField
@@ -489,7 +491,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def instantSeconds(): InstantSeconds = InstantSeconds
 
-    instance Time/Temporal/TemporalField.TemporalField[InstantSeconds] {
+    instance TemporalField[InstantSeconds] {
         pub def marshalToNativeTemporalField(_: InstantSeconds): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
             get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField
@@ -505,7 +507,7 @@ namespace Time/Temporal/ChronoField {
 
     pub def offsetSeconds(): OffsetSeconds = OffsetSeconds
 
-    instance Time/Temporal/TemporalField.TemporalField[OffsetSeconds] {
+    instance TemporalField[OffsetSeconds] {
         pub def marshalToNativeTemporalField(_: OffsetSeconds): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField & Pure as get_OFFSET_SECONDS;
             get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField

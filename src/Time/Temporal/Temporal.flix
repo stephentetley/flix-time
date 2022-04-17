@@ -15,22 +15,32 @@
  */
 
 
-namespace Time/Temporal/Temporal {
+namespace Time/Temporal {
 
-    use Time.Year;
-    use Time.Year.{Year};
+    pub class TemporalAccessor[a] with ToString[a] {
+        pub def marshalToNativeTemporalAccessor(x: a): ##java.time.temporal.TemporalAccessor
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): a
+    }
 
-    pub class Temporal[a] with ToString[a] {
+    pub class Temporal[a] with TemporalAccessor[a] {
         pub def marshalToNativeTemporal(x: a): ##java.time.temporal.Temporal
         pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): a
     }
 
-    instance Temporal[Year] {
-        pub def marshalToNativeTemporal(x: Year): ##java.time.temporal.Temporal =         
-            Time/Year.getYear(x) as ##java.time.temporal.Temporal
-        
-        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): Year = 
-            Year(x as ##java.time.Year)
+    pub class TemporalAmount[a] with ToString[a] {
+        pub def marshalToNativeTemporalAmount(x: a): ##java.time.temporal.TemporalAmount
+        pub def unmarshalFromNativeTemporalAmount(x: ##java.time.temporal.TemporalAmount): a
     }
+
+    pub class TemporalField[a] with ToString[a] {
+        pub def marshalToNativeTemporalField(x: a): ##java.time.temporal.TemporalField
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): a
+    }
+
+    pub class TemporalUnit[a] with ToString[a] {
+        pub def marshalToNativeTemporalUnit(x: a): ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): a
+    }    
 
 }

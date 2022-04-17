@@ -19,6 +19,9 @@
 
 namespace Time/Temporal/IsoFields {
 
+    use Time/Temporal.TemporalField;
+    use Time/Temporal.TemporalUnit;
+
     def primEqualsIsoFields(x: ##java.time.temporal.IsoFields, y: ##java.time.temporal.IsoFields): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Enum;
@@ -43,7 +46,7 @@ namespace Time/Temporal/IsoFields {
 
     pub def dayOfQuarter(): DayOfQuarter = DayOfQuarter
 
-    instance Time/Temporal/TemporalField.TemporalField[DayOfQuarter] {
+    instance TemporalField[DayOfQuarter] {
         pub def marshalToNativeTemporalField(_: DayOfQuarter): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.IsoFields & Pure as get_DAY_OF_QUARTER;
             get_DAY_OF_QUARTER() as ##java.time.temporal.TemporalField
@@ -59,7 +62,7 @@ namespace Time/Temporal/IsoFields {
 
     pub def quarterOfYear(): QuarterOfYear = QuarterOfYear
 
-    instance Time/Temporal/TemporalField.TemporalField[QuarterOfYear] {
+    instance TemporalField[QuarterOfYear] {
         pub def marshalToNativeTemporalField(_: QuarterOfYear): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.IsoFields & Pure as get_QUARTER_OF_YEAR;
             get_QUARTER_OF_YEAR() as ##java.time.temporal.TemporalField
@@ -76,7 +79,7 @@ namespace Time/Temporal/IsoFields {
 
     pub def weekBasedYear(): WeekBasedYear = WeekBasedYear
 
-    instance Time/Temporal/TemporalField.TemporalField[WeekBasedYear] {
+    instance TemporalField[WeekBasedYear] {
         pub def marshalToNativeTemporalField(_: WeekBasedYear): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.IsoFields.WEEK_BASED_YEAR: ##java.time.temporal.IsoFields & Pure as get_WEEK_BASED_YEAR;
             get_WEEK_BASED_YEAR() as ##java.time.temporal.TemporalField
@@ -93,7 +96,7 @@ namespace Time/Temporal/IsoFields {
 
     pub def weekOfWeekBasedYear(): WeekOfWeekBasedYear = WeekOfWeekBasedYear
 
-    instance Time/Temporal/TemporalField.TemporalField[WeekOfWeekBasedYear] {
+    instance TemporalField[WeekOfWeekBasedYear] {
         pub def marshalToNativeTemporalField(_: WeekOfWeekBasedYear): ##java.time.temporal.TemporalField =
             import static get java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR: ##java.time.temporal.IsoFields & Pure as get_WEEK_OF_WEEK_BASED_YEAR;
             get_WEEK_OF_WEEK_BASED_YEAR() as ##java.time.temporal.TemporalField
@@ -110,7 +113,7 @@ namespace Time/Temporal/IsoFields {
 
     pub def quarterYears(): QuarterYears = QuarterYears
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[QuarterYears] {
+    instance TemporalUnit[QuarterYears] {
         pub def marshalToNativeTemporalUnit(_: QuarterYears): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.IsoFields & Pure as get_QUARTER_YEARS;
             get_QUARTER_YEARS() as ##java.time.temporal.TemporalUnit
@@ -126,7 +129,7 @@ namespace Time/Temporal/IsoFields {
 
     pub def weekBasedYears(): WeekBasedYears = WeekBasedYears
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[WeekBasedYears] {
+    instance TemporalUnit[WeekBasedYears] {
         pub def marshalToNativeTemporalUnit(_: WeekBasedYears): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.IsoFields.WEEK_BASED_YEARS: ##java.time.temporal.IsoFields & Pure as get_WEEK_BASED_YEARS;
             get_WEEK_BASED_YEARS() as ##java.time.temporal.TemporalUnit

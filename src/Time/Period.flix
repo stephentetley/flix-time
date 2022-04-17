@@ -92,6 +92,17 @@ namespace Time {
         pub def empty(): Period = Time/Period.zero()
     }
 
+
+    instance TemporalAmount[Period] {
+        pub def marshalToNativeTemporalAmount(x: Period): ##java.time.temporal.TemporalAmount = 
+            let Period(x1) = x;
+            x1 as ##java.time.temporal.TemporalAmount
+
+        pub def unmarshalFromNativeTemporalAmount(x: ##java.time.temporal.TemporalAmount): Period= 
+            Period(x as ##java.time.Period)
+    }
+
+    
 }
 
 namespace Time/Period {

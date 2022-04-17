@@ -39,11 +39,12 @@ namespace Time/Temporal {
 
 namespace Time/Temporal/WeekFields {
 
-    use Time/Temporal.WeekFields;
-    use Time/Temporal.WeekFields.{WeekFields};
     use FlixSandbox/I18n.Locale;
     use FlixSandbox/I18n.Locale.{Locale};
-    use Time/Temporal.ChronoField;
+
+    use Time/Temporal.WeekFields;
+    use Time/Temporal.WeekFields.{WeekFields};
+    use Time/Temporal.TemporalField;
 
     pub def getWeekFields(x: WeekFields): ##java.time.temporal.WeekFields = 
         let WeekFields(x1) = x;
@@ -116,7 +117,7 @@ namespace Time/Temporal/WeekFields {
         let x1 = getWeekFields(x);
         DayOfWeek(dayOfWeek(x1))
 
-    instance Time/Temporal/TemporalField.TemporalField[DayOfWeek] {
+    instance TemporalField[DayOfWeek] {
         pub def marshalToNativeTemporalField(x: DayOfWeek): ##java.time.temporal.TemporalField =
             let DayOfWeek(x1) = x;
             x1
@@ -140,7 +141,7 @@ namespace Time/Temporal/WeekFields {
         let x1 = getWeekFields(x);
         WeekBasedYear(weekBasedYear(x1))
 
-    instance Time/Temporal/TemporalField.TemporalField[WeekBasedYear] {
+    instance TemporalField[WeekBasedYear] {
         pub def marshalToNativeTemporalField(x: WeekBasedYear): ##java.time.temporal.TemporalField =
             let WeekBasedYear(x1) = x;
             x1
@@ -164,7 +165,7 @@ namespace Time/Temporal/WeekFields {
         let x1 = getWeekFields(x);
         WeekOfMonth(weekOfMonth(x1))
 
-    instance Time/Temporal/TemporalField.TemporalField[WeekOfMonth] {
+    instance TemporalField[WeekOfMonth] {
         pub def marshalToNativeTemporalField(x: WeekOfMonth): ##java.time.temporal.TemporalField =
             let WeekOfMonth(x1) = x;
             x1
@@ -188,7 +189,7 @@ namespace Time/Temporal/WeekFields {
         let x1 = getWeekFields(x);
         WeekOfWeekBasedYear(weekOfWeekBasedYear(x1))
 
-    instance Time/Temporal/TemporalField.TemporalField[WeekOfWeekBasedYear] {
+    instance TemporalField[WeekOfWeekBasedYear] {
         pub def marshalToNativeTemporalField(x: WeekOfWeekBasedYear): ##java.time.temporal.TemporalField =
             let WeekOfWeekBasedYear(x1) = x;
             x1
@@ -212,7 +213,7 @@ namespace Time/Temporal/WeekFields {
         let x1 = getWeekFields(x);
         WeekOfYear(weekOfYear(x1))
 
-    instance Time/Temporal/TemporalField.TemporalField[WeekOfYear] {
+    instance TemporalField[WeekOfYear] {
         pub def marshalToNativeTemporalField(x: WeekOfYear): ##java.time.temporal.TemporalField =
             let WeekOfYear(x1) = x;
             x1

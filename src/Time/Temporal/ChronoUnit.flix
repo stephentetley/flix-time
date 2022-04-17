@@ -18,6 +18,8 @@
 
 namespace Time/Temporal/ChronoUnit {
 
+    use Time/Temporal.TemporalUnit;
+
     def primEquals(x: ##java.time.temporal.ChronoUnit, y: ##java.time.temporal.ChronoUnit): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
         let x1 = x as ##java.lang.Enum;
@@ -42,7 +44,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def nanos(): Nanos = Nanos
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Nanos] {
+    instance TemporalUnit[Nanos] {
         pub def marshalToNativeTemporalUnit(_: Nanos): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
             get_NANOS() as ##java.time.temporal.TemporalUnit
@@ -58,7 +60,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def micros(): Micros = Micros
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Micros] {
+    instance TemporalUnit[Micros] {
         pub def marshalToNativeTemporalUnit(_: Micros): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
             get_MICROS() as ##java.time.temporal.TemporalUnit
@@ -74,7 +76,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def millis(): Millis = Millis
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Millis] {
+    instance TemporalUnit[Millis] {
         pub def marshalToNativeTemporalUnit(_: Millis): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
             get_MILLIS() as ##java.time.temporal.TemporalUnit
@@ -90,7 +92,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def seconds(): Seconds = Seconds
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Seconds] {
+    instance TemporalUnit[Seconds] {
         pub def marshalToNativeTemporalUnit(_: Seconds): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
             get_SECONDS() as ##java.time.temporal.TemporalUnit
@@ -106,7 +108,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def minutes(): Minutes = Minutes
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Minutes] {
+    instance TemporalUnit[Minutes] {
         pub def marshalToNativeTemporalUnit(_: Minutes): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
             get_MINUTES() as ##java.time.temporal.TemporalUnit
@@ -122,7 +124,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def hours(): Hours = Hours
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Hours] {
+    instance TemporalUnit[Hours] {
         pub def marshalToNativeTemporalUnit(_: Hours): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
             get_HOURS() as ##java.time.temporal.TemporalUnit
@@ -138,7 +140,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def halfDays(): HalfDays = HalfDays
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[HalfDays] {
+    instance TemporalUnit[HalfDays] {
         pub def marshalToNativeTemporalUnit(_: HalfDays): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
             get_HALF_DAYS() as ##java.time.temporal.TemporalUnit
@@ -154,7 +156,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def days(): Days = Days
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Days] {
+    instance TemporalUnit[Days] {
         pub def marshalToNativeTemporalUnit(_: Days): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
             get_DAYS() as ##java.time.temporal.TemporalUnit
@@ -170,7 +172,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def weeks(): Weeks = Weeks
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Weeks] {
+    instance TemporalUnit[Weeks] {
         pub def marshalToNativeTemporalUnit(_: Weeks): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.WEEKS: ##java.time.temporal.ChronoUnit & Pure as get_WEEKS;
             get_WEEKS() as ##java.time.temporal.TemporalUnit
@@ -186,7 +188,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def months(): Months = Months
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Months] {
+    instance TemporalUnit[Months] {
         pub def marshalToNativeTemporalUnit(_: Months): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
             get_MONTHS() as ##java.time.temporal.TemporalUnit
@@ -202,7 +204,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def years(): Years = Years
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Years] {
+    instance TemporalUnit[Years] {
         pub def marshalToNativeTemporalUnit(_: Years): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
             get_YEARS() as ##java.time.temporal.TemporalUnit
@@ -218,7 +220,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def decades(): Decades = Decades
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Decades] {
+    instance TemporalUnit[Decades] {
         pub def marshalToNativeTemporalUnit(_: Decades): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as get_DECADES;
             get_DECADES() as ##java.time.temporal.TemporalUnit
@@ -234,7 +236,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def centuries(): Centuries = Centuries
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Centuries] {
+    instance TemporalUnit[Centuries] {
         pub def marshalToNativeTemporalUnit(_: Centuries): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
             get_CENTURIES() as ##java.time.temporal.TemporalUnit
@@ -250,7 +252,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def millennia(): Millennia = Millennia
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Millennia] {
+    instance TemporalUnit[Millennia] {
         pub def marshalToNativeTemporalUnit(_: Millennia): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
             get_MILLENNIA() as ##java.time.temporal.TemporalUnit
@@ -266,7 +268,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def eras(): Eras = Eras
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Eras] {
+    instance TemporalUnit[Eras] {
         pub def marshalToNativeTemporalUnit(_: Eras): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.ERAS: ##java.time.temporal.ChronoUnit & Pure as get_ERAS;
             get_ERAS() as ##java.time.temporal.TemporalUnit
@@ -282,7 +284,7 @@ namespace Time/Temporal/ChronoUnit {
 
     pub def forever(): Forever = Forever
 
-    instance Time/Temporal/TemporalUnit.TemporalUnit[Forever] {
+    instance TemporalUnit[Forever] {
         pub def marshalToNativeTemporalUnit(_: Forever): ##java.time.temporal.TemporalUnit =
             import static get java.time.temporal.ChronoUnit.FOREVER: ##java.time.temporal.ChronoUnit & Pure as get_FOREVER;
             get_FOREVER() as ##java.time.temporal.TemporalUnit
