@@ -43,15 +43,18 @@ namespace Time/Temporal/WeekFields {
     use Time/Temporal.WeekFields.{WeekFields};
     use FlixSandbox/I18n.Locale;
     use FlixSandbox/I18n.Locale.{Locale};
-    use Time.DayOfWeek;
     use Time/Temporal.ChronoField;
 
-    pub def of(r: {firstDayOfWeek :: DayOfWeek, minimalDaysInFirstWeek :: Int32}): WeekFields =
+    pub def getWeekFields(x: WeekFields): ##java.time.temporal.WeekFields = 
+        let WeekFields(x1) = x;
+        x1
+
+    pub def of(r: {firstDayOfWeek :: Time.DayOfWeek, minimalDaysInFirstWeek :: Int32}): WeekFields =
         import static java.time.temporal.WeekFields.of(##java.time.DayOfWeek, Int32): ##java.time.temporal.WeekFields & Pure;
         let firstDayOfWeek1 = Time/DayOfWeek.marshal(r.firstDayOfWeek);
         WeekFields(of(firstDayOfWeek1, r.minimalDaysInFirstWeek))
 
-    pub def ofLocale(locale: { locale :: Locale}): WeekFields = 
+    pub def ofLocale(locale: {locale :: Locale}): WeekFields = 
         import static java.time.temporal.WeekFields.of(##java.util.Locale): ##java.time.temporal.WeekFields & Pure;
         let Locale(x1) = locale.locale;
         WeekFields(of(x1))
@@ -64,7 +67,7 @@ namespace Time/Temporal/WeekFields {
         import static get java.time.temporal.WeekFields.SUNDAY_START: ##java.time.temporal.WeekFields & Pure as getSUNDAY_START;
         WeekFields(getSUNDAY_START())
 
-    pub def getFirstDayOfWeek(x: WeekFields): DayOfWeek =
+    pub def getFirstDayOfWeek(x: WeekFields): Time.DayOfWeek =
         import java.time.temporal.WeekFields.getFirstDayOfWeek(): ##java.time.DayOfWeek & Pure;
         let WeekFields(x1) = x;
         Time/DayOfWeek.unmarshal(getFirstDayOfWeek(x1))
@@ -93,22 +96,129 @@ namespace Time/Temporal/WeekFields {
     ///     let cx1 = weekBasedYear(x1) as ##java.time.temporal.ChronoField;
     ///     Time/Temporal/ChronoField.unmarshal(cx1)
 
-    /// pub def weekOfMonth(x: WeekFields): ChronoField = 
-    ///     import java.time.temporal.WeekFields.weekOfMonth(): ##java.time.temporal.TemporalField & Pure;
-    ///     let WeekFields(x1) = x;
-    ///     let cx1 = weekOfMonth(x1) as ##java.time.temporal.ChronoField;
-    ///     Time/Temporal/ChronoField.unmarshal(cx1)
+    def toStringHelper(constrName: String, x: ##java.time.temporal.TemporalField): String = 
+        import java.time.temporal.TemporalField.toString(): String & Pure as toString1;
+        let body = toString1(x);
+        "${constrName}(${body})"
 
-    /// pub def weekOfWeekBasedYear(x: WeekFields): ChronoField = 
-    ///     import java.time.temporal.WeekFields.weekOfWeekBasedYear(): ##java.time.temporal.TemporalField & Pure;
-    ///     let WeekFields(x1) = x;
-    ///     let cx1 = weekOfWeekBasedYear(x1) as ##java.time.temporal.ChronoField;
-    ///     Time/Temporal/ChronoField.unmarshal(cx1)
+    /// DayOfWeek
 
-    /// pub def weekOfYear(x: WeekFields): ChronoField = 
-    ///     import java.time.temporal.WeekFields.weekOfYear(): ##java.time.temporal.TemporalField & Pure;
-    ///     let WeekFields(x1) = x;
-    ///     let cx1 = weekOfYear(x1) as ##java.time.temporal.ChronoField;
-    ///     Time/Temporal/ChronoField.unmarshal(cx1)
+    pub enum DayOfWeek { case DayOfWeek(##java.time.temporal.TemporalField) }
+
+    instance ToString[DayOfWeek] {
+        pub def toString(x: DayOfWeek): String = 
+            let DayOfWeek(x1) = x;
+            toStringHelper("DayOfWeekField", x1)        
+    }
+
+    pub def dayOfWeek(x: WeekFields): DayOfWeek = 
+        import java.time.temporal.WeekFields.dayOfWeek(): ##java.time.temporal.TemporalField & Pure;
+        let x1 = getWeekFields(x);
+        DayOfWeek(dayOfWeek(x1))
+
+    instance Time/Temporal/TemporalField.TemporalField[DayOfWeek] {
+        pub def marshalToNativeTemporalField(x: DayOfWeek): ##java.time.temporal.TemporalField =
+            let DayOfWeek(x1) = x;
+            x1
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): DayOfWeek = 
+            DayOfWeek(x)
+    }
+
+    /// WeekBasedYear
+
+    pub enum WeekBasedYear { case WeekBasedYear(##java.time.temporal.TemporalField) }
+
+    instance ToString[WeekBasedYear] {
+        pub def toString(x: WeekBasedYear): String = 
+            let WeekBasedYear(x1) = x;
+            toStringHelper("WeekBasedYear", x1)
+    }
+
+    pub def weekBasedYear(x: WeekFields): WeekBasedYear = 
+        import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField & Pure;
+        let x1 = getWeekFields(x);
+        WeekBasedYear(weekBasedYear(x1))
+
+    instance Time/Temporal/TemporalField.TemporalField[WeekBasedYear] {
+        pub def marshalToNativeTemporalField(x: WeekBasedYear): ##java.time.temporal.TemporalField =
+            let WeekBasedYear(x1) = x;
+            x1
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): WeekBasedYear = 
+            WeekBasedYear(x)
+    }
+
+    /// WeekOfMonth
+
+    pub enum WeekOfMonth { case WeekOfMonth(##java.time.temporal.TemporalField) }
+
+    instance ToString[WeekOfMonth] {
+        pub def toString(x: WeekOfMonth): String = 
+            let WeekOfMonth(x1) = x;
+            toStringHelper("WeekOfMonth", x1)
+    }
+
+    pub def weekOfMonth(x: WeekFields): WeekOfMonth = 
+        import java.time.temporal.WeekFields.weekOfMonth(): ##java.time.temporal.TemporalField & Pure;
+        let x1 = getWeekFields(x);
+        WeekOfMonth(weekOfMonth(x1))
+
+    instance Time/Temporal/TemporalField.TemporalField[WeekOfMonth] {
+        pub def marshalToNativeTemporalField(x: WeekOfMonth): ##java.time.temporal.TemporalField =
+            let WeekOfMonth(x1) = x;
+            x1
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): WeekOfMonth = 
+            WeekOfMonth(x)
+    }
+
+    /// WeekOfWeekBasedYear
+
+    pub enum WeekOfWeekBasedYear { case WeekOfWeekBasedYear(##java.time.temporal.TemporalField) }
+
+    instance ToString[WeekOfWeekBasedYear] {
+        pub def toString(x: WeekOfWeekBasedYear): String = 
+            let WeekOfWeekBasedYear(x1) = x;
+            toStringHelper("WeekOfWeekBasedYear", x1)
+    }
+
+    pub def weekOfWeekBasedYear(x: WeekFields): WeekOfWeekBasedYear = 
+        import java.time.temporal.WeekFields.weekOfWeekBasedYear(): ##java.time.temporal.TemporalField & Pure;
+        let x1 = getWeekFields(x);
+        WeekOfWeekBasedYear(weekOfWeekBasedYear(x1))
+
+    instance Time/Temporal/TemporalField.TemporalField[WeekOfWeekBasedYear] {
+        pub def marshalToNativeTemporalField(x: WeekOfWeekBasedYear): ##java.time.temporal.TemporalField =
+            let WeekOfWeekBasedYear(x1) = x;
+            x1
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): WeekOfWeekBasedYear = 
+            WeekOfWeekBasedYear(x)
+    }
+
+    /// WeekOfYear
+
+    pub enum WeekOfYear { case WeekOfYear(##java.time.temporal.TemporalField) }
+
+    instance ToString[WeekOfYear] {
+        pub def toString(x: WeekOfYear): String = 
+            let WeekOfYear(x1) = x;
+            toStringHelper("WeekOfYear", x1)
+    }
+
+    pub def weekOfYear(x: WeekFields): WeekOfYear = 
+        import java.time.temporal.WeekFields.weekOfYear(): ##java.time.temporal.TemporalField & Pure;
+        let x1 = getWeekFields(x);
+        WeekOfYear(weekOfYear(x1))
+
+    instance Time/Temporal/TemporalField.TemporalField[WeekOfYear] {
+        pub def marshalToNativeTemporalField(x: WeekOfYear): ##java.time.temporal.TemporalField =
+            let WeekOfYear(x1) = x;
+            x1
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): WeekOfYear = 
+            WeekOfYear(x)
+    }
 
 }
