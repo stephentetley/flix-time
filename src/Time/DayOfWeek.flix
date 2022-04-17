@@ -18,6 +18,9 @@
 
 namespace Time {
 
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
     ///
     /// A day of the week.
     ///
@@ -55,6 +58,21 @@ namespace Time {
     }
 
 
+    instance TemporalAccessor[DayOfWeek] {
+        pub def marshalToNativeTemporalAccessor(x: DayOfWeek): ##java.time.temporal.TemporalAccessor =         
+            Time/DayOfWeek.marshal(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): DayOfWeek = 
+            Time/DayOfWeek.unmarshal(x as ##java.time.DayOfWeek)
+    }
+
+    instance TemporalAdjuster[DayOfWeek] {
+        pub def marshalToNativeTemporalAdjuster(x: DayOfWeek): ##java.time.temporal.TemporalAdjuster =         
+            Time/DayOfWeek.marshal(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): DayOfWeek = 
+            Time/DayOfWeek.unmarshal(x as ##java.time.DayOfWeek)
+    }
 
 }
 
@@ -65,7 +83,10 @@ namespace Time/DayOfWeek {
 
     use Time.DayOfWeek;
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+
     use Time/Format.TextStyle;
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalField;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
 
@@ -191,10 +212,21 @@ namespace Time/DayOfWeek {
         unmarshal(x2)
 
 
-    /// pub def range(x: DayOfWeek): ValueRange = 
-    ///     import java.time.DayOfWeek.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-    ///     let x1 = marshal(x);
-    ///     let field1 = Time/Temporal/ChronoField.marshal(Time/Temporal/ChronoField.DayOfWeek);
-    ///     ValueRange(range(x1, field1 as ##java.time.temporal.TemporalField))
+    pub def range(field: a, x: DayOfWeek): ValueRange with TemporalField[a] = 
+        import java.time.DayOfWeek.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
+        try {
+            let x1 = marshal(x);
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(x1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def adjustInto(t: a, x: DayOfWeek): a with Temporal[a] = 
+        import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = marshal(x);
+        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
 }

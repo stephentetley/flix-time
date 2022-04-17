@@ -100,7 +100,7 @@ namespace TestYear {
     def range01(): Time/Temporal.ValueRange & Impure = 
         let y1 = Time/Year.of(isoYear = 2020);        
         let r1 = Time/Year.range(Time/Temporal/ChronoField.year(), y1);
-        println("range01(): ${r1}");
+        println("Year.range01(): ${r1}");
         r1
 
 
@@ -113,7 +113,7 @@ namespace TestYear {
         let t1 = Time/Year.of(isoYear = 2020);
         let t2 = Time/Year.of(isoYear = 2028);
         let diff = Time/Year.until(Time/Temporal/ChronoUnit.years(), { start = t1, end = t2 });
-        println("until01(): ${diff}");
+        println("Year.until01(): ${diff}");
         diff
 
     /////////////////////////////////////////////////////////////////////////////
@@ -135,5 +135,5 @@ namespace TestYear {
         let t2 = Time/Year.of(isoYear = 2028);
         let t3 = Time/Year.withTemporalAdjuster(t2, t1);
         println("withTemporalAdjuster01(): ${t3}");
-        t2
+        t3
 }

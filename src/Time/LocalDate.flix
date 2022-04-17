@@ -18,6 +18,10 @@
 
 namespace Time {
 
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
     ///
     /// A wrapper around a Java LocalDate.
     ///
@@ -77,6 +81,30 @@ namespace Time {
 
     instance Boxable[LocalDate]
 
+    instance TemporalAccessor[LocalDate] {
+        pub def marshalToNativeTemporalAccessor(x: LocalDate): ##java.time.temporal.TemporalAccessor =         
+            Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): LocalDate = 
+            LocalDate(x as ##java.time.LocalDate)
+    }
+
+    instance Temporal[LocalDate] {
+        pub def marshalToNativeTemporal(x: LocalDate): ##java.time.temporal.Temporal =         
+            Time/LocalDate.getLocalDate(x) as ##java.time.temporal.Temporal
+        
+        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): LocalDate = 
+            LocalDate(x as ##java.time.LocalDate)
+    }
+
+    instance TemporalAdjuster[LocalDate] {
+        pub def marshalToNativeTemporalAdjuster(x: LocalDate): ##java.time.temporal.TemporalAdjuster =         
+            Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): LocalDate = 
+            LocalDate(x as ##java.time.LocalDate)
+    }
+
 }
 
 namespace Time/LocalDate {
@@ -86,7 +114,9 @@ namespace Time/LocalDate {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Temporal.ChronoUnit;
+    use Time/Temporal.TemporalField;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
@@ -350,6 +380,19 @@ namespace Time/LocalDate {
         import java.time.LocalDate.withYear(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
         LocalDate(withYear(x1, year))
+
+
+    pub def range(field: a, x: LocalDate): ValueRange with TemporalField[a] =
+        import java.time.LocalDate.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let LocalDate(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(x1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
 
     /// pub def until(b: LocalDate, e: LocalDate, unit: ChronoUnit): Int64 =
     ///     import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;

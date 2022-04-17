@@ -20,6 +20,10 @@
 
 namespace Time {
 
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
     ///
     /// A wrapper around a Java instant.
     ///
@@ -74,6 +78,29 @@ namespace Time {
 
     instance Boxable[ZInstant]
 
+    instance TemporalAccessor[ZInstant] {
+        pub def marshalToNativeTemporalAccessor(x: ZInstant): ##java.time.temporal.TemporalAccessor =         
+            Time/ZInstant.getInstant(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): ZInstant = 
+            ZInstant(x as ##java.time.Instant)
+    }
+
+    instance Temporal[ZInstant] {
+        pub def marshalToNativeTemporal(x: ZInstant): ##java.time.temporal.Temporal =         
+            Time/ZInstant.getInstant(x) as ##java.time.temporal.Temporal
+        
+        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): ZInstant = 
+            ZInstant(x as ##java.time.Instant)
+    }
+
+    instance TemporalAdjuster[ZInstant] {
+        pub def marshalToNativeTemporalAdjuster(x: ZInstant): ##java.time.temporal.TemporalAdjuster =         
+            Time/ZInstant.getInstant(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): ZInstant = 
+            ZInstant(x as ##java.time.Instant)
+    }
 }   
 
 namespace Time/ZInstant {

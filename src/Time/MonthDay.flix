@@ -18,6 +18,9 @@
 
 namespace Time {
 
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
     ///
     /// A wrapper around java.time.MonthDay.
     ///
@@ -56,6 +59,23 @@ namespace Time {
         pub def compare(x: MonthDay, y: MonthDay): Comparison =
             Time/MonthDay.compareTo(x,y) |> Comparison.fromInt32
     }
+
+    instance TemporalAccessor[MonthDay] {
+        pub def marshalToNativeTemporalAccessor(x: MonthDay): ##java.time.temporal.TemporalAccessor =         
+            Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): MonthDay = 
+            MonthDay(x as ##java.time.MonthDay)
+    }
+
+    instance TemporalAdjuster[MonthDay] {
+        pub def marshalToNativeTemporalAdjuster(x: MonthDay): ##java.time.temporal.TemporalAdjuster =         
+            Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): MonthDay = 
+            MonthDay(x as ##java.time.MonthDay)
+    }
+
 
 }
 

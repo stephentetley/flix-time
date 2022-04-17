@@ -17,6 +17,9 @@
 
 namespace Time {
 
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+
     ///
     /// A wrapper around a Java ZonedDateTime.
     ///
@@ -62,6 +65,22 @@ namespace Time {
     }
 
     instance Boxable[ZonedDateTime]
+
+    instance TemporalAccessor[ZonedDateTime] {
+        pub def marshalToNativeTemporalAccessor(x: ZonedDateTime): ##java.time.temporal.TemporalAccessor =         
+            Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): ZonedDateTime = 
+            ZonedDateTime(x as ##java.time.ZonedDateTime)
+    }
+
+    instance Temporal[ZonedDateTime] {
+        pub def marshalToNativeTemporal(x: ZonedDateTime): ##java.time.temporal.Temporal =         
+            Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.Temporal
+        
+        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): ZonedDateTime = 
+            ZonedDateTime(x as ##java.time.ZonedDateTime)
+    }
 
 }
 

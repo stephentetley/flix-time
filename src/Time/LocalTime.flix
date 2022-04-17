@@ -18,6 +18,10 @@
 
 namespace Time {
 
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
     ///
     /// A wrapper around a Java LocalTime.
     ///
@@ -76,6 +80,30 @@ namespace Time {
     }
 
     instance Boxable[LocalTime]
+
+    instance TemporalAccessor[LocalTime] {
+        pub def marshalToNativeTemporalAccessor(x: LocalTime): ##java.time.temporal.TemporalAccessor =         
+            Time/LocalTime.getLocalTime(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): LocalTime = 
+            LocalTime(x as ##java.time.LocalTime)
+    }
+
+    instance Temporal[LocalTime] {
+        pub def marshalToNativeTemporal(x: LocalTime): ##java.time.temporal.Temporal =         
+            Time/LocalTime.getLocalTime(x) as ##java.time.temporal.Temporal
+        
+        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): LocalTime = 
+            LocalTime(x as ##java.time.LocalTime)
+    }
+
+    instance TemporalAdjuster[LocalTime] {
+        pub def marshalToNativeTemporalAdjuster(x: LocalTime): ##java.time.temporal.TemporalAdjuster =         
+            Time/LocalTime.getLocalTime(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): LocalTime = 
+            LocalTime(x as ##java.time.LocalTime)
+    }
 
 }
 

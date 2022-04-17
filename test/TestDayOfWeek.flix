@@ -87,4 +87,15 @@ namespace TestDayOfWeek {
     @test
     def toEnum09(): Bool = Time/DayOfWeek.toEnum(8) == None
 
+    /////////////////////////////////////////////////////////////////////////////
+    // range                                                                   //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def range01(): Time/Temporal.ValueRange & Impure = 
+        let d1 = Time/DayOfWeek.Sunday;        
+        let r1 = Time/DayOfWeek.range(Time/Temporal/ChronoField.dayOfWeek(), d1);
+        println("DayOfWeek.range01(): ${r1}");
+        r1
+
 }

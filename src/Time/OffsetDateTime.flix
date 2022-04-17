@@ -17,6 +17,10 @@
 
 namespace Time {
 
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
     ///
     /// A wrapper around a Java OffsetDateTime.
     ///
@@ -74,6 +78,30 @@ namespace Time {
     }
 
     instance Boxable[OffsetDateTime]
+
+    instance TemporalAccessor[OffsetDateTime] {
+        pub def marshalToNativeTemporalAccessor(x: OffsetDateTime): ##java.time.temporal.TemporalAccessor =         
+            Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): OffsetDateTime = 
+            OffsetDateTime(x as ##java.time.OffsetDateTime)
+    }
+
+    instance Temporal[OffsetDateTime] {
+        pub def marshalToNativeTemporal(x: OffsetDateTime): ##java.time.temporal.Temporal =         
+            Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.Temporal
+        
+        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): OffsetDateTime = 
+            OffsetDateTime(x as ##java.time.OffsetDateTime)
+    }
+
+    instance TemporalAdjuster[OffsetDateTime] {
+        pub def marshalToNativeTemporalAdjuster(x: OffsetDateTime): ##java.time.temporal.TemporalAdjuster =         
+            Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): OffsetDateTime = 
+            OffsetDateTime(x as ##java.time.OffsetDateTime)
+    }
 
 }
 

@@ -17,6 +17,10 @@
 
 namespace Time {
 
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
     ///
     /// A wrapper around java.time.YearMonth.
     ///
@@ -59,6 +63,31 @@ namespace Time {
         pub def compare(x: YearMonth, y: YearMonth): Comparison =
             Time/YearMonth.compareTo(x,y) |> Comparison.fromInt32
     }
+
+    instance TemporalAccessor[YearMonth] {
+        pub def marshalToNativeTemporalAccessor(x: YearMonth): ##java.time.temporal.TemporalAccessor =         
+            Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): YearMonth = 
+            YearMonth(x as ##java.time.YearMonth)
+    }
+
+    instance Temporal[YearMonth] {
+        pub def marshalToNativeTemporal(x: YearMonth): ##java.time.temporal.Temporal =         
+            Time/YearMonth.getYearMonth(x) as ##java.time.temporal.Temporal
+        
+        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): YearMonth = 
+            YearMonth(x as ##java.time.YearMonth)
+    }
+
+    instance TemporalAdjuster[YearMonth] {
+        pub def marshalToNativeTemporalAdjuster(x: YearMonth): ##java.time.temporal.TemporalAdjuster =         
+            Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): YearMonth = 
+            YearMonth(x as ##java.time.YearMonth)
+    }
+
 
 }
 

@@ -103,8 +103,7 @@ namespace Time {
 
     instance TemporalAmount[ZDuration] {
         pub def marshalToNativeTemporalAmount(x: ZDuration): ##java.time.temporal.TemporalAmount = 
-            let ZDuration(x1) = x;
-            x1 as ##java.time.temporal.TemporalAmount
+            Time/ZDuration.getDuration(x) as ##java.time.temporal.TemporalAmount
 
         pub def unmarshalFromNativeTemporalAmount(x: ##java.time.temporal.TemporalAmount): ZDuration= 
             ZDuration(x as ##java.time.Duration)
@@ -117,6 +116,11 @@ namespace Time/ZDuration {
     use Time.ZDuration;
     use Time.ZDuration.{ZDuration};
     use Time/Temporal.ChronoUnit;
+
+    pub def getDuration(x: ZDuration): ##java.time.Duration = 
+        let ZDuration(x1) = x;
+        x1
+
 
     ///
     /// Return a new duration.

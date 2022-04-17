@@ -16,6 +16,10 @@
 
 namespace Time {
 
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
+
     ///
     /// A wrapper around a Java ZoneOffset.
     ///
@@ -54,6 +58,22 @@ namespace Time {
     }
 
     instance Boxable[ZoneOffset]
+
+    instance TemporalAccessor[ZoneOffset] {
+        pub def marshalToNativeTemporalAccessor(x: ZoneOffset): ##java.time.temporal.TemporalAccessor =         
+            Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): ZoneOffset = 
+            ZoneOffset(x as ##java.time.ZoneOffset)
+    }
+
+    instance TemporalAdjuster[ZoneOffset] {
+        pub def marshalToNativeTemporalAdjuster(x: ZoneOffset): ##java.time.temporal.TemporalAdjuster =         
+            Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): ZoneOffset = 
+            ZoneOffset(x as ##java.time.ZoneOffset)
+    }
 
 }
 

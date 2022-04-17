@@ -18,7 +18,10 @@
 
 namespace Time {
 
-    pub enum Month {
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
+    pub enum Month with Eq, Order, ToString, Hash, Boxable {
         case January,
         case February,
         case March,
@@ -33,22 +36,6 @@ namespace Time {
         case December
     }
 
-    instance ToString[Month] {
-        pub def toString(x: Month): String = match x {
-            case January => "January"
-            case February => "February"
-            case March => "March"
-            case April => "April"
-            case May => "May"
-            case June => "June"
-            case July => "July"
-            case August => "August"
-            case September => "September"
-            case October => "October"
-            case November => "November"
-            case December => "December"
-        }
-    }
 
     instance FromString[Month] {
         pub def fromString(x: String): Option[Month] = match x {
@@ -68,34 +55,22 @@ namespace Time {
         }
     }
 
-    instance Eq[Month] {
-        pub def eq(x: Month, y: Month): Bool = match (x,y) {
-            case (January, January) => true
-            case (February, February) => true
-            case (March, March) => true
-            case (April, April) => true
-            case (May, May) => true
-            case (June, June) => true
-            case (July, July) => true
-            case (August, August) => true
-            case (September, September) => true
-            case (October, October) => true
-            case (November, November) => true
-            case (December, December) => true
-            case (_, _) => false
-        }
+    instance TemporalAccessor[Month] {
+        pub def marshalToNativeTemporalAccessor(x: Month): ##java.time.temporal.TemporalAccessor =         
+            Time/Month.marshal(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): Month = 
+            Time/Month.unmarshal(x as ##java.time.Month)
     }
 
-    instance Hash[Month] {
-        pub def hash(x: Month): Int32 = Time/Month.hashCode(x)
+    instance TemporalAdjuster[Month] {
+        pub def marshalToNativeTemporalAdjuster(x: Month): ##java.time.temporal.TemporalAdjuster =         
+            Time/Month.marshal(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): Month = 
+            Time/Month.unmarshal(x as ##java.time.Month)
     }
 
-    instance Order[Month] {
-        pub def compare(x: Month, y: Month): Comparison =
-            Time/Month.compareTo(x,y) |> Comparison.fromInt32
-    }
-
-    instance Boxable[Month]
 }
 
 namespace Time/Month {

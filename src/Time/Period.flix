@@ -95,10 +95,9 @@ namespace Time {
 
     instance TemporalAmount[Period] {
         pub def marshalToNativeTemporalAmount(x: Period): ##java.time.temporal.TemporalAmount = 
-            let Period(x1) = x;
-            x1 as ##java.time.temporal.TemporalAmount
+            Time/Period.getPeriod(x) as ##java.time.temporal.TemporalAmount
 
-        pub def unmarshalFromNativeTemporalAmount(x: ##java.time.temporal.TemporalAmount): Period= 
+        pub def unmarshalFromNativeTemporalAmount(x: ##java.time.temporal.TemporalAmount): Period = 
             Period(x as ##java.time.Period)
     }
 
