@@ -89,13 +89,7 @@ namespace Time/Temporal/WeekFields {
         let WeekFields(x1) = x;
         hashCode(x1)
 
-
-    /// /// TODO not sure casting to ChronoField is wise... 
-    /// pub def weekBasedYear(x: WeekFields): ChronoField = 
-    ///     import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField & Pure;
-    ///     let WeekFields(x1) = x;
-    ///     let cx1 = weekBasedYear(x1) as ##java.time.temporal.ChronoField;
-    ///     Time/Temporal/ChronoField.unmarshal(cx1)
+    /// Temporal Fields
 
     def toStringHelper(constrName: String, x: ##java.time.temporal.TemporalField): String = 
         import java.time.temporal.TemporalField.toString(): String & Pure as toString1;

@@ -40,7 +40,7 @@ namespace Time/Temporal/ValueRange {
 
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
-    use Time/Temporal.ChronoField;
+    use Time/Temporal.TemporalField;
 
     ///
     /// Return a new **Fixed** value range.
@@ -76,23 +76,25 @@ namespace Time/Temporal/ValueRange {
         let ValueRange(x1) = x;
         hashCode(x1) 
 
+
+
+    pub def checkValidValue(field: a, value: Int64, x: ValueRange): Int64 with TemporalField[a] = 
+        import java.time.temporal.ValueRange.checkValidValue(Int64, ##java.time.temporal.TemporalField): Int64 & Pure;
+        let ValueRange(x1) = x;
+        let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+        checkValidValue(x1, value, field1)
+
+    pub def checkValidIntValue(field: a, value: Int64, x: ValueRange): Int32 with TemporalField[a] = 
+        import java.time.temporal.ValueRange.checkValidIntValue(Int64, ##java.time.temporal.TemporalField): Int32 & Pure;
+        let ValueRange(x1) = x;
+        let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+        checkValidIntValue(x1, value, field1)
+
+
     pub def getMaximum(x: ValueRange): Int64 = 
         import java.time.temporal.ValueRange.getMaximum(): Int64 & Pure;
         let ValueRange(x1) = x;
         getMaximum(x1)
-
-
-    /// pub def checkValidValue(x: ValueRange, value: Int64, field: ChronoField): Int64 = 
-    ///     import java.time.temporal.ValueRange.checkValidValue(Int64, ##java.time.temporal.TemporalField): Int64 & Pure;
-    ///     let ValueRange(x1) = x;
-    ///     let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
-    ///     checkValidValue(x1, value, field1)
-
-    /// pub def checkValidIntValue(x: ValueRange, value: Int64, field: ChronoField): Int32 = 
-    ///     import java.time.temporal.ValueRange.checkValidIntValue(Int64, ##java.time.temporal.TemporalField): Int32 & Pure;
-    ///     let ValueRange(x1) = x;
-    ///     let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
-    ///     checkValidIntValue(x1, value, field1)
 
     pub def getMinimum(x: ValueRange): Int64 = 
         import java.time.temporal.ValueRange.getMinimum(): Int64 & Pure;
