@@ -325,4 +325,26 @@ namespace Time/Year {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    /// TODO refine class qualification of `t`
+    pub def until(units: t, r: {start :: Year, end :: Year}): Int64 with TemporalUnit[t] = 
+        import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getYear(r.start);
+        let e1 = getYear(r.end) as ##java.time.temporal.Temporal;
+        let units1 = Time/Temporal/TemporalUnit/TemporalUnit.marshalToNativeTemporalUnit(units);
+        until(b1, e1, units1)
+
+
+
+    pub def withTemporalField(field: a, i: Int64, x: Year): Year with TemporalField[a] =
+        import java.time.Year.with(##java.time.temporal.TemporalField, Int64): ##java.time.Year & Pure;         
+        try {
+            let Year(x1) = x;
+            let field1 = Time/Temporal/TemporalField/TemporalField.marshalToNativeTemporalField(field);
+            Year(with(x1, field1, i))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
 }

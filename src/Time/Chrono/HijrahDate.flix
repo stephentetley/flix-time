@@ -160,17 +160,17 @@ namespace Time/Chrono/HijrahDate {
     ///     }
 
 
-    pub def plusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
-        import java.time.chrono.HijrahDate.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;
-        let HijrahDate(x1) = x;
-        let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
-        HijrahDate(plus(x1, amount, unit1))
+    /// pub def plusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
+    ///     import java.time.chrono.HijrahDate.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;
+    ///     let HijrahDate(x1) = x;
+    ///     let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
+    ///     HijrahDate(plus(x1, amount, unit1))
 
-    pub def minusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
-        import java.time.chrono.HijrahDate.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;
-        let HijrahDate(x1) = x;
-        let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
-        HijrahDate(minus(x1, amount, unit1))
+    /// pub def minusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
+    ///     import java.time.chrono.HijrahDate.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;
+    ///     let HijrahDate(x1) = x;
+    ///     let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
+    ///     HijrahDate(minus(x1, amount, unit1))
 
     pub def plusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
         import java.time.chrono.HijrahDate.plus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate & Pure;
@@ -186,13 +186,13 @@ namespace Time/Chrono/HijrahDate {
         let tamount1 = amount1 as ##java.time.temporal.TemporalAmount;
         HijrahDate(minus(x1, tamount1))
 
-    pub def until(b: HijrahDate, e: HijrahDate, unit: ChronoUnit): Int64 = 
-        import java.time.chrono.HijrahDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let HijrahDate(b1) = b;
-        let HijrahDate(e1) = e;
-        let te1 = e1 as ##java.time.temporal.Temporal;
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
-        until(b1, te1, u1)
+    /// pub def until(b: HijrahDate, e: HijrahDate, unit: ChronoUnit): Int64 = 
+    ///     import java.time.chrono.HijrahDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+    ///     let HijrahDate(b1) = b;
+    ///     let HijrahDate(e1) = e;
+    ///     let te1 = e1 as ##java.time.temporal.Temporal;
+    ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
+    ///     until(b1, te1, u1)
 
     pub def withVariant(x: HijrahDate, chronology: HijrahChronology): HijrahDate = 
         import java.time.chrono.HijrahDate.withVariant(##java.time.chrono.HijrahChronology): ##java.time.chrono.HijrahDate & Pure;

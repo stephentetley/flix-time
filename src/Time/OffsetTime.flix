@@ -299,13 +299,13 @@ namespace Time/OffsetTime {
         let ZoneOffset(o1) = offset;
         OffsetTime(withOffsetSameLocal(x1, o1))
 
-    pub def until(b: OffsetTime, e: OffsetTime, unit: ChronoUnit): Int64 =
-        import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let OffsetTime(b1) = b;
-        let OffsetTime(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
-        let te1 = e1 as ##java.time.temporal.Temporal;
-        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        until(b1, te1, tu1)
+    /// pub def until(b: OffsetTime, e: OffsetTime, unit: ChronoUnit): Int64 =
+    ///     import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+    ///     let OffsetTime(b1) = b;
+    ///     let OffsetTime(e1) = e;
+    ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+    ///     let te1 = e1 as ##java.time.temporal.Temporal;
+    ///     let tu1 = u1 as ##java.time.temporal.TemporalUnit;
+    ///     until(b1, te1, tu1)
 
 }

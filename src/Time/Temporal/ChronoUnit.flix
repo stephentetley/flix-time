@@ -16,8 +16,44 @@
 
 
 
-namespace Time/Temporal {
+namespace Time/Temporal/ChronoUnit {
 
+    def primEquals(x: ##java.time.temporal.ChronoUnit, y: ##java.time.temporal.ChronoUnit): Bool =
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
+        let y1 = y as ##java.lang.Object;
+        equals(x1, y1)
+
+
+    /// Bugs! should be unreachable due to class qualification at the API level...
+    def assertChronoUnit(x: a, fn: Unit -> ##java.time.temporal.ChronoUnit, ans: b): b with ToString[b]= 
+        try {
+            if (primEquals(x as ##java.time.temporal.ChronoUnit, fn()))
+                ans
+            else 
+                bug!("unmarshalFromNativeTemporalUnit - not ${ans}")
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        } 
+
+    /// Years
+
+    pub enum Years with ToString { case Years }
+
+    pub def years(): Years = Years
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Years] {
+        pub def marshalToNativeTemporalUnit(_: Years): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+            get_YEARS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Years = 
+            import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+            assertChronoUnit(x, get_YEARS, Years) 
+    }
+
+
+/*
     pub enum ChronoUnit {
         case Nanos
         case Micros
@@ -90,12 +126,6 @@ namespace Time/Temporal {
         pub def compare(x: ChronoUnit, y: ChronoUnit): Comparison =
             Time/Temporal/ChronoUnit.compareTo(x,y) |> Comparison.fromInt32
     }
-
-}
-
-/// TODO should provide functions from the TemporalUnit interface
-
-namespace Time/Temporal/ChronoUnit {
 
     use Time/Temporal.ChronoUnit;
     use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes,
@@ -179,11 +209,6 @@ namespace Time/Temporal/ChronoUnit {
             case Forever    => getFOREVER()
         }
 
-    def primEquals(x: ##java.time.temporal.ChronoUnit, y: ##java.time.temporal.ChronoUnit): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
-        let x1 = x as ##java.lang.Enum;
-        let y1 = y as ##java.lang.Object;
-        equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
         import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as getNANOS;

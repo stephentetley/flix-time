@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/*
+
 
 namespace TestInstant {
 
@@ -25,8 +25,10 @@ namespace TestInstant {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/Instant.epoch())
+    def toString01(): String = toString(Time/ZInstant.epoch())
+
+
 
 }
 
-*/
+

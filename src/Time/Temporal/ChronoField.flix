@@ -23,7 +23,7 @@ namespace Time/Temporal/ChronoField {
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
-    /// Bugs! should be unreachable due to class qualification...
+    /// Bugs! should be unreachable due to class qualification at the API level...
     def assertChronoField(x: a, fn: Unit -> ##java.time.temporal.ChronoField, ans: b): b with ToString[b]= 
         try {
             if (primEquals(x as ##java.time.temporal.ChronoField, fn()))
@@ -34,11 +34,90 @@ namespace Time/Temporal/ChronoField {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }  
 
+
+    /// NanoOfSecond
+
+    pub enum NanoOfSecond with ToString { case NanoOfSecond }
+
+    pub def nanoOfSecond(): NanoOfSecond = NanoOfSecond
+
+    instance Time/Temporal/TemporalField.TemporalField[NanoOfSecond] {
+        pub def marshalToNativeTemporalField(_: NanoOfSecond): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+            get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): NanoOfSecond = 
+            import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+            assertChronoField(x, get_NANO_OF_SECOND, NanoOfSecond) 
+    }
+
+    /// NanoOfDay
+
+    pub enum NanoOfDay with ToString { case NanoOfDay }
+
+    pub def nanoOfDay(): NanoOfDay = NanoOfDay
+
+    instance Time/Temporal/TemporalField.TemporalField[NanoOfDay] {
+        pub def marshalToNativeTemporalField(_: NanoOfDay): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.ChronoField.NANO_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_DAY;
+            get_NANO_OF_DAY() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): NanoOfDay = 
+            import static get java.time.temporal.ChronoField.NANO_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_DAY;
+            assertChronoField(x, get_NANO_OF_DAY, NanoOfDay) 
+    }
+
+    /// MicroOfSecond
+
+    pub enum MicroOfSecond with ToString { case MicroOfSecond }
+
+    pub def microOfSecond(): MicroOfSecond = MicroOfSecond
+
+    instance Time/Temporal/TemporalField.TemporalField[MicroOfSecond] {
+        pub def marshalToNativeTemporalField(_: MicroOfSecond): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+            get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): MicroOfSecond = 
+            import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+            assertChronoField(x, get_MICRO_OF_SECOND, MicroOfSecond) 
+    }
+
+    /// MicroOfDay
+
+    pub enum MicroOfDay with ToString { case MicroOfDay }
+
+    pub def microOfDay(): MicroOfDay = MicroOfDay
+
+    instance Time/Temporal/TemporalField.TemporalField[MicroOfDay] {
+        pub def marshalToNativeTemporalField(_: MicroOfDay): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.ChronoField.MICRO_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_DAY;
+            get_MICRO_OF_DAY() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): MicroOfDay = 
+            import static get java.time.temporal.ChronoField.MICRO_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_DAY;
+            assertChronoField(x, get_MICRO_OF_DAY, MicroOfDay) 
+    }
+
+    /// MilliOfSecond
+
+    pub enum MilliOfSecond with ToString { case MilliOfSecond }
+
+    pub def milliOfSecond(): MilliOfSecond = MilliOfSecond
+
+    instance Time/Temporal/TemporalField.TemporalField[MilliOfSecond] {
+        pub def marshalToNativeTemporalField(_: MilliOfSecond): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+            get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): MilliOfSecond = 
+            import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+            assertChronoField(x, get_MILLI_OF_SECOND, MilliOfSecond) 
+    }
+    
     /// Year
 
-    pub enum Year with ToString {
-        case Year
-    }
+    pub enum Year with ToString { case Year }
 
     pub def year(): Year = Year
 

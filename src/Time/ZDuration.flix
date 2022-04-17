@@ -229,11 +229,11 @@ namespace Time/ZDuration {
         toNanos(x1)
 
 
-    pub def ofWithChronoUnit(x: Int64, unit: ChronoUnit): ZDuration =
-        import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
-        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        ZDuration(of(x, tu1))
+    /// pub def ofWithChronoUnit(x: Int64, unit: ChronoUnit): ZDuration =
+    ///     import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
+    ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+    ///     let tu1 = u1 as ##java.time.temporal.TemporalUnit;
+    ///     ZDuration(of(x, tu1))
 
 
     pub def equals(x: ZDuration, y: ZDuration): Bool =
@@ -383,59 +383,59 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         ZDuration(minusNanos(x1, nanos))
 
-    def truncatedTo(x: ZDuration, unit: ChronoUnit): Option[ZDuration] = 
-        import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
-        try {
-            let ZDuration(x1) = x;
-            let unit1 = Time/Temporal/ChronoUnit.marshal(unit);
-            let tunit1 = unit1 as ##java.time.temporal.TemporalUnit;
-            Some(ZDuration(truncatedTo(x1, tunit1)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
+    /// def truncatedTo(x: ZDuration, unit: ChronoUnit): Option[ZDuration] = 
+    ///     import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
+    ///     try {
+    ///         let ZDuration(x1) = x;
+    ///         let unit1 = Time/Temporal/ChronoUnit.marshal(unit);
+    ///         let tunit1 = unit1 as ##java.time.temporal.TemporalUnit;
+    ///         Some(ZDuration(truncatedTo(x1, tunit1)))
+    ///     } catch {
+    ///         case _: ##java.lang.Exception => None
+    ///     }
     
-    pub def truncatedToNanos(x: ZDuration): ZDuration = 
-        match truncatedTo(x, Time/Temporal/ChronoUnit.Nanos) { 
-            case Some(x1) => x1
-            case None => x          /// Should be impossible!
-        }
+    /// pub def truncatedToNanos(x: ZDuration): ZDuration = 
+    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Nanos) { 
+    ///         case Some(x1) => x1
+    ///         case None => x          /// Should be impossible!
+    ///     }
 
     
-    pub def truncatedToMillis(x: ZDuration): ZDuration = 
-        match truncatedTo(x, Time/Temporal/ChronoUnit.Millis) { 
-            case Some(x1) => x1
-            case None => x          /// Should be impossible!
-        }
+    /// pub def truncatedToMillis(x: ZDuration): ZDuration = 
+    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Millis) { 
+    ///         case Some(x1) => x1
+    ///         case None => x          /// Should be impossible!
+    ///     }
 
-    pub def truncatedToSeconds(x: ZDuration): ZDuration = 
-        match truncatedTo(x, Time/Temporal/ChronoUnit.Seconds) { 
-            case Some(x1) => x1
-            case None => x          /// Should be impossible!
-        }
+    /// pub def truncatedToSeconds(x: ZDuration): ZDuration = 
+    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Seconds) { 
+    ///         case Some(x1) => x1
+    ///         case None => x          /// Should be impossible!
+    ///     }
 
-    pub def truncatedToMinutes(x: ZDuration): ZDuration = 
-        match truncatedTo(x, Time/Temporal/ChronoUnit.Minutes) { 
-            case Some(x1) => x1
-            case None => x          /// Should be impossible!
-        }
+    /// pub def truncatedToMinutes(x: ZDuration): ZDuration = 
+    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Minutes) { 
+    ///         case Some(x1) => x1
+    ///         case None => x          /// Should be impossible!
+    ///     }
 
-    pub def truncatedToHours(x: ZDuration): ZDuration = 
-        match truncatedTo(x, Time/Temporal/ChronoUnit.Hours) { 
-            case Some(x1) => x1
-            case None => x          /// Should be impossible!
-        }
+    /// pub def truncatedToHours(x: ZDuration): ZDuration = 
+    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Hours) { 
+    ///         case Some(x1) => x1
+    ///         case None => x          /// Should be impossible!
+    ///     }
 
-    pub def truncatedToHalfDays(x: ZDuration): ZDuration = 
-        match truncatedTo(x, Time/Temporal/ChronoUnit.HalfDays) { 
-            case Some(x1) => x1
-            case None => x          /// Should be impossible!
-        }
+    /// pub def truncatedToHalfDays(x: ZDuration): ZDuration = 
+    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.HalfDays) { 
+    ///         case Some(x1) => x1
+    ///         case None => x          /// Should be impossible!
+    ///     }
 
 
-    pub def truncatedToDays(x: ZDuration): ZDuration = 
-        match truncatedTo(x, Time/Temporal/ChronoUnit.Days) { 
-            case Some(x1) => x1
-            case None => x          /// Should be impossible!
-        }
+    /// pub def truncatedToDays(x: ZDuration): ZDuration = 
+    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Days) { 
+    ///         case Some(x1) => x1
+    ///         case None => x          /// Should be impossible!
+    ///     }
 
 }

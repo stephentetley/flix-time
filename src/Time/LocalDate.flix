@@ -351,14 +351,14 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         LocalDate(withYear(x1, year))
 
-    pub def until(b: LocalDate, e: LocalDate, unit: ChronoUnit): Int64 =
-        import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let LocalDate(b1) = b;
-        let LocalDate(e1) = e;
-        let u1 = Time/Temporal/ChronoUnit.marshal(unit);
-        let te1 = e1 as ##java.time.temporal.Temporal;
-        let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-        until(b1, te1, tu1)
+    /// pub def until(b: LocalDate, e: LocalDate, unit: ChronoUnit): Int64 =
+    ///     import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+    ///     let LocalDate(b1) = b;
+    ///     let LocalDate(e1) = e;
+    ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit);
+    ///     let te1 = e1 as ##java.time.temporal.Temporal;
+    ///     let tu1 = u1 as ##java.time.temporal.TemporalUnit;
+    ///     until(b1, te1, tu1)
 
     pub def isLeapYear(x: LocalDate): Bool =
         import java.time.LocalDate.isLeapYear(): Bool & Pure;

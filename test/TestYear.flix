@@ -93,7 +93,7 @@ namespace TestYear {
         Time/Year.adjustInto(t1, y1)
 
     /////////////////////////////////////////////////////////////////////////////
-    // adjustInto                                                              //
+    // range                                                                   //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
@@ -102,4 +102,18 @@ namespace TestYear {
         let r1 = Time/Year.range(Time/Temporal/ChronoField.year(), y1);
         println("range01(): ${r1}");
         r1
+
+
+    /////////////////////////////////////////////////////////////////////////////
+    // until                                                                   //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def until01(): Int64 & Impure = 
+        let t1 = Time/Year.of(isoYear = 2020);
+        let t2 = Time/Year.of(isoYear = 2028);
+        let diff = Time/Year.until(Time/Temporal/ChronoUnit.years(), { start = t1, end = t2 });
+        println("until01(): ${diff}");
+        diff
+
 }

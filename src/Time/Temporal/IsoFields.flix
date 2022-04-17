@@ -16,6 +16,7 @@
 
 /// Notes - should provide methods from TemporalField interface
 
+/*
 
 namespace Time/Temporal {
 
@@ -154,3 +155,5 @@ namespace Time/Temporal/IsoFields {
         ValueRange(rangeRefinedBy(x1, y1 as ##java.time.temporal.TemporalAccessor))
 
 }
+
+*/
