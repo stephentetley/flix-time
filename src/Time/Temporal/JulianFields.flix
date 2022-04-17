@@ -15,64 +15,72 @@
  */
 
 
-namespace Time/Temporal {
-
-    pub opaque type JulianFields = ##java.time.temporal.TemporalField
-
-    instance ToString[JulianFields] {
-        pub def toString(x: JulianFields): String =
-            import java.time.temporal.TemporalField.toString(): String & Pure;
-            let JulianFields(x1) = x;
-            toString(x1)
-    }
-    
-    instance Eq[JulianFields] {
-        pub def eq(x: JulianFields, y: JulianFields): Bool = Time/Temporal/JulianFields.equals(x, y)
-    }
-
-    instance Hash[JulianFields] {
-        pub def hash(x: JulianFields): Int32 = Time/Temporal/JulianFields.hashCode(x)
-    }
-
-}
-
 namespace Time/Temporal/JulianFields {
 
-    use Time/Temporal.JulianFields;
-    use Time/Temporal.JulianFields.{JulianFields};
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
+    def primEqualsJulianFields(x: ##java.time.temporal.JulianFields, y: ##java.time.temporal.JulianFields): Bool =
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
+        let y1 = y as ##java.lang.Object;
+        equals(x1, y1)
 
-    pub def dayOfQuarter(): JulianFields = 
-        import static get java.time.temporal.JulianFields.JULIAN_DAY: ##java.time.temporal.TemporalField & Pure as getJULIAN_DAY;
-        JulianFields(getJULIAN_DAY())
+    /// Bugs! should be unreachable due to class qualification at the API level...
+    def assertJulianFields(x: a, fn: Unit -> ##java.time.temporal.JulianFields, ans: b): b with ToString[b]= 
+        try {
+            if (primEqualsJulianFields(x as ##java.time.temporal.JulianFields, fn()))
+                ans
+            else 
+                bug!("unmarshalFromNativeTemporalField - not ${ans}")
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }  
 
+    /// JULIAN_DAY JulianDay
 
-    pub def modifiedJulianDay(): JulianFields = 
-        import static get java.time.temporal.JulianFields.MODIFIED_JULIAN_DAY: ##java.time.temporal.TemporalField & Pure as getMODIFIED_JULIAN_DAY;
-        JulianFields(getMODIFIED_JULIAN_DAY())
+    pub enum JulianDay with ToString { case JulianDay }
 
-    pub def rataDie(): JulianFields = 
-        import static get java.time.temporal.JulianFields.RATA_DIE: ##java.time.temporal.TemporalField & Pure as getRATA_DIE;
-        JulianFields(getRATA_DIE())
+    pub def julianDay(): JulianDay = JulianDay
 
+    instance Time/Temporal/TemporalField.TemporalField[JulianDay] {
+        pub def marshalToNativeTemporalField(_: JulianDay): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.JulianFields.JULIAN_DAY: ##java.time.temporal.JulianFields & Pure as get_JULIAN_DAY;
+            get_JULIAN_DAY() as ##java.time.temporal.TemporalField
 
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): JulianDay = 
+            import static get java.time.temporal.JulianFields.JULIAN_DAY: ##java.time.temporal.JulianFields & Pure as get_JULIAN_DAY;
+            assertJulianFields(x, get_JULIAN_DAY, JulianDay) 
+    }
 
-    pub def equals(x: JulianFields, y: JulianFields): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let JulianFields(x1) = x;
-        let JulianFields(y1) = y;
-        equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object)
+    /// MODIFIED_JULIAN_DAY ModifiedJulianDay
 
-    pub def hashCode(x: JulianFields): Int32 =
-        import java.lang.Object.hashCode(): Int32 & Pure;
-        let JulianFields(x1) = x;
-        hashCode(x1 as ##java.lang.Object)
+    pub enum ModifiedJulianDay with ToString { case ModifiedJulianDay }
 
-    pub def range(x: JulianFields): ValueRange =
-        import java.time.temporal.TemporalField.range(): ##java.time.temporal.ValueRange & Pure;
-        let JulianFields(x1) = x;
-        ValueRange(range(x1))
+    pub def modifiedJulianDay(): ModifiedJulianDay = ModifiedJulianDay
+
+    instance Time/Temporal/TemporalField.TemporalField[ModifiedJulianDay] {
+        pub def marshalToNativeTemporalField(_: ModifiedJulianDay): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.JulianFields.MODIFIED_JULIAN_DAY: ##java.time.temporal.JulianFields & Pure as get_MODIFIED_JULIAN_DAY;
+            get_MODIFIED_JULIAN_DAY() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): ModifiedJulianDay = 
+            import static get java.time.temporal.JulianFields.MODIFIED_JULIAN_DAY: ##java.time.temporal.JulianFields & Pure as get_MODIFIED_JULIAN_DAY;
+            assertJulianFields(x, get_MODIFIED_JULIAN_DAY, ModifiedJulianDay) 
+    }
+
+    /// RATA_DIE RataDie
+
+    pub enum RataDie with ToString { case RataDie }
+
+    pub def rataDie(): RataDie = RataDie
+
+    instance Time/Temporal/TemporalField.TemporalField[RataDie] {
+        pub def marshalToNativeTemporalField(_: RataDie): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.JulianFields.RATA_DIE: ##java.time.temporal.JulianFields & Pure as get_RATA_DIE;
+            get_RATA_DIE() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): RataDie = 
+            import static get java.time.temporal.JulianFields.RATA_DIE: ##java.time.temporal.JulianFields & Pure as get_RATA_DIE;
+            assertJulianFields(x, get_RATA_DIE, RataDie) 
+    }        
 
 }
 

@@ -36,6 +36,38 @@ namespace Time/Temporal/ChronoUnit {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         } 
 
+    /// Nanos
+
+    pub enum Nanos with ToString { case Nanos }
+
+    pub def nanos(): Nanos = Nanos
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Nanos] {
+        pub def marshalToNativeTemporalUnit(_: Nanos): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+            get_NANOS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Nanos = 
+            import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+            assertChronoUnit(x, get_NANOS, Nanos) 
+    }
+
+    /// Micros
+
+    pub enum Micros with ToString { case Micros }
+
+    pub def micros(): Micros = Micros
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[Micros] {
+        pub def marshalToNativeTemporalUnit(_: Micros): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+            get_MICROS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): Micros = 
+            import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+            assertChronoUnit(x, get_MICROS, Micros) 
+    }
+
     /// Years
 
     pub enum Years with ToString { case Years }

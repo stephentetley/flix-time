@@ -14,146 +14,125 @@
  * limitations under the License.
  */
 
-/// Notes - should provide methods from TemporalField interface
 
-/*
 
-namespace Time/Temporal {
-
-    pub opaque type IsoFields = ##java.time.temporal.TemporalField
-
-    instance ToString[IsoFields] {
-        pub def toString(x: IsoFields): String =
-            import java.time.temporal.TemporalField.toString(): String & Pure;
-            let IsoFields(x1) = x;
-            toString(x1)
-    }
-
-    
-    instance Eq[IsoFields] {
-        pub def eq(x: IsoFields, y: IsoFields): Bool = Time/Temporal/IsoFields.equals(x, y)
-    }
-
-    instance Hash[IsoFields] {
-        pub def hash(x: IsoFields): Int32 = Time/Temporal/IsoFields.hashCode(x)
-    }
-
-}
 
 namespace Time/Temporal/IsoFields {
 
-    use FlixSandbox/I18n.Locale;
-    use FlixSandbox/I18n.Locale.{Locale};
-    use Time/Temporal.IsoFields;
-    use Time/Temporal.IsoFields.{IsoFields};
-    use Time.Month;
-    use Time.Year;
-    use Time.Year.{Year};
-    use Time/Temporal.ChronoUnit;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
+    def primEqualsIsoFields(x: ##java.time.temporal.IsoFields, y: ##java.time.temporal.IsoFields): Bool =
+        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        let x1 = x as ##java.lang.Enum;
+        let y1 = y as ##java.lang.Object;
+        equals(x1, y1)
 
-    pub def dayOfQuarter(): IsoFields = 
-        import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField & Pure as getDAY_OF_QUARTER;
-        IsoFields(getDAY_OF_QUARTER())
-
-    pub def quarterOfYear(): IsoFields = 
-        import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField & Pure as getQUARTER_OF_YEAR;
-        IsoFields(getQUARTER_OF_YEAR())
-
-    pub def weekBasedYear(): IsoFields = 
-        import static get java.time.temporal.IsoFields.WEEK_BASED_YEAR: ##java.time.temporal.TemporalField & Pure as getWEEK_BASED_YEAR;
-        IsoFields(getWEEK_BASED_YEAR())
-
-    pub def weekOfWeekBasedYear(): IsoFields = 
-        import static get java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR: ##java.time.temporal.TemporalField & Pure as getWEEK_OF_WEEK_BASED_YEAR;
-        IsoFields(getWEEK_OF_WEEK_BASED_YEAR())
-
-    pub def equals(x: IsoFields, y: IsoFields): Bool =
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
-        let IsoFields(x1) = x;
-        let IsoFields(y1) = y;
-        equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: IsoFields): Int32 =
-        import java.lang.Object.hashCode(): Int32 & Pure;
-        let IsoFields(x1) = x;
-        hashCode(x1 as ##java.lang.Object)
+    /// Bugs! should be unreachable due to class qualification at the API level...
+    def assertIsoFields(x: a, fn: Unit -> ##java.time.temporal.IsoFields, ans: b): b with ToString[b]= 
+        try {
+            if (primEqualsIsoFields(x as ##java.time.temporal.IsoFields, fn()))
+                ans
+            else 
+                bug!("unmarshalFromNativeTemporalField - not ${ans}")
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }  
 
 
-    pub def getDisplayName(x: IsoFields, locale: Locale): String =
-        import java.time.temporal.TemporalField.getDisplayName(##java.util.Locale): String & Pure;
-        let IsoFields(x1) = x;
-        let Locale(locale1) = locale;
-        getDisplayName(x1, locale1)
+    /// DayOfQuarter
+
+    pub enum DayOfQuarter with ToString { case DayOfQuarter }
+
+    pub def dayOfQuarter(): DayOfQuarter = DayOfQuarter
+
+    instance Time/Temporal/TemporalField.TemporalField[DayOfQuarter] {
+        pub def marshalToNativeTemporalField(_: DayOfQuarter): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.IsoFields & Pure as get_DAY_OF_QUARTER;
+            get_DAY_OF_QUARTER() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): DayOfQuarter = 
+            import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.IsoFields & Pure as get_DAY_OF_QUARTER;
+            assertIsoFields(x, get_DAY_OF_QUARTER, DayOfQuarter) 
+    }
+
+    ///  QuarterOfYear
+
+    pub enum QuarterOfYear with ToString { case QuarterOfYear }
+
+    pub def quarterOfYear(): QuarterOfYear = QuarterOfYear
+
+    instance Time/Temporal/TemporalField.TemporalField[QuarterOfYear] {
+        pub def marshalToNativeTemporalField(_: QuarterOfYear): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.IsoFields & Pure as get_QUARTER_OF_YEAR;
+            get_QUARTER_OF_YEAR() as ##java.time.temporal.TemporalField
+
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): QuarterOfYear = 
+            import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.IsoFields & Pure as get_QUARTER_OF_YEAR;
+            assertIsoFields(x, get_QUARTER_OF_YEAR, QuarterOfYear) 
+    }
 
 
-    pub def range(x: IsoFields): ValueRange =
-        import java.time.temporal.TemporalField.range(): ##java.time.temporal.ValueRange & Pure;
-        let IsoFields(x1) = x;
-        ValueRange(range(x1))
+    ///  WEEK_BASED_YEAR WeekBasedYear
 
-    pub def isTimeBased(x: IsoFields): Bool = 
-        import java.time.temporal.TemporalField.isTimeBased(): Bool & Pure;
-        let IsoFields(x1) = x;
-        isTimeBased(x1)
+    pub enum WeekBasedYear with ToString { case WeekBasedYear }
 
-    pub def isDateBased(x: IsoFields): Bool = 
-        import java.time.temporal.TemporalField.isDateBased(): Bool & Pure;
-        let IsoFields(x1) = x;
-        isDateBased(x1)
+    pub def weekBasedYear(): WeekBasedYear = WeekBasedYear
 
-    pub def getRangeUnit(x: IsoFields): ChronoUnit = 
-        import java.time.temporal.TemporalField.getRangeUnit(): ##java.time.temporal.TemporalField & Pure;
-        let IsoFields(x1) = x;
-        let ans = getRangeUnit(x1) as ##java.time.temporal.ChronoUnit;
-        Time/Temporal/ChronoUnit.unmarshal(ans)
-        
-    pub def getBaseUnit(x: IsoFields): ChronoUnit = 
-        import java.time.temporal.TemporalField.getBaseUnit(): ##java.time.temporal.TemporalField & Pure;
-        let IsoFields(x1) = x;
-        let ans = getBaseUnit(x1) as ##java.time.temporal.ChronoUnit;
-        Time/Temporal/ChronoUnit.unmarshal(ans)
+    instance Time/Temporal/TemporalField.TemporalField[WeekBasedYear] {
+        pub def marshalToNativeTemporalField(_: WeekBasedYear): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.IsoFields.WEEK_BASED_YEAR: ##java.time.temporal.IsoFields & Pure as get_WEEK_BASED_YEAR;
+            get_WEEK_BASED_YEAR() as ##java.time.temporal.TemporalField
 
-    /// TODO needs corresponding function for every type that implements TemporalAccessor!
-    pub def isSupportedByMonth(x: IsoFields, m: Month): Bool = 
-        import java.time.temporal.TemporalField.isSupportedBy(##java.time.temporal.TemporalAccessor): Bool & Pure;
-        let IsoFields(x1) = x;
-        let m1 = Time/Month.marshal(m);
-        isSupportedBy(x1, m1 as ##java.time.temporal.TemporalAccessor)
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): WeekBasedYear = 
+            import static get java.time.temporal.IsoFields.WEEK_BASED_YEAR: ##java.time.temporal.IsoFields & Pure as get_WEEK_BASED_YEAR;
+            assertIsoFields(x, get_WEEK_BASED_YEAR, WeekBasedYear) 
+    }
 
-    pub def isSupportedByYear(x: IsoFields, y: Year): Bool = 
-        import java.time.temporal.TemporalField.isSupportedBy(##java.time.temporal.TemporalAccessor): Bool & Pure;
-        let IsoFields(x1) = x;
-        let Year(y1) = y;
-        isSupportedBy(x1, y1 as ##java.time.temporal.TemporalAccessor) 
 
-    /// TODO needs corresponding function for every type that implements TemporalAccessor!
-    pub def getFromMonth(x: IsoFields, m: Month): Int64 = 
-        import java.time.temporal.TemporalField.getFrom(##java.time.temporal.TemporalAccessor): Int64 & Pure;
-        let IsoFields(x1) = x;
-        let m1 = Time/Month.marshal(m);
-        getFrom(x1, m1 as ##java.time.temporal.TemporalAccessor)
+    /// WEEK_OF_WEEK_BASED_YEAR WeekOfWeekBasedYear
+    
+    pub enum WeekOfWeekBasedYear with ToString { case WeekOfWeekBasedYear }
 
-    pub def getFromYear(x: IsoFields, y: Year): Int64 = 
-        import java.time.temporal.TemporalField.getFrom(##java.time.temporal.TemporalAccessor): Int64 & Pure;
-        let IsoFields(x1) = x;
-        let Year(y1) = y;
-        getFrom(x1, y1 as ##java.time.temporal.TemporalAccessor)       
+    pub def weekOfWeekBasedYear(): WeekOfWeekBasedYear = WeekOfWeekBasedYear
 
-    /// TODO needs corresponding function for every type that implements TemporalAccessor!
-    pub def rangeRefinedByMonth(x: IsoFields, m: Month): ValueRange = 
-        import java.time.temporal.TemporalField.rangeRefinedBy(##java.time.temporal.TemporalAccessor): ##java.time.temporal.ValueRange & Pure;
-        let IsoFields(x1) = x;
-        let m1 = Time/Month.marshal(m);
-        ValueRange(rangeRefinedBy(x1, m1 as ##java.time.temporal.TemporalAccessor))
+    instance Time/Temporal/TemporalField.TemporalField[WeekOfWeekBasedYear] {
+        pub def marshalToNativeTemporalField(_: WeekOfWeekBasedYear): ##java.time.temporal.TemporalField =
+            import static get java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR: ##java.time.temporal.IsoFields & Pure as get_WEEK_OF_WEEK_BASED_YEAR;
+            get_WEEK_OF_WEEK_BASED_YEAR() as ##java.time.temporal.TemporalField
 
-    pub def rangeRefinedByYear(x: IsoFields, y: Year): ValueRange = 
-        import java.time.temporal.TemporalField.rangeRefinedBy(##java.time.temporal.TemporalAccessor): ##java.time.temporal.ValueRange & Pure;
-        let IsoFields(x1) = x;
-        let Year(y1) = y;
-        ValueRange(rangeRefinedBy(x1, y1 as ##java.time.temporal.TemporalAccessor))
+        pub def unmarshalFromNativeTemporalField(x: ##java.time.temporal.TemporalField): WeekOfWeekBasedYear = 
+            import static get java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR: ##java.time.temporal.IsoFields & Pure as get_WEEK_OF_WEEK_BASED_YEAR;
+            assertIsoFields(x, get_WEEK_OF_WEEK_BASED_YEAR, WeekOfWeekBasedYear) 
+    }
 
+
+    /// QUARTER_YEARS QuarterYears (TemporalUnit)
+    
+    pub enum QuarterYears with ToString { case QuarterYears }
+
+    pub def quarterYears(): QuarterYears = QuarterYears
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[QuarterYears] {
+        pub def marshalToNativeTemporalUnit(_: QuarterYears): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.IsoFields & Pure as get_QUARTER_YEARS;
+            get_QUARTER_YEARS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): QuarterYears = 
+            import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.IsoFields & Pure as get_QUARTER_YEARS;
+            assertIsoFields(x, get_QUARTER_YEARS, QuarterYears) 
+    }
+
+    /// WEEK_BASED_YEARS WeekBasedYears (TemporalUnit)
+    
+    pub enum WeekBasedYears with ToString { case WeekBasedYears }
+
+    pub def weekBasedYears(): WeekBasedYears = WeekBasedYears
+
+    instance Time/Temporal/TemporalUnit.TemporalUnit[WeekBasedYears] {
+        pub def marshalToNativeTemporalUnit(_: WeekBasedYears): ##java.time.temporal.TemporalUnit =
+            import static get java.time.temporal.IsoFields.WEEK_BASED_YEARS: ##java.time.temporal.IsoFields & Pure as get_WEEK_BASED_YEARS;
+            get_WEEK_BASED_YEARS() as ##java.time.temporal.TemporalUnit
+
+        pub def unmarshalFromNativeTemporalUnit(x: ##java.time.temporal.TemporalUnit): WeekBasedYears = 
+            import static get java.time.temporal.IsoFields.WEEK_BASED_YEARS: ##java.time.temporal.IsoFields & Pure as get_WEEK_BASED_YEARS;
+            assertIsoFields(x, get_WEEK_BASED_YEARS, WeekBasedYears) 
+    }
 }
-
-*/
