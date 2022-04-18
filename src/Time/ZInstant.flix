@@ -107,6 +107,10 @@ namespace Time/ZInstant {
 
     use Time.ZInstant;
     use Time.ZInstant.{ZInstant};
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+    use Time/Temporal.TemporalAmount;
+    use Time/Temporal.TemporalField;
     use Time/Temporal.TemporalUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
@@ -126,6 +130,15 @@ namespace Time/ZInstant {
     pub def getInstant(x: ZInstant): ##java.time.Instant = 
         let ZInstant(x1) = x;
         x1
+
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): ZInstant with TemporalAccessor[a] = 
+        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        ZInstant(fromTA(x1))
+
+
 
     pub def of(r: {epochSecond :: Int64, nano :: Int64}): ZInstant =
         import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant & Pure;
@@ -283,67 +296,84 @@ namespace Time/ZInstant {
         let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
         until(b1, e1, units1)
 
-    /// pub def range(x: ZInstant, field: ChronoField): ValueRange = 
-    ///     import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-    ///     let ZInstant(x1) = x;
-    ///     let field1 = Time/Temporal/ChronoField.marshal(field);
-    ///     let tfield1 = field1 as ##java.time.temporal.TemporalField;
-    ///     ValueRange(range(x1, tfield1))
+
+    pub def range(field: a, x: ZInstant): ValueRange with TemporalField[a] =
+        import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let ZInstant(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(x1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
 
-    /// def truncatedTo(x: ZInstant, unit: ChronoUnit): Option[ZInstant] = 
-    ///     import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant & Pure;
-    ///     try {
-    ///         let ZInstant(x1) = x;
-    ///         let unit1 = Time/Temporal/ChronoUnit.marshal(unit);
-    ///         let tunit1 = unit1 as ##java.time.temporal.TemporalUnit;
-    ///         Some(ZInstant(truncatedTo(x1, tunit1)))
-    ///     } catch {
-    ///         case _: ##java.lang.Exception => None
-    ///     }
+    pub def get(t: a, x: ZInstant): Int32 with TemporalField[a] = 
+        import java.time.Instant.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let x1 = getInstant(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        get(x1, t1)
+
+    pub def getLong(t: a, x: ZInstant): Int64 with TemporalField[a] = 
+        import java.time.Instant.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let x1 = getInstant(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(x1, t1)
+
+
+    pub def plusTemporalAmount(x: ZInstant, amount: a): ZInstant with TemporalAmount[a] =
+        import java.time.Instant.plus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
+        try {
+            let ZInstant(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            ZInstant(plus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def minusTemporalAmount(x: ZInstant, amount: a): ZInstant with TemporalAmount[a] =
+        import java.time.Instant.minus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
+        try {
+            let ZInstant(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            ZInstant(minus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def truncatedTo(unit: a, x: ZInstant): ZInstant with TemporalUnit[a] = 
+        import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant & Pure;
+        let ZInstant(x1) = x;
+        let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
+        ZInstant(truncatedTo(x1, unit1))
     
-    /// pub def truncatedToNanos(x: ZInstant): ZInstant = 
-    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Nanos) { 
-    ///         case Some(x1) => x1
-    ///         case None => x          /// Should be impossible!
-    ///     }
-    
-    /// pub def truncatedToMillis(x: ZInstant): ZInstant = 
-    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Millis) { 
-    ///         case Some(x1) => x1
-    ///         case None => x          /// Should be impossible!
-    ///     }
-
-    /// pub def truncatedToSeconds(x: ZInstant): ZInstant = 
-    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Seconds) { 
-    ///         case Some(x1) => x1
-    ///         case None => x          /// Should be impossible!
-    ///     }
-
-    /// pub def truncatedToMinutes(x: ZInstant): ZInstant = 
-    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Minutes) { 
-    ///         case Some(x1) => x1
-    ///         case None => x          /// Should be impossible!
-    ///     }
-
-    /// pub def truncatedToHours(x: ZInstant): ZInstant = 
-    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Hours) { 
-    ///         case Some(x1) => x1
-    ///         case None => x          /// Should be impossible!
-    ///     }
-
-    /// pub def truncatedToHalfDays(x: ZInstant): ZInstant = 
-    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.HalfDays) { 
-    ///         case Some(x1) => x1
-    ///         case None => x          /// Should be impossible!
-    ///     }
 
 
-    /// pub def truncatedToDays(x: ZInstant): ZInstant = 
-    ///     match truncatedTo(x, Time/Temporal/ChronoUnit.Days) { 
-    ///         case Some(x1) => x1
-    ///         case None => x          /// Should be impossible!
-    ///     }
+    pub def withTemporalAdjuster(adj: a, x: ZInstant): ZInstant with TemporalAdjuster[a] =
+        import java.time.Instant.with(##java.time.temporal.TemporalAdjuster): ##java.time.Instant & Pure as withTA;         
+        try {
+            let ZInstant(x1) = x;
+            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
+            ZInstant(withTA(x1, adj1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def withTemporalField(field: a, i: Int64, x: ZInstant): ZInstant with TemporalField[a] =
+        import java.time.Instant.with(##java.time.temporal.TemporalField, Int64): ##java.time.Instant & Pure as withTF;         
+        try {
+            let ZInstant(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ZInstant(withTF(x1, field1, i))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
 }
 

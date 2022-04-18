@@ -133,6 +133,21 @@ namespace Time/Year {
         let Year(x1) = x;
         x1
 
+
+    class YearTemporalUnit[a] with TemporalUnit[a] {
+        pub def marshalToNativeTemporalUnit(x: a): ##java.time.temporal.TemporalUnit = 
+            Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(x)
+    }
+
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): Year with TemporalAccessor[a] = 
+        import static java.time.Year.from(##java.time.temporal.TemporalAccessor): ##java.time.Year & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        Year(fromTA(x1))
+
+        
+
     pub def of(isoYear: {isoYear :: Int32}): Year =
         import static java.time.Year.of(Int32): ##java.time.Year & Pure;
         Year(of(isoYear.isoYear))
@@ -152,11 +167,6 @@ namespace Time/Year {
         let ZoneId(x1) = x;
         Year(now(x1))
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAccessor(x: a): Year with TemporalAccessor[a] = 
-        import static java.time.Year.from(##java.time.temporal.TemporalAccessor): ##java.time.Year & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-        Year(fromTA(x1))
 
     
 
@@ -304,10 +314,6 @@ namespace Time/Year {
         let Year(x1) = x;
         Year(minusYears(x1, yearsToSubtract))
 
-    class YearTemporalUnit[a] with TemporalUnit[a] {
-        pub def marshalToNativeTemporalUnit(x: a): ##java.time.temporal.TemporalUnit = 
-            Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(x)
-    }
     
     pub def plusAmount(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
         import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         

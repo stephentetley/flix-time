@@ -51,6 +51,8 @@ namespace Time/ZoneId {
 
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
+
+    use Time/Temporal.TemporalAccessor;
     use Time.ZonePrefix;
     use Time.ZonePrefix.{ZonePrefix};
     use Time.ZoneOffset;
@@ -59,6 +61,14 @@ namespace Time/ZoneId {
     pub def getZoneId(x: ZoneId): ##java.time.ZoneId = 
         let ZoneId(x1) = x;
         x1
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): ZoneId with TemporalAccessor[a] = 
+        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        ZoneId(fromTA(x1))
+
+
 
     pub def ofZoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
@@ -70,7 +80,20 @@ namespace Time/ZoneId {
             case ex: ##java.time.zone.ZoneRulesException => Err(getMessage(ex as ##java.lang.Throwable))
         }
         
-    pub def ofPrefixOffset(r: {prefix :: Option[ZonePrefix], offset :: ZoneOffset}): ZoneId =
+
+    pub def ofZoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] =
+        import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId & Pure;
+        import java.lang.Throwable.getMessage(): String & Pure;
+        try {
+            let m1 = FlixSandbox/Marshal.marshalMap(s1 -> s1 as ##java.lang.Object, s2 -> s2 as ##java.lang.Object, aliases) as & Pure;
+            Ok(ZoneId(of(zoneId.zoneId, m1)))
+        } catch {
+            case ex: ##java.time.DateTimeException       => Err(getMessage(ex as ##java.lang.Throwable))
+            case ex: ##java.time.zone.ZoneRulesException => Err(getMessage(ex as ##java.lang.Throwable))
+        }
+
+
+    pub def ofOffset(r: {prefix :: Option[ZonePrefix], offset :: ZoneOffset}): ZoneId =
         import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId & Pure;
         let p1 = match r.prefix {
             case Some(ZonePrefix(s)) => s
@@ -123,7 +146,5 @@ namespace Time/ZoneId {
         } catch {
             case _: ##java.lang.Exception => Set.empty()
         }
-
-
 
 }

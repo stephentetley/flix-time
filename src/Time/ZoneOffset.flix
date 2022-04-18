@@ -82,6 +82,12 @@ namespace Time/ZoneOffset {
 
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
+
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalField;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
     use Time/Zone.ZoneRules;
     use Time/Zone.ZoneRules.{ZoneRules};
 
@@ -89,6 +95,13 @@ namespace Time/ZoneOffset {
     pub def getZoneOffset(x: ZoneOffset): ##java.time.ZoneOffset = 
         let ZoneOffset(x1) = x;
         x1
+
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): ZoneOffset with TemporalAccessor[a] = 
+        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        ZoneOffset(fromTA(x1))
 
 
     ///
@@ -156,5 +169,37 @@ namespace Time/ZoneOffset {
         import java.time.ZoneOffset.getTotalSeconds(): Int32 & Pure;
         let ZoneOffset(x1) = x;
         getTotalSeconds(x1)
+
+    pub def adjustInto(t: a, z: ZoneOffset): a with Temporal[a] = 
+        import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZoneOffset(z1) = z;
+        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(z1, t1))
+
+
+    pub def get(t: a, z: ZoneOffset): Int32 with TemporalField[a] = 
+        import java.time.ZoneOffset.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let z1 = getZoneOffset(z);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        get(z1, t1)
+
+    pub def getLong(t: a, z: ZoneOffset): Int64 with TemporalField[a] = 
+        import java.time.ZoneOffset.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let z1 = getZoneOffset(z);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(z1, t1)
+
+
+    pub def range(field: a, z: ZoneOffset): ValueRange with TemporalField[a] =
+        import java.time.ZoneOffset.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let ZoneOffset(z1) = z;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(z1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
 
 }
