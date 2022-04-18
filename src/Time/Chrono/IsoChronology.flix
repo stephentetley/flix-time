@@ -29,8 +29,8 @@ namespace Time/Chrono/IsoChronology {
     use Time.LocalDate.{LocalDate};
 
     pub def getInstance(): IsoChronology & Impure = 
-        import static get java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology & Impure as getINSTANCE;
-        IsoChronology(getINSTANCE())
+        import static get java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology & Impure as get_INSTANCE;
+        IsoChronology(get_INSTANCE())
 
     pub def getCalendarType(x: IsoChronology): String = 
         import java.time.chrono.IsoChronology.getCalendarType(): String & Pure;
