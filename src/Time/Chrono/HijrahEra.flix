@@ -90,7 +90,7 @@ namespace Time/Chrono/HijrahEra {
         let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
         Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
-    pub def getDisplayName(x: HijrahEra, style: TextStyle, locale: Locale): String = 
+    pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String = 
         import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = marshal(x);
         let style1 = Time/Format/TextStyle.marshal(style);

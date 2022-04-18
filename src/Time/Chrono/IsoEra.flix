@@ -94,7 +94,7 @@ namespace Time/Chrono/IsoEra {
         let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
         Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
-    pub def getDisplayName(x: IsoEra, style: TextStyle, locale: Locale): String = 
+    pub def getDisplayName(style: TextStyle, locale: Locale, x: IsoEra): String = 
         import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = marshal(x) as ##java.time.chrono.Era;
         let style1 = Time/Format/TextStyle.marshal(style);

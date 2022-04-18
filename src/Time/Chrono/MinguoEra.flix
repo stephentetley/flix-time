@@ -84,7 +84,7 @@ namespace Time/Chrono/MinguoEra {
 
 
 
-    pub def getDisplayName(x: MinguoEra, style: TextStyle, locale: Locale): String = 
+    pub def getDisplayName(style: TextStyle, locale: Locale, x: MinguoEra): String = 
         import java.time.chrono.MinguoEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = marshal(x);
         let style1 = Time/Format/TextStyle.marshal(style);
@@ -92,7 +92,7 @@ namespace Time/Chrono/MinguoEra {
         getDisplayName(x1, style1, locale1)
 
 
-        
+
     /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: MinguoEra): a with Temporal[a] = 
         import java.time.chrono.Era.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
