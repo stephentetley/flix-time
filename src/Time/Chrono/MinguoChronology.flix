@@ -18,6 +18,13 @@ namespace Time/Chrono {
 
     pub opaque type MinguoChronology = ##java.time.chrono.MinguoChronology
 
+    instance ToString[MinguoChronology] {
+        pub def toString(x: MinguoChronology): String =
+            import java.time.chrono.AbstractChronology.toString(): String & Pure;
+            let MinguoChronology(x1) = x;
+            toString(x1 as ##java.time.chrono.AbstractChronology)
+    }
+
 }
 
 namespace Time/Chrono/MinguoChronology {

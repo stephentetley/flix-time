@@ -17,6 +17,13 @@
 namespace Time/Chrono {
 
     pub opaque type IsoChronology = ##java.time.chrono.IsoChronology
+    
+    instance ToString[IsoChronology] {
+        pub def toString(x: IsoChronology): String =
+            import java.time.chrono.AbstractChronology.toString(): String & Pure;
+            let IsoChronology(x1) = x;
+            toString(x1 as ##java.time.chrono.AbstractChronology)
+    }
 
 }
 
@@ -46,6 +53,13 @@ namespace Time/Chrono/IsoChronology {
         import java.time.chrono.IsoChronology.eraOf(Int32): ##java.time.chrono.IsoEra & Pure;
         let IsoChronology(x1) = x;
         Time/Chrono/IsoEra.unmarshal(eraOf(x1, i))
+
+    pub def eras(x: IsoChronology): List[IsoEra] = 
+        import java.time.chrono.IsoChronology.eras(): ##java.util.List & Pure;
+        let IsoChronology(x1) = x;
+        let jxs = eras(x1);
+        FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs) as & Pure
+
 
     pub def getId(x: IsoChronology): String = 
         import java.time.chrono.IsoChronology.getId(): String & Pure;

@@ -19,6 +19,12 @@ namespace Time/Chrono {
 
     pub opaque type JapaneseChronology = ##java.time.chrono.JapaneseChronology
 
+    instance ToString[JapaneseChronology] {
+        pub def toString(x: JapaneseChronology): String =
+            import java.time.chrono.AbstractChronology.toString(): String & Pure;
+            let JapaneseChronology(x1) = x;
+            toString(x1 as ##java.time.chrono.AbstractChronology)
+    }
 }
 
 /// TODO should provide functions from the TemporalUnit interface

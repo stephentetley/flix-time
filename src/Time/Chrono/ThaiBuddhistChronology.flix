@@ -18,6 +18,12 @@ namespace Time/Chrono {
 
     pub opaque type ThaiBuddhistChronology = ##java.time.chrono.ThaiBuddhistChronology
 
+    instance ToString[ThaiBuddhistChronology] {
+        pub def toString(x: ThaiBuddhistChronology): String =
+            import java.time.chrono.AbstractChronology.toString(): String & Pure;
+            let ThaiBuddhistChronology(x1) = x;
+            toString(x1 as ##java.time.chrono.AbstractChronology)
+    }
 }
 
 namespace Time/Chrono/ThaiBuddhistChronology {
