@@ -84,6 +84,9 @@ namespace Time/MonthDay {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalField;
     use Time.Month;
     use Time.MonthDay;
     use Time.MonthDay.{MonthDay};
@@ -93,6 +96,13 @@ namespace Time/MonthDay {
     pub def getMonthDay(x: MonthDay): ##java.time.MonthDay = 
         let MonthDay(x1) = x;
         x1
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): MonthDay with TemporalAccessor[a] = 
+        import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        MonthDay(fromTA(x1))
+
 
     pub def of(r: {month :: Int32, dayOfMonth :: Int32}): MonthDay =
         import static java.time.MonthDay.of(Int32, Int32): ##java.time.MonthDay & Pure;
@@ -215,5 +225,25 @@ namespace Time/MonthDay {
         import java.time.MonthDay.isValidYear(Int32): Bool & Pure;
         let MonthDay(x1) = x;
         isValidYear(x1, year)
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def adjustInto(t: a, x: MonthDay): a with Temporal[a] = 
+        import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = getMonthDay(x);
+        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
+
+
+    pub def get(t: a, x: MonthDay): Int32 with TemporalField[a] = 
+        import java.time.MonthDay.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let x1 = getMonthDay(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        get(x1, t1)
+
+    pub def getLong(t: a, x: MonthDay): Int64 with TemporalField[a] = 
+        import java.time.MonthDay.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let x1 = getMonthDay(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(x1, t1)
 
 }

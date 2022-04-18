@@ -86,6 +86,7 @@ namespace Time/DayOfWeek {
 
     use Time/Format.TextStyle;
     use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
     use Time/Temporal.TemporalField;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
@@ -103,37 +104,9 @@ namespace Time/DayOfWeek {
     }
 
 
-    /// `from` to work out...
-    /// Cannot get DayOfWeek from MonthDay (obviously)
-    /// Can get DayOfWeek from LocalDate
 
 
-    /// 
-    /// Expected to be replaced by a typeclass method...
-    ///
-    pub def fromEnum(x: DayOfWeek): Int32 = match x {
-        case Monday => 0
-        case Tuesday => 1
-        case Wednesday => 2
-        case Thursday => 3
-        case Friday => 4
-        case Saturday => 5
-        case Sunday => 6
-    }
 
-    /// 
-    /// Expected to be replaced by a typeclass method...
-    ///    
-    pub def toEnum(x: Int32): Option[DayOfWeek] = match x {
-        case 0 => Some(Monday)
-        case 1 => Some(Tuesday)
-        case 2 => Some(Wednesday)
-        case 3 => Some(Thursday)
-        case 4 => Some(Friday)
-        case 5 => Some(Saturday)
-        case 6 => Some(Sunday)
-        case _ => None
-    }
 
     pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek =
         import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as get_MONDAY;
@@ -177,6 +150,12 @@ namespace Time/DayOfWeek {
             case x1 if primEquals(x1, get_SATURDAY())    => Saturday
             case x1 if primEquals(x1, get_SUNDAY())      => Sunday
         }
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): DayOfWeek with TemporalAccessor[a] = 
+        import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        unmarshal(fromTA(x1))
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
@@ -223,10 +202,23 @@ namespace Time/DayOfWeek {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+    /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: DayOfWeek): a with Temporal[a] = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let x1 = marshal(x);
         let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
         Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
+
+    pub def get(t: a, x: DayOfWeek): Int32 with TemporalField[a] = 
+        import java.time.DayOfWeek.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let x1 = marshal(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        get(x1, t1)
+
+    pub def getLong(t: a, x: DayOfWeek): Int64 with TemporalField[a] = 
+        import java.time.DayOfWeek.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let x1 = marshal(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(x1, t1)
 
 }

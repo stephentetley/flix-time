@@ -108,12 +108,21 @@ namespace Time/Period {
 
     use Time.Period;
     use Time.Period.{Period};
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAmount;
+    use Time/Temporal.TemporalUnit;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     
     pub def getPeriod(x: Period): ##java.time.Period = 
         let Period(x1) = x;
         x1
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAmount(x: a): Period with TemporalAmount[a] = 
+        import static java.time.Period.from(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(x);
+        Period(fromTA(x1))
 
 
     pub def of(r: {years :: Int32, months :: Int32, days :: Int32}): Period =
@@ -254,5 +263,37 @@ namespace Time/Period {
         let LocalDate(b1) = b;
         let LocalDate(e1) = e;
         Period(between(b1, e1))
+
+    /// Units YEARS, MONTHS, DAYS
+    pub def get(t: a, x: Period): Int64 with TemporalUnit[a] = 
+        import java.time.Period.get(##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let x1 = getPeriod(x);
+        let t1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(t);
+        get(x1, t1)
+
+
+    pub def plus(x: Period, amount: a): Period with TemporalAmount[a] =
+        import java.time.Period.plus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
+        let Period(x1) = x;
+        let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+        Period(plus(x1, amount1))
+
+    pub def minus(x: Period, amount: a): Period with TemporalAmount[a] =
+        import java.time.Period.minus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
+        let Period(x1) = x;
+        let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+        Period(minus(x1, amount1))
+
+    pub def addTo(x: Period, base: a): a with Temporal[a] =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let Period(x1) = x;
+        let base1 = Time/Temporal/Temporal.marshalToNativeTemporal(base);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(addTo(x1, base1))
+
+    pub def subtractFrom(x: Period, base: a): a with Temporal[a] =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let Period(x1) = x;
+        let base1 = Time/Temporal/Temporal.marshalToNativeTemporal(base);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(subtractFrom(x1, base1))
 
 }

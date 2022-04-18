@@ -31,61 +31,6 @@ namespace TestDayOfWeek {
     @test
     def neq01(): Bool = Time/DayOfWeek.Monday != Time/DayOfWeek.Tuesday
 
-    /////////////////////////////////////////////////////////////////////////////
-    // fromEnum                                                                //
-    /////////////////////////////////////////////////////////////////////////////
-
-    @test
-    def fromEnum01(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Monday) == 0
-
-    @test
-    def fromEnum02(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Tuesday) == 1
-
-    @test
-    def fromEnum03(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Wednesday) == 2
-
-    @test
-    def fromEnum04(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Thursday) == 3
-
-    @test
-    def fromEnum05(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Friday) == 4
-
-    @test
-    def fromEnum06(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Saturday) == 5
-
-    @test
-    def fromEnum07(): Bool = Time/DayOfWeek.fromEnum(Time/DayOfWeek.Sunday) == 6
-
-    /////////////////////////////////////////////////////////////////////////////
-    // toEnum                                                                  //
-    /////////////////////////////////////////////////////////////////////////////
-
-    @test
-    def toEnum01(): Bool = Time/DayOfWeek.toEnum(0) == Some(Time/DayOfWeek.Monday)
-
-    @test
-    def toEnum02(): Bool = Time/DayOfWeek.toEnum(1) == Some(Time/DayOfWeek.Tuesday)
-
-    @test
-    def toEnum03(): Bool = Time/DayOfWeek.toEnum(2) == Some(Time/DayOfWeek.Wednesday)
-
-    @test
-    def toEnum04(): Bool = Time/DayOfWeek.toEnum(3) == Some(Time/DayOfWeek.Thursday)
-
-    @test
-    def toEnum05(): Bool = Time/DayOfWeek.toEnum(4) == Some(Time/DayOfWeek.Friday)
-
-    @test
-    def toEnum06(): Bool = Time/DayOfWeek.toEnum(5) == Some(Time/DayOfWeek.Saturday)
-
-    @test
-    def toEnum07(): Bool = Time/DayOfWeek.toEnum(6) == Some(Time/DayOfWeek.Sunday)
-
-    @test
-    def toEnum08(): Bool = Time/DayOfWeek.toEnum(7) == None
-
-    @test
-    def toEnum09(): Bool = Time/DayOfWeek.toEnum(8) == None
 
     /////////////////////////////////////////////////////////////////////////////
     // range                                                                   //
@@ -97,5 +42,37 @@ namespace TestDayOfWeek {
         let r1 = Time/DayOfWeek.range(Time/Temporal/ChronoField.dayOfWeek(), d1);
         println("DayOfWeek.range01(): ${r1}");
         r1
+
+    /////////////////////////////////////////////////////////////////////////////
+    // fromTemporalAccessor                                                     //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def fromTemporalAccessor01(): Time.DayOfWeek & Impure = 
+        let date = Time/LocalDate.of({year =2022, month = 4, dayOfMonth = 18});
+        let dow = Time/DayOfWeek.fromTemporalAccessor(date);
+        println("DayOfWeek.fromTemporalAccessor01(): ${dow}");
+        dow
+
+
+    @test
+    def fromTemporalAccessor02(): Time.DayOfWeek & Impure = 
+        let year = Time/Year.of(isoYear = 2022);
+        let dow = Time/DayOfWeek.fromTemporalAccessor(year);
+        println("DayOfWeek.fromTemporalAccessor02(): ${dow}");
+        dow
+
+
+    /////////////////////////////////////////////////////////////////////////////
+    // get                                                                     //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def get01(): Int32 & Impure =         
+        let dow = Time/DayOfWeek.Monday;
+        let i = Time/DayOfWeek.get(Time/Temporal/ChronoField.dayOfWeek(), dow);
+        println("DayOfWeek.get01(): ${i}");
+        i
+
 
 }
