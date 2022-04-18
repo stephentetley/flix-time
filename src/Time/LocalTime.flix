@@ -114,6 +114,14 @@ namespace Time/LocalTime {
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.TimeFormat;
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+    use Time/Temporal.TemporalAmount;
+    use Time/Temporal.TemporalField;
+    use Time/Temporal.TemporalUnit;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.ZoneId;
@@ -122,6 +130,13 @@ namespace Time/LocalTime {
     pub def getLocalTime(x: LocalTime): ##java.time.LocalTime = 
         let LocalTime(x1) = x;
         x1
+
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): LocalTime with TemporalAccessor[a] = 
+        import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        LocalTime(fromTA(x1))
 
     pub def of(r: {hour :: Int32, minute :: Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32): ##java.time.LocalTime & Pure;
@@ -341,5 +356,119 @@ namespace Time/LocalTime {
         import java.time.LocalTime.withNano(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withNano(x1, nano))
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def adjustInto(t: a, x: LocalTime): a with Temporal[a] = 
+        import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = getLocalTime(x);
+        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
+
+
+    pub def get(t: a, x: LocalTime): Int32 with TemporalField[a] = 
+        import java.time.LocalTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let x1 = getLocalTime(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        get(x1, t1)
+
+    pub def getLong(t: a, x: LocalTime): Int64 with TemporalField[a] = 
+        import java.time.LocalTime.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let x1 = getLocalTime(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(x1, t1)
+
+    pub def plus(x: LocalTime, r: {amount :: Int64, temporalUnit :: a}): LocalTime with TemporalUnit[a] =
+        import java.time.LocalTime.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalTime & Pure;         
+        try {
+            let LocalTime(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            LocalTime(plus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+    
+    pub def minus(x: LocalTime, r: {amount :: Int64, temporalUnit :: a}): LocalTime with TemporalUnit[a] =
+        import java.time.LocalTime.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalTime & Pure;         
+        try {
+            let LocalTime(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            LocalTime(minus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def plusTemporalAmount(x: LocalTime, amount: a): LocalTime with TemporalAmount[a] =
+        import java.time.LocalTime.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalTime & Pure;         
+        try {
+            let LocalTime(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            LocalTime(plus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def minusTemporalAmount(x: LocalTime, amount: a): LocalTime with TemporalAmount[a] =
+        import java.time.LocalTime.minus(##java.time.temporal.TemporalAmount): ##java.time.LocalTime & Pure;         
+        try {
+            let LocalTime(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            LocalTime(minus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def range(field: a, x: LocalTime): ValueRange with TemporalField[a] =
+        import java.time.LocalTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let LocalTime(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(x1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def truncatedTo(unit: a, x: LocalTime): LocalTime with TemporalUnit[a] = 
+        import java.time.LocalTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.LocalTime & Pure;
+        let LocalTime(x1) = x;
+        let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
+        LocalTime(truncatedTo(x1, unit1))
+
+    pub def until(units: t, r: {start :: LocalTime, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+        import java.time.LocalTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getLocalTime(r.start);
+        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
+        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
+        until(b1, e1, units1)
+
+    pub def withTemporalAdjuster(adj: a, x: LocalTime): LocalTime with TemporalAdjuster[a] =
+        import java.time.LocalTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.LocalTime & Pure as withTA;         
+        try {
+            let LocalTime(x1) = x;
+            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
+            LocalTime(withTA(x1, adj1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def withTemporalField(field: a, i: Int64, x: LocalTime): LocalTime with TemporalField[a] =
+        import java.time.LocalTime.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalTime & Pure as withTF;         
+        try {
+            let LocalTime(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            LocalTime(withTF(x1, field1, i))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
 
 }
