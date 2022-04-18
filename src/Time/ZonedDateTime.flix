@@ -91,6 +91,14 @@ namespace Time/ZonedDateTime {
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.DateTimeFormat;
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+    use Time/Temporal.TemporalAmount;
+    use Time/Temporal.TemporalField;
+    use Time/Temporal.TemporalUnit;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
@@ -105,6 +113,14 @@ namespace Time/ZonedDateTime {
     pub def getZonedDateTime(x: ZonedDateTime): ##java.time.ZonedDateTime = 
         let ZonedDateTime(x1) = x;
         x1
+
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): ZonedDateTime with TemporalAccessor[a] = 
+        import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        ZonedDateTime(fromTA(x1))
+
 
     pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, 
                     minute :: Int32, second :: Int32, nanoSecond :: Int32, zoneId :: ZoneId}): ZonedDateTime =
@@ -320,7 +336,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getYear(x1)
 
-    pub def withYear(x: ZonedDateTime, year: Int32): ZonedDateTime =
+    pub def withYear(year: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withYear(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withYear(x1, year))
@@ -336,7 +352,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getValue(getMonth(x1))
 
-    pub def withMonth(x: ZonedDateTime, month: Int32): ZonedDateTime =
+    pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withMonth(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withMonth(x1, month))
@@ -346,7 +362,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getDayOfYear(x1)
 
-    pub def withDayOfYear(x: ZonedDateTime, dayOfYear: Int32): ZonedDateTime =
+    pub def withDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfYear(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withDayOfYear(x1, dayOfYear))
@@ -356,7 +372,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getDayOfMonth(x1)
 
-    pub def withDayOfMonth(x: ZonedDateTime, dayOfMonth: Int32): ZonedDateTime =
+    pub def withDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfMonth(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withDayOfMonth(x1, dayOfMonth))
@@ -371,7 +387,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getHour(x1)
 
-    pub def withHour(x: ZonedDateTime, hour: Int32): ZonedDateTime =
+    pub def withHour(hour: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withHour(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withHour(x1, hour))
@@ -381,7 +397,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getMinute(x1)
 
-    pub def withMinute(x: ZonedDateTime, minute: Int32): ZonedDateTime =
+    pub def withMinute(minute: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withMinute(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withMinute(x1, minute))
@@ -391,7 +407,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getSecond(x1)
 
-    pub def withSecond(x: ZonedDateTime, second: Int32): ZonedDateTime =
+    pub def withSecond(second: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withSecond(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withSecond(x1, second))
@@ -401,9 +417,99 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getNano(x1)
 
-    pub def withNano(x: ZonedDateTime, nano: Int32): ZonedDateTime =
+    pub def withNano(nano: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withNano(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withNano(x1, nano))
+
+    pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
+        import java.time.ZonedDateTime.withZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
+        let ZonedDateTime(x1) = x;
+        let zone1 = Time/ZoneId.getZoneId(zone);
+        ZonedDateTime(withZoneSameInstant(x1, zone1))
+
+    pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
+        import java.time.ZonedDateTime.withZoneSameLocal(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
+        let ZonedDateTime(x1) = x;
+        let zone1 = Time/ZoneId.getZoneId(zone);
+        ZonedDateTime(withZoneSameLocal(x1, zone1))
+
+    pub def get(t: a, x: ZonedDateTime): Int32 with TemporalField[a] = 
+        import java.time.ZonedDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let x1 = getZonedDateTime(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        get(x1, t1)
+
+    pub def getLong(t: a, x: ZonedDateTime): Int64 with TemporalField[a] = 
+        import java.time.ZonedDateTime.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let x1 = getZonedDateTime(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(x1, t1)
+
+    pub def plusTemporalAmount(x: ZonedDateTime, amount: a): ZonedDateTime with TemporalAmount[a] =
+        import java.time.ZonedDateTime.plus(##java.time.temporal.TemporalAmount): ##java.time.ZonedDateTime & Pure;         
+        try {
+            let ZonedDateTime(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            ZonedDateTime(plus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def minusTemporalAmount(x: ZonedDateTime, amount: a): ZonedDateTime with TemporalAmount[a] =
+        import java.time.ZonedDateTime.minus(##java.time.temporal.TemporalAmount): ##java.time.ZonedDateTime & Pure;         
+        try {
+            let ZonedDateTime(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            ZonedDateTime(minus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def range(field: a, x: ZonedDateTime): ValueRange with TemporalField[a] =
+        import java.time.ZonedDateTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let ZonedDateTime(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(x1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    /// TODO refine class qualification of `t`
+    pub def until(units: t, r: {start :: ZonedDateTime, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+        import java.time.ZonedDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getZonedDateTime(r.start);
+        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
+        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
+        until(b1, e1, units1)
+
+
+    pub def withTemporalAdjuster(adj: a, x: ZonedDateTime): ZonedDateTime with TemporalAdjuster[a] =
+        import java.time.ZonedDateTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.ZonedDateTime & Pure as withTA;         
+        try {
+            let ZonedDateTime(x1) = x;
+            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
+            ZonedDateTime(withTA(x1, adj1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def withTemporalField(field: a, i: Int64, x: ZonedDateTime): ZonedDateTime with TemporalField[a] =
+        import java.time.ZonedDateTime.with(##java.time.temporal.TemporalField, Int64): ##java.time.ZonedDateTime & Pure as withTF;         
+        try {
+            let ZonedDateTime(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ZonedDateTime(withTF(x1, field1, i))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
 
 }

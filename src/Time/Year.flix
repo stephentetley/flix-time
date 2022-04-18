@@ -152,12 +152,13 @@ namespace Time/Year {
         let ZoneId(x1) = x;
         Year(now(x1))
 
+    /// NOTE - maybe this should return Option [/ Result] ?
     pub def fromTemporalAccessor(x: a): Year with TemporalAccessor[a] = 
         import static java.time.Year.from(##java.time.temporal.TemporalAccessor): ##java.time.Year & Pure as fromTA;
         let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
         Year(fromTA(x1))
 
-
+    
 
     ///
     /// Parse the string `s` as a Year, leading or trailing whitespace is trimmed.
@@ -364,37 +365,47 @@ namespace Time/Year {
         }
 
     /// TODO refine class qualification of `t`
-    pub def until(units: t, r: {start :: Year, end :: Year}): Int64 with TemporalUnit[t] = 
+    pub def until(units: t, r: {start :: Year, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
         import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let b1 = getYear(r.start);
-        let e1 = getYear(r.end) as ##java.time.temporal.Temporal;
+        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
         let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
         until(b1, e1, units1)
 
 
-
-    pub def withTemporalField(field: a, i: Int64, x: Year): Year with TemporalField[a] =
-        import java.time.Year.with(##java.time.temporal.TemporalField, Int64): ##java.time.Year & Pure;         
-        try {
-            let Year(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            Year(with(x1, field1, i))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
     pub def withTemporalAdjuster(adj: a, x: Year): Year with TemporalAdjuster[a] =
-        import java.time.Year.with(##java.time.temporal.TemporalAdjuster): ##java.time.Year & Pure;         
+        import java.time.Year.with(##java.time.temporal.TemporalAdjuster): ##java.time.Year & Pure as withTA;         
         try {
             let Year(x1) = x;
             let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
-            Year(with(x1, adj1))
+            Year(withTA(x1, adj1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def withTemporalField(field: a, i: Int64, x: Year): Year with TemporalField[a] =
+        import java.time.Year.with(##java.time.temporal.TemporalField, Int64): ##java.time.Year & Pure as withTF;         
+        try {
+            let Year(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            Year(withTF(x1, field1, i))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 
+    pub def get(t: a, x: Year): Int32 with TemporalField[a] = 
+        import java.time.Year.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let x1 = getYear(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        get(x1, t1)
+
+    pub def getLong(t: a, x: Year): Int64 with TemporalField[a] = 
+        import java.time.Year.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let x1 = getYear(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(x1, t1)
 
 }
