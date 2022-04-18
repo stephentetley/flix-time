@@ -323,23 +323,23 @@ namespace Time/YearMonth {
         }
 
 
-    pub def plusAmount(x: YearMonth, amount: Int64, unit: a): YearMonth with TemporalUnit[a] =
+    pub def plus(x: YearMonth, r: {amount :: Int64, temporalUnit :: a}): YearMonth with TemporalUnit[a] =
         import java.time.YearMonth.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.YearMonth & Pure;         
         try {
             let YearMonth(x1) = x;
-            let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
-            YearMonth(plus(x1, amount, unit1))
+            let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            YearMonth(plus(x1, r.amount, unit1))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def minusAmount(x: YearMonth, amount: Int64, unit: a): YearMonth with TemporalUnit[a] =
+    pub def minus(x: YearMonth, r: {amount :: Int64, temporalUnit :: a}): YearMonth with TemporalUnit[a] =
         import java.time.YearMonth.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.YearMonth & Pure;         
         try {
             let YearMonth(x1) = x;
-            let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
-            YearMonth(minus(x1, amount, unit1))
+            let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            YearMonth(minus(x1, r.amount, unit1))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)

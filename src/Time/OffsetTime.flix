@@ -113,6 +113,14 @@ namespace Time/OffsetTime {
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.TimeFormat;
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+    use Time/Temporal.TemporalAmount;
+    use Time/Temporal.TemporalField;
+    use Time/Temporal.TemporalUnit;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
     use Time.Instant;
     use Time.Instant.{Instant};
     use Time.LocalTime;
@@ -126,6 +134,14 @@ namespace Time/OffsetTime {
     pub def getOffsetTime(x: OffsetTime): ##java.time.OffsetTime = 
         let OffsetTime(x1) = x;
         x1
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): OffsetTime with TemporalAccessor[a] = 
+        import static java.time.OffsetTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetTime & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        OffsetTime(fromTA(x1))
+
+
 
     pub def of(r: { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetTime =
         import static java.time.OffsetTime.of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetTime & Pure;
@@ -326,13 +342,112 @@ namespace Time/OffsetTime {
         let ZoneOffset(o1) = offset;
         OffsetTime(withOffsetSameLocal(x1, o1))
 
-    /// pub def until(b: OffsetTime, e: OffsetTime, unit: ChronoUnit): Int64 =
-    ///     import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-    ///     let OffsetTime(b1) = b;
-    ///     let OffsetTime(e1) = e;
-    ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit);
-    ///     let te1 = e1 as ##java.time.temporal.Temporal;
-    ///     let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-    ///     until(b1, te1, tu1)
+
+    pub def get(t: a, x: OffsetTime): Int32 with TemporalField[a] = 
+        import java.time.OffsetTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let x1 = getOffsetTime(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        get(x1, t1)
+
+    pub def getLong(t: a, x: OffsetTime): Int64 with TemporalField[a] = 
+        import java.time.OffsetTime.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let x1 = getOffsetTime(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(x1, t1)
+
+    pub def plus(x: OffsetTime, r: {amount :: Int64, temporalUnit :: a}): OffsetTime with TemporalUnit[a] =
+        import java.time.OffsetTime.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.OffsetTime & Pure;         
+        try {
+            let OffsetTime(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            OffsetTime(plus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+    
+    pub def minus(x: OffsetTime, r: {amount :: Int64, temporalUnit :: a}): OffsetTime with TemporalUnit[a] =
+        import java.time.OffsetTime.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.OffsetTime & Pure;         
+        try {
+            let OffsetTime(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            OffsetTime(minus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def plusTemporalAmount(x: OffsetTime, amount: a): OffsetTime with TemporalAmount[a] =
+        import java.time.OffsetTime.plus(##java.time.temporal.TemporalAmount): ##java.time.OffsetTime & Pure;         
+        try {
+            let OffsetTime(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            OffsetTime(plus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def minusTemporalAmount(x: OffsetTime, amount: a): OffsetTime with TemporalAmount[a] =
+        import java.time.OffsetTime.minus(##java.time.temporal.TemporalAmount): ##java.time.OffsetTime & Pure;         
+        try {
+            let OffsetTime(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            OffsetTime(minus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def range(field: a, x: OffsetTime): ValueRange with TemporalField[a] =
+        import java.time.OffsetTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let OffsetTime(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(x1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def until(units: t, r: {start :: OffsetTime, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+        import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getOffsetTime(r.start);
+        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
+        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
+        until(b1, e1, units1)
+
+    pub def truncatedTo(unit: a, x: OffsetTime): OffsetTime with TemporalUnit[a] = 
+        import java.time.OffsetTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
+        OffsetTime(truncatedTo(x1, unit1))
+
+
+    pub def withTemporalAdjuster(adj: a, x: OffsetTime): OffsetTime with TemporalAdjuster[a] =
+        import java.time.OffsetTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.OffsetTime & Pure as withTA;         
+        try {
+            let OffsetTime(x1) = x;
+            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
+            OffsetTime(withTA(x1, adj1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def withTemporalField(field: a, i: Int64, x: OffsetTime): OffsetTime with TemporalField[a] =
+        import java.time.OffsetTime.with(##java.time.temporal.TemporalField, Int64): ##java.time.OffsetTime & Pure as withTF;         
+        try {
+            let OffsetTime(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            OffsetTime(withTF(x1, field1, i))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
 
 }

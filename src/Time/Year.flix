@@ -146,7 +146,7 @@ namespace Time/Year {
         let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
         Year(fromTA(x1))
 
-        
+
 
     pub def of(isoYear: {isoYear :: Int32}): Year =
         import static java.time.Year.of(Int32): ##java.time.Year & Pure;
@@ -315,7 +315,7 @@ namespace Time/Year {
         Year(minusYears(x1, yearsToSubtract))
 
     
-    pub def plusAmount(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
+    pub def plus(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
         import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         
         try {
             let Year(x1) = x;
@@ -326,7 +326,7 @@ namespace Time/Year {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
     
-    pub def minusAmount(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
+    pub def minus(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
         import java.time.Year.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         
         try {
             let Year(x1) = x;

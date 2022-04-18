@@ -87,6 +87,8 @@ namespace Time/MonthDay {
     use Time/Temporal.Temporal;
     use Time/Temporal.TemporalAccessor;
     use Time/Temporal.TemporalField;
+    use Time/Temporal.ValueRange;
+    use Time/Temporal.ValueRange.{ValueRange};
     use Time.Month;
     use Time.MonthDay;
     use Time.MonthDay.{MonthDay};
@@ -245,5 +247,17 @@ namespace Time/MonthDay {
         let x1 = getMonthDay(x);
         let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
         getLong(x1, t1)
+
+
+    pub def range(field: a, x: MonthDay): ValueRange with TemporalField[a] =
+        import java.time.MonthDay.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let MonthDay(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            ValueRange(range(x1, field1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
 }

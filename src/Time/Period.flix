@@ -258,10 +258,10 @@ namespace Time/Period {
         let Period(x1) = x;
         Period(withDays(x1, days))
 
-    pub def between(b: LocalDate, e: LocalDate): Period =
+    pub def between(r: {start :: LocalDate, end :: LocalDate}): Period =
         import static java.time.Period.between(##java.time.LocalDate, ##java.time.LocalDate): ##java.time.Period & Pure;
-        let LocalDate(b1) = b;
-        let LocalDate(e1) = e;
+        let LocalDate(b1) = r.start;
+        let LocalDate(e1) = r.end;
         Period(between(b1, e1))
 
     /// Units YEARS, MONTHS, DAYS

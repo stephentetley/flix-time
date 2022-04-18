@@ -115,11 +115,20 @@ namespace Time/ZDuration {
 
     use Time.ZDuration;
     use Time.ZDuration.{ZDuration};
+    
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAmount;
     use Time/Temporal.TemporalUnit;
 
     pub def getDuration(x: ZDuration): ##java.time.Duration = 
         let ZDuration(x1) = x;
         x1
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAmount(x: a): ZDuration with TemporalAmount[a] = 
+        import static java.time.Duration.from(##java.time.temporal.TemporalAmount): ##java.time.Duration & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(x);
+        ZDuration(fromTA(x1))
 
 
     ///
@@ -404,6 +413,66 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
         ZDuration(truncatedTo(x1, unit1))
+
+    pub def addTo(x: ZDuration, base: a): a with Temporal[a] =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZDuration(x1) = x;
+        let base1 = Time/Temporal/Temporal.marshalToNativeTemporal(base);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(addTo(x1, base1))
+
+    pub def subtractFrom(x: ZDuration, base: a): a with Temporal[a] =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZDuration(x1) = x;
+        let base1 = Time/Temporal/Temporal.marshalToNativeTemporal(base);
+        Time/Temporal/Temporal.unmarshalFromNativeTemporal(subtractFrom(x1, base1))    
+
+
+    pub def between(r: {start :: a, end :: a}): ZDuration with Temporal[a] =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        let b1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.start);
+        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
+        ZDuration(between(b1, e1))
+
+
+    pub def get(t: a, x: ZDuration): Int64 with TemporalUnit[a] = 
+        import java.time.Duration.get(##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let x1 = getDuration(x);
+        let t1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(t);
+        get(x1, t1)
+
     
+    pub def plus(x: ZDuration, r: {amount :: Int64, temporalUnit :: a}): ZDuration with TemporalUnit[a] =
+        import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
+        try {
+            let ZDuration(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            ZDuration(plus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+    
+    pub def minus(x: ZDuration, r: {amount :: Int64, temporalUnit :: a}): ZDuration with TemporalUnit[a] =
+        import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
+        try {
+            let ZDuration(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            ZDuration(minus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+    
+    pub def ofAmount(r: {amount :: Int64, temporalUnit :: a}): ZDuration with TemporalUnit[a] =
+        import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
+        try {
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            ZDuration(of(r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
 
 }
