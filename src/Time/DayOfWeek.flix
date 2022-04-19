@@ -91,6 +91,11 @@ namespace Time/DayOfWeek {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
 
+    class DayOfWeekSupportedField[a] with TemporalField[a] {}
+
+    instance DayOfWeekSupportedField[Time/Temporal/ChronoField.DayOfWeek]
+    instance DayOfWeekSupportedField[Time/Temporal/WeekFields.DayOfWeek]
+
     /// 1 (Monday) to 7 (Sunday)
     pub def of(i: Int32): Option[DayOfWeek] = match i {
         case 1 => Some(Monday)
@@ -195,15 +200,14 @@ namespace Time/DayOfWeek {
         unmarshal(x2)
 
 
-    pub def range(field: a, x: DayOfWeek): ValueRange with TemporalField[a] = 
+    pub def range(field: a, x: DayOfWeek): ValueRange with DayOfWeekSupportedField[a] = 
         import java.time.DayOfWeek.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
         try {
             let x1 = marshal(x);
             let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
             ValueRange(range(x1, field1))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     /// NOTE - maybe this should return Option [/ Result] ?
@@ -213,13 +217,13 @@ namespace Time/DayOfWeek {
         let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
         Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
-    pub def get(t: a, x: DayOfWeek): Int32 with TemporalField[a] = 
+    pub def get(t: a, x: DayOfWeek): Int32 with DayOfWeekSupportedField[a] = 
         import java.time.DayOfWeek.get(##java.time.temporal.TemporalField): Int32 & Pure;
         let x1 = marshal(x);
         let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
         get(x1, t1)
 
-    pub def getLong(t: a, x: DayOfWeek): Int64 with TemporalField[a] = 
+    pub def getLong(t: a, x: DayOfWeek): Int64 with DayOfWeekSupportedField[a] = 
         import java.time.DayOfWeek.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
         let x1 = marshal(x);
         let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);

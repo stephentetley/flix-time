@@ -139,6 +139,34 @@ namespace Time/LocalDate {
     use Time.ZInstant;
     use Time.ZInstant.{ZInstant};
 
+    class LocalDateSupportedField[a] with TemporalField[a] {}
+
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.DayOfWeek]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.AlignedDayOfWeekInMonth]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.AlignedDayOfWeekInYear]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.DayOfMonth]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.DayOfYear]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.EpochDay]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.AlignedWeekOfMonth]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.AlignedWeekOfYear]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.MonthOfYear]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.ProlepticMonth]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.YearOfEra]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.Year]
+    instance LocalDateSupportedField[Time/Temporal/ChronoField.Era]
+
+    instance LocalDateSupportedField[Time/Temporal/WeekFields.DayOfWeek]
+
+    class LocalDateSupportedUnit[a] with TemporalUnit[a] {}
+
+    instance LocalDateSupportedUnit[Time/Temporal/ChronoUnit.Days]
+    instance LocalDateSupportedUnit[Time/Temporal/ChronoUnit.Weeks]
+    instance LocalDateSupportedUnit[Time/Temporal/ChronoUnit.Months]
+    instance LocalDateSupportedUnit[Time/Temporal/ChronoUnit.Years]
+    instance LocalDateSupportedUnit[Time/Temporal/ChronoUnit.Decades]
+    instance LocalDateSupportedUnit[Time/Temporal/ChronoUnit.Centuries]
+    instance LocalDateSupportedUnit[Time/Temporal/ChronoUnit.Millennia]
+    instance LocalDateSupportedUnit[Time/Temporal/ChronoUnit.Eras]
 
     pub def getLocalDate(x: LocalDate): ##java.time.LocalDate = 
         let LocalDate(x1) = x;
@@ -433,26 +461,24 @@ namespace Time/LocalDate {
         let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
         getLong(x1, t1)
 
-    pub def plus(x: LocalDate, r: {amount :: Int64, temporalUnit :: a}): LocalDate with TemporalUnit[a] =
+    pub def plus(x: LocalDate, r: {amount :: Int64, temporalUnit :: a}): LocalDate with LocalDateSupportedUnit[a] =
         import java.time.LocalDate.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDate & Pure;         
         try {
             let LocalDate(x1) = x;
             let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
             LocalDate(plus(x1, r.amount, temporalUnit1))
         } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
     
-    pub def minus(x: LocalDate, r: {amount :: Int64, temporalUnit :: a}): LocalDate with TemporalUnit[a] =
+    pub def minus(x: LocalDate, r: {amount :: Int64, temporalUnit :: a}): LocalDate with LocalDateSupportedUnit[a] =
         import java.time.LocalDate.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDate & Pure;         
         try {
             let LocalDate(x1) = x;
             let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
             LocalDate(minus(x1, r.amount, temporalUnit1))
         } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 
@@ -463,8 +489,7 @@ namespace Time/LocalDate {
             let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
             LocalDate(plus(x1, amount1))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     pub def minusTemporalAmount(x: LocalDate, amount: a): LocalDate with TemporalAmount[a] =
@@ -474,23 +499,21 @@ namespace Time/LocalDate {
             let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
             LocalDate(minus(x1, amount1))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-
-    pub def range(field: a, x: LocalDate): ValueRange with TemporalField[a] =
+    /// Shouldn't fail as fields constrained by LocalDateSupportedField
+    pub def range(field: a, x: LocalDate): ValueRange with LocalDateSupportedField[a] =
         import java.time.LocalDate.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let LocalDate(x1) = x;
             let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
             ValueRange(range(x1, field1))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def until(units: t, r: {start :: LocalDate, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+    pub def until(units: t, r: {start :: LocalDate, end :: a}): Int64 with LocalDateSupportedUnit[t], Temporal[a] = 
         import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let b1 = getLocalDate(r.start);
         let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
@@ -504,29 +527,19 @@ namespace Time/LocalDate {
             let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
             LocalDate(withTA(x1, adj1))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def withTemporalField(field: a, i: Int64, x: LocalDate): LocalDate with TemporalField[a] =
+    pub def withTemporalField(field: a, i: Int64, x: LocalDate): LocalDate with LocalDateSupportedField[a] =
         import java.time.LocalDate.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalDate & Pure as withTF;         
         try {
             let LocalDate(x1) = x;
             let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
             LocalDate(withTF(x1, field1, i))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 
-    /// pub def until(b: LocalDate, e: LocalDate, unit: ChronoUnit): Int64 =
-    ///     import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-    ///     let LocalDate(b1) = b;
-    ///     let LocalDate(e1) = e;
-    ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit);
-    ///     let te1 = e1 as ##java.time.temporal.Temporal;
-    ///     let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-    ///     until(b1, te1, tu1)
 
 }
