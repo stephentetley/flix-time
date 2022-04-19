@@ -100,7 +100,7 @@ namespace Time/Zone/ZoneRules {
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
         let xs = getValidOffsets(x1, ldt1);
-        FlixSandbox/Marshal.unmarshalList(o -> ZoneOffset(o as ##java.time.ZoneOffset), xs) as & Pure
+        FlixSandbox/Marshal.unmarshalList(o -> ZoneOffset(o as ##java.time.ZoneOffset), xs)
 
     pub def getDaylightSavings(instant: ZInstant, x: ZoneRules): ZDuration =
         import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant): ##java.time.Duration & Pure;
@@ -133,5 +133,5 @@ namespace Time/Zone/ZoneRules {
         import java.time.zone.ZoneRules.getTransitions(): ##java.util.List & Pure;
         let ZoneRules(x1) = x;
         let xs = getTransitions(x1);
-        FlixSandbox/Marshal.unmarshalList(o -> ZoneOffsetTransition(o as ##java.time.zone.ZoneOffsetTransition), xs) as & Pure
+        FlixSandbox/Marshal.unmarshalList(o -> ZoneOffsetTransition(o as ##java.time.zone.ZoneOffsetTransition), xs)
 }

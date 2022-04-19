@@ -182,7 +182,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     pub def appendGenericZoneTextWithZones(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, Unit] = 
         import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder & Impure;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = FlixSandbox/Marshal.marshalListToSet(z -> Time/ZoneId.getZoneId(z) as ##java.lang.Object, preferredZones) as & Pure;
+        let s1 = FlixSandbox/Marshal.marshalListToSet(z -> Time/ZoneId.getZoneId(z) as ##java.lang.Object, preferredZones);
         liftJvmBuilderPrim(bldr -> appendGenericZoneText(bldr, style1, s1))
 
     pub def appendInstant(): DateTimeFormatterBuilder[ka, Unit] = 
@@ -250,7 +250,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     pub def appendZoneTextWithZones(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, Unit] = 
         import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder & Impure;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = FlixSandbox/Marshal.marshalListToSet(z -> Time/ZoneId.getZoneId(z) as ##java.lang.Object, preferredZones) as & Pure;
+        let s1 = FlixSandbox/Marshal.marshalListToSet(z -> Time/ZoneId.getZoneId(z) as ##java.lang.Object, preferredZones);
         liftJvmBuilderPrim(bldr -> appendZoneText(bldr, style1, s1))
 
 

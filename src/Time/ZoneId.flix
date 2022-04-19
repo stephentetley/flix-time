@@ -85,7 +85,7 @@ namespace Time/ZoneId {
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId & Pure;
         import java.lang.Throwable.getMessage(): String & Pure;
         try {
-            let m1 = FlixSandbox/Marshal.marshalMap(s1 -> s1 as ##java.lang.Object, s2 -> s2 as ##java.lang.Object, aliases) as & Pure;
+            let m1 = FlixSandbox/Marshal.marshalMap(s1 -> s1 as ##java.lang.Object, s2 -> s2 as ##java.lang.Object, aliases);
             Ok(ZoneId(of(zoneId.zoneId, m1)))
         } catch {
             case ex: ##java.time.DateTimeException       => Err(getMessage(ex as ##java.lang.Throwable))

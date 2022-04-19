@@ -58,7 +58,7 @@ namespace Time/Chrono/IsoChronology {
         import java.time.chrono.IsoChronology.eras(): ##java.util.List & Pure;
         let IsoChronology(x1) = x;
         let jxs = eras(x1);
-        FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs) as & Pure
+        FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs)
 
 
     pub def getId(x: IsoChronology): String = 

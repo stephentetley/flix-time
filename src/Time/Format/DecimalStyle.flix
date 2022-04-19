@@ -76,7 +76,7 @@ namespace Time/Format/DecimalStyle {
     pub def getAvailableLocales(): List[Locale] =
         import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set & Pure;
         let js = getAvailableLocales();
-        FlixSandbox/Marshal.unmarshalSetToList(o -> Locale(o as ##java.util.Locale), js) as & Pure
+        FlixSandbox/Marshal.unmarshalSetToList(o -> Locale(o as ##java.util.Locale), js)
 
     // Note - should the Locale module provide a function marshal and unmarshal functions
     // so a cleint doesn't have to use: `o -> Locale(o as ##java.util.Locale)` ?

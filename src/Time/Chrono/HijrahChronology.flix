@@ -106,7 +106,7 @@ namespace Time/Chrono/HijrahChronology {
         import java.time.chrono.HijrahChronology.eras(): ##java.util.List & Pure;
         let HijrahChronology(x1) = x;
         let jxs = eras(x1);
-        FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/HijrahEra.unmarshal(o as ##java.time.chrono.HijrahEra), jxs) as & Pure
+        FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/HijrahEra.unmarshal(o as ##java.time.chrono.HijrahEra), jxs)
         
     pub def getId(x: HijrahChronology): String = 
         import java.time.chrono.HijrahChronology.getId(): String & Pure;
@@ -146,7 +146,7 @@ namespace Time/Chrono/HijrahChronology {
         let resolverStyle1 = Time/Format/ResolverStyle.marshal(resolverStyle);
         let upcastKey = field -> Time/Temporal/TemporalField.marshalToNativeTemporalField(field) as ##java.lang.Object;
         let upcastVal = i -> FlixSandbox/Marshal.marshalInt64(i) as ##java.lang.Object;
-        let fieldValues1 = FlixSandbox/Marshal.marshalListToMap(upcastKey, upcastVal, fieldValues) as & Pure;
+        let fieldValues1 = FlixSandbox/Marshal.marshalAssocListToMap(upcastKey, upcastVal, fieldValues);
         HijrahDate(resolveDate(x1, fieldValues1, resolverStyle1))
 
 }
