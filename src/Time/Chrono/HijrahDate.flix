@@ -15,7 +15,11 @@
  */
 
 namespace Time/Chrono {
-    
+
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+
     ///
     /// A wrapper around java.time.chrono.HijrahDate.
     ///
@@ -39,6 +43,29 @@ namespace Time/Chrono {
         pub def hash(x: HijrahDate): Int32 = Time/Chrono/HijrahDate.hashCode(x)
     }  
 
+    instance TemporalAccessor[HijrahDate] {
+        pub def marshalToNativeTemporalAccessor(x: HijrahDate): ##java.time.temporal.TemporalAccessor =         
+            Time/Chrono/HijrahDate.getHijrahDate(x) as ##java.time.temporal.TemporalAccessor
+        
+        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): HijrahDate = 
+            HijrahDate(x as ##java.time.chrono.HijrahDate)
+    }
+
+    instance Temporal[HijrahDate] {
+        pub def marshalToNativeTemporal(x: HijrahDate): ##java.time.temporal.Temporal =         
+            Time/Chrono/HijrahDate.getHijrahDate(x) as ##java.time.temporal.Temporal
+        
+        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): HijrahDate = 
+            HijrahDate(x as ##java.time.chrono.HijrahDate)
+    }
+
+    instance TemporalAdjuster[HijrahDate] {
+        pub def marshalToNativeTemporalAdjuster(x: HijrahDate): ##java.time.temporal.TemporalAdjuster =         
+            Time/Chrono/HijrahDate.getHijrahDate(x) as ##java.time.temporal.TemporalAdjuster
+        
+        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): HijrahDate = 
+            HijrahDate(x as ##java.time.chrono.HijrahDate)
+    }
 }
 
 namespace Time/Chrono/HijrahDate {
@@ -49,8 +76,12 @@ namespace Time/Chrono/HijrahDate {
     use Time/Chrono.HijrahChronology;
     use Time/Chrono.HijrahChronology.{HijrahChronology};
     use Time/Chrono.HijrahEra;
-    use Time/Temporal.ChronoField;
-    use Time/Temporal.ChronoUnit;
+    use Time/Temporal.Temporal;
+    use Time/Temporal.TemporalAccessor;
+    use Time/Temporal.TemporalAdjuster;
+    use Time/Temporal.TemporalAmount;
+    use Time/Temporal.TemporalField;
+    use Time/Temporal.TemporalUnit;
     use Time.Clock;
     use Time.Clock.{Clock};
     use Time.LocalDate;
@@ -59,6 +90,17 @@ namespace Time/Chrono/HijrahDate {
     use Time.Period.{Period};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
+
+    pub def getHijrahDate(x: HijrahDate): ##java.time.chrono.HijrahDate = 
+        let HijrahDate(x1) = x;
+        x1
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAccessor(x: a): HijrahDate with TemporalAccessor[a] = 
+        import static java.time.chrono.HijrahDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.HijrahDate & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+        HijrahDate(fromTA(x1))
+
 
     pub def of(r: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
         import static java.time.chrono.HijrahDate.of(Int32, Int32, Int32): ##java.time.chrono.HijrahDate & Pure;
@@ -125,52 +167,6 @@ namespace Time/Chrono/HijrahDate {
         let HijrahDate(x1) = x;
         lengthOfYear(x1)
 
-    /// pub def getDayOfWeek(x: HijrahDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek)
-    ///         |> Result.getWithDefault(-1)
-
-    /// pub def getDayOfMonth(x: HijrahDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth)
-    ///         |> Result.getWithDefault(-1)
-
-    /// pub def getDayOfYear(x: HijrahDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear)
-    ///         |> Result.getWithDefault(-1)
-
-    /// pub def getMonthOfYear(x: HijrahDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear)
-    ///         |> Result.getWithDefault(-1)
-
-    /// pub def getYear(x: HijrahDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.Year)
-    ///         |> Result.getWithDefault(-1)
-
-    /// pub def getYearOfEra(x: HijrahDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra)
-    ///         |> Result.getWithDefault(-1)
-
-    /// def getChronoFieldHelper(x: HijrahDate, field: ChronoField): Result[Int32, String] =
-    ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 & Pure;
-    ///     try {
-    ///         let HijrahDate(x1) = x;
-    ///         let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
-    ///         Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1))
-    ///     } catch {
-    ///         case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
-    ///     }
-
-
-    /// pub def plusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
-    ///     import java.time.chrono.HijrahDate.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;
-    ///     let HijrahDate(x1) = x;
-    ///     let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
-    ///     HijrahDate(plus(x1, amount, unit1))
-
-    /// pub def minusChronoAmount(x: HijrahDate, amount: Int64, unit: ChronoUnit): HijrahDate = 
-    ///     import java.time.chrono.HijrahDate.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;
-    ///     let HijrahDate(x1) = x;
-    ///     let unit1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
-    ///     HijrahDate(minus(x1, amount, unit1))
 
     pub def plusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
         import java.time.chrono.HijrahDate.plus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate & Pure;
@@ -186,18 +182,96 @@ namespace Time/Chrono/HijrahDate {
         let tamount1 = amount1 as ##java.time.temporal.TemporalAmount;
         HijrahDate(minus(x1, tamount1))
 
-    /// pub def until(b: HijrahDate, e: HijrahDate, unit: ChronoUnit): Int64 = 
-    ///     import java.time.chrono.HijrahDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-    ///     let HijrahDate(b1) = b;
-    ///     let HijrahDate(e1) = e;
-    ///     let te1 = e1 as ##java.time.temporal.Temporal;
-    ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit) as ##java.time.temporal.TemporalUnit;
-    ///     until(b1, te1, u1)
+
 
     pub def withVariant(x: HijrahDate, chronology: HijrahChronology): HijrahDate = 
         import java.time.chrono.HijrahDate.withVariant(##java.time.chrono.HijrahChronology): ##java.time.chrono.HijrahDate & Pure;
         let HijrahDate(x1) = x;
         let HijrahChronology(chronology1) = chronology;
         HijrahDate(withVariant(x1, chronology1))
+
+    pub def getLong(t: a, x: HijrahDate): Int64 with TemporalField[a] = 
+        import java.time.chrono.HijrahDate.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        let x1 = getHijrahDate(x);
+        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+        getLong(x1, t1)
+
+
+    pub def plus(x: HijrahDate, r: {amount :: Int64, temporalUnit :: a}): HijrahDate with TemporalUnit[a] =
+        import java.time.chrono.HijrahDate.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;         
+        try {
+            let HijrahDate(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            HijrahDate(plus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+    
+    pub def minus(x: HijrahDate, r: {amount :: Int64, temporalUnit :: a}): HijrahDate with TemporalUnit[a] =
+        import java.time.chrono.HijrahDate.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.chrono.HijrahDate & Pure;         
+        try {
+            let HijrahDate(x1) = x;
+            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
+            HijrahDate(minus(x1, r.amount, temporalUnit1))
+        } catch {
+            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def plusTemporalAmount(x: HijrahDate, amount: a): HijrahDate with TemporalAmount[a] =
+        import java.time.chrono.HijrahDate.plus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate & Pure;         
+        try {
+            let HijrahDate(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            HijrahDate(plus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def minusTemporalAmount(x: HijrahDate, amount: a): HijrahDate with TemporalAmount[a] =
+        import java.time.chrono.HijrahDate.minus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate & Pure;         
+        try {
+            let HijrahDate(x1) = x;
+            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
+            HijrahDate(minus(x1, amount1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def until(units: t, r: {start :: HijrahDate, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+        import java.time.chrono.HijrahDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getHijrahDate(r.start);
+        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
+        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
+        until(b1, e1, units1)
+
+
+    pub def withTemporalAdjuster(adj: a, x: HijrahDate): HijrahDate with TemporalAdjuster[a] =
+        import java.time.chrono.HijrahDate.with(##java.time.temporal.TemporalAdjuster): ##java.time.chrono.HijrahDate & Pure as withTA;         
+        try {
+            let HijrahDate(x1) = x;
+            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
+            HijrahDate(withTA(x1, adj1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def withTemporalField(field: a, i: Int64, x: HijrahDate): HijrahDate with TemporalField[a] =
+        import java.time.chrono.HijrahDate.with(##java.time.temporal.TemporalField, Int64): ##java.time.chrono.HijrahDate & Pure as withTF;         
+        try {
+            let HijrahDate(x1) = x;
+            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+            HijrahDate(withTF(x1, field1, i))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
 
 }

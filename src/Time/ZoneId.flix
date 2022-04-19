@@ -40,8 +40,6 @@ namespace Time {
         pub def hash(x: ZoneId): Int32 = Time/ZoneId.hashCode(x)
     }
 
-    pub opaque type ZonePrefix = String
-
 }
 
 namespace Time/ZoneId {
@@ -53,8 +51,6 @@ namespace Time/ZoneId {
     use Time.ZoneId.{ZoneId};
 
     use Time/Temporal.TemporalAccessor;
-    use Time.ZonePrefix;
-    use Time.ZonePrefix.{ZonePrefix};
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
@@ -70,7 +66,7 @@ namespace Time/ZoneId {
 
 
 
-    pub def ofZoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
+    pub def of(zoneId: {zoneId :: String}): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
         import java.lang.Throwable.getMessage(): String & Pure;
         try {
@@ -93,21 +89,20 @@ namespace Time/ZoneId {
         }
 
 
-    pub def ofOffset(r: {prefix :: Option[ZonePrefix], offset :: ZoneOffset}): ZoneId =
+    pub def ofOffset(r: {prefix :: Option[String], offset :: ZoneOffset}): ZoneId =
         import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId & Pure;
         let p1 = match r.prefix {
-            case Some(ZonePrefix(s)) => s
-            case _ => ""
+            case Some(s) => s
+            case _       => ""
         };
         let ZoneOffset(o1) = r.offset;
         ZoneId(ofOffset(p1, o1))
 
-    pub def gmt(): ZonePrefix = ZonePrefix("GMT")
 
-    pub def utc(): ZonePrefix = ZonePrefix("UTC")
-
-    pub def ut(): ZonePrefix = ZonePrefix("UT")
-
+    pub def utc(): ZoneId = match of(zoneId = "Z") {
+        case Ok(z)  => z
+        case Err(_) => bug!("ZoneId.utc() - failed")
+    }
 
     pub def systemDefault(): Option[ZoneId] & Impure =
         import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId & Impure;

@@ -14,30 +14,19 @@
  * limitations under the License.
  */
 
-namespace TestClock {
+namespace TestIsoChronology {
 
     use ToString.toString;
 
     /////////////////////////////////////////////////////////////////////////////
-    // toString                                                                //
+    // eras                                                                    //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String & Impure = toString(Time/Clock.systemDefaultZone())
+    def eras01(): List[Time/Chrono.IsoEra] & Impure = 
+        let ic = Time/Chrono/IsoChronology.getInstance();
+        let xs = Time/Chrono/IsoChronology.eras(ic);
+        println("TestIsoChronology.eras01(): ${xs}");
+        xs
 
-
-    /////////////////////////////////////////////////////////////////////////////
-    // fixed                                                                   //
-    /////////////////////////////////////////////////////////////////////////////
-
-    @test
-    def fixed01(): Bool & Impure = 
-        let i = Time/ZInstant.now();
-        let z = Time/ZoneId.utc();
-        let c = Time/Clock.fixed(i, z);
-        let ci1 = Time/Clock.instant(c);
-        let ci2 = Time/Clock.instant(c);
-        println("Clock.fixed01(): ${ci1} ${ci2}");
-        ci1 == ci2
-        
 }

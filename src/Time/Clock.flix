@@ -35,10 +35,6 @@ namespace Time {
             toString(o1)
     }
 
-    instance Eq[Clock] {
-        pub def eq(x: Clock, y: Clock): Bool = Time/Clock.equals(x, y)
-    }
-
     instance Hash[Clock] {
         pub def hash(x: Clock): Int32 = Time/Clock.hashCode(x)
     }
@@ -60,6 +56,13 @@ namespace Time/Clock {
         let Clock(x1) = x;
         x1
 
+
+    pub def hashCode(x: Clock): Int32 =
+        import java.time.Clock.hashCode(): Int32 & Pure;
+        let Clock(x1) = x;
+        hashCode(x1)
+
+
     /// Pure or Impure?
     pub def fixed(inst: ZInstant, zone: ZoneId): Clock =
         import static java.time.Clock.fixed(##java.time.Instant, ##java.time.ZoneId): ##java.time.Clock & Pure;
@@ -73,11 +76,6 @@ namespace Time/Clock {
         let Clock(c1) = c;
         Clock(offset(c1, d1))
 
-    pub def tick(d: ZDuration, c: Clock): Clock & Impure =
-        import static java.time.Clock.tick(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
-        let ZDuration(d1) = d;
-        let Clock(c1) = c;
-        Clock(tick(c1, d1))
 
 
     pub def system(zone: ZoneId): Clock & Impure =
@@ -94,17 +92,19 @@ namespace Time/Clock {
         import static java.time.Clock.systemUTC(): ##java.time.Clock & Impure;
         Clock(systemUTC())
 
-    /// TODO - no equals?
-    pub def equals(x: Clock, y: Clock): Bool =
-        import java.time.Clock.equals(##java.lang.Object): Bool & Pure;
-        let Clock(x1) = x;
-        let Clock(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
+    /// /// TODO - no equals?
+    /// pub def equals(x: Clock, y: Clock): Bool =
+    ///     import java.time.Clock.equals(##java.lang.Object): Bool & Pure;
+    ///     let Clock(x1) = x;
+    ///     let Clock(y1) = y;
+    ///     equals(x1, y1 as ##java.lang.Object)
 
-    pub def hashCode(x: Clock): Int32 =
-        import java.time.Clock.hashCode(): Int32 & Pure;
-        let Clock(x1) = x;
-        hashCode(x1)
+    pub def tick(d: ZDuration, c: Clock): Clock & Impure =
+        import static java.time.Clock.tick(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
+        let ZDuration(d1) = d;
+        let Clock(c1) = c;
+        Clock(tick(c1, d1))
+
 
     pub def millis(x: Clock): Int64 & Impure =
         import java.time.Clock.millis(): Int64 & Impure;
@@ -143,5 +143,4 @@ namespace Time/Clock {
         Clock(withZone(c1, Time/ZoneId.getZoneId(zone)))
 
     
-
 }
