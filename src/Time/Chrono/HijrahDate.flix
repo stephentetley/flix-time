@@ -95,11 +95,15 @@ namespace Time/Chrono/HijrahDate {
         let HijrahDate(x1) = x;
         x1
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAccessor(x: a): HijrahDate with TemporalAccessor[a] = 
+    /// `fromTemporalAccessor` does not support all TemporalAccessor types
+    pub def fromTemporalAccessor(x: a): Result[HijrahDate, String] with TemporalAccessor[a] = 
         import static java.time.chrono.HijrahDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.HijrahDate & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-        HijrahDate(fromTA(x1))
+        try {
+            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+            HijrahDate(fromTA(x1)) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
 
     pub def of(r: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =

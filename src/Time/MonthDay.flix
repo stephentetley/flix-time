@@ -99,11 +99,15 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         x1
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAccessor(x: a): MonthDay with TemporalAccessor[a] = 
+    /// `fromTemporalAccessor` does not support all TemporalAccessor types
+    pub def fromTemporalAccessor(x: a): Result[MonthDay, String] with TemporalAccessor[a] = 
         import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-        MonthDay(fromTA(x1))
+        try {
+            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+            MonthDay(fromTA(x1)) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
 
     pub def of(r: {month :: Int32, dayOfMonth :: Int32}): MonthDay =

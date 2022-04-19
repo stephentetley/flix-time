@@ -140,11 +140,15 @@ namespace Time/Year {
     }
 
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAccessor(x: a): Year with TemporalAccessor[a] = 
+    /// `fromTemporalAccessor` does not support all TemporalAccessor types
+    pub def fromTemporalAccessor(x: a): Result[Year, String] with TemporalAccessor[a] = 
         import static java.time.Year.from(##java.time.temporal.TemporalAccessor): ##java.time.Year & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-        Year(fromTA(x1))
+        try {
+            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+            Year(fromTA(x1)) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
 
 

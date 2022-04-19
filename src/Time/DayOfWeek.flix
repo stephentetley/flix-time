@@ -151,11 +151,15 @@ namespace Time/DayOfWeek {
             case x1 if primEquals(x1, get_SUNDAY())      => Sunday
         }
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAccessor(x: a): DayOfWeek with TemporalAccessor[a] = 
+    /// `fromTemporalAccessor` does not support all TemporalAccessor types
+    pub def fromTemporalAccessor(x: a): Result[DayOfWeek, String] with TemporalAccessor[a] = 
         import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-        unmarshal(fromTA(x1))
+        try {
+            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+            unmarshal(fromTA(x1)) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;

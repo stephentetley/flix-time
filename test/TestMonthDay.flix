@@ -30,7 +30,7 @@ namespace TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def fromTemporalAccessor01(): Time.MonthDay & Impure = 
+    def fromTemporalAccessor01(): Result[Time.MonthDay, String] & Impure = 
         let date = Time/LocalDate.of({year =2022, month = 4, dayOfMonth = 18});
         let md = Time/MonthDay.fromTemporalAccessor(date);
         println("MonthDay.fromTemporalAccessor01(): ${md}");

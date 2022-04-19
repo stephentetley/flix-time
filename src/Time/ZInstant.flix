@@ -132,11 +132,15 @@ namespace Time/ZInstant {
         x1
 
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAccessor(x: a): ZInstant with TemporalAccessor[a] = 
+    /// `fromTemporalAccessor` does not support all TemporalAccessor types
+    pub def fromTemporalAccessor(x: a): Result[ZInstant, String] with TemporalAccessor[a] = 
         import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-        ZInstant(fromTA(x1))
+        try {
+            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+            ZInstant(fromTA(x1)) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
 
 

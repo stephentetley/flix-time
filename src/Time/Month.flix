@@ -87,11 +87,15 @@ namespace Time/Month {
     use Time/Temporal.ValueRange.{ValueRange};
     use Time/Format.TextStyle;
 
-        /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAccessor(x: a): Month with TemporalAccessor[a] = 
+    /// `fromTemporalAccessor` does not support all TemporalAccessor types
+    pub def fromTemporalAccessor(x: a): Result[Month, String] with TemporalAccessor[a] = 
         import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-        unmarshal(fromTA(x1))
+        try {
+            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+            unmarshal(fromTA(x1)) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def marshal(x: Month): ##java.time.Month =
         import static get java.time.Month.JANUARY: ##java.time.Month & Pure as get_JANUARY;
