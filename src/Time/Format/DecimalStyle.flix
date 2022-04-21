@@ -88,7 +88,7 @@ namespace Time/Format/DecimalStyle {
         getDecimalStyle(x) |> getDecimalSeparator
 
 
-    pub def withDecimalSeparator(sep: Char, x: DecimalStyle): Char = 
+    pub def setDecimalSeparator(sep: Char, x: DecimalStyle): Char = 
         import java.time.format.DecimalStyle.withDecimalSeparator(Char): Char & Pure;
         let DecimalStyle(x1) = x;
         withDecimalSeparator(x1, sep)
@@ -97,7 +97,7 @@ namespace Time/Format/DecimalStyle {
         import java.time.format.DecimalStyle.getNegativeSign(): Char & Pure;
         getDecimalStyle(x) |> getNegativeSign
 
-    pub def withNegativeSign(sign: Char, x: DecimalStyle): Char = 
+    pub def setNegativeSign(sign: Char, x: DecimalStyle): Char = 
         import java.time.format.DecimalStyle.withNegativeSign(Char): Char & Pure;
         let DecimalStyle(x1) = x;
         withNegativeSign(x1, sign)
@@ -106,7 +106,7 @@ namespace Time/Format/DecimalStyle {
         import java.time.format.DecimalStyle.getPositiveSign(): Char & Pure;
         getDecimalStyle(x) |> getPositiveSign
 
-    pub def withPositiveSign(sign: Char, x: DecimalStyle): Char = 
+    pub def setPositiveSign(sign: Char, x: DecimalStyle): Char = 
         import java.time.format.DecimalStyle.withPositiveSign(Char): Char & Pure;
         let DecimalStyle(x1) = x;
         withPositiveSign(x1, sign)
@@ -115,7 +115,7 @@ namespace Time/Format/DecimalStyle {
         import java.time.format.DecimalStyle.getZeroDigit(): Char & Pure;
         getDecimalStyle(x) |> getZeroDigit
 
-    pub def withZeroDigit(digit: Char, x: DecimalStyle): Char = 
+    pub def setZeroDigit(digit: Char, x: DecimalStyle): Char = 
         import java.time.format.DecimalStyle.withZeroDigit(Char): Char & Pure;
         let DecimalStyle(x1) = x;
         withZeroDigit(x1, digit)

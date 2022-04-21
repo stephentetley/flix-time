@@ -307,12 +307,14 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         LocalTime(minusNanos(x1, nanos))
 
+    /// Get/Set
+
     pub def getHour(x: LocalTime): Int32 =
         import java.time.LocalTime.getHour(): Int32 & Pure;
         let LocalTime(x1) = x;
         getHour(x1)
 
-    pub def withHour(x: LocalTime, hour: Int32): LocalTime =
+    pub def setHour(hour: Int32, x: LocalTime): LocalTime =
         import java.time.LocalTime.withHour(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withHour(x1, hour))
@@ -322,7 +324,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         getMinute(x1)
 
-    pub def withMinute(x: LocalTime, minute: Int32): LocalTime =
+    pub def setMinute(minute: Int32, x: LocalTime): LocalTime =
         import java.time.LocalTime.withMinute(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withMinute(x1, minute))
@@ -332,7 +334,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         getSecond(x1)
 
-    pub def withSecond(x: LocalTime, second: Int32): LocalTime =
+    pub def setSecond(second: Int32, x: LocalTime): LocalTime =
         import java.time.LocalTime.withSecond(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withSecond(x1, second))
@@ -342,10 +344,12 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         getNano(x1)
 
-    pub def withNano(x: LocalTime, nano: Int32): LocalTime =
+    pub def setNano(nano: Int32, x: LocalTime): LocalTime =
         import java.time.LocalTime.withNano(Int32): ##java.time.LocalTime & Pure;
         let LocalTime(x1) = x;
         LocalTime(withNano(x1, nano))
+
+    /// Generic
 
     /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: LocalTime): a with Temporal[a] = 

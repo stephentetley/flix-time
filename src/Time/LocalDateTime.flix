@@ -361,12 +361,14 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         LocalDateTime(minusNanos(x1, nanos))
 
+    /// Get/Set
+
     pub def getYear(x: LocalDateTime): Int32 =
         import java.time.LocalDateTime.getYear(): Int32 & Pure;
         let LocalDateTime(x1) = x;
         getYear(x1)
 
-    pub def withYear(x: LocalDateTime, year: Int32): LocalDateTime =
+    pub def setYear(year: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withYear(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withYear(x1, year))
@@ -383,7 +385,7 @@ namespace Time/LocalDateTime {
         getValue(getMonth(x1))
 
 
-    pub def withMonth(x: LocalDateTime, month: Int32): LocalDateTime =
+    pub def setMonth(month: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withMonth(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withMonth(x1, month))
@@ -393,7 +395,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getDayOfYear(x1)
 
-    pub def withDayOfYear(x: LocalDateTime, dayOfYear: Int32): LocalDateTime =
+    pub def setDayOfYear(dayOfYear: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withDayOfYear(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withDayOfYear(x1, dayOfYear))
@@ -403,7 +405,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getDayOfMonth(x1)
 
-    pub def withDayOfMonth(x: LocalDateTime, dayOfMonth: Int32): LocalDateTime =
+    pub def setDayOfMonth(dayOfMonth: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withDayOfMonth(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withDayOfMonth(x1, dayOfMonth))
@@ -418,7 +420,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getHour(x1)
 
-    pub def withHour(x: LocalDateTime, hour: Int32): LocalDateTime =
+    pub def setHour(hour: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withHour(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withHour(x1, hour))
@@ -428,7 +430,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getMinute(x1)
 
-    pub def withMinute(x: LocalDateTime, minute: Int32): LocalDateTime =
+    pub def setMinute(minute: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withMinute(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withMinute(x1, minute))
@@ -438,7 +440,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getSecond(x1)
 
-    pub def withSecond(x: LocalDateTime, second: Int32): LocalDateTime =
+    pub def setSecond(second: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withSecond(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withSecond(x1, second))
@@ -448,10 +450,13 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getNano(x1)
 
-    pub def withNano(x: LocalDateTime, nano: Int32): LocalDateTime =
+    pub def setNano(nano: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withNano(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withNano(x1, nano))
+
+
+    /// Generic
 
     /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: LocalDateTime): a with Temporal[a] = 

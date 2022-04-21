@@ -136,7 +136,7 @@ namespace Time/Clock {
         import java.time.Clock.getZone(): ##java.time.ZoneId & Pure;
         ZoneId(getZone(getClock(c)))
 
-    pub def withZone(zone: ZoneId, c: Clock): Clock =
+    pub def setZone(zone: ZoneId, c: Clock): Clock =
         import java.time.Clock.withZone(##java.time.ZoneId): ##java.time.Clock & Pure;
         let Clock(c1) = c;
         Clock(withZone(c1, Time/ZoneId.getZoneId(zone)))

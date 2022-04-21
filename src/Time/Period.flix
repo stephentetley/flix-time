@@ -243,7 +243,7 @@ namespace Time/Period {
         let Period(x1) = x;
         getMonths(x1)
 
-    pub def withMonths(months: Int32, x: Period): Period =
+    pub def setMonths(months: Int32, x: Period): Period =
         import java.time.Period.withMonths(Int32): ##java.time.Period & Pure;
         let Period(x1) = x;
         Period(withMonths(x1, months))

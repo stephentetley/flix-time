@@ -433,13 +433,13 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withNano(x1, nano))
 
-    pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
+    pub def setZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         let zone1 = Time/ZoneId.getZoneId(zone);
         ZonedDateTime(withZoneSameInstant(x1, zone1))
 
-    pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
+    pub def setZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withZoneSameLocal(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         let zone1 = Time/ZoneId.getZoneId(zone);
