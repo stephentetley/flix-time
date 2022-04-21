@@ -318,6 +318,7 @@ namespace Time/Year {
         let Year(x1) = x;
         Year(minusYears(x1, yearsToSubtract))
 
+    /// Generic
     
     pub def plus(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =
         import java.time.Year.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Year & Pure;         

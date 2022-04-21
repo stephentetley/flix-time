@@ -335,12 +335,15 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         ZonedDateTime(minus(x1, nanos))
 
+
+    /// Get/Set...
+
     pub def getYear(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getYear(): Int32 & Pure ;
         let ZonedDateTime(x1) = x;
         getYear(x1)
 
-    pub def withYear(year: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def setYear(year: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withYear(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withYear(x1, year))
@@ -350,23 +353,25 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         Time/Month.unmarshal(getMonth(x1))
 
+    pub def setMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
+        import java.time.ZonedDateTime.withMonth(Int32): ##java.time.ZonedDateTime & Pure;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(withMonth(x1, month))
+
+
     pub def getMonthValue(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getMonth(): ##java.time.Month & Pure;
         import java.time.Month.getValue(): Int32 & Pure;
         let ZonedDateTime(x1) = x;
         getValue(getMonth(x1))
 
-    pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withMonth(Int32): ##java.time.ZonedDateTime & Pure;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(withMonth(x1, month))
 
     pub def getDayOfYear(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getDayOfYear(): Int32 & Pure;
         let ZonedDateTime(x1) = x;
         getDayOfYear(x1)
 
-    pub def withDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def setDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfYear(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withDayOfYear(x1, dayOfYear))
@@ -376,7 +381,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getDayOfMonth(x1)
 
-    pub def withDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def setDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfMonth(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withDayOfMonth(x1, dayOfMonth))
@@ -386,12 +391,14 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         Time/DayOfWeek.unmarshal(getDayOfWeek(x1))
 
+    // no setDayOfWeek
+
     pub def getHour(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getHour(): Int32 & Pure;
         let ZonedDateTime(x1) = x;
         getHour(x1)
 
-    pub def withHour(hour: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def setHour(hour: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withHour(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withHour(x1, hour))
@@ -401,7 +408,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getMinute(x1)
 
-    pub def withMinute(minute: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def setMinute(minute: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withMinute(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withMinute(x1, minute))
@@ -411,7 +418,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getSecond(x1)
 
-    pub def withSecond(second: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def setSecond(second: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withSecond(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withSecond(x1, second))
@@ -421,7 +428,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getNano(x1)
 
-    pub def withNano(nano: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def setNano(nano: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withNano(Int32): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withNano(x1, nano))
@@ -437,6 +444,8 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         let zone1 = Time/ZoneId.getZoneId(zone);
         ZonedDateTime(withZoneSameLocal(x1, zone1))
+
+    /// Generic 
 
     pub def get(t: a, x: ZonedDateTime): Int32 with TemporalField[a] = 
         import java.time.ZonedDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;

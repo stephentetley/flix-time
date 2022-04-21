@@ -290,6 +290,7 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         isNegative(x1)
 
+    /// Get/Set...
 
     ///
     /// Get the nanosecond part of the duration `x`.
@@ -302,7 +303,7 @@ namespace Time/ZDuration {
     ///
     /// Set the nano part of the duration `x` to `seconds``.
     ///
-    pub def withNano(x: ZDuration, nanos: Int32): ZDuration =
+    pub def setNano(nanos: Int32, x: ZDuration): ZDuration =
         import java.time.Duration.withNanos(Int32): ##java.time.Duration & Pure;
         let ZDuration(x1) = x;
         ZDuration(withNanos(x1, nanos))
@@ -318,7 +319,7 @@ namespace Time/ZDuration {
     ///
     /// Set the seconds part of the duration `x` to `seconds``.
     ///
-    pub def withSeconds(x: ZDuration, seconds: Int64): ZDuration =
+    pub def setSeconds(seconds: Int64, x: ZDuration): ZDuration =
         import java.time.Duration.withSeconds(Int64): ##java.time.Duration & Pure;
         let ZDuration(x1) = x;
         ZDuration(withSeconds(x1, seconds))

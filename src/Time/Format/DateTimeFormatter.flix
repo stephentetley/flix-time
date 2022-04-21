@@ -32,7 +32,7 @@ namespace Time/Format {
     }
 
     instance FromString[DateTimeFormatter[t]] {
-        pub def fromString(x: String): Option[DateTimeFormatter[t]] = Time/Format/DateTimeFormatter.ofPattern(x)
+        pub def fromString(x: String): Option[DateTimeFormatter[t]] = Time/Format/DateTimeFormatter.fromPattern(x)
     }
 
     pub enum DateFormat {}

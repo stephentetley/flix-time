@@ -255,6 +255,7 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         YearMonth(minusYears(x1, years))
 
+    /// Get/Set...
 
     pub def getMonth(x: YearMonth): Month =
         import java.time.YearMonth.getMonth(): ##java.time.Month & Pure;
@@ -262,7 +263,7 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         (getMonth(x1) |> unmarshal)
 
-    pub def withMonth(x: YearMonth, month: Month): YearMonth =
+    pub def setMonth(month: Month, x: YearMonth): YearMonth =
         yearMonthWithMonth({year = getYear(x), month = month})
 
     pub def getMonthValue(x: YearMonth): Int32 =
@@ -270,7 +271,7 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         getMonthValue(x1)
 
-    pub def withMonthValue(x: YearMonth, month: Int32): YearMonth =
+    pub def setMonthValue(month: Int32, x: YearMonth): YearMonth =
         import java.time.YearMonth.withMonth(Int32): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
         YearMonth(withMonth(x1, month))
@@ -280,10 +281,12 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         getYear(x1)
 
-    pub def withYear(x: YearMonth, year: Int32): YearMonth =
+    pub def setYear(year: Int32, x: YearMonth): YearMonth =
         import java.time.YearMonth.withYear(Int32): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
         YearMonth(withYear(x1, year))
+
+    /// Generic
 
     pub def get(t: a, x: YearMonth): Int32 with TemporalField[a] = 
         import java.time.YearMonth.get(##java.time.temporal.TemporalField): Int32 & Pure;
