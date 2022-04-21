@@ -161,12 +161,7 @@ namespace Time/OffsetDateTime {
         let ZoneOffset(o1) = r.offset;
         OffsetDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, o1))
 
-    /// TODO - potentially remove getFields...
-    pub def getFields(x: OffsetDateTime): {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
-                                            second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset} =
-        { year = getYear(x), month = getMonthValue(x), dayOfMonth = getDayOfMonth(x)
-        , hour = getHour(x), minute = getMinute(x), second = getSecond(x)
-        , nanoSecond = getNano(x), offset = getOffset(x) }
+
 
 
     ///
@@ -186,31 +181,42 @@ namespace Time/OffsetDateTime {
 
 
 
-    pub def atZoneSameInstant(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime =
+    pub def atZoneSameInstant(zone: {zone :: ZoneId}, x: OffsetDateTime): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         let OffsetDateTime(x1) = x;
-        let ZoneId(z1) = zoneId;
+        let ZoneId(z1) = zone.zone;
         ZonedDateTime(atZoneSameInstant(x1, z1))
 
-    pub def atZoneSimilarLocal(x: OffsetDateTime, zoneId: ZoneId): ZonedDateTime =
+    pub def atZoneSimilarLocal(zone: {zone :: ZoneId}, x: OffsetDateTime): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSimilarLocal(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         let OffsetDateTime(x1) = x;
-        let ZoneId(z1) = zoneId;
+        let ZoneId(z1) = zone.zone;
         ZonedDateTime(atZoneSimilarLocal(x1, z1))
 
 
-    pub def ofLocalDateTime(dateTime: LocalDateTime, offset: ZoneOffset): OffsetDateTime =
+    pub def fromLocalDateTime(offset: {offset :: ZoneOffset}, dateTime: LocalDateTime): OffsetDateTime =
         import static java.time.OffsetDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime & Pure;
         let LocalDateTime(dt1) = dateTime;
-        let ZoneOffset(o1) = offset;
+        let ZoneOffset(o1) = offset.offset;
         OffsetDateTime(of(dt1, o1))
 
-    pub def ofLocalDateLocalTime(date: LocalDate, time: LocalTime, offset: ZoneOffset): OffsetDateTime =
+    ///
+    /// Returns the given date-time `x` as __.
+    ///
+    pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
+        import java.time.OffsetDateTime.toLocalDateTime(): ##java.time.LocalDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        LocalDateTime(toLocalDateTime(x1))
+
+
+    pub def fromLocalDateLocalTime(offset: {offset :: ZoneOffset}, date: LocalDate, time: LocalTime): OffsetDateTime =
         import static java.time.OffsetDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime & Pure;
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
-        let ZoneOffset(o1) = offset;
+        let ZoneOffset(o1) = offset.offset;
         OffsetDateTime(of(d1, t1, o1))
+
+
 
     pub def toEpochSecond(x: OffsetDateTime): Int64 =
         import java.time.OffsetDateTime.toEpochSecond(): Int64 & Pure;
@@ -240,13 +246,6 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         LocalTime(toLocalTime(x1))
 
-    ///
-    /// Returns the given date-time `x` as __.
-    ///
-    pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
-        import java.time.OffsetDateTime.toLocalDateTime(): ##java.time.LocalDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        LocalDateTime(toLocalDateTime(x1))
 
     ///
     /// Returns the given date-time `x` as __.

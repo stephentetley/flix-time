@@ -57,7 +57,7 @@ namespace Time/Zone/ZoneOffsetTransition {
         let ZoneOffsetTransition(x1) = x;
         x1
 
-    pub def of(r: {transition :: LocalDateTime, before :: ZoneOffset, after :: ZoneOffset}): ZoneOffsetTransition =
+    pub def zoneOffsetTransition(r: {transition :: LocalDateTime, before :: ZoneOffset, after :: ZoneOffset}): ZoneOffsetTransition =
         import static java.time.zone.ZoneOffsetTransition.of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset): ##java.time.zone.ZoneOffsetTransition & Pure;
         use Time/ZoneOffset.{getZoneOffset};
         ZoneOffsetTransition(of(Time/LocalDateTime.getLocalDateTime(r.transition), getZoneOffset(r.before), getZoneOffset(r.after)))

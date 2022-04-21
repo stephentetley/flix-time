@@ -146,10 +146,10 @@ namespace Time/ZonedDateTime {
         let ZoneId(z1) = zone;
         ZonedDateTime(now(z1))
 
-    pub def ofLocalDateTime(dateTime: LocalDateTime, zone: ZoneId): ZonedDateTime =
+    pub def fromLocalDateTime(zone: {zone :: ZoneId},dateTime: LocalDateTime): ZonedDateTime =
         import static java.time.ZonedDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         let LocalDateTime(dt1) = dateTime;
-        let ZoneId(z1) = zone;
+        let ZoneId(z1) = zone.zone;
         ZonedDateTime(of(dt1, z1))
 
     ///
@@ -160,11 +160,11 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         LocalDateTime(toLocalDateTime(x1))
 
-    pub def ofLocalDateLocalTime(date: LocalDate, time: LocalTime, zone: ZoneId): ZonedDateTime =
+    pub def fromLocalDateLocalTime(zone: {zone :: ZoneId}, date: LocalDate, time: LocalTime): ZonedDateTime =
         import static java.time.ZonedDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
-        let ZoneId(z1) = zone;
+        let ZoneId(z1) = zone.zone;
         ZonedDateTime(of(d1, t1, z1))
 
     ///

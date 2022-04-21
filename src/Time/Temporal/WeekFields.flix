@@ -50,12 +50,12 @@ namespace Time/Temporal/WeekFields {
         let WeekFields(x1) = x;
         x1
 
-    pub def of(r: {firstDayOfWeek :: Time.DayOfWeek, minimalDaysInFirstWeek :: Int32}): WeekFields =
+    pub def weekFields(r: {firstDayOfWeek :: Time.DayOfWeek, minimalDaysInFirstWeek :: Int32}): WeekFields =
         import static java.time.temporal.WeekFields.of(##java.time.DayOfWeek, Int32): ##java.time.temporal.WeekFields & Pure;
         let firstDayOfWeek1 = Time/DayOfWeek.marshal(r.firstDayOfWeek);
         WeekFields(of(firstDayOfWeek1, r.minimalDaysInFirstWeek))
 
-    pub def ofLocale(locale: {locale :: Locale}): WeekFields = 
+    pub def fromLocale(locale: {locale :: Locale}): WeekFields = 
         import static java.time.temporal.WeekFields.of(##java.util.Locale): ##java.time.temporal.WeekFields & Pure;
         let Locale(x1) = locale.locale;
         WeekFields(of(x1))

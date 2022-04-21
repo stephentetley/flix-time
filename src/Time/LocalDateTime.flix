@@ -165,12 +165,6 @@ namespace Time/LocalDateTime {
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
         LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond))
 
-    /// TODO - potentially remove getFields...
-    pub def getFields(x: LocalDateTime): {year :: Int32, month :: Int32, dayOfMonth :: Int32,
-                                            hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32} =
-        { year = getYear(x), month = getMonthValue(x), dayOfMonth = getDayOfMonth(x)
-        , hour = getHour(x), minute = getMinute(x), second = getSecond(x)
-        , nanoSecond = getNano(x) }
 
     ///
     /// Returns the current date-time from the system clock.
@@ -189,21 +183,21 @@ namespace Time/LocalDateTime {
 
 
 
-    pub def ofLocalDateLocalTime(d: LocalDate, t: LocalTime): LocalDateTime =
+    pub def fromLocalDateLocalTime(d: LocalDate, t: LocalTime): LocalDateTime =
         import static java.time.LocalDateTime.of(##java.time.LocalDate, ##java.time.LocalTime): ##java.time.LocalDateTime & Pure;
         let LocalDate(d1) = d;
         let LocalTime(t1) = t;
         LocalDateTime(of(d1, t1))
 
-    pub def ofEpochSecond(epochSecond: Int64, nanoOfSecond: Int32, offset: ZoneOffset): LocalDateTime =
+    pub def fromEpochSecond(offset: {offset :: ZoneOffset}, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
         import static java.time.LocalDateTime.ofEpochSecond(Int64, Int32, ##java.time.ZoneOffset): ##java.time.LocalDateTime & Pure;
-        let ZoneOffset(o1) = offset;
+        let ZoneOffset(o1) = offset.offset;
         LocalDateTime(ofEpochSecond(epochSecond, nanoOfSecond, o1))
 
-    pub def ofInstant(x: ZInstant, zoneId: ZoneId): LocalDateTime =
+    pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): LocalDateTime =
         import static java.time.LocalDateTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDateTime & Pure;
         let ZInstant(x1) = x;
-        let ZoneId(z1) = zoneId;
+        let ZoneId(z1) = zone.zone;
         LocalDateTime(ofInstant(x1, z1))
 
 

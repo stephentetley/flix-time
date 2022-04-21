@@ -151,8 +151,6 @@ namespace Time/OffsetTime {
         import static java.time.OffsetTime.of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetTime & Pure;
         OffsetTime(of(r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneOffset.getZoneOffset(r.offset)))
 
-    pub def getFields(x: OffsetTime): { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset} =
-        { hour = getHour(x), minute = getMinute(x), second = getSecond(x), nanoSecond = getNano(x), offset = getOffset(x) }
 
 
     ///
@@ -171,17 +169,17 @@ namespace Time/OffsetTime {
         OffsetTime(now(z1))
 
 
-    pub def ofLocalTime(x: LocalTime, offset: ZoneOffset): OffsetTime =
+    pub def fromLocalTime(offset: {offset :: ZoneOffset}, x: LocalTime): OffsetTime =
         import static java.time.OffsetTime.of(##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetTime & Pure;
         let LocalTime(x1) = x;
-        let ZoneOffset(o1) = offset;
+        let ZoneOffset(o1) = offset.offset;
         OffsetTime(of(x1, o1))
 
 
-    pub def ofInstant(x: Instant, zone: ZoneId): OffsetTime =
+    pub def fromInstant(zone: {zone :: ZoneId}, x: Instant): OffsetTime =
         import static java.time.OffsetTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.OffsetTime & Pure;
         let Instant(x1) = x;
-        let ZoneId(z1) = zone;
+        let ZoneId(z1) = zone.zone;
         OffsetTime(ofInstant(x1, z1))
 
 

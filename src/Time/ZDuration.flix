@@ -138,12 +138,6 @@ namespace Time/ZDuration {
         import static java.time.Duration.ofSeconds(Int64, Int64): ##java.time.Duration & Pure;
         ZDuration(ofSeconds(r.seconds, r.nanos))
 
-    ///
-    /// Return the components of Duration `x` as a count of seconds and the
-    /// nanoseconds adjustment.
-    ///
-    pub def getFields(x: ZDuration): {seconds :: Int64, nanos :: Int32} =
-        {seconds = getSeconds(x), nanos = getNano(x)}
 
     ///
     /// Construct a zero length Duration.
@@ -155,7 +149,7 @@ namespace Time/ZDuration {
     ///
     /// Construct a Duration from the supplied number of days.
     ///
-    pub def ofDays(days: Int64): ZDuration =
+    pub def fromDays(days: Int64): ZDuration =
         import static java.time.Duration.ofDays(Int64): ##java.time.Duration & Pure;
         ZDuration(ofDays(days))
 
@@ -180,7 +174,7 @@ namespace Time/ZDuration {
     ///
     /// Construct a Duration from the supplied number of hours.
     ///
-    pub def ofHours(hours: Int64): ZDuration =
+    pub def fromHours(hours: Int64): ZDuration =
         import static java.time.Duration.ofHours(Int64): ##java.time.Duration & Pure;
         ZDuration(ofHours(hours))
 
@@ -195,7 +189,7 @@ namespace Time/ZDuration {
     ///
     /// Construct a Duration from the supplied number of minutes.
     ///
-    pub def ofMinutes(minutes: Int64): ZDuration =
+    pub def fromMinutes(minutes: Int64): ZDuration =
         import static java.time.Duration.ofMinutes(Int64): ##java.time.Duration & Pure;
         ZDuration(ofMinutes(minutes))
 
@@ -210,7 +204,7 @@ namespace Time/ZDuration {
     ///
     /// Construct a Duration from the supplied number of seconds.
     ///
-    pub def ofSeconds(seconds: Int64): ZDuration =
+    pub def fromSeconds(seconds: Int64): ZDuration =
         import static java.time.Duration.ofSeconds(Int64): ##java.time.Duration & Pure;
         ZDuration(ofSeconds(seconds))
 
@@ -225,7 +219,7 @@ namespace Time/ZDuration {
     ///
     /// Construct a Duration from the supplied number of milliseconds.
     ///
-    pub def ofMillis(millis: Int64): ZDuration =
+    pub def fromMillis(millis: Int64): ZDuration =
         import static java.time.Duration.ofMillis(Int64): ##java.time.Duration & Pure;
         ZDuration(ofMillis(millis))
 
@@ -241,7 +235,7 @@ namespace Time/ZDuration {
     ///
     /// Return the number of nanoseconds in Duration `x`.
     ///
-    pub def ofNanos(nanos: Int64): ZDuration =
+    pub def fromNanos(nanos: Int64): ZDuration =
         import static java.time.Duration.ofNanos(Int64): ##java.time.Duration & Pure;
         ZDuration(ofNanos(nanos))
 
@@ -254,7 +248,7 @@ namespace Time/ZDuration {
         toNanos(x1)
 
 
-    /// pub def ofWithChronoUnit(x: Int64, unit: ChronoUnit): ZDuration =
+    /// pub def durationOfChronoUnit(x: Int64, unit: ChronoUnit): ZDuration =
     ///     import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
     ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit);
     ///     let tu1 = u1 as ##java.time.temporal.TemporalUnit;

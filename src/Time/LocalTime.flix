@@ -154,8 +154,6 @@ namespace Time/LocalTime {
         import static java.time.LocalTime.of(Int32, Int32, Int32, Int32): ##java.time.LocalTime & Pure;
         LocalTime(of(r.hour, r.minute, r.second, r.nanoSecond))
 
-    pub def getFields(x: LocalTime): {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32} =
-        {hour = getHour(x), minute = getMinute(x), second = getSecond(x), nanoSecond= getNano(x)}
 
     ///
     /// Returns the current time from the system clock.
@@ -180,25 +178,13 @@ namespace Time/LocalTime {
         LocalTime(getNOON())
 
 
-    pub def ofHoursMinutes(hours: Int32, minutes: Int32): LocalTime =
-        import static java.time.LocalTime.of(Int32, Int32): ##java.time.LocalTime & Pure;
-        LocalTime(of(hours, minutes))
-
-    pub def ofHoursMinutesSeconds(hours: Int32, minutes: Int32, seconds: Int32): LocalTime =
-        import static java.time.LocalTime.of(Int32, Int32, Int32): ##java.time.LocalTime & Pure;
-        LocalTime(of(hours, minutes, seconds))
-
-    pub def ofHoursMinutesSecondsNanos(hours: Int32, minutes: Int32, seconds: Int32, nanos: Int32): LocalTime =
-        import static java.time.LocalTime.of(Int32, Int32, Int32, Int32): ##java.time.LocalTime & Pure;
-        LocalTime(of(hours, minutes, seconds, nanos))
-
-    pub def ofInstant(x: Instant, zone: ZoneId): LocalTime =
+    pub def fromInstant(zone: {zone :: ZoneId}, x: Instant): LocalTime =
         import static java.time.LocalTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalTime & Pure;
         let Instant(x1) = x;
-        let ZoneId(z1) = zone;
+        let ZoneId(z1) = zone.zone;
         LocalTime(ofInstant(x1, z1))
 
-    pub def ofSecondOfDay(secondOfDay: Int64): LocalTime =
+    pub def fromSecondOfDay(secondOfDay: Int64): LocalTime =
         import static java.time.LocalTime.ofSecondOfDay(Int64): ##java.time.LocalTime & Pure;
         LocalTime(ofSecondOfDay(secondOfDay))
 
@@ -207,7 +193,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = time;
         toSecondOfDay(x1)
 
-    pub def ofNanoOfDay(nanoOfDay: Int64): LocalTime =
+    pub def fromNanoOfDay(nanoOfDay: Int64): LocalTime =
         import static java.time.LocalTime.ofNanoOfDay(Int64): ##java.time.LocalTime & Pure;
         LocalTime(ofNanoOfDay(nanoOfDay))
 

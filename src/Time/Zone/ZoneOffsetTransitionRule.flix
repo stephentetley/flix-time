@@ -94,15 +94,15 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
 
 
 
-    pub def of(r: {month :: Month, 
-                    dayOfMonthIndicator :: Int32, 
-                    dayOfWeek :: DayOfWeek, 
-                    time :: LocalTime,
-                    timeEndOfDay :: Bool, 
-                    timeDefinition :: TimeDefinition,
-                    standardOffset :: ZoneOffset, 
-                    offsetBefore :: ZoneOffset,
-                    offsetAfter :: ZoneOffset}): Result[ZoneOffsetTransitionRule, String] =
+    pub def zoneOffsetTransitionRule(r: {month :: Month, 
+                                        dayOfMonthIndicator :: Int32, 
+                                        dayOfWeek :: DayOfWeek, 
+                                        time :: LocalTime,
+                                        timeEndOfDay :: Bool, 
+                                        timeDefinition :: TimeDefinition,
+                                        standardOffset :: ZoneOffset, 
+                                        offsetBefore :: ZoneOffset,
+                                        offsetAfter :: ZoneOffset}): Result[ZoneOffsetTransitionRule, String] =
         import static java.time.zone.ZoneOffsetTransitionRule.of(##java.time.Month, 
                                                                     Int32,
                                                                     ##java.time.DayOfWeek,

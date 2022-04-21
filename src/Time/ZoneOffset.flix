@@ -124,19 +124,19 @@ namespace Time/ZoneOffset {
         ZoneOffset(get_MAX())
 
 
-    pub def ofHours(hours: Int32): ZoneOffset =
+    pub def fromHours(hours: Int32): ZoneOffset =
         import static java.time.ZoneOffset.ofHours(Int32): ##java.time.ZoneOffset & Pure;
         ZoneOffset(ofHours(hours))
 
-    pub def ofHoursMinutes(r: {hours :: Int32, minutes :: Int32}): ZoneOffset =
+    pub def fromHoursMinutes(r: {hours :: Int32, minutes :: Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): ##java.time.ZoneOffset & Pure;
         ZoneOffset(ofHoursMinutes(r.hours, r.minutes))
 
-    pub def ofHoursMinutesSeconds(r: {hours :: Int32, minutes :: Int32, seconds :: Int32}): ZoneOffset =
+    pub def fromHoursMinutesSeconds(r: {hours :: Int32, minutes :: Int32, seconds :: Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): ##java.time.ZoneOffset & Pure;
         ZoneOffset(ofHoursMinutesSeconds(r.hours, r.minutes, r.seconds))
 
-    pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
+    pub def fromTotalSeconds(seconds: Int32): ZoneOffset =
         import static java.time.ZoneOffset.ofTotalSeconds(Int32): ##java.time.ZoneOffset & Pure;
         ZoneOffset(ofTotalSeconds(seconds))
 

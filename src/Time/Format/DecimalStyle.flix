@@ -59,12 +59,12 @@ namespace Time/Format/DecimalStyle {
         import static get java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle & Pure as get_STANDARD;
         DecimalStyle(get_STANDARD())
 
-    pub def of(loc: Locale): DecimalStyle & Impure = 
+    pub def decimalStyle(loc: Locale): DecimalStyle & Impure = 
         import static java.time.format.DecimalStyle.of(##java.util.Locale): ##java.time.format.DecimalStyle & Impure;
         let Locale(loc1) = loc;
         DecimalStyle(of(loc1))
 
-    pub def ofDefaultLocale(): DecimalStyle & Impure = 
+    pub def decimalStyleWithDefaultLocale(): DecimalStyle & Impure = 
         import static java.time.format.DecimalStyle.ofDefaultLocale(): ##java.time.format.DecimalStyle & Impure;
         DecimalStyle(ofDefaultLocale())
 

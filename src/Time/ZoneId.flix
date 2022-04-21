@@ -93,7 +93,7 @@ namespace Time/ZoneId {
         }
 
 
-    pub def ofOffset(r: {prefix :: Option[String], offset :: ZoneOffset}): ZoneId =
+    pub def fromOffset(r: {prefix :: Option[String], offset :: ZoneOffset}): ZoneId =
         import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId & Pure;
         let p1 = match r.prefix {
             case Some(s) => s

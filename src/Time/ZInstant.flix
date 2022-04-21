@@ -148,8 +148,6 @@ namespace Time/ZInstant {
         import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant & Pure;
         ZInstant(ofEpochSecond(r.epochSecond, r.nano))
 
-    pub def getFields(x: ZInstant): {epochSecond :: Int64, nano :: Int32} =
-        {epochSecond = getEpochSecond(x), nano = getNano(x)}
 
     ///
     /// Returns the current time from the system clock.
@@ -173,13 +171,12 @@ namespace Time/ZInstant {
         import static get java.time.Instant.MAX: ##java.time.Instant & Pure as get_MAX;
         ZInstant(get_MAX())
     
-    pub def ofEpochSecond(epochSecond: Int64): ZInstant =
+    pub def fromEpochSecond(epochSecond: Int64): ZInstant =
         import static java.time.Instant.ofEpochSecond(Int64): ##java.time.Instant & Pure;
         ZInstant(ofEpochSecond(epochSecond))
 
-    
 
-    pub def ofEpochMilli(epochMilli: Int64): ZInstant =
+    pub def fromEpochMilli(epochMilli: Int64): ZInstant =
         import static java.time.Instant.ofEpochMilli(Int64): ##java.time.Instant & Pure;
         ZInstant(ofEpochMilli(epochMilli))
 

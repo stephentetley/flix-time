@@ -129,9 +129,6 @@ namespace Time/Period {
         import static java.time.Period.of(Int32, Int32, Int32): ##java.time.Period & Pure;
         Period(of(r.years, r.months, r.days))
 
-    pub def getFields(x: Period): {years :: Int32, months :: Int32, days :: Int32} =
-        { years = getYears(x), months = getMonths(x), days = getDays(x) }
-
     ///
     /// The period of zero.
     ///
@@ -139,19 +136,19 @@ namespace Time/Period {
         import static get java.time.Period.ZERO: ##java.time.Period & Pure as getZERO;
         Period(getZERO())
 
-    pub def ofYears(years: Int32): Period =
+    pub def fromYears(years: Int32): Period =
         import static java.time.Period.ofYears(Int32): ##java.time.Period & Pure;
         Period(ofYears(years))
 
-    pub def ofMonths(months: Int32): Period =
+    pub def fromMonths(months: Int32): Period =
         import static java.time.Period.ofMonths(Int32): ##java.time.Period & Pure;
         Period(ofMonths(months))
 
-    pub def ofWeeks(weeks: Int32): Period =
+    pub def fromWeeks(weeks: Int32): Period =
         import static java.time.Period.ofWeeks(Int32): ##java.time.Period & Pure;
         Period(ofWeeks(weeks))
 
-    pub def ofDays(days: Int32): Period =
+    pub def fromDays(days: Int32): Period =
         import static java.time.Period.ofDays(Int32): ##java.time.Period & Pure;
         Period(ofDays(days))
 

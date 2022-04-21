@@ -97,7 +97,7 @@ namespace Time/DayOfWeek {
     instance DayOfWeekSupportedField[Time/Temporal/WeekFields.DayOfWeek]
 
     /// 1 (Monday) to 7 (Sunday)
-    pub def of(i: Int32): Option[DayOfWeek] = match i {
+    pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
         case 1 => Some(Monday)
         case 2 => Some(Tuesday)
         case 3 => Some(Wednesday)

@@ -191,9 +191,6 @@ namespace Time/LocalDate {
         let m1 = Time/Month.marshal(r.month);
         LocalDate(of(r.year, m1, r.dayOfMonth))
 
-    /// TODO - potentially remove getFields...
-    pub def getFields(x: LocalDate): {year :: Int32, month :: Int32, dayOfMonth :: Int32} =
-        {year = getYear(x), month = getMonthValue(x), dayOfMonth = getDayOfMonth(x)}
 
 
     ///
@@ -245,11 +242,20 @@ namespace Time/LocalDate {
         OffsetDateTime(atTime(x1, t1))
 
 
-    pub def ofInstant(x: ZInstant, zoneId: ZoneId): LocalDate =
+    pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): LocalDate =
         import static java.time.LocalDate.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDate & Pure;
         let ZInstant(x1) = x;
-        let ZoneId(z1) = zoneId;
+        let ZoneId(z1) = zone.zone;
         LocalDate(ofInstant(x1, z1))
+
+    pub def fromEpochDay(x: Int64): LocalDate =
+        import static java.time.LocalDate.ofEpochDay(Int64): ##java.time.LocalDate & Pure;
+        LocalDate(ofEpochDay(x))
+
+    pub def toEpochDay(x: LocalDate): Int64 =
+        import java.time.chrono.ChronoLocalDate.toEpochDay(): Int64 & Pure;
+        let LocalDate(x1) = x;
+        toEpochDay(x1 as ##java.time.chrono.ChronoLocalDate)
 
 
     ///
@@ -288,17 +294,6 @@ namespace Time/LocalDate {
         import java.time.LocalDate.hashCode(): Int32 & Pure;
         let LocalDate(x1) = x;
         hashCode(x1)
-
-
-    pub def ofEpochDay(x: Int64): LocalDate =
-        import static java.time.LocalDate.ofEpochDay(Int64): ##java.time.LocalDate & Pure;
-        LocalDate(ofEpochDay(x))
-
-    pub def toEpochDay(x: LocalDate): Int64 =
-        import java.time.chrono.ChronoLocalDate.toEpochDay(): Int64 & Pure;
-        let LocalDate(x1) = x;
-        toEpochDay(x1 as ##java.time.chrono.ChronoLocalDate)
-
 
 
     ///

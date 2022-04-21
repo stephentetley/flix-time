@@ -126,7 +126,7 @@ namespace Time/Format/DateTimeFormatter {
 
 
 
-    pub def ofPattern(pattern: String): Option[DateTimeFormatter[t]] =
+    pub def fromPattern(pattern: String): Option[DateTimeFormatter[t]] =
         import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter & Pure;
         try {
             Some(DateTimeFormatter(ofPattern(String.trim(pattern))))
@@ -135,23 +135,23 @@ namespace Time/Format/DateTimeFormatter {
         }
 
 
-    pub def ofLocalizedTime(style: FormatStyle): DateTimeFormatter[TimeFormat] =
+    pub def fromLocalizedTime(style: FormatStyle): DateTimeFormatter[TimeFormat] =
         import static java.time.format.DateTimeFormatter.ofLocalizedTime(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
         let style1 = Time/Format/FormatStyle.marshal(style);
         DateTimeFormatter(ofLocalizedTime(style1))
 
-    pub def ofLocalizedDateTime(style: FormatStyle): DateTimeFormatter[DateTimeFormat] =
+    pub def fromLocalizedDateTime(style: FormatStyle): DateTimeFormatter[DateTimeFormat] =
         import static java.time.format.DateTimeFormatter.ofLocalizedDateTime(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
         let style1 = Time/Format/FormatStyle.marshal(style);
         DateTimeFormatter(ofLocalizedDateTime(style1))
 
-    pub def ofLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter[DateTimeFormat] =
+    pub def fromLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter[DateTimeFormat] =
         import static java.time.format.DateTimeFormatter.ofLocalizedDateTime(##java.time.format.FormatStyle, ##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
         let d1 = Time/Format/FormatStyle.marshal(dateStyle);
         let t1 = Time/Format/FormatStyle.marshal(timeStyle);
         DateTimeFormatter(ofLocalizedDateTime(d1, t1))
 
-    pub def ofLocalizedDate(style: FormatStyle): DateTimeFormatter[DateFormat] =
+    pub def fromLocalizedDate(style: FormatStyle): DateTimeFormatter[DateFormat] =
         import static java.time.format.DateTimeFormatter.ofLocalizedDate(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
         let style1 = Time/Format/FormatStyle.marshal(style);
         DateTimeFormatter(ofLocalizedDate(style1))
