@@ -23,7 +23,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String & Impure = toString(Time/Clock.systemDefaultZone())
+    def toString01(): String & Impure = toString(Time/Clock.systemClockDefaultZone())
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ namespace TestClock {
     def fixed01(): Bool & Impure = 
         let i = Time/ZInstant.now();
         let z = Time/ZoneId.utc();
-        let c = Time/Clock.fixed(i, z);
+        let c = Time/Clock.fixedClock(i, z);
         let ci1 = Time/Clock.instant(c);
         let ci2 = Time/Clock.instant(c);
         println("Clock.fixed01(): ${ci1} ${ci2}");

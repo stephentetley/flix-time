@@ -64,7 +64,7 @@ namespace Time/Clock {
 
 
     /// Pure or Impure?
-    pub def fixed(inst: ZInstant, zone: ZoneId): Clock =
+    pub def fixedClock(inst: ZInstant, zone: ZoneId): Clock =
         import static java.time.Clock.fixed(##java.time.Instant, ##java.time.ZoneId): ##java.time.Clock & Pure;
         let ZInstant(inst1) = inst;
         let ZoneId(zone1) = zone;
@@ -78,17 +78,16 @@ namespace Time/Clock {
 
 
 
-    pub def system(zone: ZoneId): Clock & Impure =
+    pub def systemClock(zone: ZoneId): Clock & Impure =
         import static java.time.Clock.system(##java.time.ZoneId): ##java.time.Clock & Impure;
         let ZoneId(zone1) = zone;
         Clock(system(zone1))
 
-
-    pub def systemDefaultZone(): Clock & Impure =
+    pub def systemClockDefaultZone(): Clock & Impure =
         import static java.time.Clock.systemDefaultZone(): ##java.time.Clock & Impure;
         Clock(systemDefaultZone())
 
-    pub def systemUTC(): Clock & Impure =
+    pub def systemClockUTC(): Clock & Impure =
         import static java.time.Clock.systemUTC(): ##java.time.Clock & Impure;
         Clock(systemUTC())
 

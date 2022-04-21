@@ -25,62 +25,62 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/Year.of(isoYear = 1970))
+    def toString01(): String = toString(Time/Year.year(isoYear = 1970))
 
     /////////////////////////////////////////////////////////////////////////////
     // minValue                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def minValue01(): Bool = minValue() == Time/Year.of(isoYear = -999_999_999)
+    def minValue01(): Bool = minValue() == Time/Year.year(isoYear = -999_999_999)
 
     /////////////////////////////////////////////////////////////////////////////
     // maxValue                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def maxValue01(): Bool = maxValue() == Time/Year.of(isoYear = 999_999_999)
+    def maxValue01(): Bool = maxValue() == Time/Year.year(isoYear = 999_999_999)
 
     /////////////////////////////////////////////////////////////////////////////
     // less                                                                    //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def less01(): Bool = Time/Year.of(isoYear = 2020) < Time/Year.of(isoYear = 2021)
+    def less01(): Bool = Time/Year.year(isoYear = 2020) < Time/Year.year(isoYear = 2021)
 
     /////////////////////////////////////////////////////////////////////////////
     // lessEq                                                                  //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def lessEq01(): Bool = Time/Year.of(isoYear = 2020) <= Time/Year.of(isoYear = 2021)
+    def lessEq01(): Bool = Time/Year.year(isoYear = 2020) <= Time/Year.year(isoYear = 2021)
 
     /////////////////////////////////////////////////////////////////////////////
     // greater                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def greater01(): Bool = Time/Year.of(isoYear = 2021) > Time/Year.of(isoYear = 2020)
+    def greater01(): Bool = Time/Year.year(isoYear = 2021) > Time/Year.year(isoYear = 2020)
 
     /////////////////////////////////////////////////////////////////////////////
     // greaterEq                                                               //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def greaterEq01(): Bool = Time/Year.of(isoYear = 2021) >= Time/Year.of(isoYear = 2020)
+    def greaterEq01(): Bool = Time/Year.year(isoYear = 2021) >= Time/Year.year(isoYear = 2020)
 
     /////////////////////////////////////////////////////////////////////////////
     // compare                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def compare01(): Bool = Order.compare(Time/Year.of(isoYear = 2020), Time/Year.of(isoYear = 2021)) == LessThan
+    def compare01(): Bool = Order.compare(Time/Year.year(isoYear = 2020), Time/Year.year(isoYear = 2021)) == LessThan
 
     @test
-    def compare02(): Bool = Order.compare(Time/Year.of(isoYear = 2020), Time/Year.of(isoYear = 2020)) == EqualTo
+    def compare02(): Bool = Order.compare(Time/Year.year(isoYear = 2020), Time/Year.year(isoYear = 2020)) == EqualTo
 
     @test
-    def compare03(): Bool = Order.compare(Time/Year.of(isoYear = 2021), Time/Year.of(isoYear = 2020)) == GreaterThan
+    def compare03(): Bool = Order.compare(Time/Year.year(isoYear = 2021), Time/Year.year(isoYear = 2020)) == GreaterThan
 
     /////////////////////////////////////////////////////////////////////////////
     // adjustInto                                                              //
@@ -88,8 +88,8 @@ namespace TestYear {
 
     @test
     def adjustInto01(): Time.Year = 
-        let t1 = Time/Year.of(isoYear = 2020);
-        let y1 = Time/Year.of(isoYear = 2021);
+        let t1 = Time/Year.year(isoYear = 2020);
+        let y1 = Time/Year.year(isoYear = 2021);
         Time/Year.adjustInto(t1, y1)
 
     /////////////////////////////////////////////////////////////////////////////
@@ -98,7 +98,7 @@ namespace TestYear {
 
     @test
     def range01(): Time/Temporal.ValueRange & Impure = 
-        let y1 = Time/Year.of(isoYear = 2020);        
+        let y1 = Time/Year.year(isoYear = 2020);        
         let r1 = Time/Year.range(Time/Temporal/ChronoField.year(), y1);
         println("Year.range01(): ${r1}");
         r1
@@ -110,8 +110,8 @@ namespace TestYear {
 
     @test
     def until01(): Int64 & Impure = 
-        let t1 = Time/Year.of(isoYear = 2020);
-        let t2 = Time/Year.of(isoYear = 2028);
+        let t1 = Time/Year.year(isoYear = 2020);
+        let t2 = Time/Year.year(isoYear = 2028);
         let diff = Time/Year.until(Time/Temporal/ChronoUnit.years(), { start = t1, end = t2 });
         println("Year.until01(): ${diff}");
         diff
@@ -121,7 +121,7 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
     @test
     def fromTemporalAccessor01(): Result[Time.Year, String] & Impure = 
-        let t1 = Time/Year.of(isoYear = 2020);
+        let t1 = Time/Year.year(isoYear = 2020);
         let t2 = Time/Year.fromTemporalAccessor(t1);
         println("fromTemporalAccessor01(): ${t2}");
         t2
@@ -131,8 +131,8 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
     @test
     def withTemporalAdjuster01(): Time.Year & Impure = 
-        let t1 = Time/Year.of(isoYear = 2020);
-        let t2 = Time/Year.of(isoYear = 2028);
+        let t1 = Time/Year.year(isoYear = 2020);
+        let t2 = Time/Year.year(isoYear = 2028);
         let t3 = Time/Year.withTemporalAdjuster(t2, t1);
         println("withTemporalAdjuster01(): ${t3}");
         t3

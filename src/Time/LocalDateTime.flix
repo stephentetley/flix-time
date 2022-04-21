@@ -151,16 +151,16 @@ namespace Time/LocalDateTime {
         }
 
 
-    pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
+    pub def localDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
         LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute))
 
-    pub def ofWithSecond(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
+    pub def localDateTimeWithSecond(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
                                 hour :: Int32, minute :: Int32, second :: Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
         LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second))
 
-    pub def ofWithSecondAndNano(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
+    pub def localDateTimeWithSecondAndNano(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
                                         hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
         LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond))

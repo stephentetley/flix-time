@@ -144,7 +144,7 @@ namespace Time/ZInstant {
 
 
 
-    pub def of(r: {epochSecond :: Int64, nano :: Int64}): ZInstant =
+    pub def instant(r: {epochSecond :: Int64, nano :: Int64}): ZInstant =
         import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant & Pure;
         ZInstant(ofEpochSecond(r.epochSecond, r.nano))
 

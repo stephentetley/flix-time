@@ -23,7 +23,8 @@ namespace TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/MonthDay.of({month = 1, dayOfMonth = 1}))
+    def toString01(): String = 
+        Time/MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString
 
     /////////////////////////////////////////////////////////////////////////////
     // fromTemporalAccessor                                                     //
@@ -31,7 +32,7 @@ namespace TestMonthDay {
 
     @test
     def fromTemporalAccessor01(): Result[Time.MonthDay, String] & Impure = 
-        let date = Time/LocalDate.of({year =2022, month = 4, dayOfMonth = 18});
+        let date = Time/LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
         let md = Time/MonthDay.fromTemporalAccessor(date);
         println("MonthDay.fromTemporalAccessor01(): ${md}");
         md
@@ -42,14 +43,14 @@ namespace TestMonthDay {
 
     @test
     def get01(): Int32 & Impure =         
-        let md = Time/MonthDay.of({month = 1, dayOfMonth = 1});
+        let md = Time/MonthDay.monthDay({month = 1, dayOfMonth = 1});
         let i = Time/MonthDay.get(Time/Temporal/ChronoField.monthOfYear(), md);
         println("MonthDay.get01(): ${i}");
         i
 
     @test
     def get02(): Int32 & Impure =         
-        let md = Time/MonthDay.of({month = 1, dayOfMonth = 1});
+        let md = Time/MonthDay.monthDay({month = 1, dayOfMonth = 1});
         let i = Time/MonthDay.get(Time/Temporal/ChronoField.dayOfMonth(), md);
         println("MonthDay.get02(): ${i}");
         i  

@@ -134,7 +134,7 @@ namespace Time/ZDuration {
     ///
     /// Return a new duration.
     ///
-    pub def of(r: {seconds :: Int64, nanos :: Int64}): ZDuration =
+    pub def duration(r: {seconds :: Int64, nanos :: Int64}): ZDuration =
         import static java.time.Duration.ofSeconds(Int64, Int64): ##java.time.Duration & Pure;
         ZDuration(ofSeconds(r.seconds, r.nanos))
 

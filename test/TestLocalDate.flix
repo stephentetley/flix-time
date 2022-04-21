@@ -24,7 +24,7 @@ namespace TestLocalDate {
 
     @test
     def withTemporalAdjuster01(): Time.LocalDate & Impure = 
-        let d1 = Time/LocalDate.of({year = 2022, month = 4, dayOfMonth = 19});
+        let d1 = Time/LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
         let d2 = Time/LocalDate.withTemporalAdjuster(Time/Temporal/TemporalAdjusters.firstDayOfMonth(), d1);
         println("LocalDate.withTemporalAdjuster01(): ${d1} ${d2}");
         println("${Time/Temporal/TemporalAdjusters.firstDayOfMonth()}");
@@ -32,11 +32,16 @@ namespace TestLocalDate {
 
     @test
     def withTemporalAdjuster02(): Time.LocalDate & Impure = 
-        let d1 = Time/LocalDate.of({year = 2022, month = 4, dayOfMonth = 19});
+        let d1 = Time/LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
         let d2 = Time/LocalDate.withTemporalAdjuster(Time/Temporal/TemporalAdjusters.lastDayOfMonth(), d1);
         println("LocalDate.withTemporalAdjuster02(): ${d1} ${d2}");        
         d2
 
-
-        
+    @test
+    def temp02(): Time.LocalDate & Impure = 
+        let d1 = Time/LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
+        let i = Time/Temporal2.getEra(d1);
+        println("LocalDate.temp02(): ${d1}, era : ${i}");        
+        d1
+       
 }

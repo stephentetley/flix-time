@@ -155,7 +155,7 @@ namespace Time/OffsetDateTime {
         }
 
 
-    pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
+    pub def offsetDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
                     second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetDateTime =
         import static java.time.OffsetDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetDateTime & Pure;
         let ZoneOffset(o1) = r.offset;

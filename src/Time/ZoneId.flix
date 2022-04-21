@@ -70,7 +70,7 @@ namespace Time/ZoneId {
 
 
 
-    pub def of(zoneId: {zoneId :: String}): Result[ZoneId, String] =
+    pub def zoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
         import java.lang.Throwable.getMessage(): String & Pure;
         try {
@@ -81,7 +81,7 @@ namespace Time/ZoneId {
         }
         
 
-    pub def ofZoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] =
+    pub def zoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId & Pure;
         import java.lang.Throwable.getMessage(): String & Pure;
         try {
@@ -103,7 +103,7 @@ namespace Time/ZoneId {
         ZoneId(ofOffset(p1, o1))
 
 
-    pub def utc(): ZoneId = match of(zoneId = "Z") {
+    pub def utc(): ZoneId = match zoneId(zoneId = "Z") {
         case Ok(z)  => z
         case Err(_) => bug!("ZoneId.utc() - failed")
     }

@@ -142,15 +142,15 @@ namespace Time/LocalTime {
             case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def of(r: {hour :: Int32, minute :: Int32}): LocalTime =
+    pub def localTime(r: {hour :: Int32, minute :: Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32): ##java.time.LocalTime & Pure;
         LocalTime(of(r.hour, r.minute))
 
-    pub def ofWithSecond(r: {hour :: Int32, minute :: Int32, second :: Int32}): LocalTime =
+    pub def localTimeWithSecond(r: {hour :: Int32, minute :: Int32, second :: Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32, Int32): ##java.time.LocalTime & Pure;
         LocalTime(of(r.hour, r.minute, r.second))
 
-    pub def ofWithSecondAndNano(r: {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalTime =
+    pub def localTimeWithSecondAndNano(r: {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32, Int32, Int32): ##java.time.LocalTime & Pure;
         LocalTime(of(r.hour, r.minute, r.second, r.nanoSecond))
 

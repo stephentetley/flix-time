@@ -182,11 +182,11 @@ namespace Time/LocalDate {
             case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32}): LocalDate =
+    pub def localDate(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, Int32, Int32): ##java.time.LocalDate & Pure;
         LocalDate(of(r.year, r.month, r.dayOfMonth))
 
-    pub def ofWithMonth(r: {year :: Int32, month :: Month, dayOfMonth :: Int32}): LocalDate =
+    pub def localDateWithMonth(r: {year :: Int32, month :: Month, dayOfMonth :: Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32): ##java.time.LocalDate & Pure;
         let m1 = Time/Month.marshal(r.month);
         LocalDate(of(r.year, m1, r.dayOfMonth))

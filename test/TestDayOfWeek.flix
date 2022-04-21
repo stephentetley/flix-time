@@ -49,7 +49,7 @@ namespace TestDayOfWeek {
 
     @test
     def fromTemporalAccessor01(): Result[Time.DayOfWeek, String] & Impure = 
-        let date = Time/LocalDate.of({year =2022, month = 4, dayOfMonth = 18});
+        let date = Time/LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
         let dow = Time/DayOfWeek.fromTemporalAccessor(date);
         println("DayOfWeek.fromTemporalAccessor01(): ${dow}");
         dow
@@ -57,7 +57,7 @@ namespace TestDayOfWeek {
 
     @test
     def fromTemporalAccessor02(): Result[Time.DayOfWeek, String] & Impure = 
-        let year = Time/Year.of(isoYear = 2022);
+        let year = Time/Year.year(isoYear = 2022);
         let dow = Time/DayOfWeek.fromTemporalAccessor(year);
         println("DayOfWeek.fromTemporalAccessor02(): ${dow}");
         dow

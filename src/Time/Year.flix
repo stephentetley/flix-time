@@ -152,7 +152,7 @@ namespace Time/Year {
 
 
 
-    pub def of(isoYear: {isoYear :: Int32}): Year =
+    pub def year(isoYear: {isoYear :: Int32}): Year =
         import static java.time.Year.of(Int32): ##java.time.Year & Pure;
         Year(of(isoYear.isoYear))
 

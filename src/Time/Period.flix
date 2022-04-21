@@ -125,7 +125,7 @@ namespace Time/Period {
         Period(fromTA(x1))
 
 
-    pub def of(r: {years :: Int32, months :: Int32, days :: Int32}): Period =
+    pub def period(r: {years :: Int32, months :: Int32, days :: Int32}): Period =
         import static java.time.Period.of(Int32, Int32, Int32): ##java.time.Period & Pure;
         Period(of(r.years, r.months, r.days))
 

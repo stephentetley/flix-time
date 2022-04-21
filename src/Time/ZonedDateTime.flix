@@ -126,8 +126,8 @@ namespace Time/ZonedDateTime {
         }
 
 
-    pub def of(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, 
-                    minute :: Int32, second :: Int32, nanoSecond :: Int32, zoneId :: ZoneId}): ZonedDateTime =
+    pub def zonedDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, 
+                            minute :: Int32, second :: Int32, nanoSecond :: Int32, zoneId :: ZoneId}): ZonedDateTime =
         import static java.time.ZonedDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         ZonedDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneId.getZoneId(r.zoneId)))
 
