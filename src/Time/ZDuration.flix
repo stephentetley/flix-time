@@ -124,11 +124,6 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         x1
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAmount(x: a): ZDuration with TemporalAmount[a] = 
-        import static java.time.Duration.from(##java.time.temporal.TemporalAmount): ##java.time.Duration & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(x);
-        ZDuration(fromTA(x1))
 
 
     ///
@@ -402,6 +397,16 @@ namespace Time/ZDuration {
         import java.time.Duration.minusNanos(Int64): ##java.time.Duration & Pure;
         let ZDuration(x1) = x;
         ZDuration(minusNanos(x1, nanos))
+
+    /// Generic
+
+    /// NOTE - maybe this should return Option [/ Result] ?
+    pub def fromTemporalAmount(x: a): ZDuration with TemporalAmount[a] = 
+        import static java.time.Duration.from(##java.time.temporal.TemporalAmount): ##java.time.Duration & Pure as fromTA;
+        let x1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(x);
+        ZDuration(fromTA(x1))
+
+    /// No from___ only valid TemporalAmount is Duartion, the Unit of Period would give an estimate which is not allowed.
 
     pub def truncatedTo(unit: a, x: ZDuration): ZDuration with TemporalUnit[a] = 
         import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;

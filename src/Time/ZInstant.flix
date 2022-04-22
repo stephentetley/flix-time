@@ -132,18 +132,6 @@ namespace Time/ZInstant {
         x1
 
 
-    /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    pub def fromTemporalAccessor(x: a): Result[ZInstant, String] with TemporalAccessor[a] = 
-        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
-        try {
-            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-            ZInstant(fromTA(x1)) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-
     pub def instant(r: {epochSecond :: Int64, nano :: Int64}): ZInstant =
         import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant & Pure;
         ZInstant(ofEpochSecond(r.epochSecond, r.nano))
@@ -297,6 +285,35 @@ namespace Time/ZInstant {
         let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
         until(b1, e1, units1)
 
+    /// Generic
+
+    /// /// `fromTemporalAccessor` does not support all TemporalAccessor types
+    /// pub def fromTemporalAccessor(x: a): Result[ZInstant, String] with TemporalAccessor[a] = 
+    ///     import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
+    ///     try {
+    ///         let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+    ///         ZInstant(fromTA(x1)) |> Ok
+    ///     } catch {
+    ///         case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+    ///     }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZInstant = 
+        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            ZInstant(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromZonedDateTime(x: ZonedDateTime): ZInstant = 
+        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
+        try {
+            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            ZInstant(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def range(field: a, x: ZInstant): ValueRange with TemporalField[a] =
         import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         

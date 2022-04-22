@@ -107,6 +107,7 @@ namespace Time/ZonedDateTime {
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.Month;
+    use Time.OffsetDateTime;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -115,15 +116,6 @@ namespace Time/ZonedDateTime {
         x1
 
 
-    /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    pub def fromTemporalAccessor(x: a): Result[ZonedDateTime, String] with TemporalAccessor[a] = 
-        import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime & Pure as fromTA;
-        try {
-            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-            ZonedDateTime(fromTA(x1)) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
 
     pub def zonedDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, 
@@ -446,6 +438,26 @@ namespace Time/ZonedDateTime {
         ZonedDateTime(withZoneSameLocal(x1, zone1))
 
     /// Generic 
+
+
+    /// `fromTemporalAccessor` does not support all TemporalAccessor types
+    /// pub def fromTemporalAccessor(x: a): Result[ZonedDateTime, String] with TemporalAccessor[a] = 
+    ///     import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime & Pure as fromTA;
+    ///     try {
+    ///         let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
+    ///         ZonedDateTime(fromTA(x1)) |> Ok
+    ///     } catch {
+    ///         case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+    ///     }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
+        import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            ZonedDateTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def get(t: a, x: ZonedDateTime): Int32 with TemporalField[a] = 
         import java.time.ZonedDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
