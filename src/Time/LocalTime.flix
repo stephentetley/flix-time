@@ -109,8 +109,9 @@ namespace Time {
 
 namespace Time/LocalTime {
 
-    use Time.Instant;
-    use Time.Instant.{Instant};
+    use Time.LocalTime;
+    use Time.LocalTime.{LocalTime};
+    
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.TimeFormat;
@@ -122,8 +123,12 @@ namespace Time/LocalTime {
     use Time/Temporal.TemporalUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
-    use Time.LocalTime;
-    use Time.LocalTime.{LocalTime};
+    use Time.LocalDateTime;
+    use Time.OffsetDateTime;
+    use Time.OffsetTime;
+    use Time.ZInstant;
+    use Time.ZInstant.{ZInstant};
+    use Time.ZonedDateTime;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -132,15 +137,6 @@ namespace Time/LocalTime {
         x1
 
 
-    /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    pub def fromTemporalAccessor(x: a): Result[LocalTime, String] with TemporalAccessor[a] = 
-        import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime & Pure as fromTA;
-        try {
-            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-            LocalTime(fromTA(x1)) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
     pub def localTime(r: {hour :: Int32, minute :: Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32): ##java.time.LocalTime & Pure;
@@ -178,9 +174,9 @@ namespace Time/LocalTime {
         LocalTime(getNOON())
 
 
-    pub def fromInstant(zone: {zone :: ZoneId}, x: Instant): LocalTime =
+    pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): LocalTime =
         import static java.time.LocalTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalTime & Pure;
-        let Instant(x1) = x;
+        let ZInstant(x1) = x;
         let ZoneId(z1) = zone.zone;
         LocalTime(ofInstant(x1, z1))
 
@@ -350,6 +346,45 @@ namespace Time/LocalTime {
         LocalTime(withNano(x1, nano))
 
     /// Generic
+
+
+    /// # `fromTemporalAccessor` specialized
+
+    pub def fromLocalDateTime(x: LocalDateTime): LocalTime = 
+        import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime & Pure as fromTA;
+        try {
+            let x1 = Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            LocalTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): LocalTime = 
+        import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            LocalTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromOffsetTime(x: OffsetTime): LocalTime = 
+        import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor;
+            LocalTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromZonedDateTime(x: ZonedDateTime): LocalTime = 
+        import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime & Pure as fromTA;
+        try {
+            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            LocalTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: LocalTime): a with Temporal[a] = 

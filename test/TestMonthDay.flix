@@ -27,14 +27,14 @@ namespace TestMonthDay {
         Time/MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString
 
     /////////////////////////////////////////////////////////////////////////////
-    // fromTemporalAccessor                                                     //
+    // fromLocalDate                                                           //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def fromTemporalAccessor01(): Result[Time.MonthDay, String] & Impure = 
+    def fromLocalDate01(): Time.MonthDay & Impure = 
         let date = Time/LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
-        let md = Time/MonthDay.fromTemporalAccessor(date);
-        println("MonthDay.fromTemporalAccessor01(): ${md}");
+        let md = Time/MonthDay.fromLocalDate(date);
+        println("MonthDay.fromLocalDate01(): ${md}");
         md
 
     /////////////////////////////////////////////////////////////////////////////

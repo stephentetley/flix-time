@@ -110,9 +110,11 @@ namespace Time/LocalDateTime {
 
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
+    
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.DateTimeFormat;
+    use Time/Temporal.ChronoUnit;
     use Time/Temporal.Temporal;
     use Time/Temporal.TemporalAccessor;
     use Time/Temporal.TemporalAdjuster;
@@ -122,6 +124,7 @@ namespace Time/LocalDateTime {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
+    use Time.ZDuration;
     use Time.ZInstant;
     use Time.ZInstant.{ZInstant};
     use Time.LocalDate;
@@ -129,7 +132,8 @@ namespace Time/LocalDateTime {
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.Month;
-    use Time/Temporal.ChronoUnit;
+    use Time.OffsetDateTime;
+    use Time.ZonedDateTime;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
     use Time.ZoneOffset;
@@ -140,15 +144,6 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         x1
 
-    /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    pub def fromTemporalAccessor(x: a): Result[LocalDateTime, String] with TemporalAccessor[a] = 
-        import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime & Pure as fromTA;
-        try {
-            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-            LocalDateTime(fromTA(x1)) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
 
     pub def localDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
@@ -458,6 +453,27 @@ namespace Time/LocalDateTime {
 
     /// Generic
 
+    /// # `fromTemporalAccessor` specialized
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
+        import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            LocalDateTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
+        import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime & Pure as fromTA;
+        try {
+            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            LocalDateTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
     /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: LocalDateTime): a with Temporal[a] = 
         import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
@@ -476,6 +492,31 @@ namespace Time/LocalDateTime {
         let x1 = getLocalDateTime(x);
         let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
         getLong(x1, t1)
+
+
+    pub def plusDuration(x: LocalDateTime, d: ZDuration): LocalDateTime =
+        import java.time.LocalDateTime.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalDateTime & Pure;         
+        try {
+            let LocalDateTime(x1) = x;
+            let d1 = Time/ZDuration.getDuration(d) as ##java.time.temporal.TemporalAmount;        
+            LocalDateTime(plus(x1, d1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def minusDuration(x: LocalDateTime, d: ZDuration): LocalDateTime =
+        import java.time.LocalDateTime.minus(##java.time.temporal.TemporalAmount): ##java.time.LocalDateTime & Pure;         
+        try {
+            let LocalDateTime(x1) = x;
+            let d1 = Time/ZDuration.getDuration(d) as ##java.time.temporal.TemporalAmount;        
+            LocalDateTime(minus(x1, d1))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
 
     pub def plus(x: LocalDateTime, r: {amount :: Int64, temporalUnit :: a}): LocalDateTime with TemporalUnit[a] =
         import java.time.LocalDateTime.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDateTime & Pure;         
@@ -498,6 +539,7 @@ namespace Time/LocalDateTime {
             case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
 
 
     pub def plusTemporalAmount(x: LocalDateTime, amount: a): LocalDateTime with TemporalAmount[a] =

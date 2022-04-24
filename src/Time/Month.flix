@@ -80,22 +80,19 @@ namespace Time/Month {
 
     use Time.Month;
     use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};
+
+    use Time/Format.TextStyle;
     use Time/Temporal.Temporal;
     use Time/Temporal.TemporalAccessor;
     use Time/Temporal.TemporalField;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
-    use Time/Format.TextStyle;
-
-    /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    pub def fromTemporalAccessor(x: a): Result[Month, String] with TemporalAccessor[a] = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        try {
-            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-            unmarshal(fromTA(x1)) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+    use Time.LocalDate;
+    use Time.LocalDateTime;
+    use Time.MonthDay;
+    use Time.OffsetDateTime;    
+    use Time.YearMonth;
+    use Time.ZonedDateTime;
 
     pub def marshal(x: Month): ##java.time.Month =
         import static get java.time.Month.JANUARY: ##java.time.Month & Pure as get_JANUARY;
@@ -196,6 +193,65 @@ namespace Time/Month {
         let x1 = marshal(x);
         let x2 = minus(x1, y);
         unmarshal(x2)
+
+    /// Generic
+
+
+    /// # `fromTemporalAccessor` specialized
+
+    pub def fromLocalDate(x: LocalDate): Month = 
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        try {
+            let x1 = Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromLocalDateTime(x: LocalDateTime): Month = 
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        try {
+            let x1 = Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromMonthDay(x: MonthDay): Month = 
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        try {
+            let x1 = Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromYearMonth(x: YearMonth): Month = 
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        try {
+            let x1 = Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromZonedDateTime(x: ZonedDateTime): Month = 
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        try {
+            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def get(t: a, x: Month): Int32 with TemporalField[a] = 
         import java.time.Month.get(##java.time.temporal.TemporalField): Int32 & Pure;

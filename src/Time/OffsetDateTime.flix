@@ -144,15 +144,6 @@ namespace Time/OffsetDateTime {
         x1
 
 
-    /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    pub def fromTemporalAccessor(x: a): Result[OffsetDateTime, String] with TemporalAccessor[a] = 
-        import static java.time.OffsetDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetDateTime & Pure as fromTA;
-        try {
-            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-            OffsetDateTime(fromTA(x1)) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
 
     pub def offsetDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
@@ -518,6 +509,17 @@ namespace Time/OffsetDateTime {
         OffsetDateTime(withOffsetSameLocal(x1, o1))
 
     /// Generic
+
+    /// # `fromTemporalAccessor` specialized
+
+    pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
+        import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime & Pure as fromTA;
+        try {
+            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            LocalDateTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def get(t: a, x: OffsetDateTime): Int32 with TemporalField[a] = 
         import java.time.OffsetDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;

@@ -90,6 +90,10 @@ namespace Time/DayOfWeek {
     use Time/Temporal.TemporalField;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
+    use Time.LocalDate;
+    use Time.LocalDateTime;
+    use Time.OffsetDateTime;
+    use Time.ZonedDateTime;
 
     class DayOfWeekSupportedField[a] with TemporalField[a] {}
 
@@ -156,15 +160,6 @@ namespace Time/DayOfWeek {
             case x1 if primEquals(x1, get_SUNDAY())      => Sunday
         }
 
-    /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    pub def fromTemporalAccessor(x: a): Result[DayOfWeek, String] with TemporalAccessor[a] = 
-        import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek & Pure as fromTA;
-        try {
-            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-            unmarshal(fromTA(x1)) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
@@ -198,6 +193,46 @@ namespace Time/DayOfWeek {
         let x1 = marshal(x);
         let x2 = minus(x1, days);
         unmarshal(x2)
+
+    /// Generic
+
+    /// # `fromTemporalAccessor` specialized
+
+    pub def fromLocalDate(x: LocalDate): DayOfWeek = 
+        import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek & Pure as fromTA;
+        try {
+            let x1 = Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
+        import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek & Pure as fromTA;
+        try {
+            let x1 = Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
+        import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
+        import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek & Pure as fromTA;
+        try {
+            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            unmarshal(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
 
     pub def range(field: a, x: DayOfWeek): ValueRange with DayOfWeekSupportedField[a] = 

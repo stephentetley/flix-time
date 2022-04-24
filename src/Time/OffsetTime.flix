@@ -110,6 +110,7 @@ namespace Time/OffsetTime {
 
     use Time.OffsetTime;
     use Time.OffsetTime.{OffsetTime};
+    use Time/Temporal.ChronoUnit;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.TimeFormat;
@@ -125,9 +126,10 @@ namespace Time/OffsetTime {
     use Time.Instant.{Instant};
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
-    use Time/Temporal.ChronoUnit;
+    use Time.OffsetDateTime;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
+    use Time.ZonedDateTime;
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
@@ -135,15 +137,6 @@ namespace Time/OffsetTime {
         let OffsetTime(x1) = x;
         x1
 
-    /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    pub def fromTemporalAccessor(x: a): Result[OffsetTime, String] with TemporalAccessor[a] = 
-        import static java.time.OffsetTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetTime & Pure as fromTA;
-        try {
-            let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-            OffsetTime(fromTA(x1)) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
 
 
@@ -346,6 +339,29 @@ namespace Time/OffsetTime {
         let ZoneOffset(o1) = offset;
         OffsetTime(withOffsetSameLocal(x1, o1))
 
+    /// Generic
+
+
+
+    /// # `fromTemporalAccessor` specialized
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): OffsetTime = 
+        import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetTime & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            OffsetTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime = 
+        import static java.time.OffsetTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetTime & Pure as fromTA;
+        try {
+            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            OffsetTime(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def get(t: a, x: OffsetTime): Int32 with TemporalField[a] = 
         import java.time.OffsetTime.get(##java.time.temporal.TemporalField): Int32 & Pure;

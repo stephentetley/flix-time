@@ -170,15 +170,7 @@ namespace Time/ZoneOffset {
 
     /// Generic 
 
-    /// /// `fromTemporalAccessor` does not support all TemporalAccessor types
-    /// pub def fromTemporalAccessor(x: a): Result[ZoneOffset, String] with TemporalAccessor[a] = 
-    ///     import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
-    ///     try {
-    ///         let x1 = Time/Temporal/TemporalAccessor.marshalToNativeTemporalAccessor(x);
-    ///         ZoneOffset(fromTA(x1)) |> Ok
-    ///     } catch {
-    ///         case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
+    /// # `fromTemporalAccessor` specialized
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
         import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
