@@ -133,8 +133,10 @@ namespace Time/LocalDateTime {
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.Month;
+    use Time.MonthDay;
     use Time.Period;
     use Time.OffsetDateTime;
+    use Time.YearMonth;
     use Time.ZonedDateTime;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
@@ -622,5 +624,21 @@ namespace Time/LocalDateTime {
         let x1 = Time/Period.getPeriod(x);
         let i1 = getLocalDateTime(i) as ##java.time.temporal.Temporal;
         LocalDateTime(subtractFrom(x1, i1) as ##java.time.LocalDateTime)
+
+    /// MonthDay methods
+
+    pub def adjustMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
+        import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/MonthDay.getMonthDay(x);
+        let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;
+        LocalDateTime(adjustInto(x1, d1) as ##java.time.LocalDateTime)
+
+    /// YearMonth methods
+
+    pub def adjustYearMonth(x: YearMonth, dt: LocalDateTime): LocalDateTime = 
+        import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/YearMonth.getYearMonth(x);
+        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
 
 }

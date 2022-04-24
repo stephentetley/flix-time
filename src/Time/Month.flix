@@ -277,11 +277,12 @@ namespace Time/Month {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def adjustInto(t: a, x: Month): a with Temporal[a] = 
-        import java.time.Month.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = marshal(x);
-        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
+    
+    /// # `adjustInto` specialized - synonymous with `setMonth` in the respective modules:
+    /// LocalDate
+    /// LocalDateTime
+    /// OffsetDateTime
+    /// YearMonth
+    /// ZonedDateTime
 
 }

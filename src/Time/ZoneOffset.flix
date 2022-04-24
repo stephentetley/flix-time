@@ -188,13 +188,10 @@ namespace Time/ZoneOffset {
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
         fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
-    /// /// Probably to just remove...
-    /// pub def adjustInto(t: a, z: ZoneOffset): a with Temporal[a] = 
-    ///     import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-    ///     let ZoneOffset(z1) = z;
-    ///     let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
-    ///     Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(z1, t1))
 
+    /// # `adjustInto` specialized - this become `adjustZoneOffset` in the respective modules:
+    /// OffsetDateTime
+    /// ZonedDateTime
 
     
     /// # `getLong` specialized

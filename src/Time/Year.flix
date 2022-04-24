@@ -290,11 +290,7 @@ namespace Time/Year {
         let Year(x1) = x;
         length(x1)
 
-    pub def adjustInto(t: a, y: Year): a with Temporal[a] = 
-        import java.time.Year.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let Year(y1) = y;
-        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(y1, t1))
+
 
     ///
     /// _
@@ -361,6 +357,13 @@ namespace Time/Year {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }        
 
+    
+    /// # `adjustInto` specialized - synonymous with `setYear` in the respective modules:
+    /// LocalDate
+    /// LocalDateTime
+    /// OffsetDateTime
+    /// YearMonth
+    /// ZonedDateTime
 
 
     pub def plus(x: Year, r: {amount :: Int64, temporalUnit :: a}): Year with YearTemporalUnit[a] =

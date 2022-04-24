@@ -285,42 +285,25 @@ namespace Time/YearMonth {
 
     /// # `fromTemporalAccessor` specialized
 
-    pub def fromLocalDate(x: LocalDate): YearMonth = 
+    def fromHelper(x: ##java.time.temporal.TemporalAccessor): YearMonth = 
         import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.YearMonth & Pure as fromTA;
         try {
-            let x1 = Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor;
-            YearMonth(fromTA(x1))
+            YearMonth(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    pub def fromLocalDate(x: LocalDate): YearMonth = 
+        fromHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromLocalDateTime(x: LocalDateTime): YearMonth = 
-        import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.YearMonth & Pure as fromTA;
-        try {
-            let x1 = Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            YearMonth(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
+        fromHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): YearMonth = 
-        import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.YearMonth & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            YearMonth(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): YearMonth = 
-        import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.YearMonth & Pure as fromTA;
-        try {
-            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            YearMonth(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
     pub def get(t: a, x: YearMonth): Int32 with TemporalField[a] = 
@@ -340,6 +323,12 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
         Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
+
+    /// # `adjustInto` specialized - this become `adjustYearMonth` in the respective modules:
+    /// LocalDate
+    /// LocalDateTime
+    /// OffsetDateTime
+    /// ZonedDateTime
 
 
     pub def plusTemporalAmount(x: YearMonth, amount: a): YearMonth with TemporalAmount[a] =

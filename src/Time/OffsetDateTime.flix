@@ -132,9 +132,11 @@ namespace Time/OffsetDateTime {
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.Month;
+    use Time.MonthDay;
     use Time.OffsetTime;
     use Time.OffsetTime.{OffsetTime};
     use Time.Period;
+    use Time.YearMonth;
     use Time.ZonedDateTime;
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
@@ -665,5 +667,28 @@ namespace Time/OffsetDateTime {
         let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
         OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
 
+    /// ZoneOffset methods
+
+    pub def adjustZoneOffset(zo: ZoneOffset, dt: OffsetDateTime): OffsetDateTime = 
+        import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let zo1 = Time/ZoneOffset.getZoneOffset(zo);
+        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(adjustInto(zo1, dt1) as ##java.time.OffsetDateTime)
+
+    /// MonthDay methods
+
+    pub def adjustMonthDay(x: MonthDay, d: OffsetDateTime): OffsetDateTime = 
+        import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/MonthDay.getMonthDay(x);
+        let d1 = getOffsetDateTime(d) as ##java.time.temporal.Temporal;
+        OffsetDateTime(adjustInto(x1, d1) as ##java.time.OffsetDateTime)
+
+    /// YearMonth methods
+
+    pub def adjustYearMonth(x: YearMonth, dt: OffsetDateTime): OffsetDateTime = 
+        import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/YearMonth.getYearMonth(x);
+        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
 
 }
