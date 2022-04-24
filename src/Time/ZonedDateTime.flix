@@ -110,6 +110,7 @@ namespace Time/ZonedDateTime {
     use Time.LocalTime.{LocalTime};
     use Time.Month;
     use Time.OffsetDateTime;
+    use Time.Period;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -550,5 +551,20 @@ namespace Time/ZonedDateTime {
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let i1 = getZonedDateTime(i) as ##java.time.temporal.Temporal;
         let ZDuration(x1) = x;
-        ZonedDateTime(subtractFrom(x1, i1) as ##java.time.ZonedDateTime)                            
+        ZonedDateTime(subtractFrom(x1, i1) as ##java.time.ZonedDateTime)
+
+    /// Period methods
+
+    pub def plusPeriod(i: ZonedDateTime, x: Period): ZonedDateTime =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getZonedDateTime(i) as ##java.time.temporal.Temporal;
+        ZonedDateTime(addTo(x1, i1) as ##java.time.ZonedDateTime)
+    
+    pub def minusPeriod(i: ZonedDateTime, x: Period): ZonedDateTime =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getZonedDateTime(i) as ##java.time.temporal.Temporal;
+        ZonedDateTime(subtractFrom(x1, i1) as ##java.time.ZonedDateTime)
+
 }

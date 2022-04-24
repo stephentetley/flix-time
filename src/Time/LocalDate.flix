@@ -132,6 +132,7 @@ namespace Time/LocalDate {
     use Time.OffsetDateTime.{OffsetDateTime};
     use Time.OffsetTime;
     use Time.OffsetTime.{OffsetTime};
+    use Time.Period;
     use Time.ZonedDateTime;
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
@@ -557,6 +558,20 @@ namespace Time/LocalDate {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+
+    /// Period methods
+
+    pub def plusPeriod(i: LocalDate, x: Period): LocalDate =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getLocalDate(i) as ##java.time.temporal.Temporal;
+        LocalDate(addTo(x1, i1) as ##java.time.LocalDate)
+    
+    pub def minusPeriod(i: LocalDate, x: Period): LocalDate =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getLocalDate(i) as ##java.time.temporal.Temporal;
+        LocalDate(subtractFrom(x1, i1) as ##java.time.LocalDate)
 
 
 }

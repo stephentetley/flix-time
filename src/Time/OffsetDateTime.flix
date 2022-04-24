@@ -134,6 +134,7 @@ namespace Time/OffsetDateTime {
     use Time.Month;
     use Time.OffsetTime;
     use Time.OffsetTime.{OffsetTime};
+    use Time.Period;
     use Time.ZonedDateTime;
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
@@ -649,5 +650,20 @@ namespace Time/OffsetDateTime {
         let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
         let ZDuration(x1) = x;
         OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
+
+    /// Period methods
+
+    pub def plusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
+    
+    pub def minusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
+
 
 }

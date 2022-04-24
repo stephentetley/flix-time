@@ -133,6 +133,7 @@ namespace Time/LocalDateTime {
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.Month;
+    use Time.Period;
     use Time.OffsetDateTime;
     use Time.ZonedDateTime;
     use Time.ZoneId;
@@ -607,5 +608,19 @@ namespace Time/LocalDateTime {
         let ZDuration(x1) = x;
         let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
         LocalDateTime(subtractFrom(x1, dt1) as ##java.time.LocalDateTime)
+
+    /// Period methods
+
+    pub def plusPeriod(i: LocalDateTime, x: Period): LocalDateTime =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getLocalDateTime(i) as ##java.time.temporal.Temporal;
+        LocalDateTime(addTo(x1, i1) as ##java.time.LocalDateTime)
+    
+    pub def minusPeriod(i: LocalDateTime, x: Period): LocalDateTime =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getLocalDateTime(i) as ##java.time.temporal.Temporal;
+        LocalDateTime(subtractFrom(x1, i1) as ##java.time.LocalDateTime)
 
 }

@@ -450,7 +450,7 @@ namespace Time/ZDuration {
 
 
 
-    /// # `addTo`  and `subtractFrom`specialized - are `plusDuration` and `minusDuration` their respective modules:
+    /// # `addTo`  and `subtractFrom`specialized - these become `plusDuration` and `minusDuration` their respective modules:
     /// Instant
     /// LocalDateTime
     /// LocalTime

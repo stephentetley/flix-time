@@ -308,47 +308,29 @@ namespace Time/ZInstant {
         getLongHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
 
 
-    /// # `plus<TemporalAmount>` specialized
-    def plusHelper(x: ZInstant, a: ##java.time.temporal.TemporalAmount): ZInstant =
-        import java.time.Instant.plus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
-        try {
-            let ZInstant(x1) = x;
-            ZInstant(plus(x1, a))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+    /// /// # `plus<TemporalAmount>` specialized
+    /// def plusHelper(x: ZInstant, a: ##java.time.temporal.TemporalAmount): ZInstant =
+    ///     import java.time.Instant.plus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
+    ///     try {
+    ///         let ZInstant(x1) = x;
+    ///         ZInstant(plus(x1, a))
+    ///     } catch {
+    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+    ///     }
 
 
-    /// Period.ofMonths and Period.ofYears fail (None)
-    pub def plusPeriod(x: ZInstant, p: Period): Option[ZInstant] =
-        try { 
-            let d1 = Time/Period.getPeriod(p) as ##java.time.temporal.TemporalAmount;
-            Some(plusHelper(x, d1))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
+    /// /// # `minus<TemporalAmount>` specialized
+    /// def minusHelper(x: ZInstant, a: ##java.time.temporal.TemporalAmount): ZInstant =
+    ///     import java.time.Instant.minus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
+    ///     try {
+    ///         let ZInstant(x1) = x;
+    ///         ZInstant(minus(x1, a))
+    ///     } catch {
+    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+    ///     }
 
-    /// # `minus<TemporalAmount>` specialized
-    def minusHelper(x: ZInstant, a: ##java.time.temporal.TemporalAmount): ZInstant =
-        import java.time.Instant.minus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
-        try {
-            let ZInstant(x1) = x;
-            ZInstant(minus(x1, a))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    /// Period.ofMonths and Period.ofYears fail (None)
-    pub def minusPeriod(x: ZInstant, p: Period): Option[ZInstant] =
-        try { 
-            let d1 = Time/Period.getPeriod(p) as ##java.time.temporal.TemporalAmount;
-            Some(minusHelper(x, d1))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
 
     /// # `range` specialized
     
@@ -508,6 +490,20 @@ namespace Time/ZInstant {
     pub def minusDuration(i: ZInstant, x: ZDuration): ZInstant =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let ZDuration(x1) = x;
+        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
+        ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
+
+    /// Period methods
+
+    pub def plusPeriod(i: ZInstant, x: Period): ZInstant =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
+        ZInstant(addTo(x1, i1) as ##java.time.Instant)
+    
+    pub def minusPeriod(i: ZInstant, x: Period): ZInstant =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
         let i1 = getInstant(i) as ##java.time.temporal.Temporal;
         ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
 

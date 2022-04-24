@@ -58,28 +58,15 @@ namespace Time {
     }
 
     instance Add[Period] {
-        pub def add(x: Period, y: Period): Period =
-            import java.time.Period.plus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
-            let Period(x1) = x;
-            let Period(y1) = y;
-            let ty1 = y1 as ##java.time.temporal.TemporalAmount;
-            Period(plus(x1, ty1))
+        pub def add(x: Period, y: Period): Period = Time/Period.plus(x, y)
     }
 
     instance Sub[Period] {
-        pub def sub(x: Period, y: Period): Period =
-            import java.time.Period.minus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
-            let Period(x1) = x;
-            let Period(y1) = y;
-            let ty1 = y1 as ##java.time.temporal.TemporalAmount;
-            Period(minus(x1, ty1 as ##java.time.temporal.TemporalAmount))
+        pub def sub(x: Period, y: Period): Period = Time/Period.minus(x, y)
     }
 
     instance Neg[Period] {
-        pub def neg(x: Period): Period =
-            import java.time.Period.negated(): ##java.time.Period & Pure;
-            let Period(x1) = x;
-            Period(negated(x1))
+        pub def neg(x: Period): Period = Time/Period.negate(x)
     }
 
     /// `combine` is addition
@@ -108,9 +95,7 @@ namespace Time/Period {
 
     use Time.Period;
     use Time.Period.{Period};
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAmount;
-    use Time/Temporal.TemporalUnit;
+
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     
@@ -118,12 +103,7 @@ namespace Time/Period {
         let Period(x1) = x;
         x1
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAmount(x: a): Period with TemporalAmount[a] = 
-        import static java.time.Period.from(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(x);
-        Period(fromTA(x1))
-
+    
 
     pub def period(r: {years :: Int32, months :: Int32, days :: Int32}): Period =
         import static java.time.Period.of(Int32, Int32, Int32): ##java.time.Period & Pure;
@@ -176,7 +156,10 @@ namespace Time/Period {
         Period(normalized(x1))
 
 
-
+    pub def negate(x: Period): Period =
+        import java.time.Period.negated(): ##java.time.Period & Pure;
+        let Period(x1) = x;
+        Period(negated(x1))
 
     // `compareTo` not implemented in Java 13.
 
@@ -266,36 +249,37 @@ namespace Time/Period {
         let LocalDate(e1) = r.end;
         Period(between(b1, e1))
 
-    /// Units YEARS, MONTHS, DAYS
-    pub def get(t: a, x: Period): Int64 with TemporalUnit[a] = 
-        import java.time.Period.get(##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let x1 = getPeriod(x);
-        let t1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(t);
-        get(x1, t1)
 
+    /// Generic
+    
+    /// # `from<TemporalAmount>` specialized - only supported amount is Period which is identity
 
-    pub def plus(x: Period, amount: a): Period with TemporalAmount[a] =
+    /// # `get` specialized - supported units are YEARS, MONTHS, DAYS
+    /// These are already covered in the non generic API
+    
+    /// # `plus<TemporalAmount>` specialized
+
+    pub def plus(x: Period, a: Period): Period =
         import java.time.Period.plus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
-        let Period(x1) = x;
-        let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-        Period(plus(x1, amount1))
+        let x1 = getPeriod(x);
+        let a1 = getPeriod(a) as ##java.time.temporal.TemporalAmount;
+        Period(plus(x1, a1))
 
-    pub def minus(x: Period, amount: a): Period with TemporalAmount[a] =
+    /// # `minus<TemporalAmount>` specialized
+
+    pub def minus(x: Period, a: Period): Period =
         import java.time.Period.minus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
-        let Period(x1) = x;
-        let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-        Period(minus(x1, amount1))
+        let x1 = getPeriod(x);
+        let a1 = getPeriod(a) as ##java.time.temporal.TemporalAmount;
+        Period(minus(x1, a1))
 
-    pub def addTo(x: Period, base: a): a with Temporal[a] =
-        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let Period(x1) = x;
-        let base1 = Time/Temporal/Temporal.marshalToNativeTemporal(base);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(addTo(x1, base1))
 
-    pub def subtractFrom(x: Period, base: a): a with Temporal[a] =
-        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let Period(x1) = x;
-        let base1 = Time/Temporal/Temporal.marshalToNativeTemporal(base);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(subtractFrom(x1, base1))
+    /// # `addTo`  and `subtractFrom` specialized - these become `plusPeriod` and `minusPeriod` their respective modules:
+    /// Instant
+    /// LocalDate
+    /// LocalDateTime
+    /// OffsetDateTime
+    /// ZonedDateTime
+
 
 }
