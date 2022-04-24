@@ -260,31 +260,6 @@ namespace Time/ZInstant {
         ZInstant(plusNanos(x1, nanos))
 
 
-    pub def plusDuration(x: ZInstant, d: ZDuration): ZInstant =
-        import java.time.Instant.plus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;
-        let ZInstant(x1) = x;
-        let ZDuration(d1) = d;
-        ZInstant(plus(x1, d1 as ##java.time.temporal.TemporalAmount))
-
-    /// Period.ofMonths and Period.ofYears fail (None)
-    pub def plusPeriod(x: ZInstant, p: Period): Option[ZInstant] =
-        import java.time.Instant.plus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;
-        try { 
-            let ZInstant(x1) = x;
-            let Period(p1) = p;
-            Some(ZInstant(plus(x1, p1 as ##java.time.temporal.TemporalAmount)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
-
-    /// TODO refine class qualification of `t`
-    pub def until(units: t, r: {start :: ZInstant, end :: ZInstant}): Int64 with TemporalUnit[t] = 
-        import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getInstant(r.start);
-        let e1 = getInstant(r.end) as ##java.time.temporal.Temporal;
-        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
-        until(b1, e1, units1)
-
     /// Generic
 
     /// # `fromTemporalAccessor` specialized
@@ -319,71 +294,198 @@ namespace Time/ZInstant {
         }
 
 
-    pub def get(t: a, x: ZInstant): Int32 with TemporalField[a] = 
-        import java.time.Instant.get(##java.time.temporal.TemporalField): Int32 & Pure;
-        let x1 = getInstant(x);
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        get(x1, t1)
+    /// # `getLong` specialized
 
-    pub def getLong(t: a, x: ZInstant): Int64 with TemporalField[a] = 
+    def getLongHelper(field: ##java.time.temporal.TemporalField, x: ZInstant): Int64 =
         import java.time.Instant.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-        let x1 = getInstant(x);
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        getLong(x1, t1)
+        try {
+            let ZInstant(x1) = x;
+            getLong(x1, field)
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def getNanoOfSecond(x: ZInstant): Int64 =
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        getLongHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def getMicroOfSecond(x: ZInstant): Int64 =
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+        getLongHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def getMilliOfSecond(x: ZInstant): Int64 =
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+        getLongHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def getInstantSeconds(x: ZInstant): Int64 =
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
+        getLongHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
 
 
-    pub def plusTemporalAmount(x: ZInstant, amount: a): ZInstant with TemporalAmount[a] =
+    /// # `plus<TemporalAmount>` specialized
+    def plusHelper(x: ZInstant, a: ##java.time.temporal.TemporalAmount): ZInstant =
         import java.time.Instant.plus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
         try {
             let ZInstant(x1) = x;
-            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-            ZInstant(plus(x1, amount1))
+            ZInstant(plus(x1, a))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def minusTemporalAmount(x: ZInstant, amount: a): ZInstant with TemporalAmount[a] =
+    pub def plusDuration(x: ZInstant, d: ZDuration): ZInstant =
+        let d1 = Time/ZDuration.getDuration(d) as ##java.time.temporal.TemporalAmount;
+        plusHelper(x, d1)
+
+    /// Period.ofMonths and Period.ofYears fail (None)
+    pub def plusPeriod(x: ZInstant, p: Period): Option[ZInstant] =
+        try { 
+            let d1 = Time/Period.getPeriod(p) as ##java.time.temporal.TemporalAmount;
+            Some(plusHelper(x, d1))
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
+
+    /// # `minus<TemporalAmount>` specialized
+    def minusHelper(x: ZInstant, a: ##java.time.temporal.TemporalAmount): ZInstant =
         import java.time.Instant.minus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
         try {
             let ZInstant(x1) = x;
-            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-            ZInstant(minus(x1, amount1))
+            ZInstant(minus(x1, a))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 
-    pub def truncatedTo(unit: a, x: ZInstant): ZInstant with TemporalUnit[a] = 
+    pub def minusDuration(x: ZInstant, d: ZDuration): ZInstant =
+        let d1 = Time/ZDuration.getDuration(d) as ##java.time.temporal.TemporalAmount;
+        minusHelper(x, d1)
+
+    /// Period.ofMonths and Period.ofYears fail (None)
+    pub def minusPeriod(x: ZInstant, p: Period): Option[ZInstant] =
+        try { 
+            let d1 = Time/Period.getPeriod(p) as ##java.time.temporal.TemporalAmount;
+            Some(minusHelper(x, d1))
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
+
+    /// # `truncatedTo` specialized
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: ZInstant): ZInstant = 
         import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant & Pure;
         let ZInstant(x1) = x;
-        let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
-        ZInstant(truncatedTo(x1, unit1))
+        ZInstant(truncatedTo(x1, u))
     
+    pub def truncatedToNanos(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        truncatedToHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMicros(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        truncatedToHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMillis(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        truncatedToHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToSeconds(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        truncatedToHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMinutes(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        truncatedToHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToHours(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToHalfDays(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        truncatedToHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
 
-    pub def withTemporalAdjuster(adj: a, x: ZInstant): ZInstant with TemporalAdjuster[a] =
-        import java.time.Instant.with(##java.time.temporal.TemporalAdjuster): ##java.time.Instant & Pure as withTA;         
+    pub def truncatedToDays(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
+
+
+    /// # `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getInstant(r.start);
+        let e1 = getInstant(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def nanosUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        untilHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def microsUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        untilHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def millisUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        untilHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def secondsUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def minutesUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def hoursUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def halfDaysUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def daysUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+
+    /// # `withTemporalAdjuster` specialized
+
+    /// Only Instant is supported which is just identity
+
+    /// # `withTemporalField` specialized
+
+    def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: ZInstant): ZInstant =
+        import java.time.Instant.with(##java.time.temporal.TemporalField, Int64): ##java.time.Instant & Pure as withTF;                   
         try {
             let ZInstant(x1) = x;
-            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
-            ZInstant(withTA(x1, adj1))
+            ZInstant(withTF(x1, field, i))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def withTemporalField(field: a, i: Int64, x: ZInstant): ZInstant with TemporalField[a] =
-        import java.time.Instant.with(##java.time.temporal.TemporalField, Int64): ##java.time.Instant & Pure as withTF;         
-        try {
-            let ZInstant(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ZInstant(withTF(x1, field1, i))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+    pub def withNanoOfSecond(i: Int64, x: ZInstant): ZInstant =
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        withTemporalFieldHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
+
+    pub def withMicroOfSecond(i: Int64, x: ZInstant): ZInstant =
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+        withTemporalFieldHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
+
+    pub def withMilliOfSecond(i: Int64, x: ZInstant): ZInstant =
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+        withTemporalFieldHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
+
+    pub def withInstantSeconds(i: Int64, x: ZInstant): ZInstant =
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
+        withTemporalFieldHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, i, x)
 
 }
 

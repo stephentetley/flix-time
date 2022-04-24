@@ -37,11 +37,5 @@ namespace TestLocalDate {
         println("LocalDate.withTemporalAdjuster02(): ${d1} ${d2}");        
         d2
 
-    @test
-    def temp02(): Time.LocalDate & Impure = 
-        let d1 = Time/LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
-        let i = Time/Temporal2.getEra(d1);
-        println("LocalDate.temp02(): ${d1}, era : ${i}");        
-        d1
        
 }
