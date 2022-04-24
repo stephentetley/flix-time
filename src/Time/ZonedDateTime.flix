@@ -454,10 +454,6 @@ namespace Time/ZonedDateTime {
         }
 
 
-    pub def between(r: {start :: ZonedDateTime, end :: ZonedDateTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getZonedDateTime(r.start) as ##java.time.temporal.Temporal, 
-                            getZonedDateTime(r.end) as ##java.time.temporal.Temporal))
 
     pub def get(t: a, x: ZonedDateTime): Int32 with TemporalField[a] = 
         import java.time.ZonedDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
@@ -537,4 +533,22 @@ namespace Time/ZonedDateTime {
         }
 
 
+    /// Duration methods
+    
+    pub def between(r: {start :: ZonedDateTime, end :: ZonedDateTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getZonedDateTime(r.start) as ##java.time.temporal.Temporal, 
+                            getZonedDateTime(r.end) as ##java.time.temporal.Temporal))
+
+    pub def plusDuration(i: ZonedDateTime, x: ZDuration): ZonedDateTime =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getZonedDateTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        ZonedDateTime(addTo(x1, i1) as ##java.time.ZonedDateTime)
+    
+    pub def minusDuration(i: ZonedDateTime, x: ZDuration): ZonedDateTime =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getZonedDateTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        ZonedDateTime(subtractFrom(x1, i1) as ##java.time.ZonedDateTime)                            
 }

@@ -366,11 +366,6 @@ namespace Time/OffsetTime {
         }
 
 
-    pub def between(r: {start :: OffsetTime, end :: OffsetTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getOffsetTime(r.start) as ##java.time.temporal.Temporal, 
-                            getOffsetTime(r.end) as ##java.time.temporal.Temporal))
-
     pub def get(t: a, x: OffsetTime): Int32 with TemporalField[a] = 
         import java.time.OffsetTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
         let x1 = getOffsetTime(x);
@@ -477,5 +472,23 @@ namespace Time/OffsetTime {
         }
 
 
+    /// Duration methods
+    
+    pub def between(r: {start :: OffsetTime, end :: OffsetTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getOffsetTime(r.start) as ##java.time.temporal.Temporal, 
+                            getOffsetTime(r.end) as ##java.time.temporal.Temporal))
+
+    pub def plusDuration(i: OffsetTime, x: ZDuration): OffsetTime =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        OffsetTime(addTo(x1, i1) as ##java.time.OffsetTime)
+    
+    pub def minusDuration(i: OffsetTime, x: ZDuration): OffsetTime =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        OffsetTime(subtractFrom(x1, i1) as ##java.time.OffsetTime)
 
 }

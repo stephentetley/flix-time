@@ -403,6 +403,7 @@ namespace Time/ZDuration {
     /// # `from<TemporalAmount>` specialized but only Duration is supported which is just identity
 
     /// # `between` specialized - specialized versions make more sense in their respective modules:
+    /// Instant
     /// LocalDateTime
     /// LocalTime
     /// OffsetDateTime
@@ -448,19 +449,14 @@ namespace Time/ZDuration {
 
 
 
-    pub def addTo(x: ZDuration, base: a): a with Temporal[a] =
-        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let ZDuration(x1) = x;
-        let base1 = Time/Temporal/Temporal.marshalToNativeTemporal(base);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(addTo(x1, base1))
 
-    pub def subtractFrom(x: ZDuration, base: a): a with Temporal[a] =
-        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let ZDuration(x1) = x;
-        let base1 = Time/Temporal/Temporal.marshalToNativeTemporal(base);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(subtractFrom(x1, base1))    
-
-
+    /// # `addTo`  and `subtractFrom`specialized - are `plusDuration` and `minusDuration` their respective modules:
+    /// Instant
+    /// LocalDateTime
+    /// LocalTime
+    /// OffsetDateTime
+    /// OffsetTime
+    /// ZonedDateTime
 
 
     pub def get(t: a, x: ZDuration): Int64 with TemporalUnit[a] = 

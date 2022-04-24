@@ -474,12 +474,7 @@ namespace Time/LocalDateTime {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-
-    pub def between(r: {start :: LocalDateTime, end :: LocalDateTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getLocalDateTime(r.start) as ##java.time.temporal.Temporal, 
-                            getLocalDateTime(r.end) as ##java.time.temporal.Temporal))
-
+    
     /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: LocalDateTime): a with Temporal[a] = 
         import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
@@ -499,29 +494,6 @@ namespace Time/LocalDateTime {
         let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
         getLong(x1, t1)
 
-
-    pub def plusDuration(x: LocalDateTime, d: ZDuration): LocalDateTime =
-        import java.time.LocalDateTime.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalDateTime & Pure;         
-        try {
-            let LocalDateTime(x1) = x;
-            let d1 = Time/ZDuration.getDuration(d) as ##java.time.temporal.TemporalAmount;        
-            LocalDateTime(plus(x1, d1))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    pub def minusDuration(x: LocalDateTime, d: ZDuration): LocalDateTime =
-        import java.time.LocalDateTime.minus(##java.time.temporal.TemporalAmount): ##java.time.LocalDateTime & Pure;         
-        try {
-            let LocalDateTime(x1) = x;
-            let d1 = Time/ZDuration.getDuration(d) as ##java.time.temporal.TemporalAmount;        
-            LocalDateTime(minus(x1, d1))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
 
     pub def plus(x: LocalDateTime, r: {amount :: Int64, temporalUnit :: a}): LocalDateTime with TemporalUnit[a] =
@@ -615,6 +587,25 @@ namespace Time/LocalDateTime {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+    
+    /// Duration methods
 
+    pub def between(r: {start :: LocalDateTime, end :: LocalDateTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getLocalDateTime(r.start) as ##java.time.temporal.Temporal, 
+                            getLocalDateTime(r.end) as ##java.time.temporal.Temporal))
+
+
+    pub def plusDuration(dt: LocalDateTime, x: ZDuration): LocalDateTime =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZDuration(x1) = x;
+        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(addTo(x1, dt1) as ##java.time.LocalDateTime)
+    
+    pub def minusDuration(dt: LocalDateTime, x: ZDuration): LocalDateTime =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZDuration(x1) = x;
+        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(subtractFrom(x1, dt1) as ##java.time.LocalDateTime)
 
 }

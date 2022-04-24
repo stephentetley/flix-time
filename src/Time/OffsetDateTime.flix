@@ -524,11 +524,6 @@ namespace Time/OffsetDateTime {
         }
 
 
-    pub def between(r: {start :: OffsetDateTime, end :: OffsetDateTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getOffsetDateTime(r.start) as ##java.time.temporal.Temporal, 
-                            getOffsetDateTime(r.end) as ##java.time.temporal.Temporal))
-
     pub def get(t: a, x: OffsetDateTime): Int32 with TemporalField[a] = 
         import java.time.OffsetDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
         let x1 = getOffsetDateTime(x);
@@ -635,5 +630,24 @@ namespace Time/OffsetDateTime {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+
+    /// Duration methods
+    
+    pub def between(r: {start :: OffsetDateTime, end :: OffsetDateTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getOffsetDateTime(r.start) as ##java.time.temporal.Temporal, 
+                            getOffsetDateTime(r.end) as ##java.time.temporal.Temporal))
+
+    pub def plusDuration(i: OffsetDateTime, x: ZDuration): OffsetDateTime =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
+    
+    pub def minusDuration(i: OffsetDateTime, x: ZDuration): OffsetDateTime =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
 
 }

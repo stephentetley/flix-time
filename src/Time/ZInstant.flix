@@ -271,6 +271,7 @@ namespace Time/ZInstant {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+
     pub def fromOffsetDateTime(x: OffsetDateTime): ZInstant = 
         fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
@@ -318,9 +319,6 @@ namespace Time/ZInstant {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def plusDuration(x: ZInstant, d: ZDuration): ZInstant =
-        let d1 = Time/ZDuration.getDuration(d) as ##java.time.temporal.TemporalAmount;
-        plusHelper(x, d1)
 
     /// Period.ofMonths and Period.ofYears fail (None)
     pub def plusPeriod(x: ZInstant, p: Period): Option[ZInstant] =
@@ -342,10 +340,6 @@ namespace Time/ZInstant {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-
-    pub def minusDuration(x: ZInstant, d: ZDuration): ZInstant =
-        let d1 = Time/ZDuration.getDuration(d) as ##java.time.temporal.TemporalAmount;
-        minusHelper(x, d1)
 
     /// Period.ofMonths and Period.ofYears fail (None)
     pub def minusPeriod(x: ZInstant, p: Period): Option[ZInstant] =
@@ -496,6 +490,26 @@ namespace Time/ZInstant {
     pub def withInstantSeconds(i: Int64, x: ZInstant): ZInstant =
         import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
         withTemporalFieldHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, i, x)
+
+    /// Duration methods
+
+    pub def between(r: {start :: ZInstant, end :: ZInstant}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getInstant(r.start) as ##java.time.temporal.Temporal, 
+                            getInstant(r.end) as ##java.time.temporal.Temporal))
+
+
+    pub def plusDuration(i: ZInstant, x: ZDuration): ZInstant =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZDuration(x1) = x;
+        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
+        ZInstant(addTo(x1, i1) as ##java.time.Instant)
+    
+    pub def minusDuration(i: ZInstant, x: ZDuration): ZInstant =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZDuration(x1) = x;
+        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
+        ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
 
 }
 

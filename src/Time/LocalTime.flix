@@ -388,10 +388,6 @@ namespace Time/LocalTime {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def between(r: {start :: LocalTime, end :: LocalTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getLocalTime(r.start) as ##java.time.temporal.Temporal, 
-                            getLocalTime(r.end) as ##java.time.temporal.Temporal))
 
     /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: LocalTime): a with Temporal[a] = 
@@ -506,5 +502,23 @@ namespace Time/LocalTime {
         }
 
 
+    /// Duration methods
 
+    pub def between(r: {start :: LocalTime, end :: LocalTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getLocalTime(r.start) as ##java.time.temporal.Temporal, 
+                            getLocalTime(r.end) as ##java.time.temporal.Temporal))
+
+    
+    pub def plusDuration(i: LocalTime, x: ZDuration): LocalTime =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        LocalTime(addTo(x1, i1) as ##java.time.LocalTime)
+    
+    pub def minusDuration(i: LocalTime, x: ZDuration): LocalTime =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        LocalTime(subtractFrom(x1, i1) as ##java.time.LocalTime)
 }
