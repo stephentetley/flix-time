@@ -400,19 +400,53 @@ namespace Time/ZDuration {
 
     /// Generic
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def fromTemporalAmount(x: a): ZDuration with TemporalAmount[a] = 
-        import static java.time.Duration.from(##java.time.temporal.TemporalAmount): ##java.time.Duration & Pure as fromTA;
-        let x1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(x);
-        ZDuration(fromTA(x1))
+    /// # `from<TemporalAmount>` specialized but only Duration is supported which is just identity
 
-    /// No from___ only valid TemporalAmount is Duartion, the Unit of Period would give an estimate which is not allowed.
+    /// # `between` specialized - specialized versions make more sense in their respective modules:
+    /// LocalDateTime
+    /// LocalTime
+    /// OffsetDateTime
+    /// OffsetTime
+    /// ZonedDateTime
+    
 
-    pub def truncatedTo(unit: a, x: ZDuration): ZDuration with TemporalUnit[a] = 
+
+    /// # `truncatedTo` specialized
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: ZDuration): ZDuration = 
         import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
         let ZDuration(x1) = x;
-        let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
-        ZDuration(truncatedTo(x1, unit1))
+        ZDuration(truncatedTo(x1, u))
+    
+    pub def truncatedToNanos(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        truncatedToHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMicros(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        truncatedToHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMillis(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        truncatedToHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToSeconds(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        truncatedToHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMinutes(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        truncatedToHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToHours(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToHalfDays(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        truncatedToHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
+
+
 
     pub def addTo(x: ZDuration, base: a): a with Temporal[a] =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
@@ -427,11 +461,6 @@ namespace Time/ZDuration {
         Time/Temporal/Temporal.unmarshalFromNativeTemporal(subtractFrom(x1, base1))    
 
 
-    pub def between(r: {start :: a, end :: a}): ZDuration with Temporal[a] =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        let b1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.start);
-        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
-        ZDuration(between(b1, e1))
 
 
     pub def get(t: a, x: ZDuration): Int64 with TemporalUnit[a] = 

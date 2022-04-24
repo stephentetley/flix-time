@@ -122,8 +122,10 @@ namespace Time/OffsetTime {
     use Time/Temporal.TemporalUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
-    use Time.Instant;
-    use Time.Instant.{Instant};
+    use Time.ZDuration;
+    use Time.ZDuration.{ZDuration};
+    use Time.ZInstant;
+    use Time.ZInstant.{ZInstant};
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.OffsetDateTime;
@@ -169,9 +171,9 @@ namespace Time/OffsetTime {
         OffsetTime(of(x1, o1))
 
 
-    pub def fromInstant(zone: {zone :: ZoneId}, x: Instant): OffsetTime =
+    pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): OffsetTime =
         import static java.time.OffsetTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.OffsetTime & Pure;
-        let Instant(x1) = x;
+        let ZInstant(x1) = x;
         let ZoneId(z1) = zone.zone;
         OffsetTime(ofInstant(x1, z1))
 
@@ -362,6 +364,12 @@ namespace Time/OffsetTime {
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+
+    pub def between(r: {start :: OffsetTime, end :: OffsetTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getOffsetTime(r.start) as ##java.time.temporal.Temporal, 
+                            getOffsetTime(r.end) as ##java.time.temporal.Temporal))
 
     pub def get(t: a, x: OffsetTime): Int32 with TemporalField[a] = 
         import java.time.OffsetTime.get(##java.time.temporal.TemporalField): Int32 & Pure;

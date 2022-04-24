@@ -100,6 +100,8 @@ namespace Time/ZonedDateTime {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
+    use Time.ZDuration;
+    use Time.ZDuration.{ZDuration};
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.LocalDateTime;
@@ -450,6 +452,12 @@ namespace Time/ZonedDateTime {
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+
+    pub def between(r: {start :: ZonedDateTime, end :: ZonedDateTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getZonedDateTime(r.start) as ##java.time.temporal.Temporal, 
+                            getZonedDateTime(r.end) as ##java.time.temporal.Temporal))
 
     pub def get(t: a, x: ZonedDateTime): Int32 with TemporalField[a] = 
         import java.time.ZonedDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;

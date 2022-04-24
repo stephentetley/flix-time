@@ -144,40 +144,25 @@ namespace Time/ZoneId {
     /// Generic
 
     /// # `fromTemporalAccessor` specialized
+    
+    def fromHelper(x: ##java.time.temporal.TemporalAccessor): ZoneId = 
+        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
+        try {
+            ZoneId(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
-        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZoneId(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetTime(x: OffsetTime): ZoneId = 
-        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZoneId(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
-        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
-        try {
-            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZoneId(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
-        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
-        try {
-            let x1 = Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor;
-            ZoneId(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor)
+
 }

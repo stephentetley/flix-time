@@ -263,35 +263,19 @@ namespace Time/ZInstant {
     /// Generic
 
     /// # `fromTemporalAccessor` specialized
+    def fromHelper(x: ##java.time.temporal.TemporalAccessor): ZInstant = 
+        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
+        try {
+            ZInstant(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZInstant = 
-        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZInstant(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZInstant = 
-        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
-        try {
-            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZInstant(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def range(field: a, x: ZInstant): ValueRange with TemporalField[a] =
-        import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let ZInstant(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
     /// # `getLong` specialized
@@ -371,6 +355,34 @@ namespace Time/ZInstant {
         } catch {
             case _: ##java.lang.Exception => None
         }
+
+    /// # `range` specialized
+    
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: ZInstant): ValueRange =
+        import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let ZInstant(x1) = x;
+            ValueRange(range(x1, f))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def rangeNanoOfSecond(x: ZInstant): ValueRange = 
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def rangeMicroOfSecond(x: ZInstant): ValueRange =
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+        rangeHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def rangeMilliOfSecond(x: ZInstant): ValueRange =
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+        rangeHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def rangeInstantSeconds(x: ZInstant): ValueRange =
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
+        rangeHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
 
     /// # `truncatedTo` specialized
 
@@ -455,9 +467,7 @@ namespace Time/ZInstant {
         untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
 
-    /// # `withTemporalAdjuster` specialized
-
-    /// Only Instant is supported which is just identity
+    /// # `withTemporalAdjuster` specialized but only Instant is supported which is just identity
 
     /// # `withTemporalField` specialized
 

@@ -121,6 +121,8 @@ namespace Time/OffsetDateTime {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
+    use Time.ZDuration;
+    use Time.ZDuration.{ZDuration};
     use Time.ZInstant;
     use Time.ZInstant.{ZInstant};
     use Time.LocalDate;
@@ -520,6 +522,12 @@ namespace Time/OffsetDateTime {
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+
+    pub def between(r: {start :: OffsetDateTime, end :: OffsetDateTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getOffsetDateTime(r.start) as ##java.time.temporal.Temporal, 
+                            getOffsetDateTime(r.end) as ##java.time.temporal.Temporal))
 
     pub def get(t: a, x: OffsetDateTime): Int32 with TemporalField[a] = 
         import java.time.OffsetDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;

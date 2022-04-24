@@ -171,71 +171,64 @@ namespace Time/ZoneOffset {
     /// Generic 
 
     /// # `fromTemporalAccessor` specialized
+    def fromHelper(x: ##java.time.temporal.TemporalAccessor): ZoneOffset = 
+        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
+        try {
+            ZoneOffset(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
-        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZoneOffset(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
-        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZoneOffset(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
+        fromHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
+            
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
-        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
-        try {
-            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZoneOffset(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
-
-    /// Probably to just remove...
-    pub def adjustInto(t: a, z: ZoneOffset): a with Temporal[a] = 
-        import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let ZoneOffset(z1) = z;
-        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(z1, t1))
+    /// /// Probably to just remove...
+    /// pub def adjustInto(t: a, z: ZoneOffset): a with Temporal[a] = 
+    ///     import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+    ///     let ZoneOffset(z1) = z;
+    ///     let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
+    ///     Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(z1, t1))
 
 
     
-    /// No need for get/getLong, get(OFFSET_SECONDS) === `getTotalSeconds`
+    /// # `getLong` specialized
 
-    /// pub def get(t: a, z: ZoneOffset): Int32 with TemporalField[a] = 
-    ///     import java.time.ZoneOffset.get(##java.time.temporal.TemporalField): Int32 & Pure;
-    ///     let z1 = getZoneOffset(z);
-    ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-    ///     get(z1, t1)
-
-    /// pub def getLong(t: a, z: ZoneOffset): Int64 with TemporalField[a] = 
-    ///     import java.time.ZoneOffset.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-    ///     let z1 = getZoneOffset(z);
-    ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-    ///     getLong(z1, t1)
-
-
-    pub def rangeOffsetSeconds(z: ZoneOffset): ValueRange =        
-        import java.time.ZoneOffset.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField & Pure as get_OFFSET_SECONDS;            
+    def getLongHelper(field: ##java.time.temporal.TemporalField, x: ZoneOffset): Int64 =
+        import java.time.ZoneOffset.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
         try {
-            let ZoneOffset(z1) = z;
-            let field1 = get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField;
-            ValueRange(range(z1, field1))
+            let ZoneOffset(x1) = x;
+            getLong(x1, field)
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    pub def getOffsetSeconds(x: ZoneOffset): Int64 =
+        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField & Pure as get_OFFSET_SECONDS;
+        getLongHelper(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, x)
+
+    /// # `range` specialized
+    
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: ZoneOffset): ValueRange =
+        import java.time.ZoneOffset.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
+        try {
+            let ZoneOffset(x1) = x;
+            ValueRange(range(x1, f))
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def rangeOffsetSeconds(z: ZoneOffset): ValueRange =       
+        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField & Pure as get_OFFSET_SECONDS;            
+        rangeHelper(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, z)
 
 
 }

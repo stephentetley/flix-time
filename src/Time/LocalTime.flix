@@ -126,6 +126,8 @@ namespace Time/LocalTime {
     use Time.LocalDateTime;
     use Time.OffsetDateTime;
     use Time.OffsetTime;
+    use Time.ZDuration;
+    use Time.ZDuration.{ZDuration};
     use Time.ZInstant;
     use Time.ZInstant.{ZInstant};
     use Time.ZonedDateTime;
@@ -385,6 +387,11 @@ namespace Time/LocalTime {
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    pub def between(r: {start :: LocalTime, end :: LocalTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        ZDuration(between(getLocalTime(r.start) as ##java.time.temporal.Temporal, 
+                            getLocalTime(r.end) as ##java.time.temporal.Temporal))
 
     /// NOTE - maybe this should return Option [/ Result] ?
     pub def adjustInto(t: a, x: LocalTime): a with Temporal[a] = 
