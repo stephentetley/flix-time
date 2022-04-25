@@ -458,46 +458,54 @@ namespace Time/ZDuration {
     /// OffsetTime
     /// ZonedDateTime
 
-
-    pub def get(t: a, x: ZDuration): Int64 with TemporalUnit[a] = 
-        import java.time.Duration.get(##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let x1 = getDuration(x);
-        let t1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(t);
-        get(x1, t1)
+    /// # `get` specialized - only Nanos and Seconds supported which we already have getters for
 
     
-    pub def plus(x: ZDuration, r: {amount :: Int64, temporalUnit :: a}): ZDuration with TemporalUnit[a] =
+    /// # `plus` specialized - except for HalfDays we already have a `plus_` function for the other supported ChronoUnits
+
+    def plusHelper(x: ZDuration, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): ZDuration =
         import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
         try {
             let ZDuration(x1) = x;
-            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
-            ZDuration(plus(x1, r.amount, temporalUnit1))
+            ZDuration(plus(x1, amount, temporalUnit))
         } catch {
             case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
     
-    pub def minus(x: ZDuration, r: {amount :: Int64, temporalUnit :: a}): ZDuration with TemporalUnit[a] =
+    pub def plusHalfDays(x: ZDuration, i: Int64): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        plusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
+
+    /// # `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
+
+    def minusHelper(x: ZDuration, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): ZDuration =
         import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
         try {
             let ZDuration(x1) = x;
-            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
-            ZDuration(minus(x1, r.amount, temporalUnit1))
+            ZDuration(minus(x1, amount, temporalUnit))
         } catch {
             case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
     
-    pub def ofAmount(r: {amount :: Int64, temporalUnit :: a}): ZDuration with TemporalUnit[a] =
+    pub def minusHalfDays(x: ZDuration, i: Int64): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        minusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
+
+
+    /// # `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
+
+    def ofHelper(temporalUnit: ##java.time.temporal.TemporalUnit, amount: Int64): ZDuration =
         import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
         try {
-            let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
-            ZDuration(of(r.amount, temporalUnit1))
+            ZDuration(of(amount, temporalUnit))
         } catch {
             case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-
-
+    pub def fromHalfDays(i: Int64): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        ofHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, i)
 }
