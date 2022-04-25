@@ -170,6 +170,13 @@ namespace Time/Month {
         name(en1)
 
 
+    pub def getValue(x: Month): Int32 =
+        import java.time.Month.getValue(): Int32 & Pure;
+        let x1 = marshal(x);
+        getValue(x1)
+
+
+
     pub def hashCode(x: Month): Int32 =
         import java.lang.Enum.hashCode(): Int32 & Pure;
         let en1 = marshal(x) as ##java.lang.Enum;
@@ -198,84 +205,52 @@ namespace Time/Month {
 
 
     /// # `fromTemporalAccessor` specialized
+    def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        try {
+            unmarshal(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     pub def fromLocalDate(x: LocalDate): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        try {
-            let x1 = Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor;
-            unmarshal(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromLocalDateTime(x: LocalDateTime): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        try {
-            let x1 = Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            unmarshal(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromMonthDay(x: MonthDay): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        try {
-            let x1 = Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor;
-            unmarshal(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            unmarshal(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromYearMonth(x: YearMonth): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        try {
-            let x1 = Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor;
-            unmarshal(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+        fromHelper(Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        try {
-            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            unmarshal(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def get(t: a, x: Month): Int32 with TemporalField[a] = 
-        import java.time.Month.get(##java.time.temporal.TemporalField): Int32 & Pure;
-        let x1 = marshal(x);
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        get(x1, t1)
-
-    pub def getLong(t: a, x: Month): Int64 with TemporalField[a] = 
-        import java.time.Month.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-        let x1 = marshal(x);
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        getLong(x1, t1)
+        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
-    pub def range(field: a, x: Month): ValueRange with TemporalField[a] =
+
+    /// # `get` specialized but only MonthOfYear is supported which equivalant to `getValue`
+
+
+    /// # `range` specialized
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: Month): ValueRange =
         import java.time.Month.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let x1 = marshal(x);
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
+            ValueRange(range(x1, f))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+
+    pub def rangeMonthOfYear(z: Month): ValueRange =       
+        import static get java.time.temporal.ChronoField.MONTH_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_MONTH_OF_YEAR;            
+        rangeHelper(get_MONTH_OF_YEAR() as ##java.time.temporal.TemporalField, z)
 
     
     /// # `adjustInto` specialized - synonymous with `setMonth` in the respective modules:

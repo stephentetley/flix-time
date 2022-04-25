@@ -175,8 +175,8 @@ namespace Time/DayOfWeek {
 
     pub def getValue(x: DayOfWeek): Int32 =
         import java.time.DayOfWeek.getValue(): Int32 & Pure;
-        let en1 = marshal(x);
-        getValue(en1)
+        let x1 = marshal(x);
+        getValue(x1)
 
 
 
@@ -241,6 +241,6 @@ namespace Time/DayOfWeek {
     /// ZonedDateTime
 
 
-    /// # `get` specialized but only DayOfWeek is supported which equivalant to `dayOfWeek`
+    /// # `get` specialized but only DayOfWeek is supported which equivalant to `getValue`
 
 }

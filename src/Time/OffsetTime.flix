@@ -347,24 +347,20 @@ namespace Time/OffsetTime {
 
     /// # `fromTemporalAccessor` specialized
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): OffsetTime = 
-        import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetTime & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            OffsetTime(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime = 
+    def fromHelper(x: ##java.time.temporal.TemporalAccessor): OffsetTime = 
         import static java.time.OffsetTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetTime & Pure as fromTA;
         try {
-            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            OffsetTime(fromTA(x1))
+            OffsetTime(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+    pub def fromOffsetDateTime(x: OffsetDateTime): OffsetTime = 
+        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime = 
+        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        
 
     pub def get(t: a, x: OffsetTime): Int32 with TemporalField[a] = 
         import java.time.OffsetTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
