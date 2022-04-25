@@ -575,6 +575,14 @@ namespace Time/LocalDate {
         let i1 = getLocalDate(i) as ##java.time.temporal.Temporal;
         LocalDate(subtractFrom(x1, i1) as ##java.time.LocalDate)
 
+    /// DayOfWeek methods
+
+    pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
+        import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/DayOfWeek.marshal(x);
+        let d1 = getLocalDate(d) as ##java.time.temporal.Temporal;
+        LocalDate(adjustInto(x1, d1) as ##java.time.LocalDate)
+
     /// MonthDay methods
 
     pub def adjustMonthDay(x: MonthDay, d: LocalDate): LocalDate = 

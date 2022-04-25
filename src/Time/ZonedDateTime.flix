@@ -571,6 +571,14 @@ namespace Time/ZonedDateTime {
         ZonedDateTime(subtractFrom(x1, i1) as ##java.time.ZonedDateTime)
 
 
+    /// DayOfWeek methods
+
+    pub def adjustDayOfWeek(x: DayOfWeek, d: ZonedDateTime): ZonedDateTime = 
+        import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/DayOfWeek.marshal(x);
+        let d1 = getZonedDateTime(d) as ##java.time.temporal.Temporal;
+        ZonedDateTime(adjustInto(x1, d1) as ##java.time.ZonedDateTime)
+
     /// MonthDay methods
 
     pub def adjustMonthDay(x: MonthDay, d: ZonedDateTime): ZonedDateTime = 

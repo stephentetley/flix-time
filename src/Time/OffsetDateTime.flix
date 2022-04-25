@@ -675,6 +675,14 @@ namespace Time/OffsetDateTime {
         let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
         OffsetDateTime(adjustInto(zo1, dt1) as ##java.time.OffsetDateTime)
 
+    /// DayOfWeek methods
+
+    pub def adjustDayOfWeek(x: DayOfWeek, d: OffsetDateTime): OffsetDateTime = 
+        import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/DayOfWeek.marshal(x);
+        let d1 = getOffsetDateTime(d) as ##java.time.temporal.Temporal;
+        OffsetDateTime(adjustInto(x1, d1) as ##java.time.OffsetDateTime)
+
     /// MonthDay methods
 
     pub def adjustMonthDay(x: MonthDay, d: OffsetDateTime): OffsetDateTime = 

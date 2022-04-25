@@ -39,7 +39,7 @@ namespace TestDayOfWeek {
     @test
     def range01(): Time/Temporal.ValueRange & Impure = 
         let d1 = Time/DayOfWeek.Sunday;        
-        let r1 = Time/DayOfWeek.range(Time/Temporal/ChronoField.dayOfWeek(), d1);
+        let r1 = Time/DayOfWeek.rangeDayOfWeek(d1);
         println("DayOfWeek.range01(): ${r1}");
         r1
 
@@ -57,14 +57,14 @@ namespace TestDayOfWeek {
 
 
     /////////////////////////////////////////////////////////////////////////////
-    // get                                                                     //
+    // getValue                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def get01(): Int32 & Impure =         
+    def getValue01(): Int32 & Impure =         
         let dow = Time/DayOfWeek.Monday;
-        let i = Time/DayOfWeek.get(Time/Temporal/ChronoField.dayOfWeek(), dow);
-        println("DayOfWeek.get01(): ${i}");
+        let i = Time/DayOfWeek.getValue(dow);
+        println("DayOfWeek.dayOfWeek(): ${i}");
         i
 
 
