@@ -603,4 +603,12 @@ namespace Time/ZonedDateTime {
         let dt1 = getZonedDateTime(dt) as ##java.time.temporal.Temporal;
         ZonedDateTime(adjustInto(x1, dt1) as ##java.time.ZonedDateTime)
 
+    /// LocalDate methods
+
+    pub def adjustLocalDate(x: LocalDate, dt: ZonedDateTime): ZonedDateTime = 
+        import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalDate.getLocalDate(x);
+        let dt1 = getZonedDateTime(dt) as ##java.time.temporal.Temporal;
+        ZonedDateTime(adjustInto(x1, dt1) as ##java.time.ZonedDateTime)
+
 }

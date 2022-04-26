@@ -699,4 +699,12 @@ namespace Time/OffsetDateTime {
         let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
         OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
 
+    /// LocalDate methods
+
+    pub def adjustLocalDate(x: LocalDate, dt: OffsetDateTime): OffsetDateTime = 
+        import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalDate.getLocalDate(x);
+        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
+
 }

@@ -451,25 +451,47 @@ namespace Time/LocalDate {
         fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def adjustInto(t: a, x: LocalDate): a with Temporal[a] = 
-        import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = getLocalDate(x);
-        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
+    /// # `adjustInto` specialized - synonymous with `adjustLocalDate` in the respective modules:
+    /// LocalDateTime
+    /// OffsetDateTime
+    /// ZonedDateTime
 
-    pub def get(t: a, x: LocalDate): Int32 with TemporalField[a] = 
-        import java.time.LocalDate.get(##java.time.temporal.TemporalField): Int32 & Pure;
-        let x1 = getLocalDate(x);
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        get(x1, t1)
+    /// # `getLong` specialized
 
-    pub def getLong(t: a, x: LocalDate): Int64 with TemporalField[a] = 
+    def getLongHelper(field: ##java.time.temporal.TemporalField, x: LocalDate): Int64 =
         import java.time.LocalDate.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-        let x1 = getLocalDate(x);
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        getLong(x1, t1)
+        try {
+            let LocalDate(x1) = x;
+            getLong(x1, field)
+        } catch {
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    /// TODO other ChronoFields...
+
+    pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
+        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
+        getLongHelper(get_ALIGNED_DAY_OF_WEEK_IN_MONTH() as ##java.time.temporal.TemporalField, x)
+    
+    pub def getAlignedDayOfWeekInYear(x: LocalDate): Int64 =
+        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_DAY_OF_WEEK_IN_YEAR;
+        getLongHelper(get_ALIGNED_DAY_OF_WEEK_IN_YEAR() as ##java.time.temporal.TemporalField, x)
+
+    pub def getAlignedWeekOfMonth(x: LocalDate): Int64 =
+        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_WEEK_OF_MONTH;
+        getLongHelper(get_ALIGNED_WEEK_OF_MONTH() as ##java.time.temporal.TemporalField, x)
+
+    pub def getAlignedWeekOfYear(x: LocalDate): Int64 =
+        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_WEEK_OF_YEAR;
+        getLongHelper(get_ALIGNED_WEEK_OF_YEAR() as ##java.time.temporal.TemporalField, x)
+
+
+    pub def getEra(x: LocalDate): Int64 =
+        import static get java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField & Pure as get_ERA;
+        getLongHelper(get_ERA() as ##java.time.temporal.TemporalField, x)
+
 
     pub def plus(x: LocalDate, r: {amount :: Int64, temporalUnit :: a}): LocalDate with LocalDateSupportedUnit[a] =
         import java.time.LocalDate.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDate & Pure;         
@@ -512,16 +534,27 @@ namespace Time/LocalDate {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    /// Shouldn't fail as fields constrained by LocalDateSupportedField
-    pub def range(field: a, x: LocalDate): ValueRange with LocalDateSupportedField[a] =
+
+    /// # `range` specialized
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: LocalDate): ValueRange =
         import java.time.LocalDate.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let LocalDate(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
+            ValueRange(range(x1, f))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    /// TODO other ChronoFields...
+
+    pub def rangeDayOfWeek(z: LocalDate): ValueRange =       
+        import static get java.time.temporal.ChronoField.DAY_OF_WEEK: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_WEEK;            
+        rangeHelper(get_DAY_OF_WEEK() as ##java.time.temporal.TemporalField, z)
+
+    pub def rangeDayOfMonth(z: LocalDate): ValueRange =       
+        import static get java.time.temporal.ChronoField.DAY_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_MONTH;            
+        rangeHelper(get_DAY_OF_MONTH() as ##java.time.temporal.TemporalField, z)
 
     pub def until(units: t, r: {start :: LocalDate, end :: a}): Int64 with LocalDateSupportedUnit[t], Temporal[a] = 
         import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
@@ -530,25 +563,60 @@ namespace Time/LocalDate {
         let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
         until(b1, e1, units1)
 
-    pub def withTemporalAdjuster(adj: a, x: LocalDate): LocalDate with TemporalAdjuster[a] =
+
+   /// # `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+        import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getLocalDate(r.start);
+        let e1 = getLocalDate(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def daysUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    /// TODO other ChronoUnits...
+
+    /// # `with<TemporalAdjuster>` specialized
+
+    def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: LocalDate): LocalDate =
         import java.time.LocalDate.with(##java.time.temporal.TemporalAdjuster): ##java.time.LocalDate & Pure as withTA;         
         try {
             let LocalDate(x1) = x;
-            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
-            LocalDate(withTA(x1, adj1))
+            LocalDate(withTA(x1, adj))
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def withTemporalField(field: a, i: Int64, x: LocalDate): LocalDate with LocalDateSupportedField[a] =
-        import java.time.LocalDate.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalDate & Pure as withTF;         
+    pub def withMonthDay(i: MonthDay, x: LocalDate): LocalDate =
+        let i1 = Time/MonthDay.getMonthDay(i) as ##java.time.temporal.TemporalAdjuster;
+        withTemporalAdjusterHelper(i1, x)
+
+    pub def withYearMonth(i: YearMonth, x: LocalDate): LocalDate =
+        let i1 = Time/YearMonth.getYearMonth(i) as ##java.time.temporal.TemporalAdjuster;
+        withTemporalAdjusterHelper(i1, x)
+
+    /// TODO other TemporalAdjusters...
+
+
+
+    /// # `withTemporalField` specialized
+
+    def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: LocalDate): LocalDate =
+        import java.time.LocalDate.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalDate & Pure as withTF;                   
         try {
             let LocalDate(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            LocalDate(withTF(x1, field1, i))
+            LocalDate(withTF(x1, field, i))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
+        import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;
+        withTemporalFieldHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, i, x)
 
 
     /// Period methods
@@ -589,4 +657,27 @@ namespace Time/LocalDate {
         let d1 = getLocalDate(d) as ##java.time.temporal.Temporal;
         LocalDate(adjustInto(x1, d1) as ##java.time.LocalDate)
 
+    /// java.time.termporal.TemporalAdjusters methods
+
+    pub def withFirstDayOfMonth(x: LocalDate): LocalDate = 
+        import static java.time.temporal.TemporalAdjusters.firstDayOfMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(firstDayOfMonth(), x)
+
+    pub def withFirstDayOfNextMonth(x: LocalDate): LocalDate = 
+        import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(firstDayOfNextMonth(), x)
+
+    pub def withFirstDayOfNextYear(x: LocalDate): LocalDate = 
+        import static java.time.temporal.TemporalAdjusters.firstDayOfNextYear(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(firstDayOfNextYear(), x)
+
+    pub def withLastDayOfMonth(x: LocalDate): LocalDate =  
+        import static java.time.temporal.TemporalAdjusters.lastDayOfMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(lastDayOfMonth(), x)
+
+    pub def withLastDayOfYear(x: LocalDate): LocalDate =  
+        import static java.time.temporal.TemporalAdjusters.lastDayOfYear(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(lastDayOfYear(), x)
+
+    /// TODO other methods...
 }

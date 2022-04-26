@@ -644,4 +644,12 @@ namespace Time/LocalDateTime {
         let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
         LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
 
+    /// LocalDate methods
+
+    pub def adjustLocalDate(x: LocalDate, dt: LocalDateTime): LocalDateTime = 
+        import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalDate.getLocalDate(x);
+        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
+
 }

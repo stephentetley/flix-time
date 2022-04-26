@@ -23,17 +23,17 @@ namespace TestLocalDate {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def withTemporalAdjuster01(): Time.LocalDate & Impure = 
+    def withFirstDayOfMonth01(): Time.LocalDate & Impure = 
         let d1 = Time/LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
-        let d2 = Time/LocalDate.withTemporalAdjuster(Time/Temporal/TemporalAdjusters.firstDayOfMonth(), d1);
+        let d2 = Time/LocalDate.withFirstDayOfMonth(d1);
         println("LocalDate.withTemporalAdjuster01(): ${d1} ${d2}");
         println("${Time/Temporal/TemporalAdjusters.firstDayOfMonth()}");
         d2
 
     @test
-    def withTemporalAdjuster02(): Time.LocalDate & Impure = 
+    def withLastDayOfMonth01(): Time.LocalDate & Impure = 
         let d1 = Time/LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
-        let d2 = Time/LocalDate.withTemporalAdjuster(Time/Temporal/TemporalAdjusters.lastDayOfMonth(), d1);
+        let d2 = Time/LocalDate.withLastDayOfMonth(d1);
         println("LocalDate.withTemporalAdjuster02(): ${d1} ${d2}");        
         d2
 
