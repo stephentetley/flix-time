@@ -89,7 +89,7 @@ namespace TestYear {
     @test
     def range01(): Time/Temporal.ValueRange & Impure = 
         let y1 = Time/Year.year(isoYear = 2020);        
-        let r1 = Time/Year.range(Time/Temporal/ChronoField.year(), y1);
+        let r1 = Time/Year.rangeYear(y1);
         println("Year.range01(): ${r1}");
         r1
 

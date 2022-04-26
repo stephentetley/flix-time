@@ -289,15 +289,25 @@ namespace Time/MonthDay {
         getLong(x1, t1)
 
 
-    pub def range(field: a, x: MonthDay): ValueRange with TemporalField[a] =
+    /// # `range` specialized
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: MonthDay): ValueRange =
         import java.time.MonthDay.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let MonthDay(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
+            ValueRange(range(x1, f))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+
+    pub def rangeDayOfMonth(z: MonthDay): ValueRange =
+        import static get java.time.temporal.ChronoField.DAY_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_MONTH;            
+        rangeHelper(get_DAY_OF_MONTH() as ##java.time.temporal.TemporalField, z)
+
+
+    pub def rangeMonthOfYear(z: MonthDay): ValueRange =
+        import static get java.time.temporal.ChronoField.MONTH_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_MONTH_OF_YEAR;            
+        rangeHelper(get_MONTH_OF_YEAR() as ##java.time.temporal.TemporalField, z)
+        
 }

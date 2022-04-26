@@ -377,16 +377,25 @@ namespace Time/YearMonth {
         }
 
 
-    pub def range(field: a, x: YearMonth): ValueRange with TemporalField[a] =
+    /// # `range` specialized
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: YearMonth): ValueRange =
         import java.time.YearMonth.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let YearMonth(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
+            ValueRange(range(x1, f))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    pub def rangeMonthOfYear(z: YearMonth): ValueRange =
+        import static get java.time.temporal.ChronoField.MONTH_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_MONTH_OF_YEAR;            
+        rangeHelper(get_MONTH_OF_YEAR() as ##java.time.temporal.TemporalField, z)
+
+
+    pub def rangeYearOfEra(z: YearMonth): ValueRange =
+        import static get java.time.temporal.ChronoField.YEAR_OF_ERA: ##java.time.temporal.ChronoField & Pure as get_YEAR_OF_ERA;            
+        rangeHelper(get_YEAR_OF_ERA() as ##java.time.temporal.TemporalField, z)
 
     /// TODO refine class qualification of `t`
     pub def until(units: t, r: {start :: YearMonth, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
