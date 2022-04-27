@@ -419,17 +419,22 @@ namespace Time/OffsetTime {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+    /// # `range` specialized
 
-    pub def range(field: a, x: OffsetTime): ValueRange with TemporalField[a] =
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: OffsetTime): ValueRange =
         import java.time.OffsetTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let OffsetTime(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
+            ValueRange(range(x1, f))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    pub def rangeNanoOfSecond(x: OffsetTime): ValueRange = 
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
 
    /// # `until` specialized
 
@@ -445,11 +450,17 @@ namespace Time/OffsetTime {
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
 
-    pub def truncatedTo(unit: a, x: OffsetTime): OffsetTime with TemporalUnit[a] = 
+    /// # `truncatedTo` specialized
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: OffsetTime): OffsetTime = 
         import java.time.OffsetTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetTime & Pure;
         let OffsetTime(x1) = x;
-        let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
-        OffsetTime(truncatedTo(x1, unit1))
+        OffsetTime(truncatedTo(x1, u))
+
+    pub def truncatedToHours(x: OffsetTime): OffsetTime = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+
 
 
     pub def withTemporalAdjuster(adj: a, x: OffsetTime): OffsetTime with TemporalAdjuster[a] =
@@ -493,5 +504,13 @@ namespace Time/OffsetTime {
         let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
         let ZDuration(x1) = x;
         OffsetTime(subtractFrom(x1, i1) as ##java.time.OffsetTime)
+
+    /// LocalTime methods
+
+    pub def adjustLocalTime(x: LocalTime, dt: OffsetTime): OffsetTime = 
+        import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalTime.getLocalTime(x);
+        let dt1 = getOffsetTime(dt) as ##java.time.temporal.Temporal;
+        OffsetTime(adjustInto(x1, dt1) as ##java.time.OffsetTime)
 
 }

@@ -493,17 +493,21 @@ namespace Time/ZonedDateTime {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+    /// # `range` specialized
 
-    pub def range(field: a, x: ZonedDateTime): ValueRange with TemporalField[a] =
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: ZonedDateTime): ValueRange =
         import java.time.ZonedDateTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let ZonedDateTime(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
+            ValueRange(range(x1, f))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    pub def rangeNanoOfSecond(x: ZonedDateTime): ValueRange = 
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
    /// # `until` specialized
 
@@ -613,6 +617,22 @@ namespace Time/ZonedDateTime {
     pub def adjustLocalDate(x: LocalDate, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let x1 = Time/LocalDate.getLocalDate(x);
+        let dt1 = getZonedDateTime(dt) as ##java.time.temporal.Temporal;
+        ZonedDateTime(adjustInto(x1, dt1) as ##java.time.ZonedDateTime)
+
+    /// LocalDateTime methods
+
+    pub def adjustLocalDateTime(x: LocalDateTime, dt: ZonedDateTime): ZonedDateTime = 
+        import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalDateTime.getLocalDateTime(x);
+        let dt1 = getZonedDateTime(dt) as ##java.time.temporal.Temporal;
+        ZonedDateTime(adjustInto(x1, dt1) as ##java.time.ZonedDateTime)
+
+    /// LocalTime methods
+
+    pub def adjustLocalTime(x: LocalTime, dt: ZonedDateTime): ZonedDateTime = 
+        import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalTime.getLocalTime(x);
         let dt1 = getZonedDateTime(dt) as ##java.time.temporal.Temporal;
         ZonedDateTime(adjustInto(x1, dt1) as ##java.time.ZonedDateTime)
 

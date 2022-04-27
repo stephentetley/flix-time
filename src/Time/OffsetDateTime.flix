@@ -585,22 +585,34 @@ namespace Time/OffsetDateTime {
         }
 
 
-    pub def range(field: a, x: OffsetDateTime): ValueRange with TemporalField[a] =
+    /// # `range` specialized
+    
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: OffsetDateTime): ValueRange =
         import java.time.OffsetDateTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let OffsetDateTime(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
+            ValueRange(range(x1, f))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def truncatedTo(unit: a, x: OffsetDateTime): OffsetDateTime with TemporalUnit[a] = 
+    pub def rangeNanoOfSecond(x: OffsetDateTime): ValueRange = 
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+
+    /// # `truncatedTo` specialized
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: OffsetDateTime): OffsetDateTime = 
         import java.time.OffsetDateTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetDateTime & Pure;
         let OffsetDateTime(x1) = x;
-        let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
-        OffsetDateTime(truncatedTo(x1, unit1))
+        OffsetDateTime(truncatedTo(x1, u))
+
+    pub def truncatedToDays(x: OffsetDateTime): OffsetDateTime = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
+
 
    /// # `until` specialized
 
@@ -710,6 +722,22 @@ namespace Time/OffsetDateTime {
     pub def adjustLocalDate(x: LocalDate, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let x1 = Time/LocalDate.getLocalDate(x);
+        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
+
+    /// LocalDateTime methods
+
+    pub def adjustLocalDateTime(x: LocalDateTime, dt: OffsetDateTime): OffsetDateTime = 
+        import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalDateTime.getLocalDateTime(x);
+        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
+
+    /// LocalTime methods
+
+    pub def adjustLocalTime(x: LocalTime, dt: OffsetDateTime): OffsetDateTime = 
+        import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalTime.getLocalTime(x);
         let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
         OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
 

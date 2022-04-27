@@ -473,12 +473,9 @@ namespace Time/LocalDateTime {
         fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def adjustInto(t: a, x: LocalDateTime): a with Temporal[a] = 
-        import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = getLocalDateTime(x);
-        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
+    /// # `adjustInto` specialized - this become `adjustLocalDateTime` in the respective modules:
+    /// OffsetDateTime
+    /// ZonedDateTime
 
     pub def get(t: a, x: LocalDateTime): Int32 with TemporalField[a] = 
         import java.time.LocalDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
@@ -540,22 +537,33 @@ namespace Time/LocalDateTime {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def range(field: a, x: LocalDateTime): ValueRange with TemporalField[a] =
+    /// # `range` specialized
+
+    def rangeHelper(f: ##java.time.temporal.TemporalField, x: LocalDateTime): ValueRange =
         import java.time.LocalDateTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
         try {
             let LocalDateTime(x1) = x;
-            let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-            ValueRange(range(x1, field1))
+            ValueRange(range(x1, f))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def truncatedTo(unit: a, x: LocalDateTime): LocalDateTime with TemporalUnit[a] = 
+    pub def rangeNanoOfSecond(x: LocalDateTime): ValueRange = 
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+
+    /// # `truncatedTo` specialized
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: LocalDateTime): LocalDateTime = 
         import java.time.LocalDateTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
-        let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
-        LocalDateTime(truncatedTo(x1, unit1))
+        LocalDateTime(truncatedTo(x1, u))
+
+    pub def truncatedToDays(x: LocalDateTime): LocalDateTime = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
    /// # `until` specialized
 
@@ -659,4 +667,11 @@ namespace Time/LocalDateTime {
         let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
         LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
 
+    /// LocalTime methods
+
+    pub def adjustLocalTime(x: LocalTime, dt: LocalDateTime): LocalDateTime = 
+        import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalTime.getLocalTime(x);
+        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
 }
