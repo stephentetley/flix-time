@@ -431,12 +431,19 @@ namespace Time/OffsetTime {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def until(units: t, r: {start :: OffsetTime, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+   /// # `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
         import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let b1 = getOffsetTime(r.start);
-        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
-        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
-        until(b1, e1, units1)
+        let e1 = getOffsetTime(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def hoursUntil(r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+
 
     pub def truncatedTo(unit: a, x: OffsetTime): OffsetTime with TemporalUnit[a] = 
         import java.time.OffsetTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetTime & Pure;

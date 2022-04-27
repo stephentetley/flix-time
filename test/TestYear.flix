@@ -102,7 +102,7 @@ namespace TestYear {
     def until01(): Int64 & Impure = 
         let t1 = Time/Year.year(isoYear = 2020);
         let t2 = Time/Year.year(isoYear = 2028);
-        let diff = Time/Year.until(Time/Temporal/ChronoUnit.years(), { start = t1, end = t2 });
+        let diff = Time/Year.yearsUntil({ start = t1, end = t2 });
         println("Year.until01(): ${diff}");
         diff
 

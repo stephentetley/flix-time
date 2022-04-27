@@ -557,12 +557,19 @@ namespace Time/LocalDateTime {
         let unit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(unit);
         LocalDateTime(truncatedTo(x1, unit1))
 
-    pub def until(units: t, r: {start :: LocalDateTime, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+   /// # `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
         import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let b1 = getLocalDateTime(r.start);
-        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
-        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
-        until(b1, e1, units1)
+        let e1 = getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def hoursUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+
 
     pub def withTemporalAdjuster(adj: a, x: LocalDateTime): LocalDateTime with TemporalAdjuster[a] =
         import java.time.LocalDateTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.LocalDateTime & Pure as withTA;         

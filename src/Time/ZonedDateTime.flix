@@ -505,13 +505,18 @@ namespace Time/ZonedDateTime {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    /// TODO refine class qualification of `t`
-    pub def until(units: t, r: {start :: ZonedDateTime, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+   /// # `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
         import java.time.ZonedDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let b1 = getZonedDateTime(r.start);
-        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
-        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
-        until(b1, e1, units1)
+        let e1 = getZonedDateTime(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def hoursUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
 
     pub def withTemporalAdjuster(adj: a, x: ZonedDateTime): ZonedDateTime with TemporalAdjuster[a] =

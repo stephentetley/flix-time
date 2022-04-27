@@ -433,13 +433,18 @@ namespace Time/Year {
         import static get java.time.temporal.ChronoField.YEAR_OF_ERA: ##java.time.temporal.ChronoField & Pure as get_YEAR_OF_ERA;            
         rangeHelper(get_YEAR_OF_ERA() as ##java.time.temporal.TemporalField, z)
 
-    /// TODO refine class qualification of `t`
-    pub def until(units: t, r: {start :: Year, end :: a}): Int64 with TemporalUnit[t], Temporal[a] = 
+    /// # `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: Year, end :: Year}): Int64 = 
         import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
         let b1 = getYear(r.start);
-        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
-        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
-        until(b1, e1, units1)
+        let e1 = getYear(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def yearsUntil(r: {start :: Year, end :: Year}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
 
     pub def withTemporalAdjuster(adj: a, x: Year): Year with TemporalAdjuster[a] =

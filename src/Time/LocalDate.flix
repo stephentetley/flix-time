@@ -556,14 +556,6 @@ namespace Time/LocalDate {
         import static get java.time.temporal.ChronoField.DAY_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_MONTH;            
         rangeHelper(get_DAY_OF_MONTH() as ##java.time.temporal.TemporalField, z)
 
-    pub def until(units: t, r: {start :: LocalDate, end :: a}): Int64 with LocalDateSupportedUnit[t], Temporal[a] = 
-        import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getLocalDate(r.start);
-        let e1 = Time/Temporal/Temporal.marshalToNativeTemporal(r.end);
-        let units1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(units);
-        until(b1, e1, units1)
-
-
    /// # `until` specialized
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDate, end :: LocalDate}): Int64 = 
@@ -574,8 +566,9 @@ namespace Time/LocalDate {
 
 
     pub def daysUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
-        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+
 
     /// TODO other ChronoUnits...
 
