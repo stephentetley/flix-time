@@ -93,6 +93,9 @@ namespace Time {
 
 namespace Time/YearMonth {
 
+    use Time.YearMonth;
+    use Time.YearMonth.{YearMonth};
+
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
@@ -108,8 +111,7 @@ namespace Time/YearMonth {
     use Time.LocalDateTime;
     use Time.Month;
     use Time.OffsetDateTime;
-    use Time.YearMonth;
-    use Time.YearMonth.{YearMonth};
+    use Time.Year;
     use Time.ZonedDateTime;
 
 
@@ -318,11 +320,6 @@ namespace Time/YearMonth {
         let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
         getLong(x1, t1)
 
-    pub def adjustInto(t: a, x: YearMonth): a with Temporal[a] = 
-        import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let YearMonth(x1) = x;
-        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
     /// # `adjustInto` specialized - this become `adjustYearMonth` in the respective modules:
     /// LocalDate
@@ -425,15 +422,21 @@ namespace Time/YearMonth {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def withTemporalAdjuster(adj: a, x: YearMonth): YearMonth with TemporalAdjuster[a] =
+    /// # `with<TemporalAdjuster>` specialized
+
+    def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: YearMonth): YearMonth =
         import java.time.YearMonth.with(##java.time.temporal.TemporalAdjuster): ##java.time.YearMonth & Pure as withTA;         
         try {
             let YearMonth(x1) = x;
-            let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
-            YearMonth(withTA(x1, adj1))
+            YearMonth(withTA(x1, adj))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
+
+    /// TODO - we don't really need this as we already have setYear
+    pub def withYear(i: Year, x: YearMonth): YearMonth =
+        let i1 = Time/Year.getYear(i) as ##java.time.temporal.TemporalAdjuster;
+        withTemporalAdjusterHelper(i1, x)
+
 
 }
