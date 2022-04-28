@@ -481,7 +481,16 @@ namespace Time/LocalDate {
         import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as get_DECADES;
         plusHelper(x, i, get_DECADES() as ##java.time.temporal.TemporalUnit)
 
-    def minusHelper(x: LocalDate, amount: Int64, ##java.time.temporal.TemporalUnit): LocalDate =
+    pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
+        plusHelper(x, i, get_CENTURIES() as ##java.time.temporal.TemporalUnit)
+
+    pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
+        plusHelper(x, i, get_MILLENNIA() as ##java.time.temporal.TemporalUnit)
+
+
+    def minusHelper(x: LocalDate, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalDate =
         import java.time.LocalDate.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDate & Pure;         
         try {
             let LocalDate(x1) = x;
@@ -491,10 +500,20 @@ namespace Time/LocalDate {
         }
 
     pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
-        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as get_DECADES;
+        import static get java.time.temporal.ChronoUnit.DECADES:##java.time.temporal.ChronoUnit & Pure as get_DECADES;
         minusHelper(x, i, get_DECADES() as ##java.time.temporal.TemporalUnit)
 
-    
+
+    pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
+        minusHelper(x, i, get_CENTURIES() as ##java.time.temporal.TemporalUnit)
+
+    pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
+        minusHelper(x, i, get_MILLENNIA() as ##java.time.temporal.TemporalUnit)
+
+
+
     pub def plusTemporalAmount(x: LocalDate, amount: a): LocalDate with TemporalAmount[a] =
         import java.time.LocalDate.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalDate & Pure;         
         try {
