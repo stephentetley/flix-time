@@ -16,8 +16,6 @@
 
 namespace Time/Chrono {
 
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalAdjuster;
 
     ///
     /// A wrapper around java.time.chrono.JapaneseEra.
@@ -44,22 +42,6 @@ namespace Time/Chrono {
         pub def hash(x: JapaneseEra): Int32 = Time/Chrono/JapaneseEra.hashCode(x)
     } 
 
-    instance TemporalAccessor[JapaneseEra] {
-        pub def marshalToNativeTemporalAccessor(x: JapaneseEra): ##java.time.temporal.TemporalAccessor =         
-            Time/Chrono/JapaneseEra.getJapaneseEra(x) as ##java.time.temporal.TemporalAccessor
-        
-        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): JapaneseEra = 
-            JapaneseEra(x as ##java.time.chrono.JapaneseEra)
-    }
-
-    instance TemporalAdjuster[JapaneseEra] {
-        pub def marshalToNativeTemporalAdjuster(x: JapaneseEra): ##java.time.temporal.TemporalAdjuster =         
-            Time/Chrono/JapaneseEra.getJapaneseEra(x) as ##java.time.temporal.TemporalAdjuster
-        
-        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): JapaneseEra = 
-            JapaneseEra(x as ##java.time.chrono.JapaneseEra)
-    }
-
 }
 
 namespace Time/Chrono/JapaneseEra {
@@ -70,8 +52,6 @@ namespace Time/Chrono/JapaneseEra {
     use Time/Chrono.JapaneseEra;
     use Time/Chrono.JapaneseEra.{JapaneseEra};
     use Time/Format.TextStyle;
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalField;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
 
@@ -133,31 +113,31 @@ namespace Time/Chrono/JapaneseEra {
         let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1)
 
-    /// NOTE - maybe this should return Option [/ Result] ?
-    pub def adjustInto(t: a, x: JapaneseEra): a with Temporal[a] = 
-        import java.time.chrono.Era.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
-        let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
-        Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
+    /// /// NOTE - maybe this should return Option [/ Result] ?
+    /// pub def adjustInto(t: a, x: JapaneseEra): a with Temporal[a] = 
+    ///     import java.time.chrono.Era.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+    ///     let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
+    ///     let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
+    ///     Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
-    pub def range(field: a, x: JapaneseEra): ValueRange with TemporalField[a] =
-        import java.time.chrono.JapaneseEra.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-        let x1 = getJapaneseEra(x);
-        let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-        ValueRange(range(x1, field1))
+    /// pub def range(field: a, x: JapaneseEra): ValueRange with TemporalField[a] =
+    ///     import java.time.chrono.JapaneseEra.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
+    ///     let x1 = getJapaneseEra(x);
+    ///     let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
+    ///     ValueRange(range(x1, field1))
 
 
 
-    pub def get(t: a, x: JapaneseEra): Int32 with TemporalField[a] = 
-        import java.time.chrono.Era.get(##java.time.temporal.TemporalField): Int32 & Pure;
-        let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        get(x1, t1)
+    /// pub def get(t: a, x: JapaneseEra): Int32 with TemporalField[a] = 
+    ///     import java.time.chrono.Era.get(##java.time.temporal.TemporalField): Int32 & Pure;
+    ///     let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
+    ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+    ///     get(x1, t1)
 
-    pub def getLong(t: a, x: JapaneseEra): Int64 with TemporalField[a] = 
-        import java.time.chrono.Era.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-        let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        getLong(x1, t1)
+    /// pub def getLong(t: a, x: JapaneseEra): Int64 with TemporalField[a] = 
+    ///     import java.time.chrono.Era.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+    ///     let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
+    ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
+    ///     getLong(x1, t1)
 
 }
