@@ -18,8 +18,6 @@
 
 namespace Time {
 
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalAdjuster;
 
     ///
     /// A day of the week.
@@ -49,30 +47,6 @@ namespace Time {
         }
     }
 
-    instance LowerBound[DayOfWeek] {
-        pub def minValue(): DayOfWeek = Monday
-    }
-
-    instance UpperBound[DayOfWeek] {
-        pub def maxValue(): DayOfWeek = Sunday
-    }
-
-
-    instance TemporalAccessor[DayOfWeek] {
-        pub def marshalToNativeTemporalAccessor(x: DayOfWeek): ##java.time.temporal.TemporalAccessor =         
-            Time/DayOfWeek.marshal(x) as ##java.time.temporal.TemporalAccessor
-        
-        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): DayOfWeek = 
-            Time/DayOfWeek.unmarshal(x as ##java.time.DayOfWeek)
-    }
-
-    instance TemporalAdjuster[DayOfWeek] {
-        pub def marshalToNativeTemporalAdjuster(x: DayOfWeek): ##java.time.temporal.TemporalAdjuster =         
-            Time/DayOfWeek.marshal(x) as ##java.time.temporal.TemporalAdjuster
-        
-        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): DayOfWeek = 
-            Time/DayOfWeek.unmarshal(x as ##java.time.DayOfWeek)
-    }
 
 }
 
@@ -85,20 +59,12 @@ namespace Time/DayOfWeek {
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
 
     use Time/Format.TextStyle;
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalField;
     use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
+    use Time/Temporal.ValueRange.{ValueRange};    
     use Time.LocalDate;
     use Time.LocalDateTime;
     use Time.OffsetDateTime;
     use Time.ZonedDateTime;
-
-    class DayOfWeekSupportedField[a] with TemporalField[a] {}
-
-    instance DayOfWeekSupportedField[Time/Temporal/ChronoField.DayOfWeek]
-    instance DayOfWeekSupportedField[Time/Temporal/WeekFields.DayOfWeek]
 
     /// 1 (Monday) to 7 (Sunday)
     pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {

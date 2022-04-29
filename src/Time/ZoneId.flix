@@ -50,7 +50,6 @@ namespace Time/ZoneId {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
-    use Time/Temporal.TemporalAccessor;
     use Time.OffsetDateTime;
     use Time.OffsetTime;
     use Time.ZoneOffset;

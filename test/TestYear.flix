@@ -27,19 +27,6 @@ namespace TestYear {
     @test
     def toString01(): String = toString(Time/Year.year(isoYear = 1970))
 
-    /////////////////////////////////////////////////////////////////////////////
-    // minValue                                                                //
-    /////////////////////////////////////////////////////////////////////////////
-
-    @test
-    def minValue01(): Bool = minValue() == Time/Year.year(isoYear = -999_999_999)
-
-    /////////////////////////////////////////////////////////////////////////////
-    // maxValue                                                                //
-    /////////////////////////////////////////////////////////////////////////////
-
-    @test
-    def maxValue01(): Bool = maxValue() == Time/Year.year(isoYear = 999_999_999)
 
     /////////////////////////////////////////////////////////////////////////////
     // less                                                                    //
@@ -119,11 +106,11 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
     // withTemporalAdjuster                                                    //
     /////////////////////////////////////////////////////////////////////////////
-    @test
-    def withTemporalAdjuster01(): Time.Year & Impure = 
-        let t1 = Time/Year.year(isoYear = 2020);
-        let t2 = Time/Year.year(isoYear = 2028);
-        let t3 = Time/Year.withTemporalAdjuster(t2, t1);
-        println("withTemporalAdjuster01(): ${t3}");
-        t3
+    /// @test
+    /// def withTemporalAdjuster01(): Time.Year & Impure = 
+    ///     let t1 = Time/Year.year(isoYear = 2020);
+    ///     let t2 = Time/Year.year(isoYear = 2028);
+    ///     let t3 = Time/Year.withTemporalAdjuster(t2, t1);
+    ///     println("withTemporalAdjuster01(): ${t3}");
+    ///     t3
 }

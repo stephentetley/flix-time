@@ -20,7 +20,6 @@
 
 namespace Time {
 
-    use Time/Temporal.TemporalAmount;
     ///
     /// A measure of time represented internally as seconds and a nanoseconds adjustment.
     ///
@@ -101,13 +100,6 @@ namespace Time {
     }
 
 
-    instance TemporalAmount[ZDuration] {
-        pub def marshalToNativeTemporalAmount(x: ZDuration): ##java.time.temporal.TemporalAmount = 
-            Time/ZDuration.getDuration(x) as ##java.time.temporal.TemporalAmount
-
-        pub def unmarshalFromNativeTemporalAmount(x: ##java.time.temporal.TemporalAmount): ZDuration= 
-            ZDuration(x as ##java.time.Duration)
-    }
 
 }
 
@@ -116,9 +108,6 @@ namespace Time/ZDuration {
     use Time.ZDuration;
     use Time.ZDuration.{ZDuration};
     
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAmount;
-    use Time/Temporal.TemporalUnit;
 
     pub def getDuration(x: ZDuration): ##java.time.Duration = 
         let ZDuration(x1) = x;

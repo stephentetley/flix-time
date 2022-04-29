@@ -20,9 +20,6 @@
 
 namespace Time {
 
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalAdjuster;
 
     ///
     /// A wrapper around a Java instant.
@@ -68,50 +65,14 @@ namespace Time {
             Time/ZInstant.compareTo(x,y) |> Comparison.fromInt32
     }
 
-    instance LowerBound[ZInstant] {
-        pub def minValue(): ZInstant = Time/ZInstant.min()
-    }
-
-    instance UpperBound[ZInstant] {
-        pub def maxValue(): ZInstant = Time/ZInstant.max()
-    }
-
     instance Boxable[ZInstant]
 
-    instance TemporalAccessor[ZInstant] {
-        pub def marshalToNativeTemporalAccessor(x: ZInstant): ##java.time.temporal.TemporalAccessor =         
-            Time/ZInstant.getInstant(x) as ##java.time.temporal.TemporalAccessor
-        
-        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): ZInstant = 
-            ZInstant(x as ##java.time.Instant)
-    }
-
-    instance Temporal[ZInstant] {
-        pub def marshalToNativeTemporal(x: ZInstant): ##java.time.temporal.Temporal =         
-            Time/ZInstant.getInstant(x) as ##java.time.temporal.Temporal
-        
-        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): ZInstant = 
-            ZInstant(x as ##java.time.Instant)
-    }
-
-    instance TemporalAdjuster[ZInstant] {
-        pub def marshalToNativeTemporalAdjuster(x: ZInstant): ##java.time.temporal.TemporalAdjuster =         
-            Time/ZInstant.getInstant(x) as ##java.time.temporal.TemporalAdjuster
-        
-        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): ZInstant = 
-            ZInstant(x as ##java.time.Instant)
-    }
 }   
 
 namespace Time/ZInstant {
 
     use Time.ZInstant;
     use Time.ZInstant.{ZInstant};
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalAdjuster;
-    use Time/Temporal.TemporalAmount;
-    use Time/Temporal.TemporalField;
-    use Time/Temporal.TemporalUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.ZDuration;

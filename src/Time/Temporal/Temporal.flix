@@ -17,6 +17,8 @@
 
 namespace Time/Temporal {
 
+    /// OBSOLETE
+
     pub class TemporalAccessor[a] with ToString[a] {
         pub def marshalToNativeTemporalAccessor(x: a): ##java.time.temporal.TemporalAccessor
         pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): a

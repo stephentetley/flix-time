@@ -55,21 +55,6 @@ namespace Time {
         }
     }
 
-    instance TemporalAccessor[Month] {
-        pub def marshalToNativeTemporalAccessor(x: Month): ##java.time.temporal.TemporalAccessor =         
-            Time/Month.marshal(x) as ##java.time.temporal.TemporalAccessor
-        
-        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): Month = 
-            Time/Month.unmarshal(x as ##java.time.Month)
-    }
-
-    instance TemporalAdjuster[Month] {
-        pub def marshalToNativeTemporalAdjuster(x: Month): ##java.time.temporal.TemporalAdjuster =         
-            Time/Month.marshal(x) as ##java.time.temporal.TemporalAdjuster
-        
-        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): Month = 
-            Time/Month.unmarshal(x as ##java.time.Month)
-    }
 
 }
 

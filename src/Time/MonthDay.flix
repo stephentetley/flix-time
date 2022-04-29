@@ -18,9 +18,6 @@
 
 namespace Time {
 
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalAdjuster;
-
     ///
     /// A wrapper around java.time.MonthDay.
     ///
@@ -60,22 +57,6 @@ namespace Time {
             Time/MonthDay.compareTo(x,y) |> Comparison.fromInt32
     }
 
-    instance TemporalAccessor[MonthDay] {
-        pub def marshalToNativeTemporalAccessor(x: MonthDay): ##java.time.temporal.TemporalAccessor =         
-            Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor
-        
-        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): MonthDay = 
-            MonthDay(x as ##java.time.MonthDay)
-    }
-
-    instance TemporalAdjuster[MonthDay] {
-        pub def marshalToNativeTemporalAdjuster(x: MonthDay): ##java.time.temporal.TemporalAdjuster =         
-            Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAdjuster
-        
-        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): MonthDay = 
-            MonthDay(x as ##java.time.MonthDay)
-    }
-
 
 }
 
@@ -87,9 +68,6 @@ namespace Time/MonthDay {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalField;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.LocalDate;
@@ -276,17 +254,15 @@ namespace Time/MonthDay {
     /// ZonedDateTime
 
 
-    pub def get(t: a, x: MonthDay): Int32 with TemporalField[a] = 
+    pub def getHelper(t: ##java.time.temporal.TemporalField, x: MonthDay): Int32 = 
         import java.time.MonthDay.get(##java.time.temporal.TemporalField): Int32 & Pure;
         let x1 = getMonthDay(x);
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        get(x1, t1)
+        get(x1, t)
 
-    pub def getLong(t: a, x: MonthDay): Int64 with TemporalField[a] = 
+    pub def getLongHelper(t: ##java.time.temporal.TemporalField, x: MonthDay): Int64 = 
         import java.time.MonthDay.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
         let x1 = getMonthDay(x);
-        let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-        getLong(x1, t1)
+        getLong(x1, t)
 
 
     /// # `range` specialized

@@ -18,9 +18,6 @@
 
 namespace Time {
 
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalAdjuster;
 
     ///
     /// A wrapper around a Java LocalDate.
@@ -67,43 +64,9 @@ namespace Time {
             Time/LocalDate.compareTo(x,y) |> Comparison.fromInt32
     }
 
-    instance LowerBound[LocalDate] {
-        pub def minValue(): LocalDate =
-            import static get java.time.LocalDate.MIN: ##java.time.LocalDate & Pure as getMIN;
-            LocalDate(getMIN())
-    }
-
-    instance UpperBound[LocalDate] {
-        pub def maxValue(): LocalDate =
-            import static get java.time.LocalDate.MAX: ##java.time.LocalDate & Pure as getMAX;
-            LocalDate(getMAX())
-    }
 
     instance Boxable[LocalDate]
 
-    instance TemporalAccessor[LocalDate] {
-        pub def marshalToNativeTemporalAccessor(x: LocalDate): ##java.time.temporal.TemporalAccessor =         
-            Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor
-        
-        pub def unmarshalFromNativeTemporalAccessor(x: ##java.time.temporal.TemporalAccessor): LocalDate = 
-            LocalDate(x as ##java.time.LocalDate)
-    }
-
-    instance Temporal[LocalDate] {
-        pub def marshalToNativeTemporal(x: LocalDate): ##java.time.temporal.Temporal =         
-            Time/LocalDate.getLocalDate(x) as ##java.time.temporal.Temporal
-        
-        pub def unmarshalFromNativeTemporal(x: ##java.time.temporal.Temporal): LocalDate = 
-            LocalDate(x as ##java.time.LocalDate)
-    }
-
-    instance TemporalAdjuster[LocalDate] {
-        pub def marshalToNativeTemporalAdjuster(x: LocalDate): ##java.time.temporal.TemporalAdjuster =         
-            Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAdjuster
-        
-        pub def unmarshalFromNativeTemporalAdjuster(x: ##java.time.temporal.TemporalAdjuster): LocalDate = 
-            LocalDate(x as ##java.time.LocalDate)
-    }
 
 }
 
@@ -114,12 +77,6 @@ namespace Time/LocalDate {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalAdjuster;
-    use Time/Temporal.TemporalAmount;
-    use Time/Temporal.TemporalField;
-    use Time/Temporal.TemporalUnit;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
@@ -514,25 +471,23 @@ namespace Time/LocalDate {
 
 
 
-    pub def plusTemporalAmount(x: LocalDate, amount: a): LocalDate with TemporalAmount[a] =
-        import java.time.LocalDate.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalDate & Pure;         
-        try {
-            let LocalDate(x1) = x;
-            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-            LocalDate(plus(x1, amount1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+    /// pub def plusTemporalAmountHelper(x: LocalDate, amount: ##java.time.temporal.TemporalAmount): LocalDate =
+    ///     import java.time.LocalDate.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalDate & Pure;         
+    ///     try {
+    ///         let LocalDate(x1) = x;
+    ///         LocalDate(plus(x1, amount))
+    ///     } catch {
+    ///         case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+    ///     }
 
-    pub def minusTemporalAmount(x: LocalDate, amount: a): LocalDate with TemporalAmount[a] =
-        import java.time.LocalDate.minus(##java.time.temporal.TemporalAmount): ##java.time.LocalDate & Pure;         
-        try {
-            let LocalDate(x1) = x;
-            let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-            LocalDate(minus(x1, amount1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+    /// pub def minusTemporalAmountHelper(x: LocalDate, amount: ##java.time.temporal.TemporalAmount): LocalDate =
+    ///     import java.time.LocalDate.minus(##java.time.temporal.TemporalAmount): ##java.time.LocalDate & Pure;         
+    ///     try {
+    ///         let LocalDate(x1) = x;
+    ///         LocalDate(minus(x1, amount))
+    ///     } catch {
+    ///         case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+    ///     }
 
 
     /// # `range` specialized

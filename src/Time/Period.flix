@@ -17,8 +17,6 @@
 
 namespace Time {
 
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAmount;
 
     ///
     /// A wrapper around a Java Period.
@@ -79,14 +77,6 @@ namespace Time {
         pub def empty(): Period = Time/Period.zero()
     }
 
-
-    instance TemporalAmount[Period] {
-        pub def marshalToNativeTemporalAmount(x: Period): ##java.time.temporal.TemporalAmount = 
-            Time/Period.getPeriod(x) as ##java.time.temporal.TemporalAmount
-
-        pub def unmarshalFromNativeTemporalAmount(x: ##java.time.temporal.TemporalAmount): Period = 
-            Period(x as ##java.time.Period)
-    }
 
     
 }
