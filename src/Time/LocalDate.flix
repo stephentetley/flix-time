@@ -344,6 +344,38 @@ namespace Time/LocalDate {
         LocalDate(withYear(x1, year))
 
 
+    /// Get/Set Iso
+
+    pub def getDayOfQuarter(x: LocalDate): Int32 = 
+        import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField & Pure as get_DAY_OF_QUARTER;
+        getHelper(get_DAY_OF_QUARTER(), x)
+
+    pub def setDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
+        import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField & Pure as get_DAY_OF_QUARTER;
+        withTemporalFieldHelper(get_DAY_OF_QUARTER(), Int32.toInt64(d), x)
+
+    pub def getQuarterOfYear(x: LocalDate): Int32 = 
+        import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField & Pure as get_QUARTER_OF_YEAR;
+        getHelper(get_QUARTER_OF_YEAR(), x)
+
+    pub def setQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
+        import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField & Pure as get_QUARTER_OF_YEAR;
+        withTemporalFieldHelper(get_QUARTER_OF_YEAR(), Int32.toInt64(d), x)
+
+
+    def getISOWeekFields(): ##java.time.temporal.WeekFields = 
+        import static get java.time.temporal.WeekFields.ISO: ##java.time.temporal.WeekFields & Pure as get_ISO;
+        get_ISO()
+
+    pub def getWeekOfYear(x: LocalDate): Int32 = 
+        import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField & Pure;
+        getHelper(getISOWeekFields() |> weekBasedYear, x)
+
+    pub def setWeekOfYear(d: Int32, x: LocalDate): LocalDate =
+        import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField & Pure;
+        withTemporalFieldHelper(getISOWeekFields() |> weekBasedYear, Int32.toInt64(d), x)
+        
+
     pub def isLeapYear(x: LocalDate): Bool =
         import java.time.LocalDate.isLeapYear(): Bool & Pure;
         let LocalDate(x1) = x;
