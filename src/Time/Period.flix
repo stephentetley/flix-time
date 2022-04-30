@@ -232,7 +232,7 @@ namespace Time/Period {
         Period(withDays(x1, days))
 
 
-
+    /// Note returns Period as LocalDate has no time component
     pub def between(r: {start :: LocalDate, end :: LocalDate}): Period =
         import static java.time.Period.between(##java.time.LocalDate, ##java.time.LocalDate): ##java.time.Period & Pure;
         let LocalDate(b1) = r.start;

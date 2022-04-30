@@ -492,11 +492,37 @@ namespace Time/ZonedDateTime {
         let e1 = getZonedDateTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
+    pub def secondsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def minutesUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
     pub def hoursUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
+    pub def halfDaysUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def daysUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def monthsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def yearsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def quarterYearsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
+        untilHelper(get_QUARTER_YEARS(), r)
 
     /// pub def withTemporalAdjuster(adj: a, x: ZonedDateTime): ZonedDateTime with TemporalAdjuster[a] =
     ///     import java.time.ZonedDateTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.ZonedDateTime & Pure as withTA;         
