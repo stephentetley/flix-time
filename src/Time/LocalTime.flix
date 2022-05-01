@@ -225,7 +225,7 @@ namespace Time/LocalTime {
         format(x1, fmtr)
 
 
-
+    /// ## predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -244,6 +244,8 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         let LocalTime(y1) = y;
         isAfter(x1, y1)
+
+
 
     pub def plusHours(x: LocalTime, hours: Int64): LocalTime =
         import java.time.LocalTime.plusHours(Int64): ##java.time.LocalTime & Pure;

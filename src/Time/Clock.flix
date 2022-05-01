@@ -60,6 +60,7 @@ namespace Time/Clock {
     pub def getClock(x: Clock): ##java.time.Clock = 
         let Clock(x1) = x;
         x1
+
     /// ## "abstract constructors" (e.g. `fixedClock`)
 
     /// Pure or Impure?
@@ -88,26 +89,11 @@ namespace Time/Clock {
         import static java.time.Clock.systemUTC(): ##java.time.Clock & Impure;
         Clock(systemUTC())
 
-
-
-
-
     pub def tick(d: ZDuration, c: Clock): Clock & Impure =
         import static java.time.Clock.tick(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
         let ZDuration(d1) = d;
         let Clock(c1) = c;
         Clock(tick(c1, d1))
-
-
-    pub def millis(x: Clock): Int64 & Impure =
-        import java.time.Clock.millis(): Int64 & Impure;
-        let Clock(x1) = x;
-        millis(x1)
-
-    pub def instant(x: Clock): ZInstant & Impure =
-        import java.time.Clock.instant(): ##java.time.Instant & Impure;
-        let Clock(x1) = x;
-        ZInstant(instant(x1))
 
 
     pub def tickMillis(zoneId: ZoneId): Clock & Impure =
@@ -125,7 +111,20 @@ namespace Time/Clock {
         let ZoneId(zoneId1) = zoneId;
         Clock(tickMinutes(zoneId1))
 
-    
+
+    pub def millis(x: Clock): Int64 & Impure =
+        import java.time.Clock.millis(): Int64 & Impure;
+        let Clock(x1) = x;
+        millis(x1)
+
+    pub def instant(x: Clock): ZInstant & Impure =
+        import java.time.Clock.instant(): ##java.time.Instant & Impure;
+        let Clock(x1) = x;
+        ZInstant(instant(x1))
+
+
+    /// ## Get/Set
+
     pub def getZone(c: Clock): ZoneId =
         import java.time.Clock.getZone(): ##java.time.ZoneId & Pure;
         ZoneId(getZone(getClock(c)))

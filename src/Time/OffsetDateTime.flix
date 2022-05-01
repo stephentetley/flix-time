@@ -272,7 +272,7 @@ namespace Time/OffsetDateTime {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
-
+    /// ## predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -291,6 +291,15 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         let OffsetDateTime(y1) = y;
         isAfter(x1, y1)
+
+
+    pub def isInstantEqual(x: OffsetDateTime, y: OffsetDateTime): Bool =
+        import java.time.OffsetDateTime.isEqual(##java.time.OffsetDateTime): Bool & Pure;
+        let OffsetDateTime(x1) = x;
+        let OffsetDateTime(y1) = y;
+        isEqual(x1, y1)
+
+
 
     pub def plusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusYears(Int64): ##java.time.OffsetDateTime & Pure;

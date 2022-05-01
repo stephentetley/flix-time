@@ -288,7 +288,7 @@ namespace Time/ZDuration {
         toString(x1)
 
 
-    
+    /// ## predicates / comparisons
 
     pub def isZero(x: ZDuration): Bool =
         import java.time.Duration.isZero(): Bool & Pure;

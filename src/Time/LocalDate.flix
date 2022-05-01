@@ -243,6 +243,7 @@ namespace Time/LocalDate {
 
 
 
+    /// ## predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -263,6 +264,13 @@ namespace Time/LocalDate {
         isAfter(x1, y1 as ##java.time.chrono.ChronoLocalDate)
 
 
+    pub def isLeapYear(x: LocalDate): Bool =
+        import java.time.LocalDate.isLeapYear(): Bool & Pure;
+        let LocalDate(x1) = x;
+        isLeapYear(x1)
+
+
+        
     pub def plusYears(x: LocalDate, years: Int64): LocalDate =
         import java.time.LocalDate.plusYears(Int64): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
@@ -303,7 +311,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         LocalDate(minusDays(x1, days))
 
-    /// Get/Set
+    /// ## Get/Set
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
         use Time/DayOfWeek.{unmarshal};
@@ -391,10 +399,6 @@ namespace Time/LocalDate {
         withTemporalFieldHelper(getISOWeekFields() |> weekBasedYear, Int32.toInt64(d), x)
         
 
-    pub def isLeapYear(x: LocalDate): Bool =
-        import java.time.LocalDate.isLeapYear(): Bool & Pure;
-        let LocalDate(x1) = x;
-        isLeapYear(x1)
 
     pub def lengthOfMonth(x: LocalDate): Int32 =
         import java.time.LocalDate.lengthOfMonth(): Int32 & Pure;

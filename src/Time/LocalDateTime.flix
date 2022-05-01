@@ -233,7 +233,7 @@ namespace Time/LocalDateTime {
         format(x1, fmtr)
 
 
-
+    /// ## predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.

@@ -72,7 +72,10 @@ namespace Time {
     }
 
     instance Neg[Period] {
-        pub def neg(x: Period): Period = Time/Period.negate(x)
+        pub def neg(x: Period): Period =
+            import java.time.Period.negated(): ##java.time.Period & Pure;
+            let Period(x1) = x;
+            Period(negated(x1))
     }
 
     /// `combine` is addition
@@ -167,19 +170,7 @@ namespace Time/Period {
         let Period(x1) = x;
         toString(x1)
 
-     pub def normalize(x: Period): Period =
-        import java.time.Period.normalized(): ##java.time.Period & Pure;
-        let Period(x1) = x;
-        Period(normalized(x1))
-
-
-    pub def negate(x: Period): Period =
-        import java.time.Period.negated(): ##java.time.Period & Pure;
-        let Period(x1) = x;
-        Period(negated(x1))
-
-    // `compareTo` not implemented in Java 13.
-
+    /// ## predicates / comparisons
 
     pub def isZero(x: Period): Bool =
         import java.time.Period.isZero(): Bool & Pure;
@@ -193,6 +184,18 @@ namespace Time/Period {
         import java.time.Period.isNegative(): Bool & Pure;
         let Period(x1) = x;
         isNegative(x1)
+
+
+     pub def normalize(x: Period): Period =
+        import java.time.Period.normalized(): ##java.time.Period & Pure;
+        let Period(x1) = x;
+        Period(normalized(x1))
+
+
+
+
+
+
 
 
     pub def plusYears(x: Period, years: Int64): Period =

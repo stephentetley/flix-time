@@ -48,18 +48,28 @@ namespace Time {
 
 
     instance Eq[YearMonth] {
-        pub def eq(x: YearMonth, y: YearMonth): Bool = Time/YearMonth.equals(x, y)
+        pub def eq(x: YearMonth, y: YearMonth): Bool =
+            import java.time.YearMonth.equals(##java.lang.Object): Bool & Pure;
+            let YearMonth(x1) = x;
+            let YearMonth(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[YearMonth] {
-        pub def hash(x: YearMonth): Int32 = Time/YearMonth.hashCode(x)
+        pub def hash(x: YearMonth): Int32 =
+            import java.time.YearMonth.hashCode(): Int32 & Pure;
+            let YearMonth(x1) = x;
+            hashCode(x1)
+
     }
 
     instance Order[YearMonth] {
         pub def compare(x: YearMonth, y: YearMonth): Comparison =
-            Time/YearMonth.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.YearMonth.compareTo(##java.time.YearMonth): Int32 & Pure;
+            let YearMonth(x1) = x;
+            let YearMonth(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
-
 
 }
 
@@ -156,27 +166,8 @@ namespace Time/YearMonth {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
-    pub def equals(x: YearMonth, y: YearMonth): Bool =
-        import java.time.YearMonth.equals(##java.lang.Object): Bool & Pure;
-        let YearMonth(x1) = x;
-        let YearMonth(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
 
-    pub def hashCode(x: YearMonth): Int32 =
-        import java.time.YearMonth.hashCode(): Int32 & Pure;
-        let YearMonth(x1) = x;
-        hashCode(x1)
-
-
-    ///
-    /// Returns ...
-    ///
-    pub def compareTo(x: YearMonth, y: YearMonth): Int32 =
-        import java.time.YearMonth.compareTo(##java.time.YearMonth): Int32 & Pure;
-        let YearMonth(x1) = x;
-        let YearMonth(y1) = y;
-        compareTo(x1, y1)
-
+    /// ## predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.

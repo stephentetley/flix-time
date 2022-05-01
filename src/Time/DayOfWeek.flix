@@ -146,7 +146,7 @@ namespace Time/DayOfWeek {
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
         fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
-    pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Order.compare(x, y) |> Comparison.toInt 
+
 
 
     pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =

@@ -180,7 +180,34 @@ namespace Time/MonthDay {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
+    /// ## predicates / comparisons
 
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def isBefore(x: MonthDay, y: MonthDay): Bool =
+        import java.time.MonthDay.isBefore(##java.time.MonthDay): Bool & Pure;
+        let MonthDay(x1) = x;
+        let MonthDay(y1) = y;
+        isBefore(x1, y1)
+
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def isAfter(x: MonthDay, y: MonthDay): Bool =
+        import java.time.MonthDay.isAfter(##java.time.MonthDay): Bool & Pure;
+        let MonthDay(x1) = x;
+        let MonthDay(y1) = y;
+        isAfter(x1, y1)
+
+    ///
+    /// Returns `true` if `year` is valid for the MonthDay `x`.
+    ///
+    pub def isValidYear(year: Int32, x: MonthDay): Bool =
+        import java.time.MonthDay.isValidYear(Int32): Bool & Pure;
+        let MonthDay(x1) = x;
+        isValidYear(x1, year)
+        
 
     /// Get/Set...
 
@@ -217,31 +244,6 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         MonthDay(withMonth(x1, month))
 
-    ///
-    /// Returns `true` if `x` is before `y`.
-    ///
-    pub def isBefore(x: MonthDay, y: MonthDay): Bool =
-        import java.time.MonthDay.isBefore(##java.time.MonthDay): Bool & Pure;
-        let MonthDay(x1) = x;
-        let MonthDay(y1) = y;
-        isBefore(x1, y1)
-
-    ///
-    /// Returns `true` if `x` is after `y`.
-    ///
-    pub def isAfter(x: MonthDay, y: MonthDay): Bool =
-        import java.time.MonthDay.isAfter(##java.time.MonthDay): Bool & Pure;
-        let MonthDay(x1) = x;
-        let MonthDay(y1) = y;
-        isAfter(x1, y1)
-
-    ///
-    /// Returns `true` if `year` is valid for the MonthDay `x`.
-    ///
-    pub def isValidYear(year: Int32, x: MonthDay): Bool =
-        import java.time.MonthDay.isValidYear(Int32): Bool & Pure;
-        let MonthDay(x1) = x;
-        isValidYear(x1, year)
 
     /// Generic
 

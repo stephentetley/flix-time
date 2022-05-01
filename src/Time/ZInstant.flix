@@ -200,20 +200,8 @@ namespace Time/ZInstant {
         let ZInstant(x1) = x;
         toString(x1)
 
-    
 
-
-    pub def getEpochSecond(x: ZInstant): Int64 =
-        import java.time.Instant.getEpochSecond(): Int64 & Pure;
-        let ZInstant(x1) = x;
-        getEpochSecond(x1)
-
-    pub def getNano(x: ZInstant): Int32 =
-        import java.time.Instant.getNano(): Int32 & Pure;
-        let ZInstant(x1) = x;
-        getNano(x1)
-
-
+    /// ## predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -233,6 +221,19 @@ namespace Time/ZInstant {
         let ZInstant(y1) = y;
         isAfter(x1, y1)
 
+    
+
+
+    pub def getEpochSecond(x: ZInstant): Int64 =
+        import java.time.Instant.getEpochSecond(): Int64 & Pure;
+        let ZInstant(x1) = x;
+        getEpochSecond(x1)
+
+    pub def getNano(x: ZInstant): Int32 =
+        import java.time.Instant.getNano(): Int32 & Pure;
+        let ZInstant(x1) = x;
+        getNano(x1)
+        
     pub def plusSeconds(x: ZInstant, seconds: Int64): ZInstant =
         import java.time.Instant.plusSeconds(Int64): ##java.time.Instant & Pure;
         let ZInstant(x1) = x;

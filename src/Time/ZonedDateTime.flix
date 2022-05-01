@@ -208,8 +208,7 @@ namespace Time/ZonedDateTime {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
-
-
+    /// ## predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.

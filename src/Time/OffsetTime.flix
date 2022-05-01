@@ -191,6 +191,7 @@ namespace Time/OffsetTime {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
+    /// ## predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -209,6 +210,13 @@ namespace Time/OffsetTime {
         let OffsetTime(x1) = x;
         let OffsetTime(y1) = y;
         isAfter(x1, y1)
+
+    pub def isInstantEqual(x: OffsetTime, y: OffsetTime): Bool =
+        import java.time.OffsetTime.isEqual(##java.time.OffsetTime): Bool & Pure;
+        let OffsetTime(x1) = x;
+        let OffsetTime(y1) = y;
+        isEqual(x1, y1)
+
 
     pub def plusHours(x: OffsetTime, hours: Int64): OffsetTime =
         import java.time.OffsetTime.plusHours(Int64): ##java.time.OffsetTime & Pure;
