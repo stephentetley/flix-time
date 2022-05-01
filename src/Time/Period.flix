@@ -89,15 +89,21 @@ namespace Time/Period {
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     
+
+    /// ## Unwrap
+
     pub def getPeriod(x: Period): ##java.time.Period = 
         let Period(x1) = x;
         x1
 
     
+    /// ## Constructors
 
     pub def period(r: {years :: Int32, months :: Int32, days :: Int32}): Period =
         import static java.time.Period.of(Int32, Int32, Int32): ##java.time.Period & Pure;
         Period(of(r.years, r.months, r.days))
+
+    /// ## "abstract constructors" (e.g. `zero`)
 
     ///
     /// The period of zero.
@@ -106,21 +112,30 @@ namespace Time/Period {
         import static get java.time.Period.ZERO: ##java.time.Period & Pure as getZERO;
         Period(getZERO())
 
-    pub def fromYears(years: Int32): Period =
-        import static java.time.Period.ofYears(Int32): ##java.time.Period & Pure;
-        Period(ofYears(years))
 
-    pub def fromMonths(months: Int32): Period =
-        import static java.time.Period.ofMonths(Int32): ##java.time.Period & Pure;
-        Period(ofMonths(months))
+    /// ## `from` functions
 
-    pub def fromWeeks(weeks: Int32): Period =
-        import static java.time.Period.ofWeeks(Int32): ##java.time.Period & Pure;
-        Period(ofWeeks(weeks))
 
     pub def fromDays(days: Int32): Period =
         import static java.time.Period.ofDays(Int32): ##java.time.Period & Pure;
         Period(ofDays(days))
+
+    pub def fromWeeks(weeks: Int32): Period =
+        import static java.time.Period.ofWeeks(Int32): ##java.time.Period & Pure;
+        Period(ofWeeks(weeks))
+        
+    pub def fromMonths(months: Int32): Period =
+        import static java.time.Period.ofMonths(Int32): ##java.time.Period & Pure;
+        Period(ofMonths(months))
+
+    pub def fromYears(years: Int32): Period =
+        import static java.time.Period.ofYears(Int32): ##java.time.Period & Pure;
+        Period(ofYears(years))
+
+
+
+
+    /// ## `to` functions
 
     pub def toTotalMonths(x: Period): Int64 =
         import java.time.Period.toTotalMonths(): Int64 & Pure;

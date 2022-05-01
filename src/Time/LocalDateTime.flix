@@ -98,12 +98,13 @@ namespace Time/LocalDateTime {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
+    /// ## Unwrap
 
     pub def getLocalDateTime(x: LocalDateTime): ##java.time.LocalDateTime = 
         let LocalDateTime(x1) = x;
         x1
 
-
+    /// ## Constructors
 
     pub def localDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
@@ -119,6 +120,8 @@ namespace Time/LocalDateTime {
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime & Pure;
         LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond))
 
+
+    /// ## `now` and "abstract constructors" if any
 
     ///
     /// Returns the current date-time from the system clock.
@@ -136,6 +139,7 @@ namespace Time/LocalDateTime {
         LocalDateTime(now(z))
 
 
+    /// ## `from` functions
 
     pub def fromLocalDateLocalTime(d: LocalDate, t: LocalTime): LocalDateTime =
         import static java.time.LocalDateTime.of(##java.time.LocalDate, ##java.time.LocalTime): ##java.time.LocalDateTime & Pure;
@@ -154,6 +158,23 @@ namespace Time/LocalDateTime {
         let ZoneId(z1) = zone.zone;
         LocalDateTime(ofInstant(x1, z1))
 
+    /// # `fromTemporalAccessor` specialized
+    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): LocalDateTime = 
+        import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime & Pure as fromTA;
+        try {
+            LocalDateTime(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
+        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
+        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+
+    /// ## `to` functions
 
     ///
     /// Returns the given date-time `x` as __.
@@ -412,20 +433,6 @@ namespace Time/LocalDateTime {
 
     /// Generic
 
-    /// # `fromTemporalAccessor` specialized
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): LocalDateTime = 
-        import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime & Pure as fromTA;
-        try {
-            LocalDateTime(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     
     /// # `adjustInto` specialized - this become `adjustLocalDateTime` in the respective modules:

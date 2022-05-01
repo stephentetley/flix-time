@@ -79,10 +79,6 @@ namespace Time/DayOfWeek {
     }
 
 
-
-
-
-
     pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek =
         import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as get_MONDAY;
         import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek & Pure as get_TUESDAY;
@@ -126,41 +122,7 @@ namespace Time/DayOfWeek {
             case x1 if primEquals(x1, get_SUNDAY())      => Sunday
         }
 
-
-    pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =
-        import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
-        let x1 = marshal(x);
-        let s1 = Time/Format/TextStyle.marshal(style);
-        let Locale(l1) = locale;
-        getDisplayName(x1, s1, l1)
-
-    pub def name(x: DayOfWeek): String =
-        import java.lang.Enum.name(): String & Pure;
-        let en1 = marshal(x) as ##java.lang.Enum;
-        name(en1)
-
-    pub def getValue(x: DayOfWeek): Int32 =
-        import java.time.DayOfWeek.getValue(): Int32 & Pure;
-        let x1 = marshal(x);
-        getValue(x1)
-
-
-
-    pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Order.compare(x, y) |> Comparison.toInt 
-
-    pub def plus(x:DayOfWeek, days: Int64): DayOfWeek =
-        import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek & Pure;
-        let x1 = marshal(x);
-        let x2 = plus(x1, days);
-        unmarshal(x2)
-
-    pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
-        import java.time.DayOfWeek.minus(Int64): ##java.time.DayOfWeek & Pure;
-        let x1 = marshal(x);
-        let x2 = minus(x1, days);
-        unmarshal(x2)
-
-    /// Generic
+    /// `from` functions
 
     /// # `fromTemporalAccessor` specialized
     def fromHelper(x: ##java.time.temporal.TemporalAccessor): DayOfWeek = 
@@ -183,6 +145,44 @@ namespace Time/DayOfWeek {
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
         fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
+    pub def compareTo(x: DayOfWeek, y: DayOfWeek): Int32 = Order.compare(x, y) |> Comparison.toInt 
+
+
+    pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =
+        import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
+        let x1 = marshal(x);
+        let s1 = Time/Format/TextStyle.marshal(style);
+        let Locale(l1) = locale;
+        getDisplayName(x1, s1, l1)
+
+    pub def name(x: DayOfWeek): String =
+        import java.lang.Enum.name(): String & Pure;
+        let en1 = marshal(x) as ##java.lang.Enum;
+        name(en1)
+
+    pub def getValue(x: DayOfWeek): Int32 =
+        import java.time.DayOfWeek.getValue(): Int32 & Pure;
+        let x1 = marshal(x);
+        getValue(x1)
+
+
+
+    pub def plus(x:DayOfWeek, days: Int64): DayOfWeek =
+        import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek & Pure;
+        let x1 = marshal(x);
+        let x2 = plus(x1, days);
+        unmarshal(x2)
+
+    pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
+        import java.time.DayOfWeek.minus(Int64): ##java.time.DayOfWeek & Pure;
+        let x1 = marshal(x);
+        let x2 = minus(x1, days);
+        unmarshal(x2)
+
+    /// Generic
+
+    /// Range not really telling anything useful and could be removed
+
     /// # `range` specialized
     def rangeHelper(f: ##java.time.temporal.TemporalField, x: DayOfWeek): ValueRange =
         import java.time.DayOfWeek.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
@@ -200,13 +200,7 @@ namespace Time/DayOfWeek {
         rangeHelper(get_DAY_OF_WEEK() as ##java.time.temporal.TemporalField, z)
 
 
-    /// # `adjustInto` specialized - synonymous with `adjustDayOfWeek` in the respective modules:
-    /// LocalDate
-    /// LocalDateTime
-    /// OffsetDateTime
-    /// ZonedDateTime
 
-
-    /// # `get` specialized but only DayOfWeek is supported which equivalant to `getValue`
+    /// # `get` generic - only DayOfWeek is supported which equivalant to `getValue`
 
 }

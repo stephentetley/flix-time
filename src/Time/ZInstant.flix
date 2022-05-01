@@ -88,15 +88,19 @@ namespace Time/ZInstant {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
+    /// ## Unwrap
+
     pub def getInstant(x: ZInstant): ##java.time.Instant = 
         let ZInstant(x1) = x;
         x1
 
+    /// ## Constructors
 
     pub def instant(r: {epochSecond :: Int64, nano :: Int64}): ZInstant =
         import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant & Pure;
         ZInstant(ofEpochSecond(r.epochSecond, r.nano))
 
+    /// ## `now` and "abstract constructors" (e.g. `epoch`)
 
     ///
     /// Returns the current time from the system clock.
@@ -119,7 +123,9 @@ namespace Time/ZInstant {
     pub def max(): ZInstant =
         import static get java.time.Instant.MAX: ##java.time.Instant & Pure as get_MAX;
         ZInstant(get_MAX())
-    
+
+    /// ## `from` functions
+
     pub def fromEpochSecond(epochSecond: Int64): ZInstant =
         import static java.time.Instant.ofEpochSecond(Int64): ##java.time.Instant & Pure;
         ZInstant(ofEpochSecond(epochSecond))
@@ -128,6 +134,25 @@ namespace Time/ZInstant {
     pub def fromEpochMilli(epochMilli: Int64): ZInstant =
         import static java.time.Instant.ofEpochMilli(Int64): ##java.time.Instant & Pure;
         ZInstant(ofEpochMilli(epochMilli))
+
+
+    /// # `fromTemporalAccessor` specialized
+    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZInstant = 
+        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
+        try {
+            ZInstant(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZInstant = 
+        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromZonedDateTime(x: ZonedDateTime): ZInstant = 
+        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        
+    /// ## `to` functions
 
     pub def toEpochMilli(x: ZInstant): Int64 =
         import java.time.Instant.toEpochMilli(): Int64 & Pure;
@@ -223,21 +248,6 @@ namespace Time/ZInstant {
 
     /// Generic
 
-    /// # `fromTemporalAccessor` specialized
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): ZInstant = 
-        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
-        try {
-            ZInstant(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZInstant = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromZonedDateTime(x: ZonedDateTime): ZInstant = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
     /// # `getLong` specialized

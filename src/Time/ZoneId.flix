@@ -56,12 +56,14 @@ namespace Time/ZoneId {
     use Time.ZoneOffset.{ZoneOffset};
     use Time.ZonedDateTime;
 
+    /// ## Unwrap
+
     pub def getZoneId(x: ZoneId): ##java.time.ZoneId = 
         let ZoneId(x1) = x;
         x1
 
 
-
+    /// ## Constructors
 
     pub def zoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
@@ -85,16 +87,7 @@ namespace Time/ZoneId {
             case ex: ##java.time.zone.ZoneRulesException => Err(getMessage(ex as ##java.lang.Throwable))
         }
 
-
-    pub def fromOffset(r: {prefix :: Option[String], offset :: ZoneOffset}): ZoneId =
-        import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId & Pure;
-        let p1 = match r.prefix {
-            case Some(s) => s
-            case _       => ""
-        };
-        let ZoneOffset(o1) = r.offset;
-        ZoneId(ofOffset(p1, o1))
-
+    /// ## "abstract constructors" (e.g. `utc`)
 
     pub def utc(): ZoneId = match zoneId(zoneId = "Z") {
         case Ok(z)  => z
@@ -109,6 +102,41 @@ namespace Time/ZoneId {
             case _: ##java.time.DateTimeException => None
             case _: ##java.time.zone.ZoneRulesException => None
         }
+
+
+    /// ## `from` functions
+
+    pub def fromOffset(r: {prefix :: Option[String], offset :: ZoneOffset}): ZoneId =
+        import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId & Pure;
+        let p1 = match r.prefix {
+            case Some(s) => s
+            case _       => ""
+        };
+        let ZoneOffset(o1) = r.offset;
+        ZoneId(ofOffset(p1, o1))
+
+    /// `fromTemporalAccessor` specialized
+    
+    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZoneId = 
+        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
+        try {
+            ZoneId(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
+        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromOffsetTime(x: OffsetTime): ZoneId = 
+        fromTemporalAccessorHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
+        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
+        fromTemporalAccessorHelper(Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor)
+
 
     pub def equals(x: ZoneId, y: ZoneId): Bool =
         import java.time.ZoneId.equals(##java.lang.Object): Bool & Pure;
@@ -142,26 +170,6 @@ namespace Time/ZoneId {
 
     /// Generic
 
-    /// # `fromTemporalAccessor` specialized
-    
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): ZoneId = 
-        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
-        try {
-            ZoneId(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromOffsetTime(x: OffsetTime): ZoneId = 
-        fromHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
-        fromHelper(Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor)
 
 }

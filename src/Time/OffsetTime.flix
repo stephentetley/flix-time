@@ -90,18 +90,19 @@ namespace Time/OffsetTime {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
+    /// ## Unwrap
+
     pub def getOffsetTime(x: OffsetTime): ##java.time.OffsetTime = 
         let OffsetTime(x1) = x;
         x1
 
-
-
+    /// ## Constructors
 
     pub def offsetTime(r: { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetTime =
         import static java.time.OffsetTime.of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetTime & Pure;
         OffsetTime(of(r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneOffset.getZoneOffset(r.offset)))
 
-
+    /// ## `now` and "abstract constructors" if any
 
     ///
     /// Returns the current time from the system clock.
@@ -118,6 +119,7 @@ namespace Time/OffsetTime {
         let ZoneId(z1) = zone;
         OffsetTime(now(z1))
 
+    /// ## `from` functions
 
     pub def fromLocalTime(offset: {offset :: ZoneOffset}, x: LocalTime): OffsetTime =
         import static java.time.OffsetTime.of(##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetTime & Pure;
@@ -133,6 +135,24 @@ namespace Time/OffsetTime {
         OffsetTime(ofInstant(x1, z1))
 
 
+
+    /// # `fromTemporalAccessor` specialized
+
+    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): OffsetTime = 
+        import static java.time.OffsetTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetTime & Pure as fromTA;
+        try {
+            OffsetTime(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): OffsetTime = 
+        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime = 
+        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+        
 
     ///
     /// Returns OffsetTime `x` as a String using `formatter`.
@@ -299,22 +319,6 @@ namespace Time/OffsetTime {
     /// Generic
 
 
-
-    /// # `fromTemporalAccessor` specialized
-
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): OffsetTime = 
-        import static java.time.OffsetTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetTime & Pure as fromTA;
-        try {
-            OffsetTime(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): OffsetTime = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
         
 
     /// pub def get(t: a, x: OffsetTime): Int32 with TemporalField[a] = 

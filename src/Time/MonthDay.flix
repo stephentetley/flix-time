@@ -78,10 +78,13 @@ namespace Time/MonthDay {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
     
+    /// ## Unwrap
+
     pub def getMonthDay(x: MonthDay): ##java.time.MonthDay = 
         let MonthDay(x1) = x;
         x1
 
+    /// ## Constructors
 
     pub def monthDay(r: {month :: Int32, dayOfMonth :: Int32}): MonthDay =
         import static java.time.MonthDay.of(Int32, Int32): ##java.time.MonthDay & Pure;
@@ -92,6 +95,8 @@ namespace Time/MonthDay {
         let m1 = Time/Month.marshal(r.month);
         MonthDay(of(m1, r.dayOfMonth))
 
+    /// ## `now` and "abstract constructors" if any
+
     pub def now(): MonthDay & Impure =
         import static java.time.MonthDay.now(): ##java.time.MonthDay & Impure;
         MonthDay(now())
@@ -100,6 +105,41 @@ namespace Time/MonthDay {
         import static java.time.MonthDay.now(##java.time.ZoneId): ##java.time.MonthDay & Impure;
         let ZoneId(x1) = x;
         MonthDay(now(x1))
+
+
+    /// `fromTemporalAccessor` specialized
+
+    def fromTemporalAccessorHelper(t: ##java.time.temporal.TemporalAccessor): MonthDay = 
+        import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
+        try {
+            MonthDay(fromTA(t))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromLocalDate(x: LocalDate): MonthDay = 
+        fromTemporalAccessorHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+        
+    pub def fromLocalDateTime(x: LocalDateTime): MonthDay = 
+        fromTemporalAccessorHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        
+    pub def fromOffsetDateTime(x: OffsetDateTime): MonthDay = 
+        import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
+        try {
+            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            MonthDay(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromZonedDateTime(x: ZonedDateTime): MonthDay = 
+        import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
+        try {
+            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            MonthDay(fromTA(x1))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
 
     ///
     /// Returns MonthDay `x` as a String using `formatter`.
@@ -209,43 +249,7 @@ namespace Time/MonthDay {
 
     /// Generic
 
-    /// # `fromTemporalAccessor` specialized
 
-    pub def fromLocalDate(x: LocalDate): MonthDay = 
-        import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
-        try {
-            let x1 = Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor;
-            MonthDay(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromLocalDateTime(x: LocalDateTime): MonthDay = 
-        import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
-        try {
-            let x1 = Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            MonthDay(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): MonthDay = 
-        import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
-        try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            MonthDay(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromZonedDateTime(x: ZonedDateTime): MonthDay = 
-        import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
-        try {
-            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            MonthDay(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
     /// # `adjustInto` specialized - this become `adjustMonthDay` in the respective modules:
     /// LocalDate

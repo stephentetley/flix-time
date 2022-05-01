@@ -99,11 +99,13 @@ namespace Time/LocalDate {
     use Time.ZInstant;
     use Time.ZInstant.{ZInstant};
 
+    /// ## Unwrap
 
     pub def getLocalDate(x: LocalDate): ##java.time.LocalDate = 
         let LocalDate(x1) = x;
         x1
 
+    /// ## Constructors
 
     pub def localDate(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, Int32, Int32): ##java.time.LocalDate & Pure;
@@ -114,7 +116,7 @@ namespace Time/LocalDate {
         let m1 = Time/Month.marshal(r.month);
         LocalDate(of(r.year, m1, r.dayOfMonth))
 
-
+    /// ## `now` and "abstract constructors" (e.g. `epoch`)
 
     ///
     /// Returns the current date from the system clock.
@@ -131,7 +133,6 @@ namespace Time/LocalDate {
         let ZoneId(z1) = zoneId;
         LocalDate(now(z1))
 
-
     ///
     /// ___
     ///
@@ -139,7 +140,7 @@ namespace Time/LocalDate {
         import static get java.time.LocalDate.EPOCH: ##java.time.LocalDate & Pure as getEPOCH;
         LocalDate(getEPOCH())
 
-
+    /// ## `at` functions
 
     pub def atStartOfDay(x: LocalDate): LocalDateTime =
         import java.time.LocalDate.atStartOfDay(): ##java.time.LocalDateTime & Pure;
@@ -164,6 +165,7 @@ namespace Time/LocalDate {
         let OffsetTime(t1) = t;
         OffsetDateTime(atTime(x1, t1))
 
+    /// ## `from` functions
 
     pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): LocalDate =
         import static java.time.LocalDate.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDate & Pure;
@@ -174,6 +176,27 @@ namespace Time/LocalDate {
     pub def fromEpochDay(x: Int64): LocalDate =
         import static java.time.LocalDate.ofEpochDay(Int64): ##java.time.LocalDate & Pure;
         LocalDate(ofEpochDay(x))
+
+
+    ///  `fromTemporalAccessor` specialized
+    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): LocalDate = 
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate & Pure as fromTA;
+        try {
+            LocalDate(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
+        fromTemporalAccessorHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): LocalDate = 
+        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromZonedDateTime(x: ZonedDateTime): LocalDate = 
+        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    /// ## `to` functions
 
     pub def toEpochDay(x: LocalDate): Int64 =
         import java.time.chrono.ChronoLocalDate.toEpochDay(): Int64 & Pure;
@@ -393,23 +416,6 @@ namespace Time/LocalDate {
 
     /// Generic
 
-    /// # `fromTemporalAccessor` specialized
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): LocalDate = 
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate & Pure as fromTA;
-        try {
-            LocalDate(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
-        fromHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): LocalDate = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromZonedDateTime(x: ZonedDateTime): LocalDate = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
 

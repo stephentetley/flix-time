@@ -92,17 +92,22 @@ namespace Time/ZonedDateTime {
     use Time.ZoneId.{ZoneId};
     use Time.ZoneOffset;
 
+    /// ## Unwrap
+
     pub def getZonedDateTime(x: ZonedDateTime): ##java.time.ZonedDateTime = 
         let ZonedDateTime(x1) = x;
         x1
 
 
-
+    /// ## Constructors
 
     pub def zonedDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, 
                             minute :: Int32, second :: Int32, nanoSecond :: Int32, zoneId :: ZoneId}): ZonedDateTime =
         import static java.time.ZonedDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         ZonedDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneId.getZoneId(r.zoneId)))
+
+
+    /// ## `now` and "abstract constructors" (e.g. `epoch`)
 
     ///
     /// Returns the current date-time from the system clock using the system zone id.
@@ -119,11 +124,23 @@ namespace Time/ZonedDateTime {
         let ZoneId(z1) = zone;
         ZonedDateTime(now(z1))
 
+    /// ## `from` functions
+
     pub def fromLocalDateTime(zone: {zone :: ZoneId},dateTime: LocalDateTime): ZonedDateTime =
         import static java.time.ZonedDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
         let LocalDateTime(dt1) = dateTime;
         let ZoneId(z1) = zone.zone;
         ZonedDateTime(of(dt1, z1))
+
+
+    pub def fromLocalDateLocalTime(zone: {zone :: ZoneId}, date: LocalDate, time: LocalTime): ZonedDateTime =
+        import static java.time.ZonedDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
+        let LocalDate(d1) = date;
+        let LocalTime(t1) = time;
+        let ZoneId(z1) = zone.zone;
+        ZonedDateTime(of(d1, t1, z1))
+
+    /// ## `to` functions
 
     ///
     /// Returns the given date-time `x` as __.
@@ -133,12 +150,6 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         LocalDateTime(toLocalDateTime(x1))
 
-    pub def fromLocalDateLocalTime(zone: {zone :: ZoneId}, date: LocalDate, time: LocalTime): ZonedDateTime =
-        import static java.time.ZonedDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
-        let LocalDate(d1) = date;
-        let LocalTime(t1) = time;
-        let ZoneId(z1) = zone.zone;
-        ZonedDateTime(of(d1, t1, z1))
 
     ///
     /// Returns the given date-time `x` as __.

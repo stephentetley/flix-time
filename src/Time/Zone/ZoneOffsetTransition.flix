@@ -53,14 +53,25 @@ namespace Time/Zone/ZoneOffsetTransition {
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
 
+    /// ## Unwrap
+
     pub def getZoneOffsetTransition(x: ZoneOffsetTransition): ##java.time.zone.ZoneOffsetTransition = 
         let ZoneOffsetTransition(x1) = x;
         x1
+
+    /// ## Constructors
 
     pub def zoneOffsetTransition(r: {transition :: LocalDateTime, before :: ZoneOffset, after :: ZoneOffset}): ZoneOffsetTransition =
         import static java.time.zone.ZoneOffsetTransition.of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset): ##java.time.zone.ZoneOffsetTransition & Pure;
         use Time/ZoneOffset.{getZoneOffset};
         ZoneOffsetTransition(of(Time/LocalDateTime.getLocalDateTime(r.transition), getZoneOffset(r.before), getZoneOffset(r.after)))
+    
+    /// ## `to` functions
+
+    pub def toEpochSecond(x: ZoneOffsetTransition): Int64 =
+        import java.time.zone.ZoneOffsetTransition.toEpochSecond(): Int64 & Pure;
+        let ZoneOffsetTransition(x1) = x;
+        toEpochSecond(x1)
 
 
     pub def equals(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool =
@@ -90,8 +101,5 @@ namespace Time/Zone/ZoneOffsetTransition {
         let ZoneOffsetTransition(x1) = x;
         isOverlap(x1)
 
-    pub def toEpochSecond(x: ZoneOffsetTransition): Int64 =
-        import java.time.zone.ZoneOffsetTransition.toEpochSecond(): Int64 & Pure;
-        let ZoneOffsetTransition(x1) = x;
-        toEpochSecond(x1)
+
 }

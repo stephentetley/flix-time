@@ -108,12 +108,14 @@ namespace Time/ZDuration {
     use Time.ZDuration;
     use Time.ZDuration.{ZDuration};
     
+    /// ## Unwrap
 
     pub def getDuration(x: ZDuration): ##java.time.Duration = 
         let ZDuration(x1) = x;
         x1
 
 
+    /// ## Constructors
 
     ///
     /// Return a new duration.
@@ -122,6 +124,7 @@ namespace Time/ZDuration {
         import static java.time.Duration.ofSeconds(Int64, Int64): ##java.time.Duration & Pure;
         ZDuration(ofSeconds(r.seconds, r.nanos))
 
+    /// ## "abstract constructors" (e.g. `zero`)
 
     ///
     /// Construct a zero length Duration.
@@ -130,12 +133,112 @@ namespace Time/ZDuration {
         import static get java.time.Duration.ZERO: ##java.time.Duration & Pure as get_ZERO;
         ZDuration(get_ZERO())
 
+
+    /// ## `from` functions
+
+    ///
+    /// Construct a Duration from the supplied number of nanoseconds.
+    ///
+    pub def fromNanos(nanos: Int64): ZDuration =
+        import static java.time.Duration.ofNanos(Int64): ##java.time.Duration & Pure;
+        ZDuration(ofNanos(nanos))
+
+
+    ///
+    /// Construct a Duration from the supplied number of milliseconds.
+    ///
+    pub def fromMillis(millis: Int64): ZDuration =
+        import static java.time.Duration.ofMillis(Int64): ##java.time.Duration & Pure;
+        ZDuration(ofMillis(millis))
+
+
+    ///
+    /// Construct a Duration from the supplied number of seconds.
+    ///
+    pub def fromSeconds(seconds: Int64): ZDuration =
+        import static java.time.Duration.ofSeconds(Int64): ##java.time.Duration & Pure;
+        ZDuration(ofSeconds(seconds))
+
+    ///
+    /// Construct a Duration from the supplied number of minutes.
+    ///
+    pub def fromMinutes(minutes: Int64): ZDuration =
+        import static java.time.Duration.ofMinutes(Int64): ##java.time.Duration & Pure;
+        ZDuration(ofMinutes(minutes))
+
+    ///
+    /// Construct a Duration from the supplied number of hours.
+    ///
+    pub def fromHours(hours: Int64): ZDuration =
+        import static java.time.Duration.ofHours(Int64): ##java.time.Duration & Pure;
+        ZDuration(ofHours(hours))
+
     ///
     /// Construct a Duration from the supplied number of days.
     ///
     pub def fromDays(days: Int64): ZDuration =
         import static java.time.Duration.ofDays(Int64): ##java.time.Duration & Pure;
         ZDuration(ofDays(days))
+
+    /// # `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
+
+    def ofTemporalUnitHelper(temporalUnit: ##java.time.temporal.TemporalUnit, amount: Int64): ZDuration =
+        import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
+        try {
+            ZDuration(of(amount, temporalUnit))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromHalfDays(i: Int64): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        ofTemporalUnitHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, i)
+
+
+    /// ## `to` functions
+
+    ///
+    /// Return the number of nanoseconds in Duration `x`.
+    ///
+    pub def toNanos(x: ZDuration): Int64 =
+        import java.time.Duration.toNanos(): Int64 & Pure;
+        let ZDuration(x1) = x;
+        toNanos(x1)
+
+    ///
+    /// Get the total length of Duration `x` in milliseconds.
+    ///
+    pub def toMillis(x: ZDuration): Int64 =
+        import java.time.Duration.toMillis(): Int64 & Pure;
+        let ZDuration(x1) = x;
+        toMillis(x1)
+
+
+    ///
+    /// Return the number of seconds in Duration `x`.
+    ///
+    pub def toSeconds(x: ZDuration): Int64 =
+        import java.time.Duration.toSeconds(): Int64 & Pure;
+        let ZDuration(x1) = x;
+        toSeconds(x1)
+
+
+    ///
+    /// Return the number of minutes in Duration `x`.
+    ///
+    pub def toMinutes(x: ZDuration): Int64 =
+        import java.time.Duration.toMinutes(): Int64 & Pure;
+        let ZDuration(x1) = x;
+        toMinutes(x1)
+
+
+    ///
+    /// Return the number of hours in Duration `x`.
+    ///
+    pub def toHours(x: ZDuration): Int64 =
+        import java.time.Duration.toHours(): Int64 & Pure;
+        let ZDuration(x1) = x;
+        toHours(x1)
 
     ///
     /// Return the number of days in Duration `x`.
@@ -155,88 +258,6 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         toDaysPart(x1)
 
-    ///
-    /// Construct a Duration from the supplied number of hours.
-    ///
-    pub def fromHours(hours: Int64): ZDuration =
-        import static java.time.Duration.ofHours(Int64): ##java.time.Duration & Pure;
-        ZDuration(ofHours(hours))
-
-    ///
-    /// Return the number of hours in Duration `x`.
-    ///
-    pub def toHours(x: ZDuration): Int64 =
-        import java.time.Duration.toHours(): Int64 & Pure;
-        let ZDuration(x1) = x;
-        toHours(x1)
-
-    ///
-    /// Construct a Duration from the supplied number of minutes.
-    ///
-    pub def fromMinutes(minutes: Int64): ZDuration =
-        import static java.time.Duration.ofMinutes(Int64): ##java.time.Duration & Pure;
-        ZDuration(ofMinutes(minutes))
-
-    ///
-    /// Return the number of minutes in Duration `x`.
-    ///
-    pub def toMinutes(x: ZDuration): Int64 =
-        import java.time.Duration.toMinutes(): Int64 & Pure;
-        let ZDuration(x1) = x;
-        toMinutes(x1)
-
-    ///
-    /// Construct a Duration from the supplied number of seconds.
-    ///
-    pub def fromSeconds(seconds: Int64): ZDuration =
-        import static java.time.Duration.ofSeconds(Int64): ##java.time.Duration & Pure;
-        ZDuration(ofSeconds(seconds))
-
-    ///
-    /// Return the number of seconds in Duration `x`.
-    ///
-    pub def toSeconds(x: ZDuration): Int64 =
-        import java.time.Duration.toSeconds(): Int64 & Pure;
-        let ZDuration(x1) = x;
-        toSeconds(x1)
-
-    ///
-    /// Construct a Duration from the supplied number of milliseconds.
-    ///
-    pub def fromMillis(millis: Int64): ZDuration =
-        import static java.time.Duration.ofMillis(Int64): ##java.time.Duration & Pure;
-        ZDuration(ofMillis(millis))
-
-
-    ///
-    /// Get the total length of Duration `x` in milliseconds.
-    ///
-    pub def toMillis(x: ZDuration): Int64 =
-        import java.time.Duration.toMillis(): Int64 & Pure;
-        let ZDuration(x1) = x;
-        toMillis(x1)
-
-    ///
-    /// Return the number of nanoseconds in Duration `x`.
-    ///
-    pub def fromNanos(nanos: Int64): ZDuration =
-        import static java.time.Duration.ofNanos(Int64): ##java.time.Duration & Pure;
-        ZDuration(ofNanos(nanos))
-
-    ///
-    /// Return the number of nanoseconds in Duration `x`.
-    ///
-    pub def toNanos(x: ZDuration): Int64 =
-        import java.time.Duration.toNanos(): Int64 & Pure;
-        let ZDuration(x1) = x;
-        toNanos(x1)
-
-
-    /// pub def durationOfChronoUnit(x: Int64, unit: ChronoUnit): ZDuration =
-    ///     import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
-    ///     let u1 = Time/Temporal/ChronoUnit.marshal(unit);
-    ///     let tu1 = u1 as ##java.time.temporal.TemporalUnit;
-    ///     ZDuration(of(x, tu1))
 
 
     pub def equals(x: ZDuration, y: ZDuration): Bool =
@@ -483,18 +504,4 @@ namespace Time/ZDuration {
         minusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
 
 
-    /// # `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
-
-    def ofHelper(temporalUnit: ##java.time.temporal.TemporalUnit, amount: Int64): ZDuration =
-        import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
-        try {
-            ZDuration(of(amount, temporalUnit))
-        } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromHalfDays(i: Int64): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        ofHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, i)
 }

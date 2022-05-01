@@ -72,11 +72,13 @@ namespace Time/ZoneOffset {
     use Time.OffsetTime;
     use Time.ZonedDateTime;
 
+    /// ## Unwrap
 
     pub def getZoneOffset(x: ZoneOffset): ##java.time.ZoneOffset = 
         let ZoneOffset(x1) = x;
         x1
 
+    /// ## "abstract constructors" (e.g. `utc`)
 
     ///
     /// ___
@@ -93,6 +95,7 @@ namespace Time/ZoneOffset {
         import static get java.time.ZoneOffset.MAX: ##java.time.ZoneOffset & Pure as get_MAX;
         ZoneOffset(get_MAX())
 
+    /// ## `from` functions
 
     pub def fromHours(hours: Int32): ZoneOffset =
         import static java.time.ZoneOffset.ofHours(Int32): ##java.time.ZoneOffset & Pure;
@@ -110,6 +113,23 @@ namespace Time/ZoneOffset {
         import static java.time.ZoneOffset.ofTotalSeconds(Int32): ##java.time.ZoneOffset & Pure;
         ZoneOffset(ofTotalSeconds(seconds))
 
+    /// `fromTemporalAccessor` specialized
+    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZoneOffset = 
+        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
+        try {
+            ZoneOffset(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
+        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
+        fromTemporalAccessorHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
+            
+    pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
+        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def equals(x: ZoneOffset, y: ZoneOffset): Bool =
         import java.time.ZoneOffset.equals(##java.lang.Object): Bool & Pure;
@@ -148,23 +168,7 @@ namespace Time/ZoneOffset {
 
     /// Generic 
 
-    /// # `fromTemporalAccessor` specialized
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): ZoneOffset = 
-        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
-        try {
-            ZoneOffset(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
-        fromHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
-            
-    pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
     /// # `adjustInto` specialized - this become `adjustZoneOffset` in the respective modules:

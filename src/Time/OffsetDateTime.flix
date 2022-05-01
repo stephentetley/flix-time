@@ -101,13 +101,14 @@ namespace Time/OffsetDateTime {
     use Time.ZoneId.{ZoneId};
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
-    
+
+    /// ## Unwrap
+
     pub def getOffsetDateTime(x: OffsetDateTime): ##java.time.OffsetDateTime = 
         let OffsetDateTime(x1) = x;
         x1
 
-
-
+    /// ## Constructors
 
     pub def offsetDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
                     second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetDateTime =
@@ -116,7 +117,7 @@ namespace Time/OffsetDateTime {
         OffsetDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, o1))
 
 
-
+    /// ## `now` functions
 
     ///
     /// Returns the current date-time from the system clock using the system zone id.
@@ -133,7 +134,7 @@ namespace Time/OffsetDateTime {
         let ZoneId(z1) = zone;
         OffsetDateTime(now(z1))
 
-
+    /// ## `at` functions
 
     pub def atZoneSameInstant(zone: {zone :: ZoneId}, x: OffsetDateTime): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
@@ -154,14 +155,8 @@ namespace Time/OffsetDateTime {
         let ZoneOffset(o1) = offset.offset;
         OffsetDateTime(of(dt1, o1))
 
-    ///
-    /// Returns the given date-time `x` as __.
-    ///
-    pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
-        import java.time.OffsetDateTime.toLocalDateTime(): ##java.time.LocalDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        LocalDateTime(toLocalDateTime(x1))
 
+    /// ## `from` functions
 
     pub def fromLocalDateLocalTime(offset: {offset :: ZoneOffset}, date: LocalDate, time: LocalTime): OffsetDateTime =
         import static java.time.OffsetDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime & Pure;
@@ -170,32 +165,21 @@ namespace Time/OffsetDateTime {
         let ZoneOffset(o1) = offset.offset;
         OffsetDateTime(of(d1, t1, o1))
 
-    /// # `fromTemporalAccessor` specialized
+    /// `fromTemporalAccessor` specialized
 
-    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): LocalDateTime = 
-        import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime & Pure as fromTA;
+    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): OffsetDateTime = 
+        import static java.time.OffsetDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetDateTime & Pure as fromTA;
         try {
-            LocalDateTime(fromTA(x))
+            OffsetDateTime(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
+    pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
         let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
         fromTemporalAccessorHelper(x1)
 
-
-
-    pub def toEpochSecond(x: OffsetDateTime): Int64 =
-        import java.time.OffsetDateTime.toEpochSecond(): Int64 & Pure;
-        let OffsetDateTime(x1) = x;
-        toEpochSecond(x1)
-
-
-    pub def toInstant(x: OffsetDateTime): ZInstant =
-        import java.time.OffsetDateTime.toInstant(): ##java.time.Instant & Pure;
-        let OffsetDateTime(x1) = x;
-        ZInstant(toInstant(x1))
+    /// ## `to` functions
 
 
     ///
@@ -214,6 +198,14 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         LocalTime(toLocalTime(x1))
 
+    ///
+    /// Returns the given date-time `x` as __.
+    ///
+    pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
+        import java.time.OffsetDateTime.toLocalDateTime(): ##java.time.LocalDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        LocalDateTime(toLocalDateTime(x1))
+
 
     ///
     /// Returns the given date-time `x` as __.
@@ -231,6 +223,16 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         ZonedDateTime(toZonedDateTime(x1))
 
+
+    pub def toInstant(x: OffsetDateTime): ZInstant =
+        import java.time.OffsetDateTime.toInstant(): ##java.time.Instant & Pure;
+        let OffsetDateTime(x1) = x;
+        ZInstant(toInstant(x1))
+
+    pub def toEpochSecond(x: OffsetDateTime): Int64 =
+        import java.time.OffsetDateTime.toEpochSecond(): Int64 & Pure;
+        let OffsetDateTime(x1) = x;
+        toEpochSecond(x1)
 
 
     ///

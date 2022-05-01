@@ -141,6 +141,35 @@ namespace Time/Month {
             case x1 if primEquals(x1, get_DECEMBER())    => December
         }
 
+    /// `from` functions
+
+    /// # `fromTemporalAccessor` specialized
+    def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        try {
+            unmarshal(fromTA(x))
+        } catch {
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+        }
+
+    pub def fromLocalDate(x: LocalDate): Month = 
+        fromHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromLocalDateTime(x: LocalDateTime): Month = 
+        fromHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromMonthDay(x: MonthDay): Month = 
+        fromHelper(Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
+        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromYearMonth(x: YearMonth): Month = 
+        fromHelper(Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor)
+
+    pub def fromZonedDateTime(x: ZonedDateTime): Month = 
+        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
 
     pub def getDisplayName(x: Month, style: TextStyle, locale: Locale): String =
         import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
@@ -189,32 +218,6 @@ namespace Time/Month {
     /// Generic
 
 
-    /// # `fromTemporalAccessor` specialized
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
-        try {
-            unmarshal(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def fromLocalDate(x: LocalDate): Month = 
-        fromHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromLocalDateTime(x: LocalDateTime): Month = 
-        fromHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromMonthDay(x: MonthDay): Month = 
-        fromHelper(Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromYearMonth(x: YearMonth): Month = 
-        fromHelper(Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor)
-
-    pub def fromZonedDateTime(x: ZonedDateTime): Month = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
 

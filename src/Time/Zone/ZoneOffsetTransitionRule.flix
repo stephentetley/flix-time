@@ -92,7 +92,7 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
         }
 
 
-
+    /// ## Constructors
 
     pub def zoneOffsetTransitionRule(r: {month :: Month, 
                                         dayOfMonthIndicator :: Int32, 
