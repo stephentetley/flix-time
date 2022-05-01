@@ -123,7 +123,7 @@ namespace Time/Period {
     pub def fromWeeks(weeks: Int32): Period =
         import static java.time.Period.ofWeeks(Int32): ##java.time.Period & Pure;
         Period(ofWeeks(weeks))
-        
+
     pub def fromMonths(months: Int32): Period =
         import static java.time.Period.ofMonths(Int32): ##java.time.Period & Pure;
         Period(ofMonths(months))
@@ -141,6 +141,23 @@ namespace Time/Period {
         import java.time.Period.toTotalMonths(): Int64 & Pure;
         let Period(x1) = x;
         toTotalMonths(x1)
+
+    /// ## `parse` / `format` functions        
+
+    pub def parse(s: String): Option[Period] =
+        import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period & Pure;
+        try {
+            let cs = String.trim(s) as ##java.lang.CharSequence;
+            Some(Period(parse(cs)))
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => None
+        }
+
+    /// Note - alias of `toString`
+    pub def format(x: Period): String =
+        import java.time.Period.toString(): String & Pure;
+        let Period(x1) = x;
+        toString(x1)
 
     pub def equals(x: Period, y: Period): Bool =
         import java.time.Period.equals(##java.lang.Object): Bool & Pure;

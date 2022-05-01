@@ -78,6 +78,7 @@ namespace Time/DayOfWeek {
         case _ => None
     }
 
+    /// ## Marshal enums
 
     pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek =
         import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek & Pure as get_MONDAY;
@@ -122,7 +123,7 @@ namespace Time/DayOfWeek {
             case x1 if primEquals(x1, get_SUNDAY())      => Sunday
         }
 
-    /// `from` functions
+    /// ## `from` functions
 
     /// # `fromTemporalAccessor` specialized
     def fromHelper(x: ##java.time.temporal.TemporalAccessor): DayOfWeek = 

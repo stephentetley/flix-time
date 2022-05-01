@@ -167,15 +167,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         LocalTime(toLocalTime(x1))
 
-
-    ///
-    /// Returns ZonedDateTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: ZonedDateTime): String =
-        import java.time.ZonedDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
-        let ZonedDateTime(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        format(x1, fmtr)
+    /// ## `parse` / `format` functions
 
     ///
     /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.
@@ -192,6 +184,16 @@ namespace Time/ZonedDateTime {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
+        
+    ///
+    /// Returns ZonedDateTime `x` as a String using `formatter`.
+    ///
+    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: ZonedDateTime): String =
+        import java.time.ZonedDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
+        let ZonedDateTime(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        format(x1, fmtr)
+
 
     pub def equals(x: ZonedDateTime, y: ZonedDateTime): Bool =
         import java.time.ZonedDateTime.equals(##java.lang.Object): Bool & Pure;

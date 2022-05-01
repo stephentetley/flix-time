@@ -234,16 +234,8 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         toEpochSecond(x1)
 
-
-    ///
-    /// Returns OffsetDateTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: OffsetDateTime): String =
-        import java.time.OffsetDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
-        let OffsetDateTime(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        format(x1, fmtr)
-
+    /// ## `parse` / `format` functions
+    
     ///
     /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
@@ -259,6 +251,17 @@ namespace Time/OffsetDateTime {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
+
+
+    ///
+    /// Returns OffsetDateTime `x` as a String using `formatter`.
+    ///
+    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: OffsetDateTime): String =
+        import java.time.OffsetDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
+        let OffsetDateTime(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        format(x1, fmtr)
+
 
     pub def equals(x: OffsetDateTime, y: OffsetDateTime): Bool =
         import java.time.OffsetDateTime.equals(##java.lang.Object): Bool & Pure;

@@ -192,16 +192,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         LocalTime(toLocalTime(x1))
 
-
-
-    ///
-    /// Returns LocalDateTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: LocalDateTime): String =
-        import java.time.LocalDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
-        let LocalDateTime(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        format(x1, fmtr)
+    /// ## `parse` / `format` functions
 
     ///
     /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
@@ -218,6 +209,16 @@ namespace Time/LocalDateTime {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
+        
+    ///
+    /// Returns LocalDateTime `x` as a String using `formatter`.
+    ///
+    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: LocalDateTime): String =
+        import java.time.LocalDateTime.format(##java.time.format.DateTimeFormatter): String & Pure;
+        let LocalDateTime(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        format(x1, fmtr)
+
 
     pub def equals(x: LocalDateTime, y: LocalDateTime): Bool =
         import java.time.LocalDateTime.equals(##java.lang.Object): Bool & Pure;

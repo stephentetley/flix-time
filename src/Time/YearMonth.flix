@@ -129,15 +129,7 @@ namespace Time/YearMonth {
     pub def fromZonedDateTime(x: ZonedDateTime): YearMonth = 
         fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
-
-    ///
-    /// Returns YearMonth `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter[DateFormat], x: YearMonth): String =
-        import java.time.YearMonth.format(##java.time.format.DateTimeFormatter): String & Pure;
-        let YearMonth(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        format(x1, fmtr)
+    /// ## `parse` / `format` functions  
 
     ///
     /// Parse the string `s` as a YearMonth, leading or trailing whitespace is trimmed.
@@ -154,6 +146,15 @@ namespace Time/YearMonth {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
+    
+    ///
+    /// Returns YearMonth `x` as a String using `formatter`.
+    ///
+    pub def format(formatter: DateTimeFormatter[DateFormat], x: YearMonth): String =
+        import java.time.YearMonth.format(##java.time.format.DateTimeFormatter): String & Pure;
+        let YearMonth(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        format(x1, fmtr)
 
     pub def equals(x: YearMonth, y: YearMonth): Bool =
         import java.time.YearMonth.equals(##java.lang.Object): Bool & Pure;

@@ -79,6 +79,8 @@ namespace Time/Month {
     use Time.YearMonth;
     use Time.ZonedDateTime;
 
+    /// ## Marshal enums
+
     pub def marshal(x: Month): ##java.time.Month =
         import static get java.time.Month.JANUARY: ##java.time.Month & Pure as get_JANUARY;
         import static get java.time.Month.FEBRUARY: ##java.time.Month & Pure as get_FEBRUARY;
@@ -141,9 +143,9 @@ namespace Time/Month {
             case x1 if primEquals(x1, get_DECEMBER())    => December
         }
 
-    /// `from` functions
+    /// ## `from` functions
 
-    /// # `fromTemporalAccessor` specialized
+    /// `fromTemporalAccessor` specialized
     def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
         import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
         try {

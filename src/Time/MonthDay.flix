@@ -141,14 +141,7 @@ namespace Time/MonthDay {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    ///
-    /// Returns MonthDay `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter[DateFormat], x: MonthDay): String =
-        import java.time.MonthDay.format(##java.time.format.DateTimeFormatter): String & Pure;
-        let MonthDay(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        format(x1, fmtr)
+    /// ## `parse` / `format` functions
 
     ///
     /// Parse the string `s` as a MonthDay, leading or trailing whitespace is trimmed.
@@ -165,6 +158,17 @@ namespace Time/MonthDay {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
+
+
+    ///
+    /// Returns MonthDay `x` as a String using `formatter`.
+    ///
+    pub def format(formatter: DateTimeFormatter[DateFormat], x: MonthDay): String =
+        import java.time.MonthDay.format(##java.time.format.DateTimeFormatter): String & Pure;
+        let MonthDay(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        format(x1, fmtr)
+
 
     pub def equals(x: MonthDay, y: MonthDay): Bool =
         import java.time.MonthDay.equals(##java.lang.Object): Bool & Pure;

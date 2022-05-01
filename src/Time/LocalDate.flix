@@ -204,6 +204,8 @@ namespace Time/LocalDate {
         toEpochDay(x1 as ##java.time.chrono.ChronoLocalDate)
 
 
+    /// ## `parse` / `format` functions
+
     ///
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.

@@ -258,7 +258,22 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         toDaysPart(x1)
 
+    /// ## `parse` / `format` functions
 
+    pub def parse(s: String): Option[ZDuration] =
+        import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration & Pure;
+        try {
+            let cs = String.trim(s) as ##java.lang.CharSequence;
+            Some(ZDuration(parse(cs)))
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => None
+        }
+        
+    /// Note - alias of `toString`
+    pub def format(x: ZDuration): String =
+        import java.time.Duration.toString(): String & Pure;
+        let ZDuration(x1) = x;
+        toString(x1)
 
     pub def equals(x: ZDuration, y: ZDuration): Bool =
         import java.time.Duration.equals(##java.lang.Object): Bool & Pure;

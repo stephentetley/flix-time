@@ -151,13 +151,29 @@ namespace Time/ZInstant {
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZInstant = 
         fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
-        
+
     /// ## `to` functions
 
     pub def toEpochMilli(x: ZInstant): Int64 =
         import java.time.Instant.toEpochMilli(): Int64 & Pure;
         let ZInstant(x1) = x;
         toEpochMilli(x1)
+
+    /// ## `parse` / `format` functions
+    
+    pub def parse(s: String): Option[ZInstant] =
+        import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant & Pure;
+        try {
+            let cs = String.trim(s) as ##java.lang.CharSequence;
+            Some(ZInstant(parse(cs)))
+        } catch {
+            case _: ##java.time.format.DateTimeParseException => None
+        }
+
+    pub def format(x: ZInstant): String =
+        import java.time.Instant.toString(): String & Pure;
+        let ZInstant(x1) = x;
+        toString(x1)
 
     pub def equals(x: ZInstant, y: ZInstant): Bool =
         import java.time.Instant.equals(##java.lang.Object): Bool & Pure;

@@ -187,17 +187,8 @@ namespace Time/LocalTime {
         let LocalTime(x1) = time;
         toNanoOfDay(x1)
 
+    /// ## `parse` / `format` functions
 
-    ///
-    /// Returns the given LocalTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter[TimeFormat], x: LocalTime): String =
-        import java.time.LocalTime.format(##java.time.format.DateTimeFormatter): String & Pure;
-        let LocalTime(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        format(x1, fmtr)
-
-    
     ///
     /// Parse the string `s` as a LocalTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
@@ -212,6 +203,16 @@ namespace Time/LocalTime {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
+
+    ///
+    /// Returns the given LocalTime `x` as a String using `formatter`.
+    ///
+    pub def format(formatter: DateTimeFormatter[TimeFormat], x: LocalTime): String =
+        import java.time.LocalTime.format(##java.time.format.DateTimeFormatter): String & Pure;
+        let LocalTime(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        format(x1, fmtr)
+
 
     pub def equals(x: LocalTime, y: LocalTime): Bool =
         import java.time.LocalTime.equals(##java.lang.Object): Bool & Pure;

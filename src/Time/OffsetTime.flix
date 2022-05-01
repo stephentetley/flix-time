@@ -152,16 +152,7 @@ namespace Time/OffsetTime {
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime = 
         fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
-        
-
-    ///
-    /// Returns OffsetTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter[TimeFormat], x: OffsetTime): String =
-        import java.time.OffsetTime.format(##java.time.format.DateTimeFormatter): String & Pure;
-        let OffsetTime(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        format(x1, fmtr)
+    /// ## `parse` / `format` functions        
 
     ///
     /// Parse the string `s` as a OffsetTime, leading or trailing whitespace is trimmed.
@@ -178,6 +169,16 @@ namespace Time/OffsetTime {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
+
+    ///
+    /// Returns OffsetTime `x` as a String using `formatter`.
+    ///
+    pub def format(formatter: DateTimeFormatter[TimeFormat], x: OffsetTime): String =
+        import java.time.OffsetTime.format(##java.time.format.DateTimeFormatter): String & Pure;
+        let OffsetTime(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        format(x1, fmtr)
+
 
     pub def equals(x: OffsetTime, y: OffsetTime): Bool =
         import java.time.OffsetTime.equals(##java.lang.Object): Bool & Pure;

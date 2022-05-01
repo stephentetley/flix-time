@@ -51,17 +51,13 @@ namespace Time/Clock {
     use Time.ZInstant.{ZInstant};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
-    
+
+    /// ## Unwrap
+
     pub def getClock(x: Clock): ##java.time.Clock = 
         let Clock(x1) = x;
         x1
-
-
-    pub def hashCode(x: Clock): Int32 =
-        import java.time.Clock.hashCode(): Int32 & Pure;
-        let Clock(x1) = x;
-        hashCode(x1)
-
+    /// ## "abstract constructors" (e.g. `fixedClock`)
 
     /// Pure or Impure?
     pub def fixedClock(inst: ZInstant, zone: ZoneId): Clock =
@@ -76,8 +72,6 @@ namespace Time/Clock {
         let Clock(c1) = c;
         Clock(offset(c1, d1))
 
-
-
     pub def systemClock(zone: ZoneId): Clock & Impure =
         import static java.time.Clock.system(##java.time.ZoneId): ##java.time.Clock & Impure;
         let ZoneId(zone1) = zone;
@@ -91,12 +85,12 @@ namespace Time/Clock {
         import static java.time.Clock.systemUTC(): ##java.time.Clock & Impure;
         Clock(systemUTC())
 
-    /// /// TODO - no equals?
-    /// pub def equals(x: Clock, y: Clock): Bool =
-    ///     import java.time.Clock.equals(##java.lang.Object): Bool & Pure;
-    ///     let Clock(x1) = x;
-    ///     let Clock(y1) = y;
-    ///     equals(x1, y1 as ##java.lang.Object)
+
+    pub def hashCode(x: Clock): Int32 =
+        import java.time.Clock.hashCode(): Int32 & Pure;
+        let Clock(x1) = x;
+        hashCode(x1)
+
 
     pub def tick(d: ZDuration, c: Clock): Clock & Impure =
         import static java.time.Clock.tick(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
