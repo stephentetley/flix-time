@@ -51,17 +51,27 @@ namespace Time {
     }
 
     instance Eq[LocalDate] {
-        pub def eq(x: LocalDate, y: LocalDate): Bool = Time/LocalDate.equals(x, y)
+        pub def eq(x: LocalDate, y: LocalDate): Bool =
+            import java.time.LocalDate.equals(##java.lang.Object): Bool & Pure;
+            let LocalDate(x1) = x;
+            let LocalDate(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[LocalDate] {
-        pub def hash(x: LocalDate): Int32 = Time/LocalDate.hashCode(x)
+        pub def hash(x: LocalDate): Int32 =
+            import java.time.LocalDate.hashCode(): Int32 & Pure;
+            let LocalDate(x1) = x;
+            hashCode(x1)
     }
 
 
     instance Order[LocalDate] {
         pub def compare(x: LocalDate, y: LocalDate): Comparison =
-            Time/LocalDate.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.LocalDate.compareTo(##java.time.chrono.ChronoLocalDate): Int32 & Pure;
+            let LocalDate(x1) = x;
+            let LocalDate(y1) = y;
+            compareTo(x1, y1 as ##java.time.chrono.ChronoLocalDate) |> Comparison.fromInt32
     }
 
 
@@ -231,27 +241,7 @@ namespace Time/LocalDate {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
-    pub def equals(x: LocalDate, y: LocalDate): Bool =
-        import java.time.LocalDate.equals(##java.lang.Object): Bool & Pure;
-        let LocalDate(x1) = x;
-        let LocalDate(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
 
-
-    pub def hashCode(x: LocalDate): Int32 =
-        import java.time.LocalDate.hashCode(): Int32 & Pure;
-        let LocalDate(x1) = x;
-        hashCode(x1)
-
-
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def compareTo(x: LocalDate, y: LocalDate): Int32 =
-        import java.time.LocalDate.compareTo(##java.time.chrono.ChronoLocalDate): Int32 & Pure;
-        let LocalDate(x1) = x;
-        let LocalDate(y1) = y;
-        compareTo(x1, y1 as ##java.time.chrono.ChronoLocalDate)
 
 
     ///

@@ -30,18 +30,29 @@ namespace Time/Zone {
     }
 
     instance Eq[ZoneOffsetTransition] {
-        pub def eq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool = Time/Zone/ZoneOffsetTransition.equals(x, y)
+        pub def eq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool =
+            import java.time.zone.ZoneOffsetTransition.equals(##java.lang.Object): Bool & Pure;
+            let ZoneOffsetTransition(x1) = x;
+            let ZoneOffsetTransition(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[ZoneOffsetTransition] {
-        pub def hash(x: ZoneOffsetTransition): Int32 = Time/Zone/ZoneOffsetTransition.hashCode(x)
+        pub def hash(x: ZoneOffsetTransition): Int32 =
+            import java.time.zone.ZoneOffsetTransition.hashCode(): Int32 & Pure;
+            let ZoneOffsetTransition(x1) = x;
+            hashCode(x1)
     }
 
     instance Order[ZoneOffsetTransition] {
         pub def compare(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Comparison =
-            Time/Zone/ZoneOffsetTransition.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.zone.ZoneOffsetTransition.compareTo(##java.time.zone.ZoneOffsetTransition): Int32 & Pure;
+            let ZoneOffsetTransition(x1) = x;
+            let ZoneOffsetTransition(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
-
+        
+    instance Boxable[ZoneOffsetTransition]
 }
 
 namespace Time/Zone/ZoneOffsetTransition {
@@ -74,22 +85,6 @@ namespace Time/Zone/ZoneOffsetTransition {
         toEpochSecond(x1)
 
 
-    pub def equals(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool =
-        import java.time.zone.ZoneOffsetTransition.equals(##java.lang.Object): Bool & Pure;
-        let ZoneOffsetTransition(x1) = x;
-        let ZoneOffsetTransition(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ZoneOffsetTransition): Int32 =
-        import java.time.zone.ZoneOffsetTransition.hashCode(): Int32 & Pure;
-        let ZoneOffsetTransition(x1) = x;
-        hashCode(x1)
-
-    pub def compareTo(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Int32 =
-        import java.time.zone.ZoneOffsetTransition.compareTo(##java.time.zone.ZoneOffsetTransition): Int32 & Pure;
-        let ZoneOffsetTransition(x1) = x;
-        let ZoneOffsetTransition(y1) = y;
-        compareTo(x1, y1)
 
     pub def isGap(x: ZoneOffsetTransition): Bool =
         import java.time.zone.ZoneOffsetTransition.isGap(): Bool & Pure;

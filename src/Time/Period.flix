@@ -47,13 +47,21 @@ namespace Time {
     }
 
     instance Eq[Period] {
-        pub def eq(x: Period, y: Period): Bool = Time/Period.equals(x, y)
+        pub def eq(x: Period, y: Period): Bool =
+            import java.time.Period.equals(##java.lang.Object): Bool & Pure;
+            let Period(x1) = x;
+            let Period(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
 
     instance Hash[Period] {
-        pub def hash(x: Period): Int32 = Time/Period.hashCode(x)
+        pub def hash(x: Period): Int32 =
+            import java.time.Period.hashCode(): Int32 & Pure;
+            let Period(x1) = x;
+            hashCode(x1)
     }
+
 
     instance Add[Period] {
         pub def add(x: Period, y: Period): Period = Time/Period.plus(x, y)
@@ -158,19 +166,6 @@ namespace Time/Period {
         import java.time.Period.toString(): String & Pure;
         let Period(x1) = x;
         toString(x1)
-
-    pub def equals(x: Period, y: Period): Bool =
-        import java.time.Period.equals(##java.lang.Object): Bool & Pure;
-        let Period(x1) = x;
-        let Period(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-
-    pub def hashCode(x: Period): Int32 =
-        import java.time.Period.hashCode(): Int32 & Pure;
-        let Period(x1) = x;
-        hashCode(x1)
-
 
      pub def normalize(x: Period): Period =
         import java.time.Period.normalized(): ##java.time.Period & Pure;

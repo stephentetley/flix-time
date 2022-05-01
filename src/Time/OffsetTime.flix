@@ -51,17 +51,29 @@ namespace Time {
     }
 
     instance Eq[OffsetTime] {
-        pub def eq(x: OffsetTime, y: OffsetTime): Bool = Time/OffsetTime.equals(x, y)
+        pub def eq(x: OffsetTime, y: OffsetTime): Bool =
+            import java.time.OffsetTime.equals(##java.lang.Object): Bool & Pure;
+            let OffsetTime(x1) = x;
+            let OffsetTime(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
+
     }
 
     instance Hash[OffsetTime] {
-        pub def hash(x: OffsetTime): Int32 = Time/OffsetTime.hashCode(x)
+        pub def hash(x: OffsetTime): Int32 =
+            import java.time.OffsetTime.hashCode(): Int32 & Pure;
+            let OffsetTime(x1) = x;
+            hashCode(x1)
     }
 
     instance Order[OffsetTime] {
         pub def compare(x: OffsetTime, y: OffsetTime): Comparison =
-            Time/OffsetTime.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.OffsetTime.compareTo(##java.time.OffsetTime): Int32 & Pure;
+            let OffsetTime(x1) = x;
+            let OffsetTime(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
+
 
     instance Boxable[OffsetTime]
 
@@ -179,26 +191,6 @@ namespace Time/OffsetTime {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
-
-    pub def equals(x: OffsetTime, y: OffsetTime): Bool =
-        import java.time.OffsetTime.equals(##java.lang.Object): Bool & Pure;
-        let OffsetTime(x1) = x;
-        let OffsetTime(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: OffsetTime): Int32 =
-        import java.time.OffsetTime.hashCode(): Int32 & Pure;
-        let OffsetTime(x1) = x;
-        hashCode(x1)
-
-    ///
-    /// Returns .
-    ///
-    pub def compareTo(x: OffsetTime, y: OffsetTime): Int32 =
-        import java.time.OffsetTime.compareTo(##java.time.OffsetTime): Int32 & Pure;
-        let OffsetTime(x1) = x;
-        let OffsetTime(y1) = y;
-        compareTo(x1, y1)
 
     ///
     /// Returns `true` if `x` is before `y`.

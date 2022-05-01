@@ -32,29 +32,30 @@ namespace Time {
     }
 
     instance Eq[ZoneOffset] {
-        pub def eq(x: ZoneOffset, y: ZoneOffset): Bool = Time/ZoneOffset.equals(x, y)
+        pub def eq(x: ZoneOffset, y: ZoneOffset): Bool =
+            import java.time.ZoneOffset.equals(##java.lang.Object): Bool & Pure;
+            let ZoneOffset(x1) = x;
+            let ZoneOffset(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[ZoneOffset] {
-        pub def hash(x: ZoneOffset): Int32 = Time/ZoneOffset.hashCode(x)
+        pub def hash(x: ZoneOffset): Int32 = 
+            import java.time.ZoneOffset.hashCode(): Int32 & Pure;
+            let ZoneOffset(x1) = x;
+            hashCode(x1)
+
     }
 
     instance Order[ZoneOffset] {
         pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison =
-            Time/ZoneOffset.compareTo(x,y) |> Comparison.fromInt32
-    }
-
-
-    instance LowerBound[ZoneOffset] {
-        pub def minValue(): ZoneOffset = Time/ZoneOffset.min()
-    }
-
-    instance UpperBound[ZoneOffset] {
-        pub def maxValue(): ZoneOffset = Time/ZoneOffset.max()
+            import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset): Int32 & Pure;
+            let ZoneOffset(x1) = x;
+            let ZoneOffset(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
 
     instance Boxable[ZoneOffset]
-
 
 }
 
@@ -131,23 +132,6 @@ namespace Time/ZoneOffset {
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
         fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
-    pub def equals(x: ZoneOffset, y: ZoneOffset): Bool =
-        import java.time.ZoneOffset.equals(##java.lang.Object): Bool & Pure;
-        let ZoneOffset(x1) = x;
-        let ZoneOffset(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ZoneOffset): Int32 =
-        import java.time.ZoneOffset.hashCode(): Int32 & Pure;
-        let ZoneOffset(x1) = x;
-        hashCode(x1)
-
-
-    pub def compareTo(x: ZoneOffset, y: ZoneOffset): Int32 =
-        import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset): Int32 & Pure;
-        let ZoneOffset(x1) = x;
-        let ZoneOffset(y1) = y;
-        compareTo(x1, y1)
 
     pub def getId(x: ZoneOffset): String =
         import java.time.ZoneOffset.getId(): String & Pure;

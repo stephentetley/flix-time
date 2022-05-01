@@ -45,18 +45,29 @@ namespace Time {
     }
 
     instance Eq[MonthDay] {
-        pub def eq(x: MonthDay, y: MonthDay): Bool = Time/MonthDay.equals(x, y)
+        pub def eq(x: MonthDay, y: MonthDay): Bool =
+            import java.time.MonthDay.equals(##java.lang.Object): Bool & Pure;
+            let MonthDay(x1) = x;
+            let MonthDay(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
+
     }
 
     instance Hash[MonthDay] {
-        pub def hash(x: MonthDay): Int32 = Time/MonthDay.hashCode(x)
+        pub def hash(x: MonthDay): Int32 =
+            import java.time.MonthDay.hashCode(): Int32 & Pure;
+            let MonthDay(x1) = x;
+            hashCode(x1)
+
     }
 
     instance Order[MonthDay] {
         pub def compare(x: MonthDay, y: MonthDay): Comparison =
-            Time/MonthDay.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.MonthDay.compareTo(##java.time.MonthDay): Int32 & Pure;
+            let MonthDay(x1) = x;
+            let MonthDay(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
-
 
 }
 
@@ -170,25 +181,6 @@ namespace Time/MonthDay {
         format(x1, fmtr)
 
 
-    pub def equals(x: MonthDay, y: MonthDay): Bool =
-        import java.time.MonthDay.equals(##java.lang.Object): Bool & Pure;
-        let MonthDay(x1) = x;
-        let MonthDay(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: MonthDay): Int32 =
-        import java.time.MonthDay.hashCode(): Int32 & Pure;
-        let MonthDay(x1) = x;
-        hashCode(x1)
-
-    ///
-    /// Returns ...
-    ///
-    pub def compareTo(x: MonthDay, y: MonthDay): Int32 =
-        import java.time.MonthDay.compareTo(##java.time.MonthDay): Int32 & Pure;
-        let MonthDay(x1) = x;
-        let MonthDay(y1) = y;
-        compareTo(x1, y1)
 
     /// Get/Set...
 

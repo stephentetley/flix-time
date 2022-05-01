@@ -53,16 +53,27 @@ namespace Time {
     }
 
     instance Eq[ZInstant] {
-        pub def eq(x: ZInstant, y: ZInstant): Bool = Time/ZInstant.equals(x, y)
+        pub def eq(x: ZInstant, y: ZInstant): Bool =
+            import java.time.Instant.equals(##java.lang.Object): Bool & Pure;
+            let ZInstant(x1) = x;
+            let ZInstant(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[ZInstant] {
-        pub def hash(x: ZInstant): Int32 = Time/ZInstant.hashCode(x)
+        pub def hash(x: ZInstant): Int32 =
+            import java.time.Instant.hashCode(): Int32 & Pure;
+            let ZInstant(x1) = x;
+            hashCode(x1)
     }
+
 
     instance Order[ZInstant] {
         pub def compare(x: ZInstant, y: ZInstant): Comparison =
-            Time/ZInstant.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.Instant.compareTo(##java.time.Instant): Int32 & Pure;
+            let ZInstant(x1) = x;
+            let ZInstant(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
 
     instance Boxable[ZInstant]
@@ -124,6 +135,20 @@ namespace Time/ZInstant {
         import static get java.time.Instant.MAX: ##java.time.Instant & Pure as get_MAX;
         ZInstant(get_MAX())
 
+    /// ## `at` functions
+
+    pub def atOffset(x: ZInstant, offset: ZoneOffset): OffsetDateTime =
+        import java.time.Instant.atOffset(##java.time.ZoneOffset): ##java.time.OffsetDateTime & Pure;
+        let ZInstant(x1) = x;
+        let ZoneOffset(offset1) = offset;
+        OffsetDateTime(atOffset(x1, offset1))
+
+    pub def atZone(x: ZInstant, zone: ZoneId): ZonedDateTime =
+        import java.time.Instant.atZone(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
+        let ZInstant(x1) = x;
+        let ZoneId(zone1) = zone;
+        ZonedDateTime(atZone(x1, zone1))
+
     /// ## `from` functions
 
     pub def fromEpochSecond(epochSecond: Int64): ZInstant =
@@ -160,7 +185,7 @@ namespace Time/ZInstant {
         toEpochMilli(x1)
 
     /// ## `parse` / `format` functions
-    
+
     pub def parse(s: String): Option[ZInstant] =
         import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant & Pure;
         try {
@@ -175,30 +200,7 @@ namespace Time/ZInstant {
         let ZInstant(x1) = x;
         toString(x1)
 
-    pub def equals(x: ZInstant, y: ZInstant): Bool =
-        import java.time.Instant.equals(##java.lang.Object): Bool & Pure;
-        let ZInstant(x1) = x;
-        let ZInstant(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ZInstant): Int32 = 
-        import java.time.Instant.hashCode(): Int32 & Pure;
-        let ZInstant(x1) = x;
-        hashCode(x1)
-
     
-
-    pub def atOffset(x: ZInstant, offset: ZoneOffset): OffsetDateTime =
-        import java.time.Instant.atOffset(##java.time.ZoneOffset): ##java.time.OffsetDateTime & Pure;
-        let ZInstant(x1) = x;
-        let ZoneOffset(offset1) = offset;
-        OffsetDateTime(atOffset(x1, offset1))
-
-    pub def atZone(x: ZInstant, zone: ZoneId): ZonedDateTime =
-        import java.time.Instant.atZone(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
-        let ZInstant(x1) = x;
-        let ZoneId(zone1) = zone;
-        ZonedDateTime(atZone(x1, zone1))
 
 
     pub def getEpochSecond(x: ZInstant): Int64 =
@@ -212,11 +214,6 @@ namespace Time/ZInstant {
         getNano(x1)
 
 
-    pub def compareTo(x: ZInstant, y: ZInstant): Int32 =
-        import java.time.Instant.compareTo(##java.time.Instant): Int32 & Pure;
-        let ZInstant(x1) = x;
-        let ZInstant(y1) = y;
-        compareTo(x1, y1)
 
     ///
     /// Returns `true` if `x` is before `y`.

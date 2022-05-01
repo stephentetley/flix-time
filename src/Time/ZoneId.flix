@@ -33,11 +33,18 @@ namespace Time {
     }
 
     instance Eq[ZoneId] {
-        pub def eq(x: ZoneId, y: ZoneId): Bool = Time/ZoneId.equals(x, y)
+        pub def eq(x: ZoneId, y: ZoneId): Bool =
+            import java.time.ZoneId.equals(##java.lang.Object): Bool & Pure;
+            let ZoneId(x1) = x;
+            let ZoneId(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[ZoneId] {
-        pub def hash(x: ZoneId): Int32 = Time/ZoneId.hashCode(x)
+        pub def hash(x: ZoneId): Int32 =
+            import java.time.ZoneId.hashCode(): Int32 & Pure;
+            let ZoneId(x1) = x;
+            hashCode(x1)
     }
 
 }
@@ -138,16 +145,6 @@ namespace Time/ZoneId {
         fromTemporalAccessorHelper(Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor)
 
 
-    pub def equals(x: ZoneId, y: ZoneId): Bool =
-        import java.time.ZoneId.equals(##java.lang.Object): Bool & Pure;
-        let ZoneId(x1) = x;
-        let ZoneId(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ZoneId): Int32 =
-        import java.time.ZoneId.hashCode(): Int32 & Pure;
-        let ZoneId(x1) = x;
-        hashCode(x1)
 
 
     ///

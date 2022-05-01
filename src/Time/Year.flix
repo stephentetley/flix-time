@@ -45,31 +45,28 @@ namespace Time {
     }
 
     instance Eq[Year] {
-        pub def eq(x: Year, y: Year): Bool = Time/Year.equals(x, y)
+        pub def eq(x: Year, y: Year): Bool = 
+            import java.time.Year.equals(##java.lang.Object): Bool & Pure;
+            let Year(x1) = x;
+            let Year(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
+
     }
 
     instance Hash[Year] {
-        pub def hash(x: Year): Int32 = Time/Year.hashCode(x)
+        pub def hash(x: Year): Int32 =
+            import java.time.Year.hashCode(): Int32 & Pure;
+            let Year(x1) = x;
+            hashCode(x1)
     }
 
     instance Order[Year] {
         pub def compare(x: Year, y: Year): Comparison =
-            Time/Year.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.Year.compareTo(##java.time.Year): Int32 & Pure;
+            let Year(x1) = x;
+            let Year(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
-
-    /// instance LowerBound[Year] {
-    ///     pub def minValue(): Year =
-    ///         import static get java.time.Year.MIN_VALUE: Int32 & Pure as getMIN_VALUE;
-    ///         import static java.time.Year.of(Int32): ##java.time.Year & Pure;
-    ///         Year(of(getMIN_VALUE()))
-    /// }
-
-    /// instance UpperBound[Year] {
-    ///     pub def maxValue(): Year =
-    ///         import static get java.time.Year.MAX_VALUE: Int32 & Pure as getMAX_VALUE;
-    ///         import static java.time.Year.of(Int32): ##java.time.Year & Pure;
-    ///         Year(of(getMAX_VALUE()))
-    /// }
 
 }
 
@@ -127,6 +124,43 @@ namespace Time/Year {
         let ZoneId(x1) = x;
         Year(now(x1))
 
+    /// ## `at` functions
+
+    pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
+        import java.time.Year.atDay(Int32): ##java.time.LocalDate & Pure;
+        try {
+            let Year(x1) = x;
+            Some(LocalDate(atDay(x1, dayOfYear)))
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
+
+    pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
+        import java.time.Year.atMonth(Int32): ##java.time.YearMonth & Pure;
+        try {
+            let Year(x1) = x;
+            Some(YearMonth(atMonth(x1, month)))
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
+
+    pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
+        import java.time.Year.atMonth(##java.time.Month): ##java.time.YearMonth & Pure;
+        try {
+            let Year(x1) = x;
+            let m1 = Time/Month.marshal(month);
+            Some(YearMonth(atMonth(x1, m1)))
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
+
+    pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
+        import java.time.Year.atMonthDay(##java.time.MonthDay): ##java.time.LocalDate & Pure;
+        let Year(x1) = x;
+        let MonthDay(m1) = monthDay;
+        LocalDate(atMonthDay(x1, m1))
+
+
     /// ## `from` functions
 
     def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): Year = 
@@ -180,59 +214,7 @@ namespace Time/Year {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
-    pub def equals(x: Year, y: Year): Bool =
-        import java.time.Year.equals(##java.lang.Object): Bool & Pure;
-        let Year(x1) = x;
-        let Year(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
 
-
-    pub def hashCode(x: Year): Int32 =
-        import java.time.Year.hashCode(): Int32 & Pure;
-        let Year(x1) = x;
-        hashCode(x1)
-
-    pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
-        import java.time.Year.atDay(Int32): ##java.time.LocalDate & Pure;
-        try {
-            let Year(x1) = x;
-            Some(LocalDate(atDay(x1, dayOfYear)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
-
-    pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
-        import java.time.Year.atMonth(Int32): ##java.time.YearMonth & Pure;
-        try {
-            let Year(x1) = x;
-            Some(YearMonth(atMonth(x1, month)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
-
-    pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
-        import java.time.Year.atMonth(##java.time.Month): ##java.time.YearMonth & Pure;
-        try {
-            let Year(x1) = x;
-            let m1 = Time/Month.marshal(month);
-            Some(YearMonth(atMonth(x1, m1)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
-
-    pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
-        import java.time.Year.atMonthDay(##java.time.MonthDay): ##java.time.LocalDate & Pure;
-        let Year(x1) = x;
-        let MonthDay(m1) = monthDay;
-        LocalDate(atMonthDay(x1, m1))
-
-
-
-    pub def compareTo(x: Year, y: Year): Int32 =
-        import java.time.Year.compareTo(##java.time.Year): Int32 & Pure;
-        let Year(x1) = x;
-        let Year(y1) = y;
-        compareTo(x1, y1)
 
 
     ///

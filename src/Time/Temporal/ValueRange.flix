@@ -27,12 +27,20 @@ namespace Time/Temporal {
     }
 
     instance Eq[ValueRange] {
-        pub def eq(x: ValueRange, y: ValueRange): Bool = Time/Temporal/ValueRange.equals(x, y)
+        pub def eq(x: ValueRange, y: ValueRange): Bool =
+            import java.time.temporal.ValueRange.equals(##java.lang.Object): Bool & Pure;
+            let ValueRange(x1) = x;
+            let ValueRange(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[ValueRange] {
-        pub def hash(x: ValueRange): Int32 = Time/Temporal/ValueRange.hashCode(x)
+        pub def hash(x: ValueRange): Int32 =
+            import java.time.temporal.ValueRange.hashCode(): Int32 & Pure;
+            let ValueRange(x1) = x;
+            hashCode(x1)
     }
+
 
 }
 
@@ -64,17 +72,7 @@ namespace Time/Temporal/ValueRange {
         import static java.time.temporal.ValueRange.of(Int64, Int64, Int64, Int64): ##java.time.temporal.ValueRange & Pure;
         ValueRange(of(r.minSmallest, r.minLargest, r.maxSmallest, r.maxLargest))
 
-
-    pub def equals(x: ValueRange, y: ValueRange): Bool =
-        import java.time.temporal.ValueRange.equals(##java.lang.Object): Bool & Pure;
-        let ValueRange(x1) = x;
-        let ValueRange(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ValueRange): Int32 = 
-        import java.time.temporal.ValueRange.hashCode(): Int32 & Pure;
-        let ValueRange(x1) = x;
-        hashCode(x1) 
+ 
 
 
 

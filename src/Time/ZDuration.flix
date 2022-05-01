@@ -54,17 +54,29 @@ namespace Time {
     }
 
     instance Eq[ZDuration] {
-        pub def eq(x: ZDuration, y: ZDuration): Bool = Time/ZDuration.equals(x, y)
+        pub def eq(x: ZDuration, y: ZDuration): Bool =
+            import java.time.Duration.equals(##java.lang.Object): Bool & Pure;
+            let ZDuration(x1) = x;
+            let ZDuration(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[ZDuration] {
-        pub def hash(x: ZDuration): Int32 = Time/ZDuration.hashCode(x)
+        pub def hash(x: ZDuration): Int32 =
+            import java.time.Duration.hashCode(): Int32 & Pure;
+            let ZDuration(x1) = x;
+            hashCode(x1)
     }
 
     instance Order[ZDuration] {
         pub def compare(x: ZDuration, y: ZDuration): Comparison = 
-            Time/ZDuration.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.Duration.compareTo(##java.time.Duration): Int32 & Pure;
+            let ZDuration(x1) = x;
+            let ZDuration(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
+
+    instance Boxable[ZDuration]
 
     instance Add[ZDuration] {
         pub def add(x: ZDuration, y: ZDuration): ZDuration =
@@ -268,32 +280,13 @@ namespace Time/ZDuration {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
-        
+
     /// Note - alias of `toString`
     pub def format(x: ZDuration): String =
         import java.time.Duration.toString(): String & Pure;
         let ZDuration(x1) = x;
         toString(x1)
 
-    pub def equals(x: ZDuration, y: ZDuration): Bool =
-        import java.time.Duration.equals(##java.lang.Object): Bool & Pure;
-        let ZDuration(x1) = x;
-        let ZDuration(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ZDuration): Int32 = 
-        import java.time.Duration.hashCode(): Int32 & Pure;
-        let ZDuration(x1) = x;
-        hashCode(x1)
-
-    ///
-    /// Returns 1 if x > y, -1 if x < y, and 0 if x = y.
-    ///
-    pub def compareTo(x: ZDuration, y: ZDuration): Int32 =
-        import java.time.Duration.compareTo(##java.time.Duration): Int32 & Pure;
-        let ZDuration(x1) = x;
-        let ZDuration(y1) = y;
-        compareTo(x1, y1)
 
     
 

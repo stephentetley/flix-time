@@ -51,16 +51,29 @@ namespace Time {
     }
 
     instance Eq[LocalDateTime] {
-        pub def eq(x: LocalDateTime, y: LocalDateTime): Bool = Time/LocalDateTime.equals(x, y)
+        pub def eq(x: LocalDateTime, y: LocalDateTime): Bool =
+            import java.time.LocalDateTime.equals(##java.lang.Object): Bool & Pure;
+            let LocalDateTime(x1) = x;
+            let LocalDateTime(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
+
     }
 
     instance Hash[LocalDateTime] {
-        pub def hash(x: LocalDateTime): Int32 = Time/LocalDateTime.hashCode(x)
+        pub def hash(x: LocalDateTime): Int32 =
+            import java.time.LocalDateTime.hashCode(): Int32 & Pure;
+            let LocalDateTime(x1) = x;
+            hashCode(x1)
+
     }
 
     instance Order[LocalDateTime] {
         pub def compare(x: LocalDateTime, y: LocalDateTime): Comparison =
-            Time/LocalDateTime.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.LocalDateTime.compareTo(##java.time.chrono.ChronoLocalDateTime): Int32 & Pure;
+            let LocalDateTime(x1) = x;
+            let LocalDateTime(y1) = y;
+            let cy1 = y1 as ##java.time.chrono.ChronoLocalDateTime;
+            compareTo(x1, cy1) |> Comparison.fromInt32
     }
 
 
@@ -209,7 +222,7 @@ namespace Time/LocalDateTime {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
-        
+
     ///
     /// Returns LocalDateTime `x` as a String using `formatter`.
     ///
@@ -220,23 +233,6 @@ namespace Time/LocalDateTime {
         format(x1, fmtr)
 
 
-    pub def equals(x: LocalDateTime, y: LocalDateTime): Bool =
-        import java.time.LocalDateTime.equals(##java.lang.Object): Bool & Pure;
-        let LocalDateTime(x1) = x;
-        let LocalDateTime(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: LocalDateTime): Int32 =
-        import java.time.LocalDateTime.hashCode(): Int32 & Pure;
-        let LocalDateTime(x1) = x;
-        hashCode(x1)
-
-    pub def compareTo(x: LocalDateTime, y: LocalDateTime): Int32 =
-        import java.time.LocalDateTime.compareTo(##java.time.chrono.ChronoLocalDateTime): Int32 & Pure;
-        let LocalDateTime(x1) = x;
-        let LocalDateTime(y1) = y;
-        let cy1 = y1 as ##java.time.chrono.ChronoLocalDateTime;
-        compareTo(x1, cy1)
 
 
     ///

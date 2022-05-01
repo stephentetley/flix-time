@@ -30,14 +30,20 @@ namespace Time/Zone {
     }
 
     instance Eq[ZoneOffsetTransitionRule] {
-        pub def eq(x: ZoneOffsetTransitionRule, y: ZoneOffsetTransitionRule): Bool = Time/Zone/ZoneOffsetTransitionRule.equals(x, y)
+        pub def eq(x: ZoneOffsetTransitionRule, y: ZoneOffsetTransitionRule): Bool = 
+            import java.time.zone.ZoneOffsetTransitionRule.equals(##java.lang.Object): Bool & Pure;
+            let ZoneOffsetTransitionRule(x1) = x;
+            let ZoneOffsetTransitionRule(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
+
     }
 
     instance Hash[ZoneOffsetTransitionRule] {
-        pub def hash(x: ZoneOffsetTransitionRule): Int32 = Time/Zone/ZoneOffsetTransitionRule.hashCode(x)
+        pub def hash(x: ZoneOffsetTransitionRule): Int32 = 
+            import java.time.zone.ZoneOffsetTransitionRule.hashCode(): Int32 & Pure;
+            let ZoneOffsetTransitionRule(x1) = x;
+            hashCode(x1)
     }
-
-
 
 }
 
@@ -128,16 +134,6 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
             case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex)) as & Pure
         }
 
-    pub def equals(x: ZoneOffsetTransitionRule, y: ZoneOffsetTransitionRule): Bool =
-        import java.time.zone.ZoneOffsetTransitionRule.equals(##java.lang.Object): Bool & Pure;
-        let ZoneOffsetTransitionRule(x1) = x;
-        let ZoneOffsetTransitionRule(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ZoneOffsetTransitionRule): Int32 =
-        import java.time.zone.ZoneOffsetTransitionRule.hashCode(): Int32 & Pure;
-        let ZoneOffsetTransitionRule(x1) = x;
-        hashCode(x1)
 
 
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =

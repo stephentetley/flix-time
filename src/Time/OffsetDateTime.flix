@@ -50,18 +50,28 @@ namespace Time {
     }
 
     instance Eq[OffsetDateTime] {
-        pub def eq(x: OffsetDateTime, y: OffsetDateTime): Bool = Time/OffsetDateTime.equals(x, y)
+        pub def eq(x: OffsetDateTime, y: OffsetDateTime): Bool =
+            import java.time.OffsetDateTime.equals(##java.lang.Object): Bool & Pure;
+            let OffsetDateTime(x1) = x;
+            let OffsetDateTime(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
+
     }
 
     instance Hash[OffsetDateTime] {
-        pub def hash(x: OffsetDateTime): Int32 = Time/OffsetDateTime.hashCode(x)
+        pub def hash(x: OffsetDateTime): Int32 =
+            import java.time.OffsetDateTime.hashCode(): Int32 & Pure;
+            let OffsetDateTime(x1) = x;
+            hashCode(x1)
     }
 
     instance Order[OffsetDateTime] {
         pub def compare(x: OffsetDateTime, y: OffsetDateTime): Comparison =
-            Time/OffsetDateTime.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.OffsetDateTime.compareTo(##java.time.OffsetDateTime): Int32 & Pure;
+            let OffsetDateTime(x1) = x;
+            let OffsetDateTime(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
-
 
     instance Boxable[OffsetDateTime]
 
@@ -262,23 +272,6 @@ namespace Time/OffsetDateTime {
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
 
-
-    pub def equals(x: OffsetDateTime, y: OffsetDateTime): Bool =
-        import java.time.OffsetDateTime.equals(##java.lang.Object): Bool & Pure;
-        let OffsetDateTime(x1) = x;
-        let OffsetDateTime(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: OffsetDateTime): Int32 =
-        import java.time.OffsetDateTime.hashCode(): Int32 & Pure;
-        let OffsetDateTime(x1) = x;
-        hashCode(x1)
-
-    pub def compareTo(x: OffsetDateTime, y: OffsetDateTime): Int32 =
-        import java.time.OffsetDateTime.compareTo(##java.time.OffsetDateTime): Int32 & Pure;
-        let OffsetDateTime(x1) = x;
-        let OffsetDateTime(y1) = y;
-        compareTo(x1, y1)
 
 
     ///

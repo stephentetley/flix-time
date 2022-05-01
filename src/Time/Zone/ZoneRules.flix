@@ -30,12 +30,21 @@ namespace Time/Zone {
     }
 
     instance Eq[ZoneRules] {
-        pub def eq(x: ZoneRules, y: ZoneRules): Bool = Time/Zone/ZoneRules.equals(x, y)
+        pub def eq(x: ZoneRules, y: ZoneRules): Bool = 
+            import java.time.zone.ZoneRules.equals(##java.lang.Object): Bool & Pure;
+            let ZoneRules(x1) = x;
+            let ZoneRules(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[ZoneRules] {
-        pub def hash(x: ZoneRules): Int32 = Time/Zone/ZoneRules.hashCode(x)
+        pub def hash(x: ZoneRules): Int32 =
+            import java.time.zone.ZoneRules.hashCode(): Int32 & Pure;
+            let ZoneRules(x1) = x;
+            hashCode(x1)
+
     }
+
 
 }
 
@@ -67,16 +76,6 @@ namespace Time/Zone/ZoneRules {
         let ZoneOffset(x1) = offset;
         ZoneRules(of(x1))
 
-    pub def equals(x: ZoneRules, y: ZoneRules): Bool =
-        import java.time.zone.ZoneRules.equals(##java.lang.Object): Bool & Pure;
-        let ZoneRules(x1) = x;
-        let ZoneRules(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ZoneRules): Int32 =
-        import java.time.zone.ZoneRules.hashCode(): Int32 & Pure;
-        let ZoneRules(x1) = x;
-        hashCode(x1)
 
     pub def getOffset(inst: ZInstant, x: ZoneRules): ZoneOffset =
         import java.time.zone.ZoneRules.getOffset(##java.time.Instant): ##java.time.ZoneOffset & Pure;

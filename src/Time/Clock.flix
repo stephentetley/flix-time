@@ -36,7 +36,10 @@ namespace Time {
     }
 
     instance Hash[Clock] {
-        pub def hash(x: Clock): Int32 = Time/Clock.hashCode(x)
+        pub def hash(x: Clock): Int32 =
+            import java.time.Clock.hashCode(): Int32 & Pure;
+            let Clock(x1) = x;
+            hashCode(x1)
     }
 
 }
@@ -86,10 +89,7 @@ namespace Time/Clock {
         Clock(systemUTC())
 
 
-    pub def hashCode(x: Clock): Int32 =
-        import java.time.Clock.hashCode(): Int32 & Pure;
-        let Clock(x1) = x;
-        hashCode(x1)
+
 
 
     pub def tick(d: ZDuration, c: Clock): Clock & Impure =

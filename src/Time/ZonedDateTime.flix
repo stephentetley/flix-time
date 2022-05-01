@@ -49,17 +49,31 @@ namespace Time {
     }
 
     instance Eq[ZonedDateTime] {
-        pub def eq(x: ZonedDateTime, y: ZonedDateTime): Bool = Time/ZonedDateTime.equals(x, y)
+        pub def eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
+            import java.time.ZonedDateTime.equals(##java.lang.Object): Bool & Pure;
+            let ZonedDateTime(x1) = x;
+            let ZonedDateTime(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)        
     }
 
     instance Hash[ZonedDateTime] {
-        pub def hash(x: ZonedDateTime): Int32 = Time/ZonedDateTime.hashCode(x)
+        pub def hash(x: ZonedDateTime): Int32 =
+            import java.time.ZonedDateTime.hashCode(): Int32 & Pure;
+            let ZonedDateTime(x1) = x;
+            hashCode(x1)
     }
 
     instance Order[ZonedDateTime] {
         pub def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison =
-            Time/ZonedDateTime.compareTo(x,y) |> Comparison.fromInt32
+            // Have to use ChronoZonedDateTime...
+            import java.time.chrono.ChronoZonedDateTime.compareTo(##java.time.chrono.ChronoZonedDateTime): Int32 & Pure;
+            let ZonedDateTime(x1) = x;
+            let ZonedDateTime(y1) = y;
+            let cx1 = x1 as ##java.time.chrono.ChronoZonedDateTime;
+            let cy1 = y1 as ##java.time.chrono.ChronoZonedDateTime;
+            compareTo(cx1, cy1) |> Comparison.fromInt32
     }
+
 
     instance Boxable[ZonedDateTime]
 
@@ -184,7 +198,7 @@ namespace Time/ZonedDateTime {
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
         }
-        
+
     ///
     /// Returns ZonedDateTime `x` as a String using `formatter`.
     ///
@@ -195,28 +209,6 @@ namespace Time/ZonedDateTime {
         format(x1, fmtr)
 
 
-    pub def equals(x: ZonedDateTime, y: ZonedDateTime): Bool =
-        import java.time.ZonedDateTime.equals(##java.lang.Object): Bool & Pure;
-        let ZonedDateTime(x1) = x;
-        let ZonedDateTime(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.hashCode(): Int32 & Pure;
-        let ZonedDateTime(x1) = x;
-        hashCode(x1)
-
-
-    ///
-    /// Returns `true` if `x` == `y`.
-    ///
-    pub def compareTo(x: ZonedDateTime, y: ZonedDateTime): Int32 =
-        import java.time.chrono.ChronoZonedDateTime.compareTo(##java.time.chrono.ChronoZonedDateTime): Int32 & Pure;
-        let ZonedDateTime(x1) = x;
-        let ZonedDateTime(y1) = y;
-        let cx1 = x1 as ##java.time.chrono.ChronoZonedDateTime;
-        let cy1 = y1 as ##java.time.chrono.ChronoZonedDateTime;
-        compareTo(cx1, cy1)
 
 
     ///

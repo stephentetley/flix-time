@@ -52,16 +52,27 @@ namespace Time {
 
 
     instance Eq[LocalTime] {
-        pub def eq(x: LocalTime, y: LocalTime): Bool = Time/LocalTime.equals(x, y)
+        pub def eq(x: LocalTime, y: LocalTime): Bool =
+            import java.time.LocalTime.equals(##java.lang.Object): Bool & Pure;
+            let LocalTime(x1) = x;
+            let LocalTime(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
     
     instance Hash[LocalTime] {
-        pub def hash(x: LocalTime): Int32 = Time/LocalTime.hashCode(x)
+        pub def hash(x: LocalTime): Int32 =
+            import java.time.LocalTime.hashCode(): Int32 & Pure;
+            let LocalTime(x1) = x;
+            hashCode(x1)
+
     }
 
     instance Order[LocalTime] {
         pub def compare(x: LocalTime, y: LocalTime): Comparison = 
-            Time/LocalTime.compareTo(x,y) |> Comparison.fromInt32
+            import java.time.LocalTime.compareTo(##java.time.LocalTime): Int32 & Pure;
+            let LocalTime(x1) = x;
+            let LocalTime(y1) = y;
+            compareTo(x1, y1) |> Comparison.fromInt32
     }
 
     instance Boxable[LocalTime]
@@ -214,25 +225,6 @@ namespace Time/LocalTime {
         format(x1, fmtr)
 
 
-    pub def equals(x: LocalTime, y: LocalTime): Bool =
-        import java.time.LocalTime.equals(##java.lang.Object): Bool & Pure;
-        let LocalTime(x1) = x;
-        let LocalTime(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
-
-    pub def hashCode(x: LocalTime): Int32 = 
-        import java.time.LocalTime.hashCode(): Int32 & Pure;
-        let LocalTime(x1) = x;
-        hashCode(x1)
-
-    ///
-    /// Returns
-    ///
-    pub def compareTo(x: LocalTime, y: LocalTime): Int32 =
-        import java.time.LocalTime.compareTo(##java.time.LocalTime): Int32 & Pure;
-        let LocalTime(x1) = x;
-        let LocalTime(y1) = y;
-        compareTo(x1, y1)
 
 
     ///
