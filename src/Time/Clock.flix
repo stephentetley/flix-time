@@ -124,7 +124,7 @@ namespace Time/Clock {
         ZInstant(instant(x1))
 
 
-    /// ## Get/Set
+    /// ## Getters and Setters
 
     pub def getZone(c: Clock): ZoneId =
         import java.time.Clock.getZone(): ##java.time.ZoneId & Pure;

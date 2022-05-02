@@ -317,89 +317,8 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(y1) = y;
         let cmp = timeLineOrder();
         compare(cmp, x1 as ##java.lang.Object, y1 as ##java.lang.Object) |> Comparison.fromInt32
-        
 
-    pub def plusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.plusYears(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(plusYears(x1, years))
-
-    pub def minusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.minusYears(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(minusYears(x1, years))
-
-    pub def plusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.plusMonths(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(plusMonths(x1, months))
-
-    pub def minusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.minusMonths(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(minusMonths(x1, months))
-
-    pub def plusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.plusWeeks(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(plusWeeks(x1, weeks))
-
-    pub def minusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.minusWeeks(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(minusWeeks(x1, weeks))
-
-    pub def plusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.plusDays(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(plusDays(x1, days))
-
-    pub def minusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.minusDays(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(minusDays(x1, days))
-
-    pub def plusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.plusHours(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(plusHours(x1, hours))
-
-    pub def minusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.minusHours(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(minusHours(x1, hours))
-
-    pub def plusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.plusMinutes(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(plusMinutes(x1, minutes))
-
-    pub def minusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.minusMinutes(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(minusMinutes(x1, minutes))
-
-    pub def plusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.plusSeconds(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(plusSeconds(x1, seconds))
-
-    pub def minusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.minusSeconds(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(minusSeconds(x1, seconds))
-
-    pub def plusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.plusNanos(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(plusNanos(x1, nanos))
-
-    pub def minusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
-        import java.time.OffsetDateTime.minusNanos(Int64): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(minusNanos(x1, nanos))
-
-
+    /// ## Getters and Setters
     /// Get/Set...
 
     pub def getOffset(x: OffsetDateTime): ZoneOffset =
@@ -523,7 +442,7 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         OffsetDateTime(withYear(x1, year))
 
-   /// MonthDay methods
+    /// MonthDay methods
 
     pub def getMonthDay(d: OffsetDateTime): MonthDay = 
         import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay & Pure as fromTA;
@@ -590,6 +509,93 @@ namespace Time/OffsetDateTime {
         let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
         OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
 
+    pub def getEpochDay(x: OffsetDateTime): Int64 = 
+        import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;        
+        getLongHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, x)
+
+
+
+    pub def plusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.plusYears(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(plusYears(x1, years))
+
+    pub def minusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.minusYears(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(minusYears(x1, years))
+
+    pub def plusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.plusMonths(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(plusMonths(x1, months))
+
+    pub def minusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.minusMonths(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(minusMonths(x1, months))
+
+    pub def plusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.plusWeeks(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(plusWeeks(x1, weeks))
+
+    pub def minusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.minusWeeks(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(minusWeeks(x1, weeks))
+
+    pub def plusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.plusDays(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(plusDays(x1, days))
+
+    pub def minusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.minusDays(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(minusDays(x1, days))
+
+    pub def plusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.plusHours(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(plusHours(x1, hours))
+
+    pub def minusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.minusHours(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(minusHours(x1, hours))
+
+    pub def plusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.plusMinutes(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(plusMinutes(x1, minutes))
+
+    pub def minusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.minusMinutes(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(minusMinutes(x1, minutes))
+
+    pub def plusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.plusSeconds(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(plusSeconds(x1, seconds))
+
+    pub def minusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.minusSeconds(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(minusSeconds(x1, seconds))
+
+    pub def plusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.plusNanos(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(plusNanos(x1, nanos))
+
+    pub def minusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
+        import java.time.OffsetDateTime.minusNanos(Int64): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(minusNanos(x1, nanos))
+
+
 
 
     /// Generic
@@ -608,9 +614,6 @@ namespace Time/OffsetDateTime {
         getLong(x1, t)
 
 
-    pub def getEpochDay(x: OffsetDateTime): Int64 = 
-        import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;        
-        getLongHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, x)
 
     /// pub def plus(x: OffsetDateTime, r: {amount :: Int64, temporalUnit :: a}): OffsetDateTime with TemporalUnit[a] =
     ///     import java.time.OffsetDateTime.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.OffsetDateTime & Pure;         

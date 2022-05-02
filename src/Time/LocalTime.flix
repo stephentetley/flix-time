@@ -254,6 +254,48 @@ namespace Time/LocalTime {
         import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
         getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
 
+    /// ## Getters and Setters
+
+    pub def getHour(x: LocalTime): Int32 =
+        import java.time.LocalTime.getHour(): Int32 & Pure;
+        let LocalTime(x1) = x;
+        getHour(x1)
+
+    pub def setHour(hour: Int32, x: LocalTime): LocalTime =
+        import java.time.LocalTime.withHour(Int32): ##java.time.LocalTime & Pure;
+        let LocalTime(x1) = x;
+        LocalTime(withHour(x1, hour))
+
+    pub def getMinute(x: LocalTime): Int32 =
+        import java.time.LocalTime.getMinute(): Int32 & Pure;
+        let LocalTime(x1) = x;
+        getMinute(x1)
+
+    pub def setMinute(minute: Int32, x: LocalTime): LocalTime =
+        import java.time.LocalTime.withMinute(Int32): ##java.time.LocalTime & Pure;
+        let LocalTime(x1) = x;
+        LocalTime(withMinute(x1, minute))
+
+    pub def getSecond(x: LocalTime): Int32 =
+        import java.time.LocalTime.getSecond(): Int32 & Pure;
+        let LocalTime(x1) = x;
+        getSecond(x1)
+
+    pub def setSecond(second: Int32, x: LocalTime): LocalTime =
+        import java.time.LocalTime.withSecond(Int32): ##java.time.LocalTime & Pure;
+        let LocalTime(x1) = x;
+        LocalTime(withSecond(x1, second))
+
+    pub def getNano(x: LocalTime): Int32 =
+        import java.time.LocalTime.getNano(): Int32 & Pure;
+        let LocalTime(x1) = x;
+        getNano(x1)
+
+    pub def setNano(nano: Int32, x: LocalTime): LocalTime =
+        import java.time.LocalTime.withNano(Int32): ##java.time.LocalTime & Pure;
+        let LocalTime(x1) = x;
+        LocalTime(withNano(x1, nano))
+
 
     pub def plusHours(x: LocalTime, hours: Int64): LocalTime =
         import java.time.LocalTime.plusHours(Int64): ##java.time.LocalTime & Pure;
@@ -295,47 +337,7 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         LocalTime(minusNanos(x1, nanos))
 
-    /// Get/Set
 
-    pub def getHour(x: LocalTime): Int32 =
-        import java.time.LocalTime.getHour(): Int32 & Pure;
-        let LocalTime(x1) = x;
-        getHour(x1)
-
-    pub def setHour(hour: Int32, x: LocalTime): LocalTime =
-        import java.time.LocalTime.withHour(Int32): ##java.time.LocalTime & Pure;
-        let LocalTime(x1) = x;
-        LocalTime(withHour(x1, hour))
-
-    pub def getMinute(x: LocalTime): Int32 =
-        import java.time.LocalTime.getMinute(): Int32 & Pure;
-        let LocalTime(x1) = x;
-        getMinute(x1)
-
-    pub def setMinute(minute: Int32, x: LocalTime): LocalTime =
-        import java.time.LocalTime.withMinute(Int32): ##java.time.LocalTime & Pure;
-        let LocalTime(x1) = x;
-        LocalTime(withMinute(x1, minute))
-
-    pub def getSecond(x: LocalTime): Int32 =
-        import java.time.LocalTime.getSecond(): Int32 & Pure;
-        let LocalTime(x1) = x;
-        getSecond(x1)
-
-    pub def setSecond(second: Int32, x: LocalTime): LocalTime =
-        import java.time.LocalTime.withSecond(Int32): ##java.time.LocalTime & Pure;
-        let LocalTime(x1) = x;
-        LocalTime(withSecond(x1, second))
-
-    pub def getNano(x: LocalTime): Int32 =
-        import java.time.LocalTime.getNano(): Int32 & Pure;
-        let LocalTime(x1) = x;
-        getNano(x1)
-
-    pub def setNano(nano: Int32, x: LocalTime): LocalTime =
-        import java.time.LocalTime.withNano(Int32): ##java.time.LocalTime & Pure;
-        let LocalTime(x1) = x;
-        LocalTime(withNano(x1, nano))
 
     /// Generic
 

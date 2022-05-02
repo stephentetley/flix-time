@@ -209,7 +209,7 @@ namespace Time/MonthDay {
         isValidYear(x1, year)
         
 
-    /// Get/Set...
+    /// ## Getters and Setters
 
     pub def getDayOfMonth(x: MonthDay): Int32 =
         import java.time.MonthDay.getDayOfMonth(): Int32 & Pure;

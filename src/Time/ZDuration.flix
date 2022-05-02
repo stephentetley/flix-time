@@ -303,7 +303,18 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         isNegative(x1)
 
-    /// Get/Set...
+    /// ## Duration functions
+
+    ///
+    /// Returns the absolute value of `x`.
+    ///
+    pub def abs(x: ZDuration): ZDuration =
+        import java.time.Duration.abs(): ##java.time.Duration & Pure;
+        let ZDuration(x1) = x;
+        ZDuration(abs(x1))
+
+
+    /// ## Getters and Setters
 
     ///
     /// Get the nanosecond part of the duration `x`.
@@ -337,13 +348,6 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         ZDuration(withSeconds(x1, seconds))
 
-    ///
-    /// Returns the absolute value of `x`.
-    ///
-    pub def abs(x: ZDuration): ZDuration =
-        import java.time.Duration.abs(): ##java.time.Duration & Pure;
-        let ZDuration(x1) = x;
-        ZDuration(abs(x1))
 
 
     pub def multipliedBy(x: ZDuration, y: Int64): ZDuration =

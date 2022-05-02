@@ -225,47 +225,7 @@ namespace Time/OffsetTime {
         import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
         getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
 
-    pub def plusHours(x: OffsetTime, hours: Int64): OffsetTime =
-        import java.time.OffsetTime.plusHours(Int64): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(plusHours(x1, hours))
-
-    pub def minusHours(x: OffsetTime, hours: Int64): OffsetTime =
-        import java.time.OffsetTime.minusHours(Int64): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(minusHours(x1, hours))
-
-    pub def plusMinutes(x: OffsetTime, minutes: Int64): OffsetTime =
-        import java.time.OffsetTime.plusMinutes(Int64): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(plusMinutes(x1, minutes))
-
-    pub def minusMinutes(x: OffsetTime, minutes: Int64): OffsetTime =
-        import java.time.OffsetTime.minusMinutes(Int64): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(minusMinutes(x1, minutes))
-
-    pub def plusSeconds(x: OffsetTime, seconds: Int64): OffsetTime =
-        import java.time.OffsetTime.plusSeconds(Int64): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(plusSeconds(x1, seconds))
-
-    pub def minusSeconds(x: OffsetTime, seconds: Int64): OffsetTime =
-        import java.time.OffsetTime.minusSeconds(Int64): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(minusSeconds(x1, seconds))
-
-    pub def plusNanos(x: OffsetTime, nanos: Int64): OffsetTime =
-        import java.time.OffsetTime.plusNanos(Int64): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(plusNanos(x1, nanos))
-
-    pub def minusNanos(x: OffsetTime, nanos: Int64): OffsetTime =
-        import java.time.OffsetTime.minusNanos(Int64): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(minusNanos(x1, nanos))
-
-    /// Get/Set...
+    /// ## Getters and Setters
 
     pub def getHour(x: OffsetTime): Int32 =
         import java.time.OffsetTime.getHour(): Int32 & Pure;
@@ -323,6 +283,48 @@ namespace Time/OffsetTime {
         let OffsetTime(x1) = x;
         let ZoneOffset(o1) = offset;
         OffsetTime(withOffsetSameLocal(x1, o1))
+
+
+
+    pub def plusHours(x: OffsetTime, hours: Int64): OffsetTime =
+        import java.time.OffsetTime.plusHours(Int64): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(plusHours(x1, hours))
+
+    pub def minusHours(x: OffsetTime, hours: Int64): OffsetTime =
+        import java.time.OffsetTime.minusHours(Int64): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(minusHours(x1, hours))
+
+    pub def plusMinutes(x: OffsetTime, minutes: Int64): OffsetTime =
+        import java.time.OffsetTime.plusMinutes(Int64): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(plusMinutes(x1, minutes))
+
+    pub def minusMinutes(x: OffsetTime, minutes: Int64): OffsetTime =
+        import java.time.OffsetTime.minusMinutes(Int64): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(minusMinutes(x1, minutes))
+
+    pub def plusSeconds(x: OffsetTime, seconds: Int64): OffsetTime =
+        import java.time.OffsetTime.plusSeconds(Int64): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(plusSeconds(x1, seconds))
+
+    pub def minusSeconds(x: OffsetTime, seconds: Int64): OffsetTime =
+        import java.time.OffsetTime.minusSeconds(Int64): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(minusSeconds(x1, seconds))
+
+    pub def plusNanos(x: OffsetTime, nanos: Int64): OffsetTime =
+        import java.time.OffsetTime.plusNanos(Int64): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(plusNanos(x1, nanos))
+
+    pub def minusNanos(x: OffsetTime, nanos: Int64): OffsetTime =
+        import java.time.OffsetTime.minusNanos(Int64): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(minusNanos(x1, nanos))
 
     /// Generic
 

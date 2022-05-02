@@ -261,89 +261,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getValue(getMonth(x1))
 
-        
-
-    pub def plusYears(x: LocalDateTime, years: Int64): LocalDateTime =
-        import java.time.LocalDateTime.plusYears(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(plusYears(x1, years))
-
-    pub def minusYears(x: LocalDateTime, years: Int64): LocalDateTime =
-        import java.time.LocalDateTime.minusYears(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(minusYears(x1, years))
-
-    pub def plusMonths(x: LocalDateTime, months: Int64): LocalDateTime =
-        import java.time.LocalDateTime.plusMonths(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(plusMonths(x1, months))
-
-    pub def minusMonths(x: LocalDateTime, months: Int64): LocalDateTime =
-        import java.time.LocalDateTime.minusMonths(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(minusMonths(x1, months))
-
-    pub def plusWeeks(x: LocalDateTime, weeks: Int64): LocalDateTime =
-        import java.time.LocalDateTime.plusWeeks(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(plusWeeks(x1, weeks))
-
-    pub def minusWeeks(x: LocalDateTime, weeks: Int64): LocalDateTime =
-        import java.time.LocalDateTime.minusWeeks(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(minusWeeks(x1, weeks))
-
-    pub def plusDays(x: LocalDateTime, days: Int64): LocalDateTime =
-        import java.time.LocalDateTime.plusDays(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(plusDays(x1, days))
-
-    pub def minusDays(x: LocalDateTime, days: Int64): LocalDateTime =
-        import java.time.LocalDateTime.minusDays(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(minusDays(x1, days))
-
-    pub def plusHours(x: LocalDateTime, hours: Int64): LocalDateTime =
-        import java.time.LocalDateTime.plusHours(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(plusHours(x1, hours))
-
-    pub def minusHours(x: LocalDateTime, hours: Int64): LocalDateTime =
-        import java.time.LocalDateTime.minusHours(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(minusHours(x1, hours))
-
-    pub def plusMinutes(x: LocalDateTime, minutes: Int64): LocalDateTime =
-        import java.time.LocalDateTime.plusMinutes(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(plusMinutes(x1, minutes))
-
-    pub def minusMinutes(x: LocalDateTime, minutes: Int64): LocalDateTime =
-        import java.time.LocalDateTime.minusMinutes(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(minusMinutes(x1, minutes))
-
-    pub def plusSeconds(x: LocalDateTime, seconds: Int64): LocalDateTime =
-        import java.time.LocalDateTime.plusSeconds(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(plusSeconds(x1, seconds))
-
-    pub def minusSeconds(x: LocalDateTime, seconds: Int64): LocalDateTime =
-        import java.time.LocalDateTime.minusSeconds(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(minusSeconds(x1, seconds))
-
-    pub def plusNanos(x: LocalDateTime, nanos: Int64): LocalDateTime =
-        import java.time.LocalDateTime.plusNanos(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(plusNanos(x1, nanos))
-
-    pub def minusNanos(x: LocalDateTime, nanos: Int64): LocalDateTime =
-        import java.time.LocalDateTime.minusNanos(Int64): ##java.time.LocalDateTime & Pure;
-        let LocalDateTime(x1) = x;
-        LocalDateTime(minusNanos(x1, nanos))
-
-    /// Get/Set
+    /// ## Getters and Setters
 
     pub def getYear(x: LocalDateTime): Int32 =
         import java.time.LocalDateTime.getYear(): Int32 & Pure;
@@ -429,6 +347,88 @@ namespace Time/LocalDateTime {
         import java.time.LocalDateTime.withNano(Int32): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
         LocalDateTime(withNano(x1, nano))
+
+    pub def plusYears(x: LocalDateTime, years: Int64): LocalDateTime =
+        import java.time.LocalDateTime.plusYears(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(plusYears(x1, years))
+
+    pub def minusYears(x: LocalDateTime, years: Int64): LocalDateTime =
+        import java.time.LocalDateTime.minusYears(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(minusYears(x1, years))
+
+    pub def plusMonths(x: LocalDateTime, months: Int64): LocalDateTime =
+        import java.time.LocalDateTime.plusMonths(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(plusMonths(x1, months))
+
+    pub def minusMonths(x: LocalDateTime, months: Int64): LocalDateTime =
+        import java.time.LocalDateTime.minusMonths(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(minusMonths(x1, months))
+
+    pub def plusWeeks(x: LocalDateTime, weeks: Int64): LocalDateTime =
+        import java.time.LocalDateTime.plusWeeks(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(plusWeeks(x1, weeks))
+
+    pub def minusWeeks(x: LocalDateTime, weeks: Int64): LocalDateTime =
+        import java.time.LocalDateTime.minusWeeks(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(minusWeeks(x1, weeks))
+
+    pub def plusDays(x: LocalDateTime, days: Int64): LocalDateTime =
+        import java.time.LocalDateTime.plusDays(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(plusDays(x1, days))
+
+    pub def minusDays(x: LocalDateTime, days: Int64): LocalDateTime =
+        import java.time.LocalDateTime.minusDays(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(minusDays(x1, days))
+
+    pub def plusHours(x: LocalDateTime, hours: Int64): LocalDateTime =
+        import java.time.LocalDateTime.plusHours(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(plusHours(x1, hours))
+
+    pub def minusHours(x: LocalDateTime, hours: Int64): LocalDateTime =
+        import java.time.LocalDateTime.minusHours(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(minusHours(x1, hours))
+
+    pub def plusMinutes(x: LocalDateTime, minutes: Int64): LocalDateTime =
+        import java.time.LocalDateTime.plusMinutes(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(plusMinutes(x1, minutes))
+
+    pub def minusMinutes(x: LocalDateTime, minutes: Int64): LocalDateTime =
+        import java.time.LocalDateTime.minusMinutes(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(minusMinutes(x1, minutes))
+
+    pub def plusSeconds(x: LocalDateTime, seconds: Int64): LocalDateTime =
+        import java.time.LocalDateTime.plusSeconds(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(plusSeconds(x1, seconds))
+
+    pub def minusSeconds(x: LocalDateTime, seconds: Int64): LocalDateTime =
+        import java.time.LocalDateTime.minusSeconds(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(minusSeconds(x1, seconds))
+
+    pub def plusNanos(x: LocalDateTime, nanos: Int64): LocalDateTime =
+        import java.time.LocalDateTime.plusNanos(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(plusNanos(x1, nanos))
+
+    pub def minusNanos(x: LocalDateTime, nanos: Int64): LocalDateTime =
+        import java.time.LocalDateTime.minusNanos(Int64): ##java.time.LocalDateTime & Pure;
+        let LocalDateTime(x1) = x;
+        LocalDateTime(minusNanos(x1, nanos))
+
+
 
 
     /// Generic

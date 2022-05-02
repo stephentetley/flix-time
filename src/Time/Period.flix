@@ -192,8 +192,37 @@ namespace Time/Period {
         let Period(x1) = x;
         Period(normalized(x1))
 
+    /// ## Getters and Setters
 
+    pub def getYears(x: Period): Int32 =
+        import java.time.Period.getYears(): Int32 & Pure;
+        let Period(x1) = x;
+        getYears(x1)
 
+    pub def setYears(years: Int32, x: Period): Period =
+        import java.time.Period.withYears(Int32): ##java.time.Period & Pure;
+        let Period(x1) = x;
+        Period(withYears(x1, years))
+
+    pub def getMonths(x: Period): Int32 =
+        import java.time.Period.getMonths(): Int32 & Pure;
+        let Period(x1) = x;
+        getMonths(x1)
+
+    pub def setMonths(months: Int32, x: Period): Period =
+        import java.time.Period.withMonths(Int32): ##java.time.Period & Pure;
+        let Period(x1) = x;
+        Period(withMonths(x1, months))
+
+    pub def getDays(x: Period): Int32 =
+        import java.time.Period.getDays(): Int32 & Pure;
+        let Period(x1) = x;
+        getDays(x1)
+
+    pub def setDays(days: Int32, x: Period): Period =
+        import java.time.Period.withDays(Int32): ##java.time.Period & Pure;
+        let Period(x1) = x;
+        Period(withDays(x1, days))
 
 
 
@@ -229,38 +258,7 @@ namespace Time/Period {
         let Period(x1) = x;
         Period(minusDays(x1, days))
 
-    /// Get/Set...
 
-
-    pub def getYears(x: Period): Int32 =
-        import java.time.Period.getYears(): Int32 & Pure;
-        let Period(x1) = x;
-        getYears(x1)
-
-    pub def setYears(years: Int32, x: Period): Period =
-        import java.time.Period.withYears(Int32): ##java.time.Period & Pure;
-        let Period(x1) = x;
-        Period(withYears(x1, years))
-
-    pub def getMonths(x: Period): Int32 =
-        import java.time.Period.getMonths(): Int32 & Pure;
-        let Period(x1) = x;
-        getMonths(x1)
-
-    pub def setMonths(months: Int32, x: Period): Period =
-        import java.time.Period.withMonths(Int32): ##java.time.Period & Pure;
-        let Period(x1) = x;
-        Period(withMonths(x1, months))
-
-    pub def getDays(x: Period): Int32 =
-        import java.time.Period.getDays(): Int32 & Pure;
-        let Period(x1) = x;
-        getDays(x1)
-
-    pub def setDays(days: Int32, x: Period): Period =
-        import java.time.Period.withDays(Int32): ##java.time.Period & Pure;
-        let Period(x1) = x;
-        Period(withDays(x1, days))
 
 
     /// Note returns Period as LocalDate has no time component

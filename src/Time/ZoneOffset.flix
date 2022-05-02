@@ -178,18 +178,6 @@ namespace Time/ZoneOffset {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    /// /// `getLong` specialized
-
-    /// def getLongHelper(field: ##java.time.temporal.TemporalField, x: ZoneOffset): Int64 =
-    ///     import java.time.ZoneOffset.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-    ///     try {
-    ///         let ZoneOffset(x1) = x;
-    ///         getLong(x1, field)
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
 
     /// # `range` specialized
     

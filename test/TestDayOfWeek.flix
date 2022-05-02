@@ -32,16 +32,6 @@ namespace TestDayOfWeek {
     def neq01(): Bool = Time/DayOfWeek.Monday != Time/DayOfWeek.Tuesday
 
 
-    /////////////////////////////////////////////////////////////////////////////
-    // range                                                                   //
-    /////////////////////////////////////////////////////////////////////////////
-
-    @test
-    def range01(): Time/Temporal.ValueRange & Impure = 
-        let d1 = Time/DayOfWeek.Sunday;        
-        let r1 = Time/DayOfWeek.rangeDayOfWeek(d1);
-        println("DayOfWeek.range01(): ${r1}");
-        r1
 
     /////////////////////////////////////////////////////////////////////////////
     // fromLocalDate                                                           //

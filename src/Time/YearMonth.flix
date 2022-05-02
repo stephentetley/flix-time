@@ -221,27 +221,7 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         lengthOfYear(x1)
 
-    pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
-        import java.time.YearMonth.plusMonths(Int64): ##java.time.YearMonth & Pure;
-        let YearMonth(x1) = x;
-        YearMonth(plusMonths(x1, months))
-
-    pub def minusMonths(x: YearMonth, months: Int64): YearMonth =
-        import java.time.YearMonth.minusMonths(Int64): ##java.time.YearMonth & Pure;
-        let YearMonth(x1) = x;
-        YearMonth(minusMonths(x1, months))
-
-    pub def plusYears(x: YearMonth, years: Int64): YearMonth =
-        import java.time.YearMonth.plusYears(Int64): ##java.time.YearMonth & Pure;
-        let YearMonth(x1) = x;
-        YearMonth(plusYears(x1, years))
-
-    pub def minusYears(x: YearMonth, years: Int64): YearMonth =
-        import java.time.YearMonth.minusYears(Int64): ##java.time.YearMonth & Pure;
-        let YearMonth(x1) = x;
-        YearMonth(minusYears(x1, years))
-
-    /// Get/Set...
+    /// ## Getters and Setters
 
     pub def getMonth(x: YearMonth): Month =
         import java.time.YearMonth.getMonth(): ##java.time.Month & Pure;
@@ -271,6 +251,28 @@ namespace Time/YearMonth {
         import java.time.YearMonth.withYear(Int32): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
         YearMonth(withYear(x1, year))
+        
+    pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
+        import java.time.YearMonth.plusMonths(Int64): ##java.time.YearMonth & Pure;
+        let YearMonth(x1) = x;
+        YearMonth(plusMonths(x1, months))
+
+    pub def minusMonths(x: YearMonth, months: Int64): YearMonth =
+        import java.time.YearMonth.minusMonths(Int64): ##java.time.YearMonth & Pure;
+        let YearMonth(x1) = x;
+        YearMonth(minusMonths(x1, months))
+
+    pub def plusYears(x: YearMonth, years: Int64): YearMonth =
+        import java.time.YearMonth.plusYears(Int64): ##java.time.YearMonth & Pure;
+        let YearMonth(x1) = x;
+        YearMonth(plusYears(x1, years))
+
+    pub def minusYears(x: YearMonth, years: Int64): YearMonth =
+        import java.time.YearMonth.minusYears(Int64): ##java.time.YearMonth & Pure;
+        let YearMonth(x1) = x;
+        YearMonth(minusYears(x1, years))
+
+
 
     /// Generic
 

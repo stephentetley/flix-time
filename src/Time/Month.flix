@@ -224,31 +224,8 @@ namespace Time/Month {
         unmarshal(x2)
 
     /// Generic
+    /// `get` specialized but only MonthOfYear is supported which equivalant to `getValue`
 
-
-
-
-
-    /// # `get` specialized but only MonthOfYear is supported which equivalant to `getValue`
-
-
-    /// # `range` specialized
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: Month): ValueRange =
-        import java.time.Month.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let x1 = marshal(x);
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    pub def rangeMonthOfYear(z: Month): ValueRange =       
-        import static get java.time.temporal.ChronoField.MONTH_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_MONTH_OF_YEAR;            
-        rangeHelper(get_MONTH_OF_YEAR() as ##java.time.temporal.TemporalField, z)
-
-    
     /// # `adjustInto` specialized - synonymous with `setMonth` in the respective modules:
     /// LocalDate
     /// LocalDateTime

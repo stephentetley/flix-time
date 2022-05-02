@@ -222,7 +222,7 @@ namespace Time/ZInstant {
         isAfter(x1, y1)
 
     
-
+    /// ## Getters and Setters
 
     pub def getEpochSecond(x: ZInstant): Int64 =
         import java.time.Instant.getEpochSecond(): Int64 & Pure;
@@ -233,7 +233,41 @@ namespace Time/ZInstant {
         import java.time.Instant.getNano(): Int32 & Pure;
         let ZInstant(x1) = x;
         getNano(x1)
-        
+
+
+    pub def getNanoOfSecond(x: ZInstant): Int64 =
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        getLongHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def setNanoOfSecond(i: Int64, x: ZInstant): ZInstant =
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        withTemporalFieldHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
+
+    pub def getMicroOfSecond(x: ZInstant): Int64 =
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+        getLongHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def setMicroOfSecond(i: Int64, x: ZInstant): ZInstant =
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+        withTemporalFieldHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
+
+    pub def getMilliOfSecond(x: ZInstant): Int64 =
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+        getLongHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, x)
+
+    pub def setMilliOfSecond(i: Int64, x: ZInstant): ZInstant =
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+        withTemporalFieldHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
+
+    pub def getInstantSeconds(x: ZInstant): Int64 =
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
+        getLongHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
+
+    pub def setInstantSeconds(i: Int64, x: ZInstant): ZInstant =
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
+        withTemporalFieldHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, i, x)
+
+
     pub def plusSeconds(x: ZInstant, seconds: Int64): ZInstant =
         import java.time.Instant.plusSeconds(Int64): ##java.time.Instant & Pure;
         let ZInstant(x1) = x;
@@ -276,21 +310,6 @@ namespace Time/ZInstant {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def getNanoOfSecond(x: ZInstant): Int64 =
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
-        getLongHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-    pub def getMicroOfSecond(x: ZInstant): Int64 =
-        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
-        getLongHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-    pub def getMilliOfSecond(x: ZInstant): Int64 =
-        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
-        getLongHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-    pub def getInstantSeconds(x: ZInstant): Int64 =
-        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
-        getLongHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
 
 
     /// /// # `plus<TemporalAmount>` specialized
@@ -442,21 +461,6 @@ namespace Time/ZInstant {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def withNanoOfSecond(i: Int64, x: ZInstant): ZInstant =
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
-        withTemporalFieldHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
-
-    pub def withMicroOfSecond(i: Int64, x: ZInstant): ZInstant =
-        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
-        withTemporalFieldHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
-
-    pub def withMilliOfSecond(i: Int64, x: ZInstant): ZInstant =
-        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
-        withTemporalFieldHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
-
-    pub def withInstantSeconds(i: Int64, x: ZInstant): ZInstant =
-        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
-        withTemporalFieldHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, i, x)
 
     /// Duration methods
 

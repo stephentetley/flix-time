@@ -232,86 +232,7 @@ namespace Time/ZonedDateTime {
         let cy1 = y1 as ##java.time.chrono.ChronoZonedDateTime;
         isAfter(cx1, cy1)
 
-    pub def plusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.plusYears(Int64): ##java.time.ZonedDateTime & Pure as plus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(plus(x1, years))
-
-    pub def minusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.minusYears(Int64): ##java.time.ZonedDateTime & Pure as minus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(minus(x1, years))
-
-    pub def plusMonths(x: ZonedDateTime, months: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.plusMonths(Int64): ##java.time.ZonedDateTime & Pure as plus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(plus(x1, months))
-
-    pub def minusMonths(x: ZonedDateTime, months: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.minusMonths(Int64): ##java.time.ZonedDateTime & Pure as minus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(minus(x1, months))
-
-    pub def plusWeeks(x: ZonedDateTime, weeks: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.plusWeeks(Int64): ##java.time.ZonedDateTime & Pure as plus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(plus(x1, weeks))
-
-    pub def minusWeeks(x: ZonedDateTime, weeks: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.minusWeeks(Int64): ##java.time.ZonedDateTime & Pure as minus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(minus(x1, weeks))
-
-    pub def plusDays(x: ZonedDateTime, days: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.plusDays(Int64): ##java.time.ZonedDateTime & Pure as plus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(plus(x1, days))
-
-    pub def minusDays(x: ZonedDateTime, days: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.minusDays(Int64): ##java.time.ZonedDateTime & Pure as minus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(minus(x1, days))
-
-    pub def plusHours(x: ZonedDateTime, hours: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.plusHours(Int64): ##java.time.ZonedDateTime & Pure as plus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(plus(x1, hours))
-
-    pub def minusHours(x: ZonedDateTime, hours: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.minusHours(Int64): ##java.time.ZonedDateTime & Pure as minus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(minus(x1, hours))
-
-    pub def plusMinutes(x: ZonedDateTime, minutes: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.plusMinutes(Int64): ##java.time.ZonedDateTime & Pure as plus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(plus(x1, minutes))
-
-    pub def minusMinutes(x: ZonedDateTime, minutes: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.minusMinutes(Int64): ##java.time.ZonedDateTime & Pure as minus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(minus(x1, minutes))
-
-    pub def plusSeconds(x: ZonedDateTime, seconds: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.plusSeconds(Int64): ##java.time.ZonedDateTime & Pure as plus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(plus(x1, seconds))
-
-    pub def minusSeconds(x: ZonedDateTime, seconds: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.minusSeconds(Int64): ##java.time.ZonedDateTime & Pure as minus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(minus(x1, seconds))
-
-    pub def plusNanos(x: ZonedDateTime, nanos: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.plusNanos(Int64): ##java.time.ZonedDateTime & Pure as plus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(plus(x1, nanos))
-
-    pub def minusNanos(x: ZonedDateTime, nanos: Int64): ZonedDateTime =
-        import java.time.ZonedDateTime.minusNanos(Int64): ##java.time.ZonedDateTime & Pure as minus;
-        let ZonedDateTime(x1) = x;
-        ZonedDateTime(minus(x1, nanos))
-
+    /// ## Getters and Setters
 
     /// Get/Set...
 
@@ -437,6 +358,89 @@ namespace Time/ZonedDateTime {
         import java.time.ZonedDateTime.withLaterOffsetAtOverlap(): ##java.time.ZonedDateTime & Pure;
         let ZonedDateTime(t1) = t;
         ZonedDateTime(withLaterOffsetAtOverlap(t1))
+
+
+
+    pub def plusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.plusYears(Int64): ##java.time.ZonedDateTime & Pure as plus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(plus(x1, years))
+
+    pub def minusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.minusYears(Int64): ##java.time.ZonedDateTime & Pure as minus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(minus(x1, years))
+
+    pub def plusMonths(x: ZonedDateTime, months: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.plusMonths(Int64): ##java.time.ZonedDateTime & Pure as plus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(plus(x1, months))
+
+    pub def minusMonths(x: ZonedDateTime, months: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.minusMonths(Int64): ##java.time.ZonedDateTime & Pure as minus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(minus(x1, months))
+
+    pub def plusWeeks(x: ZonedDateTime, weeks: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.plusWeeks(Int64): ##java.time.ZonedDateTime & Pure as plus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(plus(x1, weeks))
+
+    pub def minusWeeks(x: ZonedDateTime, weeks: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.minusWeeks(Int64): ##java.time.ZonedDateTime & Pure as minus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(minus(x1, weeks))
+
+    pub def plusDays(x: ZonedDateTime, days: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.plusDays(Int64): ##java.time.ZonedDateTime & Pure as plus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(plus(x1, days))
+
+    pub def minusDays(x: ZonedDateTime, days: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.minusDays(Int64): ##java.time.ZonedDateTime & Pure as minus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(minus(x1, days))
+
+    pub def plusHours(x: ZonedDateTime, hours: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.plusHours(Int64): ##java.time.ZonedDateTime & Pure as plus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(plus(x1, hours))
+
+    pub def minusHours(x: ZonedDateTime, hours: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.minusHours(Int64): ##java.time.ZonedDateTime & Pure as minus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(minus(x1, hours))
+
+    pub def plusMinutes(x: ZonedDateTime, minutes: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.plusMinutes(Int64): ##java.time.ZonedDateTime & Pure as plus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(plus(x1, minutes))
+
+    pub def minusMinutes(x: ZonedDateTime, minutes: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.minusMinutes(Int64): ##java.time.ZonedDateTime & Pure as minus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(minus(x1, minutes))
+
+    pub def plusSeconds(x: ZonedDateTime, seconds: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.plusSeconds(Int64): ##java.time.ZonedDateTime & Pure as plus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(plus(x1, seconds))
+
+    pub def minusSeconds(x: ZonedDateTime, seconds: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.minusSeconds(Int64): ##java.time.ZonedDateTime & Pure as minus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(minus(x1, seconds))
+
+    pub def plusNanos(x: ZonedDateTime, nanos: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.plusNanos(Int64): ##java.time.ZonedDateTime & Pure as plus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(plus(x1, nanos))
+
+    pub def minusNanos(x: ZonedDateTime, nanos: Int64): ZonedDateTime =
+        import java.time.ZonedDateTime.minusNanos(Int64): ##java.time.ZonedDateTime & Pure as minus;
+        let ZonedDateTime(x1) = x;
+        ZonedDateTime(minus(x1, nanos))
+
 
 
     /// Generic 

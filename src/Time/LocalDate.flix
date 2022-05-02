@@ -298,48 +298,7 @@ namespace Time/LocalDate {
         let strm = datesUntil(s1, e1, step1);
         FlixSandbox/Marshal.unmarshalStream(o -> LocalDate(o as ##java.time.LocalDate), strm)
 
-
-    pub def plusYears(x: LocalDate, years: Int64): LocalDate =
-        import java.time.LocalDate.plusYears(Int64): ##java.time.LocalDate & Pure;
-        let LocalDate(x1) = x;
-        LocalDate(plusYears(x1, years))
-
-    pub def minusYears(x: LocalDate, years: Int64): LocalDate =
-        import java.time.LocalDate.minusYears(Int64): ##java.time.LocalDate & Pure;
-        let LocalDate(x1) = x;
-        LocalDate(minusYears(x1, years))
-
-    pub def plusMonths(x: LocalDate, months: Int64): LocalDate =
-        import java.time.LocalDate.plusMonths(Int64): ##java.time.LocalDate & Pure;
-        let LocalDate(x1) = x;
-        LocalDate(plusMonths(x1, months))
-
-    pub def minusMonths(x: LocalDate, months: Int64): LocalDate =
-        import java.time.LocalDate.minusMonths(Int64): ##java.time.LocalDate & Pure;
-        let LocalDate(x1) = x;
-        LocalDate(minusMonths(x1, months))
-
-    pub def plusWeeks(x: LocalDate, weeks: Int64): LocalDate =
-        import java.time.LocalDate.plusWeeks(Int64): ##java.time.LocalDate & Pure;
-        let LocalDate(x1) = x;
-        LocalDate(plusWeeks(x1, weeks))
-
-    pub def minusWeeks(x: LocalDate, weeks: Int64): LocalDate =
-        import java.time.LocalDate.minusWeeks(Int64): ##java.time.LocalDate & Pure;
-        let LocalDate(x1) = x;
-        LocalDate(minusWeeks(x1, weeks))
-
-    pub def plusDays(x: LocalDate, days: Int64): LocalDate =
-        import java.time.LocalDate.plusDays(Int64): ##java.time.LocalDate & Pure;
-        let LocalDate(x1) = x;
-        LocalDate(plusDays(x1, days))
-
-    pub def minusDays(x: LocalDate, days: Int64): LocalDate =
-        import java.time.LocalDate.minusDays(Int64): ##java.time.LocalDate & Pure;
-        let LocalDate(x1) = x;
-        LocalDate(minusDays(x1, days))
-
-    /// ## Get/Set
+    /// ## Getters and Setters
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
         use Time/DayOfWeek.{unmarshal};
@@ -426,6 +385,49 @@ namespace Time/LocalDate {
         import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField & Pure;
         withTemporalFieldHelper(getISOWeekFields() |> weekBasedYear, Int32.toInt64(d), x)
         
+
+
+
+    pub def plusYears(x: LocalDate, years: Int64): LocalDate =
+        import java.time.LocalDate.plusYears(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(plusYears(x1, years))
+
+    pub def minusYears(x: LocalDate, years: Int64): LocalDate =
+        import java.time.LocalDate.minusYears(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(minusYears(x1, years))
+
+    pub def plusMonths(x: LocalDate, months: Int64): LocalDate =
+        import java.time.LocalDate.plusMonths(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(plusMonths(x1, months))
+
+    pub def minusMonths(x: LocalDate, months: Int64): LocalDate =
+        import java.time.LocalDate.minusMonths(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(minusMonths(x1, months))
+
+    pub def plusWeeks(x: LocalDate, weeks: Int64): LocalDate =
+        import java.time.LocalDate.plusWeeks(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(plusWeeks(x1, weeks))
+
+    pub def minusWeeks(x: LocalDate, weeks: Int64): LocalDate =
+        import java.time.LocalDate.minusWeeks(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(minusWeeks(x1, weeks))
+
+    pub def plusDays(x: LocalDate, days: Int64): LocalDate =
+        import java.time.LocalDate.plusDays(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(plusDays(x1, days))
+
+    pub def minusDays(x: LocalDate, days: Int64): LocalDate =
+        import java.time.LocalDate.minusDays(Int64): ##java.time.LocalDate & Pure;
+        let LocalDate(x1) = x;
+        LocalDate(minusDays(x1, days))
+
 
 
 
