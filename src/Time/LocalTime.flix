@@ -391,88 +391,12 @@ namespace Time/LocalTime {
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
-    /// # `adjustInto` specialized - this become `adjustLocalTime` in the respective modules:
-    /// LocalDateTime
-    /// OffsetDateTime
-    /// OffsetTime
-    /// ZonedDateTime
-
-
+    
+    /// ## generic helper functions
 
     def getHelper(t: ##java.time.temporal.TemporalField, x: LocalTime): Int32 = 
         import java.time.LocalTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
         let x1 = getLocalTime(x);
         get(x1, t)
-
-    pub def getLongHelper(t: ##java.time.temporal.TemporalField, x: LocalTime): Int64 = 
-        import java.time.LocalTime.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-        let x1 = getLocalTime(x);
-        getLong(x1, t)
-
-    pub def plusHelper(x: LocalTime, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalTime =
-        import java.time.LocalTime.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalTime & Pure;         
-        try {
-            let LocalTime(x1) = x;
-            LocalTime(plus(x1, amount, temporalUnit))
-        } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-    
-    pub def minusHelper(x: LocalTime, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalTime =
-        import java.time.LocalTime.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalTime & Pure;         
-        try {
-            let LocalTime(x1) = x;
-            LocalTime(minus(x1, amount, temporalUnit))
-        } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    pub def plusTemporalAmountHelper(x: LocalTime, amount: ##java.time.temporal.TemporalAmount): LocalTime =
-        import java.time.LocalTime.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalTime & Pure;         
-        try {
-            let LocalTime(x1) = x;
-            LocalTime(plus(x1, amount))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def minusTemporalAmountHelper(x: LocalTime, amount: ##java.time.temporal.TemporalAmount): LocalTime =
-        import java.time.LocalTime.minus(##java.time.temporal.TemporalAmount): ##java.time.LocalTime & Pure;         
-        try {
-            let LocalTime(x1) = x;
-            LocalTime(minus(x1, amount))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    pub def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: LocalTime): LocalTime =
-        import java.time.LocalTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.LocalTime & Pure as withTA;         
-        try {
-            let LocalTime(x1) = x;
-            LocalTime(withTA(x1, adj))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: LocalTime): LocalTime =
-        import java.time.LocalTime.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalTime & Pure as withTF;         
-        try {
-            let LocalTime(x1) = x;
-            LocalTime(withTF(x1, field, i))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    /// Duration methods
-
 
 }

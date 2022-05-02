@@ -577,7 +577,7 @@ namespace Time/ZonedDateTime {
         untilHelper(get_QUARTER_YEARS(), r)
 
 
-    /// # `fromTemporalAccessor` specialized
+    /// ## generic helper functions
 
     def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZonedDateTime = 
         import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime & Pure as fromTA;
@@ -586,70 +586,6 @@ namespace Time/ZonedDateTime {
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
-
-    
-
-
-    /// pub def get(t: a, x: ZonedDateTime): Int32 with TemporalField[a] = 
-    ///     import java.time.ZonedDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
-    ///     let x1 = getZonedDateTime(x);
-    ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-    ///     get(x1, t1)
-
-    /// pub def getLong(t: a, x: ZonedDateTime): Int64 with TemporalField[a] = 
-    ///     import java.time.ZonedDateTime.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-    ///     let x1 = getZonedDateTime(x);
-    ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-    ///     getLong(x1, t1)
-
-    /// pub def plusTemporalAmount(x: ZonedDateTime, amount: a): ZonedDateTime with TemporalAmount[a] =
-    ///     import java.time.ZonedDateTime.plus(##java.time.temporal.TemporalAmount): ##java.time.ZonedDateTime & Pure;         
-    ///     try {
-    ///         let ZonedDateTime(x1) = x;
-    ///         let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-    ///         ZonedDateTime(plus(x1, amount1))
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-    /// pub def minusTemporalAmount(x: ZonedDateTime, amount: a): ZonedDateTime with TemporalAmount[a] =
-    ///     import java.time.ZonedDateTime.minus(##java.time.temporal.TemporalAmount): ##java.time.ZonedDateTime & Pure;         
-    ///     try {
-    ///         let ZonedDateTime(x1) = x;
-    ///         let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-    ///         ZonedDateTime(minus(x1, amount1))
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-    /// pub def withTemporalAdjuster(adj: a, x: ZonedDateTime): ZonedDateTime with TemporalAdjuster[a] =
-    ///     import java.time.ZonedDateTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.ZonedDateTime & Pure as withTA;         
-    ///     try {
-    ///         let ZonedDateTime(x1) = x;
-    ///         let adj1 = Time/Temporal/TemporalAdjuster.marshalToNativeTemporalAdjuster(adj);
-    ///         ZonedDateTime(withTA(x1, adj1))
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-    /// pub def withTemporalField(field: a, i: Int64, x: ZonedDateTime): ZonedDateTime with TemporalField[a] =
-    ///     import java.time.ZonedDateTime.with(##java.time.temporal.TemporalField, Int64): ##java.time.ZonedDateTime & Pure as withTF;         
-    ///     try {
-    ///         let ZonedDateTime(x1) = x;
-    ///         let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-    ///         ZonedDateTime(withTF(x1, field1, i))
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-
-    /// Duration methods
-    
-
 
 
 }

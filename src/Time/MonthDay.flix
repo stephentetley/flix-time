@@ -245,26 +245,5 @@ namespace Time/MonthDay {
         MonthDay(withMonth(x1, month))
 
 
-    /// Generic
-
-
-
-    /// # `adjustInto` specialized - this become `adjustMonthDay` in the respective modules:
-    /// LocalDate
-    /// LocalDateTime
-    /// OffsetDateTime
-    /// ZonedDateTime
-
-
-    pub def getHelper(t: ##java.time.temporal.TemporalField, x: MonthDay): Int32 = 
-        import java.time.MonthDay.get(##java.time.temporal.TemporalField): Int32 & Pure;
-        let x1 = getMonthDay(x);
-        get(x1, t)
-
-    pub def getLongHelper(t: ##java.time.temporal.TemporalField, x: MonthDay): Int64 = 
-        import java.time.MonthDay.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-        let x1 = getMonthDay(x);
-        getLong(x1, t)
-
 
 }

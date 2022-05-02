@@ -692,6 +692,7 @@ namespace Time/OffsetDateTime {
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
 
+    /// ## generic helper functions
 
     def getHelper(t: ##java.time.temporal.TemporalField, x: OffsetDateTime): Int32 = 
         import java.time.OffsetDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
@@ -703,52 +704,6 @@ namespace Time/OffsetDateTime {
         let x1 = getOffsetDateTime(x);
         getLong(x1, t)
 
-
-
-    /// pub def plus(x: OffsetDateTime, r: {amount :: Int64, temporalUnit :: a}): OffsetDateTime with TemporalUnit[a] =
-    ///     import java.time.OffsetDateTime.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.OffsetDateTime & Pure;         
-    ///     try {
-    ///         let OffsetDateTime(x1) = x;
-    ///         let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
-    ///         OffsetDateTime(plus(x1, r.amount, temporalUnit1))
-    ///     } catch {
-    ///         case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-    
-    /// pub def minus(x: OffsetDateTime, r: {amount :: Int64, temporalUnit :: a}): OffsetDateTime with TemporalUnit[a] =
-    ///     import java.time.OffsetDateTime.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.OffsetDateTime & Pure;         
-    ///     try {
-    ///         let OffsetDateTime(x1) = x;
-    ///         let temporalUnit1 = Time/Temporal/TemporalUnit.marshalToNativeTemporalUnit(r.temporalUnit);
-    ///         OffsetDateTime(minus(x1, r.amount, temporalUnit1))
-    ///     } catch {
-    ///         case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-
-    /// pub def plusTemporalAmount(x: OffsetDateTime, amount: a): OffsetDateTime with TemporalAmount[a] =
-    ///     import java.time.OffsetDateTime.plus(##java.time.temporal.TemporalAmount): ##java.time.OffsetDateTime & Pure;         
-    ///     try {
-    ///         let OffsetDateTime(x1) = x;
-    ///         let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-    ///         OffsetDateTime(plus(x1, amount1))
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-    /// pub def minusTemporalAmount(x: OffsetDateTime, amount: a): OffsetDateTime with TemporalAmount[a] =
-    ///     import java.time.OffsetDateTime.minus(##java.time.temporal.TemporalAmount): ##java.time.OffsetDateTime & Pure;         
-    ///     try {
-    ///         let OffsetDateTime(x1) = x;
-    ///         let amount1 = Time/Temporal/TemporalAmount.marshalToNativeTemporalAmount(amount);
-    ///         OffsetDateTime(minus(x1, amount1))
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
 
  
 }

@@ -413,7 +413,7 @@ namespace Time/ZInstant {
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
         untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
-    /// # `getLong` specialized
+    /// ## generic helper functions
 
     def getLongHelper(field: ##java.time.temporal.TemporalField, x: ZInstant): Int64 =
         import java.time.Instant.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
@@ -421,39 +421,9 @@ namespace Time/ZInstant {
             let ZInstant(x1) = x;
             getLong(x1, field)
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-
-
-    /// /// # `plus<TemporalAmount>` specialized
-    /// def plusHelper(x: ZInstant, a: ##java.time.temporal.TemporalAmount): ZInstant =
-    ///     import java.time.Instant.plus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
-    ///     try {
-    ///         let ZInstant(x1) = x;
-    ///         ZInstant(plus(x1, a))
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-
-    /// /// # `minus<TemporalAmount>` specialized
-    /// def minusHelper(x: ZInstant, a: ##java.time.temporal.TemporalAmount): ZInstant =
-    ///     import java.time.Instant.minus(##java.time.temporal.TemporalAmount): ##java.time.Instant & Pure;         
-    ///     try {
-    ///         let ZInstant(x1) = x;
-    ///         ZInstant(minus(x1, a))
-    ///     } catch {
-    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-
-    /// # `withTemporalAdjuster` specialized but only Instant is supported which is just identity
-
-    /// # `withTemporalField` specialized
 
     def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: ZInstant): ZInstant =
         import java.time.Instant.with(##java.time.temporal.TemporalField, Int64): ##java.time.Instant & Pure as withTF;                   
@@ -461,8 +431,7 @@ namespace Time/ZInstant {
             let ZInstant(x1) = x;
             ZInstant(withTF(x1, field, i))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 

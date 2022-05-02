@@ -178,6 +178,4 @@ namespace Time/DayOfWeek {
         unmarshal(x2)
 
 
-    /// `get` generic - only DayOfWeek is supported which equivalant to `getValue`
-
 }

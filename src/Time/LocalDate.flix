@@ -563,12 +563,7 @@ namespace Time/LocalDate {
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
 
-    /// # `adjustInto` specialized - synonymous with `adjustLocalDate` in the respective modules:
-    /// LocalDateTime
-    /// OffsetDateTime
-    /// ZonedDateTime
-
-    /// # `get` specialized
+    /// ## generic helper functions
 
     def getHelper(field: ##java.time.temporal.TemporalField, x: LocalDate): Int32 = 
         import java.time.LocalDate.getLong(##java.time.temporal.TemporalField): Int32 & Pure;
@@ -579,12 +574,6 @@ namespace Time/LocalDate {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
-
-
-
-    /// TODO other ChronoFields...
-
-
 
 
     def plusHelper(x: LocalDate, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalDate =
@@ -609,30 +598,6 @@ namespace Time/LocalDate {
 
 
 
-
-    /// pub def plusTemporalAmountHelper(x: LocalDate, amount: ##java.time.temporal.TemporalAmount): LocalDate =
-    ///     import java.time.LocalDate.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalDate & Pure;         
-    ///     try {
-    ///         let LocalDate(x1) = x;
-    ///         LocalDate(plus(x1, amount))
-    ///     } catch {
-    ///         case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-    /// pub def minusTemporalAmountHelper(x: LocalDate, amount: ##java.time.temporal.TemporalAmount): LocalDate =
-    ///     import java.time.LocalDate.minus(##java.time.temporal.TemporalAmount): ##java.time.LocalDate & Pure;         
-    ///     try {
-    ///         let LocalDate(x1) = x;
-    ///         LocalDate(minus(x1, amount))
-    ///     } catch {
-    ///         case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-    ///     }
-
-
-    /// TODO other ChronoUnits...
-
-    /// # `with<TemporalAdjuster>` specialized
-
     def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: LocalDate): LocalDate =
         import java.time.LocalDate.with(##java.time.temporal.TemporalAdjuster): ##java.time.LocalDate & Pure as withTA;         
         try {
@@ -642,12 +607,6 @@ namespace Time/LocalDate {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-
-    /// TODO other TemporalAdjusters...
-
-
-
-    /// # `withTemporalField` specialized
 
     def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: LocalDate): LocalDate =
         import java.time.LocalDate.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalDate & Pure as withTF;                   

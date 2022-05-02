@@ -468,34 +468,9 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         ZDuration(dividedBy(x1, y))
 
-
-    /// Generic
-
-    /// # `from<TemporalAmount>` specialized but only Duration is supported which is just identity
-
-    /// # `between` specialized - specialized versions make more sense in their respective modules:
-    /// Instant
-    /// LocalDateTime
-    /// LocalTime
-    /// OffsetDateTime
-    /// OffsetTime
-    /// ZonedDateTime
+    /// ## generic helper functions
     
-
-
-
-    /// # `addTo`  and `subtractFrom`specialized - these become `plusDuration` and `minusDuration` their respective modules:
-    /// Instant
-    /// LocalDateTime
-    /// LocalTime
-    /// OffsetDateTime
-    /// OffsetTime
-    /// ZonedDateTime
-
-    /// # `get` specialized - only Nanos and Seconds supported which we already have getters for
-
-    
-    /// # `plus` specialized - except for HalfDays we already have a `plus_` function for the other supported ChronoUnits
+    /// `plus` specialized - except for HalfDays we already have a `plus_` function for the other supported ChronoUnits
 
     def plusHelper(x: ZDuration, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): ZDuration =
         import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
@@ -508,7 +483,7 @@ namespace Time/ZDuration {
         }
     
 
-    /// # `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
+    /// `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
 
     def minusHelper(x: ZDuration, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): ZDuration =
         import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         

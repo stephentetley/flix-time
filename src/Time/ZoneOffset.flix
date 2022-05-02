@@ -157,16 +157,7 @@ namespace Time/ZoneOffset {
         getHelper(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, x)
 
 
-    /// Generic 
-
-
-
-
-    /// `adjustInto` specialized - this become `adjustZoneOffset` in the respective modules:
-    /// OffsetDateTime
-    /// ZonedDateTime
-
-    /// `get` specialized
+    /// ## generic helper functions
 
     def getHelper(field: ##java.time.temporal.TemporalField, x: ZoneOffset): Int32 =
         import java.time.ZoneOffset.get(##java.time.temporal.TemporalField): Int32 & Pure;
@@ -174,8 +165,7 @@ namespace Time/ZoneOffset {
             let ZoneOffset(x1) = x;
             get(x1, field)
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 

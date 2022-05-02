@@ -372,6 +372,23 @@ namespace Time/LocalDateTime {
         let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
         LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
 
+    /// DayOfWeek methods
+
+    pub def setDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
+        import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/DayOfWeek.marshal(x);
+        let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;
+        LocalDateTime(adjustInto(x1, d1) as ##java.time.LocalDateTime)
+
+    /// MonthDay methods
+
+    pub def setMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
+        import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/MonthDay.getMonthDay(x);
+        let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;
+        LocalDateTime(adjustInto(x1, d1) as ##java.time.LocalDateTime)
+
+
     /// ## truncate functions
 
     def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: LocalDateTime): LocalDateTime = 
@@ -541,108 +558,6 @@ namespace Time/LocalDateTime {
     pub def quarterYearsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
-
-    
-    /// # `adjustInto` specialized - this become `adjustLocalDateTime` in the respective modules:
-    /// OffsetDateTime
-    /// ZonedDateTime
-
-    pub def getHelper(t: ##java.time.temporal.TemporalField, x: LocalDateTime): Int32 = 
-        import java.time.LocalDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
-        let x1 = getLocalDateTime(x);
-        get(x1, t)
-
-    pub def getLongHelper(t: ##java.time.temporal.TemporalField, x: LocalDateTime): Int64 = 
-        import java.time.LocalDateTime.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
-        let x1 = getLocalDateTime(x);
-        getLong(x1, t)
-
-
-
-    pub def plusHelper(x: LocalDateTime, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalDateTime =
-        import java.time.LocalDateTime.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDateTime & Pure;         
-        try {
-            let LocalDateTime(x1) = x;
-            LocalDateTime(plus(x1, amount, temporalUnit))
-        } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-    
-    pub def minusHelper(x: LocalDateTime, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalDateTime =
-        import java.time.LocalDateTime.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDateTime & Pure;         
-        try {
-            let LocalDateTime(x1) = x;
-            LocalDateTime(minus(x1, amount, temporalUnit))
-        } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-
-    pub def plusTemporalAmountHelper(x: LocalDateTime, amount: ##java.time.temporal.TemporalAmount): LocalDateTime =
-        import java.time.LocalDateTime.plus(##java.time.temporal.TemporalAmount): ##java.time.LocalDateTime & Pure;         
-        try {
-            let LocalDateTime(x1) = x;
-            LocalDateTime(plus(x1, amount))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def minusTemporalAmountHelper(x: LocalDateTime, amount: ##java.time.temporal.TemporalAmount): LocalDateTime =
-        import java.time.LocalDateTime.minus(##java.time.temporal.TemporalAmount): ##java.time.LocalDateTime & Pure;         
-        try {
-            let LocalDateTime(x1) = x;
-            LocalDateTime(minus(x1, amount))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    pub def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: LocalDateTime): LocalDateTime =
-        import java.time.LocalDateTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.LocalDateTime & Pure as withTA;         
-        try {
-            let LocalDateTime(x1) = x;
-            LocalDateTime(withTA(x1, adj))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: LocalDateTime): LocalDateTime =
-        import java.time.LocalDateTime.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalDateTime & Pure as withTF;         
-        try {
-            let LocalDateTime(x1) = x;
-            LocalDateTime(withTF(x1, field, i))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-    
-    /// Duration methods
-
-
-
-
-
-    /// DayOfWeek methods
-
-    pub def setDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
-        import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/DayOfWeek.marshal(x);
-        let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;
-        LocalDateTime(adjustInto(x1, d1) as ##java.time.LocalDateTime)
-
-    /// MonthDay methods
-
-    pub def setMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
-        import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/MonthDay.getMonthDay(x);
-        let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;
-        LocalDateTime(adjustInto(x1, d1) as ##java.time.LocalDateTime)
 
 
 }
