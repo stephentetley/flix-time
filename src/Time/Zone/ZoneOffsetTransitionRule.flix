@@ -60,6 +60,7 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
     
+    /// ## Unwrap
 
     pub def getZoneOffsetTransitionRule(x: ZoneOffsetTransitionRule): ##java.time.zone.ZoneOffsetTransitionRule = 
         let ZoneOffsetTransitionRule(x1) = x;
@@ -134,6 +135,20 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
             case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex)) as & Pure
         }
 
+    /// ## predicates / comparisons
+    
+    pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
+        import java.time.zone.ZoneOffsetTransitionRule.isMidnightEndOfDay(): Bool & Pure;
+        let ZoneOffsetTransitionRule(x1) = x;
+        isMidnightEndOfDay(x1)
+
+
+    /// ## ZoneOffsetTransitionRule functions
+
+    pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
+        import java.time.zone.ZoneOffsetTransitionRule.createTransition(Int32): ##java.time.zone.ZoneOffsetTransition & Pure;
+        let ZoneOffsetTransitionRule(x1) = x;
+        ZoneOffsetTransition(createTransition(x1, year))
 
 
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
@@ -157,10 +172,6 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
         let ZoneOffsetTransitionRule(x1) = x;
         LocalTime(getLocalTime(x1))
 
-    pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
-        import java.time.zone.ZoneOffsetTransitionRule.isMidnightEndOfDay(): Bool & Pure;
-        let ZoneOffsetTransitionRule(x1) = x;
-        isMidnightEndOfDay(x1)
 
     pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
         import java.time.zone.ZoneOffsetTransitionRule.getStandardOffset(): ##java.time.ZoneOffset & Pure;
@@ -178,9 +189,5 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
         let ZoneOffsetTransitionRule(x1) = x;
         ZoneOffset(getOffsetAfter(x1))
 
-    pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
-        import java.time.zone.ZoneOffsetTransitionRule.createTransition(Int32): ##java.time.zone.ZoneOffsetTransition & Pure;
-        let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffsetTransition(createTransition(x1, year))
 
 }

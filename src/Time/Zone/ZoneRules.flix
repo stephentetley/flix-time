@@ -76,6 +76,7 @@ namespace Time/Zone/ZoneRules {
         let ZoneOffset(x1) = offset;
         ZoneRules(of(x1))
 
+    /// ## ZoneRules functions
 
     pub def getOffset(inst: ZInstant, x: ZoneRules): ZoneOffset =
         import java.time.zone.ZoneRules.getOffset(##java.time.Instant): ##java.time.ZoneOffset & Pure;

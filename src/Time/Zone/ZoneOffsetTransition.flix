@@ -63,6 +63,10 @@ namespace Time/Zone/ZoneOffsetTransition {
     use Time.ZoneOffset.{ZoneOffset};
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
+    use Time.ZDuration;
+    use Time.ZDuration.{ZDuration};
+    use Time.ZInstant;
+    use Time.ZInstant.{ZInstant};
 
     /// ## Unwrap
 
@@ -85,6 +89,7 @@ namespace Time/Zone/ZoneOffsetTransition {
         toEpochSecond(x1)
 
 
+    /// ## predicates / comparisons
 
     pub def isGap(x: ZoneOffsetTransition): Bool =
         import java.time.zone.ZoneOffsetTransition.isGap(): Bool & Pure;
@@ -96,5 +101,37 @@ namespace Time/Zone/ZoneOffsetTransition {
         let ZoneOffsetTransition(x1) = x;
         isOverlap(x1)
 
+    /// ## ZoneOffsetTransition functions
+
+    pub def getDateTimeBefore(x: ZoneOffsetTransition): LocalDateTime =
+        import java.time.zone.ZoneOffsetTransition.getDateTimeBefore(): ##java.time.LocalDateTime & Pure;
+        let ZoneOffsetTransition(x1) = x;
+        LocalDateTime(getDateTimeBefore(x1))
+
+    pub def getDateTimeAfter(x: ZoneOffsetTransition): LocalDateTime =
+        import java.time.zone.ZoneOffsetTransition.getDateTimeAfter(): ##java.time.LocalDateTime & Pure;
+        let ZoneOffsetTransition(x1) = x;
+        LocalDateTime(getDateTimeAfter(x1))
+
+
+    pub def getOffsetBefore(x: ZoneOffsetTransition): ZoneOffset =
+        import java.time.zone.ZoneOffsetTransition.getOffsetBefore(): ##java.time.ZoneOffset & Pure;
+        let ZoneOffsetTransition(x1) = x;
+        ZoneOffset(getOffsetBefore(x1))
+
+    pub def getOffsetAfter(x: ZoneOffsetTransition): ZoneOffset =
+        import java.time.zone.ZoneOffsetTransition.getOffsetAfter(): ##java.time.ZoneOffset & Pure;
+        let ZoneOffsetTransition(x1) = x;
+        ZoneOffset(getOffsetAfter(x1))
+
+    pub def getDuration(x: ZoneOffsetTransition): ZDuration =
+        import java.time.zone.ZoneOffsetTransition.getDuration(): ##java.time.Duration & Pure;
+        let ZoneOffsetTransition(x1) = x;
+        ZDuration(getDuration(x1))
+
+    pub def getInstant(x: ZoneOffsetTransition): ZInstant =
+        import java.time.zone.ZoneOffsetTransition.getInstant(): ##java.time.Instant & Pure;
+        let ZoneOffsetTransition(x1) = x;
+        ZInstant(getInstant(x1))
 
 }

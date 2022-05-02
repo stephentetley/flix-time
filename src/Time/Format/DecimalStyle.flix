@@ -27,14 +27,20 @@ namespace Time/Format {
     }
     
     instance Eq[DecimalStyle] {
-        pub def eq(x: DecimalStyle, y: DecimalStyle): Bool = Time/Format/DecimalStyle.equals(x, y)
+        pub def eq(x: DecimalStyle, y: DecimalStyle): Bool =
+            import java.time.format.DecimalStyle.equals(##java.lang.Object): Bool & Pure;
+            let DecimalStyle(x1) = x;
+            let DecimalStyle(y1) = y;
+            equals(x1, y1 as ##java.lang.Object)
     }
 
     instance Hash[DecimalStyle] {
-        pub def hash(x: DecimalStyle): Int32 = Time/Format/DecimalStyle.hashCode(x)
+        pub def hash(x: DecimalStyle): Int32 = 
+            import java.time.format.DecimalStyle.hashCode(): Int32 & Pure;
+            let DecimalStyle(x1) = x;
+            hashCode(x1)
     } 
     
-
 }
 
 namespace Time/Format/DecimalStyle {
@@ -45,15 +51,14 @@ namespace Time/Format/DecimalStyle {
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
 
+    /// ## Unwrap
+
     pub def getDecimalStyle(x: DecimalStyle): ##java.time.format.DecimalStyle = 
         let DecimalStyle(x1) = x;
         x1
 
-    pub def equals(x: DecimalStyle, y: DecimalStyle): Bool =
-        import java.time.format.DecimalStyle.equals(##java.lang.Object): Bool & Pure;
-        let DecimalStyle(x1) = x;
-        let DecimalStyle(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
+
+    /// ## "abstract constructors" (e.g. `standard`)
 
     pub def standard(): DecimalStyle =
         import static get java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle & Pure as get_STANDARD;
@@ -68,10 +73,8 @@ namespace Time/Format/DecimalStyle {
         import static java.time.format.DecimalStyle.ofDefaultLocale(): ##java.time.format.DecimalStyle & Impure;
         DecimalStyle(ofDefaultLocale())
 
-    pub def hashCode(x: DecimalStyle): Int32 = 
-        import java.time.format.DecimalStyle.hashCode(): Int32 & Pure;
-        let DecimalStyle(x1) = x;
-        hashCode(x1)
+
+    /// ## DecimalStyle functions
 
     pub def getAvailableLocales(): List[Locale] =
         import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set & Pure;
@@ -79,9 +82,9 @@ namespace Time/Format/DecimalStyle {
         FlixSandbox/Marshal.unmarshalSetToList(o -> Locale(o as ##java.util.Locale), js)
 
     // Note - should the Locale module provide a function marshal and unmarshal functions
-    // so a cleint doesn't have to use: `o -> Locale(o as ##java.util.Locale)` ?
+    // so a client doesn't have to use: `o -> Locale(o as ##java.util.Locale)` ?
 
-
+    /// ## Getters and Setters
 
     pub def getDecimalSeparator(x: DecimalStyle): Char = 
         import java.time.format.DecimalStyle.getDecimalSeparator(): Char & Pure;

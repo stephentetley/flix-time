@@ -75,19 +75,23 @@ namespace Time/Format/TextStyle {
         }
 
     
-    pub def asStandalone(x: TextStyle): TextStyle =
-        import java.time.format.TextStyle.asStandalone(): ##java.time.format.TextStyle & Pure;
-        let x1 = marshal(x);
-        unmarshal(asStandalone(x1))
-    
-    pub def asNormal(x: TextStyle): TextStyle =
-        import java.time.format.TextStyle.asNormal(): ##java.time.format.TextStyle & Pure;
-        let x1 = marshal(x);
-        unmarshal(asNormal(x1))
+    /// ## predicates / comparisons
 
     pub def isStandalone(x: TextStyle): Bool =
         import java.time.format.TextStyle.isStandalone(): Bool & Pure;
         let x1 = marshal(x);
         isStandalone(x1)
+
+    /// ## Getters and Setters
+    
+    pub def setStandalone(x: TextStyle): TextStyle =
+        import java.time.format.TextStyle.asStandalone(): ##java.time.format.TextStyle & Pure;
+        let x1 = marshal(x);
+        unmarshal(asStandalone(x1))
+    
+    pub def setNormal(x: TextStyle): TextStyle =
+        import java.time.format.TextStyle.asNormal(): ##java.time.format.TextStyle & Pure;
+        let x1 = marshal(x);
+        unmarshal(asNormal(x1))
 
 }

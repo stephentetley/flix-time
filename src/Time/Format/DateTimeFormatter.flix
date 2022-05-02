@@ -58,10 +58,14 @@ namespace Time/Format/DateTimeFormatter {
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
+    /// ## Unwrap
+
     pub def getDateTimeFormatter(x: DateTimeFormatter[t]): ##java.time.format.DateTimeFormatter = 
         let DateTimeFormatter(x1) = x;
         x1
-        
+
+    /// ## "abstract constructors"
+
     /// Builtin DateTime Formatters
 
     pub def iso_local_date_time(): DateTimeFormatter[DateTimeFormat] =
@@ -124,7 +128,7 @@ namespace Time/Format/DateTimeFormatter {
         import static get java.time.format.DateTimeFormatter.ISO_TIME: ##java.time.format.DateTimeFormatter & Pure as get_ISO_TIME;
         DateTimeFormatter(get_ISO_TIME())
 
-
+    /// ## `from` functions
 
     pub def fromPattern(pattern: String): Option[DateTimeFormatter[t]] =
         import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter & Pure;
@@ -155,6 +159,8 @@ namespace Time/Format/DateTimeFormatter {
         import static java.time.format.DateTimeFormatter.ofLocalizedDate(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter & Pure;
         let style1 = Time/Format/FormatStyle.marshal(style);
         DateTimeFormatter(ofLocalizedDate(style1))
+
+    /// ## Getters and Setters
 
     pub def getZone(x: DateTimeFormatter[t]): ZoneId =
         import java.time.format.DateTimeFormatter.getZone(): ##java.time.ZoneId & Pure;
