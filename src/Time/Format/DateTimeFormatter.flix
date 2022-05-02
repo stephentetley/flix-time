@@ -32,7 +32,13 @@ namespace Time/Format {
     }
 
     instance FromString[DateTimeFormatter[t]] {
-        pub def fromString(x: String): Option[DateTimeFormatter[t]] = Time/Format/DateTimeFormatter.fromPattern(x)
+        pub def fromString(s: String): Option[DateTimeFormatter[t]] =
+            import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter & Pure;
+            try {
+                Some(DateTimeFormatter(ofPattern(String.trim(s))))
+            } catch {
+                case _: ##java.lang.Exception => None
+            }
     }
 
     pub enum DateFormat {}
@@ -130,12 +136,12 @@ namespace Time/Format/DateTimeFormatter {
 
     /// ## `from` functions
 
-    pub def fromPattern(pattern: String): Option[DateTimeFormatter[t]] =
+    pub def fromPattern(pattern: String): Result[DateTimeFormatter[t], String] =
         import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter & Pure;
         try {
-            Some(DateTimeFormatter(ofPattern(String.trim(pattern))))
+            Ok(DateTimeFormatter(ofPattern(String.trim(pattern))))
         } catch {
-            case _: ##java.lang.IllegalArgumentException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 

@@ -18,6 +18,24 @@ namespace TestDayOfWeek {
 
 
     /////////////////////////////////////////////////////////////////////////////
+    // toString                                                              //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def toString01(): Bool = ToString.toString(Time/DayOfWeek.Monday) == "Monday"
+
+    /////////////////////////////////////////////////////////////////////////////
+    // fromString                                                              //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def fromString01(): Bool = FromString.fromString("Monday") == Some(Time/DayOfWeek.Monday)
+
+
+    @test
+    def fromString02(): Bool = (FromString.fromString("MONDAY") : Option[Time.DayOfWeek]) == None
+
+    /////////////////////////////////////////////////////////////////////////////
     // eq                                                                      //
     /////////////////////////////////////////////////////////////////////////////
 
@@ -32,18 +50,31 @@ namespace TestDayOfWeek {
     def neq01(): Bool = Time/DayOfWeek.Monday != Time/DayOfWeek.Tuesday
 
 
+    /////////////////////////////////////////////////////////////////////////////
+    // dayOfWeek                                                               //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def dayOfWeek01(): Bool = 
+        Time/DayOfWeek.dayOfWeek(1) == Some(Time/DayOfWeek.Monday)
+
+    @test
+    def dayOfWeek02(): Bool = 
+        Time/DayOfWeek.dayOfWeek(0) == None
 
     /////////////////////////////////////////////////////////////////////////////
     // fromLocalDate                                                           //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def fromLocalDate01(): Time.DayOfWeek & Impure = 
-        let date = Time/LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
-        let dow = Time/DayOfWeek.fromLocalDate(date);
-        println("DayOfWeek.fromLocalDate01(): ${dow}");
-        dow
+    def fromLocalDate01(): Bool = 
+        let date = Time/LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 1});
+        Time/DayOfWeek.fromLocalDate(date) == Time/DayOfWeek.Sunday
 
+    @test
+    def fromLocalDate02(): Bool =         
+        let date = Time/LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 2});
+        Time/DayOfWeek.fromLocalDate(date) != Time/DayOfWeek.Sunday
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -56,6 +87,13 @@ namespace TestDayOfWeek {
         let i = Time/DayOfWeek.getValue(dow);
         println("DayOfWeek.dayOfWeek(): ${i}");
         i
+
+    /////////////////////////////////////////////////////////////////////////////
+    // getValue                                                                //
+    /////////////////////////////////////////////////////////////////////////////
+    
+    pub def getDisplayName01(): Bool & Impure =         
+        not String.isEmpty(Time/DayOfWeek.getDisplayName(Time/Format/TextStyle.Full, FlixSandbox/I18n/Locale.getDefault(), Time/DayOfWeek.Monday))
 
 
 }
