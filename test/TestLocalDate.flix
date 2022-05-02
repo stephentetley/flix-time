@@ -31,10 +31,10 @@ namespace TestLocalDate {
     ///     d2
 
     @test
-    def withLastDayOfMonth01(): Time.LocalDate & Impure = 
+    def setToLastDayOfMonth01(): Time.LocalDate & Impure = 
         let d1 = Time/LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
-        let d2 = Time/LocalDate.withLastDayOfMonth(d1);
-        println("LocalDate.withLastDayOfMonth01(): ${d1} ${d2}");        
+        let d2 = Time/LocalDate.setToLastDayOfMonth(d1);
+        println("LocalDate.setToLastDayOfMonth01(): ${d1} ${d2}");        
         d2
 
        

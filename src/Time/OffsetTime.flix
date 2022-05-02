@@ -284,7 +284,24 @@ namespace Time/OffsetTime {
         let ZoneOffset(o1) = offset;
         OffsetTime(withOffsetSameLocal(x1, o1))
 
+    pub def setLocalTime(x: LocalTime, dt: OffsetTime): OffsetTime = 
+        import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/LocalTime.getLocalTime(x);
+        let dt1 = getOffsetTime(dt) as ##java.time.temporal.Temporal;
+        OffsetTime(adjustInto(x1, dt1) as ##java.time.OffsetTime)
 
+    /// ## truncate functions
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: OffsetTime): OffsetTime = 
+        import java.time.OffsetTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetTime & Pure;
+        let OffsetTime(x1) = x;
+        OffsetTime(truncatedTo(x1, u))
+
+    pub def truncatedToHours(x: OffsetTime): OffsetTime = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+
+    /// ## plus / minus functions
 
     pub def plusHours(x: OffsetTime, hours: Int64): OffsetTime =
         import java.time.OffsetTime.plusHours(Int64): ##java.time.OffsetTime & Pure;
@@ -325,6 +342,20 @@ namespace Time/OffsetTime {
         import java.time.OffsetTime.minusNanos(Int64): ##java.time.OffsetTime & Pure;
         let OffsetTime(x1) = x;
         OffsetTime(minusNanos(x1, nanos))
+
+
+    pub def plusDuration(i: OffsetTime, x: ZDuration): OffsetTime =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        OffsetTime(addTo(x1, i1) as ##java.time.OffsetTime)
+    
+    pub def minusDuration(i: OffsetTime, x: ZDuration): OffsetTime =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        OffsetTime(subtractFrom(x1, i1) as ##java.time.OffsetTime)
+
 
     /// Generic
 
@@ -418,16 +449,6 @@ namespace Time/OffsetTime {
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
 
-    /// # `truncatedTo` specialized
-
-    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: OffsetTime): OffsetTime = 
-        import java.time.OffsetTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetTime & Pure;
-        let OffsetTime(x1) = x;
-        OffsetTime(truncatedTo(x1, u))
-
-    pub def truncatedToHours(x: OffsetTime): OffsetTime = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
 
 
 
@@ -461,24 +482,8 @@ namespace Time/OffsetTime {
         ZDuration(between(getOffsetTime(r.start) as ##java.time.temporal.Temporal, 
                             getOffsetTime(r.end) as ##java.time.temporal.Temporal))
 
-    pub def plusDuration(i: OffsetTime, x: ZDuration): OffsetTime =
-        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
-        OffsetTime(addTo(x1, i1) as ##java.time.OffsetTime)
-    
-    pub def minusDuration(i: OffsetTime, x: ZDuration): OffsetTime =
-        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
-        OffsetTime(subtractFrom(x1, i1) as ##java.time.OffsetTime)
 
     /// LocalTime methods
 
-    pub def adjustLocalTime(x: LocalTime, dt: OffsetTime): OffsetTime = 
-        import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/LocalTime.getLocalTime(x);
-        let dt1 = getOffsetTime(dt) as ##java.time.temporal.Temporal;
-        OffsetTime(adjustInto(x1, dt1) as ##java.time.OffsetTime)
 
 }

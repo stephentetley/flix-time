@@ -348,17 +348,44 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         ZDuration(withSeconds(x1, seconds))
 
+    /// ## truncate functions
 
-
-    pub def multipliedBy(x: ZDuration, y: Int64): ZDuration =
-        import java.time.Duration.multipliedBy(Int64): ##java.time.Duration & Pure;
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: ZDuration): ZDuration = 
+        import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
         let ZDuration(x1) = x;
-        ZDuration(multipliedBy(x1, y))
+        ZDuration(truncatedTo(x1, u))
+    
+    pub def truncatedToNanos(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        truncatedToHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, x)
 
-    pub def dividedBy(x: ZDuration, y: Int64): ZDuration =
-        import java.time.Duration.dividedBy(Int64): ##java.time.Duration & Pure;
-        let ZDuration(x1) = x;
-        ZDuration(dividedBy(x1, y))
+    pub def truncatedToMicros(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        truncatedToHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMillis(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        truncatedToHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToSeconds(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        truncatedToHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMinutes(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        truncatedToHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToHours(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToHalfDays(x: ZDuration): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        truncatedToHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
+
+
+    /// ## plus / minus functions
+
 
     pub def plusDays(x: ZDuration, days: Int64): ZDuration =
         import java.time.Duration.plusDays(Int64): ##java.time.Duration & Pure;
@@ -420,6 +447,15 @@ namespace Time/ZDuration {
         let ZDuration(x1) = x;
         ZDuration(minusNanos(x1, nanos))
 
+
+    pub def plusHalfDays(x: ZDuration, i: Int64): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        plusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
+
+    pub def minusHalfDays(x: ZDuration, i: Int64): ZDuration = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        minusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
+
     /// Generic
 
     /// # `from<TemporalAmount>` specialized but only Duration is supported which is just identity
@@ -433,43 +469,15 @@ namespace Time/ZDuration {
     /// ZonedDateTime
     
 
-
-    /// # `truncatedTo` specialized
-
-    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: ZDuration): ZDuration = 
-        import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
+    pub def multipliedBy(x: ZDuration, y: Int64): ZDuration =
+        import java.time.Duration.multipliedBy(Int64): ##java.time.Duration & Pure;
         let ZDuration(x1) = x;
-        ZDuration(truncatedTo(x1, u))
-    
-    pub def truncatedToNanos(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
-        truncatedToHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, x)
+        ZDuration(multipliedBy(x1, y))
 
-    pub def truncatedToMicros(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
-        truncatedToHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToMillis(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
-        truncatedToHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToSeconds(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
-        truncatedToHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToMinutes(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
-        truncatedToHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToHours(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToHalfDays(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        truncatedToHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
-
-
+    pub def dividedBy(x: ZDuration, y: Int64): ZDuration =
+        import java.time.Duration.dividedBy(Int64): ##java.time.Duration & Pure;
+        let ZDuration(x1) = x;
+        ZDuration(dividedBy(x1, y))
 
 
     /// # `addTo`  and `subtractFrom`specialized - these become `plusDuration` and `minusDuration` their respective modules:
@@ -495,9 +503,6 @@ namespace Time/ZDuration {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
     
-    pub def plusHalfDays(x: ZDuration, i: Int64): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        plusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
 
     /// # `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
 
@@ -511,9 +516,6 @@ namespace Time/ZDuration {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
     
-    pub def minusHalfDays(x: ZDuration, i: Int64): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        minusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
 
 
 }

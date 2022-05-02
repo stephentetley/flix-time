@@ -211,6 +211,8 @@ namespace Time/Month {
         let x1 = marshal(x);
         length(x1, leap)
 
+    /// ## plus / minus functions
+    
     pub def plus(x:Month, y: Int64): Month =
         import java.time.Month.plus(Int64): ##java.time.Month & Pure;
         let x1 = marshal(x);

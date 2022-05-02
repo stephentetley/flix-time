@@ -251,7 +251,9 @@ namespace Time/YearMonth {
         import java.time.YearMonth.withYear(Int32): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
         YearMonth(withYear(x1, year))
-        
+
+    /// ## plus / minus functions
+
     pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
         import java.time.YearMonth.plusMonths(Int64): ##java.time.YearMonth & Pure;
         let YearMonth(x1) = x;
@@ -396,19 +398,16 @@ namespace Time/YearMonth {
 
     /// # `with<TemporalAdjuster>` specialized
 
-    def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: YearMonth): YearMonth =
-        import java.time.YearMonth.with(##java.time.temporal.TemporalAdjuster): ##java.time.YearMonth & Pure as withTA;         
-        try {
-            let YearMonth(x1) = x;
-            YearMonth(withTA(x1, adj))
-        } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+    /// def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: YearMonth): YearMonth =
+    ///     import java.time.YearMonth.with(##java.time.temporal.TemporalAdjuster): ##java.time.YearMonth & Pure as withTA;         
+    ///     try {
+    ///         let YearMonth(x1) = x;
+    ///         YearMonth(withTA(x1, adj))
+    ///     } catch {
+    ///         case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+    ///     }
 
-    /// TODO - we don't really need this as we already have setYear
-    pub def withYear(i: Year, x: YearMonth): YearMonth =
-        let i1 = Time/Year.getYear(i) as ##java.time.temporal.TemporalAdjuster;
-        withTemporalAdjusterHelper(i1, x)
+
 
 
 }

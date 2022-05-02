@@ -514,6 +514,18 @@ namespace Time/OffsetDateTime {
         getLongHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, x)
 
 
+    /// ## truncate functions
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: OffsetDateTime): OffsetDateTime = 
+        import java.time.OffsetDateTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetDateTime & Pure;
+        let OffsetDateTime(x1) = x;
+        OffsetDateTime(truncatedTo(x1, u))
+
+    pub def truncatedToDays(x: OffsetDateTime): OffsetDateTime = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
+
+    /// ## plus / minus functions
 
     pub def plusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusYears(Int64): ##java.time.OffsetDateTime & Pure;
@@ -596,7 +608,32 @@ namespace Time/OffsetDateTime {
         OffsetDateTime(minusNanos(x1, nanos))
 
 
+    pub def plusDuration(i: OffsetDateTime, x: ZDuration): OffsetDateTime =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
+    
+    pub def minusDuration(i: OffsetDateTime, x: ZDuration): OffsetDateTime =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
 
+    /// Period methods
+
+    pub def plusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
+    
+    pub def minusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
+        
 
     /// Generic
 
@@ -678,16 +715,6 @@ namespace Time/OffsetDateTime {
         rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
 
-    /// # `truncatedTo` specialized
-
-    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: OffsetDateTime): OffsetDateTime = 
-        import java.time.OffsetDateTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetDateTime & Pure;
-        let OffsetDateTime(x1) = x;
-        OffsetDateTime(truncatedTo(x1, u))
-
-    pub def truncatedToDays(x: OffsetDateTime): OffsetDateTime = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
-        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
 
    /// # `until` specialized
@@ -740,31 +767,7 @@ namespace Time/OffsetDateTime {
         ZDuration(between(getOffsetDateTime(r.start) as ##java.time.temporal.Temporal, 
                             getOffsetDateTime(r.end) as ##java.time.temporal.Temporal))
 
-    pub def plusDuration(i: OffsetDateTime, x: ZDuration): OffsetDateTime =
-        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
-        OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
-    
-    pub def minusDuration(i: OffsetDateTime, x: ZDuration): OffsetDateTime =
-        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
-        OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
 
-    /// Period methods
-
-    pub def plusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
-        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/Period.getPeriod(x);
-        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
-        OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
-    
-    pub def minusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
-        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/Period.getPeriod(x);
-        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
-        OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
 
     /// ZoneOffset methods
 

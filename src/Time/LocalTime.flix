@@ -296,6 +296,18 @@ namespace Time/LocalTime {
         let LocalTime(x1) = x;
         LocalTime(withNano(x1, nano))
 
+    /// ## truncate functions
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: LocalTime): LocalTime = 
+        import java.time.LocalTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.LocalTime & Pure;
+        let LocalTime(x1) = x;
+        LocalTime(truncatedTo(x1, u))
+
+    pub def truncatedToHours(x: LocalTime): LocalTime = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+
+    /// ## plus / minus functions
 
     pub def plusHours(x: LocalTime, hours: Int64): LocalTime =
         import java.time.LocalTime.plusHours(Int64): ##java.time.LocalTime & Pure;
@@ -338,7 +350,19 @@ namespace Time/LocalTime {
         LocalTime(minusNanos(x1, nanos))
 
 
-
+    
+    pub def plusDuration(i: LocalTime, x: ZDuration): LocalTime =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        LocalTime(addTo(x1, i1) as ##java.time.LocalTime)
+    
+    pub def minusDuration(i: LocalTime, x: ZDuration): LocalTime =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
+        let ZDuration(x1) = x;
+        LocalTime(subtractFrom(x1, i1) as ##java.time.LocalTime)
+        
     /// Generic
 
 
@@ -417,16 +441,7 @@ namespace Time/LocalTime {
         import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
         rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
-    /// # `truncatedTo` specialized
 
-    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: LocalTime): LocalTime = 
-        import java.time.LocalTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.LocalTime & Pure;
-        let LocalTime(x1) = x;
-        LocalTime(truncatedTo(x1, u))
-
-    pub def truncatedToHours(x: LocalTime): LocalTime = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
     
    /// # `until` specialized
 
@@ -470,17 +485,6 @@ namespace Time/LocalTime {
         ZDuration(between(getLocalTime(r.start) as ##java.time.temporal.Temporal, 
                             getLocalTime(r.end) as ##java.time.temporal.Temporal))
 
-    
-    pub def plusDuration(i: LocalTime, x: ZDuration): LocalTime =
-        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
-        LocalTime(addTo(x1, i1) as ##java.time.LocalTime)
-    
-    pub def minusDuration(i: LocalTime, x: ZDuration): LocalTime =
-        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
-        LocalTime(subtractFrom(x1, i1) as ##java.time.LocalTime)
+
 
 }

@@ -64,12 +64,21 @@ namespace Time {
 
 
     instance Add[Period] {
-        pub def add(x: Period, y: Period): Period = Time/Period.plus(x, y)
+        pub def add(x: Period, y: Period): Period =
+            import java.time.Period.plus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
+            let Period(x1) = x;
+            let Period(y1) = y;
+            Period(plus(x1, y1 as ##java.time.temporal.TemporalAmount))
     }
 
     instance Sub[Period] {
-        pub def sub(x: Period, y: Period): Period = Time/Period.minus(x, y)
+        pub def sub(x: Period, y: Period): Period =
+            import java.time.Period.minus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
+            let Period(x1) = x;
+            let Period(y1) = y;
+            Period(minus(x1, y1 as ##java.time.temporal.TemporalAmount))
     }
+
 
     instance Neg[Period] {
         pub def neg(x: Period): Period =
@@ -225,8 +234,7 @@ namespace Time/Period {
         Period(withDays(x1, days))
 
 
-
-
+    /// ## plus / minus functions
 
     pub def plusYears(x: Period, years: Int64): Period =
         import java.time.Period.plusYears(Int64): ##java.time.Period & Pure;
@@ -278,19 +286,6 @@ namespace Time/Period {
     
     /// # `plus<TemporalAmount>` specialized
 
-    pub def plus(x: Period, a: Period): Period =
-        import java.time.Period.plus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
-        let x1 = getPeriod(x);
-        let a1 = getPeriod(a) as ##java.time.temporal.TemporalAmount;
-        Period(plus(x1, a1))
-
-    /// # `minus<TemporalAmount>` specialized
-
-    pub def minus(x: Period, a: Period): Period =
-        import java.time.Period.minus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
-        let x1 = getPeriod(x);
-        let a1 = getPeriod(a) as ##java.time.temporal.TemporalAmount;
-        Period(minus(x1, a1))
 
 
     /// # `addTo`  and `subtractFrom` specialized - these become `plusPeriod` and `minusPeriod` their respective modules:

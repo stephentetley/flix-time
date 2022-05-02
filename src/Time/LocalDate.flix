@@ -386,7 +386,63 @@ namespace Time/LocalDate {
         withTemporalFieldHelper(getISOWeekFields() |> weekBasedYear, Int32.toInt64(d), x)
         
 
+    pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int32 =
+        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
+        getHelper(get_ALIGNED_DAY_OF_WEEK_IN_MONTH() as ##java.time.temporal.TemporalField, x)
+    
+    pub def getAlignedDayOfWeekInYear(x: LocalDate): Int32 =
+        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_DAY_OF_WEEK_IN_YEAR;
+        getHelper(get_ALIGNED_DAY_OF_WEEK_IN_YEAR() as ##java.time.temporal.TemporalField, x)
 
+    pub def getAlignedWeekOfMonth(x: LocalDate): Int32 =
+        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_WEEK_OF_MONTH;
+        getHelper(get_ALIGNED_WEEK_OF_MONTH() as ##java.time.temporal.TemporalField, x)
+
+    pub def getAlignedWeekOfYear(x: LocalDate): Int32 =
+        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_WEEK_OF_YEAR;
+        getHelper(get_ALIGNED_WEEK_OF_YEAR() as ##java.time.temporal.TemporalField, x)
+
+
+    pub def getEra(x: LocalDate): Int32 =
+        import static get java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField & Pure as get_ERA;
+        getHelper(get_ERA() as ##java.time.temporal.TemporalField, x)
+
+    pub def setMonthDay(i: MonthDay, x: LocalDate): LocalDate =
+        let i1 = Time/MonthDay.getMonthDay(i) as ##java.time.temporal.TemporalAdjuster;
+        withTemporalAdjusterHelper(i1, x)
+
+    pub def setYearMonth(i: YearMonth, x: LocalDate): LocalDate =
+        let i1 = Time/YearMonth.getYearMonth(i) as ##java.time.temporal.TemporalAdjuster;
+        withTemporalAdjusterHelper(i1, x)
+
+
+    pub def setEpochDay(i: Int64, x: LocalDate): LocalDate =
+        import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;
+        withTemporalFieldHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, i, x)
+
+    
+    pub def setToFirstDayOfMonth(x: LocalDate): LocalDate = 
+        import static java.time.temporal.TemporalAdjusters.firstDayOfMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(firstDayOfMonth(), x)
+
+    pub def setToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
+        import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(firstDayOfNextMonth(), x)
+
+    pub def setToFirstDayOfNextYear(x: LocalDate): LocalDate = 
+        import static java.time.temporal.TemporalAdjusters.firstDayOfNextYear(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(firstDayOfNextYear(), x)
+
+    pub def setToLastDayOfMonth(x: LocalDate): LocalDate =  
+        import static java.time.temporal.TemporalAdjusters.lastDayOfMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(lastDayOfMonth(), x)
+
+    pub def setToLastDayOfYear(x: LocalDate): LocalDate =  
+        import static java.time.temporal.TemporalAdjusters.lastDayOfYear(): ##java.time.temporal.TemporalAdjuster & Pure;
+        withTemporalAdjusterHelper(lastDayOfYear(), x)
+
+
+    /// ## plus / minus functions
 
     pub def plusYears(x: LocalDate, years: Int64): LocalDate =
         import java.time.LocalDate.plusYears(Int64): ##java.time.LocalDate & Pure;
@@ -429,6 +485,45 @@ namespace Time/LocalDate {
         LocalDate(minusDays(x1, days))
 
 
+    pub def plusDecades(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as get_DECADES;
+        plusHelper(x, i, get_DECADES() as ##java.time.temporal.TemporalUnit)
+
+    pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.DECADES:##java.time.temporal.ChronoUnit & Pure as get_DECADES;
+        minusHelper(x, i, get_DECADES() as ##java.time.temporal.TemporalUnit)
+
+    pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
+        plusHelper(x, i, get_CENTURIES() as ##java.time.temporal.TemporalUnit)
+
+    pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
+        minusHelper(x, i, get_CENTURIES() as ##java.time.temporal.TemporalUnit)
+
+    pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
+        plusHelper(x, i, get_MILLENNIA() as ##java.time.temporal.TemporalUnit)
+
+    pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
+        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
+        minusHelper(x, i, get_MILLENNIA() as ##java.time.temporal.TemporalUnit)
+
+
+    /// Period methods
+
+    pub def plusPeriod(i: LocalDate, x: Period): LocalDate =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getLocalDate(i) as ##java.time.temporal.Temporal;
+        LocalDate(addTo(x1, i1) as ##java.time.LocalDate)
+    
+    pub def minusPeriod(i: LocalDate, x: Period): LocalDate =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getLocalDate(i) as ##java.time.temporal.Temporal;
+        LocalDate(subtractFrom(x1, i1) as ##java.time.LocalDate)
+
 
 
     /// Generic
@@ -457,26 +552,6 @@ namespace Time/LocalDate {
 
     /// TODO other ChronoFields...
 
-    pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int32 =
-        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
-        getHelper(get_ALIGNED_DAY_OF_WEEK_IN_MONTH() as ##java.time.temporal.TemporalField, x)
-    
-    pub def getAlignedDayOfWeekInYear(x: LocalDate): Int32 =
-        import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_DAY_OF_WEEK_IN_YEAR;
-        getHelper(get_ALIGNED_DAY_OF_WEEK_IN_YEAR() as ##java.time.temporal.TemporalField, x)
-
-    pub def getAlignedWeekOfMonth(x: LocalDate): Int32 =
-        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_WEEK_OF_MONTH;
-        getHelper(get_ALIGNED_WEEK_OF_MONTH() as ##java.time.temporal.TemporalField, x)
-
-    pub def getAlignedWeekOfYear(x: LocalDate): Int32 =
-        import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR: ##java.time.temporal.ChronoField & Pure as get_ALIGNED_WEEK_OF_YEAR;
-        getHelper(get_ALIGNED_WEEK_OF_YEAR() as ##java.time.temporal.TemporalField, x)
-
-
-    pub def getEra(x: LocalDate): Int32 =
-        import static get java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField & Pure as get_ERA;
-        getHelper(get_ERA() as ##java.time.temporal.TemporalField, x)
 
 
 
@@ -489,17 +564,6 @@ namespace Time/LocalDate {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def plusDecades(x: LocalDate, i: Int64): LocalDate = 
-        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as get_DECADES;
-        plusHelper(x, i, get_DECADES() as ##java.time.temporal.TemporalUnit)
-
-    pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
-        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
-        plusHelper(x, i, get_CENTURIES() as ##java.time.temporal.TemporalUnit)
-
-    pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
-        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
-        plusHelper(x, i, get_MILLENNIA() as ##java.time.temporal.TemporalUnit)
 
 
     def minusHelper(x: LocalDate, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalDate =
@@ -511,18 +575,6 @@ namespace Time/LocalDate {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
-        import static get java.time.temporal.ChronoUnit.DECADES:##java.time.temporal.ChronoUnit & Pure as get_DECADES;
-        minusHelper(x, i, get_DECADES() as ##java.time.temporal.TemporalUnit)
-
-
-    pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
-        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
-        minusHelper(x, i, get_CENTURIES() as ##java.time.temporal.TemporalUnit)
-
-    pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
-        import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit & Pure as get_MILLENNIA;
-        minusHelper(x, i, get_MILLENNIA() as ##java.time.temporal.TemporalUnit)
 
 
 
@@ -604,13 +656,6 @@ namespace Time/LocalDate {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def withMonthDay(i: MonthDay, x: LocalDate): LocalDate =
-        let i1 = Time/MonthDay.getMonthDay(i) as ##java.time.temporal.TemporalAdjuster;
-        withTemporalAdjusterHelper(i1, x)
-
-    pub def withYearMonth(i: YearMonth, x: LocalDate): LocalDate =
-        let i1 = Time/YearMonth.getYearMonth(i) as ##java.time.temporal.TemporalAdjuster;
-        withTemporalAdjusterHelper(i1, x)
 
     /// TODO other TemporalAdjusters...
 
@@ -628,70 +673,15 @@ namespace Time/LocalDate {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
-        import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;
-        withTemporalFieldHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, i, x)
 
-
-    /// Period methods
-
-    pub def plusPeriod(i: LocalDate, x: Period): LocalDate =
-        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/Period.getPeriod(x);
-        let i1 = getLocalDate(i) as ##java.time.temporal.Temporal;
-        LocalDate(addTo(x1, i1) as ##java.time.LocalDate)
-    
-    pub def minusPeriod(i: LocalDate, x: Period): LocalDate =
-        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/Period.getPeriod(x);
-        let i1 = getLocalDate(i) as ##java.time.temporal.Temporal;
-        LocalDate(subtractFrom(x1, i1) as ##java.time.LocalDate)
 
     /// DayOfWeek methods
 
-    pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
+    pub def setDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let x1 = Time/DayOfWeek.marshal(x);
         let d1 = getLocalDate(d) as ##java.time.temporal.Temporal;
         LocalDate(adjustInto(x1, d1) as ##java.time.LocalDate)
 
-    /// MonthDay methods
 
-    pub def adjustMonthDay(x: MonthDay, d: LocalDate): LocalDate = 
-        import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/MonthDay.getMonthDay(x);
-        let d1 = getLocalDate(d) as ##java.time.temporal.Temporal;
-        LocalDate(adjustInto(x1, d1) as ##java.time.LocalDate)
-
-    /// YearMonth methods
-
-    pub def adjustYearMonth(x: YearMonth, d: LocalDate): LocalDate = 
-        import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/YearMonth.getYearMonth(x);
-        let d1 = getLocalDate(d) as ##java.time.temporal.Temporal;
-        LocalDate(adjustInto(x1, d1) as ##java.time.LocalDate)
-
-    /// java.time.termporal.TemporalAdjusters methods
-
-    pub def withFirstDayOfMonth(x: LocalDate): LocalDate = 
-        import static java.time.temporal.TemporalAdjusters.firstDayOfMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
-        withTemporalAdjusterHelper(firstDayOfMonth(), x)
-
-    pub def withFirstDayOfNextMonth(x: LocalDate): LocalDate = 
-        import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
-        withTemporalAdjusterHelper(firstDayOfNextMonth(), x)
-
-    pub def withFirstDayOfNextYear(x: LocalDate): LocalDate = 
-        import static java.time.temporal.TemporalAdjusters.firstDayOfNextYear(): ##java.time.temporal.TemporalAdjuster & Pure;
-        withTemporalAdjusterHelper(firstDayOfNextYear(), x)
-
-    pub def withLastDayOfMonth(x: LocalDate): LocalDate =  
-        import static java.time.temporal.TemporalAdjusters.lastDayOfMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
-        withTemporalAdjusterHelper(lastDayOfMonth(), x)
-
-    pub def withLastDayOfYear(x: LocalDate): LocalDate =  
-        import static java.time.temporal.TemporalAdjusters.lastDayOfYear(): ##java.time.temporal.TemporalAdjuster & Pure;
-        withTemporalAdjusterHelper(lastDayOfYear(), x)
-
-    /// TODO other methods...
 }

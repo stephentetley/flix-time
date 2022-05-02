@@ -163,8 +163,9 @@ namespace Time/DayOfWeek {
         getValue(x1)
 
 
+    /// ## plus / minus functions
 
-    pub def plus(x:DayOfWeek, days: Int64): DayOfWeek =
+    pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek & Pure;
         let x1 = marshal(x);
         let x2 = plus(x1, days);

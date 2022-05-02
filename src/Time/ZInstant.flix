@@ -268,6 +268,48 @@ namespace Time/ZInstant {
         withTemporalFieldHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, i, x)
 
 
+    /// # `truncatedTo` specialized
+
+    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: ZInstant): ZInstant = 
+        import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant & Pure;
+        let ZInstant(x1) = x;
+        ZInstant(truncatedTo(x1, u))
+    
+    pub def truncatedToNanos(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        truncatedToHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMicros(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        truncatedToHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMillis(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        truncatedToHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToSeconds(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        truncatedToHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToMinutes(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        truncatedToHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToHours(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+
+    pub def truncatedToHalfDays(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        truncatedToHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
+
+
+    pub def truncatedToDays(x: ZInstant): ZInstant = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
+
+    /// ## plus / minus functions
+
     pub def plusSeconds(x: ZInstant, seconds: Int64): ZInstant =
         import java.time.Instant.plusSeconds(Int64): ##java.time.Instant & Pure;
         let ZInstant(x1) = x;
@@ -294,6 +336,33 @@ namespace Time/ZInstant {
         ZInstant(plusNanos(x1, nanos))
 
 
+    pub def plusDuration(i: ZInstant, x: ZDuration): ZInstant =
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZDuration(x1) = x;
+        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
+        ZInstant(addTo(x1, i1) as ##java.time.Instant)
+    
+    pub def minusDuration(i: ZInstant, x: ZDuration): ZInstant =
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let ZDuration(x1) = x;
+        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
+        ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
+
+    /// Period methods
+
+    pub def plusPeriod(i: ZInstant, x: Period): ZInstant =
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
+        ZInstant(addTo(x1, i1) as ##java.time.Instant)
+    
+    pub def minusPeriod(i: ZInstant, x: Period): ZInstant =
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/Period.getPeriod(x);
+        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
+        ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
+
+        
     /// Generic
 
 
@@ -364,45 +433,6 @@ namespace Time/ZInstant {
         import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
         rangeHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
 
-    /// # `truncatedTo` specialized
-
-    def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: ZInstant): ZInstant = 
-        import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant & Pure;
-        let ZInstant(x1) = x;
-        ZInstant(truncatedTo(x1, u))
-    
-    pub def truncatedToNanos(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
-        truncatedToHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToMicros(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
-        truncatedToHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToMillis(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
-        truncatedToHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToSeconds(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
-        truncatedToHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToMinutes(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
-        truncatedToHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToHours(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
-
-    pub def truncatedToHalfDays(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        truncatedToHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
-
-
-    pub def truncatedToDays(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
-        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
 
     /// # `until` specialized
@@ -470,31 +500,6 @@ namespace Time/ZInstant {
                             getInstant(r.end) as ##java.time.temporal.Temporal))
 
 
-    pub def plusDuration(i: ZInstant, x: ZDuration): ZInstant =
-        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let ZDuration(x1) = x;
-        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
-        ZInstant(addTo(x1, i1) as ##java.time.Instant)
-    
-    pub def minusDuration(i: ZInstant, x: ZDuration): ZInstant =
-        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let ZDuration(x1) = x;
-        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
-        ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
-
-    /// Period methods
-
-    pub def plusPeriod(i: ZInstant, x: Period): ZInstant =
-        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/Period.getPeriod(x);
-        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
-        ZInstant(addTo(x1, i1) as ##java.time.Instant)
-    
-    pub def minusPeriod(i: ZInstant, x: Period): ZInstant =
-        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/Period.getPeriod(x);
-        let i1 = getInstant(i) as ##java.time.temporal.Temporal;
-        ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
 
 }
 
