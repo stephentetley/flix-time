@@ -77,24 +77,20 @@ namespace Time/ZoneId {
 
     pub def zoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
-        import java.lang.Throwable.getMessage(): String & Pure;
         try {
             Ok(ZoneId(of(zoneId.zoneId)))
         } catch {
-            case ex: ##java.time.DateTimeException       => Err(getMessage(ex as ##java.lang.Throwable))
-            case ex: ##java.time.zone.ZoneRulesException => Err(getMessage(ex as ##java.lang.Throwable))
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
         
 
     pub def zoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId & Pure;
-        import java.lang.Throwable.getMessage(): String & Pure;
         try {
             let m1 = FlixSandbox/Marshal.marshalMap(s1 -> s1 as ##java.lang.Object, s2 -> s2 as ##java.lang.Object, aliases);
             Ok(ZoneId(of(zoneId.zoneId, m1)))
         } catch {
-            case ex: ##java.time.DateTimeException       => Err(getMessage(ex as ##java.lang.Throwable))
-            case ex: ##java.time.zone.ZoneRulesException => Err(getMessage(ex as ##java.lang.Throwable))
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     /// ## "abstract constructors" (e.g. `utc`)
@@ -104,13 +100,12 @@ namespace Time/ZoneId {
         case Err(_) => bug!("ZoneId.utc() - failed")
     }
 
-    pub def systemDefault(): Option[ZoneId] & Impure =
+    pub def systemDefault(): Result[ZoneId, String] & Impure =
         import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId & Impure;
         try {
-            Some(ZoneId(systemDefault()))
+            Ok(ZoneId(systemDefault()))
         } catch {
-            case _: ##java.time.DateTimeException => None
-            case _: ##java.time.zone.ZoneRulesException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 

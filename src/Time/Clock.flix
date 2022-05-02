@@ -22,25 +22,6 @@ namespace Time {
     ///
     pub opaque type Clock = ##java.time.Clock
 
-    ///
-    /// Returns the given Clock `x` as a String.
-    ///
-    /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
-    ///
-    instance ToString[Clock] {
-        pub def toString(x: Clock): String =
-            import java.lang.Object.toString(): String & Pure;
-            let Clock(x1) = x;
-            let o1 = x1 as ##java.lang.Object;
-            toString(o1)
-    }
-
-    instance Hash[Clock] {
-        pub def hash(x: Clock): Int32 =
-            import java.time.Clock.hashCode(): Int32 & Pure;
-            let Clock(x1) = x;
-            hashCode(x1)
-    }
 
 }
 
@@ -63,18 +44,12 @@ namespace Time/Clock {
 
     /// ## "abstract constructors" (e.g. `fixedClock`)
 
-    /// Pure or Impure?
-    pub def fixedClock(inst: ZInstant, zone: ZoneId): Clock =
-        import static java.time.Clock.fixed(##java.time.Instant, ##java.time.ZoneId): ##java.time.Clock & Pure;
+    /// Pure or Impure? 
+    pub def fixedClock(inst: ZInstant, zone: ZoneId): Clock & Impure =
+        import static java.time.Clock.fixed(##java.time.Instant, ##java.time.ZoneId): ##java.time.Clock & Impure;
         let ZInstant(inst1) = inst;
         let ZoneId(zone1) = zone;
         Clock(fixed(inst1, zone1))
-
-    pub def offset(d: ZDuration, c: Clock): Clock & Impure =
-        import static java.time.Clock.offset(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
-        let ZDuration(d1) = d;
-        let Clock(c1) = c;
-        Clock(offset(c1, d1))
 
     pub def systemClock(zone: ZoneId): Clock & Impure =
         import static java.time.Clock.system(##java.time.ZoneId): ##java.time.Clock & Impure;
@@ -88,6 +63,12 @@ namespace Time/Clock {
     pub def systemClockUTC(): Clock & Impure =
         import static java.time.Clock.systemUTC(): ##java.time.Clock & Impure;
         Clock(systemUTC())
+
+    pub def offset(d: ZDuration, c: Clock): Clock & Impure =
+        import static java.time.Clock.offset(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
+        let ZDuration(d1) = d;
+        let Clock(c1) = c;
+        Clock(offset(c1, d1))
 
     pub def tick(d: ZDuration, c: Clock): Clock & Impure =
         import static java.time.Clock.tick(##java.time.Clock, ##java.time.Duration): ##java.time.Clock & Impure;
@@ -113,6 +94,16 @@ namespace Time/Clock {
 
     /// ## Clock functions
 
+    ///
+    /// Impure so not a ToString instance.
+    /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
+    ///
+    pub def toString(x: Clock): String & Impure =
+        import java.lang.Object.toString(): String & Impure;
+        let Clock(x1) = x;
+        let o1 = x1 as ##java.lang.Object;
+        toString(o1)
+
     pub def millis(x: Clock): Int64 & Impure =
         import java.time.Clock.millis(): Int64 & Impure;
         let Clock(x1) = x;
@@ -126,12 +117,12 @@ namespace Time/Clock {
 
     /// ## Getters and Setters
 
-    pub def getZone(c: Clock): ZoneId =
-        import java.time.Clock.getZone(): ##java.time.ZoneId & Pure;
+    pub def getZone(c: Clock): ZoneId & Impure =
+        import java.time.Clock.getZone(): ##java.time.ZoneId & Impure;
         ZoneId(getZone(getClock(c)))
 
-    pub def setZone(zone: ZoneId, c: Clock): Clock =
-        import java.time.Clock.withZone(##java.time.ZoneId): ##java.time.Clock & Pure;
+    pub def setZone(zone: ZoneId, c: Clock): Clock & Impure =
+        import java.time.Clock.withZone(##java.time.ZoneId): ##java.time.Clock & Impure;
         let Clock(c1) = c;
         Clock(withZone(c1, Time/ZoneId.getZoneId(zone)))
 

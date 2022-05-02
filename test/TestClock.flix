@@ -16,28 +16,98 @@
 
 namespace TestClock {
 
-    use ToString.toString;
 
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String & Impure = toString(Time/Clock.systemClockDefaultZone())
+    def toString01(): String & Impure = Time/Clock.toString(Time/Clock.systemClockDefaultZone())
 
 
     /////////////////////////////////////////////////////////////////////////////
-    // fixed                                                                   //
+    // fixedClock                                                              //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def fixed01(): Bool & Impure = 
+    def fixedClock01(): Bool & Impure = 
         let i = Time/ZInstant.now();
         let z = Time/ZoneId.utc();
         let c = Time/Clock.fixedClock(i, z);
         let ci1 = Time/Clock.instant(c);
         let ci2 = Time/Clock.instant(c);
-        println("Clock.fixed01(): ${ci1} ${ci2}");
         ci1 == ci2
         
+    /////////////////////////////////////////////////////////////////////////////
+    // systemClock                                                             //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def systemClock01(): Bool & Impure = 
+        let c = Time/Clock.systemClock(Time/ZoneId.utc());
+        Time/Clock.millis(c) > 0i64
+
+    /////////////////////////////////////////////////////////////////////////////
+    // systemClockDefaultZone                                                  //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def systemClockDefaultZone01(): Bool & Impure = 
+        let c = Time/Clock.systemClockDefaultZone();
+        Time/Clock.millis(c) > 0i64
+
+    /////////////////////////////////////////////////////////////////////////////
+    // systemClockUTC                                                          //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def systemClockUTC01(): Bool & Impure = 
+        let c = Time/Clock.systemClockUTC();
+        Time/Clock.millis(c) > 0i64
+       
+    /////////////////////////////////////////////////////////////////////////////
+    // offset                                                                  //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def offset01(): Bool & Impure = 
+        let c = Time/Clock.offset(Time/ZDuration.zero(), Time/Clock.systemClockUTC());
+        Time/Clock.millis(c) > 0i64
+       
+    /////////////////////////////////////////////////////////////////////////////
+    // tick                                                                    //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def tick01(): Bool & Impure = 
+        let c = Time/Clock.tick(Time/ZDuration.zero(), Time/Clock.systemClockUTC());
+        Time/Clock.millis(c) > 0i64
+
+    /////////////////////////////////////////////////////////////////////////////
+    // tickMillis                                                              //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def tickMillis01(): Bool & Impure = 
+        let c = Time/Clock.tickMillis(Time/ZoneId.utc());
+        Time/Clock.millis(c) > 0i64
+
+    /////////////////////////////////////////////////////////////////////////////
+    // tickSeconds                                                             //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def tickSeconds01(): Bool & Impure = 
+        let c = Time/Clock.tickSeconds(Time/ZoneId.utc());
+        Time/Clock.millis(c) > 0i64
+
+    /////////////////////////////////////////////////////////////////////////////
+    // tickMinutes                                                             //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def tickMinutes01(): Bool & Impure = 
+        let c = Time/Clock.tickMinutes(Time/ZoneId.utc());
+        Time/Clock.millis(c) > 0i64
+
 }
