@@ -203,6 +203,8 @@ namespace Time/YearMonth {
         let YearMonth(x1) = x;
         isValidDay(x1, dayOfMonth)
 
+    /// ## YearMonth functions
+
     ///
     /// Returns the length of the month.
     ///

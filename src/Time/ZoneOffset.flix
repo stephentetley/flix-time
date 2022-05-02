@@ -131,7 +131,8 @@ namespace Time/ZoneOffset {
             
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
         fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
+    
+    /// ## ZoneOffset functions
 
     pub def getId(x: ZoneOffset): String =
         import java.time.ZoneOffset.getId(): String & Pure;
@@ -150,31 +151,45 @@ namespace Time/ZoneOffset {
 
 
 
+
+    pub def getOffsetSeconds(x: ZoneOffset): Int32 =
+        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField & Pure as get_OFFSET_SECONDS;
+        getHelper(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, x)
+
+
     /// Generic 
 
 
 
 
-    /// # `adjustInto` specialized - this become `adjustZoneOffset` in the respective modules:
+    /// `adjustInto` specialized - this become `adjustZoneOffset` in the respective modules:
     /// OffsetDateTime
     /// ZonedDateTime
 
-    
-    /// # `getLong` specialized
+    /// `get` specialized
 
-    def getLongHelper(field: ##java.time.temporal.TemporalField, x: ZoneOffset): Int64 =
-        import java.time.ZoneOffset.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+    def getHelper(field: ##java.time.temporal.TemporalField, x: ZoneOffset): Int32 =
+        import java.time.ZoneOffset.get(##java.time.temporal.TemporalField): Int32 & Pure;
         try {
             let ZoneOffset(x1) = x;
-            getLong(x1, field)
+            get(x1, field)
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    pub def getOffsetSeconds(x: ZoneOffset): Int64 =
-        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField & Pure as get_OFFSET_SECONDS;
-        getLongHelper(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, x)
+    /// /// `getLong` specialized
+
+    /// def getLongHelper(field: ##java.time.temporal.TemporalField, x: ZoneOffset): Int64 =
+    ///     import java.time.ZoneOffset.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+    ///     try {
+    ///         let ZoneOffset(x1) = x;
+    ///         getLong(x1, field)
+    ///     } catch {
+    ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+    ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+    ///     }
+
 
     /// # `range` specialized
     

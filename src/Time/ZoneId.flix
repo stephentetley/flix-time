@@ -51,12 +51,15 @@ namespace Time {
 
 namespace Time/ZoneId {
 
-    use X.Cursor;
-    use X.Cursor.{Cursor};
+    use FlixSandbox/I18n.Locale;
+    use FlixSandbox/I18n.Locale.{Locale};
 
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
-
+    
+    use Time/Format.TextStyle;
+    use Time/Zone.ZoneRules;
+    use Time/Zone.ZoneRules.{ZoneRules};
     use Time.OffsetDateTime;
     use Time.OffsetTime;
     use Time.ZoneOffset;
@@ -145,7 +148,14 @@ namespace Time/ZoneId {
         fromTemporalAccessorHelper(Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor)
 
 
+    /// ## ZoneId functions
 
+    pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
+        import java.time.ZoneId.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
+        let style1 = Time/Format/TextStyle.marshal(style);
+        let Locale(locale1) = locale;
+        let ZoneId(z1) = z;
+        getDisplayName(z1, style1, locale1)
 
     ///
     /// Returns the unique ID of the time zone.
@@ -164,9 +174,21 @@ namespace Time/ZoneId {
             case _: ##java.lang.Exception => Set.empty()
         }
 
+    ///
+    pub def getRules(x: ZoneId): Option[ZoneRules] =
+        import java.time.ZoneId.getRules(): ##java.time.zone.ZoneRules & Pure;
+        try {
+            let ZoneId(x1) = x;
+            Some(ZoneRules(getRules(x1)))
+        } catch {
+            case _: ##java.lang.Exception => None
+        }
 
-    /// Generic
-
+    ///
+    pub def normalized(x: ZoneId): ZoneId =
+        import java.time.ZoneId.normalized(): ##java.time.ZoneId & Pure;
+        let ZoneId(x1) = x;
+        ZoneId(normalized(x1))
 
 
 }

@@ -246,6 +246,14 @@ namespace Time/LocalTime {
         isAfter(x1, y1)
 
 
+    pub def isAmOfDay(x: LocalTime): Bool = 
+        import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
+        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 0
+
+    pub def isPmOfDay(x: LocalTime): Bool = 
+        import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
+        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
+
 
     pub def plusHours(x: LocalTime, hours: Int64): LocalTime =
         import java.time.LocalTime.plusHours(Int64): ##java.time.LocalTime & Pure;
@@ -340,7 +348,7 @@ namespace Time/LocalTime {
 
 
 
-    pub def get(t: ##java.time.temporal.TemporalField, x: LocalTime): Int32 = 
+    def getHelper(t: ##java.time.temporal.TemporalField, x: LocalTime): Int32 = 
         import java.time.LocalTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
         let x1 = getLocalTime(x);
         get(x1, t)

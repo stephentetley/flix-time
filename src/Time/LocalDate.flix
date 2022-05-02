@@ -269,8 +269,36 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         isLeapYear(x1)
 
+    /// ## LocalDate functions
 
-        
+    pub def lengthOfMonth(x: LocalDate): Int32 =
+        import java.time.LocalDate.lengthOfMonth(): Int32 & Pure;
+        let LocalDate(x1) = x;
+        lengthOfMonth(x1)
+
+    pub def lengthOfYear(x: LocalDate): Int32 =
+        import java.time.LocalDate.lengthOfYear(): Int32 & Pure;
+        let LocalDate(x1) = x;
+        lengthOfYear(x1)
+
+
+    pub def datesUntil(s: LocalDate, e: LocalDate): Iterator[LocalDate] & Impure = 
+        import java.time.LocalDate.datesUntil(##java.time.LocalDate): ##java.util.stream.Stream & Impure;
+        let LocalDate(s1) = s;
+        let LocalDate(e1) = e;
+        let strm = datesUntil(s1, e1);
+        FlixSandbox/Marshal.unmarshalStream(o -> LocalDate(o as ##java.time.LocalDate), strm)
+
+
+    pub def datesUntilWithStep(s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate] & Impure = 
+        import java.time.LocalDate.datesUntil(##java.time.LocalDate, ##java.time.Period): ##java.util.stream.Stream & Impure;
+        let LocalDate(s1) = s;
+        let LocalDate(e1) = e;
+        let step1 = Time/Period.getPeriod(step);
+        let strm = datesUntil(s1, e1, step1);
+        FlixSandbox/Marshal.unmarshalStream(o -> LocalDate(o as ##java.time.LocalDate), strm)
+
+
     pub def plusYears(x: LocalDate, years: Int64): LocalDate =
         import java.time.LocalDate.plusYears(Int64): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
@@ -400,15 +428,6 @@ namespace Time/LocalDate {
         
 
 
-    pub def lengthOfMonth(x: LocalDate): Int32 =
-        import java.time.LocalDate.lengthOfMonth(): Int32 & Pure;
-        let LocalDate(x1) = x;
-        lengthOfMonth(x1)
-
-    pub def lengthOfYear(x: LocalDate): Int32 =
-        import java.time.LocalDate.lengthOfYear(): Int32 & Pure;
-        let LocalDate(x1) = x;
-        lengthOfYear(x1)
 
     /// Generic
 

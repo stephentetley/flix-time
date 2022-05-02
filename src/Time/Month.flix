@@ -172,25 +172,44 @@ namespace Time/Month {
     pub def fromZonedDateTime(x: ZonedDateTime): Month = 
         fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
-
-    pub def getDisplayName(x: Month, style: TextStyle, locale: Locale): String =
+    /// ## Month functions
+    
+    pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
         import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = marshal(x);
         let s1 = Time/Format/TextStyle.marshal(style);
         let Locale(l1) = locale;
         getDisplayName(x1, s1, l1)
 
-    pub def getName(x: Month): String =
-        import java.lang.Enum.name(): String & Pure;
-        let en1 = marshal(x) as ##java.lang.Enum;
-        name(en1)
-
-
     pub def getValue(x: Month): Int32 =
         import java.time.Month.getValue(): Int32 & Pure;
         let x1 = marshal(x);
         getValue(x1)
 
+    pub def firstDayOfYear(leap: Bool, x: Month): Int32 =
+        import java.time.Month.firstDayOfYear(Bool): Int32 & Pure;
+        let x1 = marshal(x);
+        firstDayOfYear(x1, leap)
+
+    pub def firstMonthOfQuarter(x: Month): Month =
+        import java.time.Month.firstMonthOfQuarter(): ##java.time.Month & Pure;
+        let x1 = marshal(x);
+        unmarshal(firstMonthOfQuarter(x1))
+
+    pub def maxLength(x: Month): Int32 =
+        import java.time.Month.maxLength(): Int32 & Pure;
+        let x1 = marshal(x);
+        maxLength(x1)
+
+    pub def minLength(x: Month): Int32 =
+        import java.time.Month.minLength(): Int32 & Pure;
+        let x1 = marshal(x);
+        minLength(x1)
+
+    pub def length(leap: Bool, x: Month): Int32 =
+        import java.time.Month.length(Bool): Int32 & Pure;
+        let x1 = marshal(x);
+        length(x1, leap)
 
     pub def plus(x:Month, y: Int64): Month =
         import java.time.Month.plus(Int64): ##java.time.Month & Pure;

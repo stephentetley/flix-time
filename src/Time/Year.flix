@@ -238,10 +238,10 @@ namespace Time/Year {
     ///
     /// Returns `true` if `x` is a leap year.
     ///
-    pub def isLeap(x: Year): Bool =
+    pub def isLeap(y: Year): Bool =
         import java.time.Year.isLeap(): Bool & Pure;
-        let Year(x1) = x;
-        isLeap(x1)
+        let Year(y1) = y;
+        isLeap(y1)
 
     ///
     /// Returns `true` if `x` is a leap year.
@@ -250,6 +250,17 @@ namespace Time/Year {
         import static java.time.Year.isLeap(Int64): Bool & Pure;
         isLeap(x)
 
+    ///
+    /// Returns `true` if _.
+    ///
+    pub def isValidMonthDay(x: MonthDay, y: Year): Bool =
+        import java.time.Year.isValidMonthDay(##java.time.MonthDay): Bool & Pure;
+        let x1 = Time/MonthDay.getMonthDay(x);
+        let Year(y1) = y;
+        isValidMonthDay(y1, x1)
+
+
+    /// ## Year functions
 
     ///
     /// Returns _

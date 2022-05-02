@@ -125,7 +125,7 @@ namespace Time/DayOfWeek {
 
     /// ## `from` functions
 
-    /// # `fromTemporalAccessor` specialized
+    /// `fromTemporalAccessor` specialized
     def fromHelper(x: ##java.time.temporal.TemporalAccessor): DayOfWeek = 
         import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek & Pure as fromTA;
         try {
@@ -147,19 +147,15 @@ namespace Time/DayOfWeek {
         fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
+    /// ## DayOfWeek functions
 
-
-    pub def getDisplayName(x: DayOfWeek, style: TextStyle, locale: Locale): String =
+    pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = marshal(x);
         let s1 = Time/Format/TextStyle.marshal(style);
         let Locale(l1) = locale;
         getDisplayName(x1, s1, l1)
 
-    pub def name(x: DayOfWeek): String =
-        import java.lang.Enum.name(): String & Pure;
-        let en1 = marshal(x) as ##java.lang.Enum;
-        name(en1)
 
     pub def getValue(x: DayOfWeek): Int32 =
         import java.time.DayOfWeek.getValue(): Int32 & Pure;

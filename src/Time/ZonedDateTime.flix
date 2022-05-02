@@ -422,6 +422,23 @@ namespace Time/ZonedDateTime {
         let zone1 = Time/ZoneId.getZoneId(zone);
         ZonedDateTime(withZoneSameLocal(x1, zone1))
 
+
+    pub def setFixedOffsetZone(t: ZonedDateTime): ZonedDateTime = 
+        import java.time.ZonedDateTime.withFixedOffsetZone(): ##java.time.ZonedDateTime & Pure;
+        let ZonedDateTime(t1) = t;
+        ZonedDateTime(withFixedOffsetZone(t1))
+
+    pub def setEarlierOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
+        import java.time.ZonedDateTime.withEarlierOffsetAtOverlap(): ##java.time.ZonedDateTime & Pure;
+        let ZonedDateTime(t1) = t;
+        ZonedDateTime(withEarlierOffsetAtOverlap(t1))
+
+    pub def setLaterOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
+        import java.time.ZonedDateTime.withLaterOffsetAtOverlap(): ##java.time.ZonedDateTime & Pure;
+        let ZonedDateTime(t1) = t;
+        ZonedDateTime(withLaterOffsetAtOverlap(t1))
+
+
     /// Generic 
 
 

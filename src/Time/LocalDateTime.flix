@@ -253,6 +253,16 @@ namespace Time/LocalDateTime {
         let LocalDateTime(y1) = y;
         isAfter(x1, y1 as ##java.time.chrono.ChronoLocalDateTime)
 
+    /// ## LocalDateTime functions
+
+    pub def getMonthValue(x: LocalDateTime): Int32 =
+        import java.time.LocalDateTime.getMonth(): ##java.time.Month & Pure;
+        import java.time.Month.getValue(): Int32 & Pure;
+        let LocalDateTime(x1) = x;
+        getValue(getMonth(x1))
+
+        
+
     pub def plusYears(x: LocalDateTime, years: Int64): LocalDateTime =
         import java.time.LocalDateTime.plusYears(Int64): ##java.time.LocalDateTime & Pure;
         let LocalDateTime(x1) = x;
@@ -349,13 +359,6 @@ namespace Time/LocalDateTime {
         import java.time.LocalDateTime.getMonth(): ##java.time.Month & Pure;
         let LocalDateTime(x1) = x;
         Time/Month.unmarshal(getMonth(x1))
-
-    pub def getMonthValue(x: LocalDateTime): Int32 =
-        import java.time.LocalDateTime.getMonth(): ##java.time.Month & Pure;
-        import java.time.Month.getValue(): Int32 & Pure;
-        let LocalDateTime(x1) = x;
-        getValue(getMonth(x1))
-
 
     pub def setMonth(month: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withMonth(Int32): ##java.time.LocalDateTime & Pure;

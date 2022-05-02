@@ -217,6 +217,13 @@ namespace Time/OffsetTime {
         let OffsetTime(y1) = y;
         isEqual(x1, y1)
 
+    pub def isAmOfDay(x: OffsetTime): Bool = 
+        import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
+        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 0
+
+    pub def isPmOfDay(x: OffsetTime): Bool = 
+        import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
+        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
 
     pub def plusHours(x: OffsetTime, hours: Int64): OffsetTime =
         import java.time.OffsetTime.plusHours(Int64): ##java.time.OffsetTime & Pure;
@@ -322,11 +329,10 @@ namespace Time/OffsetTime {
 
         
 
-    /// pub def get(t: a, x: OffsetTime): Int32 with TemporalField[a] = 
-    ///     import java.time.OffsetTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
-    ///     let x1 = getOffsetTime(x);
-    ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
-    ///     get(x1, t1)
+    pub def getHelper(t: ##java.time.temporal.TemporalField, x: OffsetTime): Int32 = 
+        import java.time.OffsetTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        let x1 = getOffsetTime(x);
+        get(x1, t)
 
     /// pub def getLong(t: a, x: OffsetTime): Int64 with TemporalField[a] = 
     ///     import java.time.OffsetTime.getLong(##java.time.temporal.TemporalField): Int64 & Pure;

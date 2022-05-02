@@ -300,6 +300,24 @@ namespace Time/OffsetDateTime {
         isEqual(x1, y1)
 
 
+    pub def isAmOfDay(x: OffsetDateTime): Bool = 
+        import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
+        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 0
+
+    pub def isPmOfDay(x: OffsetDateTime): Bool = 
+        import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
+        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
+
+    /// ## OffsetDateTime functions
+
+    pub def timeLineOrder(x: OffsetDateTime, y: OffsetDateTime): Comparison =
+        import static java.time.OffsetDateTime.timeLineOrder(): ##java.util.Comparator & Pure;
+        import java.util.Comparator.compare(##java.lang.Object, ##java.lang.Object): Int32 & Pure;
+        let OffsetDateTime(x1) = x;
+        let OffsetDateTime(y1) = y;
+        let cmp = timeLineOrder();
+        compare(cmp, x1 as ##java.lang.Object, y1 as ##java.lang.Object) |> Comparison.fromInt32
+        
 
     pub def plusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
         import java.time.OffsetDateTime.plusYears(Int64): ##java.time.OffsetDateTime & Pure;
@@ -589,9 +607,6 @@ namespace Time/OffsetDateTime {
         let x1 = getOffsetDateTime(x);
         getLong(x1, t)
 
-    pub def getAmPmOfDay(x: OffsetDateTime): Int32 = 
-        import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField & Pure as get_AMPM_OF_DAY;        
-        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x)
 
     pub def getEpochDay(x: OffsetDateTime): Int64 = 
         import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;        

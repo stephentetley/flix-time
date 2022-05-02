@@ -111,6 +111,7 @@ namespace Time/Clock {
         let ZoneId(zoneId1) = zoneId;
         Clock(tickMinutes(zoneId1))
 
+    /// ## Clock functions
 
     pub def millis(x: Clock): Int64 & Impure =
         import java.time.Clock.millis(): Int64 & Impure;

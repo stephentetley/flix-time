@@ -185,8 +185,9 @@ namespace Time/Period {
         let Period(x1) = x;
         isNegative(x1)
 
-
-     pub def normalize(x: Period): Period =
+    /// ## Period functions
+    
+    pub def normalize(x: Period): Period =
         import java.time.Period.normalized(): ##java.time.Period & Pure;
         let Period(x1) = x;
         Period(normalized(x1))
