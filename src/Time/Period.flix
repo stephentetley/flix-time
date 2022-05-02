@@ -164,13 +164,13 @@ namespace Time/Period {
 
     /// ## `parse` / `format` functions        
 
-    pub def parse(s: String): Option[Period] =
+    pub def parse(s: String): Result[Period, String] =
         import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period & Pure;
         try {
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(Period(parse(cs)))
+            Ok(Period(parse(cs)))
         } catch {
-            case _: ##java.time.format.DateTimeParseException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     /// Note - alias of `toString`

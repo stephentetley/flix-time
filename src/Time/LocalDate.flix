@@ -220,16 +220,16 @@ namespace Time/LocalDate {
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     ///
-    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Option[LocalDate] =
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[LocalDate, String] =
         import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate & Pure;
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(LocalDate(parse(cs, fmtr)))
+            Ok(LocalDate(parse(cs, fmtr)))
         } catch {
-            case _: ##java.time.format.DateTimeParseException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     ///
@@ -300,12 +300,6 @@ namespace Time/LocalDate {
 
     /// ## Getters and Setters
 
-    pub def getDayOfWeek(x: LocalDate): DayOfWeek =
-        use Time/DayOfWeek.{unmarshal};
-        import java.time.LocalDate.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
-        let LocalDate(x1) = x;
-        unmarshal(getDayOfWeek(x1))
-
     pub def getDayOfMonth(x: LocalDate): Int32 =
         import java.time.LocalDate.getDayOfMonth(): Int32 & Pure;
         let LocalDate(x1) = x;
@@ -315,6 +309,7 @@ namespace Time/LocalDate {
         import java.time.LocalDate.withDayOfMonth(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
         LocalDate(withDayOfMonth(x1, dayOfMonth))
+
 
     pub def getDayOfYear(x: LocalDate): Int32 =
         import java.time.LocalDate.getDayOfYear(): Int32 & Pure;
@@ -326,17 +321,6 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         LocalDate(withDayOfYear(x1, dayOfYear))
 
-    pub def getMonth(x: LocalDate): Month =
-        import java.time.LocalDate.getMonth(): ##java.time.Month & Pure;
-        let LocalDate(x1) = x;
-        Time/Month.unmarshal(getMonth(x1))
-
-
-    pub def getMonthValue(x: LocalDate): Int32 =
-        import java.time.LocalDate.getMonth(): ##java.time.Month & Pure;
-        import java.time.Month.getValue(): Int32 & Pure;
-        let LocalDate(x1) = x;
-        getValue(getMonth(x1))
 
     pub def setMonth(month: Int32, x: LocalDate): LocalDate =
         import java.time.LocalDate.withMonth(Int32): ##java.time.LocalDate & Pure;
@@ -352,6 +336,27 @@ namespace Time/LocalDate {
         import java.time.LocalDate.withYear(Int32): ##java.time.LocalDate & Pure;
         let LocalDate(x1) = x;
         LocalDate(withYear(x1, year))
+
+
+    pub def getDayOfWeek(x: LocalDate): DayOfWeek =
+        use Time/DayOfWeek.{unmarshal};
+        import java.time.LocalDate.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
+        let LocalDate(x1) = x;
+        unmarshal(getDayOfWeek(x1))
+
+
+    pub def getMonth(x: LocalDate): Month =
+        import java.time.LocalDate.getMonth(): ##java.time.Month & Pure;
+        let LocalDate(x1) = x;
+        Time/Month.unmarshal(getMonth(x1))
+
+
+    pub def getMonthValue(x: LocalDate): Int32 =
+        import java.time.LocalDate.getMonth(): ##java.time.Month & Pure;
+        import java.time.Month.getValue(): Int32 & Pure;
+        let LocalDate(x1) = x;
+        getValue(getMonth(x1))
+
 
 
     /// Get/Set Iso

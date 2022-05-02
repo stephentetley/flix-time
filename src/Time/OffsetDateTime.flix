@@ -250,16 +250,16 @@ namespace Time/OffsetDateTime {
     /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     ///
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `None`.
+    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Option[OffsetDateTime] =
+    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[OffsetDateTime, String] =
         import static java.time.OffsetDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.OffsetDateTime & Pure;
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(OffsetDateTime(parse(cs, fmtr)))
+            Ok(OffsetDateTime(parse(cs, fmtr)))
         } catch {
-            case _: ##java.time.format.DateTimeParseException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 

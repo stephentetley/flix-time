@@ -186,13 +186,13 @@ namespace Time/ZInstant {
 
     /// ## `parse` / `format` functions
 
-    pub def parse(s: String): Option[ZInstant] =
+    pub def parse(s: String): Result[ZInstant, String] =
         import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant & Pure;
         try {
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(ZInstant(parse(cs)))
+            Ok(ZInstant(parse(cs)))
         } catch {
-            case _: ##java.time.format.DateTimeParseException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     pub def format(x: ZInstant): String =

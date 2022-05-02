@@ -158,16 +158,16 @@ namespace Time/MonthDay {
     /// Parse the string `s` as a MonthDay, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     ///
-    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Option[MonthDay] =
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[MonthDay, String] =
         import static java.time.MonthDay.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.MonthDay & Pure;
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(MonthDay(parse(cs, fmtr)))
+            Ok(MonthDay(parse(cs, fmtr)))
         } catch {
-            case _: ##java.time.format.DateTimeParseException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
 

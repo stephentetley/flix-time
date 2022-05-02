@@ -211,16 +211,16 @@ namespace Time/LocalDateTime {
     /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     ///
-    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Option[LocalDateTime] =
+    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[LocalDateTime, String] =
         import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDateTime & Pure;
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(LocalDateTime(parse(cs, fmtr)))
+            Ok(LocalDateTime(parse(cs, fmtr)))
         } catch {
-            case _: ##java.time.format.DateTimeParseException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     ///
@@ -630,7 +630,7 @@ namespace Time/LocalDateTime {
 
     /// DayOfWeek methods
 
-    pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
+    pub def setDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let x1 = Time/DayOfWeek.marshal(x);
         let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;
@@ -638,7 +638,7 @@ namespace Time/LocalDateTime {
 
     /// MonthDay methods
 
-    pub def adjustMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
+    pub def setMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
         import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
         let x1 = Time/MonthDay.getMonthDay(x);
         let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;

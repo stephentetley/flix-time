@@ -193,16 +193,16 @@ namespace Time/Year {
     /// Parse the string `s` as a Year, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     ///
-    /// A successful parse is wrapped with `Some(x)`, a parse failure is indicated by `None`.
+    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Option[Year] =
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[Year, String] =
         import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.Year & Pure;
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(Year(parse(cs, fmtr)))
+            Ok(Year(parse(cs, fmtr)))
         } catch {
-            case _: ##java.lang.Exception => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     ///

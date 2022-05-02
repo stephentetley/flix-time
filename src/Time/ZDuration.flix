@@ -272,13 +272,13 @@ namespace Time/ZDuration {
 
     /// ## `parse` / `format` functions
 
-    pub def parse(s: String): Option[ZDuration] =
+    pub def parse(s: String): Result[ZDuration, String] =
         import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration & Pure;
         try {
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(ZDuration(parse(cs)))
+            Ok(ZDuration(parse(cs)))
         } catch {
-            case _: ##java.time.format.DateTimeParseException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     /// Note - alias of `toString`

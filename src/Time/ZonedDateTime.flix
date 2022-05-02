@@ -191,16 +191,16 @@ namespace Time/ZonedDateTime {
     /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.
     /// The format of the input string should in the format mandated by `formatter`.
     ///
-    /// A successful parse is wrapped with `Some(_)`, a parse failure is indicated by `None`.
+    /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Option[ZonedDateTime] =
+    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[ZonedDateTime, String] =
         import static java.time.ZonedDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.ZonedDateTime & Pure;
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = String.trim(s) as ##java.lang.CharSequence;
-            Some(ZonedDateTime(parse(cs, fmtr)))
+            Ok(ZonedDateTime(parse(cs, fmtr)))
         } catch {
-            case _: ##java.time.format.DateTimeParseException => None
+            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
     ///
