@@ -420,6 +420,14 @@ namespace Time/LocalDate {
         import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;
         withTemporalFieldHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, i, x)
 
+    /// DayOfWeek methods
+
+    pub def setDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
+        import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let x1 = Time/DayOfWeek.marshal(x);
+        let d1 = getLocalDate(d) as ##java.time.temporal.Temporal;
+        LocalDate(adjustInto(x1, d1) as ##java.time.LocalDate)
+
     
     pub def setToFirstDayOfMonth(x: LocalDate): LocalDate = 
         import static java.time.temporal.TemporalAdjusters.firstDayOfMonth(): ##java.time.temporal.TemporalAdjuster & Pure;
@@ -525,11 +533,30 @@ namespace Time/LocalDate {
         LocalDate(subtractFrom(x1, i1) as ##java.time.LocalDate)
 
 
+    /// ## between / until functions
 
-    /// Generic
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+        import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getLocalDate(r.start);
+        let e1 = getLocalDate(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
 
 
+    pub def daysUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
+    pub def monthsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def yearsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def quarterYearsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
+        untilHelper(get_QUARTER_YEARS(), r)
 
     /// # `adjustInto` specialized - synonymous with `adjustLocalDate` in the respective modules:
     /// LocalDateTime
@@ -620,28 +647,7 @@ namespace Time/LocalDate {
 
    /// # `until` specialized
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDate, end :: LocalDate}): Int64 = 
-        import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getLocalDate(r.start);
-        let e1 = getLocalDate(r.end) as ##java.time.temporal.Temporal;
-        until(b1, e1, u)
 
-
-    pub def daysUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
-        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def monthsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
-        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def yearsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
-        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def quarterYearsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
-        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
-        untilHelper(get_QUARTER_YEARS(), r)
 
     /// TODO other ChronoUnits...
 
@@ -674,14 +680,6 @@ namespace Time/LocalDate {
         }
 
 
-
-    /// DayOfWeek methods
-
-    pub def setDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
-        import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let x1 = Time/DayOfWeek.marshal(x);
-        let d1 = getLocalDate(d) as ##java.time.temporal.Temporal;
-        LocalDate(adjustInto(x1, d1) as ##java.time.LocalDate)
 
 
 }

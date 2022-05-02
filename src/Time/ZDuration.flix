@@ -456,6 +456,19 @@ namespace Time/ZDuration {
         import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
         minusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
 
+    /// ## multiply / divide functions
+
+    pub def multipliedBy(x: ZDuration, y: Int64): ZDuration =
+        import java.time.Duration.multipliedBy(Int64): ##java.time.Duration & Pure;
+        let ZDuration(x1) = x;
+        ZDuration(multipliedBy(x1, y))
+
+    pub def dividedBy(x: ZDuration, y: Int64): ZDuration =
+        import java.time.Duration.dividedBy(Int64): ##java.time.Duration & Pure;
+        let ZDuration(x1) = x;
+        ZDuration(dividedBy(x1, y))
+
+
     /// Generic
 
     /// # `from<TemporalAmount>` specialized but only Duration is supported which is just identity
@@ -469,15 +482,6 @@ namespace Time/ZDuration {
     /// ZonedDateTime
     
 
-    pub def multipliedBy(x: ZDuration, y: Int64): ZDuration =
-        import java.time.Duration.multipliedBy(Int64): ##java.time.Duration & Pure;
-        let ZDuration(x1) = x;
-        ZDuration(multipliedBy(x1, y))
-
-    pub def dividedBy(x: ZDuration, y: Int64): ZDuration =
-        import java.time.Duration.dividedBy(Int64): ##java.time.Duration & Pure;
-        let ZDuration(x1) = x;
-        ZDuration(dividedBy(x1, y))
 
 
     /// # `addTo`  and `subtractFrom`specialized - these become `plusDuration` and `minusDuration` their respective modules:

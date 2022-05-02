@@ -212,7 +212,7 @@ namespace Time/Month {
         length(x1, leap)
 
     /// ## plus / minus functions
-    
+
     pub def plus(x:Month, y: Int64): Month =
         import java.time.Month.plus(Int64): ##java.time.Month & Pure;
         let x1 = marshal(x);
@@ -225,14 +225,6 @@ namespace Time/Month {
         let x2 = minus(x1, y);
         unmarshal(x2)
 
-    /// Generic
-    /// `get` specialized but only MonthOfYear is supported which equivalant to `getValue`
 
-    /// # `adjustInto` specialized - synonymous with `setMonth` in the respective modules:
-    /// LocalDate
-    /// LocalDateTime
-    /// OffsetDateTime
-    /// YearMonth
-    /// ZonedDateTime
 
 }

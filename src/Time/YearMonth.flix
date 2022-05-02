@@ -276,8 +276,22 @@ namespace Time/YearMonth {
 
 
 
-    /// Generic
+    /// ## between / until functions
 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: YearMonth, end :: YearMonth}): Int64 = 
+        import java.time.YearMonth.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getYearMonth(r.start);
+        let e1 = getYearMonth(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def monthsUntil(r: {start :: YearMonth, end :: YearMonth}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def yearsUntil(r: {start :: YearMonth, end :: YearMonth}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
 
 
@@ -370,20 +384,6 @@ namespace Time/YearMonth {
 
     /// # `until` specialized
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: YearMonth, end :: YearMonth}): Int64 = 
-        import java.time.YearMonth.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getYearMonth(r.start);
-        let e1 = getYearMonth(r.end) as ##java.time.temporal.Temporal;
-        until(b1, e1, u)
-
-
-    pub def monthsUntil(r: {start :: YearMonth, end :: YearMonth}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
-        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def yearsUntil(r: {start :: YearMonth, end :: YearMonth}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
-        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
     /// pub def withTemporalField(field: a, i: Int64, x: YearMonth): YearMonth with TemporalField[a] =
     ///     import java.time.YearMonth.with(##java.time.temporal.TemporalField, Int64): ##java.time.YearMonth & Pure as withTF;         

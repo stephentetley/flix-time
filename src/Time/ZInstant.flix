@@ -362,10 +362,56 @@ namespace Time/ZInstant {
         let i1 = getInstant(i) as ##java.time.temporal.Temporal;
         ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
 
-        
-    /// Generic
+
+    /// ## between / until functions
+
+    pub def between(r: {start :: ZInstant, end :: ZInstant}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        let s1 = getInstant(r.start) as ##java.time.temporal.Temporal;
+        let e1 = getInstant(r.end) as ##java.time.temporal.Temporal;
+        ZDuration(between(s1, e1))
 
 
+    /// `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getInstant(r.start);
+        let e1 = getInstant(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def nanosUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        untilHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def microsUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        untilHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def millisUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        untilHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def secondsUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def minutesUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def hoursUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def halfDaysUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def daysUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
     /// # `getLong` specialized
 
@@ -435,46 +481,6 @@ namespace Time/ZInstant {
 
 
 
-    /// # `until` specialized
-
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getInstant(r.start);
-        let e1 = getInstant(r.end) as ##java.time.temporal.Temporal;
-        until(b1, e1, u)
-
-
-    pub def nanosUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
-        untilHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def microsUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
-        untilHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def millisUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
-        untilHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def secondsUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
-        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def minutesUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
-        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def hoursUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def halfDaysUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def daysUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
-        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
 
     /// # `withTemporalAdjuster` specialized but only Instant is supported which is just identity
@@ -494,10 +500,6 @@ namespace Time/ZInstant {
 
     /// Duration methods
 
-    pub def between(r: {start :: ZInstant, end :: ZInstant}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getInstant(r.start) as ##java.time.temporal.Temporal, 
-                            getInstant(r.end) as ##java.time.temporal.Temporal))
 
 
 

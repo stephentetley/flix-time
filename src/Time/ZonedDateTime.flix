@@ -154,6 +154,10 @@ namespace Time/ZonedDateTime {
         let ZoneId(z1) = zone.zone;
         ZonedDateTime(of(d1, t1, z1))
 
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
+        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+
+
     /// ## `to` functions
 
     ///
@@ -412,7 +416,7 @@ namespace Time/ZonedDateTime {
         let x1 = Time/LocalTime.getLocalTime(x);
         let dt1 = getZonedDateTime(dt) as ##java.time.temporal.Temporal;
         ZonedDateTime(adjustInto(x1, dt1) as ##java.time.ZonedDateTime)
-        
+
     /// ## plus / minus functions
 
     pub def plusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
@@ -523,20 +527,67 @@ namespace Time/ZonedDateTime {
 
 
 
-    /// Generic 
+    /// ## between / until functions 
+
+
+    pub def between(r: {start :: ZonedDateTime, end :: ZonedDateTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        let s1 = getZonedDateTime(r.start) as ##java.time.temporal.Temporal;
+        let e1 = getZonedDateTime(r.end) as ##java.time.temporal.Temporal;
+        ZDuration(between(s1, e1))
+
+    /// `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import java.time.ZonedDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getZonedDateTime(r.start);
+        let e1 = getZonedDateTime(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+    pub def secondsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def minutesUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def hoursUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def halfDaysUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def daysUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def monthsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def yearsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def quarterYearsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
+        untilHelper(get_QUARTER_YEARS(), r)
 
 
     /// # `fromTemporalAccessor` specialized
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
+    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZonedDateTime = 
         import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime & Pure as fromTA;
         try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
-            ZonedDateTime(fromTA(x1))
+            ZonedDateTime(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
+    
 
 
     /// pub def get(t: a, x: ZonedDateTime): Int32 with TemporalField[a] = 
@@ -589,45 +640,6 @@ namespace Time/ZonedDateTime {
         import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
         rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
-   /// # `until` specialized
-
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import java.time.ZonedDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getZonedDateTime(r.start);
-        let e1 = getZonedDateTime(r.end) as ##java.time.temporal.Temporal;
-        until(b1, e1, u)
-
-    pub def secondsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
-        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def minutesUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
-        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def hoursUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def halfDaysUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def daysUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
-        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def monthsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
-        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def yearsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
-        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def quarterYearsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
-        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
-        untilHelper(get_QUARTER_YEARS(), r)
 
     /// pub def withTemporalAdjuster(adj: a, x: ZonedDateTime): ZonedDateTime with TemporalAdjuster[a] =
     ///     import java.time.ZonedDateTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.ZonedDateTime & Pure as withTA;         
@@ -654,10 +666,6 @@ namespace Time/ZonedDateTime {
 
     /// Duration methods
     
-    pub def between(r: {start :: ZonedDateTime, end :: ZonedDateTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getZonedDateTime(r.start) as ##java.time.temporal.Temporal, 
-                            getZonedDateTime(r.end) as ##java.time.temporal.Temporal))
 
 
 

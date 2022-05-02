@@ -357,7 +357,29 @@ namespace Time/OffsetTime {
         OffsetTime(subtractFrom(x1, i1) as ##java.time.OffsetTime)
 
 
-    /// Generic
+    /// ## between / until functions
+
+
+   /// # `until` specialized
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+        import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getOffsetTime(r.start);
+        let e1 = getOffsetTime(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def secondsUntil(r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def minutesUntil(r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def hoursUntil(r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
 
         
@@ -435,18 +457,6 @@ namespace Time/OffsetTime {
         rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
 
-   /// # `until` specialized
-
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
-        import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getOffsetTime(r.start);
-        let e1 = getOffsetTime(r.end) as ##java.time.temporal.Temporal;
-        until(b1, e1, u)
-
-
-    pub def hoursUntil(r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
 
 

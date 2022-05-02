@@ -362,9 +362,34 @@ namespace Time/LocalTime {
         let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
         let ZDuration(x1) = x;
         LocalTime(subtractFrom(x1, i1) as ##java.time.LocalTime)
-        
-    /// Generic
 
+    /// ## between / until functions
+
+    pub def between(r: {start :: LocalTime, end :: LocalTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        let s1 = getLocalTime(r.start) as ##java.time.temporal.Temporal;
+        let e1 = getLocalTime(r.end) as ##java.time.temporal.Temporal;
+        ZDuration(between(s1, e1)) 
+
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalTime, end :: LocalTime}): Int64 = 
+        import java.time.LocalTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getLocalTime(r.start);
+        let e1 = getLocalTime(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def secondsUntil(r: {start :: LocalTime, end :: LocalTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def minutesUntil(r: {start :: LocalTime, end :: LocalTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def hoursUntil(r: {start :: LocalTime, end :: LocalTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
     /// # `adjustInto` specialized - this become `adjustLocalTime` in the respective modules:
     /// LocalDateTime
@@ -445,16 +470,6 @@ namespace Time/LocalTime {
     
    /// # `until` specialized
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalTime, end :: LocalTime}): Int64 = 
-        import java.time.LocalTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getLocalTime(r.start);
-        let e1 = getLocalTime(r.end) as ##java.time.temporal.Temporal;
-        until(b1, e1, u)
-
-
-    pub def hoursUntil(r: {start :: LocalTime, end :: LocalTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
 
     pub def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: LocalTime): LocalTime =
@@ -479,12 +494,6 @@ namespace Time/LocalTime {
 
 
     /// Duration methods
-
-    pub def between(r: {start :: LocalTime, end :: LocalTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getLocalTime(r.start) as ##java.time.temporal.Temporal, 
-                            getLocalTime(r.end) as ##java.time.temporal.Temporal))
-
 
 
 }

@@ -513,6 +513,14 @@ namespace Time/OffsetDateTime {
         import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField & Pure as get_EPOCH_DAY;        
         getLongHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, x)
 
+    /// ZoneOffset methods
+
+    pub def setZoneOffset(zo: ZoneOffset, dt: OffsetDateTime): OffsetDateTime = 
+        import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        let zo1 = Time/ZoneOffset.getZoneOffset(zo);
+        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(adjustInto(zo1, dt1) as ##java.time.OffsetDateTime)
+
 
     /// ## truncate functions
 
@@ -633,12 +641,57 @@ namespace Time/OffsetDateTime {
         let x1 = Time/Period.getPeriod(x);
         let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
         OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
+
+
+
+    /// ## between / until functions
+
+    pub def between(r: {start :: OffsetDateTime, end :: OffsetDateTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        let s1 = getOffsetDateTime(r.start) as ##java.time.temporal.Temporal;
+        let e1 = getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
+        ZDuration(between(s1, e1))
+
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getOffsetDateTime(r.start);
+        let e1 = getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def secondsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def minutesUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def hoursUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def halfDaysUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def daysUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def monthsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def yearsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def quarterYearsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
+        untilHelper(get_QUARTER_YEARS(), r)
         
-
-    /// Generic
-
-
-
 
     def getHelper(t: ##java.time.temporal.TemporalField, x: OffsetDateTime): Int32 = 
         import java.time.OffsetDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
@@ -719,63 +772,12 @@ namespace Time/OffsetDateTime {
 
    /// # `until` specialized
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getOffsetDateTime(r.start);
-        let e1 = getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
-        until(b1, e1, u)
-
-
-    pub def secondsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
-        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def minutesUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
-        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def hoursUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def halfDaysUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def daysUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
-        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def monthsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
-        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def yearsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
-        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def quarterYearsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
-        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
-        untilHelper(get_QUARTER_YEARS(), r)
 
 
 
-    /// Duration methods
-    
-    pub def between(r: {start :: OffsetDateTime, end :: OffsetDateTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getOffsetDateTime(r.start) as ##java.time.temporal.Temporal, 
-                            getOffsetDateTime(r.end) as ##java.time.temporal.Temporal))
 
 
 
-    /// ZoneOffset methods
-
-    pub def adjustZoneOffset(zo: ZoneOffset, dt: OffsetDateTime): OffsetDateTime = 
-        import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
-        let zo1 = Time/ZoneOffset.getZoneOffset(zo);
-        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
-        OffsetDateTime(adjustInto(zo1, dt1) as ##java.time.OffsetDateTime)
 
     /// DayOfWeek methods
     /// adjustDayOfWeek === setDayOfWeek

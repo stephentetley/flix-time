@@ -371,7 +371,7 @@ namespace Time/LocalDateTime {
         let x1 = Time/LocalTime.getLocalTime(x);
         let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
         LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
-        
+
     /// ## truncate functions
 
     def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: LocalDateTime): LocalDateTime = 
@@ -493,8 +493,54 @@ namespace Time/LocalDateTime {
         LocalDateTime(subtractFrom(x1, dt1) as ##java.time.LocalDateTime)
 
 
-    /// Generic
+    /// ## between / until functions
 
+    pub def between(r: {start :: LocalDateTime, end :: LocalDateTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        let s1 = getLocalDateTime(r.start) as ##java.time.temporal.Temporal;
+        let e1 = getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
+        ZDuration(between(s1, e1)) 
+                            
+
+
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        let b1 = getLocalDateTime(r.start);
+        let e1 = getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
+        until(b1, e1, u)
+
+
+    pub def secondsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def minutesUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def hoursUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def halfDaysUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def daysUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def monthsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
+        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def yearsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+
+    pub def quarterYearsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
+        untilHelper(get_QUARTER_YEARS(), r)
 
     
     /// # `adjustInto` specialized - this become `adjustLocalDateTime` in the respective modules:
@@ -575,44 +621,6 @@ namespace Time/LocalDateTime {
 
    /// # `until` specialized
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
-        let b1 = getLocalDateTime(r.start);
-        let e1 = getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
-        until(b1, e1, u)
-
-
-    pub def secondsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
-        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def minutesUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
-        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def hoursUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def halfDaysUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
-        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def daysUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
-        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def monthsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit & Pure as get_MONTHS;
-        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def yearsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
-        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
-
-    pub def quarterYearsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
-        import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
-        untilHelper(get_QUARTER_YEARS(), r)
 
 
     pub def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: LocalDateTime): LocalDateTime =
@@ -637,10 +645,6 @@ namespace Time/LocalDateTime {
     
     /// Duration methods
 
-    pub def between(r: {start :: LocalDateTime, end :: LocalDateTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getLocalDateTime(r.start) as ##java.time.temporal.Temporal, 
-                            getLocalDateTime(r.end) as ##java.time.temporal.Temporal))
 
 
 

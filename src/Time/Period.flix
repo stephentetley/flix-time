@@ -266,8 +266,16 @@ namespace Time/Period {
         let Period(x1) = x;
         Period(minusDays(x1, days))
 
+   /// ## multiply / divide functions
 
+    pub def multipliedBy(x: Period, y: Int32): Period =
+        import java.time.Period.multipliedBy(Int32): ##java.time.Period & Pure;
+        let Period(x1) = x;
+        Period(multipliedBy(x1, y))
 
+    // No `dividedBy` in ##java.time.Period
+
+    /// ## between / until functions
 
     /// Note returns Period as LocalDate has no time component
     pub def between(r: {start :: LocalDate, end :: LocalDate}): Period =
@@ -275,25 +283,6 @@ namespace Time/Period {
         let LocalDate(b1) = r.start;
         let LocalDate(e1) = r.end;
         Period(between(b1, e1))
-
-
-    /// Generic
-    
-    /// # `from<TemporalAmount>` specialized - only supported amount is Period which is identity
-
-    /// # `get` specialized - supported units are YEARS, MONTHS, DAYS
-    /// These are already covered in the non generic API
-    
-    /// # `plus<TemporalAmount>` specialized
-
-
-
-    /// # `addTo`  and `subtractFrom` specialized - these become `plusPeriod` and `minusPeriod` their respective modules:
-    /// Instant
-    /// LocalDate
-    /// LocalDateTime
-    /// OffsetDateTime
-    /// ZonedDateTime
 
 
 }
