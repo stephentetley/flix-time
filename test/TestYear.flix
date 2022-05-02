@@ -69,17 +69,6 @@ namespace TestYear {
     @test
     def compare03(): Bool = Order.compare(Time/Year.year(isoYear = 2021), Time/Year.year(isoYear = 2020)) == GreaterThan
 
-    /////////////////////////////////////////////////////////////////////////////
-    // range                                                                   //
-    /////////////////////////////////////////////////////////////////////////////
-
-    @test
-    def range01(): Time/Temporal.ValueRange & Impure = 
-        let y1 = Time/Year.year(isoYear = 2020);        
-        let r1 = Time/Year.rangeYear(y1);
-        println("Year.range01(): ${r1}");
-        r1
-
 
     /////////////////////////////////////////////////////////////////////////////
     // until                                                                   //

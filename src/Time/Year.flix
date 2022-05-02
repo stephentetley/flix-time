@@ -358,28 +358,6 @@ namespace Time/Year {
     ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
     ///     }
 
-    /// # `range` specialized
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: Year): ValueRange =
-        import java.time.Year.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let Year(x1) = x;
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def rangeEra(z: Year): ValueRange =
-        import static get java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField & Pure as get_ERA;            
-        rangeHelper(get_ERA() as ##java.time.temporal.TemporalField, z)
-
-    pub def rangeYear(z: Year): ValueRange =
-        import static get java.time.temporal.ChronoField.YEAR: ##java.time.temporal.ChronoField & Pure as get_YEAR;            
-        rangeHelper(get_YEAR() as ##java.time.temporal.TemporalField, z)
-
-    pub def rangeYearOfEra(z: Year): ValueRange =
-        import static get java.time.temporal.ChronoField.YEAR_OF_ERA: ##java.time.temporal.ChronoField & Pure as get_YEAR_OF_ERA;            
-        rangeHelper(get_YEAR_OF_ERA() as ##java.time.temporal.TemporalField, z)
 
 
 

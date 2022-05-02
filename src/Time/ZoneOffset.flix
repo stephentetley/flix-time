@@ -179,22 +179,5 @@ namespace Time/ZoneOffset {
         }
 
 
-    /// # `range` specialized
-    
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: ZoneOffset): ValueRange =
-        import java.time.ZoneOffset.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let ZoneOffset(x1) = x;
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-
-    pub def rangeOffsetSeconds(z: ZoneOffset): ValueRange =       
-        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField & Pure as get_OFFSET_SECONDS;            
-        rangeHelper(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, z)
-
 
 }

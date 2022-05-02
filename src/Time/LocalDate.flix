@@ -624,31 +624,6 @@ namespace Time/LocalDate {
     ///     }
 
 
-    /// # `range` specialized
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: LocalDate): ValueRange =
-        import java.time.LocalDate.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let LocalDate(x1) = x;
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    /// TODO other ChronoFields...
-
-    pub def rangeDayOfWeek(z: LocalDate): ValueRange =       
-        import static get java.time.temporal.ChronoField.DAY_OF_WEEK: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_WEEK;            
-        rangeHelper(get_DAY_OF_WEEK() as ##java.time.temporal.TemporalField, z)
-
-    pub def rangeDayOfMonth(z: LocalDate): ValueRange =       
-        import static get java.time.temporal.ChronoField.DAY_OF_MONTH: ##java.time.temporal.ChronoField & Pure as get_DAY_OF_MONTH;            
-        rangeHelper(get_DAY_OF_MONTH() as ##java.time.temporal.TemporalField, z)
-
-   /// # `until` specialized
-
-
-
     /// TODO other ChronoUnits...
 
     /// # `with<TemporalAdjuster>` specialized

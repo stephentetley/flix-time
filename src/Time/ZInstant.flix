@@ -451,38 +451,6 @@ namespace Time/ZInstant {
     ///     }
 
 
-    /// # `range` specialized
-    
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: ZInstant): ValueRange =
-        import java.time.Instant.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let ZInstant(x1) = x;
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def rangeNanoOfSecond(x: ZInstant): ValueRange = 
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
-        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-    pub def rangeMicroOfSecond(x: ZInstant): ValueRange =
-        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
-        rangeHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-    pub def rangeMilliOfSecond(x: ZInstant): ValueRange =
-        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
-        rangeHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-    pub def rangeInstantSeconds(x: ZInstant): ValueRange =
-        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
-        rangeHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
-
-
-
-
-
     /// # `withTemporalAdjuster` specialized but only Instant is supported which is just identity
 
     /// # `withTemporalField` specialized
@@ -498,11 +466,4 @@ namespace Time/ZInstant {
         }
 
 
-    /// Duration methods
-
-
-
-
 }
-
-

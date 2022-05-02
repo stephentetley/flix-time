@@ -450,27 +450,6 @@ namespace Time/LocalTime {
             case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
         }
 
-    /// # `range` specialized
-
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: LocalTime): ValueRange =
-        import java.time.LocalTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let LocalTime(x1) = x;
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def rangeNanoOfSecond(x: LocalTime): ValueRange = 
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
-        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-
-    
-   /// # `until` specialized
-
-
 
     pub def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: LocalTime): LocalTime =
         import java.time.LocalTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.LocalTime & Pure as withTA;         

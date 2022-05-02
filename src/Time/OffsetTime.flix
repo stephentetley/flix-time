@@ -358,9 +358,13 @@ namespace Time/OffsetTime {
 
 
     /// ## between / until functions
+    
+    pub def between(r: {start :: OffsetTime, end :: OffsetTime}): ZDuration =
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        let s1 = getOffsetTime(r.start) as ##java.time.temporal.Temporal;
+        let e1 = getOffsetTime(r.end) as ##java.time.temporal.Temporal;
+        ZDuration(between(s1, e1))
 
-
-   /// # `until` specialized
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
         import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
@@ -440,27 +444,6 @@ namespace Time/OffsetTime {
     ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
     ///     }
 
-    /// # `range` specialized
-
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: OffsetTime): ValueRange =
-        import java.time.OffsetTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let OffsetTime(x1) = x;
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def rangeNanoOfSecond(x: OffsetTime): ValueRange = 
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
-        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-
-
-
-
-
 
     /// pub def withTemporalAdjuster(adj: a, x: OffsetTime): OffsetTime with TemporalAdjuster[a] =
     ///     import java.time.OffsetTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.OffsetTime & Pure as withTA;         
@@ -485,12 +468,7 @@ namespace Time/OffsetTime {
     ///     }
 
 
-    /// Duration methods
-    
-    pub def between(r: {start :: OffsetTime, end :: OffsetTime}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
-        ZDuration(between(getOffsetTime(r.start) as ##java.time.temporal.Temporal, 
-                            getOffsetTime(r.end) as ##java.time.temporal.Temporal))
+
 
 
     /// LocalTime methods

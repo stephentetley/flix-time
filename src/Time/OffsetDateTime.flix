@@ -691,7 +691,7 @@ namespace Time/OffsetDateTime {
     pub def quarterYearsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit & Pure as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
-        
+
 
     def getHelper(t: ##java.time.temporal.TemporalField, x: OffsetDateTime): Int32 = 
         import java.time.OffsetDateTime.get(##java.time.temporal.TemporalField): Int32 & Pure;
@@ -749,39 +749,6 @@ namespace Time/OffsetDateTime {
     ///         /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
     ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
     ///     }
-
-
-    /// # `range` specialized
-    
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: OffsetDateTime): ValueRange =
-        import java.time.OffsetDateTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let OffsetDateTime(x1) = x;
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def rangeNanoOfSecond(x: OffsetDateTime): ValueRange = 
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
-        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-
-
-
-   /// # `until` specialized
-
-
-
-
-
-
-
-
-    /// DayOfWeek methods
-    /// adjustDayOfWeek === setDayOfWeek
-
 
  
 }

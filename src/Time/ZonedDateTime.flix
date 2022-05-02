@@ -624,23 +624,6 @@ namespace Time/ZonedDateTime {
     ///         case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
     ///     }
 
-    /// # `range` specialized
-
-    def rangeHelper(f: ##java.time.temporal.TemporalField, x: ZonedDateTime): ValueRange =
-        import java.time.ZonedDateTime.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;         
-        try {
-            let ZonedDateTime(x1) = x;
-            ValueRange(range(x1, f))
-        } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
-
-    pub def rangeNanoOfSecond(x: ZonedDateTime): ValueRange = 
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
-        rangeHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
-
-
     /// pub def withTemporalAdjuster(adj: a, x: ZonedDateTime): ZonedDateTime with TemporalAdjuster[a] =
     ///     import java.time.ZonedDateTime.with(##java.time.temporal.TemporalAdjuster): ##java.time.ZonedDateTime & Pure as withTA;         
     ///     try {

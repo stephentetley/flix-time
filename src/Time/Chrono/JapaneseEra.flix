@@ -120,12 +120,6 @@ namespace Time/Chrono/JapaneseEra {
     ///     let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
     ///     Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
-    /// pub def range(field: a, x: JapaneseEra): ValueRange with TemporalField[a] =
-    ///     import java.time.chrono.JapaneseEra.range(##java.time.temporal.TemporalField): ##java.time.temporal.ValueRange & Pure;
-    ///     let x1 = getJapaneseEra(x);
-    ///     let field1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(field);
-    ///     ValueRange(range(x1, field1))
-
 
 
     /// pub def get(t: a, x: JapaneseEra): Int32 with TemporalField[a] = 
