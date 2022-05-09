@@ -167,11 +167,12 @@ namespace Time/Format/DateTimeFormatterBuilder {
         let style1 = Time/Format/TextStyle.marshal(style);
         liftJvmBuilderPrim(flip(appendChronologyText, style1))
 
+    /// Java 16
 
-    pub def appendDayPeriodText(style: TextStyle): DateTimeFormatterBuilder[ka, Unit] = 
-        import java.time.format.DateTimeFormatterBuilder.appendDayPeriodText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder & Impure;
-        let style1 = Time/Format/TextStyle.marshal(style);
-        liftJvmBuilderPrim(flip(appendDayPeriodText, style1))
+    /// pub def appendDayPeriodText(style: TextStyle): DateTimeFormatterBuilder[ka, Unit] = 
+    ///     import java.time.format.DateTimeFormatterBuilder.appendDayPeriodText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder & Impure;
+    ///     let style1 = Time/Format/TextStyle.marshal(style);
+    ///     liftJvmBuilderPrim(flip(appendDayPeriodText, style1))
 
 
     pub def appendGenericZoneText(style: TextStyle): DateTimeFormatterBuilder[ka, Unit] = 

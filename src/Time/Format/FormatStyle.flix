@@ -33,15 +33,15 @@ namespace Time/Format/FormatStyle {
     use Time/Format.FormatStyle.{Full, Long, Medium, Short};
 
     pub def marshal(x: FormatStyle): ##java.time.format.FormatStyle = 
-        import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle & Pure as getFULL;
-        import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle & Pure as getLONG;
-        import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle & Pure as getMEDIUM;
-        import static get java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle & Pure as getSHORT;
+        import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle & Pure as get_FULL;
+        import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle & Pure as get_LONG;
+        import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle & Pure as get_MEDIUM;
+        import static get java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle & Pure as get_SHORT;
         match x {
-            case Full               => getFULL()
-            case Long               => getLONG()
-            case Medium             => getMEDIUM()
-            case Short              => getSHORT()
+            case Full               => get_FULL()
+            case Long               => get_LONG()
+            case Medium             => get_MEDIUM()
+            case Short              => get_SHORT()
         }
 
     def primEquals(x: ##java.time.format.FormatStyle, y: ##java.time.format.FormatStyle): Bool =
@@ -51,14 +51,14 @@ namespace Time/Format/FormatStyle {
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.format.FormatStyle): FormatStyle = 
-        import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle & Pure as getFULL;
-        import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle & Pure as getLONG;
-        import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle & Pure as getMEDIUM;
-        import static get java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle & Pure as getSHORT;
+        import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle & Pure as get_FULL;
+        import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle & Pure as get_LONG;
+        import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle & Pure as get_MEDIUM;
+        import static get java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle & Pure as get_SHORT;
         match x {
-            case x1 if primEquals(x1, getFULL())                => Full
-            case x1 if primEquals(x1, getLONG())                => Long
-            case x1 if primEquals(x1, getMEDIUM())              => Medium
-            case x1 if primEquals(x1, getSHORT())               => Short
+            case x1 if primEquals(x1, get_FULL())   => Full
+            case x1 if primEquals(x1, get_LONG())   => Long
+            case x1 if primEquals(x1, get_MEDIUM()) => Medium
+            case x1 if primEquals(x1, get_SHORT())  => Short
         }
 }

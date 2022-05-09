@@ -72,9 +72,9 @@ namespace TestDayOfWeek {
         Time/DayOfWeek.fromLocalDate(date) == Time/DayOfWeek.Sunday
 
     @test
-    def fromLocalDate02(): Bool =         
+    def fromLocalDate02(): Bool =
         let date = Time/LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 2});
-        Time/DayOfWeek.fromLocalDate(date) != Time/DayOfWeek.Sunday
+        Time/DayOfWeek.fromLocalDate(date) == Time/DayOfWeek.Monday
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -93,7 +93,7 @@ namespace TestDayOfWeek {
     /////////////////////////////////////////////////////////////////////////////
     
     pub def getDisplayName01(): Bool & Impure =         
-        not String.isEmpty(Time/DayOfWeek.getDisplayName(Time/Format/TextStyle.Full, FlixSandbox/I18n/Locale.getDefault(), Time/DayOfWeek.Monday))
+        Time/DayOfWeek.getDisplayName(Time/Format/TextStyle.Full, FlixSandbox/I18n/Locale.getDefault(), Time/DayOfWeek.Monday) != ""
 
 
 }
