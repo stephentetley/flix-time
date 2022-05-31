@@ -20,7 +20,7 @@ namespace Time {
     ///
     /// A wrapper around a Java ZonedDateTime.
     ///
-    pub opaque type ZonedDateTime = ##java.time.ZonedDateTime
+    pub enum ZonedDateTime(##java.time.ZonedDateTime)
 
     ///
     /// Returns the given date-time `x` as a String using ISO-8601 representation.

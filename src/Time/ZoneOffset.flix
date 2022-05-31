@@ -19,7 +19,7 @@ namespace Time {
     ///
     /// A wrapper around a Java ZoneOffset.
     ///
-    pub opaque type ZoneOffset = ##java.time.ZoneOffset
+    pub enum ZoneOffset(##java.time.ZoneOffset)
 
     ///
     /// Returns the given ZoneOffset `x` as a String.

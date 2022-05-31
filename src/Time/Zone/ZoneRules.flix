@@ -20,7 +20,7 @@ namespace Time/Zone {
     ///
     /// A wrapper around a Java ZoneRules.
     ///
-    pub opaque type ZoneRules = ##java.time.zone.ZoneRules
+    pub enum ZoneRules(##java.time.zone.ZoneRules)
 
     instance ToString[ZoneRules] {
         pub def toString(x: ZoneRules): String =

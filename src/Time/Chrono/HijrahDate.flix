@@ -19,7 +19,7 @@ namespace Time/Chrono {
     ///
     /// A wrapper around java.time.chrono.HijrahDate.
     ///
-    pub opaque type HijrahDate = ##java.time.chrono.HijrahDate
+    pub enum HijrahDate(##java.time.chrono.HijrahDate)
     
     ///
     /// Returns the given HijrahDate `x` as a String.

@@ -21,7 +21,7 @@ namespace Time/Chrono {
     ///
     /// A wrapper around java.time.chrono.JapaneseDate.
     ///
-    pub opaque type JapaneseDate = ##java.time.chrono.JapaneseDate
+    pub enum JapaneseDate(##java.time.chrono.JapaneseDate)
     
     ///
     /// Returns the given JapaneseDate `x` as a String.

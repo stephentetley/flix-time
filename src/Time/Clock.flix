@@ -20,7 +20,7 @@ namespace Time {
     ///
     /// A wrapper around a Java Clock.
     ///
-    pub opaque type Clock = ##java.time.Clock
+    pub enum Clock(##java.time.Clock)
 
 
 }

@@ -25,7 +25,7 @@ namespace Time {
     ///
     /// This is a wrapper around java.time.Duration.
     ///
-    pub opaque type ZDuration = ##java.time.Duration
+    pub enum ZDuration(##java.time.Duration)
 
     ///
     /// The format of the output string is in ISO-8601 duration format.

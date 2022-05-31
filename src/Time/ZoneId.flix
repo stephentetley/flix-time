@@ -20,7 +20,7 @@ namespace Time {
     ///
     /// A wrapper around a Java ZoneId.
     ///
-    pub opaque type ZoneId = ##java.time.ZoneId
+    pub enum ZoneId(##java.time.ZoneId)
 
     ///
     /// Returns the given ZoneId `x` as a String.

@@ -21,7 +21,7 @@ namespace Time {
     ///
     /// A wrapper around a Java OffsetTime.
     ///
-    pub opaque type OffsetTime = ##java.time.OffsetTime
+    pub enum OffsetTime(##java.time.OffsetTime)
 
 
     ///

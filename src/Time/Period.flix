@@ -21,7 +21,7 @@ namespace Time {
     ///
     /// A wrapper around a Java Period.
     ///
-    pub opaque type Period = ##java.time.Period
+    pub enum Period(##java.time.Period)
 
     instance ToString[Period] {
         pub def toString(x: Period): String =

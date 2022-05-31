@@ -19,7 +19,7 @@ namespace Time/Chrono {
     ///
     /// A wrapper around java.time.chrono.MinguoDate.
     ///
-    pub opaque type MinguoDate = ##java.time.chrono.MinguoDate
+    pub enum MinguoDate(##java.time.chrono.MinguoDate)
     
     ///
     /// Returns the given MinguoDate `x` as a String.

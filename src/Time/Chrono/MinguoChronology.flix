@@ -16,7 +16,7 @@
 
 namespace Time/Chrono {
 
-    pub opaque type MinguoChronology = ##java.time.chrono.MinguoChronology
+    pub enum MinguoChronology(##java.time.chrono.MinguoChronology)
 
     instance ToString[MinguoChronology] {
         pub def toString(x: MinguoChronology): String =

@@ -22,7 +22,7 @@ namespace Time {
     ///
     /// A wrapper around a Java LocalDate.
     ///
-    pub opaque type LocalDate = ##java.time.LocalDate
+    pub enum LocalDate(##java.time.LocalDate)
 
     ///
     /// Returns the given date `x` as a string using the Java builtin toString method.

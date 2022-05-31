@@ -24,7 +24,7 @@ namespace Time {
     ///
     /// A wrapper around a Java instant.
     ///
-    pub opaque type ZInstant = ##java.time.Instant
+    pub enum ZInstant(##java.time.Instant)
     
     ///
     /// Returns the given instant `x` as a String using ISO-8601 representation.

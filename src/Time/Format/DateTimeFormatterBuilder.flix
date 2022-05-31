@@ -23,7 +23,8 @@ namespace Time/Format {
     /// 
     /// `ka` is the continuation answer type
     ///
-    pub opaque type DateTimeFormatterBuilder[ka, a] = ##java.time.format.DateTimeFormatterBuilder -> (a -> ##java.time.format.DateTimeFormatterBuilder -> Result[ka, String] & Impure) -> Result[ka, String] & Impure
+    pub enum DateTimeFormatterBuilder[ka, a](##java.time.format.DateTimeFormatterBuilder -> 
+        (a -> ##java.time.format.DateTimeFormatterBuilder -> Result[ka, String] & Impure) -> Result[ka, String] & Impure)
 
 
     instance Functor[DateTimeFormatterBuilder[ka]] {

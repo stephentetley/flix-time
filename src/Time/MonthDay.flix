@@ -21,7 +21,7 @@ namespace Time {
     ///
     /// A wrapper around java.time.MonthDay.
     ///
-    pub opaque type MonthDay = ##java.time.MonthDay
+    pub enum MonthDay(##java.time.MonthDay)
 
 
     instance ToString[MonthDay] {

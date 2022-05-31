@@ -16,7 +16,7 @@
 
 namespace Time/Format {
 
-    pub opaque type DecimalStyle = ##java.time.format.DecimalStyle
+    pub enum DecimalStyle(##java.time.format.DecimalStyle)
 
 
     instance ToString[DecimalStyle] {

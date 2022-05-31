@@ -21,7 +21,7 @@ namespace Time {
     ///
     /// A wrapper around java.time.Year.
     ///
-    pub opaque type Year = ##java.time.Year
+    pub enum Year(##java.time.Year)
 
     instance ToString[Year] {
         pub def toString(x: Year): String =

@@ -20,7 +20,7 @@ namespace Time {
     ///
     /// A wrapper around java.time.YearMonth.
     ///
-    pub opaque type YearMonth = ##java.time.YearMonth
+    pub enum YearMonth(##java.time.YearMonth)
 
     ///
     ///

@@ -21,7 +21,7 @@ namespace Time {
     ///
     /// A wrapper around a Java OffsetDateTime.
     ///
-    pub opaque type OffsetDateTime = ##java.time.OffsetDateTime
+    pub enum OffsetDateTime(##java.time.OffsetDateTime)
 
     ///
     /// Returns the given date-time `x` as a String using ISO-8601 representation.

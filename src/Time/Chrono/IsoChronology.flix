@@ -16,7 +16,7 @@
 
 namespace Time/Chrono {
 
-    pub opaque type IsoChronology = ##java.time.chrono.IsoChronology
+    pub enum IsoChronology(##java.time.chrono.IsoChronology)
     
     instance ToString[IsoChronology] {
         pub def toString(x: IsoChronology): String =

@@ -19,7 +19,7 @@ namespace Time/Chrono {
     ///
     /// A wrapper around java.time.chrono.ThaiBuddhistDate.
     ///
-    pub opaque type ThaiBuddhistDate = ##java.time.chrono.ThaiBuddhistDate
+    pub enum ThaiBuddhistDate(##java.time.chrono.ThaiBuddhistDate)
     
     ///
     /// Returns the given ThaiBuddhistDate `x` as a String.

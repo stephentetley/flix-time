@@ -22,7 +22,7 @@ namespace Time/Chrono {
     ///
     /// In Java, JapaneseEra is a class not an enum unlike HijrahEra
     ///
-    pub opaque type JapaneseEra = ##java.time.chrono.JapaneseEra
+    pub enum JapaneseEra(##java.time.chrono.JapaneseEra)
     
     ///
     /// Returns the given JapaneseEra `x` as a String.

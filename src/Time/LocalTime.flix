@@ -22,7 +22,7 @@ namespace Time {
     ///
     /// A wrapper around a Java LocalTime.
     ///
-    pub opaque type LocalTime = ##java.time.LocalTime
+    pub enum LocalTime(##java.time.LocalTime)
 
     ///
     /// Returns the given time `x` as a string using __.

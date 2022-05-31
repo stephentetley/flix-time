@@ -17,7 +17,7 @@
 
 namespace Time/Chrono {
 
-    pub opaque type JapaneseChronology = ##java.time.chrono.JapaneseChronology
+    pub enum JapaneseChronology(##java.time.chrono.JapaneseChronology)
 
     instance ToString[JapaneseChronology] {
         pub def toString(x: JapaneseChronology): String =

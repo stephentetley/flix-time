@@ -22,7 +22,7 @@ namespace Time {
     ///
     /// A wrapper around a Java LocalDateTime.
     ///
-    pub opaque type LocalDateTime = ##java.time.LocalDateTime
+    pub enum LocalDateTime(##java.time.LocalDateTime)
 
     ///
     /// Returns the given date-time `x` as a String using ISO-8601 representation.

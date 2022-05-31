@@ -20,7 +20,7 @@ namespace Time/Zone {
     ///
     /// A wrapper around a Java ZoneOffsetTransition.
     ///
-    pub opaque type ZoneOffsetTransition = ##java.time.zone.ZoneOffsetTransition
+    pub enum ZoneOffsetTransition(##java.time.zone.ZoneOffsetTransition)
 
     instance ToString[ZoneOffsetTransition] {
         pub def toString(x: ZoneOffsetTransition): String =
