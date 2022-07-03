@@ -49,8 +49,8 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatter {
 
-    use FlixSandbox/I18n.Locale;
-    use FlixSandbox/I18n.Locale.{Locale};
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
 
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};

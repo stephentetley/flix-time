@@ -93,7 +93,7 @@ namespace TestDayOfWeek {
     /////////////////////////////////////////////////////////////////////////////
     
     pub def getDisplayName01(): Bool & Impure =         
-        Time/DayOfWeek.getDisplayName(Time/Format/TextStyle.Full, FlixSandbox/I18n/Locale.getDefault(), Time/DayOfWeek.Monday) != ""
+        Time/DayOfWeek.getDisplayName(Time/Format/TextStyle.Full, I18n/Locale.getDefault(), Time/DayOfWeek.Monday) != ""
 
 
 }

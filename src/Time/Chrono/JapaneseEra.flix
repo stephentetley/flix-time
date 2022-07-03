@@ -46,8 +46,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/JapaneseEra {
 
-    use FlixSandbox/I18n.Locale;
-    use FlixSandbox/I18n.Locale.{Locale};
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
 
     use Time/Chrono.JapaneseEra;
     use Time/Chrono.JapaneseEra.{JapaneseEra};

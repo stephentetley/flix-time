@@ -26,8 +26,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/IsoEra {
 
-    use FlixSandbox/I18n.Locale;
-    use FlixSandbox/I18n.Locale.{Locale};
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
 
     use Time/Chrono.IsoEra;
     use Time/Chrono.IsoEra.{BCE, CE};

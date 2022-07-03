@@ -27,8 +27,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/ThaiBuddhistEra {
 
-    use FlixSandbox/I18n.Locale;
-    use FlixSandbox/I18n.Locale.{Locale};
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
 
     use Time/Chrono.ThaiBuddhistEra;
     use Time/Chrono.ThaiBuddhistEra.{BEFORE_BE, BE};

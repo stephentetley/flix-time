@@ -52,8 +52,8 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
-    use FlixSandbox/I18n.Locale;
-    use FlixSandbox/I18n.Locale.{Locale};
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
 
     use Time.DayOfWeek;
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};

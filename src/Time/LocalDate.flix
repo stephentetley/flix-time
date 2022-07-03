@@ -77,6 +77,14 @@ namespace Time {
 
     instance Boxable[LocalDate]
 
+    instance Interop.Marshal[LocalDate] {
+        pub def toJavaObject(x: LocalDate): ##java.lang.Object =
+            let LocalDate(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): LocalDate = 
+            LocalDate(o as ##java.time.LocalDate)
+    }
 
 }
 
@@ -282,21 +290,21 @@ namespace Time/LocalDate {
         lengthOfYear(x1)
 
 
-    pub def datesUntil(s: LocalDate, e: LocalDate): Iterator[LocalDate] & Impure = 
-        import java.time.LocalDate.datesUntil(##java.time.LocalDate): ##java.util.stream.Stream & Impure;
+    pub def datesUntil(r: Region[r], s: LocalDate, e: LocalDate): Iterator[LocalDate, r] \ Read(r) = 
+        import java.time.LocalDate.datesUntil(##java.time.LocalDate): ##java.util.stream.Stream & r;
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let strm = datesUntil(s1, e1);
-        FlixSandbox/Marshal.unmarshalStream(o -> LocalDate(o as ##java.time.LocalDate), strm)
+        Interop/Stream.new(strm, r) |> Interop/Stream.iterator
 
 
-    pub def datesUntilWithStep(s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate] & Impure = 
-        import java.time.LocalDate.datesUntil(##java.time.LocalDate, ##java.time.Period): ##java.util.stream.Stream & Impure;
+    pub def datesUntilWithStep(r: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r] \ Read(r) = 
+        import java.time.LocalDate.datesUntil(##java.time.LocalDate, ##java.time.Period): ##java.util.stream.Stream & r;
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let step1 = Time/Period.getPeriod(step);
         let strm = datesUntil(s1, e1, step1);
-        FlixSandbox/Marshal.unmarshalStream(o -> LocalDate(o as ##java.time.LocalDate), strm)
+        Interop/Stream.new(strm, r) |> Interop/Stream.iterator
 
     /// ## Getters and Setters
 

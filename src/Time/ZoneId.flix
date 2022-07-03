@@ -51,8 +51,8 @@ namespace Time {
 
 namespace Time/ZoneId {
 
-    use FlixSandbox/I18n.Locale;
-    use FlixSandbox/I18n.Locale.{Locale};
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
 
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};

@@ -45,8 +45,8 @@ namespace Time/Format {
 
 namespace Time/Format/DecimalStyle {
 
-    use FlixSandbox/I18n.Locale;
-    use FlixSandbox/I18n.Locale.{Locale};
+    use I18n.Locale;
+    use I18n.Locale.{Locale};
 
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
