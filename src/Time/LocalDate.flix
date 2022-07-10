@@ -295,7 +295,7 @@ namespace Time/LocalDate {
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let strm = datesUntil(s1, e1);
-        Interop/Stream.new(strm, r) |> Interop/Stream.iterator
+        Interop/Stream.new(r, strm) |> Interop/Stream.iterator
 
 
     pub def datesUntilWithStep(r: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r] \ Read(r) = 
@@ -304,7 +304,7 @@ namespace Time/LocalDate {
         let LocalDate(e1) = e;
         let step1 = Time/Period.getPeriod(step);
         let strm = datesUntil(s1, e1, step1);
-        Interop/Stream.new(strm, r) |> Interop/Stream.iterator
+        Interop/Stream.new(r, strm) |> Interop/Stream.iterator
 
     /// ## Getters and Setters
 
