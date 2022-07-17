@@ -53,6 +53,16 @@ namespace Time/Zone {
     }
         
     instance Boxable[ZoneOffsetTransition]
+
+    instance CollectionInterop.Marshal[ZoneOffsetTransition] {
+        pub def toJavaObject(x: ZoneOffsetTransition): ##java.lang.Object =
+            let ZoneOffsetTransition(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): ZoneOffsetTransition = 
+            ZoneOffsetTransition(o as ##java.time.zone.ZoneOffsetTransition)
+    }
+
 }
 
 namespace Time/Zone/ZoneOffsetTransition {

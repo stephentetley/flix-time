@@ -41,6 +41,7 @@ namespace Time/Format {
             }
     }
 
+    /// Phantom arguments to restrict the type of DateTimeFormatter
     pub enum DateFormat {}
     pub enum TimeFormat {}
     pub enum DateTimeFormat {}
@@ -141,7 +142,9 @@ namespace Time/Format/DateTimeFormatter {
         try {
             Ok(DateTimeFormatter(ofPattern(String.trim(pattern))))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
 
 

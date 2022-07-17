@@ -100,11 +100,11 @@ namespace Time/Chrono/HijrahChronology {
         let HijrahChronology(x1) = x;
         Time/Chrono/HijrahEra.unmarshal(eraOf(x1, i))
 
-    pub def eras(x: HijrahChronology): List[HijrahEra] = 
-        import java.time.chrono.HijrahChronology.eras(): ##java.util.List & Pure;
-        let HijrahChronology(x1) = x;
-        let jxs = eras(x1);
-        FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/HijrahEra.unmarshal(o as ##java.time.chrono.HijrahEra), jxs)
+    /// pub def eras(x: HijrahChronology): List[HijrahEra] = 
+    ///     import java.time.chrono.HijrahChronology.eras(): ##java.util.List & Pure;
+    ///     let HijrahChronology(x1) = x;
+    ///     let jxs = eras(x1);
+    ///     FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/HijrahEra.unmarshal(o as ##java.time.chrono.HijrahEra), jxs)
         
     pub def getId(x: HijrahChronology): String = 
         import java.time.chrono.HijrahChronology.getId(): String & Pure;

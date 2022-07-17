@@ -76,10 +76,11 @@ namespace Time/Format/DecimalStyle {
 
     /// ## DecimalStyle functions
 
-    pub def getAvailableLocales(): List[Locale] =
+    pub def getAvailableLocales(): List[Locale] = region r {
         import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set & Pure;
-        let js = getAvailableLocales();
-        FlixSandbox/Marshal.unmarshalSetToList(o -> Locale(o as ##java.util.Locale), js)
+        let jset = getAvailableLocales() |> CollectionInterop/RawSet.new(r);
+        CollectionInterop/RawSet.toList(jset)
+    }
 
     // Note - should the Locale module provide a function marshal and unmarshal functions
     // so a client doesn't have to use: `o -> Locale(o as ##java.util.Locale)` ?

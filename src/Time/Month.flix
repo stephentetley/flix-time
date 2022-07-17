@@ -151,7 +151,9 @@ namespace Time/Month {
         try {
             unmarshal(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromLocalDate(x: LocalDate): Month = 

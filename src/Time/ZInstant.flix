@@ -167,7 +167,9 @@ namespace Time/ZInstant {
         try {
             ZInstant(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 
@@ -192,7 +194,9 @@ namespace Time/ZInstant {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(ZInstant(parse(cs)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
 
     pub def format(x: ZInstant): String =
@@ -421,7 +425,9 @@ namespace Time/ZInstant {
             let ZInstant(x1) = x;
             getLong(x1, field)
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 
@@ -431,7 +437,9 @@ namespace Time/ZInstant {
             let ZInstant(x1) = x;
             ZInstant(withTF(x1, field, i))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 

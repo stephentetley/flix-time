@@ -77,6 +77,15 @@ namespace Time {
 
     instance Boxable[LocalTime]
 
+    instance CollectionInterop.Marshal[LocalTime] {
+        pub def toJavaObject(x: LocalTime): ##java.lang.Object =
+            let LocalTime(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): LocalTime = 
+            LocalTime(o as ##java.time.LocalTime)
+    }
+
 }
 
 namespace Time/LocalTime {
@@ -170,7 +179,9 @@ namespace Time/LocalTime {
         try {
             LocalTime(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromLocalDateTime(x: LocalDateTime): LocalTime = 
@@ -212,7 +223,9 @@ namespace Time/LocalTime {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(LocalTime(parse(cs, fmtr)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
 
     ///

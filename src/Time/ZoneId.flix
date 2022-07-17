@@ -47,6 +47,15 @@ namespace Time {
             hashCode(x1)
     }
 
+    instance CollectionInterop.Marshal[ZoneId] {
+        pub def toJavaObject(x: ZoneId): ##java.lang.Object =
+            let ZoneId(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): ZoneId = 
+            ZoneId(o as ##java.time.ZoneId)
+    }
+
 }
 
 namespace Time/ZoneId {
@@ -80,18 +89,23 @@ namespace Time/ZoneId {
         try {
             Ok(ZoneId(of(zoneId.zoneId)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
         
 
-    pub def zoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] =
+    pub def zoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] = region r {
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId & Pure;
         try {
-            let m1 = FlixSandbox/Marshal.marshalMap(s1 -> s1 as ##java.lang.Object, s2 -> s2 as ##java.lang.Object, aliases);
-            Ok(ZoneId(of(zoneId.zoneId, m1)))
+            let jmap = CollectionInterop/RawMap.fromMapViaHashMap(r, aliases) |> CollectionInterop/RawMap.getRawMap;
+            Ok(ZoneId(of(zoneId.zoneId, jmap)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
+    }
 
     /// ## "abstract constructors" (e.g. `utc`)
 
@@ -105,7 +119,9 @@ namespace Time/ZoneId {
         try {
             Ok(ZoneId(systemDefault()))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 
@@ -127,7 +143,9 @@ namespace Time/ZoneId {
         try {
             ZoneId(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
@@ -160,14 +178,15 @@ namespace Time/ZoneId {
         let ZoneId(x1) = x;
         getId(x1)
 
-    pub def getAvailableZoneIds(): Set[String] & Impure =
+    pub def getAvailableZoneIds(): Set[String] & Impure = region r {
         import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set & Impure;
         try {
-            let s1 = getAvailableZoneIds();
-            FlixSandbox/Marshal.unmarshalSet(o -> o as String, s1)
+            let s1 = getAvailableZoneIds() |> CollectionInterop/RawSet.new(r);
+            CollectionInterop/RawSet.toSet(s1)
         } catch {
             case _: ##java.lang.Exception => Set.empty()
         }
+    }
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =

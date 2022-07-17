@@ -75,6 +75,15 @@ namespace Time {
 
     instance Boxable[OffsetDateTime]
 
+    instance CollectionInterop.Marshal[OffsetDateTime] {
+        pub def toJavaObject(x: OffsetDateTime): ##java.lang.Object =
+            let OffsetDateTime(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): OffsetDateTime = 
+            OffsetDateTime(o as ##java.time.OffsetDateTime)
+    }
+
 }
 
 namespace Time/OffsetDateTime {
@@ -182,7 +191,9 @@ namespace Time/OffsetDateTime {
         try {
             OffsetDateTime(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
@@ -259,7 +270,9 @@ namespace Time/OffsetDateTime {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(OffsetDateTime(parse(cs, fmtr)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
 
 

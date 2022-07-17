@@ -131,9 +131,11 @@ namespace Time/DayOfWeek {
         try {
             unmarshal(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
-
+    
     pub def fromLocalDate(x: LocalDate): DayOfWeek = 
         fromHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
 

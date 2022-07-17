@@ -45,6 +45,14 @@ namespace Time/Zone {
 
     }
 
+    instance CollectionInterop.Marshal[ZoneRules] {
+        pub def toJavaObject(x: ZoneRules): ##java.lang.Object =
+            let ZoneRules(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): ZoneRules = 
+            ZoneRules(o as ##java.time.zone.ZoneRules)
+    }
 
 }
 
@@ -99,12 +107,13 @@ namespace Time/Zone/ZoneRules {
         ZoneOffset(getStandardOffset(x1, inst1))
 
 
-    pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] =
+    pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] = region r {
         import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List & Pure;
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
-        let xs = getValidOffsets(x1, ldt1);
-        FlixSandbox/Marshal.unmarshalList(o -> ZoneOffset(o as ##java.time.ZoneOffset), xs)
+        let xs = getValidOffsets(x1, ldt1) |> CollectionInterop/RawList.new(r);
+        CollectionInterop/RawList.toList(xs)
+    }
 
     pub def getDaylightSavings(instant: ZInstant, x: ZoneRules): ZDuration =
         import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant): ##java.time.Duration & Pure;
@@ -133,9 +142,11 @@ namespace Time/Zone/ZoneRules {
         let ZInstant(instant1) = instant;
         ZoneOffsetTransition(previousTransition(x1, instant1))
 
-    pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = 
+    pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = region r {
         import java.time.zone.ZoneRules.getTransitions(): ##java.util.List & Pure;
         let ZoneRules(x1) = x;
-        let xs = getTransitions(x1);
-        FlixSandbox/Marshal.unmarshalList(o -> ZoneOffsetTransition(o as ##java.time.zone.ZoneOffsetTransition), xs)
+        let xs = getTransitions(x1) |> CollectionInterop/RawList.new(r);
+        CollectionInterop/RawList.toList(xs)
+    }
+
 }

@@ -77,7 +77,7 @@ namespace Time {
 
     instance Boxable[LocalDate]
 
-    instance Interop.Marshal[LocalDate] {
+    instance CollectionInterop.Marshal[LocalDate] {
         pub def toJavaObject(x: LocalDate): ##java.lang.Object =
             let LocalDate(x1) = x;
             x1 as ##java.lang.Object
@@ -202,7 +202,9 @@ namespace Time/LocalDate {
         try {
             LocalDate(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
@@ -230,15 +232,17 @@ namespace Time/LocalDate {
     ///
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[LocalDate, String] =
-        import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate & Pure;
-        try {
-            let DateTimeFormatter(fmtr) = formatter;
-            let cs = String.trim(s) as ##java.lang.CharSequence;
-            Ok(LocalDate(parse(cs, fmtr)))
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[LocalDate, String] = 
+    import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate & Pure;
+    try {
+        let DateTimeFormatter(fmtr) = formatter;
+        let cs = String.trim(s) as ##java.lang.CharSequence;
+        Ok(LocalDate(parse(cs, fmtr)))
+    } catch {
+        case ex: ##java.lang.Exception => 
+            import java.lang.Throwable.getMessage(): String & Pure;
+            Err(getMessage(ex))
+    }
 
     ///
     /// Returns LocalDate `x` as a String using `formatter`.
@@ -295,7 +299,7 @@ namespace Time/LocalDate {
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let strm = datesUntil(s1, e1);
-        Interop/Stream.new(r, strm) |> Interop/Stream.iterator
+        CollectionInterop/Stream.new(r, strm) |> CollectionInterop/Stream.iterator
 
 
     pub def datesUntilWithStep(r: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r] \ Read(r) = 
@@ -304,7 +308,7 @@ namespace Time/LocalDate {
         let LocalDate(e1) = e;
         let step1 = Time/Period.getPeriod(step);
         let strm = datesUntil(s1, e1, step1);
-        Interop/Stream.new(r, strm) |> Interop/Stream.iterator
+        CollectionInterop/Stream.new(r, strm) |> CollectionInterop/Stream.iterator
 
     /// ## Getters and Setters
 
@@ -579,7 +583,9 @@ namespace Time/LocalDate {
             let LocalDate(x1) = x;
             getLong(x1, field)
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 
@@ -589,7 +595,9 @@ namespace Time/LocalDate {
             let LocalDate(x1) = x;
             LocalDate(plus(x1, amount, temporalUnit))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 
@@ -600,7 +608,9 @@ namespace Time/LocalDate {
             let LocalDate(x1) = x;
             LocalDate(minus(x1, amount, temporalUnit))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 
@@ -611,7 +621,9 @@ namespace Time/LocalDate {
             let LocalDate(x1) = x;
             LocalDate(withTA(x1, adj))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 
@@ -622,7 +634,9 @@ namespace Time/LocalDate {
             LocalDate(withTF(x1, field, i))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
 

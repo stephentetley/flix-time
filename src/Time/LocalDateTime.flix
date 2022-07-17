@@ -79,6 +79,15 @@ namespace Time {
 
     instance Boxable[LocalDateTime]
 
+    instance CollectionInterop.Marshal[LocalDateTime] {
+        pub def toJavaObject(x: LocalDateTime): ##java.lang.Object =
+            let LocalDateTime(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): LocalDateTime = 
+            LocalDateTime(o as ##java.time.LocalDateTime)
+    }
+
 }
 
 namespace Time/LocalDateTime {
@@ -177,7 +186,9 @@ namespace Time/LocalDateTime {
         try {
             LocalDateTime(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
@@ -214,14 +225,16 @@ namespace Time/LocalDateTime {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[LocalDateTime, String] =
-        import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDateTime & Pure;
-        try {
-            let DateTimeFormatter(fmtr) = formatter;
-            let cs = String.trim(s) as ##java.lang.CharSequence;
-            Ok(LocalDateTime(parse(cs, fmtr)))
-        } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
-        }
+    import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDateTime & Pure;
+    try {
+        let DateTimeFormatter(fmtr) = formatter;
+        let cs = String.trim(s) as ##java.lang.CharSequence;
+        Ok(LocalDateTime(parse(cs, fmtr)))
+    } catch {
+        case ex: ##java.lang.Exception => 
+            import java.lang.Throwable.getMessage(): String & Pure;
+            Err(getMessage(ex))
+    }
 
     ///
     /// Returns LocalDateTime `x` as a String using `formatter`.

@@ -98,6 +98,14 @@ namespace Time {
     }
 
 
+    instance CollectionInterop.Marshal[Period] {
+        pub def toJavaObject(x: Period): ##java.lang.Object =
+            let Period(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): Period = 
+            Period(o as ##java.time.Period)
+    }
     
 }
 
@@ -170,7 +178,9 @@ namespace Time/Period {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(Period(parse(cs)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
 
     /// Note - alias of `toString`

@@ -71,6 +71,16 @@ namespace Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
+
+    instance CollectionInterop.Marshal[YearMonth] {
+        pub def toJavaObject(x: YearMonth): ##java.lang.Object =
+            let YearMonth(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): YearMonth = 
+            YearMonth(o as ##java.time.YearMonth)
+    }
+
 }
 
 namespace Time/YearMonth {
@@ -124,7 +134,9 @@ namespace Time/YearMonth {
         try {
             YearMonth(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromLocalDate(x: LocalDate): YearMonth = 
@@ -154,7 +166,9 @@ namespace Time/YearMonth {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(YearMonth(parse(cs, fmtr)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
     
     ///

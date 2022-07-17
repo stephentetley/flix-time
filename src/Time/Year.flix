@@ -68,6 +68,15 @@ namespace Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
+    instance CollectionInterop.Marshal[Year] {
+        pub def toJavaObject(x: Year): ##java.lang.Object =
+            let Year(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): Year = 
+            Year(o as ##java.time.Year)
+    }
+
 }
 
 namespace Time/Year {
@@ -168,7 +177,9 @@ namespace Time/Year {
         try {
             Year(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromLocalDate(x: LocalDate): Year = 
@@ -202,7 +213,9 @@ namespace Time/Year {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(Year(parse(cs, fmtr)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
 
     ///

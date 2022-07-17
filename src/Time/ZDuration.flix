@@ -112,6 +112,14 @@ namespace Time {
     }
 
 
+    instance CollectionInterop.Marshal[ZDuration] {
+        pub def toJavaObject(x: ZDuration): ##java.lang.Object =
+            let ZDuration(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): ZDuration = 
+            ZDuration(o as ##java.time.Duration)
+    }
 
 }
 
@@ -199,7 +207,9 @@ namespace Time/ZDuration {
         try {
             ZDuration(of(amount, temporalUnit))
         } catch {
-            case ex: ##java.lang.Exception => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
 
     pub def fromHalfDays(i: Int64): ZDuration = 
@@ -278,7 +288,9 @@ namespace Time/ZDuration {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(ZDuration(parse(cs)))
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
 
     /// Note - alias of `toString`
@@ -478,8 +490,9 @@ namespace Time/ZDuration {
             let ZDuration(x1) = x;
             ZDuration(plus(x1, amount, temporalUnit))
         } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
     
 
@@ -491,8 +504,9 @@ namespace Time/ZDuration {
             let ZDuration(x1) = x;
             ZDuration(minus(x1, amount, temporalUnit))
         } catch {
-            case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception                                => bug!(FlixSandbox/Marshal.unmarshalExceptionMessage(ex) as & Pure)
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                bug!(getMessage(ex))
         }
     
 

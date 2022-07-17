@@ -25,6 +25,15 @@ namespace Time/Chrono {
             toString(x1 as ##java.time.chrono.AbstractChronology)
     }
 
+    instance CollectionInterop.Marshal[IsoChronology] {
+        pub def toJavaObject(x: IsoChronology): ##java.lang.Object =
+            let IsoChronology(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): IsoChronology = 
+            IsoChronology(o as ##java.time.chrono.IsoChronology)
+    }
+
 }
 
 namespace Time/Chrono/IsoChronology {
@@ -54,11 +63,11 @@ namespace Time/Chrono/IsoChronology {
         let IsoChronology(x1) = x;
         Time/Chrono/IsoEra.unmarshal(eraOf(x1, i))
 
-    pub def eras(x: IsoChronology): List[IsoEra] = 
-        import java.time.chrono.IsoChronology.eras(): ##java.util.List & Pure;
-        let IsoChronology(x1) = x;
-        let jxs = eras(x1);
-        FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs)
+    /// pub def eras(x: IsoChronology): List[IsoEra] = 
+    ///     import java.time.chrono.IsoChronology.eras(): ##java.util.List & Pure;
+    ///     let IsoChronology(x1) = x;
+    ///     let jxs = eras(x1);
+    ///     FlixSandbox/Marshal.unmarshalList(o -> Time/Chrono/IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs)
 
 
     pub def getId(x: IsoChronology): String = 

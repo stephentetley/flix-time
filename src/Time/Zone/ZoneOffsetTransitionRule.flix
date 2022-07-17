@@ -45,6 +45,15 @@ namespace Time/Zone {
             hashCode(x1)
     }
 
+    instance CollectionInterop.Marshal[ZoneOffsetTransitionRule] {
+        pub def toJavaObject(x: ZoneOffsetTransitionRule): ##java.lang.Object =
+            let ZoneOffsetTransitionRule(x1) = x;
+            x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): ZoneOffsetTransitionRule = 
+            ZoneOffsetTransitionRule(o as ##java.time.zone.ZoneOffsetTransitionRule)
+    }
+
 }
 
 namespace Time/Zone/ZoneOffsetTransitionRule {
@@ -132,7 +141,9 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
                                         Time/ZoneOffset.getZoneOffset(r.offsetAfter)
                                         )) |> Ok
         } catch {
-            case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex)) as & Pure
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String & Pure;
+                Err(getMessage(ex))
         }
 
     /// ## predicates / comparisons
