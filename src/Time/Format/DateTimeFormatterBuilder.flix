@@ -49,8 +49,8 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatterBuilder {
 
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use Interop/I18n.Locale;
+    use Interop/I18n.Locale.{Locale};
 
     use Time/Format.DateTimeFormatterBuilder;
     use Time/Format.DateTimeFormatterBuilder.{DateTimeFormatterBuilder};
@@ -155,7 +155,9 @@ namespace Time/Format/DateTimeFormatterBuilder {
     ///             let a = f(s);
     ///             k(a, s)
     ///         } catch {
-    ///             case ex: ##java.lang.Exception => Err(FlixSandbox/Marshal.unmarshalExceptionMessage(ex))
+    ///             case ex: ##java.lang.Exception => 
+                    /// import java.lang.Throwable.getMessage(): String & Pure;
+                    /// Err(getMessage(ex))
     ///         }            
     ///     )
 
@@ -190,7 +192,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     pub def appendGenericZoneTextWithZones(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, Unit] = region r {
         import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder & Impure;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = CollectionInterop/RawSet.fromListViaHashSet(r, preferredZones) |> CollectionInterop/RawSet.getRawSet;
+        let s1 = Interop/Collections/RawSet.fromListViaHashSet(r, preferredZones) |> Interop/Collections/RawSet.getRawSet;
         liftJvmBuilderPrim(bldr -> appendGenericZoneText(bldr, style1, s1))
     }
 
@@ -259,7 +261,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     pub def appendZoneTextWithZones(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, Unit] = region r {
         import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder & Impure;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = CollectionInterop/RawSet.fromListViaHashSet(r, preferredZones) |> CollectionInterop/RawSet.getRawSet;
+        let s1 = Interop/Collections/RawSet.fromListViaHashSet(r, preferredZones) |> Interop/Collections/RawSet.getRawSet;
         liftJvmBuilderPrim(bldr -> appendZoneText(bldr, style1, s1))
     }
 

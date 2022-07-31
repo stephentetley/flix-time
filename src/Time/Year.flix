@@ -68,7 +68,7 @@ namespace Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance CollectionInterop.Marshal[Year] {
+    instance Interop/Collections.Marshal[Year] {
         pub def toJavaObject(x: Year): ##java.lang.Object =
             let Year(x1) = x;
             x1 as ##java.lang.Object

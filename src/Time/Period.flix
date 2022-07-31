@@ -98,7 +98,7 @@ namespace Time {
     }
 
 
-    instance CollectionInterop.Marshal[Period] {
+    instance Interop/Collections.Marshal[Period] {
         pub def toJavaObject(x: Period): ##java.lang.Object =
             let Period(x1) = x;
             x1 as ##java.lang.Object

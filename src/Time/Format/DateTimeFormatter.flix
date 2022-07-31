@@ -50,8 +50,8 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatter {
 
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use Interop/I18n.Locale;
+    use Interop/I18n.Locale.{Locale};
 
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};

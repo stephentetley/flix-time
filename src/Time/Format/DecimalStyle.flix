@@ -45,8 +45,8 @@ namespace Time/Format {
 
 namespace Time/Format/DecimalStyle {
 
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use Interop/I18n.Locale;
+    use Interop/I18n.Locale.{Locale};
 
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};
@@ -78,8 +78,8 @@ namespace Time/Format/DecimalStyle {
 
     pub def getAvailableLocales(): List[Locale] = region r {
         import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set & Pure;
-        let jset = getAvailableLocales() |> CollectionInterop/RawSet.new(r);
-        CollectionInterop/RawSet.toList(jset)
+        let jset = getAvailableLocales() |> Interop/Collections/RawSet.new(r);
+        Interop/Collections/RawSet.toList(jset)
     }
 
     // Note - should the Locale module provide a function marshal and unmarshal functions

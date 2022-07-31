@@ -79,7 +79,7 @@ namespace Time {
 
     instance Boxable[LocalDateTime]
 
-    instance CollectionInterop.Marshal[LocalDateTime] {
+    instance Interop/Collections.Marshal[LocalDateTime] {
         pub def toJavaObject(x: LocalDateTime): ##java.lang.Object =
             let LocalDateTime(x1) = x;
             x1 as ##java.lang.Object

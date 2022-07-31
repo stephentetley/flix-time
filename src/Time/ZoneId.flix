@@ -47,7 +47,7 @@ namespace Time {
             hashCode(x1)
     }
 
-    instance CollectionInterop.Marshal[ZoneId] {
+    instance Interop/Collections.Marshal[ZoneId] {
         pub def toJavaObject(x: ZoneId): ##java.lang.Object =
             let ZoneId(x1) = x;
             x1 as ##java.lang.Object
@@ -60,8 +60,8 @@ namespace Time {
 
 namespace Time/ZoneId {
 
-    use I18n.Locale;
-    use I18n.Locale.{Locale};
+    use Interop/I18n.Locale;
+    use Interop/I18n.Locale.{Locale};
 
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
@@ -98,7 +98,7 @@ namespace Time/ZoneId {
     pub def zoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] = region r {
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId & Pure;
         try {
-            let jmap = CollectionInterop/RawMap.fromMapViaHashMap(r, aliases) |> CollectionInterop/RawMap.getRawMap;
+            let jmap = Interop/Collections/RawMap.fromMapViaHashMap(r, aliases) |> Interop/Collections/RawMap.getRawMap;
             Ok(ZoneId(of(zoneId.zoneId, jmap)))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -181,8 +181,8 @@ namespace Time/ZoneId {
     pub def getAvailableZoneIds(): Set[String] & Impure = region r {
         import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set & Impure;
         try {
-            let s1 = getAvailableZoneIds() |> CollectionInterop/RawSet.new(r);
-            CollectionInterop/RawSet.toSet(s1)
+            let s1 = getAvailableZoneIds() |> Interop/Collections/RawSet.new(r);
+            Interop/Collections/RawSet.toSet(s1)
         } catch {
             case _: ##java.lang.Exception => Set.empty()
         }

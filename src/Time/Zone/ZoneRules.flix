@@ -45,7 +45,7 @@ namespace Time/Zone {
 
     }
 
-    instance CollectionInterop.Marshal[ZoneRules] {
+    instance Interop/Collections.Marshal[ZoneRules] {
         pub def toJavaObject(x: ZoneRules): ##java.lang.Object =
             let ZoneRules(x1) = x;
             x1 as ##java.lang.Object
@@ -111,8 +111,8 @@ namespace Time/Zone/ZoneRules {
         import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List & Pure;
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
-        let xs = getValidOffsets(x1, ldt1) |> CollectionInterop/RawList.new(r);
-        CollectionInterop/RawList.toList(xs)
+        let xs = getValidOffsets(x1, ldt1) |> Interop/Collections/RawList.new(r);
+        Interop/Collections/RawList.toList(xs)
     }
 
     pub def getDaylightSavings(instant: ZInstant, x: ZoneRules): ZDuration =
@@ -145,8 +145,8 @@ namespace Time/Zone/ZoneRules {
     pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = region r {
         import java.time.zone.ZoneRules.getTransitions(): ##java.util.List & Pure;
         let ZoneRules(x1) = x;
-        let xs = getTransitions(x1) |> CollectionInterop/RawList.new(r);
-        CollectionInterop/RawList.toList(xs)
+        let xs = getTransitions(x1) |> Interop/Collections/RawList.new(r);
+        Interop/Collections/RawList.toList(xs)
     }
 
 }

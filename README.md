@@ -2,14 +2,13 @@
 
 A project to wrap Java's time library so it can be used by Flix.
 
+License: Apache 2.0
+
 Note - this depends on the project:
 
-https://github.com/stephentetley/flix-sandbox
+https://github.com/stephentetley/interop-charset-locale
 
-https://github.com/stephentetley/charset-locale
+https://github.com/stephentetley/interop-collections
 
-https://github.com/stephentetley/collection-interop
 
-Apache Commons IO
-
-Compatible `pkg` and `jar` files are included in the `lib` directory.
+Compatible `pkg` files are included in the `lib` directory.
