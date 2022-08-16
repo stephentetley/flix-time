@@ -77,7 +77,7 @@ namespace Time {
 
     instance Boxable[LocalDate]
 
-    instance Interop/Collections.Marshal[LocalDate] {
+    instance Interop/Flix.Marshal[LocalDate] {
         pub def toJavaObject(x: LocalDate): ##java.lang.Object =
             let LocalDate(x1) = x;
             x1 as ##java.lang.Object
@@ -299,8 +299,7 @@ namespace Time/LocalDate {
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let strm = datesUntil(s1, e1);
-        Interop/Collections/Stream.new(r, strm) |> Interop/Collections/Stream.iterator
-
+        Interop/Util/Stream/Stream.mkStream(r, strm) |> Interop/Util/Stream/Stream.iterator
 
     pub def datesUntilWithStep(r: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r] \ Read(r) = 
         import java.time.LocalDate.datesUntil(##java.time.LocalDate, ##java.time.Period): ##java.util.stream.Stream & r;
@@ -308,7 +307,7 @@ namespace Time/LocalDate {
         let LocalDate(e1) = e;
         let step1 = Time/Period.getPeriod(step);
         let strm = datesUntil(s1, e1, step1);
-        Interop/Collections/Stream.new(r, strm) |> Interop/Collections/Stream.iterator
+        Interop/Util/Stream/Stream.mkStream(r, strm) |> Interop/Util/Stream/Stream.iterator
 
     /// ## Getters and Setters
 

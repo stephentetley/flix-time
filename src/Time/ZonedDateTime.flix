@@ -77,7 +77,7 @@ namespace Time {
 
     instance Boxable[ZonedDateTime]
 
-    instance Interop/Collections.Marshal[ZonedDateTime] {
+    instance Interop/Flix.Marshal[ZonedDateTime] {
         pub def toJavaObject(x: ZonedDateTime): ##java.lang.Object =
             let ZonedDateTime(x1) = x;
             x1 as ##java.lang.Object

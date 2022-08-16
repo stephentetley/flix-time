@@ -25,8 +25,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/HijrahEra {
 
-    use Interop/I18n.Locale;
-    use Interop/I18n.Locale.{Locale};
+    use Basis/I18n.Locale;
+    use Basis/I18n.Locale.{Locale};
 
     use Time/Chrono.HijrahEra;
     use Time/Chrono.HijrahEra.{AH};
@@ -66,7 +66,7 @@ namespace Time/Chrono/HijrahEra {
         import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = marshal(x);
         let style1 = Time/Format/TextStyle.marshal(style);
-        let Locale(locale1) = locale;
+        let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
         getDisplayName(x1, style1, locale1)
         
  

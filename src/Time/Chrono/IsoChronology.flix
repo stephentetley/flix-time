@@ -25,7 +25,7 @@ namespace Time/Chrono {
             toString(x1 as ##java.time.chrono.AbstractChronology)
     }
 
-    instance Interop/Collections.Marshal[IsoChronology] {
+    instance Interop/Flix.Marshal[IsoChronology] {
         pub def toJavaObject(x: IsoChronology): ##java.lang.Object =
             let IsoChronology(x1) = x;
             x1 as ##java.lang.Object

@@ -50,8 +50,8 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatter {
 
-    use Interop/I18n.Locale;
-    use Interop/I18n.Locale.{Locale};
+    use Basis/I18n.Locale;
+    use Basis/I18n.Locale.{Locale};
 
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
@@ -184,13 +184,14 @@ namespace Time/Format/DateTimeFormatter {
 
 
     pub def getLocale(x: DateTimeFormatter[t]): Locale =
+        use Interop/Util.Locale.{Locale => Locale1};
         import java.time.format.DateTimeFormatter.getLocale(): ##java.util.Locale & Pure;        
         let DateTimeFormatter(x1) = x;
-        Locale(getLocale(x1))
+        Locale(Locale1(getLocale(x1)))
 
     pub def setLocale(loc: Locale, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale): ##java.time.format.DateTimeFormatter & Pure;
-        let Locale(loc1) = loc;
+        let loc1 = Basis/I18n/Locale.getLocale(loc) |> Interop/Util/Locale.getHH;
         let DateTimeFormatter(x1) = x;
         DateTimeFormatter(withLocale(x1, loc1))
 

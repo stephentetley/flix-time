@@ -112,7 +112,7 @@ namespace Time {
     }
 
 
-    instance Interop/Collections.Marshal[ZDuration] {
+    instance Interop/Flix.Marshal[ZDuration] {
         pub def toJavaObject(x: ZDuration): ##java.lang.Object =
             let ZDuration(x1) = x;
             x1 as ##java.lang.Object

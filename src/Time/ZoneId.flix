@@ -47,7 +47,7 @@ namespace Time {
             hashCode(x1)
     }
 
-    instance Interop/Collections.Marshal[ZoneId] {
+    instance Interop/Flix.Marshal[ZoneId] {
         pub def toJavaObject(x: ZoneId): ##java.lang.Object =
             let ZoneId(x1) = x;
             x1 as ##java.lang.Object
@@ -60,8 +60,8 @@ namespace Time {
 
 namespace Time/ZoneId {
 
-    use Interop/I18n.Locale;
-    use Interop/I18n.Locale.{Locale};
+    use Basis/I18n.Locale;
+    use Basis/I18n.Locale.{Locale};
 
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
@@ -98,7 +98,7 @@ namespace Time/ZoneId {
     pub def zoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] = region r {
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId & Pure;
         try {
-            let jmap = Interop/Collections/RawMap.fromMapViaHashMap(r, aliases) |> Interop/Collections/RawMap.getRawMap;
+            let jmap = Interop/Util/MapZ.fromMapViaHashMap(r, aliases) |> Interop/Util/MapZ.getHH;
             Ok(ZoneId(of(zoneId.zoneId, jmap)))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -166,7 +166,7 @@ namespace Time/ZoneId {
     pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
         import java.time.ZoneId.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let Locale(locale1) = locale;
+        let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
         let ZoneId(z1) = z;
         getDisplayName(z1, style1, locale1)
 
@@ -178,15 +178,14 @@ namespace Time/ZoneId {
         let ZoneId(x1) = x;
         getId(x1)
 
-    pub def getAvailableZoneIds(): Set[String] & Impure = region r {
+    pub def getAvailableZoneIds(): Set[String] & Impure =
         import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set & Impure;
         try {
-            let s1 = getAvailableZoneIds() |> Interop/Collections/RawSet.new(r);
-            Interop/Collections/RawSet.toSet(s1)
+            getAvailableZoneIds()  |> Interop/Util/SetZ.hhToSet
         } catch {
             case _: ##java.lang.Exception => Set.empty()
         }
-    }
+
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =

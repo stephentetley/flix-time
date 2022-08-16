@@ -49,8 +49,8 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatterBuilder {
 
-    use Interop/I18n.Locale;
-    use Interop/I18n.Locale.{Locale};
+    use Basis/I18n.Locale;
+    use Basis/I18n.Locale.{Locale};
 
     use Time/Format.DateTimeFormatterBuilder;
     use Time/Format.DateTimeFormatterBuilder.{DateTimeFormatterBuilder};
@@ -88,7 +88,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
         import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder & Impure as new1;
         import java.time.format.DateTimeFormatterBuilder.toFormatter(##java.util.Locale): ##java.time.format.DateTimeFormatter & Impure as toJavaFormatter;
         try {
-            let Locale(loc1) = loc;
+            let loc1 = Basis/I18n/Locale.getLocale(loc) |> Interop/Util/Locale.getHH;
             let jbuilder = new1();
             match runBuilder(ma, jbuilder) {
                 case Err(msg)           => Err(msg)
@@ -192,7 +192,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     pub def appendGenericZoneTextWithZones(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, Unit] = region r {
         import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder & Impure;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = Interop/Collections/RawSet.fromListViaHashSet(r, preferredZones) |> Interop/Collections/RawSet.getRawSet;
+        let s1 = Interop/Util/SetZ.fromListViaHashSet(r, preferredZones) |> Interop/Util/SetZ.getHH;
         liftJvmBuilderPrim(bldr -> appendGenericZoneText(bldr, style1, s1))
     }
 
@@ -261,7 +261,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     pub def appendZoneTextWithZones(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, Unit] = region r {
         import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder & Impure;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = Interop/Collections/RawSet.fromListViaHashSet(r, preferredZones) |> Interop/Collections/RawSet.getRawSet;
+        let s1 = Interop/Util/SetZ.fromListViaHashSet(r, preferredZones) |> Interop/Util/SetZ.getHH;
         liftJvmBuilderPrim(bldr -> appendZoneText(bldr, style1, s1))
     }
 

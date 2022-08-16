@@ -72,7 +72,7 @@ namespace Time {
     }
 
 
-    instance Interop/Collections.Marshal[YearMonth] {
+    instance Interop/Flix.Marshal[YearMonth] {
         pub def toJavaObject(x: YearMonth): ##java.lang.Object =
             let YearMonth(x1) = x;
             x1 as ##java.lang.Object

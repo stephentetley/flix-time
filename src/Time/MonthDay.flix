@@ -69,7 +69,7 @@ namespace Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Interop/Collections.Marshal[MonthDay] {
+    instance Interop/Flix.Marshal[MonthDay] {
         pub def toJavaObject(x: MonthDay): ##java.lang.Object =
             let MonthDay(x1) = x;
             x1 as ##java.lang.Object

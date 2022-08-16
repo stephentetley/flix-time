@@ -27,8 +27,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/ThaiBuddhistEra {
 
-    use Interop/I18n.Locale;
-    use Interop/I18n.Locale.{Locale};
+    use Basis/I18n.Locale;
+    use Basis/I18n.Locale.{Locale};
 
     use Time/Chrono.ThaiBuddhistEra;
     use Time/Chrono.ThaiBuddhistEra.{BEFORE_BE, BE};
@@ -70,7 +70,7 @@ namespace Time/Chrono/ThaiBuddhistEra {
         import java.time.chrono.ThaiBuddhistEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = marshal(x);
         let style1 = Time/Format/TextStyle.marshal(style);
-        let Locale(locale1) = locale;
+        let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
         getDisplayName(x1, style1, locale1)
         
 

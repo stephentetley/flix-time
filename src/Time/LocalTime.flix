@@ -77,7 +77,7 @@ namespace Time {
 
     instance Boxable[LocalTime]
 
-    instance Interop/Collections.Marshal[LocalTime] {
+    instance Interop/Flix.Marshal[LocalTime] {
         pub def toJavaObject(x: LocalTime): ##java.lang.Object =
             let LocalTime(x1) = x;
             x1 as ##java.lang.Object

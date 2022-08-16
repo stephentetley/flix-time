@@ -45,7 +45,7 @@ namespace Time/Zone {
             hashCode(x1)
     }
 
-    instance Interop/Collections.Marshal[ZoneOffsetTransitionRule] {
+    instance Interop/Flix.Marshal[ZoneOffsetTransitionRule] {
         pub def toJavaObject(x: ZoneOffsetTransitionRule): ##java.lang.Object =
             let ZoneOffsetTransitionRule(x1) = x;
             x1 as ##java.lang.Object

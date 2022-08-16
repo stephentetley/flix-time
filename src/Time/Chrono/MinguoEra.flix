@@ -27,8 +27,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/MinguoEra {
 
-    use Interop/I18n.Locale;
-    use Interop/I18n.Locale.{Locale};
+    use Basis/I18n.Locale;
+    use Basis/I18n.Locale.{Locale};
 
     use Time/Chrono.MinguoEra;
     use Time/Chrono.MinguoEra.{BEFORE_ROC, ROC};
@@ -69,7 +69,7 @@ namespace Time/Chrono/MinguoEra {
         import java.time.chrono.MinguoEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
         let x1 = marshal(x);
         let style1 = Time/Format/TextStyle.marshal(style);
-        let Locale(locale1) = locale;
+        let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
         getDisplayName(x1, style1, locale1)
 
 

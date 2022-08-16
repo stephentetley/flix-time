@@ -57,7 +57,7 @@ namespace Time {
 
     instance Boxable[ZoneOffset]
 
-    instance Interop/Collections.Marshal[ZoneOffset] {
+    instance Interop/Flix.Marshal[ZoneOffset] {
         pub def toJavaObject(x: ZoneOffset): ##java.lang.Object =
             let ZoneOffset(x1) = x;
             x1 as ##java.lang.Object

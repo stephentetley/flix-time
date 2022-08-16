@@ -75,7 +75,7 @@ namespace Time {
 
     instance Boxable[OffsetDateTime]
 
-    instance Interop/Collections.Marshal[OffsetDateTime] {
+    instance Interop/Flix.Marshal[OffsetDateTime] {
         pub def toJavaObject(x: OffsetDateTime): ##java.lang.Object =
             let OffsetDateTime(x1) = x;
             x1 as ##java.lang.Object
