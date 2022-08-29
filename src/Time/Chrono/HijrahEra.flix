@@ -35,25 +35,25 @@ namespace Time/Chrono/HijrahEra {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def marshal(x: HijrahEra): ##java.time.chrono.HijrahEra = 
-        import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra & Pure as getAH;
+        import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
         match x {
             case AH         => getAH()            
         }
 
     def primEquals(x: ##java.time.chrono.HijrahEra, y: ##java.time.chrono.HijrahEra): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
         let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.chrono.HijrahEra): HijrahEra = 
-        import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra & Pure as getAH;
+        import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
         match x {
             case x1 if primEquals(x1, getAH())     => AH
         }
 
     pub def getValue(x: HijrahEra): Int32 = 
-        import java.time.chrono.HijrahEra.getValue(): Int32 & Pure;
+        import java.time.chrono.HijrahEra.getValue(): Int32 \ {};
         let x1 = marshal(x);
         getValue(x1)
 
@@ -63,7 +63,7 @@ namespace Time/Chrono/HijrahEra {
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String = 
-        import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
+        import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshal(x);
         let style1 = Time/Format/TextStyle.marshal(style);
         let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;

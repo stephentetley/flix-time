@@ -20,7 +20,7 @@ namespace Time/Chrono {
     
     instance ToString[IsoChronology] {
         pub def toString(x: IsoChronology): String =
-            import java.time.chrono.AbstractChronology.toString(): String & Pure;
+            import java.time.chrono.AbstractChronology.toString(): String \ {};
             let IsoChronology(x1) = x;
             toString(x1 as ##java.time.chrono.AbstractChronology)
     }
@@ -44,34 +44,34 @@ namespace Time/Chrono/IsoChronology {
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
 
-    pub def getInstance(): IsoChronology & Impure = 
-        import static get java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology & Impure as get_INSTANCE;
+    pub def getInstance(): IsoChronology \ IO = 
+        import static get java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology \ IO as get_INSTANCE;
         IsoChronology(get_INSTANCE())
 
     pub def getCalendarType(x: IsoChronology): String = 
-        import java.time.chrono.IsoChronology.getCalendarType(): String & Pure;
+        import java.time.chrono.IsoChronology.getCalendarType(): String \ {};
         let IsoChronology(x1) = x;
         getCalendarType(x1)
 
-    pub def dateNow(x: IsoChronology): LocalDate & Impure = 
-        import java.time.chrono.IsoChronology.dateNow(): ##java.time.LocalDate & Impure;
+    pub def dateNow(x: IsoChronology): LocalDate \ IO = 
+        import java.time.chrono.IsoChronology.dateNow(): ##java.time.LocalDate \ IO;
         let IsoChronology(x1) = x;
         LocalDate(dateNow(x1))
 
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
-        import java.time.chrono.IsoChronology.eraOf(Int32): ##java.time.chrono.IsoEra & Pure;
+        import java.time.chrono.IsoChronology.eraOf(Int32): ##java.time.chrono.IsoEra \ {};
         let IsoChronology(x1) = x;
         Time/Chrono/IsoEra.unmarshal(eraOf(x1, i))
 
     /// pub def eras(x: IsoChronology): List[IsoEra] = 
-    ///     import java.time.chrono.IsoChronology.eras(): ##java.util.List & Pure;
+    ///     import java.time.chrono.IsoChronology.eras(): ##java.util.List \ {};
     ///     let IsoChronology(x1) = x;
     ///     let jxs = eras(x1);
     ///     Interop/Collections/... .unmarshalList(o -> Time/Chrono/IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs)
 
 
     pub def getId(x: IsoChronology): String = 
-        import java.time.chrono.IsoChronology.getId(): String & Pure;
+        import java.time.chrono.IsoChronology.getId(): String \ {};
         let IsoChronology(x1) = x;
         getId(x1)
 

@@ -26,7 +26,7 @@ namespace Time/Chrono {
     ///
     instance ToString[MinguoDate] {
         pub def toString(x: MinguoDate): String =
-            import java.time.chrono.MinguoDate.toString(): String & Pure;
+            import java.time.chrono.MinguoDate.toString(): String \ {};
             let MinguoDate(x1) = x;
             toString(x1)
     }
@@ -52,26 +52,26 @@ namespace Time/Chrono/MinguoDate {
     ///
     /// Returns ___
     ///
-    pub def now(): MinguoDate & Impure =
-        import static java.time.chrono.MinguoDate.now(): ##java.time.chrono.MinguoDate & Impure;
+    pub def now(): MinguoDate \ IO =
+        import static java.time.chrono.MinguoDate.now(): ##java.time.chrono.MinguoDate \ IO;
         MinguoDate(now())
 
 
     pub def equals(x: MinguoDate, y: MinguoDate): Bool = 
-        import java.time.chrono.MinguoDate.equals(##java.lang.Object): Bool & Pure;
+        import java.time.chrono.MinguoDate.equals(##java.lang.Object): Bool \ {};
         let MinguoDate(x1) = x;
         let MinguoDate(y1) = y;
         equals(x1, y1 as ##java.lang.Object)
 
     pub def hashCode(x: MinguoDate): Int32 = 
-        import java.time.chrono.MinguoDate.hashCode(): Int32 & Pure;
+        import java.time.chrono.MinguoDate.hashCode(): Int32 \ {};
         let MinguoDate(x1) = x;
         hashCode(x1)
 
 
 
     pub def toLocalDate(x: MinguoDate): LocalDate =
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate & Pure as fromDate;
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
         let MinguoDate(x1) = x;
         LocalDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
 
@@ -101,7 +101,7 @@ namespace Time/Chrono/MinguoDate {
 
 
     /// def getChronoFieldHelper(x: MinguoDate, field: ChronoField): Result[Int32, String] =
-    ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 & Pure;
+    ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///     try {
     ///         let MinguoDate(x1) = x;
     ///         let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;

@@ -32,7 +32,7 @@ namespace Time {
     ///
     instance ToString[ZDuration] {
         pub def toString(x: ZDuration): String =
-            import java.time.Duration.toString(): String & Pure;
+            import java.time.Duration.toString(): String \ {};
             let ZDuration(x1) = x;
             toString(x1)
     }
@@ -44,7 +44,7 @@ namespace Time {
     ///
     instance FromString[ZDuration] {
         pub def fromString(s: String): Option[ZDuration] =
-            import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration & Pure;
+            import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
             try {
                 let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(ZDuration(parse(cs)))
@@ -55,7 +55,7 @@ namespace Time {
 
     instance Eq[ZDuration] {
         pub def eq(x: ZDuration, y: ZDuration): Bool =
-            import java.time.Duration.equals(##java.lang.Object): Bool & Pure;
+            import java.time.Duration.equals(##java.lang.Object): Bool \ {};
             let ZDuration(x1) = x;
             let ZDuration(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -63,14 +63,14 @@ namespace Time {
 
     instance Hash[ZDuration] {
         pub def hash(x: ZDuration): Int32 =
-            import java.time.Duration.hashCode(): Int32 & Pure;
+            import java.time.Duration.hashCode(): Int32 \ {};
             let ZDuration(x1) = x;
             hashCode(x1)
     }
 
     instance Order[ZDuration] {
         pub def compare(x: ZDuration, y: ZDuration): Comparison = 
-            import java.time.Duration.compareTo(##java.time.Duration): Int32 & Pure;
+            import java.time.Duration.compareTo(##java.time.Duration): Int32 \ {};
             let ZDuration(x1) = x;
             let ZDuration(y1) = y;
             compareTo(x1, y1) |> Comparison.fromInt32
@@ -80,7 +80,7 @@ namespace Time {
 
     instance Add[ZDuration] {
         pub def add(x: ZDuration, y: ZDuration): ZDuration =
-            import java.time.Duration.plus(##java.time.Duration): ##java.time.Duration & Pure;
+            import java.time.Duration.plus(##java.time.Duration): ##java.time.Duration \ {};
             let ZDuration(x1) = x;
             let ZDuration(y1) = y;
             ZDuration(plus(x1, y1))
@@ -88,7 +88,7 @@ namespace Time {
 
     instance Sub[ZDuration] {
         pub def sub(x: ZDuration, y: ZDuration): ZDuration =
-            import java.time.Duration.minus(##java.time.Duration): ##java.time.Duration & Pure;
+            import java.time.Duration.minus(##java.time.Duration): ##java.time.Duration \ {};
             let ZDuration(x1) = x;
             let ZDuration(y1) = y;
             ZDuration(minus(x1, y1))
@@ -96,7 +96,7 @@ namespace Time {
 
     instance Neg[ZDuration] {
         pub def neg(x: ZDuration): ZDuration =
-            import java.time.Duration.negated(): ##java.time.Duration & Pure;
+            import java.time.Duration.negated(): ##java.time.Duration \ {};
             let ZDuration(x1) = x;
             ZDuration(negated(x1))
     }
@@ -141,7 +141,7 @@ namespace Time/ZDuration {
     /// Return a new duration.
     ///
     pub def duration(r: {seconds :: Int64, nanos :: Int64}): ZDuration =
-        import static java.time.Duration.ofSeconds(Int64, Int64): ##java.time.Duration & Pure;
+        import static java.time.Duration.ofSeconds(Int64, Int64): ##java.time.Duration \ {};
         ZDuration(ofSeconds(r.seconds, r.nanos))
 
     /// ## "abstract constructors" (e.g. `zero`)
@@ -150,7 +150,7 @@ namespace Time/ZDuration {
     /// Construct a zero length Duration.
     ///
     pub def zero(): ZDuration =
-        import static get java.time.Duration.ZERO: ##java.time.Duration & Pure as get_ZERO;
+        import static get java.time.Duration.ZERO: ##java.time.Duration \ {} as get_ZERO;
         ZDuration(get_ZERO())
 
 
@@ -160,7 +160,7 @@ namespace Time/ZDuration {
     /// Construct a Duration from the supplied number of nanoseconds.
     ///
     pub def fromNanos(nanos: Int64): ZDuration =
-        import static java.time.Duration.ofNanos(Int64): ##java.time.Duration & Pure;
+        import static java.time.Duration.ofNanos(Int64): ##java.time.Duration \ {};
         ZDuration(ofNanos(nanos))
 
 
@@ -168,7 +168,7 @@ namespace Time/ZDuration {
     /// Construct a Duration from the supplied number of milliseconds.
     ///
     pub def fromMillis(millis: Int64): ZDuration =
-        import static java.time.Duration.ofMillis(Int64): ##java.time.Duration & Pure;
+        import static java.time.Duration.ofMillis(Int64): ##java.time.Duration \ {};
         ZDuration(ofMillis(millis))
 
 
@@ -176,44 +176,44 @@ namespace Time/ZDuration {
     /// Construct a Duration from the supplied number of seconds.
     ///
     pub def fromSeconds(seconds: Int64): ZDuration =
-        import static java.time.Duration.ofSeconds(Int64): ##java.time.Duration & Pure;
+        import static java.time.Duration.ofSeconds(Int64): ##java.time.Duration \ {};
         ZDuration(ofSeconds(seconds))
 
     ///
     /// Construct a Duration from the supplied number of minutes.
     ///
     pub def fromMinutes(minutes: Int64): ZDuration =
-        import static java.time.Duration.ofMinutes(Int64): ##java.time.Duration & Pure;
+        import static java.time.Duration.ofMinutes(Int64): ##java.time.Duration \ {};
         ZDuration(ofMinutes(minutes))
 
     ///
     /// Construct a Duration from the supplied number of hours.
     ///
     pub def fromHours(hours: Int64): ZDuration =
-        import static java.time.Duration.ofHours(Int64): ##java.time.Duration & Pure;
+        import static java.time.Duration.ofHours(Int64): ##java.time.Duration \ {};
         ZDuration(ofHours(hours))
 
     ///
     /// Construct a Duration from the supplied number of days.
     ///
     pub def fromDays(days: Int64): ZDuration =
-        import static java.time.Duration.ofDays(Int64): ##java.time.Duration & Pure;
+        import static java.time.Duration.ofDays(Int64): ##java.time.Duration \ {};
         ZDuration(ofDays(days))
 
     /// # `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
 
     def ofTemporalUnitHelper(temporalUnit: ##java.time.temporal.TemporalUnit, amount: Int64): ZDuration =
-        import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
+        import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
         try {
             ZDuration(of(amount, temporalUnit))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
     pub def fromHalfDays(i: Int64): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         ofTemporalUnitHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, i)
 
 
@@ -223,7 +223,7 @@ namespace Time/ZDuration {
     /// Return the number of nanoseconds in Duration `x`.
     ///
     pub def toNanos(x: ZDuration): Int64 =
-        import java.time.Duration.toNanos(): Int64 & Pure;
+        import java.time.Duration.toNanos(): Int64 \ {};
         let ZDuration(x1) = x;
         toNanos(x1)
 
@@ -231,7 +231,7 @@ namespace Time/ZDuration {
     /// Get the total length of Duration `x` in milliseconds.
     ///
     pub def toMillis(x: ZDuration): Int64 =
-        import java.time.Duration.toMillis(): Int64 & Pure;
+        import java.time.Duration.toMillis(): Int64 \ {};
         let ZDuration(x1) = x;
         toMillis(x1)
 
@@ -240,7 +240,7 @@ namespace Time/ZDuration {
     /// Return the number of seconds in Duration `x`.
     ///
     pub def toSeconds(x: ZDuration): Int64 =
-        import java.time.Duration.toSeconds(): Int64 & Pure;
+        import java.time.Duration.toSeconds(): Int64 \ {};
         let ZDuration(x1) = x;
         toSeconds(x1)
 
@@ -249,7 +249,7 @@ namespace Time/ZDuration {
     /// Return the number of minutes in Duration `x`.
     ///
     pub def toMinutes(x: ZDuration): Int64 =
-        import java.time.Duration.toMinutes(): Int64 & Pure;
+        import java.time.Duration.toMinutes(): Int64 \ {};
         let ZDuration(x1) = x;
         toMinutes(x1)
 
@@ -258,7 +258,7 @@ namespace Time/ZDuration {
     /// Return the number of hours in Duration `x`.
     ///
     pub def toHours(x: ZDuration): Int64 =
-        import java.time.Duration.toHours(): Int64 & Pure;
+        import java.time.Duration.toHours(): Int64 \ {};
         let ZDuration(x1) = x;
         toHours(x1)
 
@@ -266,7 +266,7 @@ namespace Time/ZDuration {
     /// Return the number of days in Duration `x`.
     ///
     pub def toDays(x: ZDuration): Int64 =
-        import java.time.Duration.toDays(): Int64 & Pure;
+        import java.time.Duration.toDays(): Int64 \ {};
         let ZDuration(x1) = x;
         toDays(x1)
 
@@ -276,26 +276,26 @@ namespace Time/ZDuration {
     /// Return the number of days in Duration `x`.
     ///
     pub def toDaysPart(x: ZDuration): Int64 =
-        import java.time.Duration.toDaysPart(): Int64 & Pure;
+        import java.time.Duration.toDaysPart(): Int64 \ {};
         let ZDuration(x1) = x;
         toDaysPart(x1)
 
     /// ## `parse` / `format` functions
 
     pub def parse(s: String): Result[ZDuration, String] =
-        import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration & Pure;
+        import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
         try {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(ZDuration(parse(cs)))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 Err(getMessage(ex))
         }
 
     /// Note - alias of `toString`
     pub def format(x: ZDuration): String =
-        import java.time.Duration.toString(): String & Pure;
+        import java.time.Duration.toString(): String \ {};
         let ZDuration(x1) = x;
         toString(x1)
 
@@ -303,7 +303,7 @@ namespace Time/ZDuration {
     /// ## predicates / comparisons
 
     pub def isZero(x: ZDuration): Bool =
-        import java.time.Duration.isZero(): Bool & Pure;
+        import java.time.Duration.isZero(): Bool \ {};
         let ZDuration(x1) = x;
         isZero(x1)
 
@@ -311,7 +311,7 @@ namespace Time/ZDuration {
         not isNegative(x)
 
     pub def isNegative(x: ZDuration): Bool =
-        import java.time.Duration.isNegative(): Bool & Pure;
+        import java.time.Duration.isNegative(): Bool \ {};
         let ZDuration(x1) = x;
         isNegative(x1)
 
@@ -321,7 +321,7 @@ namespace Time/ZDuration {
     /// Returns the absolute value of `x`.
     ///
     pub def abs(x: ZDuration): ZDuration =
-        import java.time.Duration.abs(): ##java.time.Duration & Pure;
+        import java.time.Duration.abs(): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(abs(x1))
 
@@ -332,7 +332,7 @@ namespace Time/ZDuration {
     /// Get the nanosecond part of the duration `x`.
     ///
     pub def getNano(x: ZDuration): Int32 =
-        import java.time.Duration.getNano(): Int32 & Pure;
+        import java.time.Duration.getNano(): Int32 \ {};
         let ZDuration(x1) = x;
         getNano(x1)
 
@@ -340,7 +340,7 @@ namespace Time/ZDuration {
     /// Set the nano part of the duration `x` to `seconds``.
     ///
     pub def setNano(nanos: Int32, x: ZDuration): ZDuration =
-        import java.time.Duration.withNanos(Int32): ##java.time.Duration & Pure;
+        import java.time.Duration.withNanos(Int32): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(withNanos(x1, nanos))
 
@@ -348,7 +348,7 @@ namespace Time/ZDuration {
     /// Get the second part of the duration `x`.
     ///
     pub def getSeconds(x: ZDuration): Int64 =
-        import java.time.Duration.getSeconds(): Int64 & Pure;
+        import java.time.Duration.getSeconds(): Int64 \ {};
         let ZDuration(x1) = x;
         getSeconds(x1)
 
@@ -356,43 +356,43 @@ namespace Time/ZDuration {
     /// Set the seconds part of the duration `x` to `seconds``.
     ///
     pub def setSeconds(seconds: Int64, x: ZDuration): ZDuration =
-        import java.time.Duration.withSeconds(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.withSeconds(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(withSeconds(x1, seconds))
 
     /// ## truncate functions
 
     def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: ZDuration): ZDuration = 
-        import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;
+        import java.time.Duration.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(truncatedTo(x1, u))
     
     pub def truncatedToNanos(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
         truncatedToHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToMicros(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
         truncatedToHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToMillis(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
         truncatedToHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToSeconds(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
         truncatedToHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToMinutes(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
         truncatedToHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToHours(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
         truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToHalfDays(x: ZDuration): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         truncatedToHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
 
@@ -400,83 +400,83 @@ namespace Time/ZDuration {
 
 
     pub def plusDays(x: ZDuration, days: Int64): ZDuration =
-        import java.time.Duration.plusDays(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.plusDays(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(plusDays(x1, days))
 
     pub def minusDays(x: ZDuration, days: Int64): ZDuration =
-        import java.time.Duration.minusDays(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.minusDays(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(minusDays(x1, days))
 
     pub def plusHours(x: ZDuration, hours: Int64): ZDuration =
-        import java.time.Duration.plusHours(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.plusHours(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(plusHours(x1, hours))
 
     pub def minusHours(x: ZDuration, hours: Int64): ZDuration =
-        import java.time.Duration.minusHours(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.minusHours(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(minusHours(x1, hours))
 
     pub def plusMinutes(x: ZDuration, minutes: Int64): ZDuration =
-        import java.time.Duration.plusMinutes(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.plusMinutes(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(plusMinutes(x1, minutes))
 
     pub def minusMinutes(x: ZDuration, minutes: Int64): ZDuration =
-        import java.time.Duration.minusMinutes(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.minusMinutes(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(minusMinutes(x1, minutes))
 
     pub def plusSeconds(x: ZDuration, seconds: Int64): ZDuration =
-        import java.time.Duration.plusSeconds(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.plusSeconds(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(plusSeconds(x1, seconds))
 
     pub def minusSeconds(x: ZDuration, seconds: Int64): ZDuration =
-        import java.time.Duration.minusSeconds(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.minusSeconds(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(minusSeconds(x1, seconds))
 
     pub def plusMillis(x: ZDuration, millis: Int64): ZDuration =
-        import java.time.Duration.plusMillis(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.plusMillis(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(plusMillis(x1, millis))
 
     pub def minusMillis(x: ZDuration, millis: Int64): ZDuration =
-        import java.time.Duration.minusMillis(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.minusMillis(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(minusMillis(x1, millis))
 
     pub def plusNanos(x: ZDuration, nanos: Int64): ZDuration =
-        import java.time.Duration.plusNanos(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.plusNanos(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(plusNanos(x1, nanos))
 
     pub def minusNanos(x: ZDuration, nanos: Int64): ZDuration =
-        import java.time.Duration.minusNanos(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.minusNanos(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(minusNanos(x1, nanos))
 
 
     pub def plusHalfDays(x: ZDuration, i: Int64): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         plusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
 
     pub def minusHalfDays(x: ZDuration, i: Int64): ZDuration = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         minusHelper(x, i, get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
 
     /// ## multiply / divide functions
 
     pub def multipliedBy(x: ZDuration, y: Int64): ZDuration =
-        import java.time.Duration.multipliedBy(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.multipliedBy(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(multipliedBy(x1, y))
 
     pub def dividedBy(x: ZDuration, y: Int64): ZDuration =
-        import java.time.Duration.dividedBy(Int64): ##java.time.Duration & Pure;
+        import java.time.Duration.dividedBy(Int64): ##java.time.Duration \ {};
         let ZDuration(x1) = x;
         ZDuration(dividedBy(x1, y))
 
@@ -485,13 +485,13 @@ namespace Time/ZDuration {
     /// `plus` specialized - except for HalfDays we already have a `plus_` function for the other supported ChronoUnits
 
     def plusHelper(x: ZDuration, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): ZDuration =
-        import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
+        import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
         try {
             let ZDuration(x1) = x;
             ZDuration(plus(x1, amount, temporalUnit))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
     
@@ -499,13 +499,13 @@ namespace Time/ZDuration {
     /// `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
 
     def minusHelper(x: ZDuration, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): ZDuration =
-        import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration & Pure;         
+        import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
         try {
             let ZDuration(x1) = x;
             ZDuration(minus(x1, amount, temporalUnit))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
     

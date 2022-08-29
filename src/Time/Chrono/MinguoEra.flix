@@ -37,36 +37,36 @@ namespace Time/Chrono/MinguoEra {
     use Time/Temporal.ValueRange.{ValueRange};
 
     pub def marshal(x: MinguoEra): ##java.time.chrono.MinguoEra = 
-        import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra & Pure as getBEFORE_ROC;
-        import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra & Pure as getROC;
+        import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
+        import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
         match x {
             case BEFORE_ROC => getBEFORE_ROC()
             case ROC        => getROC() 
         }
 
     def primEquals(x: ##java.time.chrono.MinguoEra, y: ##java.time.chrono.MinguoEra): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
         let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.chrono.MinguoEra): MinguoEra =
-        import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra & Pure as getBEFORE_ROC;
-        import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra & Pure as getROC;
+        import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
+        import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
         match x {
             case x1 if primEquals(x1, getBEFORE_ROC())  => BEFORE_ROC
             case x1 if primEquals(x1, getROC())         => ROC
         }
 
     pub def getValue(x: MinguoEra): Int32 = 
-        import java.time.chrono.MinguoEra.getValue(): Int32 & Pure;
+        import java.time.chrono.MinguoEra.getValue(): Int32 \ {};
         let x1 = marshal(x);
         getValue(x1)
 
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: MinguoEra): String = 
-        import java.time.chrono.MinguoEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
+        import java.time.chrono.MinguoEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshal(x);
         let style1 = Time/Format/TextStyle.marshal(style);
         let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;

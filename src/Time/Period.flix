@@ -25,7 +25,7 @@ namespace Time {
 
     instance ToString[Period] {
         pub def toString(x: Period): String =
-            import java.time.Period.toString(): String & Pure;
+            import java.time.Period.toString(): String \ {};
             let Period(x1) = x;
             toString(x1)
     }
@@ -37,7 +37,7 @@ namespace Time {
     ///
     instance FromString[Period] {
         pub def fromString(s: String): Option[Period] =
-            import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period & Pure;
+            import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
             try {
                 let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(Period(parse(cs)))
@@ -48,7 +48,7 @@ namespace Time {
 
     instance Eq[Period] {
         pub def eq(x: Period, y: Period): Bool =
-            import java.time.Period.equals(##java.lang.Object): Bool & Pure;
+            import java.time.Period.equals(##java.lang.Object): Bool \ {};
             let Period(x1) = x;
             let Period(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -57,7 +57,7 @@ namespace Time {
 
     instance Hash[Period] {
         pub def hash(x: Period): Int32 =
-            import java.time.Period.hashCode(): Int32 & Pure;
+            import java.time.Period.hashCode(): Int32 \ {};
             let Period(x1) = x;
             hashCode(x1)
     }
@@ -65,7 +65,7 @@ namespace Time {
 
     instance Add[Period] {
         pub def add(x: Period, y: Period): Period =
-            import java.time.Period.plus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
+            import java.time.Period.plus(##java.time.temporal.TemporalAmount): ##java.time.Period \ {};
             let Period(x1) = x;
             let Period(y1) = y;
             Period(plus(x1, y1 as ##java.time.temporal.TemporalAmount))
@@ -73,7 +73,7 @@ namespace Time {
 
     instance Sub[Period] {
         pub def sub(x: Period, y: Period): Period =
-            import java.time.Period.minus(##java.time.temporal.TemporalAmount): ##java.time.Period & Pure;
+            import java.time.Period.minus(##java.time.temporal.TemporalAmount): ##java.time.Period \ {};
             let Period(x1) = x;
             let Period(y1) = y;
             Period(minus(x1, y1 as ##java.time.temporal.TemporalAmount))
@@ -82,7 +82,7 @@ namespace Time {
 
     instance Neg[Period] {
         pub def neg(x: Period): Period =
-            import java.time.Period.negated(): ##java.time.Period & Pure;
+            import java.time.Period.negated(): ##java.time.Period \ {};
             let Period(x1) = x;
             Period(negated(x1))
     }
@@ -128,7 +128,7 @@ namespace Time/Period {
     /// ## Constructors
 
     pub def period(r: {years :: Int32, months :: Int32, days :: Int32}): Period =
-        import static java.time.Period.of(Int32, Int32, Int32): ##java.time.Period & Pure;
+        import static java.time.Period.of(Int32, Int32, Int32): ##java.time.Period \ {};
         Period(of(r.years, r.months, r.days))
 
     /// ## "abstract constructors" (e.g. `zero`)
@@ -137,7 +137,7 @@ namespace Time/Period {
     /// The period of zero.
     ///
     pub def zero(): Period =
-        import static get java.time.Period.ZERO: ##java.time.Period & Pure as getZERO;
+        import static get java.time.Period.ZERO: ##java.time.Period \ {} as getZERO;
         Period(getZERO())
 
 
@@ -145,19 +145,19 @@ namespace Time/Period {
 
 
     pub def fromDays(days: Int32): Period =
-        import static java.time.Period.ofDays(Int32): ##java.time.Period & Pure;
+        import static java.time.Period.ofDays(Int32): ##java.time.Period \ {};
         Period(ofDays(days))
 
     pub def fromWeeks(weeks: Int32): Period =
-        import static java.time.Period.ofWeeks(Int32): ##java.time.Period & Pure;
+        import static java.time.Period.ofWeeks(Int32): ##java.time.Period \ {};
         Period(ofWeeks(weeks))
 
     pub def fromMonths(months: Int32): Period =
-        import static java.time.Period.ofMonths(Int32): ##java.time.Period & Pure;
+        import static java.time.Period.ofMonths(Int32): ##java.time.Period \ {};
         Period(ofMonths(months))
 
     pub def fromYears(years: Int32): Period =
-        import static java.time.Period.ofYears(Int32): ##java.time.Period & Pure;
+        import static java.time.Period.ofYears(Int32): ##java.time.Period \ {};
         Period(ofYears(years))
 
 
@@ -166,33 +166,33 @@ namespace Time/Period {
     /// ## `to` functions
 
     pub def toTotalMonths(x: Period): Int64 =
-        import java.time.Period.toTotalMonths(): Int64 & Pure;
+        import java.time.Period.toTotalMonths(): Int64 \ {};
         let Period(x1) = x;
         toTotalMonths(x1)
 
     /// ## `parse` / `format` functions        
 
     pub def parse(s: String): Result[Period, String] =
-        import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period & Pure;
+        import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
         try {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(Period(parse(cs)))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 Err(getMessage(ex))
         }
 
     /// Note - alias of `toString`
     pub def format(x: Period): String =
-        import java.time.Period.toString(): String & Pure;
+        import java.time.Period.toString(): String \ {};
         let Period(x1) = x;
         toString(x1)
 
     /// ## predicates / comparisons
 
     pub def isZero(x: Period): Bool =
-        import java.time.Period.isZero(): Bool & Pure;
+        import java.time.Period.isZero(): Bool \ {};
         let Period(x1) = x;
         isZero(x1)
 
@@ -200,46 +200,46 @@ namespace Time/Period {
         not isNegative(x)
 
     pub def isNegative(x: Period): Bool =
-        import java.time.Period.isNegative(): Bool & Pure;
+        import java.time.Period.isNegative(): Bool \ {};
         let Period(x1) = x;
         isNegative(x1)
 
     /// ## Period functions
     
     pub def normalize(x: Period): Period =
-        import java.time.Period.normalized(): ##java.time.Period & Pure;
+        import java.time.Period.normalized(): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(normalized(x1))
 
     /// ## Getters and Setters
 
     pub def getYears(x: Period): Int32 =
-        import java.time.Period.getYears(): Int32 & Pure;
+        import java.time.Period.getYears(): Int32 \ {};
         let Period(x1) = x;
         getYears(x1)
 
     pub def setYears(years: Int32, x: Period): Period =
-        import java.time.Period.withYears(Int32): ##java.time.Period & Pure;
+        import java.time.Period.withYears(Int32): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(withYears(x1, years))
 
     pub def getMonths(x: Period): Int32 =
-        import java.time.Period.getMonths(): Int32 & Pure;
+        import java.time.Period.getMonths(): Int32 \ {};
         let Period(x1) = x;
         getMonths(x1)
 
     pub def setMonths(months: Int32, x: Period): Period =
-        import java.time.Period.withMonths(Int32): ##java.time.Period & Pure;
+        import java.time.Period.withMonths(Int32): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(withMonths(x1, months))
 
     pub def getDays(x: Period): Int32 =
-        import java.time.Period.getDays(): Int32 & Pure;
+        import java.time.Period.getDays(): Int32 \ {};
         let Period(x1) = x;
         getDays(x1)
 
     pub def setDays(days: Int32, x: Period): Period =
-        import java.time.Period.withDays(Int32): ##java.time.Period & Pure;
+        import java.time.Period.withDays(Int32): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(withDays(x1, days))
 
@@ -247,39 +247,39 @@ namespace Time/Period {
     /// ## plus / minus functions
 
     pub def plusYears(x: Period, years: Int64): Period =
-        import java.time.Period.plusYears(Int64): ##java.time.Period & Pure;
+        import java.time.Period.plusYears(Int64): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(plusYears(x1, years))
 
     pub def minusYears(x: Period, years: Int64): Period =
-        import java.time.Period.minusYears(Int64): ##java.time.Period & Pure;
+        import java.time.Period.minusYears(Int64): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(minusYears(x1, years))
 
     pub def plusMonths(x: Period, months: Int64): Period =
-        import java.time.Period.plusMonths(Int64): ##java.time.Period & Pure;
+        import java.time.Period.plusMonths(Int64): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(plusMonths(x1, months))
 
     pub def minusMonths(x: Period, months: Int64): Period =
-        import java.time.Period.minusMonths(Int64): ##java.time.Period & Pure;
+        import java.time.Period.minusMonths(Int64): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(minusMonths(x1, months))
 
     pub def plusDays(x: Period, days: Int64): Period =
-        import java.time.Period.plusDays(Int64): ##java.time.Period & Pure;
+        import java.time.Period.plusDays(Int64): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(plusDays(x1, days))
 
     pub def minusDays(x: Period, days: Int64): Period =
-        import java.time.Period.minusDays(Int64): ##java.time.Period & Pure;
+        import java.time.Period.minusDays(Int64): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(minusDays(x1, days))
 
    /// ## multiply / divide functions
 
     pub def multipliedBy(x: Period, y: Int32): Period =
-        import java.time.Period.multipliedBy(Int32): ##java.time.Period & Pure;
+        import java.time.Period.multipliedBy(Int32): ##java.time.Period \ {};
         let Period(x1) = x;
         Period(multipliedBy(x1, y))
 
@@ -289,7 +289,7 @@ namespace Time/Period {
 
     /// Note returns Period as LocalDate has no time component
     pub def between(r: {start :: LocalDate, end :: LocalDate}): Period =
-        import static java.time.Period.between(##java.time.LocalDate, ##java.time.LocalDate): ##java.time.Period & Pure;
+        import static java.time.Period.between(##java.time.LocalDate, ##java.time.LocalDate): ##java.time.Period \ {};
         let LocalDate(b1) = r.start;
         let LocalDate(e1) = r.end;
         Period(between(b1, e1))

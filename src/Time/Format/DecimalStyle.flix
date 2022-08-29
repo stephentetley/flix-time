@@ -21,14 +21,14 @@ namespace Time/Format {
 
     instance ToString[DecimalStyle] {
         pub def toString(x: DecimalStyle): String =
-            import java.time.format.DecimalStyle.toString(): String & Pure;
+            import java.time.format.DecimalStyle.toString(): String \ {};
             let DecimalStyle(x1) = x;
             toString(x1)
     }
     
     instance Eq[DecimalStyle] {
         pub def eq(x: DecimalStyle, y: DecimalStyle): Bool =
-            import java.time.format.DecimalStyle.equals(##java.lang.Object): Bool & Pure;
+            import java.time.format.DecimalStyle.equals(##java.lang.Object): Bool \ {};
             let DecimalStyle(x1) = x;
             let DecimalStyle(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -36,7 +36,7 @@ namespace Time/Format {
 
     instance Hash[DecimalStyle] {
         pub def hash(x: DecimalStyle): Int32 = 
-            import java.time.format.DecimalStyle.hashCode(): Int32 & Pure;
+            import java.time.format.DecimalStyle.hashCode(): Int32 \ {};
             let DecimalStyle(x1) = x;
             hashCode(x1)
     } 
@@ -61,25 +61,26 @@ namespace Time/Format/DecimalStyle {
     /// ## "abstract constructors" (e.g. `standard`)
 
     pub def standard(): DecimalStyle =
-        import static get java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle & Pure as get_STANDARD;
+        import static get java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle \ {} as get_STANDARD;
         DecimalStyle(get_STANDARD())
 
-    pub def decimalStyle(loc: Locale): DecimalStyle & Impure = 
-        import static java.time.format.DecimalStyle.of(##java.util.Locale): ##java.time.format.DecimalStyle & Impure;
+    pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
+        import static java.time.format.DecimalStyle.of(##java.util.Locale): ##java.time.format.DecimalStyle \ IO;
         let loc1 = Basis/I18n/Locale.getLocale(loc) |> Interop/Util/Locale.getHH;
         DecimalStyle(of(loc1))
 
-    pub def decimalStyleWithDefaultLocale(): DecimalStyle & Impure = 
-        import static java.time.format.DecimalStyle.ofDefaultLocale(): ##java.time.format.DecimalStyle & Impure;
+    pub def decimalStyleWithDefaultLocale(): DecimalStyle \ IO = 
+        import static java.time.format.DecimalStyle.ofDefaultLocale(): ##java.time.format.DecimalStyle \ IO;
         DecimalStyle(ofDefaultLocale())
 
 
     /// ## DecimalStyle functions
 
     pub def getAvailableLocales(): List[Locale] = region r {
-        import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set & Pure;
-        let jset = getAvailableLocales() |> Interop/Util/SetZ.mkSetZ(r);
-        Interop/Util/SetZ.toList(jset)
+        import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set \ {};
+        getAvailableLocales() 
+            |> Interop/Util/SetZ.wrapHH(r)
+            |> Interop/Util/SetZ.toFlixList
     }
 
     // Note - should the Locale module provide a function marshal and unmarshal functions
@@ -88,39 +89,39 @@ namespace Time/Format/DecimalStyle {
     /// ## Getters and Setters
 
     pub def getDecimalSeparator(x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.getDecimalSeparator(): Char & Pure;
+        import java.time.format.DecimalStyle.getDecimalSeparator(): Char \ {};
         getDecimalStyle(x) |> getDecimalSeparator
 
 
     pub def setDecimalSeparator(sep: Char, x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.withDecimalSeparator(Char): Char & Pure;
+        import java.time.format.DecimalStyle.withDecimalSeparator(Char): Char \ {};
         let DecimalStyle(x1) = x;
         withDecimalSeparator(x1, sep)
 
     pub def getNegativeSign(x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.getNegativeSign(): Char & Pure;
+        import java.time.format.DecimalStyle.getNegativeSign(): Char \ {};
         getDecimalStyle(x) |> getNegativeSign
 
     pub def setNegativeSign(sign: Char, x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.withNegativeSign(Char): Char & Pure;
+        import java.time.format.DecimalStyle.withNegativeSign(Char): Char \ {};
         let DecimalStyle(x1) = x;
         withNegativeSign(x1, sign)
 
     pub def getPositiveSign(x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.getPositiveSign(): Char & Pure;
+        import java.time.format.DecimalStyle.getPositiveSign(): Char \ {};
         getDecimalStyle(x) |> getPositiveSign
 
     pub def setPositiveSign(sign: Char, x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.withPositiveSign(Char): Char & Pure;
+        import java.time.format.DecimalStyle.withPositiveSign(Char): Char \ {};
         let DecimalStyle(x1) = x;
         withPositiveSign(x1, sign)
 
     pub def getZeroDigit(x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.getZeroDigit(): Char & Pure;
+        import java.time.format.DecimalStyle.getZeroDigit(): Char \ {};
         getDecimalStyle(x) |> getZeroDigit
 
     pub def setZeroDigit(digit: Char, x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.withZeroDigit(Char): Char & Pure;
+        import java.time.format.DecimalStyle.withZeroDigit(Char): Char \ {};
         let DecimalStyle(x1) = x;
         withZeroDigit(x1, digit)
 

@@ -26,7 +26,7 @@ namespace Time/Chrono {
     ///
     instance ToString[ThaiBuddhistDate] {
         pub def toString(x: ThaiBuddhistDate): String =
-            import java.time.chrono.ThaiBuddhistDate.toString(): String & Pure;
+            import java.time.chrono.ThaiBuddhistDate.toString(): String \ {};
             let ThaiBuddhistDate(x1) = x;
             toString(x1)
     }
@@ -52,25 +52,25 @@ namespace Time/Chrono/ThaiBuddhistDate {
     ///
     /// Returns ___
     ///
-    pub def now(): ThaiBuddhistDate & Impure =
-        import static java.time.chrono.ThaiBuddhistDate.now(): ##java.time.chrono.ThaiBuddhistDate & Impure;
+    pub def now(): ThaiBuddhistDate \ IO =
+        import static java.time.chrono.ThaiBuddhistDate.now(): ##java.time.chrono.ThaiBuddhistDate \ IO;
         ThaiBuddhistDate(now())
 
 
     pub def equals(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = 
-        import java.time.chrono.ThaiBuddhistDate.equals(##java.lang.Object): Bool & Pure;
+        import java.time.chrono.ThaiBuddhistDate.equals(##java.lang.Object): Bool \ {};
         let ThaiBuddhistDate(x1) = x;
         let ThaiBuddhistDate(y1) = y;
         equals(x1, y1 as ##java.lang.Object)
 
     pub def hashCode(x: ThaiBuddhistDate): Int32 = 
-        import java.time.chrono.ThaiBuddhistDate.hashCode(): Int32 & Pure;
+        import java.time.chrono.ThaiBuddhistDate.hashCode(): Int32 \ {};
         let ThaiBuddhistDate(x1) = x;
         hashCode(x1)
 
 
     pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate & Pure as fromDate;
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
         let ThaiBuddhistDate(x1) = x;
         LocalDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
 
@@ -101,7 +101,7 @@ namespace Time/Chrono/ThaiBuddhistDate {
 
 
     /// def getChronoFieldHelper(x: ThaiBuddhistDate, field: ChronoField): Result[Int32, String] =
-    ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 & Pure;
+    ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///     try {
     ///         let ThaiBuddhistDate(x1) = x;
     ///         let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;

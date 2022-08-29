@@ -27,14 +27,14 @@ namespace Time {
     ///
     instance ToString[ZoneId] {
         pub def toString(x: ZoneId): String =
-            import java.time.ZoneId.toString(): String & Pure;
+            import java.time.ZoneId.toString(): String \ {};
             let ZoneId(x1) = x;
             toString(x1)
     }
 
     instance Eq[ZoneId] {
         pub def eq(x: ZoneId, y: ZoneId): Bool =
-            import java.time.ZoneId.equals(##java.lang.Object): Bool & Pure;
+            import java.time.ZoneId.equals(##java.lang.Object): Bool \ {};
             let ZoneId(x1) = x;
             let ZoneId(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -42,7 +42,7 @@ namespace Time {
 
     instance Hash[ZoneId] {
         pub def hash(x: ZoneId): Int32 =
-            import java.time.ZoneId.hashCode(): Int32 & Pure;
+            import java.time.ZoneId.hashCode(): Int32 \ {};
             let ZoneId(x1) = x;
             hashCode(x1)
     }
@@ -85,24 +85,24 @@ namespace Time/ZoneId {
     /// ## Constructors
 
     pub def zoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
-        import static java.time.ZoneId.of(String): ##java.time.ZoneId & Pure;
+        import static java.time.ZoneId.of(String): ##java.time.ZoneId \ {};
         try {
             Ok(ZoneId(of(zoneId.zoneId)))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 Err(getMessage(ex))
         }
         
 
     pub def zoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] = region r {
-        import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId & Pure;
+        import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId \ {};
         try {
-            let jmap = Interop/Util/MapZ.fromMapViaHashMap(r, aliases) |> Interop/Util/MapZ.getHH;
+            let jmap = Interop/Util/HashMap.fromFlixMap(r, aliases) |> Interop/Util/MapZ.toMapHH;
             Ok(ZoneId(of(zoneId.zoneId, jmap)))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 Err(getMessage(ex))
         }
     }
@@ -114,13 +114,13 @@ namespace Time/ZoneId {
         case Err(_) => bug!("ZoneId.utc() - failed")
     }
 
-    pub def systemDefault(): Result[ZoneId, String] & Impure =
-        import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId & Impure;
+    pub def systemDefault(): Result[ZoneId, String] \ IO =
+        import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId \ IO;
         try {
             Ok(ZoneId(systemDefault()))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
@@ -128,7 +128,7 @@ namespace Time/ZoneId {
     /// ## `from` functions
 
     pub def fromOffset(r: {prefix :: Option[String], offset :: ZoneOffset}): ZoneId =
-        import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId & Pure;
+        import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId \ {};
         let p1 = match r.prefix {
             case Some(s) => s
             case _       => ""
@@ -139,12 +139,12 @@ namespace Time/ZoneId {
     /// `fromTemporalAccessor` specialized
     
     def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZoneId = 
-        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId & Pure as fromTA;
+        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId \ {} as fromTA;
         try {
             ZoneId(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
@@ -164,7 +164,7 @@ namespace Time/ZoneId {
     /// ## ZoneId functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
-        import java.time.ZoneId.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
+        import java.time.ZoneId.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let style1 = Time/Format/TextStyle.marshal(style);
         let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
         let ZoneId(z1) = z;
@@ -174,14 +174,14 @@ namespace Time/ZoneId {
     /// Returns the unique ID of the time zone.
     ///
     pub def getTimeZoneId(x: ZoneId): String =
-        import java.time.ZoneId.getId(): String & Pure;
+        import java.time.ZoneId.getId(): String \ {};
         let ZoneId(x1) = x;
         getId(x1)
 
-    pub def getAvailableZoneIds(): Set[String] & Impure =
-        import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set & Impure;
+    pub def getAvailableZoneIds(): Set[String] \ IO =
+        import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set \ IO;
         try {
-            getAvailableZoneIds()  |> Interop/Util/SetZ.hhToSet
+            getAvailableZoneIds()  |> Interop/Util/SetZ.wrapHH(Static) |> Interop/Util/SetZ.toFlixSet
         } catch {
             case _: ##java.lang.Exception => Set.empty()
         }
@@ -189,7 +189,7 @@ namespace Time/ZoneId {
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =
-        import java.time.ZoneId.getRules(): ##java.time.zone.ZoneRules & Pure;
+        import java.time.ZoneId.getRules(): ##java.time.zone.ZoneRules \ {};
         try {
             let ZoneId(x1) = x;
             Some(ZoneRules(getRules(x1)))
@@ -199,7 +199,7 @@ namespace Time/ZoneId {
 
     ///
     pub def normalized(x: ZoneId): ZoneId =
-        import java.time.ZoneId.normalized(): ##java.time.ZoneId & Pure;
+        import java.time.ZoneId.normalized(): ##java.time.ZoneId \ {};
         let ZoneId(x1) = x;
         ZoneId(normalized(x1))
 

@@ -21,7 +21,7 @@ namespace Time/Chrono {
 
     instance ToString[JapaneseChronology] {
         pub def toString(x: JapaneseChronology): String =
-            import java.time.chrono.AbstractChronology.toString(): String & Pure;
+            import java.time.chrono.AbstractChronology.toString(): String \ {};
             let JapaneseChronology(x1) = x;
             toString(x1 as ##java.time.chrono.AbstractChronology)
     }
@@ -43,22 +43,22 @@ namespace Time/Chrono/JapaneseChronology {
     use Time.ZoneId.{ZoneId};
 
 
-    pub def getInstance(): JapaneseChronology & Impure = 
-        import static get java.time.chrono.JapaneseChronology.INSTANCE: ##java.time.chrono.JapaneseChronology & Impure as getINSTANCE;
+    pub def getInstance(): JapaneseChronology \ IO = 
+        import static get java.time.chrono.JapaneseChronology.INSTANCE: ##java.time.chrono.JapaneseChronology \ IO as getINSTANCE;
         JapaneseChronology(getINSTANCE())
 
     pub def getCalendarType(x: JapaneseChronology): String = 
-        import java.time.chrono.JapaneseChronology.getCalendarType(): String & Pure;
+        import java.time.chrono.JapaneseChronology.getCalendarType(): String \ {};
         let JapaneseChronology(x1) = x;
         getCalendarType(x1)
 
-    pub def dateNow(x: JapaneseChronology): JapaneseDate & Impure = 
-        import java.time.chrono.JapaneseChronology.dateNow(): ##java.time.chrono.JapaneseDate & Impure;
+    pub def dateNow(x: JapaneseChronology): JapaneseDate \ IO = 
+        import java.time.chrono.JapaneseChronology.dateNow(): ##java.time.chrono.JapaneseDate \ IO;
         let JapaneseChronology(x1) = x;
         JapaneseDate(dateNow(x1))
 
-    pub def dateNowWithClock(x: JapaneseChronology, clock: Clock): JapaneseDate & Impure =
-        import java.time.chrono.JapaneseChronology.dateNow(##java.time.Clock): ##java.time.chrono.JapaneseDate & Impure;
+    pub def dateNowWithClock(x: JapaneseChronology, clock: Clock): JapaneseDate \ IO =
+        import java.time.chrono.JapaneseChronology.dateNow(##java.time.Clock): ##java.time.chrono.JapaneseDate \ IO;
         let JapaneseChronology(x1) = x;
         let Clock(clock1) = clock;
         JapaneseDate(dateNow(x1, clock1))
@@ -66,14 +66,14 @@ namespace Time/Chrono/JapaneseChronology {
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
-    pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate & Impure =
-        import java.time.chrono.JapaneseChronology.dateNow(##java.time.ZoneId): ##java.time.chrono.JapaneseDate & Impure;
+    pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate \ IO =
+        import java.time.chrono.JapaneseChronology.dateNow(##java.time.ZoneId): ##java.time.chrono.JapaneseDate \ IO;
         let JapaneseChronology(x1) = x;
         let ZoneId(zone1) = zone;
         JapaneseDate(dateNow(x1, zone1))
 
     pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
-        import java.time.chrono.JapaneseChronology.eraOf(Int32): ##java.time.chrono.JapaneseEra & Pure;
+        import java.time.chrono.JapaneseChronology.eraOf(Int32): ##java.time.chrono.JapaneseEra \ {};
         let JapaneseChronology(x1) = x;
         JapaneseEra(eraOf(x1, i))
 

@@ -26,7 +26,7 @@ namespace Time/Chrono {
     ///
     instance ToString[HijrahDate] {
         pub def toString(x: HijrahDate): String =
-            import java.time.chrono.HijrahDate.toString(): String & Pure;
+            import java.time.chrono.HijrahDate.toString(): String \ {};
             let HijrahDate(x1) = x;
             toString(x1)
     }
@@ -64,80 +64,80 @@ namespace Time/Chrono/HijrahDate {
 
 
     pub def hijrahDate(r: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
-        import static java.time.chrono.HijrahDate.of(Int32, Int32, Int32): ##java.time.chrono.HijrahDate & Pure;
+        import static java.time.chrono.HijrahDate.of(Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         HijrahDate(of(r.prolepticYear, r.month, r.dayOfMonth))
 
 
     ///
     /// Returns ___
     ///
-    pub def now(): HijrahDate & Impure =
-        import static java.time.chrono.HijrahDate.now(): ##java.time.chrono.HijrahDate & Impure;
+    pub def now(): HijrahDate \ IO =
+        import static java.time.chrono.HijrahDate.now(): ##java.time.chrono.HijrahDate \ IO;
         HijrahDate(now())
 
-    pub def nowWithClock(x: Clock): HijrahDate & Impure =
-        import static java.time.chrono.HijrahDate.now(##java.time.Clock): ##java.time.chrono.HijrahDate & Impure;
+    pub def nowWithClock(x: Clock): HijrahDate \ IO =
+        import static java.time.chrono.HijrahDate.now(##java.time.Clock): ##java.time.chrono.HijrahDate \ IO;
         let Clock(x1) = x;
         HijrahDate(now(x1))
 
-    pub def nowWithZoneId(x: ZoneId): HijrahDate & Impure =
-        import static java.time.chrono.HijrahDate.now(##java.time.ZoneId): ##java.time.chrono.HijrahDate & Impure;
+    pub def nowWithZoneId(x: ZoneId): HijrahDate \ IO =
+        import static java.time.chrono.HijrahDate.now(##java.time.ZoneId): ##java.time.chrono.HijrahDate \ IO;
         let ZoneId(x1) = x;
         HijrahDate(now(x1))
 
 
     pub def equals(x: HijrahDate, y: HijrahDate): Bool = 
-        import java.time.chrono.HijrahDate.equals(##java.lang.Object): Bool & Pure;
+        import java.time.chrono.HijrahDate.equals(##java.lang.Object): Bool \ {};
         let HijrahDate(x1) = x;
         let HijrahDate(y1) = y;
         equals(x1, y1 as ##java.lang.Object)
 
     pub def hashCode(x: HijrahDate): Int32 = 
-        import java.time.chrono.HijrahDate.hashCode(): Int32 & Pure;
+        import java.time.chrono.HijrahDate.hashCode(): Int32 \ {};
         let HijrahDate(x1) = x;
         hashCode(x1)
 
 
     pub def toLocalDate(x: HijrahDate): LocalDate =
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate & Pure as fromDate;
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
         let HijrahDate(x1) = x;
         LocalDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
 
     pub def getChronology(x: HijrahDate): HijrahChronology = 
-        import java.time.chrono.HijrahDate.getChronology(): ##java.time.chrono.HijrahChronology & Pure;
+        import java.time.chrono.HijrahDate.getChronology(): ##java.time.chrono.HijrahChronology \ {};
         let HijrahDate(x1) = x;
         HijrahChronology(getChronology(x1))
 
     pub def getEra(x: HijrahDate): HijrahEra = 
-        import java.time.chrono.HijrahDate.getEra(): ##java.time.chrono.HijrahEra & Pure;
+        import java.time.chrono.HijrahDate.getEra(): ##java.time.chrono.HijrahEra \ {};
         let HijrahDate(x1) = x;
         Time/Chrono/HijrahEra.unmarshal(getEra(x1))
 
     pub def isLeapYear(x: HijrahDate): Bool = 
-        import java.time.chrono.HijrahDate.isLeapYear(): Bool & Pure;
+        import java.time.chrono.HijrahDate.isLeapYear(): Bool \ {};
         let HijrahDate(x1) = x;
         isLeapYear(x1)
 
     pub def lengthOfMonth(x: HijrahDate): Int32 = 
-        import java.time.chrono.HijrahDate.lengthOfMonth(): Int32 & Pure;
+        import java.time.chrono.HijrahDate.lengthOfMonth(): Int32 \ {};
         let HijrahDate(x1) = x;
         lengthOfMonth(x1)
 
     pub def lengthOfYear(x: HijrahDate): Int32 = 
-        import java.time.chrono.HijrahDate.lengthOfYear(): Int32 & Pure;
+        import java.time.chrono.HijrahDate.lengthOfYear(): Int32 \ {};
         let HijrahDate(x1) = x;
         lengthOfYear(x1)
 
 
     pub def plusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
-        import java.time.chrono.HijrahDate.plus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate & Pure;
+        import java.time.chrono.HijrahDate.plus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate \ {};
         let HijrahDate(x1) = x;
         let Period(amount1) = amount;
         let tamount1 = amount1 as ##java.time.temporal.TemporalAmount;
         HijrahDate(plus(x1, tamount1))
 
     pub def minusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
-        import java.time.chrono.HijrahDate.minus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate & Pure;
+        import java.time.chrono.HijrahDate.minus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate \ {};
         let HijrahDate(x1) = x;
         let Period(amount1) = amount;
         let tamount1 = amount1 as ##java.time.temporal.TemporalAmount;
@@ -146,7 +146,7 @@ namespace Time/Chrono/HijrahDate {
 
 
     pub def withVariant(x: HijrahDate, chronology: HijrahChronology): HijrahDate = 
-        import java.time.chrono.HijrahDate.withVariant(##java.time.chrono.HijrahChronology): ##java.time.chrono.HijrahDate & Pure;
+        import java.time.chrono.HijrahDate.withVariant(##java.time.chrono.HijrahChronology): ##java.time.chrono.HijrahDate \ {};
         let HijrahDate(x1) = x;
         let HijrahChronology(chronology1) = chronology;
         HijrahDate(withVariant(x1, chronology1))

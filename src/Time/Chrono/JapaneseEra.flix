@@ -29,7 +29,7 @@ namespace Time/Chrono {
     ///
     instance ToString[JapaneseEra] {
         pub def toString(x: JapaneseEra): String =
-            import java.time.chrono.JapaneseEra.toString(): String & Pure;
+            import java.time.chrono.JapaneseEra.toString(): String \ {};
             let JapaneseEra(x1) = x;
             toString(x1) 
     }
@@ -61,7 +61,7 @@ namespace Time/Chrono/JapaneseEra {
         x1
 
     pub def japaneseEra(japaneseEra: {japaneseEra :: Int32}): Option[JapaneseEra] =
-        import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra & Pure;
+        import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra \ {};
         try {
             Some(JapaneseEra(of(japaneseEra.japaneseEra)))
         } catch {
@@ -69,45 +69,45 @@ namespace Time/Chrono/JapaneseEra {
         }
 
     pub def heisei(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.HEISEI: ##java.time.chrono.JapaneseEra & Pure as getHEISEI;
+        import static get java.time.chrono.JapaneseEra.HEISEI: ##java.time.chrono.JapaneseEra \ {} as getHEISEI;
         JapaneseEra(getHEISEI())
 
     pub def meiji(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.MEIJI: ##java.time.chrono.JapaneseEra & Pure as getMEIJI;
+        import static get java.time.chrono.JapaneseEra.MEIJI: ##java.time.chrono.JapaneseEra \ {} as getMEIJI;
         JapaneseEra(getMEIJI())
 
     /// Java 13
     /// pub def reiwa(): JapaneseEra = 
-    ///     import static get java.time.chrono.JapaneseEra.REIWA: ##java.time.chrono.JapaneseEra & Pure as getREIWA;
+    ///     import static get java.time.chrono.JapaneseEra.REIWA: ##java.time.chrono.JapaneseEra \ {} as getREIWA;
     ///     JapaneseEra(getREIWA())
 
     pub def showa(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.SHOWA: ##java.time.chrono.JapaneseEra & Pure as getSHOWA;
+        import static get java.time.chrono.JapaneseEra.SHOWA: ##java.time.chrono.JapaneseEra \ {} as getSHOWA;
         JapaneseEra(getSHOWA())
 
     pub def taisho(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.TAISHO: ##java.time.chrono.JapaneseEra & Pure as getTAISHO;
+        import static get java.time.chrono.JapaneseEra.TAISHO: ##java.time.chrono.JapaneseEra \ {} as getTAISHO;
         JapaneseEra(getTAISHO())
 
     pub def getValue(x: JapaneseEra): Int32 = 
-        import java.time.chrono.JapaneseEra.getValue(): Int32 & Pure;
+        import java.time.chrono.JapaneseEra.getValue(): Int32 \ {};
         let JapaneseEra(x1) = x;
         getValue(x1)
 
     pub def equals(x: JapaneseEra, y: JapaneseEra): Bool = 
-        import java.lang.Object.equals(##java.lang.Object): Bool & Pure;
+        import java.lang.Object.equals(##java.lang.Object): Bool \ {};
         let JapaneseEra(x1) = x;
         let JapaneseEra(y1) = y;
         equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object)
 
     pub def hashCode(x: JapaneseEra): Int32 = 
-        import java.lang.Object.hashCode(): Int32 & Pure;
+        import java.lang.Object.hashCode(): Int32 \ {};
         let JapaneseEra(x1) = x;
         hashCode(x1 as ##java.lang.Object)
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: JapaneseEra): String = 
-        import java.time.chrono.JapaneseEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
+        import java.time.chrono.JapaneseEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = getJapaneseEra(x);
         let style1 = Time/Format/TextStyle.marshal(style);
         let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
@@ -115,7 +115,7 @@ namespace Time/Chrono/JapaneseEra {
 
     /// /// NOTE - maybe this should return Option [/ Result] ?
     /// pub def adjustInto(t: a, x: JapaneseEra): a with Temporal[a] = 
-    ///     import java.time.chrono.Era.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+    ///     import java.time.chrono.Era.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
     ///     let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
     ///     let t1 = Time/Temporal/Temporal.marshalToNativeTemporal(t);
     ///     Time/Temporal/Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
@@ -123,13 +123,13 @@ namespace Time/Chrono/JapaneseEra {
 
 
     /// pub def get(t: a, x: JapaneseEra): Int32 with TemporalField[a] = 
-    ///     import java.time.chrono.Era.get(##java.time.temporal.TemporalField): Int32 & Pure;
+    ///     import java.time.chrono.Era.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///     let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
     ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
     ///     get(x1, t1)
 
     /// pub def getLong(t: a, x: JapaneseEra): Int64 with TemporalField[a] = 
-    ///     import java.time.chrono.Era.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+    ///     import java.time.chrono.Era.getLong(##java.time.temporal.TemporalField): Int64 \ {};
     ///     let x1 = getJapaneseEra(x) as ##java.time.chrono.Era;
     ///     let t1 = Time/Temporal/TemporalField.marshalToNativeTemporalField(t);
     ///     getLong(x1, t1)

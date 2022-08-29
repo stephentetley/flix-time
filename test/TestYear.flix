@@ -75,7 +75,7 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def until01(): Int64 & Impure = 
+    def until01(): Int64 \ IO = 
         let t1 = Time/Year.year(isoYear = 2020);
         let t2 = Time/Year.year(isoYear = 2028);
         let diff = Time/Year.yearsUntil({ start = t1, end = t2 });
@@ -86,7 +86,7 @@ namespace TestYear {
     /// // fromTemporalAccessor                                                    //
     /// /////////////////////////////////////////////////////////////////////////////
     /// @test
-    /// def fromTemporalAccessor01(): Result[Time.Year, String] & Impure = 
+    /// def fromTemporalAccessor01(): Result[Time.Year, String] \ IO = 
     ///     let t1 = Time/Year.year(isoYear = 2020);
     ///     let t2 = Time/Year.fromTemporalAccessor(t1);
     ///     println("fromTemporalAccessor01(): ${t2}");
@@ -96,7 +96,7 @@ namespace TestYear {
     // withTemporalAdjuster                                                    //
     /////////////////////////////////////////////////////////////////////////////
     /// @test
-    /// def withTemporalAdjuster01(): Time.Year & Impure = 
+    /// def withTemporalAdjuster01(): Time.Year \ IO = 
     ///     let t1 = Time/Year.year(isoYear = 2020);
     ///     let t2 = Time/Year.year(isoYear = 2028);
     ///     let t3 = Time/Year.withTemporalAdjuster(t2, t1);

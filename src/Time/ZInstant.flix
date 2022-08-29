@@ -31,7 +31,7 @@ namespace Time {
     ///
     instance ToString[ZInstant] {
         pub def toString(x: ZInstant): String =
-            import java.time.Instant.toString(): String & Pure;
+            import java.time.Instant.toString(): String \ {};
             let ZInstant(x1) = x;
             toString(x1)
     }
@@ -43,7 +43,7 @@ namespace Time {
     ///
     instance FromString[ZInstant] {
         pub def fromString(s: String): Option[ZInstant] =
-            import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant & Pure;
+            import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
             try {
                 let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(ZInstant(parse(cs)))
@@ -54,7 +54,7 @@ namespace Time {
 
     instance Eq[ZInstant] {
         pub def eq(x: ZInstant, y: ZInstant): Bool =
-            import java.time.Instant.equals(##java.lang.Object): Bool & Pure;
+            import java.time.Instant.equals(##java.lang.Object): Bool \ {};
             let ZInstant(x1) = x;
             let ZInstant(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -62,7 +62,7 @@ namespace Time {
 
     instance Hash[ZInstant] {
         pub def hash(x: ZInstant): Int32 =
-            import java.time.Instant.hashCode(): Int32 & Pure;
+            import java.time.Instant.hashCode(): Int32 \ {};
             let ZInstant(x1) = x;
             hashCode(x1)
     }
@@ -70,7 +70,7 @@ namespace Time {
 
     instance Order[ZInstant] {
         pub def compare(x: ZInstant, y: ZInstant): Comparison =
-            import java.time.Instant.compareTo(##java.time.Instant): Int32 & Pure;
+            import java.time.Instant.compareTo(##java.time.Instant): Int32 \ {};
             let ZInstant(x1) = x;
             let ZInstant(y1) = y;
             compareTo(x1, y1) |> Comparison.fromInt32
@@ -108,7 +108,7 @@ namespace Time/ZInstant {
     /// ## Constructors
 
     pub def instant(r: {epochSecond :: Int64, nano :: Int64}): ZInstant =
-        import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant & Pure;
+        import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant \ {};
         ZInstant(ofEpochSecond(r.epochSecond, r.nano))
 
     /// ## `now` and "abstract constructors" (e.g. `epoch`)
@@ -116,35 +116,35 @@ namespace Time/ZInstant {
     ///
     /// Returns the current time from the system clock.
     ///
-    pub def now(): ZInstant & Impure =
-        import static java.time.Instant.now(): ##java.time.Instant & Impure;
+    pub def now(): ZInstant \ IO =
+        import static java.time.Instant.now(): ##java.time.Instant \ IO;
         ZInstant(now())
 
     ///
     /// Returns the start of epoch instant - 1970-01-01T00:00:00Z
     ///
     pub def epoch(): ZInstant =
-        import static get java.time.Instant.EPOCH: ##java.time.Instant & Pure as get_EPOCH;
+        import static get java.time.Instant.EPOCH: ##java.time.Instant \ {} as get_EPOCH;
         ZInstant(get_EPOCH())
 
     pub def min(): ZInstant =
-        import static get java.time.Instant.MIN: ##java.time.Instant & Pure as get_MIN;
+        import static get java.time.Instant.MIN: ##java.time.Instant \ {} as get_MIN;
         ZInstant(get_MIN())
     
     pub def max(): ZInstant =
-        import static get java.time.Instant.MAX: ##java.time.Instant & Pure as get_MAX;
+        import static get java.time.Instant.MAX: ##java.time.Instant \ {} as get_MAX;
         ZInstant(get_MAX())
 
     /// ## `at` functions
 
     pub def atOffset(x: ZInstant, offset: ZoneOffset): OffsetDateTime =
-        import java.time.Instant.atOffset(##java.time.ZoneOffset): ##java.time.OffsetDateTime & Pure;
+        import java.time.Instant.atOffset(##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let ZInstant(x1) = x;
         let ZoneOffset(offset1) = offset;
         OffsetDateTime(atOffset(x1, offset1))
 
     pub def atZone(x: ZInstant, zone: ZoneId): ZonedDateTime =
-        import java.time.Instant.atZone(##java.time.ZoneId): ##java.time.ZonedDateTime & Pure;
+        import java.time.Instant.atZone(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let ZInstant(x1) = x;
         let ZoneId(zone1) = zone;
         ZonedDateTime(atZone(x1, zone1))
@@ -152,23 +152,23 @@ namespace Time/ZInstant {
     /// ## `from` functions
 
     pub def fromEpochSecond(epochSecond: Int64): ZInstant =
-        import static java.time.Instant.ofEpochSecond(Int64): ##java.time.Instant & Pure;
+        import static java.time.Instant.ofEpochSecond(Int64): ##java.time.Instant \ {};
         ZInstant(ofEpochSecond(epochSecond))
 
 
     pub def fromEpochMilli(epochMilli: Int64): ZInstant =
-        import static java.time.Instant.ofEpochMilli(Int64): ##java.time.Instant & Pure;
+        import static java.time.Instant.ofEpochMilli(Int64): ##java.time.Instant \ {};
         ZInstant(ofEpochMilli(epochMilli))
 
 
     /// # `fromTemporalAccessor` specialized
     def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZInstant = 
-        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant & Pure as fromTA;
+        import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant \ {} as fromTA;
         try {
             ZInstant(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
@@ -182,25 +182,25 @@ namespace Time/ZInstant {
     /// ## `to` functions
 
     pub def toEpochMilli(x: ZInstant): Int64 =
-        import java.time.Instant.toEpochMilli(): Int64 & Pure;
+        import java.time.Instant.toEpochMilli(): Int64 \ {};
         let ZInstant(x1) = x;
         toEpochMilli(x1)
 
     /// ## `parse` / `format` functions
 
     pub def parse(s: String): Result[ZInstant, String] =
-        import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant & Pure;
+        import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
         try {
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(ZInstant(parse(cs)))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 Err(getMessage(ex))
         }
 
     pub def format(x: ZInstant): String =
-        import java.time.Instant.toString(): String & Pure;
+        import java.time.Instant.toString(): String \ {};
         let ZInstant(x1) = x;
         toString(x1)
 
@@ -211,7 +211,7 @@ namespace Time/ZInstant {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: ZInstant, y: ZInstant): Bool =
-        import java.time.Instant.isBefore(##java.time.Instant): Bool & Pure;
+        import java.time.Instant.isBefore(##java.time.Instant): Bool \ {};
         let ZInstant(x1) = x;
         let ZInstant(y1) = y;
         isBefore(x1, y1)
@@ -220,7 +220,7 @@ namespace Time/ZInstant {
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: ZInstant, y: ZInstant): Bool =
-        import java.time.Instant.isAfter(##java.time.Instant): Bool & Pure;
+        import java.time.Instant.isAfter(##java.time.Instant): Bool \ {};
         let ZInstant(x1) = x;
         let ZInstant(y1) = y;
         isAfter(x1, y1)
@@ -229,125 +229,125 @@ namespace Time/ZInstant {
     /// ## Getters and Setters
 
     pub def getEpochSecond(x: ZInstant): Int64 =
-        import java.time.Instant.getEpochSecond(): Int64 & Pure;
+        import java.time.Instant.getEpochSecond(): Int64 \ {};
         let ZInstant(x1) = x;
         getEpochSecond(x1)
 
     pub def getNano(x: ZInstant): Int32 =
-        import java.time.Instant.getNano(): Int32 & Pure;
+        import java.time.Instant.getNano(): Int32 \ {};
         let ZInstant(x1) = x;
         getNano(x1)
 
 
     pub def getNanoOfSecond(x: ZInstant): Int64 =
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_NANO_OF_SECOND;
         getLongHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
     pub def setNanoOfSecond(i: Int64, x: ZInstant): ZInstant =
-        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_NANO_OF_SECOND;
+        import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_NANO_OF_SECOND;
         withTemporalFieldHelper(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
 
     pub def getMicroOfSecond(x: ZInstant): Int64 =
-        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MICRO_OF_SECOND;
         getLongHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
     pub def setMicroOfSecond(i: Int64, x: ZInstant): ZInstant =
-        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MICRO_OF_SECOND;
+        import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MICRO_OF_SECOND;
         withTemporalFieldHelper(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
 
     pub def getMilliOfSecond(x: ZInstant): Int64 =
-        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MILLI_OF_SECOND;
         getLongHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
     pub def setMilliOfSecond(i: Int64, x: ZInstant): ZInstant =
-        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField & Pure as get_MILLI_OF_SECOND;
+        import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MILLI_OF_SECOND;
         withTemporalFieldHelper(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
 
     pub def getInstantSeconds(x: ZInstant): Int64 =
-        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField \ {} as get_INSTANT_SECONDS;
         getLongHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
 
     pub def setInstantSeconds(i: Int64, x: ZInstant): ZInstant =
-        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField & Pure as get_INSTANT_SECONDS;
+        import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField \ {} as get_INSTANT_SECONDS;
         withTemporalFieldHelper(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, i, x)
 
 
     /// # `truncatedTo` specialized
 
     def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: ZInstant): ZInstant = 
-        import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant & Pure;
+        import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant \ {};
         let ZInstant(x1) = x;
         ZInstant(truncatedTo(x1, u))
     
     pub def truncatedToNanos(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
         truncatedToHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToMicros(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
         truncatedToHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToMillis(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
         truncatedToHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToSeconds(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
         truncatedToHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToMinutes(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
         truncatedToHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToHours(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
         truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
 
     pub def truncatedToHalfDays(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         truncatedToHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
 
     pub def truncatedToDays(x: ZInstant): ZInstant = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
         truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
     /// ## plus / minus functions
 
     pub def plusSeconds(x: ZInstant, seconds: Int64): ZInstant =
-        import java.time.Instant.plusSeconds(Int64): ##java.time.Instant & Pure;
+        import java.time.Instant.plusSeconds(Int64): ##java.time.Instant \ {};
         let ZInstant(x1) = x;
         ZInstant(plusSeconds(x1, seconds))
 
     pub def minusSeconds(x: ZInstant, seconds: Int64): ZInstant =
-        import java.time.Instant.minusSeconds(Int64): ##java.time.Instant & Pure;
+        import java.time.Instant.minusSeconds(Int64): ##java.time.Instant \ {};
         let ZInstant(x1) = x;
         ZInstant(minusSeconds(x1, seconds))
 
     pub def plusMillis(x: ZInstant, millis: Int64): ZInstant =
-        import java.time.Instant.plusMillis(Int64): ##java.time.Instant & Pure;
+        import java.time.Instant.plusMillis(Int64): ##java.time.Instant \ {};
         let ZInstant(x1) = x;
         ZInstant(plusMillis(x1, millis))
 
     pub def minusMillis(x: ZInstant, millis: Int64): ZInstant =
-        import java.time.Instant.minusMillis(Int64): ##java.time.Instant & Pure;
+        import java.time.Instant.minusMillis(Int64): ##java.time.Instant \ {};
         let ZInstant(x1) = x;
         ZInstant(minusMillis(x1, millis))
 
     pub def plusNanos(x: ZInstant, nanos: Int64): ZInstant =
-        import java.time.Instant.plusNanos(Int64): ##java.time.Instant & Pure;
+        import java.time.Instant.plusNanos(Int64): ##java.time.Instant \ {};
         let ZInstant(x1) = x;
         ZInstant(plusNanos(x1, nanos))
 
 
     pub def plusDuration(i: ZInstant, x: ZDuration): ZInstant =
-        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let ZDuration(x1) = x;
         let i1 = getInstant(i) as ##java.time.temporal.Temporal;
         ZInstant(addTo(x1, i1) as ##java.time.Instant)
     
     pub def minusDuration(i: ZInstant, x: ZDuration): ZInstant =
-        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let ZDuration(x1) = x;
         let i1 = getInstant(i) as ##java.time.temporal.Temporal;
         ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
@@ -355,13 +355,13 @@ namespace Time/ZInstant {
     /// Period methods
 
     pub def plusPeriod(i: ZInstant, x: Period): ZInstant =
-        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/Period.getPeriod(x);
         let i1 = getInstant(i) as ##java.time.temporal.Temporal;
         ZInstant(addTo(x1, i1) as ##java.time.Instant)
     
     pub def minusPeriod(i: ZInstant, x: Period): ZInstant =
-        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal & Pure;
+        import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/Period.getPeriod(x);
         let i1 = getInstant(i) as ##java.time.temporal.Temporal;
         ZInstant(subtractFrom(x1, i1) as ##java.time.Instant)
@@ -370,7 +370,7 @@ namespace Time/ZInstant {
     /// ## between / until functions
 
     pub def between(r: {start :: ZInstant, end :: ZInstant}): ZDuration =
-        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration & Pure;
+        import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
         let s1 = getInstant(r.start) as ##java.time.temporal.Temporal;
         let e1 = getInstant(r.end) as ##java.time.temporal.Temporal;
         ZDuration(between(s1, e1))
@@ -379,66 +379,66 @@ namespace Time/ZInstant {
     /// `until` specialized
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getInstant(r.start);
         let e1 = getInstant(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
     pub def nanosUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit & Pure as get_NANOS;
+        import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
         untilHelper(get_NANOS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def microsUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit & Pure as get_MICROS;
+        import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
         untilHelper(get_MICROS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def millisUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit & Pure as get_MILLIS;
+        import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
         untilHelper(get_MILLIS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def secondsUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit & Pure as get_SECONDS;
+        import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
         untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def minutesUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit & Pure as get_MINUTES;
+        import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
         untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
     pub def hoursUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit & Pure as get_HOURS;
+        import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def halfDaysUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit & Pure as get_HALF_DAYS;
+        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def daysUntil(r: {start :: ZInstant, end :: ZInstant}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit & Pure as get_DAYS;
+        import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
         untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
     /// ## generic helper functions
 
     def getLongHelper(field: ##java.time.temporal.TemporalField, x: ZInstant): Int64 =
-        import java.time.Instant.getLong(##java.time.temporal.TemporalField): Int64 & Pure;
+        import java.time.Instant.getLong(##java.time.temporal.TemporalField): Int64 \ {};
         try {
             let ZInstant(x1) = x;
             getLong(x1, field)
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
 
     def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: ZInstant): ZInstant =
-        import java.time.Instant.with(##java.time.temporal.TemporalField, Int64): ##java.time.Instant & Pure as withTF;                   
+        import java.time.Instant.with(##java.time.temporal.TemporalField, Int64): ##java.time.Instant \ {} as withTF;                   
         try {
             let ZInstant(x1) = x;
             ZInstant(withTF(x1, field, i))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 

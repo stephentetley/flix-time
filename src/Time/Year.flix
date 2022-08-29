@@ -25,7 +25,7 @@ namespace Time {
 
     instance ToString[Year] {
         pub def toString(x: Year): String =
-            import java.time.Year.toString(): String & Pure;
+            import java.time.Year.toString(): String \ {};
             let Year(x1) = x;
             toString(x1)
     }
@@ -35,7 +35,7 @@ namespace Time {
     ///
     instance FromString[Year] {
         pub def fromString(s: String): Option[Year] =
-            import static java.time.Year.parse(##java.lang.CharSequence): ##java.time.Year & Pure;
+            import static java.time.Year.parse(##java.lang.CharSequence): ##java.time.Year \ {};
             try {
                 let cs = String.trim(s) as ##java.lang.CharSequence;
                 Some(Year(parse(cs)))
@@ -46,7 +46,7 @@ namespace Time {
 
     instance Eq[Year] {
         pub def eq(x: Year, y: Year): Bool = 
-            import java.time.Year.equals(##java.lang.Object): Bool & Pure;
+            import java.time.Year.equals(##java.lang.Object): Bool \ {};
             let Year(x1) = x;
             let Year(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -55,14 +55,14 @@ namespace Time {
 
     instance Hash[Year] {
         pub def hash(x: Year): Int32 =
-            import java.time.Year.hashCode(): Int32 & Pure;
+            import java.time.Year.hashCode(): Int32 \ {};
             let Year(x1) = x;
             hashCode(x1)
     }
 
     instance Order[Year] {
         pub def compare(x: Year, y: Year): Comparison =
-            import java.time.Year.compareTo(##java.time.Year): Int32 & Pure;
+            import java.time.Year.compareTo(##java.time.Year): Int32 \ {};
             let Year(x1) = x;
             let Year(y1) = y;
             compareTo(x1, y1) |> Comparison.fromInt32
@@ -113,30 +113,30 @@ namespace Time/Year {
     /// ## Constructors
 
     pub def year(isoYear: {isoYear :: Int32}): Year =
-        import static java.time.Year.of(Int32): ##java.time.Year & Pure;
+        import static java.time.Year.of(Int32): ##java.time.Year \ {};
         Year(of(isoYear.isoYear))
 
 
     /// ## `now` and "abstract constructors" if any
 
-    pub def now(): Year & Impure =
-        import static java.time.Year.now(): ##java.time.Year & Impure;
+    pub def now(): Year \ IO =
+        import static java.time.Year.now(): ##java.time.Year \ IO;
         Year(now())
 
-    pub def nowWithClock(x: Clock): Year & Impure =
-        import static java.time.Year.now(##java.time.Clock): ##java.time.Year & Impure;
+    pub def nowWithClock(x: Clock): Year \ IO =
+        import static java.time.Year.now(##java.time.Clock): ##java.time.Year \ IO;
         let Clock(x1) = x;
         Year(now(x1))
 
-    pub def nowWithZoneId(x: ZoneId): Year & Impure =
-        import static java.time.Year.now(##java.time.ZoneId): ##java.time.Year & Impure;
+    pub def nowWithZoneId(x: ZoneId): Year \ IO =
+        import static java.time.Year.now(##java.time.ZoneId): ##java.time.Year \ IO;
         let ZoneId(x1) = x;
         Year(now(x1))
 
     /// ## `at` functions
 
     pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
-        import java.time.Year.atDay(Int32): ##java.time.LocalDate & Pure;
+        import java.time.Year.atDay(Int32): ##java.time.LocalDate \ {};
         try {
             let Year(x1) = x;
             Some(LocalDate(atDay(x1, dayOfYear)))
@@ -145,7 +145,7 @@ namespace Time/Year {
         }
 
     pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
-        import java.time.Year.atMonth(Int32): ##java.time.YearMonth & Pure;
+        import java.time.Year.atMonth(Int32): ##java.time.YearMonth \ {};
         try {
             let Year(x1) = x;
             Some(YearMonth(atMonth(x1, month)))
@@ -154,7 +154,7 @@ namespace Time/Year {
         }
 
     pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
-        import java.time.Year.atMonth(##java.time.Month): ##java.time.YearMonth & Pure;
+        import java.time.Year.atMonth(##java.time.Month): ##java.time.YearMonth \ {};
         try {
             let Year(x1) = x;
             let m1 = Time/Month.marshal(month);
@@ -164,7 +164,7 @@ namespace Time/Year {
         }
 
     pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
-        import java.time.Year.atMonthDay(##java.time.MonthDay): ##java.time.LocalDate & Pure;
+        import java.time.Year.atMonthDay(##java.time.MonthDay): ##java.time.LocalDate \ {};
         let Year(x1) = x;
         let MonthDay(m1) = monthDay;
         LocalDate(atMonthDay(x1, m1))
@@ -173,12 +173,12 @@ namespace Time/Year {
     /// ## `from` functions
 
     def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): Year = 
-        import static java.time.Year.from(##java.time.temporal.TemporalAccessor): ##java.time.Year & Pure as fromTA;
+        import static java.time.Year.from(##java.time.temporal.TemporalAccessor): ##java.time.Year \ {} as fromTA;
         try {
             Year(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
@@ -207,14 +207,14 @@ namespace Time/Year {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[Year, String] =
-        import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.Year & Pure;
+        import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.Year \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;
             let cs = String.trim(s) as ##java.lang.CharSequence;
             Ok(Year(parse(cs, fmtr)))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 Err(getMessage(ex))
         }
 
@@ -222,7 +222,7 @@ namespace Time/Year {
     /// Returns the Year `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateTimeFormatter[DateFormat], x: Year): String =
-        import java.time.Year.format(##java.time.format.DateTimeFormatter): String & Pure;
+        import java.time.Year.format(##java.time.format.DateTimeFormatter): String \ {};
         let Year(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
         format(x1, fmtr)
@@ -234,7 +234,7 @@ namespace Time/Year {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: Year, y: Year): Bool =
-        import java.time.Year.isBefore(##java.time.Year): Bool & Pure;
+        import java.time.Year.isBefore(##java.time.Year): Bool \ {};
         let Year(x1) = x;
         let Year(y1) = y;
         isBefore(x1, y1)
@@ -243,7 +243,7 @@ namespace Time/Year {
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: Year, y: Year): Bool =
-        import java.time.Year.isAfter(##java.time.Year): Bool & Pure;
+        import java.time.Year.isAfter(##java.time.Year): Bool \ {};
         let Year(x1) = x;
         let Year(y1) = y;
         isAfter(x1, y1)
@@ -252,7 +252,7 @@ namespace Time/Year {
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeap(y: Year): Bool =
-        import java.time.Year.isLeap(): Bool & Pure;
+        import java.time.Year.isLeap(): Bool \ {};
         let Year(y1) = y;
         isLeap(y1)
 
@@ -260,14 +260,14 @@ namespace Time/Year {
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeapYear(x: Int64): Bool =
-        import static java.time.Year.isLeap(Int64): Bool & Pure;
+        import static java.time.Year.isLeap(Int64): Bool \ {};
         isLeap(x)
 
     ///
     /// Returns `true` if _.
     ///
     pub def isValidMonthDay(x: MonthDay, y: Year): Bool =
-        import java.time.Year.isValidMonthDay(##java.time.MonthDay): Bool & Pure;
+        import java.time.Year.isValidMonthDay(##java.time.MonthDay): Bool \ {};
         let x1 = Time/MonthDay.getMonthDay(x);
         let Year(y1) = y;
         isValidMonthDay(y1, x1)
@@ -279,7 +279,7 @@ namespace Time/Year {
     /// Returns _
     ///
     pub def length(x: Year): Int32 =
-        import java.time.Year.length(): Int32 & Pure;
+        import java.time.Year.length(): Int32 \ {};
         let Year(x1) = x;
         length(x1)
 
@@ -289,7 +289,7 @@ namespace Time/Year {
     /// _
     ///
     pub def plusYears(x: Year, yearsToAdd: Int64): Year =
-        import java.time.Year.plusYears(Int64): ##java.time.Year & Pure;
+        import java.time.Year.plusYears(Int64): ##java.time.Year \ {};
         let Year(x1) = x;
         Year(plusYears(x1, yearsToAdd))
 
@@ -297,7 +297,7 @@ namespace Time/Year {
     /// _
     ///
     pub def minusYears(x: Year, yearsToSubtract: Int64): Year =
-        import java.time.Year.minusYears(Int64): ##java.time.Year & Pure;
+        import java.time.Year.minusYears(Int64): ##java.time.Year \ {};
         let Year(x1) = x;
         Year(minusYears(x1, yearsToSubtract))
 
@@ -305,22 +305,22 @@ namespace Time/Year {
     /// ## between / until functions
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: Year, end :: Year}): Int64 = 
-        import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 & Pure;
+        import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getYear(r.start);
         let e1 = getYear(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
     pub def yearsUntil(r: {start :: Year, end :: Year}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit & Pure as get_YEARS;
+        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
         untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def decadesUntil(r: {start :: Year, end :: Year}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit & Pure as get_DECADES;
+        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit \ {} as get_DECADES;
         untilHelper(get_DECADES() as ##java.time.temporal.TemporalUnit, r)
 
     pub def centuriesUntil(r: {start :: Year, end :: Year}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit & Pure as get_CENTURIES;
+        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
         untilHelper(get_CENTURIES() as ##java.time.temporal.TemporalUnit, r)
 
 

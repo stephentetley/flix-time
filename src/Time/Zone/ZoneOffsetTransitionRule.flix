@@ -24,14 +24,14 @@ namespace Time/Zone {
 
     instance ToString[ZoneOffsetTransitionRule] {
         pub def toString(x: ZoneOffsetTransitionRule): String =
-            import java.time.zone.ZoneOffsetTransitionRule.toString(): String & Pure;
+            import java.time.zone.ZoneOffsetTransitionRule.toString(): String \ {};
             let ZoneOffsetTransitionRule(x1) = x;
             toString(x1)
     }
 
     instance Eq[ZoneOffsetTransitionRule] {
         pub def eq(x: ZoneOffsetTransitionRule, y: ZoneOffsetTransitionRule): Bool = 
-            import java.time.zone.ZoneOffsetTransitionRule.equals(##java.lang.Object): Bool & Pure;
+            import java.time.zone.ZoneOffsetTransitionRule.equals(##java.lang.Object): Bool \ {};
             let ZoneOffsetTransitionRule(x1) = x;
             let ZoneOffsetTransitionRule(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -40,7 +40,7 @@ namespace Time/Zone {
 
     instance Hash[ZoneOffsetTransitionRule] {
         pub def hash(x: ZoneOffsetTransitionRule): Int32 = 
-            import java.time.zone.ZoneOffsetTransitionRule.hashCode(): Int32 & Pure;
+            import java.time.zone.ZoneOffsetTransitionRule.hashCode(): Int32 \ {};
             let ZoneOffsetTransitionRule(x1) = x;
             hashCode(x1)
     }
@@ -82,9 +82,9 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
     }
 
     pub def marshalTimeDefinition(x: TimeDefinition): ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition = 
-        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.STANDARD: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition & Pure as get_STANDARD;
-        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.UTC: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition & Pure as get_UTC;
-        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.WALL: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition & Pure as get_WALL;
+        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.STANDARD: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_STANDARD;
+        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.UTC: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_UTC;
+        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.WALL: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_WALL;
         match x {
             case Standard           => get_STANDARD()
             case UTC                => get_UTC()
@@ -92,15 +92,15 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
         }
 
     def primEqualsTimeDefinition(x: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition, y: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
         let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshalTimeDefinition(x: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition): TimeDefinition = 
-        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.STANDARD: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition & Pure as get_STANDARD;
-        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.UTC: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition & Pure as get_UTC;
-        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.WALL: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition & Pure as get_WALL;
+        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.STANDARD: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_STANDARD;
+        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.UTC: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_UTC;
+        import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.WALL: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_WALL;
         match x {
             case x1 if primEqualsTimeDefinition(x1, get_STANDARD())           => Standard
             case x1 if primEqualsTimeDefinition(x1, get_UTC())                => UTC
@@ -128,7 +128,7 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
                                                                     ##java.time.ZoneOffset,
                                                                     ##java.time.ZoneOffset,
                                                                     ##java.time.ZoneOffset
-                                                                    ): ##java.time.zone.ZoneOffsetTransitionRule & Pure;
+                                                                    ): ##java.time.zone.ZoneOffsetTransitionRule \ {};
         try {
             ZoneOffsetTransitionRule(of(Time/Month.marshal(r.month), 
                                         r.dayOfMonthIndicator,
@@ -142,14 +142,14 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
                                         )) |> Ok
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 Err(getMessage(ex))
         }
 
     /// ## predicates / comparisons
     
     pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
-        import java.time.zone.ZoneOffsetTransitionRule.isMidnightEndOfDay(): Bool & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.isMidnightEndOfDay(): Bool \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         isMidnightEndOfDay(x1)
 
@@ -157,46 +157,46 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
     /// ## ZoneOffsetTransitionRule functions
 
     pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
-        import java.time.zone.ZoneOffsetTransitionRule.createTransition(Int32): ##java.time.zone.ZoneOffsetTransition & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.createTransition(Int32): ##java.time.zone.ZoneOffsetTransition \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         ZoneOffsetTransition(createTransition(x1, year))
 
 
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
-        import java.time.zone.ZoneOffsetTransitionRule.getTimeDefinition(): ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.getTimeDefinition(): ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         getTimeDefinition(x1) |> unmarshalTimeDefinition
 
     pub def getDayOfMonthIndicator(x: ZoneOffsetTransitionRule): Int32  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getDayOfMonthIndicator(): Int32 & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.getDayOfMonthIndicator(): Int32 \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         getDayOfMonthIndicator(x1)
 
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getDayOfWeek(): ##java.time.DayOfWeek & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         getDayOfWeek(x1) |> Time/DayOfWeek.unmarshal
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getLocalTime(): ##java.time.LocalTime & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.getLocalTime(): ##java.time.LocalTime \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         LocalTime(getLocalTime(x1))
 
 
     pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getStandardOffset(): ##java.time.ZoneOffset & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.getStandardOffset(): ##java.time.ZoneOffset \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         ZoneOffset(getStandardOffset(x1))
 
     pub def getOffsetBefore(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getOffsetBefore(): ##java.time.ZoneOffset & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.getOffsetBefore(): ##java.time.ZoneOffset \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         ZoneOffset(getOffsetBefore(x1))
 
 
     pub def getOffsetAfter(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getOffsetAfter(): ##java.time.ZoneOffset & Pure;
+        import java.time.zone.ZoneOffsetTransitionRule.getOffsetAfter(): ##java.time.ZoneOffset \ {};
         let ZoneOffsetTransitionRule(x1) = x;
         ZoneOffset(getOffsetAfter(x1))
 

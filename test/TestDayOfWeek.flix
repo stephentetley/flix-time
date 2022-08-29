@@ -82,7 +82,7 @@ namespace TestDayOfWeek {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def getValue01(): Int32 & Impure =         
+    def getValue01(): Int32 \ IO =         
         let dow = Time/DayOfWeek.Monday;
         let i = Time/DayOfWeek.getValue(dow);
         println("DayOfWeek.dayOfWeek(): ${i}");
@@ -92,7 +92,7 @@ namespace TestDayOfWeek {
     // getValue                                                                //
     /////////////////////////////////////////////////////////////////////////////
     
-    pub def getDisplayName01(): Bool & Impure =         
+    pub def getDisplayName01(): Bool \ IO =         
         Time/DayOfWeek.getDisplayName(Time/Format/TextStyle.Full, Basis/I18n/Locale.getDefault(), Time/DayOfWeek.Monday) != ""
 
 

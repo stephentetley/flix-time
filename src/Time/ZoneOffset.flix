@@ -26,14 +26,14 @@ namespace Time {
     ///
     instance ToString[ZoneOffset] {
         pub def toString(x: ZoneOffset): String =
-            import java.time.ZoneOffset.toString(): String & Pure;
+            import java.time.ZoneOffset.toString(): String \ {};
             let ZoneOffset(x1) = x;
             toString(x1)
     }
 
     instance Eq[ZoneOffset] {
         pub def eq(x: ZoneOffset, y: ZoneOffset): Bool =
-            import java.time.ZoneOffset.equals(##java.lang.Object): Bool & Pure;
+            import java.time.ZoneOffset.equals(##java.lang.Object): Bool \ {};
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -41,7 +41,7 @@ namespace Time {
 
     instance Hash[ZoneOffset] {
         pub def hash(x: ZoneOffset): Int32 = 
-            import java.time.ZoneOffset.hashCode(): Int32 & Pure;
+            import java.time.ZoneOffset.hashCode(): Int32 \ {};
             let ZoneOffset(x1) = x;
             hashCode(x1)
 
@@ -49,7 +49,7 @@ namespace Time {
 
     instance Order[ZoneOffset] {
         pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison =
-            import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset): Int32 & Pure;
+            import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset): Int32 \ {};
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
             compareTo(x1, y1) |> Comparison.fromInt32
@@ -94,43 +94,43 @@ namespace Time/ZoneOffset {
     /// ___
     ///
     pub def utc(): ZoneOffset =
-        import static get java.time.ZoneOffset.UTC: ##java.time.ZoneOffset & Pure as get_UTC;
+        import static get java.time.ZoneOffset.UTC: ##java.time.ZoneOffset \ {} as get_UTC;
         ZoneOffset(get_UTC())
 
     pub def min(): ZoneOffset =
-        import static get java.time.ZoneOffset.MIN: ##java.time.ZoneOffset & Pure as get_MIN;
+        import static get java.time.ZoneOffset.MIN: ##java.time.ZoneOffset \ {} as get_MIN;
         ZoneOffset(get_MIN())
 
     pub def max(): ZoneOffset =
-        import static get java.time.ZoneOffset.MAX: ##java.time.ZoneOffset & Pure as get_MAX;
+        import static get java.time.ZoneOffset.MAX: ##java.time.ZoneOffset \ {} as get_MAX;
         ZoneOffset(get_MAX())
 
     /// ## `from` functions
 
     pub def fromHours(hours: Int32): ZoneOffset =
-        import static java.time.ZoneOffset.ofHours(Int32): ##java.time.ZoneOffset & Pure;
+        import static java.time.ZoneOffset.ofHours(Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHours(hours))
 
     pub def fromHoursMinutes(r: {hours :: Int32, minutes :: Int32}): ZoneOffset =
-        import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): ##java.time.ZoneOffset & Pure;
+        import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHoursMinutes(r.hours, r.minutes))
 
     pub def fromHoursMinutesSeconds(r: {hours :: Int32, minutes :: Int32, seconds :: Int32}): ZoneOffset =
-        import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): ##java.time.ZoneOffset & Pure;
+        import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHoursMinutesSeconds(r.hours, r.minutes, r.seconds))
 
     pub def fromTotalSeconds(seconds: Int32): ZoneOffset =
-        import static java.time.ZoneOffset.ofTotalSeconds(Int32): ##java.time.ZoneOffset & Pure;
+        import static java.time.ZoneOffset.ofTotalSeconds(Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofTotalSeconds(seconds))
 
     /// `fromTemporalAccessor` specialized
     def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZoneOffset = 
-        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset & Pure as fromTA;
+        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset \ {} as fromTA;
         try {
             ZoneOffset(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
@@ -146,17 +146,17 @@ namespace Time/ZoneOffset {
     /// ## ZoneOffset functions
 
     pub def getId(x: ZoneOffset): String =
-        import java.time.ZoneOffset.getId(): String & Pure;
+        import java.time.ZoneOffset.getId(): String \ {};
         let ZoneOffset(x1) = x;
         getId(x1)
 
     pub def getRules(x: ZoneOffset): ZoneRules =
-        import java.time.ZoneOffset.getRules(): ##java.time.zone.ZoneRules & Pure;
+        import java.time.ZoneOffset.getRules(): ##java.time.zone.ZoneRules \ {};
         let ZoneOffset(x1) = x;
         ZoneRules(getRules(x1))
 
     pub def getTotalSeconds(x: ZoneOffset): Int32 =
-        import java.time.ZoneOffset.getTotalSeconds(): Int32 & Pure;
+        import java.time.ZoneOffset.getTotalSeconds(): Int32 \ {};
         let ZoneOffset(x1) = x;
         getTotalSeconds(x1)
 
@@ -164,20 +164,20 @@ namespace Time/ZoneOffset {
 
 
     pub def getOffsetSeconds(x: ZoneOffset): Int32 =
-        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField & Pure as get_OFFSET_SECONDS;
+        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField \ {} as get_OFFSET_SECONDS;
         getHelper(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, x)
 
 
     /// ## generic helper functions
 
     def getHelper(field: ##java.time.temporal.TemporalField, x: ZoneOffset): Int32 =
-        import java.time.ZoneOffset.get(##java.time.temporal.TemporalField): Int32 & Pure;
+        import java.time.ZoneOffset.get(##java.time.temporal.TemporalField): Int32 \ {};
         try {
             let ZoneOffset(x1) = x;
             get(x1, field)
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 

@@ -24,14 +24,14 @@ namespace Time/Zone {
 
     instance ToString[ZoneOffsetTransition] {
         pub def toString(x: ZoneOffsetTransition): String =
-            import java.time.zone.ZoneOffsetTransition.toString(): String & Pure;
+            import java.time.zone.ZoneOffsetTransition.toString(): String \ {};
             let ZoneOffsetTransition(x1) = x;
             toString(x1)
     }
 
     instance Eq[ZoneOffsetTransition] {
         pub def eq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool =
-            import java.time.zone.ZoneOffsetTransition.equals(##java.lang.Object): Bool & Pure;
+            import java.time.zone.ZoneOffsetTransition.equals(##java.lang.Object): Bool \ {};
             let ZoneOffsetTransition(x1) = x;
             let ZoneOffsetTransition(y1) = y;
             equals(x1, y1 as ##java.lang.Object)
@@ -39,14 +39,14 @@ namespace Time/Zone {
 
     instance Hash[ZoneOffsetTransition] {
         pub def hash(x: ZoneOffsetTransition): Int32 =
-            import java.time.zone.ZoneOffsetTransition.hashCode(): Int32 & Pure;
+            import java.time.zone.ZoneOffsetTransition.hashCode(): Int32 \ {};
             let ZoneOffsetTransition(x1) = x;
             hashCode(x1)
     }
 
     instance Order[ZoneOffsetTransition] {
         pub def compare(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Comparison =
-            import java.time.zone.ZoneOffsetTransition.compareTo(##java.time.zone.ZoneOffsetTransition): Int32 & Pure;
+            import java.time.zone.ZoneOffsetTransition.compareTo(##java.time.zone.ZoneOffsetTransition): Int32 \ {};
             let ZoneOffsetTransition(x1) = x;
             let ZoneOffsetTransition(y1) = y;
             compareTo(x1, y1) |> Comparison.fromInt32
@@ -87,14 +87,14 @@ namespace Time/Zone/ZoneOffsetTransition {
     /// ## Constructors
 
     pub def zoneOffsetTransition(r: {transition :: LocalDateTime, before :: ZoneOffset, after :: ZoneOffset}): ZoneOffsetTransition =
-        import static java.time.zone.ZoneOffsetTransition.of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset): ##java.time.zone.ZoneOffsetTransition & Pure;
+        import static java.time.zone.ZoneOffsetTransition.of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset): ##java.time.zone.ZoneOffsetTransition \ {};
         use Time/ZoneOffset.{getZoneOffset};
         ZoneOffsetTransition(of(Time/LocalDateTime.getLocalDateTime(r.transition), getZoneOffset(r.before), getZoneOffset(r.after)))
     
     /// ## `to` functions
 
     pub def toEpochSecond(x: ZoneOffsetTransition): Int64 =
-        import java.time.zone.ZoneOffsetTransition.toEpochSecond(): Int64 & Pure;
+        import java.time.zone.ZoneOffsetTransition.toEpochSecond(): Int64 \ {};
         let ZoneOffsetTransition(x1) = x;
         toEpochSecond(x1)
 
@@ -102,45 +102,45 @@ namespace Time/Zone/ZoneOffsetTransition {
     /// ## predicates / comparisons
 
     pub def isGap(x: ZoneOffsetTransition): Bool =
-        import java.time.zone.ZoneOffsetTransition.isGap(): Bool & Pure;
+        import java.time.zone.ZoneOffsetTransition.isGap(): Bool \ {};
         let ZoneOffsetTransition(x1) = x;
         isGap(x1)
 
     pub def isOverlap(x: ZoneOffsetTransition): Bool =
-        import java.time.zone.ZoneOffsetTransition.isOverlap(): Bool & Pure;
+        import java.time.zone.ZoneOffsetTransition.isOverlap(): Bool \ {};
         let ZoneOffsetTransition(x1) = x;
         isOverlap(x1)
 
     /// ## ZoneOffsetTransition functions
 
     pub def getDateTimeBefore(x: ZoneOffsetTransition): LocalDateTime =
-        import java.time.zone.ZoneOffsetTransition.getDateTimeBefore(): ##java.time.LocalDateTime & Pure;
+        import java.time.zone.ZoneOffsetTransition.getDateTimeBefore(): ##java.time.LocalDateTime \ {};
         let ZoneOffsetTransition(x1) = x;
         LocalDateTime(getDateTimeBefore(x1))
 
     pub def getDateTimeAfter(x: ZoneOffsetTransition): LocalDateTime =
-        import java.time.zone.ZoneOffsetTransition.getDateTimeAfter(): ##java.time.LocalDateTime & Pure;
+        import java.time.zone.ZoneOffsetTransition.getDateTimeAfter(): ##java.time.LocalDateTime \ {};
         let ZoneOffsetTransition(x1) = x;
         LocalDateTime(getDateTimeAfter(x1))
 
 
     pub def getOffsetBefore(x: ZoneOffsetTransition): ZoneOffset =
-        import java.time.zone.ZoneOffsetTransition.getOffsetBefore(): ##java.time.ZoneOffset & Pure;
+        import java.time.zone.ZoneOffsetTransition.getOffsetBefore(): ##java.time.ZoneOffset \ {};
         let ZoneOffsetTransition(x1) = x;
         ZoneOffset(getOffsetBefore(x1))
 
     pub def getOffsetAfter(x: ZoneOffsetTransition): ZoneOffset =
-        import java.time.zone.ZoneOffsetTransition.getOffsetAfter(): ##java.time.ZoneOffset & Pure;
+        import java.time.zone.ZoneOffsetTransition.getOffsetAfter(): ##java.time.ZoneOffset \ {};
         let ZoneOffsetTransition(x1) = x;
         ZoneOffset(getOffsetAfter(x1))
 
     pub def getDuration(x: ZoneOffsetTransition): ZDuration =
-        import java.time.zone.ZoneOffsetTransition.getDuration(): ##java.time.Duration & Pure;
+        import java.time.zone.ZoneOffsetTransition.getDuration(): ##java.time.Duration \ {};
         let ZoneOffsetTransition(x1) = x;
         ZDuration(getDuration(x1))
 
     pub def getInstant(x: ZoneOffsetTransition): ZInstant =
-        import java.time.zone.ZoneOffsetTransition.getInstant(): ##java.time.Instant & Pure;
+        import java.time.zone.ZoneOffsetTransition.getInstant(): ##java.time.Instant \ {};
         let ZoneOffsetTransition(x1) = x;
         ZInstant(getInstant(x1))
 

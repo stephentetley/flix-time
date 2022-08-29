@@ -22,7 +22,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String & Impure = Time/Clock.toString(Time/Clock.systemClockDefaultZone())
+    def toString01(): String \ IO = Time/Clock.toString(Time/Clock.systemClockDefaultZone())
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def fixedClock01(): Bool & Impure = 
+    def fixedClock01(): Bool \ IO = 
         let i = Time/ZInstant.now();
         let z = Time/ZoneId.utc();
         let c = Time/Clock.fixedClock(i, z);
@@ -43,7 +43,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def systemClock01(): Bool & Impure = 
+    def systemClock01(): Bool \ IO = 
         let c = Time/Clock.systemClock(Time/ZoneId.utc());
         Time/Clock.millis(c) > 0i64
 
@@ -52,7 +52,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def systemClockDefaultZone01(): Bool & Impure = 
+    def systemClockDefaultZone01(): Bool \ IO = 
         let c = Time/Clock.systemClockDefaultZone();
         Time/Clock.millis(c) > 0i64
 
@@ -61,7 +61,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def systemClockUTC01(): Bool & Impure = 
+    def systemClockUTC01(): Bool \ IO = 
         let c = Time/Clock.systemClockUTC();
         Time/Clock.millis(c) > 0i64
        
@@ -70,7 +70,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def offset01(): Bool & Impure = 
+    def offset01(): Bool \ IO = 
         let c = Time/Clock.offset(Time/ZDuration.zero(), Time/Clock.systemClockUTC());
         Time/Clock.millis(c) > 0i64
        
@@ -79,7 +79,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def tick01(): Bool & Impure = 
+    def tick01(): Bool \ IO = 
         let c = Time/Clock.tick(Time/ZDuration.zero(), Time/Clock.systemClockUTC());
         Time/Clock.millis(c) > 0i64
 
@@ -88,7 +88,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def tickMillis01(): Bool & Impure = 
+    def tickMillis01(): Bool \ IO = 
         let c = Time/Clock.tickMillis(Time/ZoneId.utc());
         Time/Clock.millis(c) > 0i64
 
@@ -97,7 +97,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def tickSeconds01(): Bool & Impure = 
+    def tickSeconds01(): Bool \ IO = 
         let c = Time/Clock.tickSeconds(Time/ZoneId.utc());
         Time/Clock.millis(c) > 0i64
 
@@ -106,7 +106,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def tickMinutes01(): Bool & Impure = 
+    def tickMinutes01(): Bool \ IO = 
         let c = Time/Clock.tickMinutes(Time/ZoneId.utc());
         Time/Clock.millis(c) > 0i64
 

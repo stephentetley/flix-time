@@ -37,12 +37,12 @@ namespace Time/Format/TextStyle {
 
 
     pub def marshal(x: TextStyle): ##java.time.format.TextStyle = 
-        import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle & Pure as getFULL;
-        import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle & Pure as getFULL_STANDALONE;
-        import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle & Pure as getNARROW;
-        import static get java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle & Pure as getNARROW_STANDALONE;	
-        import static get java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle & Pure as getSHORT;
-        import static get java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle & Pure as getSHORT_STANDALONE;
+        import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle \ {} as getFULL;
+        import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle \ {} as getFULL_STANDALONE;
+        import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle \ {} as getNARROW;
+        import static get java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle \ {} as getNARROW_STANDALONE;	
+        import static get java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle \ {} as getSHORT;
+        import static get java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle \ {} as getSHORT_STANDALONE;
         match x {
             case Full               => getFULL()
             case FullStandalone     => getFULL_STANDALONE()
@@ -53,18 +53,18 @@ namespace Time/Format/TextStyle {
         }
 
     def primEquals(x: ##java.time.format.TextStyle, y: ##java.time.format.TextStyle): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
         let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.format.TextStyle): TextStyle = 
-        import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle & Pure as getFULL;
-        import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle & Pure as getFULL_STANDALONE;
-        import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle & Pure as getNARROW;
-        import static get java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle & Pure as getNARROW_STANDALONE;	
-        import static get java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle & Pure as getSHORT;
-        import static get java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle & Pure as getSHORT_STANDALONE;
+        import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle \ {} as getFULL;
+        import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle \ {} as getFULL_STANDALONE;
+        import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle \ {} as getNARROW;
+        import static get java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle \ {} as getNARROW_STANDALONE;	
+        import static get java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle \ {} as getSHORT;
+        import static get java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle \ {} as getSHORT_STANDALONE;
         match x {
             case x1 if primEquals(x1, getFULL())                => Full
             case x1 if primEquals(x1, getFULL_STANDALONE())     => FullStandalone
@@ -78,19 +78,19 @@ namespace Time/Format/TextStyle {
     /// ## predicates / comparisons
 
     pub def isStandalone(x: TextStyle): Bool =
-        import java.time.format.TextStyle.isStandalone(): Bool & Pure;
+        import java.time.format.TextStyle.isStandalone(): Bool \ {};
         let x1 = marshal(x);
         isStandalone(x1)
 
     /// ## Getters and Setters
     
     pub def setStandalone(x: TextStyle): TextStyle =
-        import java.time.format.TextStyle.asStandalone(): ##java.time.format.TextStyle & Pure;
+        import java.time.format.TextStyle.asStandalone(): ##java.time.format.TextStyle \ {};
         let x1 = marshal(x);
         unmarshal(asStandalone(x1))
     
     pub def setNormal(x: TextStyle): TextStyle =
-        import java.time.format.TextStyle.asNormal(): ##java.time.format.TextStyle & Pure;
+        import java.time.format.TextStyle.asNormal(): ##java.time.format.TextStyle \ {};
         let x1 = marshal(x);
         unmarshal(asNormal(x1))
 

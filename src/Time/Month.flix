@@ -82,18 +82,18 @@ namespace Time/Month {
     /// ## Marshal enums
 
     pub def marshal(x: Month): ##java.time.Month =
-        import static get java.time.Month.JANUARY: ##java.time.Month & Pure as get_JANUARY;
-        import static get java.time.Month.FEBRUARY: ##java.time.Month & Pure as get_FEBRUARY;
-        import static get java.time.Month.MARCH: ##java.time.Month & Pure as get_MARCH;
-        import static get java.time.Month.APRIL: ##java.time.Month & Pure as get_APRIL;
-        import static get java.time.Month.MAY: ##java.time.Month & Pure as get_MAY;
-        import static get java.time.Month.JUNE: ##java.time.Month & Pure as get_JUNE;
-        import static get java.time.Month.JULY: ##java.time.Month & Pure as get_JULY;
-        import static get java.time.Month.AUGUST: ##java.time.Month & Pure as get_AUGUST;
-        import static get java.time.Month.SEPTEMBER: ##java.time.Month & Pure as get_SEPTEMBER;
-        import static get java.time.Month.OCTOBER: ##java.time.Month & Pure as get_OCTOBER;
-        import static get java.time.Month.NOVEMBER: ##java.time.Month & Pure as get_NOVEMBER;
-        import static get java.time.Month.DECEMBER: ##java.time.Month & Pure as get_DECEMBER;
+        import static get java.time.Month.JANUARY: ##java.time.Month \ {} as get_JANUARY;
+        import static get java.time.Month.FEBRUARY: ##java.time.Month \ {} as get_FEBRUARY;
+        import static get java.time.Month.MARCH: ##java.time.Month \ {} as get_MARCH;
+        import static get java.time.Month.APRIL: ##java.time.Month \ {} as get_APRIL;
+        import static get java.time.Month.MAY: ##java.time.Month \ {} as get_MAY;
+        import static get java.time.Month.JUNE: ##java.time.Month \ {} as get_JUNE;
+        import static get java.time.Month.JULY: ##java.time.Month \ {} as get_JULY;
+        import static get java.time.Month.AUGUST: ##java.time.Month \ {} as get_AUGUST;
+        import static get java.time.Month.SEPTEMBER: ##java.time.Month \ {} as get_SEPTEMBER;
+        import static get java.time.Month.OCTOBER: ##java.time.Month \ {} as get_OCTOBER;
+        import static get java.time.Month.NOVEMBER: ##java.time.Month \ {} as get_NOVEMBER;
+        import static get java.time.Month.DECEMBER: ##java.time.Month \ {} as get_DECEMBER;
         match x {
             case January    => get_JANUARY()
             case February   => get_FEBRUARY()
@@ -110,24 +110,24 @@ namespace Time/Month {
         }
 
     def primEquals(x: ##java.time.Month, y: ##java.time.Month): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool & Pure;
+        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
         let x1 = x as ##java.lang.Enum;
         let y1 = y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.Month): Month =
-        import static get java.time.Month.JANUARY: ##java.time.Month & Pure as get_JANUARY;
-        import static get java.time.Month.FEBRUARY: ##java.time.Month & Pure as get_FEBRUARY;
-        import static get java.time.Month.MARCH: ##java.time.Month & Pure as get_MARCH;
-        import static get java.time.Month.APRIL: ##java.time.Month & Pure as get_APRIL;
-        import static get java.time.Month.MAY: ##java.time.Month & Pure as get_MAY;
-        import static get java.time.Month.JUNE: ##java.time.Month & Pure as get_JUNE;
-        import static get java.time.Month.JULY: ##java.time.Month & Pure as get_JULY;
-        import static get java.time.Month.AUGUST: ##java.time.Month & Pure as get_AUGUST;
-        import static get java.time.Month.SEPTEMBER: ##java.time.Month & Pure as get_SEPTEMBER;
-        import static get java.time.Month.OCTOBER: ##java.time.Month & Pure as get_OCTOBER;
-        import static get java.time.Month.NOVEMBER: ##java.time.Month & Pure as get_NOVEMBER;
-        import static get java.time.Month.DECEMBER: ##java.time.Month & Pure as get_DECEMBER;
+        import static get java.time.Month.JANUARY: ##java.time.Month \ {} as get_JANUARY;
+        import static get java.time.Month.FEBRUARY: ##java.time.Month \ {} as get_FEBRUARY;
+        import static get java.time.Month.MARCH: ##java.time.Month \ {} as get_MARCH;
+        import static get java.time.Month.APRIL: ##java.time.Month \ {} as get_APRIL;
+        import static get java.time.Month.MAY: ##java.time.Month \ {} as get_MAY;
+        import static get java.time.Month.JUNE: ##java.time.Month \ {} as get_JUNE;
+        import static get java.time.Month.JULY: ##java.time.Month \ {} as get_JULY;
+        import static get java.time.Month.AUGUST: ##java.time.Month \ {} as get_AUGUST;
+        import static get java.time.Month.SEPTEMBER: ##java.time.Month \ {} as get_SEPTEMBER;
+        import static get java.time.Month.OCTOBER: ##java.time.Month \ {} as get_OCTOBER;
+        import static get java.time.Month.NOVEMBER: ##java.time.Month \ {} as get_NOVEMBER;
+        import static get java.time.Month.DECEMBER: ##java.time.Month \ {} as get_DECEMBER;
         match x {
             case x1 if primEquals(x1, get_JANUARY())     => January
             case x1 if primEquals(x1, get_FEBRUARY())    => February
@@ -147,12 +147,12 @@ namespace Time/Month {
 
     /// `fromTemporalAccessor` specialized
     def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month & Pure as fromTA;
+        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month \ {} as fromTA;
         try {
             unmarshal(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String & Pure;
+                import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
@@ -177,52 +177,52 @@ namespace Time/Month {
     /// ## Month functions
     
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
-        import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String & Pure;
+        import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshal(x);
         let s1 = Time/Format/TextStyle.marshal(style);
         let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
         getDisplayName(x1, s1, locale1)
 
     pub def getValue(x: Month): Int32 =
-        import java.time.Month.getValue(): Int32 & Pure;
+        import java.time.Month.getValue(): Int32 \ {};
         let x1 = marshal(x);
         getValue(x1)
 
     pub def firstDayOfYear(leap: Bool, x: Month): Int32 =
-        import java.time.Month.firstDayOfYear(Bool): Int32 & Pure;
+        import java.time.Month.firstDayOfYear(Bool): Int32 \ {};
         let x1 = marshal(x);
         firstDayOfYear(x1, leap)
 
     pub def firstMonthOfQuarter(x: Month): Month =
-        import java.time.Month.firstMonthOfQuarter(): ##java.time.Month & Pure;
+        import java.time.Month.firstMonthOfQuarter(): ##java.time.Month \ {};
         let x1 = marshal(x);
         unmarshal(firstMonthOfQuarter(x1))
 
     pub def maxLength(x: Month): Int32 =
-        import java.time.Month.maxLength(): Int32 & Pure;
+        import java.time.Month.maxLength(): Int32 \ {};
         let x1 = marshal(x);
         maxLength(x1)
 
     pub def minLength(x: Month): Int32 =
-        import java.time.Month.minLength(): Int32 & Pure;
+        import java.time.Month.minLength(): Int32 \ {};
         let x1 = marshal(x);
         minLength(x1)
 
     pub def length(leap: Bool, x: Month): Int32 =
-        import java.time.Month.length(Bool): Int32 & Pure;
+        import java.time.Month.length(Bool): Int32 \ {};
         let x1 = marshal(x);
         length(x1, leap)
 
     /// ## plus / minus functions
 
     pub def plus(x:Month, y: Int64): Month =
-        import java.time.Month.plus(Int64): ##java.time.Month & Pure;
+        import java.time.Month.plus(Int64): ##java.time.Month \ {};
         let x1 = marshal(x);
         let x2 = plus(x1, y);
         unmarshal(x2)
 
     pub def minus(x:Month, y: Int64): Month =
-        import java.time.Month.minus(Int64): ##java.time.Month & Pure;
+        import java.time.Month.minus(Int64): ##java.time.Month \ {};
         let x1 = marshal(x);
         let x2 = minus(x1, y);
         unmarshal(x2)
