@@ -18,8 +18,6 @@ namespace Time/Format {
 
 
 
-    ///
-    /// State and Codensity(Error) monad
     /// 
     /// `ka` is the continuation answer type
     ///

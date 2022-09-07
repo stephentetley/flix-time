@@ -93,36 +93,36 @@ namespace Time/Format/DecimalStyle {
         getDecimalStyle(x) |> getDecimalSeparator
 
 
-    pub def setDecimalSeparator(sep: Char, x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.withDecimalSeparator(Char): Char \ {};
+    pub def setDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
+        import java.time.format.DecimalStyle.withDecimalSeparator(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
-        withDecimalSeparator(x1, sep)
+        withDecimalSeparator(x1, sep) |> DecimalStyle
 
     pub def getNegativeSign(x: DecimalStyle): Char = 
         import java.time.format.DecimalStyle.getNegativeSign(): Char \ {};
         getDecimalStyle(x) |> getNegativeSign
 
-    pub def setNegativeSign(sign: Char, x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.withNegativeSign(Char): Char \ {};
+    pub def setNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
+        import java.time.format.DecimalStyle.withNegativeSign(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
-        withNegativeSign(x1, sign)
+        withNegativeSign(x1, sign) |> DecimalStyle
 
     pub def getPositiveSign(x: DecimalStyle): Char = 
         import java.time.format.DecimalStyle.getPositiveSign(): Char \ {};
         getDecimalStyle(x) |> getPositiveSign
 
-    pub def setPositiveSign(sign: Char, x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.withPositiveSign(Char): Char \ {};
+    pub def setPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
+        import java.time.format.DecimalStyle.withPositiveSign(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
-        withPositiveSign(x1, sign)
+        withPositiveSign(x1, sign) |> DecimalStyle
 
     pub def getZeroDigit(x: DecimalStyle): Char = 
         import java.time.format.DecimalStyle.getZeroDigit(): Char \ {};
         getDecimalStyle(x) |> getZeroDigit
 
-    pub def setZeroDigit(digit: Char, x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.withZeroDigit(Char): Char \ {};
+    pub def setZeroDigit(digit: Char, x: DecimalStyle): DecimalStyle = 
+        import java.time.format.DecimalStyle.withZeroDigit(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
-        withZeroDigit(x1, digit)
+        withZeroDigit(x1, digit) |> DecimalStyle
 
 }

@@ -372,7 +372,7 @@ namespace Time/LocalDate {
 
     /// Get/Set Iso
 
-    pub def getDayOfQuarter(x: LocalDate): Int32 = 
+    pub def getDayOfQuarter(x: LocalDate): Int64 = 
         import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;
         getHelper(get_DAY_OF_QUARTER(), x)
 
@@ -380,7 +380,7 @@ namespace Time/LocalDate {
         import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;
         withTemporalFieldHelper(get_DAY_OF_QUARTER(), Int32.toInt64(d), x)
 
-    pub def getQuarterOfYear(x: LocalDate): Int32 = 
+    pub def getQuarterOfYear(x: LocalDate): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField \ {} as get_QUARTER_OF_YEAR;
         getHelper(get_QUARTER_OF_YEAR(), x)
 
@@ -393,7 +393,7 @@ namespace Time/LocalDate {
         import static get java.time.temporal.WeekFields.ISO: ##java.time.temporal.WeekFields \ {} as get_ISO;
         get_ISO()
 
-    pub def getWeekOfYear(x: LocalDate): Int32 = 
+    pub def getWeekOfYear(x: LocalDate): Int64 = 
         import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField \ {};
         getHelper(getISOWeekFields() |> weekBasedYear, x)
 
@@ -402,24 +402,24 @@ namespace Time/LocalDate {
         withTemporalFieldHelper(getISOWeekFields() |> weekBasedYear, Int32.toInt64(d), x)
         
 
-    pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int32 =
+    pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
         getHelper(get_ALIGNED_DAY_OF_WEEK_IN_MONTH() as ##java.time.temporal.TemporalField, x)
     
-    pub def getAlignedDayOfWeekInYear(x: LocalDate): Int32 =
+    pub def getAlignedDayOfWeekInYear(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_YEAR;
         getHelper(get_ALIGNED_DAY_OF_WEEK_IN_YEAR() as ##java.time.temporal.TemporalField, x)
 
-    pub def getAlignedWeekOfMonth(x: LocalDate): Int32 =
+    pub def getAlignedWeekOfMonth(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_WEEK_OF_MONTH;
         getHelper(get_ALIGNED_WEEK_OF_MONTH() as ##java.time.temporal.TemporalField, x)
 
-    pub def getAlignedWeekOfYear(x: LocalDate): Int32 =
+    pub def getAlignedWeekOfYear(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_WEEK_OF_YEAR;
         getHelper(get_ALIGNED_WEEK_OF_YEAR() as ##java.time.temporal.TemporalField, x)
 
 
-    pub def getEra(x: LocalDate): Int32 =
+    pub def getEra(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField \ {} as get_ERA;
         getHelper(get_ERA() as ##java.time.temporal.TemporalField, x)
 
@@ -576,8 +576,8 @@ namespace Time/LocalDate {
 
     /// ## generic helper functions
 
-    def getHelper(field: ##java.time.temporal.TemporalField, x: LocalDate): Int32 = 
-        import java.time.LocalDate.getLong(##java.time.temporal.TemporalField): Int32 \ {};
+    def getHelper(field: ##java.time.temporal.TemporalField, x: LocalDate): Int64 = 
+        import java.time.LocalDate.getLong(##java.time.temporal.TemporalField): Int64 \ {};
         try {
             let LocalDate(x1) = x;
             getLong(x1, field)
