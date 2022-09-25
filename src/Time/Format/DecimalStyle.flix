@@ -66,7 +66,7 @@ namespace Time/Format/DecimalStyle {
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
         import static java.time.format.DecimalStyle.of(##java.util.Locale): ##java.time.format.DecimalStyle \ IO;
-        let loc1 = Basis/I18n/Locale.getLocale(loc) |> Interop/Util/Locale.getHH;
+        let loc1 = Interop/Util/Locale.getHH(loc);
         DecimalStyle(of(loc1))
 
     pub def decimalStyleWithDefaultLocale(): DecimalStyle \ IO = 

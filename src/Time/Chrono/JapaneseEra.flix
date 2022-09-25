@@ -110,7 +110,7 @@ namespace Time/Chrono/JapaneseEra {
         import java.time.chrono.JapaneseEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = getJapaneseEra(x);
         let style1 = Time/Format/TextStyle.marshal(style);
-        let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
+        let locale1 = Interop/Util/Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)
 
     /// /// NOTE - maybe this should return Option [/ Result] ?

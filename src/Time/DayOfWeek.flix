@@ -155,7 +155,7 @@ namespace Time/DayOfWeek {
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshal(x);
         let s1 = Time/Format/TextStyle.marshal(style);
-        let locale1 = Basis/I18n/Locale.getLocale(locale) |> Interop/Util/Locale.getHH;
+        let locale1 = Interop/Util/Locale.getHH(locale);
         getDisplayName(x1, s1, locale1)
 
 
