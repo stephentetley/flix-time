@@ -27,8 +27,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/MinguoEra {
 
-    use Basis/I18n.Locale;
-    use Basis/I18n.Locale.{Locale};
+    use Basis/Util.Locale;
+    use Basis/Util.Locale.{Locale};
 
     use Time/Chrono.MinguoEra;
     use Time/Chrono.MinguoEra.{BEFORE_ROC, ROC};

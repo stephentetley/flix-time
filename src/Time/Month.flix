@@ -60,8 +60,8 @@ namespace Time {
 
 namespace Time/Month {
 
-    use Basis/I18n.Locale;
-    use Basis/I18n.Locale.{Locale};
+    use Basis/Util.Locale;
+    use Basis/Util.Locale.{Locale};
 
     use Time.Month;
     use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};

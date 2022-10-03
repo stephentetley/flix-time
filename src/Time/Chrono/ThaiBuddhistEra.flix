@@ -27,8 +27,8 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/ThaiBuddhistEra {
 
-    use Basis/I18n.Locale;
-    use Basis/I18n.Locale.{Locale};
+    use Basis/Util.Locale;
+    use Basis/Util.Locale.{Locale};
 
     use Time/Chrono.ThaiBuddhistEra;
     use Time/Chrono.ThaiBuddhistEra.{BEFORE_BE, BE};
