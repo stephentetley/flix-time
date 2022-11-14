@@ -31,7 +31,7 @@ namespace TestClock {
 
     @test
     def fixedClock01(): Bool \ IO = 
-        let i = Time/ZInstant.now();
+        let i = Time/InstantZ.now();
         let z = Time/ZoneId.utc();
         let c = Time/Clock.fixedClock(i, z);
         let ci1 = Time/Clock.instant(c);
@@ -71,7 +71,7 @@ namespace TestClock {
 
     @test
     def offset01(): Bool \ IO = 
-        let c = Time/Clock.offset(Time/ZDuration.zero(), Time/Clock.systemClockUTC());
+        let c = Time/Clock.offset(Time/DurationZ.zero(), Time/Clock.systemClockUTC());
         Time/Clock.millis(c) > 0i64
        
     /////////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ namespace TestClock {
 
     @test
     def tick01(): Bool \ IO = 
-        let c = Time/Clock.tick(Time/ZDuration.zero(), Time/Clock.systemClockUTC());
+        let c = Time/Clock.tick(Time/DurationZ.zero(), Time/Clock.systemClockUTC());
         Time/Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////

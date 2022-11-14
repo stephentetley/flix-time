@@ -62,10 +62,10 @@ namespace Time/Zone/ZoneRules {
     use Time/Zone.ZoneRules.{ZoneRules};
     use Time/Zone.ZoneOffsetTransition;
     use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition};
-    use Time.ZDuration;
-    use Time.ZDuration.{ZDuration};
-    use Time.ZInstant;
-    use Time.ZInstant.{ZInstant};
+    use Time.DurationZ;
+    use Time.DurationZ.{DurationZ};
+    use Time.InstantZ;
+    use Time.InstantZ.{InstantZ};
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
     use Time.ZoneOffset;
@@ -86,10 +86,10 @@ namespace Time/Zone/ZoneRules {
 
     /// ## ZoneRules functions
 
-    pub def getOffset(inst: ZInstant, x: ZoneRules): ZoneOffset =
+    pub def getOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
         import java.time.zone.ZoneRules.getOffset(##java.time.Instant): ##java.time.ZoneOffset \ {};
         let ZoneRules(x1) = x;
-        let ZInstant(inst1) = inst;
+        let InstantZ(inst1) = inst;
         ZoneOffset(getOffset(x1, inst1))
 
 
@@ -100,10 +100,10 @@ namespace Time/Zone/ZoneRules {
         ZoneOffset(getOffset(x1, ldt1))
 
 
-    pub def getStandardOffset(inst: ZInstant, x: ZoneRules): ZoneOffset =
+    pub def getStandardOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
         import java.time.zone.ZoneRules.getStandardOffset(##java.time.Instant): ##java.time.ZoneOffset \ {};
         let ZoneRules(x1) = x;
-        let ZInstant(inst1) = inst;
+        let InstantZ(inst1) = inst;
         ZoneOffset(getStandardOffset(x1, inst1))
 
 
@@ -115,16 +115,16 @@ namespace Time/Zone/ZoneRules {
             getValidOffsets(x1, ldt1) |> Interop/Util/ListZ.wrapHH(r) |> Interop/Util/ListZ.toFlixList
         }
 
-    pub def getDaylightSavings(instant: ZInstant, x: ZoneRules): ZDuration =
+    pub def getDaylightSavings(instant: InstantZ, x: ZoneRules): DurationZ =
         import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant): ##java.time.Duration \ {};
         let ZoneRules(x1) = x;
-        let ZInstant(instant1) = instant;
-        ZDuration(getDaylightSavings(x1, instant1))
+        let InstantZ(instant1) = instant;
+        DurationZ(getDaylightSavings(x1, instant1))
 
-    pub def isDaylightSavings(instant: ZInstant, x: ZoneRules): Bool =
+    pub def isDaylightSavings(instant: InstantZ, x: ZoneRules): Bool =
         import java.time.zone.ZoneRules.isDaylightSavings(##java.time.Instant): Bool \ {};
         let ZoneRules(x1) = x;
-        let ZInstant(instant1) = instant;
+        let InstantZ(instant1) = instant;
         isDaylightSavings(x1, instant1)
 
 
@@ -136,10 +136,10 @@ namespace Time/Zone/ZoneRules {
         isValidOffset(x1, ldt1, offset1)
 
 
-    pub def previousTransition(instant: ZInstant, x: ZoneRules): ZoneOffsetTransition =
+    pub def previousTransition(instant: InstantZ, x: ZoneRules): ZoneOffsetTransition =
         import java.time.zone.ZoneRules.previousTransition(##java.time.Instant): ##java.time.zone.ZoneOffsetTransition \ {};
         let ZoneRules(x1) = x;
-        let ZInstant(instant1) = instant;
+        let InstantZ(instant1) = instant;
         ZoneOffsetTransition(previousTransition(x1, instant1))
 
     pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] =

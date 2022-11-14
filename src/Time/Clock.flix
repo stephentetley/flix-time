@@ -29,10 +29,10 @@ namespace Time/Clock {
 
     use Time.Clock;
     use Time.Clock.{Clock};
-    use Time.ZDuration;
-    use Time.ZDuration.{ZDuration};
-    use Time.ZInstant;
-    use Time.ZInstant.{ZInstant};
+    use Time.DurationZ;
+    use Time.DurationZ.{DurationZ};
+    use Time.InstantZ;
+    use Time.InstantZ.{InstantZ};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
 
@@ -45,9 +45,9 @@ namespace Time/Clock {
     /// ## "abstract constructors" (e.g. `fixedClock`)
 
     /// Pure or Impure? 
-    pub def fixedClock(inst: ZInstant, zone: ZoneId): Clock \ IO =
+    pub def fixedClock(inst: InstantZ, zone: ZoneId): Clock \ IO =
         import static java.time.Clock.fixed(##java.time.Instant, ##java.time.ZoneId): ##java.time.Clock \ IO;
-        let ZInstant(inst1) = inst;
+        let InstantZ(inst1) = inst;
         let ZoneId(zone1) = zone;
         Clock(fixed(inst1, zone1))
 
@@ -64,15 +64,15 @@ namespace Time/Clock {
         import static java.time.Clock.systemUTC(): ##java.time.Clock \ IO;
         Clock(systemUTC())
 
-    pub def offset(d: ZDuration, c: Clock): Clock \ IO =
+    pub def offset(d: DurationZ, c: Clock): Clock \ IO =
         import static java.time.Clock.offset(##java.time.Clock, ##java.time.Duration): ##java.time.Clock \ IO;
-        let ZDuration(d1) = d;
+        let DurationZ(d1) = d;
         let Clock(c1) = c;
         Clock(offset(c1, d1))
 
-    pub def tick(d: ZDuration, c: Clock): Clock \ IO =
+    pub def tick(d: DurationZ, c: Clock): Clock \ IO =
         import static java.time.Clock.tick(##java.time.Clock, ##java.time.Duration): ##java.time.Clock \ IO;
-        let ZDuration(d1) = d;
+        let DurationZ(d1) = d;
         let Clock(c1) = c;
         Clock(tick(c1, d1))
 
@@ -109,10 +109,10 @@ namespace Time/Clock {
         let Clock(x1) = x;
         millis(x1)
 
-    pub def instant(x: Clock): ZInstant \ IO =
+    pub def instant(x: Clock): InstantZ \ IO =
         import java.time.Clock.instant(): ##java.time.Instant \ IO;
         let Clock(x1) = x;
-        ZInstant(instant(x1))
+        InstantZ(instant(x1))
 
 
     /// ## Getters and Setters

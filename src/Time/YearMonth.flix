@@ -109,11 +109,11 @@ namespace Time/YearMonth {
 
     /// ## Constructors
 
-    pub def yearMonth(r: {year :: Int32, month :: Int32}): YearMonth =
+    pub def yearMonth(r: {year = Int32, month = Int32}): YearMonth =
         import static java.time.YearMonth.of(Int32, Int32): ##java.time.YearMonth \ {};
         YearMonth(of(r.year, r.month))
 
-    pub def yearMonthWithMonth(r: {year :: Int32, month :: Month}): YearMonth =
+    pub def yearMonthWithMonth(r: {year = Int32, month = Month}): YearMonth =
         import static java.time.YearMonth.of(Int32, ##java.time.Month): ##java.time.YearMonth \ {};
         let m1 = Time/Month.marshal(r.month);
         YearMonth(of(r.year, m1))
@@ -292,18 +292,18 @@ namespace Time/YearMonth {
 
     /// ## between / until functions
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: YearMonth, end :: YearMonth}): Int64 = 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = YearMonth, end = YearMonth}): Int64 = 
         import java.time.YearMonth.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getYearMonth(r.start);
         let e1 = getYearMonth(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
-    pub def monthsUntil(r: {start :: YearMonth, end :: YearMonth}): Int64 = 
+    pub def monthsUntil(r: {start = YearMonth, end = YearMonth}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
         untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def yearsUntil(r: {start :: YearMonth, end :: YearMonth}): Int64 = 
+    pub def yearsUntil(r: {start = YearMonth, end = YearMonth}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
         untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 

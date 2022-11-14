@@ -98,10 +98,10 @@ namespace Time/OffsetTime {
     use Time/Format.TimeFormat;
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
-    use Time.ZDuration;
-    use Time.ZDuration.{ZDuration};
-    use Time.ZInstant;
-    use Time.ZInstant.{ZInstant};
+    use Time.DurationZ;
+    use Time.DurationZ.{DurationZ};
+    use Time.InstantZ;
+    use Time.InstantZ.{InstantZ};
     use Time.LocalTime;
     use Time.LocalTime.{LocalTime};
     use Time.OffsetDateTime;
@@ -119,7 +119,7 @@ namespace Time/OffsetTime {
 
     /// ## Constructors
 
-    pub def offsetTime(r: { hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetTime =
+    pub def offsetTime(r: { hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32, offset = ZoneOffset}): OffsetTime =
         import static java.time.OffsetTime.of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetTime \ {};
         OffsetTime(of(r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneOffset.getZoneOffset(r.offset)))
 
@@ -142,16 +142,16 @@ namespace Time/OffsetTime {
 
     /// ## `from` functions
 
-    pub def fromLocalTime(offset: {offset :: ZoneOffset}, x: LocalTime): OffsetTime =
+    pub def fromLocalTime(offset: {offset = ZoneOffset}, x: LocalTime): OffsetTime =
         import static java.time.OffsetTime.of(##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetTime \ {};
         let LocalTime(x1) = x;
         let ZoneOffset(o1) = offset.offset;
         OffsetTime(of(x1, o1))
 
 
-    pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): OffsetTime =
+    pub def fromInstant(zone: {zone = ZoneId}, x: InstantZ): OffsetTime =
         import static java.time.OffsetTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.OffsetTime \ {};
-        let ZInstant(x1) = x;
+        let InstantZ(x1) = x;
         let ZoneId(z1) = zone.zone;
         OffsetTime(ofInstant(x1, z1))
 
@@ -357,44 +357,44 @@ namespace Time/OffsetTime {
         OffsetTime(minusNanos(x1, nanos))
 
 
-    pub def plusDuration(i: OffsetTime, x: ZDuration): OffsetTime =
+    pub def plusDuration(i: OffsetTime, x: DurationZ): OffsetTime =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         OffsetTime(addTo(x1, i1) as ##java.time.OffsetTime)
     
-    pub def minusDuration(i: OffsetTime, x: ZDuration): OffsetTime =
+    pub def minusDuration(i: OffsetTime, x: DurationZ): OffsetTime =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let i1 = getOffsetTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         OffsetTime(subtractFrom(x1, i1) as ##java.time.OffsetTime)
 
 
     /// ## between / until functions
     
-    pub def between(r: {start :: OffsetTime, end :: OffsetTime}): ZDuration =
+    pub def between(r: {start = OffsetTime, end = OffsetTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
         let s1 = getOffsetTime(r.start) as ##java.time.temporal.Temporal;
         let e1 = getOffsetTime(r.end) as ##java.time.temporal.Temporal;
-        ZDuration(between(s1, e1))
+        DurationZ(between(s1, e1))
 
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = OffsetTime, end = OffsetTime}): Int64 = 
         import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getOffsetTime(r.start);
         let e1 = getOffsetTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
-    pub def secondsUntil(r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+    pub def secondsUntil(r: {start = OffsetTime, end = OffsetTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
         untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def minutesUntil(r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+    pub def minutesUntil(r: {start = OffsetTime, end = OffsetTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
         untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def hoursUntil(r: {start :: OffsetTime, end :: OffsetTime}): Int64 = 
+    pub def hoursUntil(r: {start = OffsetTime, end = OffsetTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 

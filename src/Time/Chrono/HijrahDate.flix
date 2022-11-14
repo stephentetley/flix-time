@@ -63,7 +63,7 @@ namespace Time/Chrono/HijrahDate {
         x1
 
 
-    pub def hijrahDate(r: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
+    pub def hijrahDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
         import static java.time.chrono.HijrahDate.of(Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         HijrahDate(of(r.prolepticYear, r.month, r.dayOfMonth))
 

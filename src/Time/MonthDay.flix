@@ -106,11 +106,11 @@ namespace Time/MonthDay {
 
     /// ## Constructors
 
-    pub def monthDay(r: {month :: Int32, dayOfMonth :: Int32}): MonthDay =
+    pub def monthDay(r: {month = Int32, dayOfMonth = Int32}): MonthDay =
         import static java.time.MonthDay.of(Int32, Int32): ##java.time.MonthDay \ {};
         MonthDay(of(r.month, r.dayOfMonth))
 
-    pub def monthDayWithMonth(r: {month :: Month, dayOfMonth :: Int32}): MonthDay =
+    pub def monthDayWithMonth(r: {month = Month, dayOfMonth = Int32}): MonthDay =
         import static java.time.MonthDay.of(##java.time.Month, Int32): ##java.time.MonthDay \ {};
         let m1 = Time/Month.marshal(r.month);
         MonthDay(of(m1, r.dayOfMonth))

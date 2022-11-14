@@ -60,7 +60,7 @@ namespace Time/Chrono/JapaneseEra {
         let JapaneseEra(x1) = x;
         x1
 
-    pub def japaneseEra(japaneseEra: {japaneseEra :: Int32}): Option[JapaneseEra] =
+    pub def japaneseEra(japaneseEra: {japaneseEra = Int32}): Option[JapaneseEra] =
         import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra \ {};
         try {
             Some(JapaneseEra(of(japaneseEra.japaneseEra)))

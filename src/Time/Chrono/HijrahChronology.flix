@@ -52,13 +52,13 @@ namespace Time/Chrono/HijrahChronology {
         import static get java.time.chrono.HijrahChronology.INSTANCE: ##java.time.chrono.HijrahChronology \ IO as getINSTANCE;
         HijrahChronology(getINSTANCE())
 
-    pub def date(x: HijrahChronology, r: {prolepticYear :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
+    pub def date(x: HijrahChronology, r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
         import java.time.chrono.HijrahChronology.date(Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
         HijrahDate(date(x1, r.prolepticYear, r.month, r.dayOfMonth))
 
     pub def dateWithEra(x: HijrahChronology,
-                        r: {era :: HijrahEra, yearOfEra :: Int32, month :: Int32, dayOfMonth :: Int32}): HijrahDate =
+                        r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
         import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
         let era1 = Time/Chrono/HijrahEra.marshal(r.era) as ##java.time.chrono.Era;

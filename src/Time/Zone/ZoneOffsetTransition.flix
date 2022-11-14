@@ -73,10 +73,10 @@ namespace Time/Zone/ZoneOffsetTransition {
     use Time.ZoneOffset.{ZoneOffset};
     use Time.LocalDateTime;
     use Time.LocalDateTime.{LocalDateTime};
-    use Time.ZDuration;
-    use Time.ZDuration.{ZDuration};
-    use Time.ZInstant;
-    use Time.ZInstant.{ZInstant};
+    use Time.DurationZ;
+    use Time.DurationZ.{DurationZ};
+    use Time.InstantZ;
+    use Time.InstantZ.{InstantZ};
 
     /// ## Unwrap
 
@@ -86,7 +86,7 @@ namespace Time/Zone/ZoneOffsetTransition {
 
     /// ## Constructors
 
-    pub def zoneOffsetTransition(r: {transition :: LocalDateTime, before :: ZoneOffset, after :: ZoneOffset}): ZoneOffsetTransition =
+    pub def zoneOffsetTransition(r: {transition = LocalDateTime, before = ZoneOffset, after = ZoneOffset}): ZoneOffsetTransition =
         import static java.time.zone.ZoneOffsetTransition.of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset): ##java.time.zone.ZoneOffsetTransition \ {};
         use Time/ZoneOffset.{getZoneOffset};
         ZoneOffsetTransition(of(Time/LocalDateTime.getLocalDateTime(r.transition), getZoneOffset(r.before), getZoneOffset(r.after)))
@@ -134,14 +134,14 @@ namespace Time/Zone/ZoneOffsetTransition {
         let ZoneOffsetTransition(x1) = x;
         ZoneOffset(getOffsetAfter(x1))
 
-    pub def getDuration(x: ZoneOffsetTransition): ZDuration =
+    pub def getDuration(x: ZoneOffsetTransition): DurationZ =
         import java.time.zone.ZoneOffsetTransition.getDuration(): ##java.time.Duration \ {};
         let ZoneOffsetTransition(x1) = x;
-        ZDuration(getDuration(x1))
+        DurationZ(getDuration(x1))
 
-    pub def getInstant(x: ZoneOffsetTransition): ZInstant =
+    pub def getInstant(x: ZoneOffsetTransition): InstantZ =
         import java.time.zone.ZoneOffsetTransition.getInstant(): ##java.time.Instant \ {};
         let ZoneOffsetTransition(x1) = x;
-        ZInstant(getInstant(x1))
+        InstantZ(getInstant(x1))
 
 }

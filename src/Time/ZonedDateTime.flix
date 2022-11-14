@@ -98,8 +98,8 @@ namespace Time/ZonedDateTime {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
-    use Time.ZDuration;
-    use Time.ZDuration.{ZDuration};
+    use Time.DurationZ;
+    use Time.DurationZ.{DurationZ};
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.LocalDateTime;
@@ -124,8 +124,8 @@ namespace Time/ZonedDateTime {
 
     /// ## Constructors
 
-    pub def zonedDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, 
-                            minute :: Int32, second :: Int32, nanoSecond :: Int32, zoneId :: ZoneId}): ZonedDateTime =
+    pub def zonedDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, 
+                            minute = Int32, second = Int32, nanoSecond = Int32, zoneId = ZoneId}): ZonedDateTime =
         import static java.time.ZonedDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         ZonedDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneId.getZoneId(r.zoneId)))
 
@@ -149,14 +149,14 @@ namespace Time/ZonedDateTime {
 
     /// ## `from` functions
 
-    pub def fromLocalDateTime(zone: {zone :: ZoneId},dateTime: LocalDateTime): ZonedDateTime =
+    pub def fromLocalDateTime(zone: {zone = ZoneId},dateTime: LocalDateTime): ZonedDateTime =
         import static java.time.ZonedDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let LocalDateTime(dt1) = dateTime;
         let ZoneId(z1) = zone.zone;
         ZonedDateTime(of(dt1, z1))
 
 
-    pub def fromLocalDateLocalTime(zone: {zone :: ZoneId}, date: LocalDate, time: LocalTime): ZonedDateTime =
+    pub def fromLocalDateLocalTime(zone: {zone = ZoneId}, date: LocalDate, time: LocalTime): ZonedDateTime =
         import static java.time.ZonedDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
@@ -510,16 +510,16 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         ZonedDateTime(minus(x1, nanos))
 
-    pub def plusDuration(i: ZonedDateTime, x: ZDuration): ZonedDateTime =
+    pub def plusDuration(i: ZonedDateTime, x: DurationZ): ZonedDateTime =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let i1 = getZonedDateTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         ZonedDateTime(addTo(x1, i1) as ##java.time.ZonedDateTime)
     
-    pub def minusDuration(i: ZonedDateTime, x: ZDuration): ZonedDateTime =
+    pub def minusDuration(i: ZonedDateTime, x: DurationZ): ZonedDateTime =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let i1 = getZonedDateTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         ZonedDateTime(subtractFrom(x1, i1) as ##java.time.ZonedDateTime)
 
     /// Period methods
@@ -541,49 +541,49 @@ namespace Time/ZonedDateTime {
     /// ## between / until functions 
 
 
-    pub def between(r: {start :: ZonedDateTime, end :: ZonedDateTime}): ZDuration =
+    pub def between(r: {start = ZonedDateTime, end = ZonedDateTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
         let s1 = getZonedDateTime(r.start) as ##java.time.temporal.Temporal;
         let e1 = getZonedDateTime(r.end) as ##java.time.temporal.Temporal;
-        ZDuration(between(s1, e1))
+        DurationZ(between(s1, e1))
 
     /// `until` specialized
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import java.time.ZonedDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getZonedDateTime(r.start);
         let e1 = getZonedDateTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
-    pub def secondsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    pub def secondsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
         untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def minutesUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    pub def minutesUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
         untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def hoursUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    pub def hoursUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def halfDaysUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    pub def halfDaysUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def daysUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    pub def daysUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
         untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def monthsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    pub def monthsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
         untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def yearsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    pub def yearsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
         untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def quarterYearsUntil(r: {start :: ZonedDateTime, end :: ZonedDateTime}): Int64 = 
+    pub def quarterYearsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
 

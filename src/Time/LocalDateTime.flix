@@ -101,10 +101,10 @@ namespace Time/LocalDateTime {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
-    use Time.ZDuration;
-    use Time.ZDuration.{ZDuration};
-    use Time.ZInstant;
-    use Time.ZInstant.{ZInstant};
+    use Time.DurationZ;
+    use Time.DurationZ.{DurationZ};
+    use Time.InstantZ;
+    use Time.InstantZ.{InstantZ};
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.LocalTime;
@@ -128,17 +128,17 @@ namespace Time/LocalDateTime {
 
     /// ## Constructors
 
-    pub def localDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32}): LocalDateTime =
+    pub def localDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime \ {};
         LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute))
 
-    pub def localDateTimeWithSecond(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
-                                hour :: Int32, minute :: Int32, second :: Int32}): LocalDateTime =
+    pub def localDateTimeWithSecond(r: {year = Int32, month = Int32, dayOfMonth = Int32,
+                                hour = Int32, minute = Int32, second = Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime \ {};
         LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second))
 
-    pub def localDateTimeWithSecondAndNano(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32,
-                                        hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalDateTime =
+    pub def localDateTimeWithSecondAndNano(r: {year = Int32, month = Int32, dayOfMonth = Int32,
+                                        hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime \ {};
         LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond))
 
@@ -169,14 +169,14 @@ namespace Time/LocalDateTime {
         let LocalTime(t1) = t;
         LocalDateTime(of(d1, t1))
 
-    pub def fromEpochSecond(offset: {offset :: ZoneOffset}, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
+    pub def fromEpochSecond(offset: {offset = ZoneOffset}, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
         import static java.time.LocalDateTime.ofEpochSecond(Int64, Int32, ##java.time.ZoneOffset): ##java.time.LocalDateTime \ {};
         let ZoneOffset(o1) = offset.offset;
         LocalDateTime(ofEpochSecond(epochSecond, nanoOfSecond, o1))
 
-    pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): LocalDateTime =
+    pub def fromInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDateTime =
         import static java.time.LocalDateTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDateTime \ {};
-        let ZInstant(x1) = x;
+        let InstantZ(x1) = x;
         let ZoneId(z1) = zone.zone;
         LocalDateTime(ofInstant(x1, z1))
 
@@ -510,65 +510,65 @@ namespace Time/LocalDateTime {
 
 
 
-    pub def plusDuration(dt: LocalDateTime, x: ZDuration): LocalDateTime =
+    pub def plusDuration(dt: LocalDateTime, x: DurationZ): LocalDateTime =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
         LocalDateTime(addTo(x1, dt1) as ##java.time.LocalDateTime)
     
-    pub def minusDuration(dt: LocalDateTime, x: ZDuration): LocalDateTime =
+    pub def minusDuration(dt: LocalDateTime, x: DurationZ): LocalDateTime =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
         LocalDateTime(subtractFrom(x1, dt1) as ##java.time.LocalDateTime)
 
 
     /// ## between / until functions
 
-    pub def between(r: {start :: LocalDateTime, end :: LocalDateTime}): ZDuration =
+    pub def between(r: {start = LocalDateTime, end = LocalDateTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
         let s1 = getLocalDateTime(r.start) as ##java.time.temporal.Temporal;
         let e1 = getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
-        ZDuration(between(s1, e1)) 
+        DurationZ(between(s1, e1)) 
                             
 
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getLocalDateTime(r.start);
         let e1 = getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
-    pub def secondsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    pub def secondsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
         untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def minutesUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    pub def minutesUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
         untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def hoursUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    pub def hoursUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def halfDaysUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    pub def halfDaysUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def daysUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    pub def daysUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
         untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def monthsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    pub def monthsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
         untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def yearsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    pub def yearsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
         untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def quarterYearsUntil(r: {start :: LocalDateTime, end :: LocalDateTime}): Int64 = 
+    pub def quarterYearsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
 

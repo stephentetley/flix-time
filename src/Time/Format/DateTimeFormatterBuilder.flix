@@ -167,7 +167,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
         import java.time.format.DateTimeFormatterBuilder.appendLiteral(String): ##java.time.format.DateTimeFormatterBuilder \ r;
         liftSetter!(flip(appendLiteral, s))
 
-    pub def appendLocalized!(r: {timeStyle :: FormatStyle, dateStyle :: FormatStyle}): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
+    pub def appendLocalized!(r: {timeStyle = FormatStyle, dateStyle = FormatStyle}): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
         import java.time.format.DateTimeFormatterBuilder.appendLocalized(##java.time.format.FormatStyle, ##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
         let timeStyle1 = Time/Format/FormatStyle.marshal(r.timeStyle);
         let dateStyle1 = Time/Format/FormatStyle.marshal(r.dateStyle);
@@ -179,7 +179,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
         liftSetter!(flip(appendLocalizedOffset, style1))
 
 
-    pub def appendOffset!(r: {pattern :: String, noOffsetText :: String}): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
+    pub def appendOffset!(r: {pattern = String, noOffsetText = String}): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
         import java.time.format.DateTimeFormatterBuilder.appendOffset(String, String): ##java.time.format.DateTimeFormatterBuilder \ r;
         liftSetter!(bldr -> appendOffset(bldr, r.pattern, r.noOffsetText))
 

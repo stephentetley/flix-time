@@ -114,8 +114,8 @@ namespace Time/LocalDate {
     use Time.ZonedDateTime.{ZonedDateTime};
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
-    use Time.ZInstant;
-    use Time.ZInstant.{ZInstant};
+    use Time.InstantZ;
+    use Time.InstantZ.{InstantZ};
 
     /// ## Unwrap
 
@@ -125,11 +125,11 @@ namespace Time/LocalDate {
 
     /// ## Constructors
 
-    pub def localDate(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32}): LocalDate =
+    pub def localDate(r: {year = Int32, month = Int32, dayOfMonth = Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, Int32, Int32): ##java.time.LocalDate \ {};
         LocalDate(of(r.year, r.month, r.dayOfMonth))
 
-    pub def localDateWithMonth(r: {year :: Int32, month :: Month, dayOfMonth :: Int32}): LocalDate =
+    pub def localDateWithMonth(r: {year = Int32, month = Month, dayOfMonth = Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32): ##java.time.LocalDate \ {};
         let m1 = Time/Month.marshal(r.month);
         LocalDate(of(r.year, m1, r.dayOfMonth))
@@ -185,9 +185,9 @@ namespace Time/LocalDate {
 
     /// ## `from` functions
 
-    pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): LocalDate =
+    pub def fromInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDate =
         import static java.time.LocalDate.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDate \ {};
-        let ZInstant(x1) = x;
+        let InstantZ(x1) = x;
         let ZoneId(z1) = zone.zone;
         LocalDate(ofInstant(x1, z1))
 
@@ -551,26 +551,26 @@ namespace Time/LocalDate {
 
     /// ## between / until functions
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalDate, end = LocalDate}): Int64 = 
         import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getLocalDate(r.start);
         let e1 = getLocalDate(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
-    pub def daysUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+    pub def daysUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
         untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def monthsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+    pub def monthsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
         untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def yearsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+    pub def yearsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
         untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def quarterYearsUntil(r: {start :: LocalDate, end :: LocalDate}): Int64 = 
+    pub def quarterYearsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
 

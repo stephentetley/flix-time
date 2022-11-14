@@ -25,7 +25,7 @@ namespace TestInstant {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/ZInstant.epoch())
+    def toString01(): String = toString(Time/InstantZ.epoch())
 
 
 

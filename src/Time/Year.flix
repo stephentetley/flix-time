@@ -112,7 +112,7 @@ namespace Time/Year {
 
     /// ## Constructors
 
-    pub def year(isoYear: {isoYear :: Int32}): Year =
+    pub def year(isoYear: {isoYear = Int32}): Year =
         import static java.time.Year.of(Int32): ##java.time.Year \ {};
         Year(of(isoYear.isoYear))
 
@@ -304,22 +304,22 @@ namespace Time/Year {
 
     /// ## between / until functions
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: Year, end :: Year}): Int64 = 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = Year, end = Year}): Int64 = 
         import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getYear(r.start);
         let e1 = getYear(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
-    pub def yearsUntil(r: {start :: Year, end :: Year}): Int64 = 
+    pub def yearsUntil(r: {start = Year, end = Year}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
         untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def decadesUntil(r: {start :: Year, end :: Year}): Int64 = 
+    pub def decadesUntil(r: {start = Year, end = Year}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit \ {} as get_DECADES;
         untilHelper(get_DECADES() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def centuriesUntil(r: {start :: Year, end :: Year}): Int64 = 
+    pub def centuriesUntil(r: {start = Year, end = Year}): Int64 = 
         import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
         untilHelper(get_CENTURIES() as ##java.time.temporal.TemporalUnit, r)
 

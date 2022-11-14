@@ -96,10 +96,10 @@ namespace Time/OffsetDateTime {
     use Time/Temporal.ValueRange;
     use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
-    use Time.ZDuration;
-    use Time.ZDuration.{ZDuration};
-    use Time.ZInstant;
-    use Time.ZInstant.{ZInstant};
+    use Time.DurationZ;
+    use Time.DurationZ.{DurationZ};
+    use Time.InstantZ;
+    use Time.InstantZ.{InstantZ};
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
     use Time.LocalDateTime;
@@ -129,8 +129,8 @@ namespace Time/OffsetDateTime {
 
     /// ## Constructors
 
-    pub def offsetDateTime(r: {year :: Int32, month :: Int32, dayOfMonth :: Int32, hour :: Int32, minute :: Int32,
-                    second :: Int32, nanoSecond :: Int32, offset :: ZoneOffset}): OffsetDateTime =
+    pub def offsetDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32,
+                    second = Int32, nanoSecond = Int32, offset = ZoneOffset}): OffsetDateTime =
         import static java.time.OffsetDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let ZoneOffset(o1) = r.offset;
         OffsetDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, o1))
@@ -155,20 +155,20 @@ namespace Time/OffsetDateTime {
 
     /// ## `at` functions
 
-    pub def atZoneSameInstant(zone: {zone :: ZoneId}, x: OffsetDateTime): ZonedDateTime =
+    pub def atZoneSameInstant(zone: {zone = ZoneId}, x: OffsetDateTime): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let OffsetDateTime(x1) = x;
         let ZoneId(z1) = zone.zone;
         ZonedDateTime(atZoneSameInstant(x1, z1))
 
-    pub def atZoneSimilarLocal(zone: {zone :: ZoneId}, x: OffsetDateTime): ZonedDateTime =
+    pub def atZoneSimilarLocal(zone: {zone = ZoneId}, x: OffsetDateTime): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSimilarLocal(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let OffsetDateTime(x1) = x;
         let ZoneId(z1) = zone.zone;
         ZonedDateTime(atZoneSimilarLocal(x1, z1))
 
 
-    pub def fromLocalDateTime(offset: {offset :: ZoneOffset}, dateTime: LocalDateTime): OffsetDateTime =
+    pub def fromLocalDateTime(offset: {offset = ZoneOffset}, dateTime: LocalDateTime): OffsetDateTime =
         import static java.time.OffsetDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let LocalDateTime(dt1) = dateTime;
         let ZoneOffset(o1) = offset.offset;
@@ -177,7 +177,7 @@ namespace Time/OffsetDateTime {
 
     /// ## `from` functions
 
-    pub def fromLocalDateLocalTime(offset: {offset :: ZoneOffset}, date: LocalDate, time: LocalTime): OffsetDateTime =
+    pub def fromLocalDateLocalTime(offset: {offset = ZoneOffset}, date: LocalDate, time: LocalTime): OffsetDateTime =
         import static java.time.OffsetDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
@@ -245,10 +245,10 @@ namespace Time/OffsetDateTime {
         ZonedDateTime(toZonedDateTime(x1))
 
 
-    pub def toInstant(x: OffsetDateTime): ZInstant =
+    pub def toInstant(x: OffsetDateTime): InstantZ =
         import java.time.OffsetDateTime.toInstant(): ##java.time.Instant \ {};
         let OffsetDateTime(x1) = x;
-        ZInstant(toInstant(x1))
+        InstantZ(toInstant(x1))
 
     pub def toEpochSecond(x: OffsetDateTime): Int64 =
         import java.time.OffsetDateTime.toEpochSecond(): Int64 \ {};
@@ -629,16 +629,16 @@ namespace Time/OffsetDateTime {
         OffsetDateTime(minusNanos(x1, nanos))
 
 
-    pub def plusDuration(i: OffsetDateTime, x: ZDuration): OffsetDateTime =
+    pub def plusDuration(i: OffsetDateTime, x: DurationZ): OffsetDateTime =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
     
-    pub def minusDuration(i: OffsetDateTime, x: ZDuration): OffsetDateTime =
+    pub def minusDuration(i: OffsetDateTime, x: DurationZ): OffsetDateTime =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
 
     /// Period methods
@@ -659,49 +659,49 @@ namespace Time/OffsetDateTime {
 
     /// ## between / until functions
 
-    pub def between(r: {start :: OffsetDateTime, end :: OffsetDateTime}): ZDuration =
+    pub def between(r: {start = OffsetDateTime, end = OffsetDateTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
         let s1 = getOffsetDateTime(r.start) as ##java.time.temporal.Temporal;
         let e1 = getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
-        ZDuration(between(s1, e1))
+        DurationZ(between(s1, e1))
 
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getOffsetDateTime(r.start);
         let e1 = getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
-    pub def secondsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    pub def secondsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
         untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def minutesUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    pub def minutesUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
         untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def hoursUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    pub def hoursUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def halfDaysUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    pub def halfDaysUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
         untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def daysUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    pub def daysUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
         untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def monthsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    pub def monthsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
         untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def yearsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    pub def yearsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
         untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def quarterYearsUntil(r: {start :: OffsetDateTime, end :: OffsetDateTime}): Int64 = 
+    pub def quarterYearsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
 

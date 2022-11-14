@@ -84,7 +84,7 @@ namespace Time/ZoneId {
 
     /// ## Constructors
 
-    pub def zoneId(zoneId: {zoneId :: String}): Result[ZoneId, String] =
+    pub def zoneId(zoneId: {zoneId = String}): Result[ZoneId, String] =
         import static java.time.ZoneId.of(String): ##java.time.ZoneId \ {};
         try {
             Ok(ZoneId(of(zoneId.zoneId)))
@@ -95,7 +95,7 @@ namespace Time/ZoneId {
         }
         
 
-    pub def zoneIdWithAliases(zoneId: {zoneId :: String}, aliases: Map[String, String]): Result[ZoneId, String] = region r {
+    pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[ZoneId, String] = region r {
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId \ {};
         try {
             let jmap = Interop/Util/HashMap.fromFlixMap(r, aliases) |> Interop/Util/MapZ.toMapHH;
@@ -127,7 +127,7 @@ namespace Time/ZoneId {
 
     /// ## `from` functions
 
-    pub def fromOffset(r: {prefix :: Option[String], offset :: ZoneOffset}): ZoneId =
+    pub def fromOffset(r: {prefix = Option[String], offset = ZoneOffset}): ZoneId =
         import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId \ {};
         let p1 = match r.prefix {
             case Some(s) => s

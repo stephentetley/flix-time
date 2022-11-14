@@ -111,11 +111,11 @@ namespace Time/ZoneOffset {
         import static java.time.ZoneOffset.ofHours(Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHours(hours))
 
-    pub def fromHoursMinutes(r: {hours :: Int32, minutes :: Int32}): ZoneOffset =
+    pub def fromHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHoursMinutes(r.hours, r.minutes))
 
-    pub def fromHoursMinutesSeconds(r: {hours :: Int32, minutes :: Int32, seconds :: Int32}): ZoneOffset =
+    pub def fromHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHoursMinutesSeconds(r.hours, r.minutes, r.seconds))
 

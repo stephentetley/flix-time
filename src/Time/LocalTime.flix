@@ -101,10 +101,10 @@ namespace Time/LocalTime {
     use Time.LocalDateTime;
     use Time.OffsetDateTime;
     use Time.OffsetTime;
-    use Time.ZDuration;
-    use Time.ZDuration.{ZDuration};
-    use Time.ZInstant;
-    use Time.ZInstant.{ZInstant};
+    use Time.DurationZ;
+    use Time.DurationZ.{DurationZ};
+    use Time.InstantZ;
+    use Time.InstantZ.{InstantZ};
     use Time.ZonedDateTime;
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
@@ -118,15 +118,15 @@ namespace Time/LocalTime {
 
     /// ## Constructors
 
-    pub def localTime(r: {hour :: Int32, minute :: Int32}): LocalTime =
+    pub def localTime(r: {hour = Int32, minute = Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32): ##java.time.LocalTime \ {};
         LocalTime(of(r.hour, r.minute))
 
-    pub def localTimeWithSecond(r: {hour :: Int32, minute :: Int32, second :: Int32}): LocalTime =
+    pub def localTimeWithSecond(r: {hour = Int32, minute = Int32, second = Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32, Int32): ##java.time.LocalTime \ {};
         LocalTime(of(r.hour, r.minute, r.second))
 
-    pub def localTimeWithSecondAndNano(r: {hour :: Int32, minute :: Int32, second :: Int32, nanoSecond :: Int32}): LocalTime =
+    pub def localTimeWithSecondAndNano(r: {hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32, Int32, Int32): ##java.time.LocalTime \ {};
         LocalTime(of(r.hour, r.minute, r.second, r.nanoSecond))
 
@@ -158,9 +158,9 @@ namespace Time/LocalTime {
 
     /// ## `from` functions
 
-    pub def fromInstant(zone: {zone :: ZoneId}, x: ZInstant): LocalTime =
+    pub def fromInstant(zone: {zone = ZoneId}, x: InstantZ): LocalTime =
         import static java.time.LocalTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalTime \ {};
-        let ZInstant(x1) = x;
+        let InstantZ(x1) = x;
         let ZoneId(z1) = zone.zone;
         LocalTime(ofInstant(x1, z1))
 
@@ -364,43 +364,43 @@ namespace Time/LocalTime {
 
 
     
-    pub def plusDuration(i: LocalTime, x: ZDuration): LocalTime =
+    pub def plusDuration(i: LocalTime, x: DurationZ): LocalTime =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         LocalTime(addTo(x1, i1) as ##java.time.LocalTime)
     
-    pub def minusDuration(i: LocalTime, x: ZDuration): LocalTime =
+    pub def minusDuration(i: LocalTime, x: DurationZ): LocalTime =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
-        let ZDuration(x1) = x;
+        let DurationZ(x1) = x;
         LocalTime(subtractFrom(x1, i1) as ##java.time.LocalTime)
 
     /// ## between / until functions
 
-    pub def between(r: {start :: LocalTime, end :: LocalTime}): ZDuration =
+    pub def between(r: {start = LocalTime, end = LocalTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
         let s1 = getLocalTime(r.start) as ##java.time.temporal.Temporal;
         let e1 = getLocalTime(r.end) as ##java.time.temporal.Temporal;
-        ZDuration(between(s1, e1)) 
+        DurationZ(between(s1, e1)) 
 
 
-    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start :: LocalTime, end :: LocalTime}): Int64 = 
+    def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalTime, end = LocalTime}): Int64 = 
         import java.time.LocalTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getLocalTime(r.start);
         let e1 = getLocalTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
-    pub def secondsUntil(r: {start :: LocalTime, end :: LocalTime}): Int64 = 
+    pub def secondsUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
         untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def minutesUntil(r: {start :: LocalTime, end :: LocalTime}): Int64 = 
+    pub def minutesUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
         untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
-    pub def hoursUntil(r: {start :: LocalTime, end :: LocalTime}): Int64 = 
+    pub def hoursUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
         untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 

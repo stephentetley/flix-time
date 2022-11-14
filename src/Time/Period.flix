@@ -127,7 +127,7 @@ namespace Time/Period {
     
     /// ## Constructors
 
-    pub def period(r: {years :: Int32, months :: Int32, days :: Int32}): Period =
+    pub def period(r: {years = Int32, months = Int32, days = Int32}): Period =
         import static java.time.Period.of(Int32, Int32, Int32): ##java.time.Period \ {};
         Period(of(r.years, r.months, r.days))
 
@@ -288,7 +288,7 @@ namespace Time/Period {
     /// ## between / until functions
 
     /// Note returns Period as LocalDate has no time component
-    pub def between(r: {start :: LocalDate, end :: LocalDate}): Period =
+    pub def between(r: {start = LocalDate, end = LocalDate}): Period =
         import static java.time.Period.between(##java.time.LocalDate, ##java.time.LocalDate): ##java.time.Period \ {};
         let LocalDate(b1) = r.start;
         let LocalDate(e1) = r.end;
