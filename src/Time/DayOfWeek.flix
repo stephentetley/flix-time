@@ -53,14 +53,11 @@ namespace Time {
 namespace Time/DayOfWeek {
 
     use Basis/Util.Locale;
-    use Basis/Util.Locale.{Locale};
 
     use Time.DayOfWeek;
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
 
-    use Time/Format.TextStyle;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};    
+    use Time/Format.TextStyle;  
     use Time.LocalDate;
     use Time.LocalDateTime;
     use Time.OffsetDateTime;
@@ -100,8 +97,8 @@ namespace Time/DayOfWeek {
 
     def primEquals(x: ##java.time.DayOfWeek, y: ##java.time.DayOfWeek): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = x as ##java.lang.Enum;
-        let y1 = y as ##java.lang.Object;
+        let x1 = unsafe_cast x as ##java.lang.Enum;
+        let y1 = unsafe_cast y as ##java.lang.Object;
         equals(x1, y1)
 
 
@@ -137,16 +134,16 @@ namespace Time/DayOfWeek {
         }
     
     pub def fromLocalDate(x: LocalDate): DayOfWeek = 
-        fromHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
-        fromHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
     /// ## DayOfWeek functions

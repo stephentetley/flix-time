@@ -22,7 +22,7 @@ namespace Time/Chrono {
         pub def toString(x: MinguoChronology): String =
             import java.time.chrono.AbstractChronology.toString(): String \ {};
             let MinguoChronology(x1) = x;
-            toString(x1 as ##java.time.chrono.AbstractChronology)
+            toString(unsafe_cast x1 as ##java.time.chrono.AbstractChronology)
     }
 
 }

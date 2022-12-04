@@ -58,7 +58,6 @@ namespace Time/Chrono/JapaneseDate {
     use Time/Chrono.JapaneseChronology.{JapaneseChronology};
     use Time/Chrono.JapaneseEra;
     use Time/Chrono.JapaneseEra.{JapaneseEra};
-    use Time/Temporal.ChronoField;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
 
@@ -86,35 +85,35 @@ namespace Time/Chrono/JapaneseDate {
     pub def fromLocalDate(x: LocalDate): JapaneseDate = 
         import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {};
         let LocalDate(x1) = x;
-        JapaneseDate(from(x1 as ##java.time.temporal.TemporalAccessor))
+        JapaneseDate(from(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor))
 
 
     pub def toLocalDate(x: JapaneseDate): LocalDate =
         import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
         let JapaneseDate(x1) = x;
-        LocalDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
+        LocalDate(fromDate(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor))
 
 
     pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
         import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
         let HijrahDate(x1) = x;
-        JapaneseDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
+        JapaneseDate(fromDate(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor))
 
     pub def fromMinguoDate(x: MinguoDate): JapaneseDate = 
         import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
         let MinguoDate(x1) = x;
-        JapaneseDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
+        JapaneseDate(fromDate(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor))
 
     pub def fromThaiBuddhistDate(x: ThaiBuddhistDate): JapaneseDate = 
         import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
         let ThaiBuddhistDate(x1) = x;
-        JapaneseDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
+        JapaneseDate(fromDate(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor))
 
     pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
         import java.time.chrono.JapaneseDate.equals(##java.lang.Object): Bool \ {};
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
+        equals(x1, unsafe_cast y1 as ##java.lang.Object)
 
     pub def hashCode(x: JapaneseDate): Int32 = 
         import java.time.chrono.JapaneseDate.hashCode(): Int32 \ {};
@@ -181,7 +180,7 @@ namespace Time/Chrono/JapaneseDate {
         import java.time.chrono.ChronoLocalDate.isBefore(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        isBefore(x1 as ##java.time.chrono.ChronoLocalDate,  y1 as ##java.time.chrono.ChronoLocalDate)
+        isBefore(unsafe_cast x1 as ##java.time.chrono.ChronoLocalDate,  unsafe_cast y1 as ##java.time.chrono.ChronoLocalDate)
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -190,6 +189,6 @@ namespace Time/Chrono/JapaneseDate {
         import java.time.chrono.ChronoLocalDate.isAfter(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        isAfter(x1 as ##java.time.chrono.ChronoLocalDate, y1 as ##java.time.chrono.ChronoLocalDate)
+        isAfter(unsafe_cast x1 as ##java.time.chrono.ChronoLocalDate, unsafe_cast y1 as ##java.time.chrono.ChronoLocalDate)
 
 }

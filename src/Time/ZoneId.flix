@@ -37,7 +37,7 @@ namespace Time {
             import java.time.ZoneId.equals(##java.lang.Object): Bool \ {};
             let ZoneId(x1) = x;
             let ZoneId(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
     }
 
     instance Hash[ZoneId] {
@@ -50,10 +50,10 @@ namespace Time {
     instance Interop/Flix.Marshal[ZoneId] {
         pub def toJavaObject(x: ZoneId): ##java.lang.Object =
             let ZoneId(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): ZoneId = 
-            ZoneId(o as ##java.time.ZoneId)
+            ZoneId(unsafe_cast o as ##java.time.ZoneId)
     }
 
 }
@@ -61,7 +61,6 @@ namespace Time {
 namespace Time/ZoneId {
 
     use Basis/Util.Locale;
-    use Basis/Util.Locale.{Locale};
 
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};
@@ -149,16 +148,16 @@ namespace Time/ZoneId {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
-        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetTime(x: OffsetTime): ZoneId = 
-        fromTemporalAccessorHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
-        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
-        fromTemporalAccessorHelper(Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor)
 
 
     /// ## ZoneId functions

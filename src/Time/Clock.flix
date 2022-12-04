@@ -101,7 +101,7 @@ namespace Time/Clock {
     pub def toString(x: Clock): String \ IO =
         import java.lang.Object.toString(): String \ IO;
         let Clock(x1) = x;
-        let o1 = x1 as ##java.lang.Object;
+        let o1 = unsafe_cast x1 as ##java.lang.Object;
         toString(o1)
 
     pub def millis(x: Clock): Int64 \ IO =

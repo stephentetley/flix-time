@@ -46,8 +46,8 @@ namespace Time/Format/FormatStyle {
 
     def primEquals(x: ##java.time.format.FormatStyle, y: ##java.time.format.FormatStyle): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = x as ##java.lang.Enum;
-        let y1 = y as ##java.lang.Object;
+        let x1 = unsafe_cast x as ##java.lang.Enum;
+        let y1 = unsafe_cast y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.format.FormatStyle): FormatStyle = 

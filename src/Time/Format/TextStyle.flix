@@ -33,7 +33,6 @@ namespace Time/Format/TextStyle {
     use Time/Format.TextStyle;
     use Time/Format.TextStyle.{Full, FullStandalone, Narrow, NarrowStandalone,
             Short, ShortStandalone};
-    use Time.Error.{IllegalArgumentException};
 
 
     pub def marshal(x: TextStyle): ##java.time.format.TextStyle = 
@@ -54,8 +53,8 @@ namespace Time/Format/TextStyle {
 
     def primEquals(x: ##java.time.format.TextStyle, y: ##java.time.format.TextStyle): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = x as ##java.lang.Enum;
-        let y1 = y as ##java.lang.Object;
+        let x1 = unsafe_cast x as ##java.lang.Enum;
+        let y1 = unsafe_cast y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.format.TextStyle): TextStyle = 

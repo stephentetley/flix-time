@@ -47,13 +47,10 @@ namespace Time/Chrono {
 namespace Time/Chrono/JapaneseEra {
 
     use Basis/Util.Locale;
-    use Basis/Util.Locale.{Locale};
 
     use Time/Chrono.JapaneseEra;
     use Time/Chrono.JapaneseEra.{JapaneseEra};
     use Time/Format.TextStyle;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
 
 
     pub def getJapaneseEra(x: JapaneseEra): ##java.time.chrono.JapaneseEra = 
@@ -98,12 +95,12 @@ namespace Time/Chrono/JapaneseEra {
         import java.lang.Object.equals(##java.lang.Object): Bool \ {};
         let JapaneseEra(x1) = x;
         let JapaneseEra(y1) = y;
-        equals(x1 as ##java.lang.Object, y1 as ##java.lang.Object)
+        equals(unsafe_cast x1 as ##java.lang.Object, unsafe_cast y1 as ##java.lang.Object)
 
     pub def hashCode(x: JapaneseEra): Int32 = 
         import java.lang.Object.hashCode(): Int32 \ {};
         let JapaneseEra(x1) = x;
-        hashCode(x1 as ##java.lang.Object)
+        hashCode(unsafe_cast x1 as ##java.lang.Object)
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: JapaneseEra): String = 

@@ -22,16 +22,16 @@ namespace Time/Chrono {
         pub def toString(x: IsoChronology): String =
             import java.time.chrono.AbstractChronology.toString(): String \ {};
             let IsoChronology(x1) = x;
-            toString(x1 as ##java.time.chrono.AbstractChronology)
+            toString(unsafe_cast x1 as ##java.time.chrono.AbstractChronology)
     }
 
     instance Interop/Flix.Marshal[IsoChronology] {
         pub def toJavaObject(x: IsoChronology): ##java.lang.Object =
             let IsoChronology(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): IsoChronology = 
-            IsoChronology(o as ##java.time.chrono.IsoChronology)
+            IsoChronology(unsafe_cast o as ##java.time.chrono.IsoChronology)
     }
 
 }

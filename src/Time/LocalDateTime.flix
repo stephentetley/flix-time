@@ -43,7 +43,7 @@ namespace Time {
         pub def fromString(s: String): Option[LocalDateTime] =
             import static java.time.LocalDateTime.parse(##java.lang.CharSequence): ##java.time.LocalDateTime \ {};
             try {
-                let cs = String.trim(s) as ##java.lang.CharSequence;
+                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
                 Some(LocalDateTime(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -55,7 +55,7 @@ namespace Time {
             import java.time.LocalDateTime.equals(##java.lang.Object): Bool \ {};
             let LocalDateTime(x1) = x;
             let LocalDateTime(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
 
     }
 
@@ -72,7 +72,7 @@ namespace Time {
             import java.time.LocalDateTime.compareTo(##java.time.chrono.ChronoLocalDateTime): Int32 \ {};
             let LocalDateTime(x1) = x;
             let LocalDateTime(y1) = y;
-            let cy1 = y1 as ##java.time.chrono.ChronoLocalDateTime;
+            let cy1 = unsafe_cast y1 as ##java.time.chrono.ChronoLocalDateTime;
             compareTo(x1, cy1) |> Comparison.fromInt32
     }
 
@@ -82,10 +82,10 @@ namespace Time {
     instance Interop/Flix.Marshal[LocalDateTime] {
         pub def toJavaObject(x: LocalDateTime): ##java.lang.Object =
             let LocalDateTime(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): LocalDateTime = 
-            LocalDateTime(o as ##java.time.LocalDateTime)
+            LocalDateTime(unsafe_cast o as ##java.time.LocalDateTime)
     }
 
 }
@@ -98,8 +98,6 @@ namespace Time/LocalDateTime {
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.DateTimeFormat;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
     use Time.DurationZ;
     use Time.DurationZ.{DurationZ};
@@ -192,10 +190,10 @@ namespace Time/LocalDateTime {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
-        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
-        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
     /// ## `to` functions
@@ -228,7 +226,7 @@ namespace Time/LocalDateTime {
     import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDateTime \ {};
     try {
         let DateTimeFormatter(fmtr) = formatter;
-        let cs = String.trim(s) as ##java.lang.CharSequence;
+        let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
         Ok(LocalDateTime(parse(cs, fmtr)))
     } catch {
         case ex: ##java.lang.Exception => 
@@ -255,7 +253,7 @@ namespace Time/LocalDateTime {
         import java.time.LocalDateTime.isBefore(##java.time.chrono.ChronoLocalDateTime): Bool \ {};
         let LocalDateTime(x1) = x;
         let LocalDateTime(y1) = y;
-        isBefore(x1, y1 as ##java.time.chrono.ChronoLocalDateTime)
+        isBefore(x1, unsafe_cast y1 as ##java.time.chrono.ChronoLocalDateTime)
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -264,7 +262,7 @@ namespace Time/LocalDateTime {
         import java.time.LocalDateTime.isAfter(##java.time.chrono.ChronoLocalDateTime): Bool \ {};
         let LocalDateTime(x1) = x;
         let LocalDateTime(y1) = y;
-        isAfter(x1, y1 as ##java.time.chrono.ChronoLocalDateTime)
+        isAfter(x1, unsafe_cast y1 as ##java.time.chrono.ChronoLocalDateTime)
 
     /// ## LocalDateTime functions
 
@@ -366,40 +364,40 @@ namespace Time/LocalDateTime {
     pub def setYearMonth(x: YearMonth, dt: LocalDateTime): LocalDateTime = 
         import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/YearMonth.getYearMonth(x);
-        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
-        LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
+        let dt1 = unsafe_cast getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast adjustInto(x1, dt1) as ##java.time.LocalDateTime)
 
     /// LocalDate methods
 
     pub def setLocalDate(x: LocalDate, dt: LocalDateTime): LocalDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalDate.getLocalDate(x);
-        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
-        LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
+        let dt1 = unsafe_cast getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast adjustInto(x1, dt1) as ##java.time.LocalDateTime)
 
     /// LocalTime methods
 
     pub def setLocalTime(x: LocalTime, dt: LocalDateTime): LocalDateTime = 
         import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalTime.getLocalTime(x);
-        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
-        LocalDateTime(adjustInto(x1, dt1) as ##java.time.LocalDateTime)
+        let dt1 = unsafe_cast getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast adjustInto(x1, dt1) as ##java.time.LocalDateTime)
 
     /// DayOfWeek methods
 
     pub def setDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/DayOfWeek.marshal(x);
-        let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;
-        LocalDateTime(adjustInto(x1, d1) as ##java.time.LocalDateTime)
+        let d1 = unsafe_cast getLocalDateTime(d) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast adjustInto(x1, d1) as ##java.time.LocalDateTime)
 
     /// MonthDay methods
 
     pub def setMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
         import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/MonthDay.getMonthDay(x);
-        let d1 = getLocalDateTime(d) as ##java.time.temporal.Temporal;
-        LocalDateTime(adjustInto(x1, d1) as ##java.time.LocalDateTime)
+        let d1 = unsafe_cast getLocalDateTime(d) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast adjustInto(x1, d1) as ##java.time.LocalDateTime)
 
 
     /// ## truncate functions
@@ -411,7 +409,7 @@ namespace Time/LocalDateTime {
 
     pub def truncatedToDays(x: LocalDateTime): LocalDateTime = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unsafe_cast get_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
     /// ## plus / minus functions
 
@@ -499,36 +497,36 @@ namespace Time/LocalDateTime {
     pub def plusPeriod(i: LocalDateTime, x: Period): LocalDateTime =
         import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/Period.getPeriod(x);
-        let i1 = getLocalDateTime(i) as ##java.time.temporal.Temporal;
-        LocalDateTime(addTo(x1, i1) as ##java.time.LocalDateTime)
+        let i1 = unsafe_cast getLocalDateTime(i) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast addTo(x1, i1) as ##java.time.LocalDateTime)
     
     pub def minusPeriod(i: LocalDateTime, x: Period): LocalDateTime =
         import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/Period.getPeriod(x);
-        let i1 = getLocalDateTime(i) as ##java.time.temporal.Temporal;
-        LocalDateTime(subtractFrom(x1, i1) as ##java.time.LocalDateTime)
+        let i1 = unsafe_cast getLocalDateTime(i) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast subtractFrom(x1, i1) as ##java.time.LocalDateTime)
 
 
 
     pub def plusDuration(dt: LocalDateTime, x: DurationZ): LocalDateTime =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let DurationZ(x1) = x;
-        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
-        LocalDateTime(addTo(x1, dt1) as ##java.time.LocalDateTime)
+        let dt1 = unsafe_cast getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast addTo(x1, dt1) as ##java.time.LocalDateTime)
     
     pub def minusDuration(dt: LocalDateTime, x: DurationZ): LocalDateTime =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let DurationZ(x1) = x;
-        let dt1 = getLocalDateTime(dt) as ##java.time.temporal.Temporal;
-        LocalDateTime(subtractFrom(x1, dt1) as ##java.time.LocalDateTime)
+        let dt1 = unsafe_cast getLocalDateTime(dt) as ##java.time.temporal.Temporal;
+        LocalDateTime(unsafe_cast subtractFrom(x1, dt1) as ##java.time.LocalDateTime)
 
 
     /// ## between / until functions
 
     pub def between(r: {start = LocalDateTime, end = LocalDateTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = getLocalDateTime(r.start) as ##java.time.temporal.Temporal;
-        let e1 = getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
+        let s1 = unsafe_cast getLocalDateTime(r.start) as ##java.time.temporal.Temporal;
+        let e1 = unsafe_cast getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
         DurationZ(between(s1, e1)) 
                             
 
@@ -536,37 +534,37 @@ namespace Time/LocalDateTime {
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getLocalDateTime(r.start);
-        let e1 = getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
+        let e1 = unsafe_cast getLocalDateTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
     pub def secondsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def minutesUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
     pub def hoursUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def halfDaysUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def daysUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def monthsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
-        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def yearsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def quarterYearsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;

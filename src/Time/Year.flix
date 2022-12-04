@@ -37,7 +37,7 @@ namespace Time {
         pub def fromString(s: String): Option[Year] =
             import static java.time.Year.parse(##java.lang.CharSequence): ##java.time.Year \ {};
             try {
-                let cs = String.trim(s) as ##java.lang.CharSequence;
+                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
                 Some(Year(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -49,7 +49,7 @@ namespace Time {
             import java.time.Year.equals(##java.lang.Object): Bool \ {};
             let Year(x1) = x;
             let Year(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
 
     }
 
@@ -71,10 +71,10 @@ namespace Time {
     instance Interop/Flix.Marshal[Year]{
         pub def toJavaObject(x: Year): ##java.lang.Object =
             let Year(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): Year = 
-            Year(o as ##java.time.Year)
+            Year(unsafe_cast o as ##java.time.Year)
     }
 
 }
@@ -87,8 +87,6 @@ namespace Time/Year {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
     use Time.Clock;
     use Time.Clock.{Clock};
     use Time.LocalDate;
@@ -183,19 +181,19 @@ namespace Time/Year {
         }
 
     pub def fromLocalDate(x: LocalDate): Year = 
-        fromTemporalAccessorHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromLocalDateTime(x: LocalDateTime): Year = 
-        fromTemporalAccessorHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Year = 
-        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromYearMonth(x: YearMonth): Year = 
-        fromTemporalAccessorHelper(Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): Year = 
-        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
     /// ## `parse` / `format` functions  
@@ -210,7 +208,7 @@ namespace Time/Year {
         import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.Year \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = String.trim(s) as ##java.lang.CharSequence;
+            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
             Ok(Year(parse(cs, fmtr)))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -307,21 +305,21 @@ namespace Time/Year {
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = Year, end = Year}): Int64 = 
         import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getYear(r.start);
-        let e1 = getYear(r.end) as ##java.time.temporal.Temporal;
+        let e1 = unsafe_cast getYear(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
     pub def yearsUntil(r: {start = Year, end = Year}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def decadesUntil(r: {start = Year, end = Year}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit \ {} as get_DECADES;
-        untilHelper(get_DECADES() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_DECADES() as ##java.time.temporal.TemporalUnit, r)
 
     pub def centuriesUntil(r: {start = Year, end = Year}): Int64 = 
         import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
-        untilHelper(get_CENTURIES() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_CENTURIES() as ##java.time.temporal.TemporalUnit, r)
 
 
 }

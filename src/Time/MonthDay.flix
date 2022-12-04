@@ -37,7 +37,7 @@ namespace Time {
     instance FromString[MonthDay] {
         pub def fromString(s: String): Option[MonthDay] = try {
             import static java.time.MonthDay.parse(##java.lang.CharSequence): ##java.time.MonthDay \ {};
-            let cs = String.trim(s) as ##java.lang.CharSequence;
+            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
             Some(MonthDay(parse(cs)))
         } catch {
             case _: ##java.time.format.DateTimeParseException => None
@@ -49,7 +49,7 @@ namespace Time {
             import java.time.MonthDay.equals(##java.lang.Object): Bool \ {};
             let MonthDay(x1) = x;
             let MonthDay(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
 
     }
 
@@ -72,10 +72,10 @@ namespace Time {
     instance Interop/Flix.Marshal[MonthDay] {
         pub def toJavaObject(x: MonthDay): ##java.lang.Object =
             let MonthDay(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): MonthDay = 
-            MonthDay(o as ##java.time.MonthDay)
+            MonthDay(unsafe_cast o as ##java.time.MonthDay)
     }
 
 }
@@ -88,8 +88,6 @@ namespace Time/MonthDay {
     use Time/Format.DateFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
     use Time.LocalDate;
     use Time.LocalDateTime;
     use Time.Month;
@@ -140,15 +138,15 @@ namespace Time/MonthDay {
         }
 
     pub def fromLocalDate(x: LocalDate): MonthDay = 
-        fromTemporalAccessorHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
         
     pub def fromLocalDateTime(x: LocalDateTime): MonthDay = 
-        fromTemporalAccessorHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
         
     pub def fromOffsetDateTime(x: OffsetDateTime): MonthDay = 
         import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
         try {
-            let x1 = Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            let x1 = unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor;
             MonthDay(fromTA(x1))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -159,7 +157,7 @@ namespace Time/MonthDay {
     pub def fromZonedDateTime(x: ZonedDateTime): MonthDay = 
         import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
         try {
-            let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+            let x1 = unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
             MonthDay(fromTA(x1))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -179,7 +177,7 @@ namespace Time/MonthDay {
         import static java.time.MonthDay.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.MonthDay \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = String.trim(s) as ##java.lang.CharSequence;
+            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
             Ok(MonthDay(parse(cs, fmtr)))
         } catch {
             case ex: ##java.lang.Exception => 

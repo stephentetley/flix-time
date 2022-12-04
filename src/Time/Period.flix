@@ -39,7 +39,7 @@ namespace Time {
         pub def fromString(s: String): Option[Period] =
             import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
             try {
-                let cs = String.trim(s) as ##java.lang.CharSequence;
+                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
                 Some(Period(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -51,7 +51,7 @@ namespace Time {
             import java.time.Period.equals(##java.lang.Object): Bool \ {};
             let Period(x1) = x;
             let Period(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
     }
 
 
@@ -68,7 +68,7 @@ namespace Time {
             import java.time.Period.plus(##java.time.temporal.TemporalAmount): ##java.time.Period \ {};
             let Period(x1) = x;
             let Period(y1) = y;
-            Period(plus(x1, y1 as ##java.time.temporal.TemporalAmount))
+            Period(plus(x1, unsafe_cast y1 as ##java.time.temporal.TemporalAmount))
     }
 
     instance Sub[Period] {
@@ -76,7 +76,7 @@ namespace Time {
             import java.time.Period.minus(##java.time.temporal.TemporalAmount): ##java.time.Period \ {};
             let Period(x1) = x;
             let Period(y1) = y;
-            Period(minus(x1, y1 as ##java.time.temporal.TemporalAmount))
+            Period(minus(x1, unsafe_cast y1 as ##java.time.temporal.TemporalAmount))
     }
 
 
@@ -101,10 +101,10 @@ namespace Time {
     instance Interop/Flix.Marshal[Period] {
         pub def toJavaObject(x: Period): ##java.lang.Object =
             let Period(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): Period = 
-            Period(o as ##java.time.Period)
+            Period(unsafe_cast o as ##java.time.Period)
     }
     
 }
@@ -175,7 +175,7 @@ namespace Time/Period {
     pub def parse(s: String): Result[Period, String] =
         import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
         try {
-            let cs = String.trim(s) as ##java.lang.CharSequence;
+            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
             Ok(Period(parse(cs)))
         } catch {
             case ex: ##java.lang.Exception => 

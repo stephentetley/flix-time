@@ -18,8 +18,6 @@
 
 namespace Time {
 
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalAdjuster;
 
     pub enum Month with Eq, Order, ToString, Hash, Boxable {
         case January,
@@ -61,17 +59,11 @@ namespace Time {
 namespace Time/Month {
 
     use Basis/Util.Locale;
-    use Basis/Util.Locale.{Locale};
 
     use Time.Month;
     use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};
 
     use Time/Format.TextStyle;
-    use Time/Temporal.Temporal;
-    use Time/Temporal.TemporalAccessor;
-    use Time/Temporal.TemporalField;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
     use Time.LocalDate;
     use Time.LocalDateTime;
     use Time.MonthDay;
@@ -111,8 +103,8 @@ namespace Time/Month {
 
     def primEquals(x: ##java.time.Month, y: ##java.time.Month): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = x as ##java.lang.Enum;
-        let y1 = y as ##java.lang.Object;
+        let x1 = unsafe_cast x as ##java.lang.Enum;
+        let y1 = unsafe_cast y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.Month): Month =
@@ -157,22 +149,22 @@ namespace Time/Month {
         }
 
     pub def fromLocalDate(x: LocalDate): Month = 
-        fromHelper(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromLocalDateTime(x: LocalDateTime): Month = 
-        fromHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromMonthDay(x: MonthDay): Month = 
-        fromHelper(Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
-        fromHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromYearMonth(x: YearMonth): Month = 
-        fromHelper(Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): Month = 
-        fromHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     /// ## Month functions
     

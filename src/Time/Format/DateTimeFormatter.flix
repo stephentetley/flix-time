@@ -50,7 +50,9 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatter {
 
+    
     use Basis/Util.Locale;
+    use Interop/Util.Locale.{Locale};
 
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
@@ -183,7 +185,6 @@ namespace Time/Format/DateTimeFormatter {
 
 
     pub def getLocale(x: DateTimeFormatter[t]): Locale =
-        use Interop/Util.Locale.{Locale};
         import java.time.format.DateTimeFormatter.getLocale(): ##java.util.Locale \ {};        
         let DateTimeFormatter(x1) = x;
         Locale(getLocale(x1))

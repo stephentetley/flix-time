@@ -26,13 +26,10 @@ namespace Time/Chrono {
 namespace Time/Chrono/HijrahEra {
 
     use Basis/Util.Locale;
-    use Basis/Util.Locale.{Locale};
 
     use Time/Chrono.HijrahEra;
     use Time/Chrono.HijrahEra.{AH};
     use Time/Format.TextStyle;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
 
     pub def marshal(x: HijrahEra): ##java.time.chrono.HijrahEra = 
         import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
@@ -42,8 +39,8 @@ namespace Time/Chrono/HijrahEra {
 
     def primEquals(x: ##java.time.chrono.HijrahEra, y: ##java.time.chrono.HijrahEra): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = x as ##java.lang.Enum;
-        let y1 = y as ##java.lang.Object;
+        let x1 = unsafe_cast x as ##java.lang.Enum;
+        let y1 = unsafe_cast y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.chrono.HijrahEra): HijrahEra = 

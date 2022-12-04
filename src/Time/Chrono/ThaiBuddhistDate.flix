@@ -45,7 +45,6 @@ namespace Time/Chrono/ThaiBuddhistDate {
 
     use Time/Chrono.ThaiBuddhistDate;
     use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate};
-    use Time/Temporal.ChronoField;
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
 
@@ -61,7 +60,7 @@ namespace Time/Chrono/ThaiBuddhistDate {
         import java.time.chrono.ThaiBuddhistDate.equals(##java.lang.Object): Bool \ {};
         let ThaiBuddhistDate(x1) = x;
         let ThaiBuddhistDate(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
+        equals(x1, unsafe_cast y1 as ##java.lang.Object)
 
     pub def hashCode(x: ThaiBuddhistDate): Int32 = 
         import java.time.chrono.ThaiBuddhistDate.hashCode(): Int32 \ {};
@@ -72,7 +71,7 @@ namespace Time/Chrono/ThaiBuddhistDate {
     pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
         import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
         let ThaiBuddhistDate(x1) = x;
-        LocalDate(fromDate(x1 as ##java.time.temporal.TemporalAccessor))
+        LocalDate(fromDate(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor))
 
 
     /// pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 

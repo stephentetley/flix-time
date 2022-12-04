@@ -27,13 +27,10 @@ namespace Time/Chrono {
 namespace Time/Chrono/IsoEra {
 
     use Basis/Util.Locale;
-    use Basis/Util.Locale.{Locale};
 
     use Time/Chrono.IsoEra;
     use Time/Chrono.IsoEra.{BCE, CE};
-    use Time/Format.TextStyle;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};    
+    use Time/Format.TextStyle;  
     use Time.LocalDate;
     use Time.LocalDate.{LocalDate};
 
@@ -47,8 +44,8 @@ namespace Time/Chrono/IsoEra {
 
     def primEquals(x: ##java.time.chrono.IsoEra, y: ##java.time.chrono.IsoEra): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = x as ##java.lang.Enum;
-        let y1 = y as ##java.lang.Object;
+        let x1 = unsafe_cast x as ##java.lang.Enum;
+        let y1 = unsafe_cast y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.chrono.IsoEra): IsoEra = 
@@ -70,7 +67,7 @@ namespace Time/Chrono/IsoEra {
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: IsoEra): String = 
         import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let x1 = marshal(x) as ##java.time.chrono.Era;
+        let x1 = unsafe_cast marshal(x) as ##java.time.chrono.Era;
         let style1 = Time/Format/TextStyle.marshal(style);
         let locale1 = Interop/Util/Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)

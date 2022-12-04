@@ -43,7 +43,7 @@ namespace Time {
         pub def fromString(s: String): Option[LocalTime] =
             import static java.time.LocalTime.parse(##java.lang.CharSequence): ##java.time.LocalTime \ {};
             try {
-                let cs = String.trim(s) as ##java.lang.CharSequence;
+                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
                 Some(LocalTime(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -56,7 +56,7 @@ namespace Time {
             import java.time.LocalTime.equals(##java.lang.Object): Bool \ {};
             let LocalTime(x1) = x;
             let LocalTime(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
     }
     
     instance Hash[LocalTime] {
@@ -80,10 +80,10 @@ namespace Time {
     instance Interop/Flix.Marshal[LocalTime] {
         pub def toJavaObject(x: LocalTime): ##java.lang.Object =
             let LocalTime(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): LocalTime = 
-            LocalTime(o as ##java.time.LocalTime)
+            LocalTime(unsafe_cast o as ##java.time.LocalTime)
     }
 
 }
@@ -96,8 +96,6 @@ namespace Time/LocalTime {
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
     use Time/Format.TimeFormat;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
     use Time.LocalDateTime;
     use Time.OffsetDateTime;
     use Time.OffsetTime;
@@ -185,16 +183,16 @@ namespace Time/LocalTime {
         }
 
     pub def fromLocalDateTime(x: LocalDateTime): LocalTime = 
-        fromTemporalAccessorHelper(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): LocalTime = 
-        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetTime(x: OffsetTime): LocalTime = 
-        fromTemporalAccessorHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromZonedDateTime(x: ZonedDateTime): LocalTime = 
-        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
 
     /// ## `to` functions
@@ -220,7 +218,7 @@ namespace Time/LocalTime {
         import static java.time.LocalTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalTime \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = String.trim(s) as ##java.lang.CharSequence;
+            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
             Ok(LocalTime(parse(cs, fmtr)))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -261,11 +259,11 @@ namespace Time/LocalTime {
 
     pub def isAmOfDay(x: LocalTime): Bool = 
         import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField \ {} as get_AMPM_OF_DAY;        
-        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 0
+        getHelper(unsafe_cast get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 0
 
     pub def isPmOfDay(x: LocalTime): Bool = 
         import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField \ {} as get_AMPM_OF_DAY;        
-        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
+        getHelper(unsafe_cast get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
 
     /// ## Getters and Setters
 
@@ -318,7 +316,7 @@ namespace Time/LocalTime {
 
     pub def truncatedToHours(x: LocalTime): LocalTime = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-        truncatedToHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unsafe_cast get_HOURS() as ##java.time.temporal.TemporalUnit, x)
 
     /// ## plus / minus functions
 
@@ -366,43 +364,43 @@ namespace Time/LocalTime {
     
     pub def plusDuration(i: LocalTime, x: DurationZ): LocalTime =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
+        let i1 = unsafe_cast getLocalTime(i) as ##java.time.temporal.Temporal;
         let DurationZ(x1) = x;
-        LocalTime(addTo(x1, i1) as ##java.time.LocalTime)
+        LocalTime(unsafe_cast addTo(x1, i1) as ##java.time.LocalTime)
     
     pub def minusDuration(i: LocalTime, x: DurationZ): LocalTime =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let i1 = getLocalTime(i) as ##java.time.temporal.Temporal;
+        let i1 = unsafe_cast getLocalTime(i) as ##java.time.temporal.Temporal;
         let DurationZ(x1) = x;
-        LocalTime(subtractFrom(x1, i1) as ##java.time.LocalTime)
+        LocalTime(unsafe_cast subtractFrom(x1, i1) as ##java.time.LocalTime)
 
     /// ## between / until functions
 
     pub def between(r: {start = LocalTime, end = LocalTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = getLocalTime(r.start) as ##java.time.temporal.Temporal;
-        let e1 = getLocalTime(r.end) as ##java.time.temporal.Temporal;
+        let s1 = unsafe_cast getLocalTime(r.start) as ##java.time.temporal.Temporal;
+        let e1 = unsafe_cast getLocalTime(r.end) as ##java.time.temporal.Temporal;
         DurationZ(between(s1, e1)) 
 
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalTime, end = LocalTime}): Int64 = 
         import java.time.LocalTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getLocalTime(r.start);
-        let e1 = getLocalTime(r.end) as ##java.time.temporal.Temporal;
+        let e1 = unsafe_cast getLocalTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
     pub def secondsUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def minutesUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
     pub def hoursUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
     
     /// ## generic helper functions

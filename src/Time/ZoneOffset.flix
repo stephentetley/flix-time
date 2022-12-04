@@ -36,7 +36,7 @@ namespace Time {
             import java.time.ZoneOffset.equals(##java.lang.Object): Bool \ {};
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
     }
 
     instance Hash[ZoneOffset] {
@@ -60,10 +60,10 @@ namespace Time {
     instance Interop/Flix.Marshal[ZoneOffset] {
         pub def toJavaObject(x: ZoneOffset): ##java.lang.Object =
             let ZoneOffset(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): ZoneOffset = 
-            ZoneOffset(o as ##java.time.ZoneOffset)
+            ZoneOffset(unsafe_cast o as ##java.time.ZoneOffset)
     }
 
 }
@@ -74,8 +74,6 @@ namespace Time/ZoneOffset {
     use Time.ZoneOffset;
     use Time.ZoneOffset.{ZoneOffset};
 
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
     use Time/Zone.ZoneRules;
     use Time/Zone.ZoneRules.{ZoneRules};
     use Time.OffsetDateTime;
@@ -135,13 +133,13 @@ namespace Time/ZoneOffset {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
-        fromTemporalAccessorHelper(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
-        fromTemporalAccessorHelper(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
             
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
-        fromTemporalAccessorHelper(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
     
     /// ## ZoneOffset functions
 
@@ -165,7 +163,7 @@ namespace Time/ZoneOffset {
 
     pub def getOffsetSeconds(x: ZoneOffset): Int32 =
         import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField \ {} as get_OFFSET_SECONDS;
-        getHelper(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, x)
+        getHelper(unsafe_cast get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField, x)
 
 
     /// ## generic helper functions

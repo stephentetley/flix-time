@@ -18,12 +18,12 @@ namespace Time/Chrono {
 
     pub enum HijrahChronology(##java.time.chrono.HijrahChronology)
 
-    instance ToString[HijrahChronology] {
-        pub def toString(x: HijrahChronology): String =
-            import java.time.chrono.AbstractChronology.toString(): String \ {};
-            let HijrahChronology(x1) = x;
-            toString(x1 as ##java.time.chrono.AbstractChronology)
-    }
+    // instance ToString[HijrahChronology] {
+    //     pub def toString(x: HijrahChronology): String =
+    //         import java.time.chrono.AbstractChronology.toString(): String \ {};
+    //         let HijrahChronology(x1) = x;
+    //         toString(unsafe_cast x1 as ##java.time.chrono.AbstractChronology)
+    // }
 
 
 }
@@ -37,8 +37,6 @@ namespace Time/Chrono/HijrahChronology {
     use Time/Chrono.HijrahDate.{HijrahDate};
     use Time/Chrono.HijrahEra;
     use Time/Format.ResolverStyle;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
     use Time.Clock;
     use Time.Clock.{Clock};
     use Time.ZoneId;
@@ -61,7 +59,7 @@ namespace Time/Chrono/HijrahChronology {
                         r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
         import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
-        let era1 = Time/Chrono/HijrahEra.marshal(r.era) as ##java.time.chrono.Era;
+        let era1 = unsafe_cast Time/Chrono/HijrahEra.marshal(r.era) as ##java.time.chrono.Era;
         HijrahDate(date(x1, era1, r.yearOfEra, r.month, r.dayOfMonth))
 
 
@@ -116,11 +114,13 @@ namespace Time/Chrono/HijrahChronology {
         let HijrahChronology(x1) = x;
         isLeapYear(x1, prolepticYear)
 
+    
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 = 
         import java.time.chrono.HijrahChronology.prolepticYear(##java.time.chrono.Era, Int32): Int32 \ {};
         let HijrahChronology(x1) = x;
-        let era1 = Time/Chrono/HijrahEra.marshal(era) as ##java.time.chrono.Era;
-        prolepticYear(x1, era1, yearOfEra)
+        let era1 = Time/Chrono/HijrahEra.marshal(era);
+        let era2 = unsafe_cast era1 as ##java.time.chrono.Era;
+        prolepticYear(x1, era2, yearOfEra)
 
 
     /// pub def resolveDate(fieldValues: List[(a, Int64)], resolverStyle: ResolverStyle, x: HijrahChronology): HijrahDate with TemporalField[a] =

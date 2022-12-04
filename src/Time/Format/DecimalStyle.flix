@@ -31,7 +31,7 @@ namespace Time/Format {
             import java.time.format.DecimalStyle.equals(##java.lang.Object): Bool \ {};
             let DecimalStyle(x1) = x;
             let DecimalStyle(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
     }
 
     instance Hash[DecimalStyle] {
@@ -46,7 +46,6 @@ namespace Time/Format {
 namespace Time/Format/DecimalStyle {
 
     use Basis/Util.Locale;
-    use Basis/Util.Locale.{Locale};
 
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};

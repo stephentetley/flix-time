@@ -28,13 +28,10 @@ namespace Time/Chrono {
 namespace Time/Chrono/MinguoEra {
 
     use Basis/Util.Locale;
-    use Basis/Util.Locale.{Locale};
 
     use Time/Chrono.MinguoEra;
     use Time/Chrono.MinguoEra.{BEFORE_ROC, ROC};
     use Time/Format.TextStyle;
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
 
     pub def marshal(x: MinguoEra): ##java.time.chrono.MinguoEra = 
         import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
@@ -46,8 +43,8 @@ namespace Time/Chrono/MinguoEra {
 
     def primEquals(x: ##java.time.chrono.MinguoEra, y: ##java.time.chrono.MinguoEra): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = x as ##java.lang.Enum;
-        let y1 = y as ##java.lang.Object;
+        let x1 = unsafe_cast x as ##java.lang.Enum;
+        let y1 = unsafe_cast y as ##java.lang.Object;
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.chrono.MinguoEra): MinguoEra =

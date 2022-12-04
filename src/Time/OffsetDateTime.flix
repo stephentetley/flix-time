@@ -42,7 +42,7 @@ namespace Time {
         pub def fromString(s: String): Option[OffsetDateTime] =
             import static java.time.OffsetDateTime.parse(##java.lang.CharSequence): ##java.time.OffsetDateTime \ {};
             try {
-                let cs = String.trim(s) as ##java.lang.CharSequence;
+                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
                 Some(OffsetDateTime(parse(cs)))
             } catch {
                 case _: ##java.time.format.DateTimeParseException => None
@@ -54,7 +54,7 @@ namespace Time {
             import java.time.OffsetDateTime.equals(##java.lang.Object): Bool \ {};
             let OffsetDateTime(x1) = x;
             let OffsetDateTime(y1) = y;
-            equals(x1, y1 as ##java.lang.Object)
+            equals(x1, unsafe_cast y1 as ##java.lang.Object)
 
     }
 
@@ -78,10 +78,10 @@ namespace Time {
     instance Interop/Flix.Marshal[OffsetDateTime] {
         pub def toJavaObject(x: OffsetDateTime): ##java.lang.Object =
             let OffsetDateTime(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): OffsetDateTime = 
-            OffsetDateTime(o as ##java.time.OffsetDateTime)
+            OffsetDateTime(unsafe_cast o as ##java.time.OffsetDateTime)
     }
 
 }
@@ -93,8 +93,6 @@ namespace Time/OffsetDateTime {
     use Time/Format.DateTimeFormat;
     use Time/Format.DateTimeFormatter;
     use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Temporal.ValueRange;
-    use Time/Temporal.ValueRange.{ValueRange};
     use Time.DayOfWeek;
     use Time.DurationZ;
     use Time.DurationZ.{DurationZ};
@@ -197,7 +195,7 @@ namespace Time/OffsetDateTime {
         }
 
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
-        let x1 = Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
+        let x1 = unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor;
         fromTemporalAccessorHelper(x1)
 
     /// ## `to` functions
@@ -267,7 +265,7 @@ namespace Time/OffsetDateTime {
         import static java.time.OffsetDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.OffsetDateTime \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = String.trim(s) as ##java.lang.CharSequence;
+            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
             Ok(OffsetDateTime(parse(cs, fmtr)))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -315,11 +313,11 @@ namespace Time/OffsetDateTime {
 
     pub def isAmOfDay(x: OffsetDateTime): Bool = 
         import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField \ {} as get_AMPM_OF_DAY;        
-        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 0
+        getHelper(unsafe_cast get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 0
 
     pub def isPmOfDay(x: OffsetDateTime): Bool = 
         import static get java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField \ {} as get_AMPM_OF_DAY;        
-        getHelper(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
+        getHelper(unsafe_cast get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField, x) == 1
 
     /// ## OffsetDateTime functions
 
@@ -329,7 +327,7 @@ namespace Time/OffsetDateTime {
         let OffsetDateTime(x1) = x;
         let OffsetDateTime(y1) = y;
         let cmp = timeLineOrder();
-        compare(cmp, x1 as ##java.lang.Object, y1 as ##java.lang.Object) |> Comparison.fromInt32
+        compare(cmp, unsafe_cast x1 as ##java.lang.Object, unsafe_cast y1 as ##java.lang.Object) |> Comparison.fromInt32
 
     /// ## Getters and Setters
     /// Get/Set...
@@ -404,8 +402,8 @@ namespace Time/OffsetDateTime {
     pub def setDayOfWeek(x: DayOfWeek, d: OffsetDateTime): OffsetDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/DayOfWeek.marshal(x);
-        let d1 = getOffsetDateTime(d) as ##java.time.temporal.Temporal;
-        OffsetDateTime(adjustInto(x1, d1) as ##java.time.OffsetDateTime)
+        let d1 = unsafe_cast getOffsetDateTime(d) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast adjustInto(x1, d1) as ##java.time.OffsetDateTime)
 
 
     pub def getDayOfMonth(x: OffsetDateTime): Int32 =
@@ -459,80 +457,80 @@ namespace Time/OffsetDateTime {
 
     pub def getMonthDay(d: OffsetDateTime): MonthDay = 
         import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
-        let d1 = getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
+        let d1 = unsafe_cast getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
         MonthDay(fromTA(d1))
 
     pub def setMonthDay(x: MonthDay, d: OffsetDateTime): OffsetDateTime = 
         import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/MonthDay.getMonthDay(x);
-        let d1 = getOffsetDateTime(d) as ##java.time.temporal.Temporal;
-        OffsetDateTime(adjustInto(x1, d1) as ##java.time.OffsetDateTime)
+        let d1 = unsafe_cast getOffsetDateTime(d) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast adjustInto(x1, d1) as ##java.time.OffsetDateTime)
 
     /// YearMonth methods
 
     pub def getYearMonth(d: OffsetDateTime): YearMonth = 
         import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.YearMonth \ {} as fromTA;
-        let d1 = getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
+        let d1 = unsafe_cast getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
         YearMonth(fromTA(d1))
 
     pub def setYearMonth(x: YearMonth, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/YearMonth.getYearMonth(x);
-        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
-        OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
+        let dt1 = unsafe_cast getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
 
     /// LocalDate methods
 
     pub def getLocalDate(d: OffsetDateTime): LocalDate = 
         import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromTA;
-        let d1 = getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
+        let d1 = unsafe_cast getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
         LocalDate(fromTA(d1))
 
 
     pub def setLocalDate(x: LocalDate, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalDate.getLocalDate(x);
-        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
-        OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
+        let dt1 = unsafe_cast getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
 
     /// LocalDateTime methods
 
     pub def getLocalDateTime(d: OffsetDateTime): LocalDateTime = 
         import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime \ {} as fromTA;
-        let d1 = getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
+        let d1 = unsafe_cast getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
         LocalDateTime(fromTA(d1))
 
     pub def setLocalDateTime(x: LocalDateTime, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalDateTime.getLocalDateTime(x);
-        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
-        OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
+        let dt1 = unsafe_cast getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
 
     /// LocalTime methods
 
     pub def getLocalTime(d: OffsetDateTime): LocalTime = 
         import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime \ {} as fromTA;
-        let d1 = getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
+        let d1 = unsafe_cast getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor;
         LocalTime(fromTA(d1))
 
 
     pub def setLocalTime(x: LocalTime, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalTime.getLocalTime(x);
-        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
-        OffsetDateTime(adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
+        let dt1 = unsafe_cast getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast adjustInto(x1, dt1) as ##java.time.OffsetDateTime)
 
     pub def getEpochDay(x: OffsetDateTime): Int64 = 
         import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField \ {} as get_EPOCH_DAY;        
-        getLongHelper(get_EPOCH_DAY() as ##java.time.temporal.TemporalField, x)
+        getLongHelper(unsafe_cast get_EPOCH_DAY() as ##java.time.temporal.TemporalField, x)
 
     /// ZoneOffset methods
 
     pub def setZoneOffset(zo: ZoneOffset, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let zo1 = Time/ZoneOffset.getZoneOffset(zo);
-        let dt1 = getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
-        OffsetDateTime(adjustInto(zo1, dt1) as ##java.time.OffsetDateTime)
+        let dt1 = unsafe_cast getOffsetDateTime(dt) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast adjustInto(zo1, dt1) as ##java.time.OffsetDateTime)
 
 
     /// ## truncate functions
@@ -544,7 +542,7 @@ namespace Time/OffsetDateTime {
 
     pub def truncatedToDays(x: OffsetDateTime): OffsetDateTime = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-        truncatedToHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unsafe_cast get_DAYS() as ##java.time.temporal.TemporalUnit, x)
 
     /// ## plus / minus functions
 
@@ -631,29 +629,29 @@ namespace Time/OffsetDateTime {
 
     pub def plusDuration(i: OffsetDateTime, x: DurationZ): OffsetDateTime =
         import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        let i1 = unsafe_cast getOffsetDateTime(i) as ##java.time.temporal.Temporal;
         let DurationZ(x1) = x;
-        OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
+        OffsetDateTime(unsafe_cast addTo(x1, i1) as ##java.time.OffsetDateTime)
     
     pub def minusDuration(i: OffsetDateTime, x: DurationZ): OffsetDateTime =
         import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        let i1 = unsafe_cast getOffsetDateTime(i) as ##java.time.temporal.Temporal;
         let DurationZ(x1) = x;
-        OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
+        OffsetDateTime(unsafe_cast subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
 
     /// Period methods
 
     pub def plusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
         import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/Period.getPeriod(x);
-        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
-        OffsetDateTime(addTo(x1, i1) as ##java.time.OffsetDateTime)
+        let i1 = unsafe_cast getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast addTo(x1, i1) as ##java.time.OffsetDateTime)
     
     pub def minusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
         import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/Period.getPeriod(x);
-        let i1 = getOffsetDateTime(i) as ##java.time.temporal.Temporal;
-        OffsetDateTime(subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
+        let i1 = unsafe_cast getOffsetDateTime(i) as ##java.time.temporal.Temporal;
+        OffsetDateTime(unsafe_cast subtractFrom(x1, i1) as ##java.time.OffsetDateTime)
 
 
 
@@ -661,45 +659,45 @@ namespace Time/OffsetDateTime {
 
     pub def between(r: {start = OffsetDateTime, end = OffsetDateTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = getOffsetDateTime(r.start) as ##java.time.temporal.Temporal;
-        let e1 = getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
+        let s1 = unsafe_cast getOffsetDateTime(r.start) as ##java.time.temporal.Temporal;
+        let e1 = unsafe_cast getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
         DurationZ(between(s1, e1))
 
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getOffsetDateTime(r.start);
-        let e1 = getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
+        let e1 = unsafe_cast getOffsetDateTime(r.end) as ##java.time.temporal.Temporal;
         until(b1, e1, u)
 
 
     pub def secondsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-        untilHelper(get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_SECONDS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def minutesUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-        untilHelper(get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_MINUTES() as ##java.time.temporal.TemporalUnit, r)
 
     pub def hoursUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-        untilHelper(get_HOURS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_HOURS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def halfDaysUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-        untilHelper(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def daysUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-        untilHelper(get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_DAYS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def monthsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
-        untilHelper(get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def yearsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-        untilHelper(get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unsafe_cast get_YEARS() as ##java.time.temporal.TemporalUnit, r)
 
     pub def quarterYearsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
