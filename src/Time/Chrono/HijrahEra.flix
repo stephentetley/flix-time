@@ -25,7 +25,7 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/HijrahEra {
 
-    use Basis/Util.Locale;
+    use Interop/Util.Locale;
 
     use Time/Chrono.HijrahEra;
     use Time/Chrono.HijrahEra.{AH};

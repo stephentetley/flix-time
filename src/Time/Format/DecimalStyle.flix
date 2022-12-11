@@ -45,7 +45,7 @@ namespace Time/Format {
 
 namespace Time/Format/DecimalStyle {
 
-    use Basis/Util.Locale;
+    use Interop/Util.Locale;
 
     use Time/Format.DecimalStyle;
     use Time/Format.DecimalStyle.{DecimalStyle};

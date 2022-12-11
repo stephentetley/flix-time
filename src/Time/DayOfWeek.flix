@@ -52,7 +52,7 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
-    use Basis/Util.Locale;
+    use Interop/Util.Locale;
 
     use Time.DayOfWeek;
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};

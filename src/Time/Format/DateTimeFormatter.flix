@@ -51,20 +51,20 @@ namespace Time/Format {
 namespace Time/Format/DateTimeFormatter {
 
     
-    use Basis/Util.Locale;
-    use Interop/Util.Locale.{Locale};
+    use Interop/Util.Locale
+    use Interop/Util.Locale.{Locale}
 
-    use Time/Format.DateTimeFormatter;
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Format.DateFormat;
-    use Time/Format.TimeFormat;
-    use Time/Format.DateTimeFormat;
-    use Time/Format.DecimalStyle;
-    use Time/Format.DecimalStyle.{DecimalStyle};
-    use Time/Format.FormatStyle;
-    use Time/Format.ResolverStyle;
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time/Format.DateFormat
+    use Time/Format.TimeFormat
+    use Time/Format.DateTimeFormat
+    use Time/Format.DecimalStyle
+    use Time/Format.DecimalStyle.{DecimalStyle}
+    use Time/Format.FormatStyle
+    use Time/Format.ResolverStyle
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
 
     /// ## Unwrap
 

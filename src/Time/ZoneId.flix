@@ -60,7 +60,7 @@ namespace Time {
 
 namespace Time/ZoneId {
 
-    use Basis/Util.Locale;
+    use Interop/Util.Locale;
 
     use Time.ZoneId;
     use Time.ZoneId.{ZoneId};

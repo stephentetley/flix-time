@@ -27,7 +27,7 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/ThaiBuddhistEra {
 
-    use Basis/Util.Locale;
+    use Interop/Util.Locale;
 
     use Time/Chrono.ThaiBuddhistEra;
     use Time/Chrono.ThaiBuddhistEra.{BEFORE_BE, BE};

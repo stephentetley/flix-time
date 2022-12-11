@@ -47,7 +47,7 @@ namespace Time/Format {
 
 namespace Time/Format/DateTimeFormatterBuilder {
 
-    use Basis/Util.Locale;
+    use Interop/Util.Locale;
 
     use Time/Format.DateTimeFormatterBuilder;
     use Time/Format.DateTimeFormatterBuilder.{DateTimeFormatterBuilder};

@@ -26,7 +26,7 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/IsoEra {
 
-    use Basis/Util.Locale;
+    use Interop/Util.Locale;
 
     use Time/Chrono.IsoEra;
     use Time/Chrono.IsoEra.{BCE, CE};

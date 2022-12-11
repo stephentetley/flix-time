@@ -46,7 +46,7 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/JapaneseEra {
 
-    use Basis/Util.Locale;
+    use Interop/Util.Locale;
 
     use Time/Chrono.JapaneseEra;
     use Time/Chrono.JapaneseEra.{JapaneseEra};
