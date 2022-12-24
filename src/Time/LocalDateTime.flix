@@ -18,6 +18,8 @@
 
 namespace Time {
 
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around a Java LocalDateTime.
@@ -86,6 +88,16 @@ namespace Time {
 
         pub def fromJavaObject(o: ##java.lang.Object): LocalDateTime = 
             LocalDateTime(unsafe_cast o as ##java.time.LocalDateTime)
+    }
+
+    instance Interop/Time/Temporal.ImpTemporalAccessor[LocalDateTime] {
+        pub def toTemporalAccessor(x: LocalDateTime): TemporalAccessor = 
+            let LocalDateTime(x1) = x;
+            TemporalAccessor(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor)
+
+        pub def fromTemporalAccessor(x: TemporalAccessor): LocalDateTime = 
+            let TemporalAccessor(x1) = x;
+            LocalDateTime(unsafe_cast x1 as ##java.time.LocalDateTime)
     }
 
 }

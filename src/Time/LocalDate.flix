@@ -18,6 +18,8 @@
 
 namespace Time {
 
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around a Java LocalDate.
@@ -86,34 +88,45 @@ namespace Time {
             LocalDate(unsafe_cast o as ##java.time.LocalDate)
     }
 
+    instance Interop/Time/Temporal.ImpTemporalAccessor[LocalDate] {
+        pub def toTemporalAccessor(x: LocalDate): TemporalAccessor = 
+            let LocalDate(x1) = x;
+            TemporalAccessor(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor)
+
+        pub def fromTemporalAccessor(x: TemporalAccessor): LocalDate = 
+            let TemporalAccessor(x1) = x;
+            LocalDate(unsafe_cast x1 as ##java.time.LocalDate)
+    }
 }
 
 namespace Time/LocalDate {
 
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
-    use Time/Format.DateFormat;
-    use Time/Format.DateTimeFormatter;
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time.DayOfWeek;
-    use Time.LocalDateTime;
-    use Time.LocalDateTime.{LocalDateTime};
-    use Time.LocalTime;
-    use Time.LocalTime.{LocalTime};
-    use Time.Month;
-    use Time.MonthDay;
-    use Time.OffsetDateTime;
-    use Time.OffsetDateTime.{OffsetDateTime};
-    use Time.OffsetTime;
-    use Time.OffsetTime.{OffsetTime};
-    use Time.Period;
-    use Time.YearMonth;
-    use Time.ZonedDateTime;
-    use Time.ZonedDateTime.{ZonedDateTime};
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
-    use Time.InstantZ;
-    use Time.InstantZ.{InstantZ};
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
+    use Time/Format.DateFormat
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.DayOfWeek
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
+    use Time.LocalTime
+    use Time.LocalTime.{LocalTime}
+    use Time.Month
+    use Time.MonthDay
+    use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
+    use Time.OffsetTime
+    use Time.OffsetTime.{OffsetTime}
+    use Time.Period
+    use Time.YearMonth
+    use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
 
     /// ## Unwrap
 
@@ -195,24 +208,27 @@ namespace Time/LocalDate {
 
 
     ///  `fromTemporalAccessor` specialized
-    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): LocalDate = 
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromTA;
+    pub def fromTemporalAccessor(x: TemporalAccessor): LocalDate = 
+        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromTemporalAccessor;
         try {
-            LocalDate(fromTA(x))
+            let TemporalAccessor(x1) = x;
+            fromTemporalAccessor(x1) |> LocalDate
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
+    /// TODO - idiomatic Flix is `toSomeDatatype` in the respective module rather than `fromSomeDatatype`
     pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
-        fromTemporalAccessorHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        Interop/Time/Temporal.ImpTemporalAccessor.toTemporalAccessor(x) 
+            |> fromTemporalAccessor
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): LocalDate = 
-        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+    // pub def fromOffsetDateTime(x: OffsetDateTime): LocalDate = 
+    //     fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
-    pub def fromZonedDateTime(x: ZonedDateTime): LocalDate = 
-        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+    // pub def fromZonedDateTime(x: ZonedDateTime): LocalDate = 
+    //     fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
 
     /// ## `to` functions
 
@@ -231,16 +247,16 @@ namespace Time/LocalDate {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[LocalDate, String] = 
-    import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate \ {};
-    try {
-        let DateTimeFormatter(fmtr) = formatter;
-        let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-        Ok(LocalDate(parse(cs, fmtr)))
-    } catch {
-        case ex: ##java.lang.Exception => 
-            import java.lang.Throwable.getMessage(): String \ {};
-            Err(getMessage(ex))
-    }
+        import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate \ {};
+        try {
+            let DateTimeFormatter(fmtr) = formatter;
+            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
+            Ok(LocalDate(parse(cs, fmtr)))
+        } catch {
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String \ {};
+                Err(getMessage(ex))
+        }
 
     ///
     /// Returns LocalDate `x` as a String using `formatter`.
@@ -297,7 +313,7 @@ namespace Time/LocalDate {
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let strm = datesUntil(s1, e1);
-        Interop/Util/Stream/Stream.wrapHH(r, strm) |> Interop/Util/Stream/Stream.iterator
+        Interop/Util/Stream/Stream.wrapHH(r, strm) |> Interop/Util/Stream/Stream.iterator(r)
 
     pub def datesUntilWithStep(r: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r] \ Read(r) = 
         import java.time.LocalDate.datesUntil(##java.time.LocalDate, ##java.time.Period): ##java.util.stream.Stream \ r;
@@ -305,7 +321,7 @@ namespace Time/LocalDate {
         let LocalDate(e1) = e;
         let step1 = Time/Period.getPeriod(step);
         let strm = datesUntil(s1, e1, step1);
-        Interop/Util/Stream/Stream.wrapHH(r, strm) |> Interop/Util/Stream/Stream.iterator
+        Interop/Util/Stream/Stream.wrapHH(r, strm) |> Interop/Util/Stream/Stream.iterator(r)
 
     /// ## Getters and Setters
 

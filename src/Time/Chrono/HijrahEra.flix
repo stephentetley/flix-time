@@ -21,6 +21,17 @@ namespace Time/Chrono {
         case AH
     }   
  
+    instance Interop/Flix.Marshal[HijrahEra] {
+        pub def toJavaObject(x: HijrahEra): ##java.lang.Object =
+            let x1 = Time/Chrono/HijrahEra.marshal(x);
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
+            let x1 = unsafe_cast o as ##java.time.chrono.HijrahEra;
+            Time/Chrono/HijrahEra.unmarshal(x1)
+    }
+
+
 }
 
 namespace Time/Chrono/HijrahEra {

@@ -16,6 +16,9 @@
 
 namespace Time/Chrono {
 
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
+
     ///
     /// A wrapper around java.time.chrono.HijrahDate.
     ///
@@ -39,6 +42,15 @@ namespace Time/Chrono {
         pub def hash(x: HijrahDate): Int32 = Time/Chrono/HijrahDate.hashCode(x)
     }  
 
+    instance Interop/Time/Temporal.ImpTemporalAccessor[HijrahDate] {
+        pub def toTemporalAccessor(x: HijrahDate): TemporalAccessor = 
+            let HijrahDate(x1) = x;
+            TemporalAccessor(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor)
+
+        pub def fromTemporalAccessor(x: TemporalAccessor): HijrahDate = 
+            let TemporalAccessor(x1) = x;
+            HijrahDate(unsafe_cast x1 as ##java.time.chrono.HijrahDate)
+    }
 }
 
 namespace Time/Chrono/HijrahDate {

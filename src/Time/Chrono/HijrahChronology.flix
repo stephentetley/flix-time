@@ -16,15 +16,45 @@
 
 namespace Time/Chrono {
 
+    use Interop/Time/Chrono.AbstractChronology
+    use Interop/Time/Chrono.AbstractChronology.{AbstractChronology}
+
     pub enum HijrahChronology(##java.time.chrono.HijrahChronology)
 
-    // instance ToString[HijrahChronology] {
-    //     pub def toString(x: HijrahChronology): String =
-    //         import java.time.chrono.AbstractChronology.toString(): String \ {};
-    //         let HijrahChronology(x1) = x;
-    //         toString(unsafe_cast x1 as ##java.time.chrono.AbstractChronology)
-    // }
+    instance ToString[HijrahChronology] {
+        pub def toString(x: HijrahChronology): String =
+            Time/Chrono/HijrahChronology.toString(x)
+    }
 
+    instance Eq[HijrahChronology] {
+        pub def eq(x: HijrahChronology, y: HijrahChronology): Bool =
+            Time/Chrono/HijrahChronology.equals(x, y)
+    }
+
+    instance Order[HijrahChronology] {
+        pub def compare(x: HijrahChronology, y: HijrahChronology): Comparison =
+            Time/Chrono/HijrahChronology.compare(x, y)
+    }
+
+
+    instance Interop/Flix.Marshal[HijrahChronology] {
+        pub def toJavaObject(x: HijrahChronology): ##java.lang.Object =
+            let HijrahChronology(x1) = x;
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
+            HijrahChronology(unsafe_cast o as ##java.time.chrono.HijrahChronology)
+    }
+    
+    instance Interop/Time/Chrono.SubAbstractChronology[HijrahChronology] {
+        pub def toAbstractChronology(x: HijrahChronology): AbstractChronology = 
+            let HijrahChronology(x1) = x;
+            AbstractChronology(unsafe_cast x1 as ##java.time.chrono.AbstractChronology)
+
+        pub def fromAbstractChronology(x: AbstractChronology): HijrahChronology = 
+            let AbstractChronology(x1) = x;
+            HijrahChronology(unsafe_cast x1 as ##java.time.chrono.HijrahChronology)
+    }
 
 }
 
@@ -45,6 +75,7 @@ namespace Time/Chrono/HijrahChronology {
     pub def getHijrahChronology(x: HijrahChronology): ##java.time.chrono.HijrahChronology = 
         let HijrahChronology(x1) = x;
         x1
+
 
     pub def getInstance(): HijrahChronology \ IO =
         import static get java.time.chrono.HijrahChronology.INSTANCE: ##java.time.chrono.HijrahChronology \ IO as getINSTANCE;
@@ -88,6 +119,20 @@ namespace Time/Chrono/HijrahChronology {
         let HijrahChronology(x1) = x;
         HijrahDate(dateEpochDay(x1, epochDay))
 
+    pub def toString(x: HijrahChronology): String =
+        Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x) 
+            |> Interop/Time/Chrono/AbstractChronology.toString
+            
+    pub def equals(x: HijrahChronology, y: HijrahChronology): Bool =
+        let x1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x);
+        let y1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(y);
+        Interop/Time/Chrono/AbstractChronology.equals(x1, y1)
+
+    pub def compare(x: HijrahChronology, y: HijrahChronology): Comparison =
+        let x1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x);
+        let y1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(y);
+        Interop/Time/Chrono/AbstractChronology.compareTo(x1, y1) |> Comparison.fromInt32
+
     pub def getCalendarType(x: HijrahChronology): String = 
         import java.time.chrono.HijrahChronology.getCalendarType(): String \ {};
         let HijrahChronology(x1) = x;
@@ -98,12 +143,12 @@ namespace Time/Chrono/HijrahChronology {
         let HijrahChronology(x1) = x;
         Time/Chrono/HijrahEra.unmarshal(eraOf(x1, i))
 
-    /// pub def eras(x: HijrahChronology): List[HijrahEra] = 
-    ///     import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};
-    ///     let HijrahChronology(x1) = x;
-    ///     let jxs = eras(x1);
-    ///     Interop/Collections/... .unmarshalList(o -> Time/Chrono/HijrahEra.unmarshal(o as ##java.time.chrono.HijrahEra), jxs)
-        
+    pub def eras(x: HijrahChronology): List[HijrahEra] = region r {
+        import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};
+        let HijrahChronology(x1) = x;
+        eras(x1) |> Interop/Util/ListZ.wrapHH(r) |> Interop/Util/ListZ.toFlixList
+    }
+
     pub def getId(x: HijrahChronology): String = 
         import java.time.chrono.HijrahChronology.getId(): String \ {};
         let HijrahChronology(x1) = x;
