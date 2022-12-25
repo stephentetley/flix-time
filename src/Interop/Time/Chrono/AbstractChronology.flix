@@ -50,4 +50,4 @@ namespace Interop/Time/Chrono/AbstractChronology {
         let AbstractChronology(y1) = y;
         compareTo(x1, unsafe_cast y1 as ##java.time.chrono.Chronology)
 
-}    
+}

@@ -16,7 +16,9 @@
 
 namespace Time/Chrono {
 
-
+    ///
+    /// Enum / Java Enum
+    ///
     pub enum HijrahEra with Eq, Order, ToString, Boxable, Hash {
         case AH
     }   
