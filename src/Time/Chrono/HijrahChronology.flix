@@ -18,6 +18,8 @@ namespace Time/Chrono {
 
     use Interop/Time/Chrono.AbstractChronology
     use Interop/Time/Chrono.AbstractChronology.{AbstractChronology}
+    use Interop/Time/Chrono.Chronology
+    use Interop/Time/Chrono.Chronology.{Chronology}
 
     pub enum HijrahChronology(##java.time.chrono.HijrahChronology)
 
@@ -45,7 +47,18 @@ namespace Time/Chrono {
         pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
             HijrahChronology(unsafe_cast o as ##java.time.chrono.HijrahChronology)
     }
-    
+
+
+    instance Interop/Time/Chrono.ImpChronology[HijrahChronology] {
+        pub def toChronology(x: HijrahChronology): Chronology = 
+            let HijrahChronology(x1) = x;
+            Chronology(unsafe_cast x1 as ##java.time.chrono.Chronology)
+
+        pub def fromChronology(x: Chronology): HijrahChronology = 
+            let Chronology(x1) = x;
+            HijrahChronology(unsafe_cast x1 as ##java.time.chrono.HijrahChronology)
+    }
+
     instance Interop/Time/Chrono.SubAbstractChronology[HijrahChronology] {
         pub def toAbstractChronology(x: HijrahChronology): AbstractChronology = 
             let HijrahChronology(x1) = x;
@@ -61,16 +74,20 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/HijrahChronology {
 
-    use Time/Chrono.HijrahChronology;
-    use Time/Chrono.HijrahChronology.{HijrahChronology};
-    use Time/Chrono.HijrahDate;
-    use Time/Chrono.HijrahDate.{HijrahDate};
-    use Time/Chrono.HijrahEra;
-    use Time/Format.ResolverStyle;
-    use Time.Clock;
-    use Time.Clock.{Clock};
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Chrono.HijrahChronology
+    use Time/Chrono.HijrahChronology.{HijrahChronology}
+    use Time/Chrono.HijrahDate
+    use Time/Chrono.HijrahDate.{HijrahDate}
+    use Time/Chrono.HijrahEra
+    use Time/Format.ResolverStyle
+    use Time/Format.TextStyle
+    use Time.Clock
+    use Time.Clock.{Clock}
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
+
+    use Interop/Time/Chrono.Era.{Era}
+    use Interop/Util.Locale
 
     pub def getHijrahChronology(x: HijrahChronology): ##java.time.chrono.HijrahChronology = 
         let HijrahChronology(x1) = x;
@@ -114,10 +131,16 @@ namespace Time/Chrono/HijrahChronology {
         let ZoneId(zone1) = zone;
         HijrahDate(dateNow(x1, zone1))
 
-    pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): HijrahDate = 
-        import java.time.chrono.HijrahChronology.dateEpochDay(Int64): ##java.time.chrono.HijrahDate \ {};
-        let HijrahChronology(x1) = x;
-        HijrahDate(dateEpochDay(x1, epochDay))
+    pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[HijrahDate, String] = 
+        try {
+            import java.time.chrono.HijrahChronology.dateEpochDay(Int64): ##java.time.chrono.HijrahDate \ {};
+            let HijrahChronology(x1) = x;
+            dateEpochDay(x1, epochDay) |> HijrahDate |> Ok
+        } catch {
+            case ex: ##java.lang.Exception => 
+                import java.lang.Throwable.getMessage(): String \ {};
+               Err(getMessage(ex))
+        }
 
     pub def toString(x: HijrahChronology): String =
         Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x) 
@@ -132,6 +155,11 @@ namespace Time/Chrono/HijrahChronology {
         let x1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x);
         let y1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(y);
         Interop/Time/Chrono/AbstractChronology.compareTo(x1, y1) |> Comparison.fromInt32
+
+
+    pub def getDisplayName(sty: TextStyle, loc: Locale, x: HijrahChronology): String = 
+        Interop/Time/Chrono.ImpChronology.toChronology(x)
+            |> Interop/Time/Chrono/Chronology.getDisplayName(sty, loc)
 
     pub def getCalendarType(x: HijrahChronology): String = 
         import java.time.chrono.HijrahChronology.getCalendarType(): String \ {};
@@ -163,9 +191,8 @@ namespace Time/Chrono/HijrahChronology {
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 = 
         import java.time.chrono.HijrahChronology.prolepticYear(##java.time.chrono.Era, Int32): Int32 \ {};
         let HijrahChronology(x1) = x;
-        let era1 = Time/Chrono/HijrahEra.marshal(era);
-        let era2 = unsafe_cast era1 as ##java.time.chrono.Era;
-        prolepticYear(x1, era2, yearOfEra)
+        let Era(era1) = Interop/Time/Chrono/ImpEra.toEra(era);
+        prolepticYear(x1, era1, yearOfEra)
 
 
     /// pub def resolveDate(fieldValues: List[(a, Int64)], resolverStyle: ResolverStyle, x: HijrahChronology): HijrahDate with TemporalField[a] =
