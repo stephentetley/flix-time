@@ -17,6 +17,9 @@
 
 namespace Time {
 
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.TemporalAccessor
+
     ///
     /// A wrapper around a Java ZonedDateTime.
     ///
@@ -84,6 +87,16 @@ namespace Time {
 
         pub def fromJavaObject(o: ##java.lang.Object): ZonedDateTime = 
             ZonedDateTime(unsafe_cast o as ##java.time.ZonedDateTime)
+    }
+
+    instance Interop/Time/Temporal.ImpTemporalAccessor[ZonedDateTime] {
+        pub def toTemporalAccessor(x: ZonedDateTime): TemporalAccessor =
+            let ZonedDateTime(x1) = x;
+            TemporalAccessor(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor)
+
+        pub def fromTemporalAccessor(x: TemporalAccessor): ZonedDateTime = 
+            let TemporalAccessor(x1) = x;
+            ZonedDateTime(unsafe_cast x1 as ##java.time.ZonedDateTime)
     }
 
 }

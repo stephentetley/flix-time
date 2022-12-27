@@ -17,6 +17,8 @@
 
 namespace Time {
 
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A wrapper around a Java OffsetDateTime.
@@ -82,6 +84,16 @@ namespace Time {
 
         pub def fromJavaObject(o: ##java.lang.Object): OffsetDateTime = 
             OffsetDateTime(unsafe_cast o as ##java.time.OffsetDateTime)
+    }
+
+    instance Interop/Time/Temporal.ImpTemporalAccessor[OffsetDateTime] {
+        pub def toTemporalAccessor(x: OffsetDateTime): TemporalAccessor =
+            let OffsetDateTime(x1) = x;
+            TemporalAccessor(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor)
+
+        pub def fromTemporalAccessor(x: TemporalAccessor): OffsetDateTime = 
+            let TemporalAccessor(x1) = x;
+            OffsetDateTime(unsafe_cast x1 as ##java.time.OffsetDateTime)
     }
 
 }

@@ -18,6 +18,8 @@
 
 namespace Time {
 
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A day of the week.
@@ -61,16 +63,18 @@ namespace Time {
 
 namespace Time/DayOfWeek {
 
-    use Interop/Util.Locale;
 
-    use Time.DayOfWeek;
-    use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+    use Time.DayOfWeek
+    use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
 
-    use Time/Format.TextStyle;  
-    use Time.LocalDate;
-    use Time.LocalDateTime;
-    use Time.OffsetDateTime;
-    use Time.ZonedDateTime;
+    use Time/Format.TextStyle
+    use Time.LocalDate
+    use Time.LocalDateTime
+    use Time.OffsetDateTime
+    use Time.ZonedDateTime
+
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Util.Locale
 
     /// 1 (Monday) to 7 (Sunday)
     pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
@@ -132,10 +136,10 @@ namespace Time/DayOfWeek {
     /// ## `from` functions
 
     /// `fromTemporalAccessor` specialized
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): DayOfWeek = 
+    def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
         import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek \ {} as fromTA;
         try {
-            unmarshal(fromTA(x))
+            Interop/Time/Temporal/TemporalAccessor.getHH(x) |> fromTA |> unmarshal
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
@@ -143,16 +147,20 @@ namespace Time/DayOfWeek {
         }
     
     pub def fromLocalDate(x: LocalDate): DayOfWeek = 
-        fromHelper(unsafe_cast Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+            |> fromTemporalAccessor
 
     pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
-        fromHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+            |> fromTemporalAccessor
 
     pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
-        fromHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+            |> fromTemporalAccessor
 
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
-        fromHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+            |> fromTemporalAccessor
 
 
     /// ## DayOfWeek functions
