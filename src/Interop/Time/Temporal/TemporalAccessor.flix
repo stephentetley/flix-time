@@ -29,8 +29,8 @@ namespace Interop/Time/Temporal {
 
 namespace Interop/Time/Temporal/TemporalAccessor {
 
-use Interop/Time/Temporal.TemporalAccessor
-use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
 
     pub def getHH(x: TemporalAccessor): ##java.time.temporal.TemporalAccessor = 
         let TemporalAccessor(x1) = x;

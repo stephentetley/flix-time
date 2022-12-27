@@ -125,8 +125,11 @@ namespace Time {
 
 namespace Time/DurationZ {
 
-    use Time.DurationZ;
-    use Time.DurationZ.{DurationZ};
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+    
+    use Interop/Time/Temporal.TemporalUnit
+    use Interop/Time/Temporal.TemporalUnit.{TemporalUnit}
     
     /// ## Unwrap
 
@@ -202,19 +205,20 @@ namespace Time/DurationZ {
 
     /// # `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
 
-    def ofTemporalUnitHelper(temporalUnit: ##java.time.temporal.TemporalUnit, amount: Int64): DurationZ =
+    def ofTemporalUnit(amount: Int64, tu: TemporalUnit): DurationZ =
         import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
         try {
-            DurationZ(of(amount, temporalUnit))
-        } catch {
+             Interop/Time/Temporal/TemporalUnit.getHH(tu) |> of(amount) |> DurationZ
+        } catch { 
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
         }
 
-    pub def fromHalfDays(i: Int64): DurationZ = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-        ofTemporalUnitHelper(unsafe_cast get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, i)
+    pub def ofHalfDays(i: Int64): DurationZ = 
+        Time/Temporal.ChronoUnit.HalfDays 
+            |> Interop/Time/Temporal/ImpTemporalUnit.toTemporalUnit
+            |> ofTemporalUnit(i)
 
 
     /// ## `to` functions
