@@ -196,13 +196,13 @@ namespace Time/LocalDate {
 
     /// ## `from` functions
 
-    pub def fromInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDate =
+    pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDate =
         import static java.time.LocalDate.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDate \ {};
         let InstantZ(x1) = x;
         let ZoneId(z1) = zone.zone;
         LocalDate(ofInstant(x1, z1))
 
-    pub def fromEpochDay(x: Int64): LocalDate =
+    pub def ofEpochDay(x: Int64): LocalDate =
         import static java.time.LocalDate.ofEpochDay(Int64): ##java.time.LocalDate \ {};
         LocalDate(ofEpochDay(x))
 

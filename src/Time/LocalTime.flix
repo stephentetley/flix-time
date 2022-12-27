@@ -156,18 +156,18 @@ namespace Time/LocalTime {
 
     /// ## `from` functions
 
-    pub def fromInstant(zone: {zone = ZoneId}, x: InstantZ): LocalTime =
+    pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalTime =
         import static java.time.LocalTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalTime \ {};
         let InstantZ(x1) = x;
         let ZoneId(z1) = zone.zone;
         LocalTime(ofInstant(x1, z1))
 
 
-    pub def fromNanoOfDay(nanoOfDay: Int64): LocalTime =
+    pub def ofNanoOfDay(nanoOfDay: Int64): LocalTime =
         import static java.time.LocalTime.ofNanoOfDay(Int64): ##java.time.LocalTime \ {};
         LocalTime(ofNanoOfDay(nanoOfDay))
 
-    pub def fromSecondOfDay(secondOfDay: Int64): LocalTime =
+    pub def ofSecondOfDay(secondOfDay: Int64): LocalTime =
         import static java.time.LocalTime.ofSecondOfDay(Int64): ##java.time.LocalTime \ {};
         LocalTime(ofSecondOfDay(secondOfDay))
 

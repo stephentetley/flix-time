@@ -141,22 +141,22 @@ namespace Time/Period {
         Period(getZERO())
 
 
-    /// ## `from` functions
+    /// ## `of` functions
 
 
-    pub def fromDays(days: Int32): Period =
+    pub def ofDays(days: Int32): Period =
         import static java.time.Period.ofDays(Int32): ##java.time.Period \ {};
         Period(ofDays(days))
 
-    pub def fromWeeks(weeks: Int32): Period =
+    pub def ofWeeks(weeks: Int32): Period =
         import static java.time.Period.ofWeeks(Int32): ##java.time.Period \ {};
         Period(ofWeeks(weeks))
 
-    pub def fromMonths(months: Int32): Period =
+    pub def ofMonths(months: Int32): Period =
         import static java.time.Period.ofMonths(Int32): ##java.time.Period \ {};
         Period(ofMonths(months))
 
-    pub def fromYears(years: Int32): Period =
+    pub def ofYears(years: Int32): Period =
         import static java.time.Period.ofYears(Int32): ##java.time.Period \ {};
         Period(ofYears(years))
 

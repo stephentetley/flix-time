@@ -146,7 +146,7 @@ namespace Time/OffsetTime {
         OffsetTime(of(x1, o1))
 
 
-    pub def fromInstant(zone: {zone = ZoneId}, x: InstantZ): OffsetTime =
+    pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): OffsetTime =
         import static java.time.OffsetTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.OffsetTime \ {};
         let InstantZ(x1) = x;
         let ZoneId(z1) = zone.zone;

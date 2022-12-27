@@ -103,21 +103,21 @@ namespace Time/ZoneOffset {
         import static get java.time.ZoneOffset.MAX: ##java.time.ZoneOffset \ {} as get_MAX;
         ZoneOffset(get_MAX())
 
-    /// ## `from` functions
+    /// ## `of` functions
 
-    pub def fromHours(hours: Int32): ZoneOffset =
+    pub def ofHours(hours: Int32): ZoneOffset =
         import static java.time.ZoneOffset.ofHours(Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHours(hours))
 
-    pub def fromHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset =
+    pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHoursMinutes(r.hours, r.minutes))
 
-    pub def fromHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
+    pub def ofHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofHoursMinutesSeconds(r.hours, r.minutes, r.seconds))
 
-    pub def fromTotalSeconds(seconds: Int32): ZoneOffset =
+    pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
         import static java.time.ZoneOffset.ofTotalSeconds(Int32): ##java.time.ZoneOffset \ {};
         ZoneOffset(ofTotalSeconds(seconds))
 

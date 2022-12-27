@@ -154,12 +154,12 @@ namespace Time/DurationZ {
         DurationZ(get_ZERO())
 
 
-    /// ## `from` functions
+    /// ## `of` functions
 
     ///
     /// Construct a Duration from the supplied number of nanoseconds.
     ///
-    pub def fromNanos(nanos: Int64): DurationZ =
+    pub def ofNanos(nanos: Int64): DurationZ =
         import static java.time.Duration.ofNanos(Int64): ##java.time.Duration \ {};
         DurationZ(ofNanos(nanos))
 
@@ -167,7 +167,7 @@ namespace Time/DurationZ {
     ///
     /// Construct a Duration from the supplied number of milliseconds.
     ///
-    pub def fromMillis(millis: Int64): DurationZ =
+    pub def ofMillis(millis: Int64): DurationZ =
         import static java.time.Duration.ofMillis(Int64): ##java.time.Duration \ {};
         DurationZ(ofMillis(millis))
 
@@ -175,28 +175,28 @@ namespace Time/DurationZ {
     ///
     /// Construct a Duration from the supplied number of seconds.
     ///
-    pub def fromSeconds(seconds: Int64): DurationZ =
+    pub def ofSeconds(seconds: Int64): DurationZ =
         import static java.time.Duration.ofSeconds(Int64): ##java.time.Duration \ {};
         DurationZ(ofSeconds(seconds))
 
     ///
     /// Construct a Duration from the supplied number of minutes.
     ///
-    pub def fromMinutes(minutes: Int64): DurationZ =
+    pub def ofMinutes(minutes: Int64): DurationZ =
         import static java.time.Duration.ofMinutes(Int64): ##java.time.Duration \ {};
         DurationZ(ofMinutes(minutes))
 
     ///
     /// Construct a Duration from the supplied number of hours.
     ///
-    pub def fromHours(hours: Int64): DurationZ =
+    pub def ofHours(hours: Int64): DurationZ =
         import static java.time.Duration.ofHours(Int64): ##java.time.Duration \ {};
         DurationZ(ofHours(hours))
 
     ///
     /// Construct a Duration from the supplied number of days.
     ///
-    pub def fromDays(days: Int64): DurationZ =
+    pub def ofDays(days: Int64): DurationZ =
         import static java.time.Duration.ofDays(Int64): ##java.time.Duration \ {};
         DurationZ(ofDays(days))
 

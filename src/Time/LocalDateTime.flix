@@ -179,12 +179,12 @@ namespace Time/LocalDateTime {
         let LocalTime(t1) = t;
         LocalDateTime(of(d1, t1))
 
-    pub def fromEpochSecond(offset: {offset = ZoneOffset}, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
+    pub def ofEpochSecond(offset: {offset = ZoneOffset}, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
         import static java.time.LocalDateTime.ofEpochSecond(Int64, Int32, ##java.time.ZoneOffset): ##java.time.LocalDateTime \ {};
         let ZoneOffset(o1) = offset.offset;
         LocalDateTime(ofEpochSecond(epochSecond, nanoOfSecond, o1))
 
-    pub def fromInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDateTime =
+    pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDateTime =
         import static java.time.LocalDateTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDateTime \ {};
         let InstantZ(x1) = x;
         let ZoneId(z1) = zone.zone;

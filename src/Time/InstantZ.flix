@@ -156,14 +156,14 @@ namespace Time/InstantZ {
         let ZoneId(zone1) = zone;
         ZonedDateTime(atZone(x1, zone1))
 
-    /// ## `from` functions
+    /// ## `of` functions
 
-    pub def fromEpochSecond(epochSecond: Int64): InstantZ =
+    pub def ofEpochSecond(epochSecond: Int64): InstantZ =
         import static java.time.Instant.ofEpochSecond(Int64): ##java.time.Instant \ {};
         InstantZ(ofEpochSecond(epochSecond))
 
 
-    pub def fromEpochMilli(epochMilli: Int64): InstantZ =
+    pub def ofEpochMilli(epochMilli: Int64): InstantZ =
         import static java.time.Instant.ofEpochMilli(Int64): ##java.time.Instant \ {};
         InstantZ(ofEpochMilli(epochMilli))
 
