@@ -54,6 +54,16 @@ namespace Time {
     }
 
 
+    instance Interop/Flix.Marshal[Month] {
+        pub def toJavaObject(x: Month): ##java.lang.Object =
+            let x1 = Time/Month.marshal(x);
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): Month = 
+            let x1 = unsafe_cast o as ##java.time.Month;
+            Time/Month.unmarshal(x1)
+    }
+
 }
 
 namespace Time/Month {

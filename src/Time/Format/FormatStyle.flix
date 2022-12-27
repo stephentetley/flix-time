@@ -24,6 +24,15 @@ namespace Time/Format {
         case Short
     }
     
+    instance Interop/Flix.Marshal[FormatStyle] {
+        pub def toJavaObject(x: FormatStyle): ##java.lang.Object =
+            let x1 = Time/Format/FormatStyle.marshal(x);
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): FormatStyle = 
+            let x1 = unsafe_cast o as ##java.time.format.FormatStyle;
+            Time/Format/FormatStyle.unmarshal(x1)
+    }
 
 }
 

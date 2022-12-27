@@ -47,6 +47,15 @@ namespace Time {
         }
     }
 
+    instance Interop/Flix.Marshal[DayOfWeek] {
+        pub def toJavaObject(x: DayOfWeek): ##java.lang.Object =
+            let x1 = Time/DayOfWeek.marshal(x);
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): DayOfWeek = 
+            let x1 = unsafe_cast o as ##java.time.DayOfWeek;
+            Time/DayOfWeek.unmarshal(x1)
+    }
 
 }
 

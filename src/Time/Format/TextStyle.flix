@@ -26,6 +26,16 @@ namespace Time/Format {
     }
 
 
+    instance Interop/Flix.Marshal[TextStyle] {
+        pub def toJavaObject(x: TextStyle): ##java.lang.Object =
+            let x1 = Time/Format/TextStyle.marshal(x);
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): TextStyle = 
+            let x1 = unsafe_cast o as ##java.time.format.TextStyle;
+            Time/Format/TextStyle.unmarshal(x1)
+    }
+
 }
 
 namespace Time/Format/TextStyle {

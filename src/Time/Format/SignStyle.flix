@@ -24,6 +24,16 @@ namespace Time/Format {
         case NonNegative
     }
 
+    instance Interop/Flix.Marshal[SignStyle] {
+        pub def toJavaObject(x: SignStyle): ##java.lang.Object =
+            let x1 = Time/Format/SignStyle.marshal(x);
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): SignStyle = 
+            let x1 = unsafe_cast o as ##java.time.format.SignStyle;
+            Time/Format/SignStyle.unmarshal(x1)
+    }
+
 }
 
 namespace Time/Format/SignStyle {

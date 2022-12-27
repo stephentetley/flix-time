@@ -78,6 +78,15 @@ namespace Time {
 
     instance Boxable[InstantZ]
 
+    instance Interop/Flix.Marshal[InstantZ] {
+        pub def toJavaObject(x: InstantZ): ##java.lang.Object =
+            let InstantZ(x1) = x;
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): InstantZ = 
+            InstantZ(unsafe_cast o as ##java.time.Instant)
+    }
+
 }   
 
 namespace Time/InstantZ {

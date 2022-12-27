@@ -16,6 +16,9 @@
 
 namespace Time/Format {
 
+
+    /// Immutable
+    ///
     pub enum DecimalStyle(##java.time.format.DecimalStyle)
 
 
@@ -41,6 +44,14 @@ namespace Time/Format {
             hashCode(x1)
     } 
     
+    instance Interop/Flix.Marshal[DecimalStyle] {
+        pub def toJavaObject(x: DecimalStyle): ##java.lang.Object =
+            let DecimalStyle(x1) = x;
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): DecimalStyle = 
+            DecimalStyle(unsafe_cast o as ##java.time.format.DecimalStyle)
+    }
 }
 
 namespace Time/Format/DecimalStyle {
@@ -101,7 +112,7 @@ namespace Time/Format/DecimalStyle {
         import java.time.format.DecimalStyle.getNegativeSign(): Char \ {};
         getDecimalStyle(x) |> getNegativeSign
 
-    pub def setNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
+    pub def withNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
         import java.time.format.DecimalStyle.withNegativeSign(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
         withNegativeSign(x1, sign) |> DecimalStyle
@@ -110,7 +121,7 @@ namespace Time/Format/DecimalStyle {
         import java.time.format.DecimalStyle.getPositiveSign(): Char \ {};
         getDecimalStyle(x) |> getPositiveSign
 
-    pub def setPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
+    pub def withPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
         import java.time.format.DecimalStyle.withPositiveSign(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
         withPositiveSign(x1, sign) |> DecimalStyle
@@ -119,7 +130,7 @@ namespace Time/Format/DecimalStyle {
         import java.time.format.DecimalStyle.getZeroDigit(): Char \ {};
         getDecimalStyle(x) |> getZeroDigit
 
-    pub def setZeroDigit(digit: Char, x: DecimalStyle): DecimalStyle = 
+    pub def withZeroDigit(digit: Char, x: DecimalStyle): DecimalStyle = 
         import java.time.format.DecimalStyle.withZeroDigit(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
         withZeroDigit(x1, digit) |> DecimalStyle

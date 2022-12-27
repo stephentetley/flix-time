@@ -22,6 +22,16 @@ namespace Time/Format {
         case Strict
     }
 
+    instance Interop/Flix.Marshal[ResolverStyle] {
+        pub def toJavaObject(x: ResolverStyle): ##java.lang.Object =
+            let x1 = Time/Format/ResolverStyle.marshal(x);
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): ResolverStyle = 
+            let x1 = unsafe_cast o as ##java.time.format.ResolverStyle;
+            Time/Format/ResolverStyle.unmarshal(x1)
+    }
+
 }
 
 namespace Time/Format/ResolverStyle {

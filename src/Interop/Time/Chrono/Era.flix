@@ -32,4 +32,8 @@ namespace Interop/Time/Chrono/Era {
     use Interop/Time/Chrono.Era
     use Interop/Time/Chrono.Era.{Era}
 
+    pub def getHH(x: Era): ##java.time.chrono.Era = 
+        let Era(x1) = x;
+        x1
+
 }

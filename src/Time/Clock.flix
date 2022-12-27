@@ -20,21 +20,32 @@ namespace Time {
     ///
     /// A wrapper around a Java Clock.
     ///
+    /// We currently consider Clock "immutable" as the factory methods like `fixed`
+    /// always return an immutable clock. 
+    ///
     pub enum Clock(##java.time.Clock)
 
+    instance Interop/Flix.Marshal[Clock] {
+        pub def toJavaObject(x: Clock): ##java.lang.Object =
+            let Clock(x1) = x;
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): Clock = 
+            Clock(unsafe_cast o as ##java.time.Clock)
+    }
 
 }
 
 namespace Time/Clock {
 
-    use Time.Clock;
-    use Time.Clock.{Clock};
-    use Time.DurationZ;
-    use Time.DurationZ.{DurationZ};
-    use Time.InstantZ;
-    use Time.InstantZ.{InstantZ};
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time.Clock
+    use Time.Clock.{Clock}
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
 
     /// ## Unwrap
 
@@ -42,7 +53,7 @@ namespace Time/Clock {
         let Clock(x1) = x;
         x1
 
-    /// ## "abstract constructors" (e.g. `fixedClock`)
+    /// ## "factory methods" (e.g. `fixedClock`)
 
     /// Pure or Impure? 
     pub def fixedClock(inst: InstantZ, zone: ZoneId): Clock \ IO =
