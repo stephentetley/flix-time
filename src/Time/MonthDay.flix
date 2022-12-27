@@ -231,7 +231,7 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         getDayOfMonth(x1)
 
-    pub def setDayOfMonth(dayOfMonth: Int32, x: MonthDay): MonthDay =
+    pub def withDayOfMonth(dayOfMonth: Int32, x: MonthDay): MonthDay =
         import java.time.MonthDay.withDayOfMonth(Int32): ##java.time.MonthDay \ {};
         let MonthDay(x1) = x;
         MonthDay(withDayOfMonth(x1, dayOfMonth))
@@ -242,7 +242,7 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         unmarshal(getMonth(x1))
 
-    pub def setMonth(month: Month, x: MonthDay): MonthDay =
+    pub def withMonth(month: Month, x: MonthDay): MonthDay =
         import java.time.MonthDay.with(##java.time.Month): ##java.time.MonthDay \ {};
         use Time/Month.{marshal};
         let MonthDay(x1) = x;
@@ -254,7 +254,7 @@ namespace Time/MonthDay {
         let MonthDay(x1) = x;
         getMonthValue(x1)
 
-    pub def setMonthValue(month: Int32, x: MonthDay): MonthDay =
+    pub def withMonthValue(month: Int32, x: MonthDay): MonthDay =
         import java.time.MonthDay.withMonth(Int32): ##java.time.MonthDay \ {};
         let MonthDay(x1) = x;
         MonthDay(withMonth(x1, month))

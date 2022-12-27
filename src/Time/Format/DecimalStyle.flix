@@ -103,7 +103,7 @@ namespace Time/Format/DecimalStyle {
         getDecimalStyle(x) |> getDecimalSeparator
 
 
-    pub def setDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
+    pub def withDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
         import java.time.format.DecimalStyle.withDecimalSeparator(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
         withDecimalSeparator(x1, sep) |> DecimalStyle

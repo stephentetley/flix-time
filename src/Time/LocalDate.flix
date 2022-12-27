@@ -330,7 +330,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         getDayOfMonth(x1)
 
-    pub def setDayOfMonth(dayOfMonth: Int32, x: LocalDate): LocalDate =
+    pub def withDayOfMonth(dayOfMonth: Int32, x: LocalDate): LocalDate =
         import java.time.LocalDate.withDayOfMonth(Int32): ##java.time.LocalDate \ {};
         let LocalDate(x1) = x;
         LocalDate(withDayOfMonth(x1, dayOfMonth))
@@ -341,13 +341,13 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         getDayOfYear(x1)
 
-    pub def setDayOfYear(dayOfYear: Int32, x: LocalDate): LocalDate =
+    pub def withDayOfYear(dayOfYear: Int32, x: LocalDate): LocalDate =
         import java.time.LocalDate.withDayOfYear(Int32): ##java.time.LocalDate \ {};
         let LocalDate(x1) = x;
         LocalDate(withDayOfYear(x1, dayOfYear))
 
 
-    pub def setMonth(month: Int32, x: LocalDate): LocalDate =
+    pub def withMonth(month: Int32, x: LocalDate): LocalDate =
         import java.time.LocalDate.withMonth(Int32): ##java.time.LocalDate \ {};
         let LocalDate(x1) = x;
         LocalDate(withMonth(x1, month))
@@ -357,7 +357,7 @@ namespace Time/LocalDate {
         let LocalDate(x1) = x;
         getYear(x1)
 
-    pub def setYear(year: Int32, x: LocalDate): LocalDate =
+    pub def withYear(year: Int32, x: LocalDate): LocalDate =
         import java.time.LocalDate.withYear(Int32): ##java.time.LocalDate \ {};
         let LocalDate(x1) = x;
         LocalDate(withYear(x1, year))
@@ -390,7 +390,7 @@ namespace Time/LocalDate {
         import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;
         getHelper(get_DAY_OF_QUARTER(), x)
 
-    pub def setDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
+    pub def withDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
         import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;
         withTemporalFieldHelper(get_DAY_OF_QUARTER(), Int32.toInt64(d), x)
 
@@ -398,7 +398,7 @@ namespace Time/LocalDate {
         import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField \ {} as get_QUARTER_OF_YEAR;
         getHelper(get_QUARTER_OF_YEAR(), x)
 
-    pub def setQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
+    pub def withQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
         import static get java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField \ {} as get_QUARTER_OF_YEAR;
         withTemporalFieldHelper(get_QUARTER_OF_YEAR(), Int32.toInt64(d), x)
 
@@ -411,7 +411,7 @@ namespace Time/LocalDate {
         import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField \ {};
         getHelper(getISOWeekFields() |> weekBasedYear, x)
 
-    pub def setWeekOfYear(d: Int32, x: LocalDate): LocalDate =
+    pub def withWeekOfYear(d: Int32, x: LocalDate): LocalDate =
         import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField \ {};
         withTemporalFieldHelper(getISOWeekFields() |> weekBasedYear, Int32.toInt64(d), x)
         
@@ -437,45 +437,45 @@ namespace Time/LocalDate {
         import static get java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField \ {} as get_ERA;
         getHelper(unsafe_cast get_ERA() as ##java.time.temporal.TemporalField, x)
 
-    pub def setMonthDay(i: MonthDay, x: LocalDate): LocalDate =
+    pub def adjustMonthDay(i: MonthDay, x: LocalDate): LocalDate =
         let i1 = unsafe_cast Time/MonthDay.getMonthDay(i) as ##java.time.temporal.TemporalAdjuster;
         withTemporalAdjusterHelper(i1, x)
 
-    pub def setYearMonth(i: YearMonth, x: LocalDate): LocalDate =
+    pub def adjustYearMonth(i: YearMonth, x: LocalDate): LocalDate =
         let i1 = unsafe_cast Time/YearMonth.getYearMonth(i) as ##java.time.temporal.TemporalAdjuster;
         withTemporalAdjusterHelper(i1, x)
 
 
-    pub def setEpochDay(i: Int64, x: LocalDate): LocalDate =
+    pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
         import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField \ {} as get_EPOCH_DAY;
         withTemporalFieldHelper(unsafe_cast get_EPOCH_DAY() as ##java.time.temporal.TemporalField, i, x)
 
     /// DayOfWeek methods
 
-    pub def setDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
+    pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/DayOfWeek.marshal(x);
         let d1 = unsafe_cast getLocalDate(d) as ##java.time.temporal.Temporal;
         LocalDate(unsafe_cast adjustInto(x1, d1) as ##java.time.LocalDate)
 
     
-    pub def setToFirstDayOfMonth(x: LocalDate): LocalDate = 
+    pub def adjustToFirstDayOfMonth(x: LocalDate): LocalDate = 
         import static java.time.temporal.TemporalAdjusters.firstDayOfMonth(): ##java.time.temporal.TemporalAdjuster \ {};
         withTemporalAdjusterHelper(firstDayOfMonth(), x)
 
-    pub def setToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
+    pub def adjustToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
         import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth(): ##java.time.temporal.TemporalAdjuster \ {};
         withTemporalAdjusterHelper(firstDayOfNextMonth(), x)
 
-    pub def setToFirstDayOfNextYear(x: LocalDate): LocalDate = 
+    pub def adjustToFirstDayOfNextYear(x: LocalDate): LocalDate = 
         import static java.time.temporal.TemporalAdjusters.firstDayOfNextYear(): ##java.time.temporal.TemporalAdjuster \ {};
         withTemporalAdjusterHelper(firstDayOfNextYear(), x)
 
-    pub def setToLastDayOfMonth(x: LocalDate): LocalDate =  
+    pub def adjustToLastDayOfMonth(x: LocalDate): LocalDate =  
         import static java.time.temporal.TemporalAdjusters.lastDayOfMonth(): ##java.time.temporal.TemporalAdjuster \ {};
         withTemporalAdjusterHelper(lastDayOfMonth(), x)
 
-    pub def setToLastDayOfYear(x: LocalDate): LocalDate =  
+    pub def adjustToLastDayOfYear(x: LocalDate): LocalDate =  
         import static java.time.temporal.TemporalAdjusters.lastDayOfYear(): ##java.time.temporal.TemporalAdjuster \ {};
         withTemporalAdjusterHelper(lastDayOfYear(), x)
 

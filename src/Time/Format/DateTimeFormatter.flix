@@ -177,7 +177,7 @@ namespace Time/Format/DateTimeFormatter {
         let DateTimeFormatter(x1) = x;
         ZoneId(getZone(x1))
 
-    pub def setZone(zone: ZoneId, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
+    pub def withZone(zone: ZoneId, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         import java.time.format.DateTimeFormatter.withZone(##java.time.ZoneId): ##java.time.format.DateTimeFormatter \ {};
         let DateTimeFormatter(x1) = x;
         let ZoneId(z1) = zone;
@@ -189,7 +189,7 @@ namespace Time/Format/DateTimeFormatter {
         let DateTimeFormatter(x1) = x;
         Locale(getLocale(x1))
 
-    pub def setLocale(loc: Locale, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
+    pub def withLocale(loc: Locale, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale): ##java.time.format.DateTimeFormatter \ {};
         let loc1 = Interop/Util/Locale.getHH(loc);
         let DateTimeFormatter(x1) = x;
@@ -200,7 +200,7 @@ namespace Time/Format/DateTimeFormatter {
         let DateTimeFormatter(x1) = x;
         DecimalStyle(getDecimalStyle(x1))
 
-    pub def setDecimalStyle(style: DecimalStyle, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
+    pub def withDecimalStyle(style: DecimalStyle, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         import java.time.format.DateTimeFormatter.withDecimalStyle(##java.time.format.DecimalStyle): ##java.time.format.DateTimeFormatter \ {};
         let DecimalStyle(style1) = style;
         let DateTimeFormatter(x1) = x;
@@ -211,7 +211,7 @@ namespace Time/Format/DateTimeFormatter {
         let DateTimeFormatter(x1) = x;
         Time/Format/ResolverStyle.unmarshal(getResolverStyle(x1))
 
-    pub def setResolverStyle(style: ResolverStyle, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
+    pub def withResolverStyle(style: ResolverStyle, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         import java.time.format.DateTimeFormatter.withResolverStyle(##java.time.format.ResolverStyle): ##java.time.format.DateTimeFormatter \ {};
         let DateTimeFormatter(x1) = x;
         let style1 = Time/Format/ResolverStyle.marshal(style);

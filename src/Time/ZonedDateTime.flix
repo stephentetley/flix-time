@@ -252,7 +252,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getYear(x1)
 
-    pub def setYear(year: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def withYear(year: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withYear(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withYear(x1, year))
@@ -262,7 +262,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         Time/Month.unmarshal(getMonth(x1))
 
-    pub def setMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withMonth(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withMonth(x1, month))
@@ -280,7 +280,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getDayOfYear(x1)
 
-    pub def setDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def withDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfYear(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withDayOfYear(x1, dayOfYear))
@@ -290,7 +290,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getDayOfMonth(x1)
 
-    pub def setDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def withDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withDayOfMonth(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withDayOfMonth(x1, dayOfMonth))
@@ -307,7 +307,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getHour(x1)
 
-    pub def setHour(hour: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def withHour(hour: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withHour(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withHour(x1, hour))
@@ -317,7 +317,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getMinute(x1)
 
-    pub def setMinute(minute: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def withMinute(minute: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withMinute(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withMinute(x1, minute))
@@ -327,7 +327,7 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getSecond(x1)
 
-    pub def setSecond(second: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def withSecond(second: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withSecond(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withSecond(x1, second))
@@ -337,42 +337,42 @@ namespace Time/ZonedDateTime {
         let ZonedDateTime(x1) = x;
         getNano(x1)
 
-    pub def setNano(nano: Int32, x: ZonedDateTime): ZonedDateTime =
+    pub def withNano(nano: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withNano(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         ZonedDateTime(withNano(x1, nano))
 
-    pub def setZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
+    pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         let zone1 = Time/ZoneId.getZoneId(zone);
         ZonedDateTime(withZoneSameInstant(x1, zone1))
 
-    pub def setZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
+    pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withZoneSameLocal(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
         let zone1 = Time/ZoneId.getZoneId(zone);
         ZonedDateTime(withZoneSameLocal(x1, zone1))
 
 
-    pub def setToFixedOffsetZone(t: ZonedDateTime): ZonedDateTime = 
+    pub def withToFixedOffsetZone(t: ZonedDateTime): ZonedDateTime = 
         import java.time.ZonedDateTime.withFixedOffsetZone(): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(t1) = t;
         ZonedDateTime(withFixedOffsetZone(t1))
 
-    pub def setToEarlierOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
+    pub def withEarlierOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
         import java.time.ZonedDateTime.withEarlierOffsetAtOverlap(): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(t1) = t;
         ZonedDateTime(withEarlierOffsetAtOverlap(t1))
 
-    pub def setToLaterOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
+    pub def withLaterOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
         import java.time.ZonedDateTime.withLaterOffsetAtOverlap(): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(t1) = t;
         ZonedDateTime(withLaterOffsetAtOverlap(t1))
 
     /// DayOfWeek methods
 
-    pub def setDayOfWeek(x: DayOfWeek, d: ZonedDateTime): ZonedDateTime = 
+    pub def adjustDayOfWeek(x: DayOfWeek, d: ZonedDateTime): ZonedDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/DayOfWeek.marshal(x);
         let d1 = unsafe_cast getZonedDateTime(d) as ##java.time.temporal.Temporal;
@@ -380,7 +380,7 @@ namespace Time/ZonedDateTime {
 
     /// MonthDay methods
 
-    pub def setMonthDay(x: MonthDay, d: ZonedDateTime): ZonedDateTime = 
+    pub def adjustMonthDay(x: MonthDay, d: ZonedDateTime): ZonedDateTime = 
         import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/MonthDay.getMonthDay(x);
         let d1 = unsafe_cast getZonedDateTime(d) as ##java.time.temporal.Temporal;
@@ -388,7 +388,7 @@ namespace Time/ZonedDateTime {
 
     /// ZoneOffset methods
 
-    pub def setZoneOffset(zo: ZoneOffset, dt: ZonedDateTime): ZonedDateTime = 
+    pub def adjustZoneOffset(zo: ZoneOffset, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let zo1 = Time/ZoneOffset.getZoneOffset(zo);
         let dt1 = unsafe_cast getZonedDateTime(dt) as ##java.time.temporal.Temporal;
@@ -396,7 +396,7 @@ namespace Time/ZonedDateTime {
 
     /// YearMonth methods
 
-    pub def setYearMonth(x: YearMonth, dt: ZonedDateTime): ZonedDateTime = 
+    pub def adjustYearMonth(x: YearMonth, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/YearMonth.getYearMonth(x);
         let dt1 = unsafe_cast getZonedDateTime(dt) as ##java.time.temporal.Temporal;
@@ -404,7 +404,7 @@ namespace Time/ZonedDateTime {
 
     /// LocalDate methods
 
-    pub def setLocalDate(x: LocalDate, dt: ZonedDateTime): ZonedDateTime = 
+    pub def adjustLocalDate(x: LocalDate, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalDate.getLocalDate(x);
         let dt1 = unsafe_cast getZonedDateTime(dt) as ##java.time.temporal.Temporal;
@@ -412,7 +412,7 @@ namespace Time/ZonedDateTime {
 
     /// LocalDateTime methods
 
-    pub def setLocalDateTime(x: LocalDateTime, dt: ZonedDateTime): ZonedDateTime = 
+    pub def adjustLocalDateTime(x: LocalDateTime, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalDateTime.getLocalDateTime(x);
         let dt1 = unsafe_cast getZonedDateTime(dt) as ##java.time.temporal.Temporal;
@@ -420,7 +420,7 @@ namespace Time/ZonedDateTime {
 
     /// LocalTime methods
 
-    pub def setLocalTime(x: LocalTime, dt: ZonedDateTime): ZonedDateTime = 
+    pub def adjustLocalTime(x: LocalTime, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalTime.getLocalTime(x);
         let dt1 = unsafe_cast getZonedDateTime(dt) as ##java.time.temporal.Temporal;

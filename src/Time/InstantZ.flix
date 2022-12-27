@@ -250,7 +250,7 @@ namespace Time/InstantZ {
         import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_NANO_OF_SECOND;
         getLongHelper(unsafe_cast get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
-    pub def setNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
+    pub def withNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
         import static get java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_NANO_OF_SECOND;
         withTemporalFieldHelper(unsafe_cast get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
 
@@ -258,7 +258,7 @@ namespace Time/InstantZ {
         import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MICRO_OF_SECOND;
         getLongHelper(unsafe_cast get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
-    pub def setMicroOfSecond(i: Int64, x: InstantZ): InstantZ =
+    pub def withMicroOfSecond(i: Int64, x: InstantZ): InstantZ =
         import static get java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MICRO_OF_SECOND;
         withTemporalFieldHelper(unsafe_cast get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
 
@@ -266,7 +266,7 @@ namespace Time/InstantZ {
         import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MILLI_OF_SECOND;
         getLongHelper(unsafe_cast get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, x)
 
-    pub def setMilliOfSecond(i: Int64, x: InstantZ): InstantZ =
+    pub def withMilliOfSecond(i: Int64, x: InstantZ): InstantZ =
         import static get java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MILLI_OF_SECOND;
         withTemporalFieldHelper(unsafe_cast get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField, i, x)
 
@@ -274,7 +274,7 @@ namespace Time/InstantZ {
         import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField \ {} as get_INSTANT_SECONDS;
         getLongHelper(unsafe_cast get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, x)
 
-    pub def setInstantSeconds(i: Int64, x: InstantZ): InstantZ =
+    pub def withInstantSeconds(i: Int64, x: InstantZ): InstantZ =
         import static get java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField \ {} as get_INSTANT_SECONDS;
         withTemporalFieldHelper(unsafe_cast get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField, i, x)
 

@@ -291,7 +291,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getYear(x1)
 
-    pub def setYear(year: Int32, x: LocalDateTime): LocalDateTime =
+    pub def withYear(year: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withYear(Int32): ##java.time.LocalDateTime \ {};
         let LocalDateTime(x1) = x;
         LocalDateTime(withYear(x1, year))
@@ -301,7 +301,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         Time/Month.unmarshal(getMonth(x1))
 
-    pub def setMonth(month: Int32, x: LocalDateTime): LocalDateTime =
+    pub def withMonth(month: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withMonth(Int32): ##java.time.LocalDateTime \ {};
         let LocalDateTime(x1) = x;
         LocalDateTime(withMonth(x1, month))
@@ -311,7 +311,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getDayOfYear(x1)
 
-    pub def setDayOfYear(dayOfYear: Int32, x: LocalDateTime): LocalDateTime =
+    pub def withDayOfYear(dayOfYear: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withDayOfYear(Int32): ##java.time.LocalDateTime \ {};
         let LocalDateTime(x1) = x;
         LocalDateTime(withDayOfYear(x1, dayOfYear))
@@ -321,7 +321,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getDayOfMonth(x1)
 
-    pub def setDayOfMonth(dayOfMonth: Int32, x: LocalDateTime): LocalDateTime =
+    pub def withDayOfMonth(dayOfMonth: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withDayOfMonth(Int32): ##java.time.LocalDateTime \ {};
         let LocalDateTime(x1) = x;
         LocalDateTime(withDayOfMonth(x1, dayOfMonth))
@@ -336,7 +336,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getHour(x1)
 
-    pub def setHour(hour: Int32, x: LocalDateTime): LocalDateTime =
+    pub def withHour(hour: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withHour(Int32): ##java.time.LocalDateTime \ {};
         let LocalDateTime(x1) = x;
         LocalDateTime(withHour(x1, hour))
@@ -346,7 +346,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getMinute(x1)
 
-    pub def setMinute(minute: Int32, x: LocalDateTime): LocalDateTime =
+    pub def withMinute(minute: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withMinute(Int32): ##java.time.LocalDateTime \ {};
         let LocalDateTime(x1) = x;
         LocalDateTime(withMinute(x1, minute))
@@ -356,7 +356,7 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getSecond(x1)
 
-    pub def setSecond(second: Int32, x: LocalDateTime): LocalDateTime =
+    pub def withSecond(second: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withSecond(Int32): ##java.time.LocalDateTime \ {};
         let LocalDateTime(x1) = x;
         LocalDateTime(withSecond(x1, second))
@@ -366,14 +366,14 @@ namespace Time/LocalDateTime {
         let LocalDateTime(x1) = x;
         getNano(x1)
 
-    pub def setNano(nano: Int32, x: LocalDateTime): LocalDateTime =
+    pub def withNano(nano: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withNano(Int32): ##java.time.LocalDateTime \ {};
         let LocalDateTime(x1) = x;
         LocalDateTime(withNano(x1, nano))
 
     /// YearMonth methods
 
-    pub def setYearMonth(x: YearMonth, dt: LocalDateTime): LocalDateTime = 
+    pub def adjustYearMonth(x: YearMonth, dt: LocalDateTime): LocalDateTime = 
         import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/YearMonth.getYearMonth(x);
         let dt1 = unsafe_cast getLocalDateTime(dt) as ##java.time.temporal.Temporal;
@@ -381,7 +381,7 @@ namespace Time/LocalDateTime {
 
     /// LocalDate methods
 
-    pub def setLocalDate(x: LocalDate, dt: LocalDateTime): LocalDateTime = 
+    pub def adjustLocalDate(x: LocalDate, dt: LocalDateTime): LocalDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalDate.getLocalDate(x);
         let dt1 = unsafe_cast getLocalDateTime(dt) as ##java.time.temporal.Temporal;
@@ -389,7 +389,7 @@ namespace Time/LocalDateTime {
 
     /// LocalTime methods
 
-    pub def setLocalTime(x: LocalTime, dt: LocalDateTime): LocalDateTime = 
+    pub def adjustLocalTime(x: LocalTime, dt: LocalDateTime): LocalDateTime = 
         import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/LocalTime.getLocalTime(x);
         let dt1 = unsafe_cast getLocalDateTime(dt) as ##java.time.temporal.Temporal;
@@ -397,7 +397,7 @@ namespace Time/LocalDateTime {
 
     /// DayOfWeek methods
 
-    pub def setDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
+    pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/DayOfWeek.marshal(x);
         let d1 = unsafe_cast getLocalDateTime(d) as ##java.time.temporal.Temporal;
@@ -405,7 +405,7 @@ namespace Time/LocalDateTime {
 
     /// MonthDay methods
 
-    pub def setMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
+    pub def adjustMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
         import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/MonthDay.getMonthDay(x);
         let d1 = unsafe_cast getLocalDateTime(d) as ##java.time.temporal.Temporal;

@@ -93,14 +93,12 @@ namespace Time/Format/TextStyle {
 
     /// ## Getters and Setters
     
-    pub def setStandalone(x: TextStyle): TextStyle =
+    pub def asStandalone(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asStandalone(): ##java.time.format.TextStyle \ {};
-        let x1 = marshal(x);
-        unmarshal(asStandalone(x1))
+        marshal(x) |> asStandalone |> unmarshal
     
-    pub def setNormal(x: TextStyle): TextStyle =
+    pub def asNormal(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asNormal(): ##java.time.format.TextStyle \ {};
-        let x1 = marshal(x);
-        unmarshal(asNormal(x1))
+        marshal(x) |> asNormal |> unmarshal
 
 }
