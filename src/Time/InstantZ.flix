@@ -91,20 +91,22 @@ namespace Time {
 
 namespace Time/InstantZ {
 
-    use Time.InstantZ;
-    use Time.InstantZ.{InstantZ};
-    use Time.DurationZ;
-    use Time.DurationZ.{DurationZ};
-    use Time.OffsetDateTime;
-    use Time.OffsetDateTime.{OffsetDateTime};
-    use Time.Period;
-    use Time.Period.{Period};
-    use Time.ZonedDateTime;
-    use Time.ZonedDateTime.{ZonedDateTime};
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
-    use Time.ZoneOffset;
-    use Time.ZoneOffset.{ZoneOffset};
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+    use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
+    use Time.Period
+    use Time.Period.{Period}
+    use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
+    use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
+    use Interop/Time/Temporal.TemporalAccessor
+    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
 
     /// ## Unwrap
 
@@ -169,10 +171,12 @@ namespace Time/InstantZ {
 
 
     /// # `fromTemporalAccessor` specialized
-    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): InstantZ = 
+    def fromTemporalAccessor(x: TemporalAccessor): InstantZ = 
         import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant \ {} as fromTA;
         try {
-            InstantZ(fromTA(x))
+            Interop/Time/Temporal/TemporalAccessor.getHH(x) 
+                |> fromTA
+                |> InstantZ
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
@@ -181,10 +185,12 @@ namespace Time/InstantZ {
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
-        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+            |> fromTemporalAccessor
 
     pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+            |> fromTemporalAccessor
 
     /// ## `to` functions
 

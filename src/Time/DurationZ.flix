@@ -465,12 +465,14 @@ namespace Time/DurationZ {
 
 
     pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-        plusHelper(x, i, unsafe_cast get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
+        Time/Temporal/ChronoUnit.HalfDays
+            |> Interop/Time/Temporal.ImpTemporalUnit.toTemporalUnit
+            |> plusHelper(x, i)
 
     pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-        minusHelper(x, i, unsafe_cast get_HALF_DAYS() as ##java.time.temporal.TemporalUnit)
+        Time/Temporal/ChronoUnit.HalfDays
+            |> Interop/Time/Temporal.ImpTemporalUnit.toTemporalUnit
+            |> minusHelper(x, i)
 
     /// ## multiply / divide functions
 
@@ -488,11 +490,12 @@ namespace Time/DurationZ {
     
     /// `plus` specialized - except for HalfDays we already have a `plus_` function for the other supported ChronoUnits
 
-    def plusHelper(x: DurationZ, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): DurationZ =
+    def plusHelper(x: DurationZ, amount: Int64, tu: TemporalUnit): DurationZ =
         import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
         try {
             let DurationZ(x1) = x;
-            DurationZ(plus(x1, amount, temporalUnit))
+            let TemporalUnit(tu1) = tu;
+            plus(x1, amount, tu1) |> DurationZ
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
@@ -502,11 +505,12 @@ namespace Time/DurationZ {
 
     /// `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
 
-    def minusHelper(x: DurationZ, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): DurationZ =
+    def minusHelper(x: DurationZ, amount: Int64, tu: TemporalUnit): DurationZ =
         import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
         try {
             let DurationZ(x1) = x;
-            DurationZ(minus(x1, amount, temporalUnit))
+            let TemporalUnit(tu1) = tu;
+            DurationZ(minus(x1, amount, tu1))
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};

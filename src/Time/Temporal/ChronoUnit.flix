@@ -22,9 +22,7 @@ namespace Time/Temporal {
     use Interop/Time/Temporal.TemporalUnit.{TemporalUnit}
 
     ///
-    /// A day of the week.
-    ///
-    /// Days are reprepresented as an enum from Monday to Sunday.
+    /// ChronoUnit
     ///
     pub enum ChronoUnit with Eq, Order, ToString, Hash, Boxable {
         case Nanos
