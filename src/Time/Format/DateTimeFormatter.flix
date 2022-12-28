@@ -138,7 +138,7 @@ namespace Time/Format/DateTimeFormatter {
 
     /// ## `from` functions
 
-    pub def fromPattern(pattern: String): Result[DateTimeFormatter[t], String] =
+    pub def fromPattern(pattern: String): Result[String, DateTimeFormatter[t]] =
         import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter \ {};
         try {
             Ok(DateTimeFormatter(ofPattern(String.trim(pattern))))

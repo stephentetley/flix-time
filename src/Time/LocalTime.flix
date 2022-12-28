@@ -214,7 +214,7 @@ namespace Time/LocalTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[TimeFormat], s: String): Result[LocalTime, String] =
+    pub def parse(formatter: DateTimeFormatter[TimeFormat], s: String): Result[String, LocalTime] =
         import static java.time.LocalTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalTime \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;

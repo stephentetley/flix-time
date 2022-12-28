@@ -173,7 +173,7 @@ namespace Time/MonthDay {
     ///
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[MonthDay, String] =
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, MonthDay] =
         import static java.time.MonthDay.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.MonthDay \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;

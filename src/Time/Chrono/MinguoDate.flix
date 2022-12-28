@@ -99,7 +99,7 @@ namespace Time/Chrono/MinguoDate {
     ///         |> Result.getWithDefault(-1)
 
 
-    /// def getChronoFieldHelper(x: MinguoDate, field: ChronoField): Result[Int32, String] =
+    /// def getChronoFieldHelper(x: MinguoDate, field: ChronoField): Result[String, Int32] =
     ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///     try {
     ///         let MinguoDate(x1) = x;

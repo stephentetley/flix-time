@@ -118,7 +118,7 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
                                         timeDefinition = TimeDefinition,
                                         standardOffset = ZoneOffset, 
                                         offsetBefore = ZoneOffset,
-                                        offsetAfter = ZoneOffset}): Result[ZoneOffsetTransitionRule, String] =
+                                        offsetAfter = ZoneOffset}): Result[String, ZoneOffsetTransitionRule] =
         import static java.time.zone.ZoneOffsetTransitionRule.of(##java.time.Month, 
                                                                     Int32,
                                                                     ##java.time.DayOfWeek,

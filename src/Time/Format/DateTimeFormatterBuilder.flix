@@ -80,7 +80,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     def liftSetter!(f: ##java.time.format.DateTimeFormatterBuilder -> ##java.time.format.DateTimeFormatterBuilder \ ef): DateTimeFormatterBuilder[r, ka, Unit] \ ef =
         DateTimeFormatterBuilder(MonadLib/MutStateError.liftSetter!(f)) |> Functor.ignore
 
-    // def liftSetterResult(f: ##java.time.format.DateTimeFormatterBuilder -> Result[##java.time.format.DateTimeFormatterBuilder, err] \ ef): DateTimeFormatterBuilder[r, ka, Unit] \ ef with ToString[err] =
+    // def liftSetterResult(f: ##java.time.format.DateTimeFormatterBuilder -> Result[err, ##java.time.format.DateTimeFormatterBuilder,] \ ef): DateTimeFormatterBuilder[r, ka, Unit] \ ef with ToString[err] =
     //     DateTimeFormatterBuilder(MonadLib/MutStateError.liftSetterResult(f))
 
 
@@ -90,12 +90,12 @@ namespace Time/Format/DateTimeFormatterBuilder {
     ///
     def runBuilder(r: Region[r], 
                         ma: DateTimeFormatterBuilder[r, a, a], 
-                        s: ##java.time.format.DateTimeFormatterBuilder): Result[a, String] \ r = 
+                        s: ##java.time.format.DateTimeFormatterBuilder): Result[String, a] \ r = 
         MonadLib/MutStateError.runMutStateError(r, getDateTimeFormatterBuilder(ma), s)
 
 
 
-    pub def toFormatter(r: Region[r], ma: DateTimeFormatterBuilder[r, a, a]): Result[DateTimeFormatter[ftype], String] \ { Read(r), Write(r) } = 
+    pub def toFormatter(r: Region[r], ma: DateTimeFormatterBuilder[r, a, a]): Result[String, DateTimeFormatter[ftype]] \ { Read(r), Write(r) } = 
         import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as new1;
         import java.time.format.DateTimeFormatterBuilder.toFormatter(): ##java.time.format.DateTimeFormatter \ r as toJavaFormatter;
         let state1 = new1();
@@ -104,7 +104,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
             case Ok(_)    => Ok(DateTimeFormatter(toJavaFormatter(state1)))
         }
 
-    pub def toFormatterWithLocale(r: Region[r], loc: Locale, ma: DateTimeFormatterBuilder[r, a, a]): Result[DateTimeFormatter[ftype], String] \ { Read(r), Write(r) } = 
+    pub def toFormatterWithLocale(r: Region[r], loc: Locale, ma: DateTimeFormatterBuilder[r, a, a]): Result[String, DateTimeFormatter[ftype]] \ { Read(r), Write(r) } = 
         import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as new1;
         import java.time.format.DateTimeFormatterBuilder.toFormatter(##java.util.Locale): ##java.time.format.DateTimeFormatter \ r as toJavaFormatter;
         let state1 = new1();

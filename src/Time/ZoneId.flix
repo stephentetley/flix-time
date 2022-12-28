@@ -83,7 +83,7 @@ namespace Time/ZoneId {
 
     /// ## Constructors
 
-    pub def zoneId(zoneId: {zoneId = String}): Result[ZoneId, String] =
+    pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
         import static java.time.ZoneId.of(String): ##java.time.ZoneId \ {};
         try {
             Ok(ZoneId(of(zoneId.zoneId)))
@@ -94,7 +94,7 @@ namespace Time/ZoneId {
         }
         
 
-    pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[ZoneId, String] = region r {
+    pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] = region r {
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId \ {};
         try {
             let jmap = Interop/Util/HashMap.fromFlixMap(r, aliases) |> Interop/Util/MapZ.toMapHH;
@@ -113,7 +113,7 @@ namespace Time/ZoneId {
         case Err(_) => bug!("ZoneId.utc() - failed")
     }
 
-    pub def systemDefault(): Result[ZoneId, String] \ IO =
+    pub def systemDefault(): Result[String, ZoneId] \ IO =
         import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId \ IO;
         try {
             Ok(ZoneId(systemDefault()))

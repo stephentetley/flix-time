@@ -204,7 +204,7 @@ namespace Time/Year {
     ///
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[Year, String] =
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, Year] =
         import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.Year \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;

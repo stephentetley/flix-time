@@ -161,7 +161,7 @@ namespace Time/Chrono/JapaneseDate {
     ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra)
     ///         |> Result.getWithDefault(-1)
 
-    /// def getChronoFieldHelper(x: JapaneseDate, field: ChronoField): Result[Int32, String] =
+    /// def getChronoFieldHelper(x: JapaneseDate, field: ChronoField): Result[String, Int32] =
     ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///     try {
     ///         let JapaneseDate(x1) = x;

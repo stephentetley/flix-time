@@ -273,7 +273,7 @@ namespace Time/OffsetDateTime {
     ///
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[OffsetDateTime, String] =
+    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, OffsetDateTime] =
         import static java.time.OffsetDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.OffsetDateTime \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;

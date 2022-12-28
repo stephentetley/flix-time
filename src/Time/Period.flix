@@ -172,7 +172,7 @@ namespace Time/Period {
 
     /// ## `parse` / `format` functions        
 
-    pub def parse(s: String): Result[Period, String] =
+    pub def parse(s: String): Result[String, Period] =
         import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
         try {
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;

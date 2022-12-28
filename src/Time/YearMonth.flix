@@ -157,7 +157,7 @@ namespace Time/YearMonth {
     ///
     /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[YearMonth, String] =
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, YearMonth] =
         import static java.time.YearMonth.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.YearMonth \ {};
         try {
             let DateTimeFormatter(fmtr) = formatter;

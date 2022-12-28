@@ -86,7 +86,7 @@ namespace TestYear {
     /// // fromTemporalAccessor                                                    //
     /// /////////////////////////////////////////////////////////////////////////////
     /// @test
-    /// def fromTemporalAccessor01(): Result[Time.Year, String] \ IO = 
+    /// def fromTemporalAccessor01(): Result[String, Time.Year] \ IO = 
     ///     let t1 = Time/Year.year(isoYear = 2020);
     ///     let t2 = Time/Year.fromTemporalAccessor(t1);
     ///     println("fromTemporalAccessor01(): ${t2}");

@@ -132,7 +132,7 @@ namespace Time/Chrono/HijrahChronology {
         let ZoneId(zone1) = zone;
         HijrahDate(dateNow(x1, zone1))
 
-    pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[HijrahDate, String] = 
+    pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] = 
         try {
             import java.time.chrono.HijrahChronology.dateEpochDay(Int64): ##java.time.chrono.HijrahDate \ {};
             let HijrahChronology(x1) = x;

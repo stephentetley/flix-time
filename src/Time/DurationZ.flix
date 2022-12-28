@@ -286,7 +286,7 @@ namespace Time/DurationZ {
 
     /// ## `parse` / `format` functions
 
-    pub def parse(s: String): Result[DurationZ, String] =
+    pub def parse(s: String): Result[String, DurationZ] =
         import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
         try {
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;

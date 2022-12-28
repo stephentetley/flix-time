@@ -201,7 +201,7 @@ namespace Time/InstantZ {
 
     /// ## `parse` / `format` functions
 
-    pub def parse(s: String): Result[InstantZ, String] =
+    pub def parse(s: String): Result[String, InstantZ] =
         import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
         try {
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;

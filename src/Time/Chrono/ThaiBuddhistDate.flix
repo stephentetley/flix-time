@@ -99,7 +99,7 @@ namespace Time/Chrono/ThaiBuddhistDate {
     ///         |> Result.getWithDefault(-1)
 
 
-    /// def getChronoFieldHelper(x: ThaiBuddhistDate, field: ChronoField): Result[Int32, String] =
+    /// def getChronoFieldHelper(x: ThaiBuddhistDate, field: ChronoField): Result[String, Int32] =
     ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///     try {
     ///         let ThaiBuddhistDate(x1) = x;
