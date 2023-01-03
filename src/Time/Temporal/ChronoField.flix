@@ -18,8 +18,8 @@
 
 namespace Time/Temporal {
 
-    use Interop/Time/Temporal.TemporalField
-    use Interop/Time/Temporal.TemporalField.{TemporalField}
+    use Time/Temporal.TemporalField
+    use Time/Temporal.TemporalField.{TemporalField}
 
     ///
     /// ChronoField
@@ -103,7 +103,7 @@ namespace Time/Temporal {
             Time/Temporal/ChronoField.unmarshal(x1)
     }
 
-    instance Interop/Time/Temporal.ImpTemporalField[ChronoField] {
+    instance Time/Temporal.ImplementsTemporalField[ChronoField] {
         pub def toTemporalField(x: ChronoField): TemporalField = 
             let x1 = Time/Temporal/ChronoField.marshal(x);
             TemporalField(unsafe_cast x1 as ##java.time.temporal.TemporalField)

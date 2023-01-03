@@ -14,26 +14,40 @@
  * limitations under the License.
  */
 
-namespace Interop/Time/Chrono {
+namespace Time/Chrono {
 
     /// Interface...
 
     pub enum Era(##java.time.chrono.Era)
 
-    pub class ImpEra[t: Type] {
+    pub class ImplementsEra[t: Type] {
         pub def toEra(s: t): Era
         pub def fromEra(s: Era): t
     }
 
 }
 
-namespace Interop/Time/Chrono/Era {
+namespace Time/Chrono/Era {
 
-    use Interop/Time/Chrono.Era
-    use Interop/Time/Chrono.Era.{Era}
+    use Time/Chrono.Era
+    use Time/Chrono.Era.{Era}
+    use Time/Format.TextStyle
+    use Interop/Util.Locale
 
     pub def getHH(x: Era): ##java.time.chrono.Era = 
         let Era(x1) = x;
         x1
+
+    pub def getDisplayName(style: TextStyle, locale: Locale, e: Era): String =
+        import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
+        let style1 = Time/Format/TextStyle.marshal(style);
+        let locale1 = Interop/Util/Locale.getHH(locale);
+        let Era(e1) = e;
+        getDisplayName(e1, style1, locale1)
+
+    pub def getValue(e: Era): Int32 =
+        import java.time.chrono.Era.getValue(): Int32 \ {};
+        let Era(e1) = e;
+        getValue(e1)
 
 }

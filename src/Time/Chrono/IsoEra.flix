@@ -16,11 +16,34 @@
 
 namespace Time/Chrono {
 
+    use Time/Chrono.Era
+    use Time/Chrono.Era.{Era}
+
     pub enum IsoEra with Eq, Order, ToString, Hash, Boxable {
         case BCE
         case CE
     }   
-    
+
+    instance Interop/Flix.Marshal[IsoEra] {
+        pub def toJavaObject(x: IsoEra): ##java.lang.Object =
+            let x1 = Time/Chrono/IsoEra.marshal(x);
+            unsafe_cast x1 as ##java.lang.Object
+
+        pub def fromJavaObject(o: ##java.lang.Object): IsoEra = 
+            let x1 = unsafe_cast o as ##java.time.chrono.IsoEra;
+            Time/Chrono/IsoEra.unmarshal(x1)
+    }
+
+    instance Time/Chrono.ImplementsEra[IsoEra] {
+        pub def toEra(x: IsoEra): Era = 
+            let x1 = Time/Chrono/IsoEra.marshal(x);
+            Era(unsafe_cast x1 as ##java.time.chrono.Era)
+
+        pub def fromEra(x: Era): IsoEra = 
+            let Era(x1) = x;
+            Time/Chrono/IsoEra.unmarshal(unsafe_cast x1 as ##java.time.chrono.IsoEra)
+
+    }
 
 }
 

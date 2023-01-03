@@ -79,6 +79,7 @@ namespace Time/Chrono/HijrahChronology {
     use Time/Chrono.HijrahDate
     use Time/Chrono.HijrahDate.{HijrahDate}
     use Time/Chrono.HijrahEra
+    use Time/Chrono.Era.{Era}
     use Time/Format.ResolverStyle
     use Time/Format.TextStyle
     use Time.Clock
@@ -86,7 +87,7 @@ namespace Time/Chrono/HijrahChronology {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
-    use Interop/Time/Chrono.Era.{Era}
+    
     use Interop/Util.Locale
 
     pub def getHijrahChronology(x: HijrahChronology): ##java.time.chrono.HijrahChronology = 
@@ -108,7 +109,7 @@ namespace Time/Chrono/HijrahChronology {
                         x: HijrahChronology): HijrahDate =
         import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
-        let era1 = Interop/Time/Chrono/ImpEra.toEra(r.era) |> Interop/Time/Chrono/Era.getHH;
+        let era1 = Time/Chrono/ImplementsEra.toEra(r.era) |> Time/Chrono/Era.getHH;
         HijrahDate(date(x1, era1, r.yearOfEra, r.month, r.dayOfMonth))
 
 
@@ -192,7 +193,7 @@ namespace Time/Chrono/HijrahChronology {
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 = 
         import java.time.chrono.HijrahChronology.prolepticYear(##java.time.chrono.Era, Int32): Int32 \ {};
         let HijrahChronology(x1) = x;
-        let Era(era1) = Interop/Time/Chrono/ImpEra.toEra(era);
+        let Era(era1) = Time/Chrono/ImplementsEra.toEra(era);
         prolepticYear(x1, era1, yearOfEra)
 
 

@@ -17,6 +17,9 @@
 namespace Time/Chrono {
 
 
+    use Time/Chrono.Era
+    use Time/Chrono.Era.{Era}
+
     ///
     /// A wrapper around java.time.chrono.JapaneseEra.
     ///
@@ -41,6 +44,18 @@ namespace Time/Chrono {
     instance Hash[JapaneseEra] {
         pub def hash(x: JapaneseEra): Int32 = Time/Chrono/JapaneseEra.hashCode(x)
     } 
+
+
+    instance Time/Chrono.ImplementsEra[JapaneseEra] {
+        pub def toEra(x: JapaneseEra): Era = 
+            let JapaneseEra(x1) = x;
+            Era(unsafe_cast x1 as ##java.time.chrono.Era)
+
+        pub def fromEra(x: Era): JapaneseEra = 
+            let Era(x1) = x;
+            JapaneseEra(unsafe_cast x1 as ##java.time.chrono.JapaneseEra)
+
+    }
 
 }
 
@@ -109,6 +124,7 @@ namespace Time/Chrono/JapaneseEra {
         let style1 = Time/Format/TextStyle.marshal(style);
         let locale1 = Interop/Util/Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)
+
 
     /// /// NOTE - maybe this should return Option [/ Result] ?
     /// pub def adjustInto(t: a, x: JapaneseEra): a with Temporal[a] = 

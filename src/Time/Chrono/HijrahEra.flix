@@ -16,9 +16,8 @@
 
 namespace Time/Chrono {
 
-
-    use Interop/Time/Chrono.Era
-    use Interop/Time/Chrono.Era.{Era}
+    use Time/Chrono.Era
+    use Time/Chrono.Era.{Era}
 
     ///
     /// Enum / Java Enum
@@ -37,7 +36,7 @@ namespace Time/Chrono {
             Time/Chrono/HijrahEra.unmarshal(x1)
     }
     
-    instance Interop/Time/Chrono.ImpEra[HijrahEra] {
+    instance Time/Chrono.ImplementsEra[HijrahEra] {
         pub def toEra(x: HijrahEra): Era = 
             let x1 = Time/Chrono/HijrahEra.marshal(x);
             Era(unsafe_cast x1 as ##java.time.chrono.Era)

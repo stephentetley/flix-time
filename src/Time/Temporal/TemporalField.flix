@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-namespace Interop/Time/Temporal {
+namespace Time/Temporal {
 
     /// Interface...
 
     pub enum TemporalField(##java.time.temporal.TemporalField)
 
-    pub class ImpTemporalField[t: Type] {
+    pub class ImplementsTemporalField[t: Type] {
         pub def toTemporalField(s: t): TemporalField
         pub def fromTemporalField(s: TemporalField): t
     }
 
 }
 
-namespace Interop/Time/Temporal/TemporalField {
+namespace Time/Temporal/TemporalField {
 
-    use Interop/Time/Temporal.TemporalField
-    use Interop/Time/Temporal.TemporalField.{TemporalField}
+    use Time/Temporal.TemporalField
+    use Time/Temporal.TemporalField.{TemporalField}
 
     pub def getHH(x: TemporalField): ##java.time.temporal.TemporalField = 
         let TemporalField(x1) = x;
