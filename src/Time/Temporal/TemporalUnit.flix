@@ -14,26 +14,33 @@
  * limitations under the License.
  */
 
-namespace Interop/Time/Temporal {
+namespace Time/Temporal {
 
     /// Interface...
 
     pub enum TemporalUnit(##java.time.temporal.TemporalUnit)
 
-    pub class ImpTemporalUnit[t: Type] {
+    pub class ImplementsTemporalUnit[t: Type] {
         pub def toTemporalUnit(s: t): TemporalUnit
         pub def fromTemporalUnit(s: TemporalUnit): t
     }
 
 }
 
-namespace Interop/Time/Temporal/TemporalUnit {
+namespace Time/Temporal/TemporalUnit {
 
-    use Interop/Time/Temporal.TemporalUnit
-    use Interop/Time/Temporal.TemporalUnit.{TemporalUnit}
+    use Time/Temporal.TemporalUnit
+    use Time/Temporal.TemporalUnit.{TemporalUnit}
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
 
     pub def getHH(x: TemporalUnit): ##java.time.temporal.TemporalUnit = 
         let TemporalUnit(x1) = x;
         x1
+
+    pub def getDuration(x: TemporalUnit): DurationZ = 
+        import java.time.temporal.TemporalUnit.getDuration(): ##java.time.Duration \ {};
+        let TemporalUnit(x1) = x;
+        getDuration(x1) |> DurationZ
 
 }        

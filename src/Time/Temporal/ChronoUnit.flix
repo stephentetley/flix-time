@@ -18,8 +18,8 @@
 
 namespace Time/Temporal {
 
-    use Interop/Time/Temporal.TemporalUnit
-    use Interop/Time/Temporal.TemporalUnit.{TemporalUnit}
+    use Time/Temporal.TemporalUnit
+    use Time/Temporal.TemporalUnit.{TemporalUnit}
 
     ///
     /// ChronoUnit
@@ -75,7 +75,7 @@ namespace Time/Temporal {
             Time/Temporal/ChronoUnit.unmarshal(x1)
     }
 
-    instance Interop/Time/Temporal.ImpTemporalUnit[ChronoUnit] {
+    instance Time/Temporal.ImplementsTemporalUnit[ChronoUnit] {
         pub def toTemporalUnit(x: ChronoUnit): TemporalUnit = 
             let x1 = Time/Temporal/ChronoUnit.marshal(x);
             TemporalUnit(unsafe_cast x1 as ##java.time.temporal.TemporalUnit)

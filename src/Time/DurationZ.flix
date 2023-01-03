@@ -128,8 +128,8 @@ namespace Time/DurationZ {
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
     
-    use Interop/Time/Temporal.TemporalUnit
-    use Interop/Time/Temporal.TemporalUnit.{TemporalUnit}
+    use Time/Temporal.TemporalUnit
+    use Time/Temporal.TemporalUnit.{TemporalUnit}
     
     /// ## Unwrap
 
@@ -208,7 +208,7 @@ namespace Time/DurationZ {
     def ofTemporalUnit(amount: Int64, tu: TemporalUnit): DurationZ =
         import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
         try {
-             Interop/Time/Temporal/TemporalUnit.getHH(tu) |> of(amount) |> DurationZ
+             Time/Temporal/TemporalUnit.getHH(tu) |> of(amount) |> DurationZ
         } catch { 
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
@@ -217,7 +217,7 @@ namespace Time/DurationZ {
 
     pub def ofHalfDays(i: Int64): DurationZ = 
         Time/Temporal.ChronoUnit.HalfDays 
-            |> Interop/Time/Temporal/ImpTemporalUnit.toTemporalUnit
+            |> Time/Temporal/ImplementsTemporalUnit.toTemporalUnit
             |> ofTemporalUnit(i)
 
 
@@ -466,12 +466,12 @@ namespace Time/DurationZ {
 
     pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
         Time/Temporal/ChronoUnit.HalfDays
-            |> Interop/Time/Temporal.ImpTemporalUnit.toTemporalUnit
+            |> Time/Temporal.ImplementsTemporalUnit.toTemporalUnit
             |> plusHelper(x, i)
 
     pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
         Time/Temporal/ChronoUnit.HalfDays
-            |> Interop/Time/Temporal.ImpTemporalUnit.toTemporalUnit
+            |> Time/Temporal.ImplementsTemporalUnit.toTemporalUnit
             |> minusHelper(x, i)
 
     /// ## multiply / divide functions
