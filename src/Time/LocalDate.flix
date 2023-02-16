@@ -308,14 +308,14 @@ namespace Time/LocalDate {
         lengthOfYear(x1)
 
 
-    pub def datesUntil(r: Region[r], s: LocalDate, e: LocalDate): Iterator[LocalDate, r] \ Read(r) = 
+    pub def datesUntil(r: Region[r], s: LocalDate, e: LocalDate): Iterator[LocalDate, r, r] \ Read(r) = 
         import java.time.LocalDate.datesUntil(##java.time.LocalDate): ##java.util.stream.Stream \ r;
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let strm = datesUntil(s1, e1);
         Interop/Util/Stream/Stream.wrapHH(r, strm) |> Interop/Util/Stream/Stream.iterator(r)
 
-    pub def datesUntilWithStep(r: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r] \ Read(r) = 
+    pub def datesUntilWithStep(r: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r, r] \ Read(r) = 
         import java.time.LocalDate.datesUntil(##java.time.LocalDate, ##java.time.Period): ##java.util.stream.Stream \ r;
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;

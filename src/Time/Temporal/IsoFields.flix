@@ -16,7 +16,7 @@
 
 
 
-namespace Time/Temporal/IsoField {
+namespace Time/Temporal/IsoFields {
 
     use Time/Temporal/TemporalField
     use Time/Temporal/TemporalField.{TemporalField}

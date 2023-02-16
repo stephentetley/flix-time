@@ -21,24 +21,26 @@ namespace Time/Format {
     /// 
     /// `ka` is the continuation answer type
     ///
-    pub enum DateTimeFormatterBuilder[r: Region, ka: Type, a: Type](MonadLib.MutStateError[r, ka, ##java.time.format.DateTimeFormatterBuilder, a])
+    pub enum DateTimeFormatterBuilder[ka: Type, ef: Bool, a: Type](Graded.MutStateError[ka, ##java.time.format.DateTimeFormatterBuilder, ef, a])
 
 
-    instance Functor[DateTimeFormatterBuilder[r, ka]] {
-        pub def map(f: a -> b \ ef, ma: DateTimeFormatterBuilder[r, ka, a]): DateTimeFormatterBuilder[r, ka, b] \ ef = 
+    instance GradedFunctor[DateTimeFormatterBuilder[ka]] {
+        pub def map(f: a -> b \ ef1, ma: DateTimeFormatterBuilder[ka, ef, a]): DateTimeFormatterBuilder[ka, ef and ef1, b] = 
             Time/Format/DateTimeFormatterBuilder.map(f, ma)
     }
 
 
-    instance Applicative[DateTimeFormatterBuilder[r, ka]] {
-        pub def point(x: a): DateTimeFormatterBuilder[r, ka, a] =  Time/Format/DateTimeFormatterBuilder.point(x)
+    instance GradedApplicative[DateTimeFormatterBuilder[ka]] {
+        pub def point(x: a): DateTimeFormatterBuilder[ka, Pure, a] =  Time/Format/DateTimeFormatterBuilder.point(x)
 
-        pub def ap(mf: DateTimeFormatterBuilder[r, ka, a -> b \ ef], ma: DateTimeFormatterBuilder[r, ka, a]): DateTimeFormatterBuilder[r, ka, b] \ ef =
+        pub def ap(mf: DateTimeFormatterBuilder[ka, ef1, a -> b \ ef2], 
+                    ma: DateTimeFormatterBuilder[ka, ef, a]): DateTimeFormatterBuilder[ka, ef and ef1 and ef2, b] =
             Time/Format/DateTimeFormatterBuilder.ap(mf, ma)
     }
 
-    instance Monad[DateTimeFormatterBuilder[r, ka]] {
-        pub def flatMap(f: a -> DateTimeFormatterBuilder[r, ka,b] \ ef, ma: DateTimeFormatterBuilder[r, ka,a]): DateTimeFormatterBuilder[r, ka,b] \ ef =
+    instance GradedMonad[DateTimeFormatterBuilder[ka]] {
+        pub def flatMap(f: a -> DateTimeFormatterBuilder[ka, ef1, b] \ ef2, 
+                        ma: DateTimeFormatterBuilder[ka, ef, a]): DateTimeFormatterBuilder[ka, ef and ef1 and ef2, b] =
             Time/Format/DateTimeFormatterBuilder.flatMap(f, ma)
     }
 
@@ -57,200 +59,202 @@ namespace Time/Format/DateTimeFormatterBuilder {
     use Time/Format.TextStyle;
     use Time.ZoneId;
 
-    pub def getDateTimeFormatterBuilder(x: DateTimeFormatterBuilder[r, ka, a]): MonadLib.MutStateError[r, ka, ##java.time.format.DateTimeFormatterBuilder, a] = 
+    pub def getDateTimeFormatterBuilder(x: DateTimeFormatterBuilder[ka, ef, a]): Graded.MutStateError[ka, ##java.time.format.DateTimeFormatterBuilder, ef, a] = 
         let DateTimeFormatterBuilder(x1) = x;
         x1
 
-    pub def point(x: a): DateTimeFormatterBuilder[r, ka,a] =
-        DateTimeFormatterBuilder(MonadLib/MutStateError.point(x))
+    pub def point(x: a): DateTimeFormatterBuilder[ka, ef, a] =
+        DateTimeFormatterBuilder(Graded/MutStateError.point(x))
 
-    pub def map(f: a -> b \ ef, ma: DateTimeFormatterBuilder[r, ka,a]): DateTimeFormatterBuilder[r, ka,b] \ ef =
-        DateTimeFormatterBuilder(MonadLib/MutStateError.map(f, getDateTimeFormatterBuilder(ma)))
+    pub def map(f: a -> b \ ef1, 
+                ma: DateTimeFormatterBuilder[ka, ef, a]): DateTimeFormatterBuilder[ka, ef and ef1, b] =
+        DateTimeFormatterBuilder(Graded/MutStateError.map(f, getDateTimeFormatterBuilder(ma)))
         
-    pub def ap(mf: DateTimeFormatterBuilder[r, ka,a -> b \ ef], ma: DateTimeFormatterBuilder[r, ka,a]): DateTimeFormatterBuilder[r, ka,b] \ ef =
-        DateTimeFormatterBuilder(MonadLib/MutStateError.ap(getDateTimeFormatterBuilder(mf), getDateTimeFormatterBuilder(ma)))
+    pub def ap(mf: DateTimeFormatterBuilder[ka, ef1, a -> b \ ef2], 
+                ma: DateTimeFormatterBuilder[ka, ef, a]): DateTimeFormatterBuilder[ka, ef and ef1 and ef2, b] =
+        DateTimeFormatterBuilder(Graded/MutStateError.ap(getDateTimeFormatterBuilder(mf), getDateTimeFormatterBuilder(ma)))
 
-    pub def flatMap(f: a -> DateTimeFormatterBuilder[r, ka,b] \ ef, ma: DateTimeFormatterBuilder[r, ka,a]): DateTimeFormatterBuilder[r, ka,b] \ ef =
-        DateTimeFormatterBuilder(MonadLib/MutStateError.flatMap(f >> getDateTimeFormatterBuilder, getDateTimeFormatterBuilder(ma)))
+    pub def flatMap(f: a -> DateTimeFormatterBuilder[ka, ef1, b] \ ef2, 
+                    ma: DateTimeFormatterBuilder[ka, ef, a]): DateTimeFormatterBuilder[ka, ef and ef1 and ef2, b] =
+        DateTimeFormatterBuilder(Graded/MutStateError.flatMap(f >> getDateTimeFormatterBuilder, getDateTimeFormatterBuilder(ma)))
 
-    pub def throwError(msg: String): DateTimeFormatterBuilder[r, ka,a] = 
-        DateTimeFormatterBuilder(MonadLib/MutStateError.throwError(msg))
+    pub def throwError(msg: String): DateTimeFormatterBuilder[ka, ef, a] = 
+        DateTimeFormatterBuilder(Graded/MutStateError.throwError(msg))
 
 
-    def liftSetter!(f: ##java.time.format.DateTimeFormatterBuilder -> ##java.time.format.DateTimeFormatterBuilder \ ef): DateTimeFormatterBuilder[r, ka, Unit] \ ef =
-        DateTimeFormatterBuilder(MonadLib/MutStateError.liftSetter!(f)) |> Functor.ignore
+    def liftSetter!(f: ##java.time.format.DateTimeFormatterBuilder -> ##java.time.format.DateTimeFormatterBuilder \ ef): DateTimeFormatterBuilder[ka, ef, Unit] =
+        DateTimeFormatterBuilder(Graded/MutStateError.liftSetter!(f)) |> GradedFunctor.ignore
 
-    // def liftSetterResult(f: ##java.time.format.DateTimeFormatterBuilder -> Result[err, ##java.time.format.DateTimeFormatterBuilder,] \ ef): DateTimeFormatterBuilder[r, ka, Unit] \ ef with ToString[err] =
-    //     DateTimeFormatterBuilder(MonadLib/MutStateError.liftSetterResult(f))
+    // def liftSetterResult(f: ##java.time.format.DateTimeFormatterBuilder -> Result[err, ##java.time.format.DateTimeFormatterBuilder,] \ ef): DateTimeFormatterBuilder[ka, ef, Unit] with ToString[err] =
+    //     DateTimeFormatterBuilder(Graded/MutStateError.liftSetterResult(f))
 
 
 
     ///
     /// Returns the result of applying `ma` to the initial state `s`.
     ///
-    def runBuilder(r: Region[r], 
-                        ma: DateTimeFormatterBuilder[r, a, a], 
-                        s: ##java.time.format.DateTimeFormatterBuilder): Result[String, a] \ r = 
-        MonadLib/MutStateError.runMutStateError(r, getDateTimeFormatterBuilder(ma), s)
+    def runBuilder(ma: DateTimeFormatterBuilder[a, ef, a], 
+                    s: ##java.time.format.DateTimeFormatterBuilder): Result[String, a] \ ef = 
+        Graded/MutStateError.runMutStateError(getDateTimeFormatterBuilder(ma), s)
 
 
 
-    pub def toFormatter(r: Region[r], ma: DateTimeFormatterBuilder[r, a, a]): Result[String, DateTimeFormatter[ftype]] \ { Read(r), Write(r) } = 
-        import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as new1;
-        import java.time.format.DateTimeFormatterBuilder.toFormatter(): ##java.time.format.DateTimeFormatter \ r as toJavaFormatter;
+    pub def toFormatter(ma: DateTimeFormatterBuilder[a, ef, a]): Result[String, DateTimeFormatter[ftype]] \ ef = 
+        import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ ef as new1;
+        import java.time.format.DateTimeFormatterBuilder.toFormatter(): ##java.time.format.DateTimeFormatter \ ef as toJavaFormatter;
         let state1 = new1();
-        match runBuilder(r, ma, state1) {
+        match runBuilder(ma, state1) {
             case Err(msg) => Err(msg)
             case Ok(_)    => Ok(DateTimeFormatter(toJavaFormatter(state1)))
         }
 
-    pub def toFormatterWithLocale(r: Region[r], loc: Locale, ma: DateTimeFormatterBuilder[r, a, a]): Result[String, DateTimeFormatter[ftype]] \ { Read(r), Write(r) } = 
-        import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as new1;
-        import java.time.format.DateTimeFormatterBuilder.toFormatter(##java.util.Locale): ##java.time.format.DateTimeFormatter \ r as toJavaFormatter;
+    pub def toFormatterWithLocale(loc: Locale, ma: DateTimeFormatterBuilder[a, ef, a]): Result[String, DateTimeFormatter[ftype]] \ ef = 
+        import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ ef as new1;
+        import java.time.format.DateTimeFormatterBuilder.toFormatter(##java.util.Locale): ##java.time.format.DateTimeFormatter \ ef as toJavaFormatter;
         let state1 = new1();
         let loc1 = Interop/Util/Locale.getHH(loc);
-        match runBuilder(r, ma, state1) {
+        match runBuilder(ma, state1) {
             case Err(msg) => Err(msg)
             case Ok(_)    => Ok(DateTimeFormatter(toJavaFormatter(state1, loc1)))
         }
 
 
 
-    pub def append!(fmt: DateTimeFormatter[ftype]): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.append(##java.time.format.DateTimeFormatter): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def append!(fmt: DateTimeFormatter[ftype]): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.append(##java.time.format.DateTimeFormatter): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let fmt1 = Time/Format/DateTimeFormatter.getDateTimeFormatter(fmt);
         liftSetter!(flip(append, fmt1))
 
-    pub def appendChronologyId!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendChronologyId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendChronologyId!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendChronologyId(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(appendChronologyId)
 
-    pub def appendChronologyText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendChronologyText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendChronologyText!(style: TextStyle): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendChronologyText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let style1 = Time/Format/TextStyle.marshal(style);
         liftSetter!(flip(appendChronologyText, style1))
 
     /// Java 16
 
-    /// pub def appendDayPeriodText(style: TextStyle): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-    ///     import java.time.format.DateTimeFormatterBuilder.appendDayPeriodText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
+    /// pub def appendDayPeriodText(style: TextStyle): DateTimeFormatterBuilder[ka, ef, Unit] = 
+    ///     import java.time.format.DateTimeFormatterBuilder.appendDayPeriodText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ ef;
     ///     let style1 = Time/Format/TextStyle.marshal(style);
     ///     liftSetter(flip(appendDayPeriodText, style1))
 
 
-    pub def appendGenericZoneText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendGenericZoneText!(style: TextStyle): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let style1 = Time/Format/TextStyle.marshal(style);
         liftSetter!(flip(appendGenericZoneText, style1))
 
-    pub def appendGenericZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = region r1 {
-        import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendGenericZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, ef, Unit] = region rc {
+        import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = Interop/Util/HashSet.fromFoldable(r1, preferredZones) |> Interop/Util/SetZ.toSetHH;
+        let s1 = Interop/Util/HashSet.fromFoldable(rc, preferredZones) |> Interop/Util/SetZ.toSetHH(rc);
         liftSetter!(bldr -> appendGenericZoneText(bldr, style1, s1))
     }
 
-    pub def appendInstant!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendInstant(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendInstant!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendInstant(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(appendInstant)
 
-    pub def appendInstantWithFractionalDigits!(fractionalDigits: Int32): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendInstant(Int32): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendInstantWithFractionalDigits!(fractionalDigits: Int32): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendInstant(Int32): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(flip(appendInstant, fractionalDigits))
 
-    pub def appendLiteralChar!(c: Char): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendLiteral(Char): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendLiteralChar!(c: Char): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendLiteral(Char): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(flip(appendLiteral, c))
 
-    pub def appendLiteralString!(s: String): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendLiteral(String): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendLiteralString!(s: String): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendLiteral(String): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(flip(appendLiteral, s))
 
-    pub def appendLocalized!(r: {timeStyle = FormatStyle, dateStyle = FormatStyle}): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendLocalized(##java.time.format.FormatStyle, ##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendLocalized!(r: {timeStyle = FormatStyle, dateStyle = FormatStyle}): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendLocalized(##java.time.format.FormatStyle, ##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let timeStyle1 = Time/Format/FormatStyle.marshal(r.timeStyle);
         let dateStyle1 = Time/Format/FormatStyle.marshal(r.dateStyle);
         liftSetter!(bldr -> appendLocalized(bldr, timeStyle1, dateStyle1))
 
-    pub def appendLocalizedOffset!(style: TextStyle): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendLocalizedOffset(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendLocalizedOffset!(style: TextStyle): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendLocalizedOffset(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let style1 = Time/Format/TextStyle.marshal(style);
         liftSetter!(flip(appendLocalizedOffset, style1))
 
 
-    pub def appendOffset!(r: {pattern = String, noOffsetText = String}): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendOffset(String, String): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendOffset!(r: {pattern = String, noOffsetText = String}): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendOffset(String, String): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(bldr -> appendOffset(bldr, r.pattern, r.noOffsetText))
 
-    pub def appendOffsetId!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendOffsetId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendOffsetId!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendOffsetId(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(appendOffsetId)
 
-    pub def appendOptional!(fmt: DateTimeFormatter[ftype]): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendOptional(##java.time.format.DateTimeFormatter): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendOptional!(fmt: DateTimeFormatter[ftype]): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendOptional(##java.time.format.DateTimeFormatter): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let fmt1 = Time/Format/DateTimeFormatter.getDateTimeFormatter(fmt);
         liftSetter!(flip(appendOptional, fmt1))
 
-    pub def appendPattern!(patt: String): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendPattern(String): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendPattern!(patt: String): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendPattern(String): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(flip(appendPattern, patt))
 
-    pub def appendZoneId!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendZoneId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendZoneId!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendZoneId(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(appendZoneId)
 
-    pub def appendZoneOrOffsetId!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendZoneOrOffsetId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendZoneOrOffsetId!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendZoneOrOffsetId(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(appendZoneOrOffsetId)
 
-    pub def appendZoneRegionId!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendZoneRegionId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendZoneRegionId!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendZoneRegionId(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(appendZoneRegionId)
 
-    pub def appendZoneText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendZoneText!(style: TextStyle): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let style1 = Time/Format/TextStyle.marshal(style);
         liftSetter!(flip(appendZoneText, style1))
 
-    pub def appendZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = region r1 {
-        import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def appendZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, ef, Unit] = region rc {
+        import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = Interop/Util/HashSet.fromFoldable(r1, preferredZones) |> Interop/Util/SetZ.toSetHH;
+        let s1 = Interop/Util/HashSet.fromFoldable(rc, preferredZones) |> Interop/Util/SetZ.toSetHH(rc);
         liftSetter!(bldr -> appendZoneText(bldr, style1, s1))
     }
 
-    pub def optionalStart!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.optionalStart(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def optionalStart!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.optionalStart(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(optionalStart)
 
-    pub def optionalEnd!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.optionalEnd(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def optionalEnd!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.optionalEnd(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(optionalEnd)
 
 
-    pub def padNext!(n: Int32): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.padNext(Int32): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def padNext!(n: Int32): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.padNext(Int32): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(flip(padNext, n))
 
-    pub def padNextWithChar!(n: Int32, c: Char): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.padNext(Int32, Char): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def padNextWithChar!(n: Int32, c: Char): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.padNext(Int32, Char): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(bldr -> padNext(bldr, n, c))
 
 
-    pub def parseCaseSensitive!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.parseCaseSensitive(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def parseCaseSensitive!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.parseCaseSensitive(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(parseCaseSensitive)
 
-    pub def parseCaseInsensitive!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.parseCaseInsensitive(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def parseCaseInsensitive!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.parseCaseInsensitive(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(parseCaseInsensitive)
 
-    pub def parseStrict!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.parseStrict(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def parseStrict!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.parseStrict(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(parseStrict)
 
-    pub def parseLenient!(): DateTimeFormatterBuilder[r, ka, Unit] \ Write(r) = 
-        import java.time.format.DateTimeFormatterBuilder.parseLenient(): ##java.time.format.DateTimeFormatterBuilder \ r;
+    pub def parseLenient!(): DateTimeFormatterBuilder[ka, ef, Unit] = 
+        import java.time.format.DateTimeFormatterBuilder.parseLenient(): ##java.time.format.DateTimeFormatterBuilder \ ef;
         liftSetter!(parseLenient)
 
 
