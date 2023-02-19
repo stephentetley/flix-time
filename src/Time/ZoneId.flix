@@ -97,7 +97,7 @@ namespace Time/ZoneId {
     pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] = region rc {
         import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId \ {};
         try {
-            let jmap = Interop/Util/HashMap.fromFlixMap(rc, aliases) |> Interop/Util/MapZ.toMapHH(rc);
+            let jmap = Interop/Util/HashMap.fromFlixMap(rc, aliases) |> Interop/Util/MapZ.toMapHH;
             Ok(ZoneId(of(zoneId.zoneId, jmap)))
         } catch {
             case ex: ##java.lang.Exception => 

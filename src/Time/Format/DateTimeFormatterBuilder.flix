@@ -150,7 +150,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     pub def appendGenericZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, ef, Unit] = region rc {
         import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = Interop/Util/HashSet.fromFoldable(rc, preferredZones) |> Interop/Util/SetZ.toSetHH(rc);
+        let s1 = Interop/Util/HashSet.fromFoldable(rc, preferredZones) |> Interop/Util/SetZ.toSetHH;
         liftSetter!(bldr -> appendGenericZoneText(bldr, style1, s1))
     }
 
@@ -219,7 +219,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     pub def appendZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[ka, ef, Unit] = region rc {
         import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ ef;
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = Interop/Util/HashSet.fromFoldable(rc, preferredZones) |> Interop/Util/SetZ.toSetHH(rc);
+        let s1 = Interop/Util/HashSet.fromFoldable(rc, preferredZones) |> Interop/Util/SetZ.toSetHH;
         liftSetter!(bldr -> appendZoneText(bldr, style1, s1))
     }
 
