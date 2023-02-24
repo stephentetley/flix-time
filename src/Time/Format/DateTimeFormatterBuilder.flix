@@ -31,7 +31,7 @@ namespace Time/Format {
 
 
     instance GradedApplicative[DateTimeFormatterBuilder[ka]] {
-        pub def point(x: a): DateTimeFormatterBuilder[ka, Pure, a] =  Time/Format/DateTimeFormatterBuilder.point(x)
+        pub def point(x: a): DateTimeFormatterBuilder[ka, ef, a] =  Time/Format/DateTimeFormatterBuilder.point(x)
 
         pub def ap(mf: DateTimeFormatterBuilder[ka, ef1, a -> b \ ef2], 
                     ma: DateTimeFormatterBuilder[ka, ef, a]): DateTimeFormatterBuilder[ka, ef and ef1 and ef2, b] =
