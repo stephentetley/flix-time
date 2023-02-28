@@ -21,7 +21,7 @@ namespace Time/Format {
     /// 
     /// `ka` is the continuation answer type
     ///
-    pub enum DateTimeFormatterBuilder[r: Region, ka: Type, ef: Bool, a: Type](Graded.Builder[r, ka, PrimBuilder, ef, a])
+    pub enum DateTimeFormatterBuilder[r: Region, ka: Type, ef: Bool, a: Type](Graded.Builder[ka, PrimBuilder[r], ef, a])
 
 
     instance GradedFunctor[DateTimeFormatterBuilder[r, ka]] {
@@ -62,7 +62,7 @@ namespace Time/Format/DateTimeFormatterBuilder {
     use Time/Format.TextStyle;
     use Time.ZoneId;
 
-    pub def getDateTimeFormatterBuilder(x: DateTimeFormatterBuilder[r, ka, ef, a]): Graded.Builder[r, ka, PrimBuilder, ef, a] = 
+    pub def getDateTimeFormatterBuilder(x: DateTimeFormatterBuilder[r, ka, ef, a]): Graded.Builder[ka, PrimBuilder[r], ef, a] = 
         let DateTimeFormatterBuilder(x1) = x;
         x1
 
