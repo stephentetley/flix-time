@@ -16,6 +16,9 @@
 
 namespace Time/Format {
 
+
+    /// Is API is too large to use Setter from flix-interop?
+
     use Interop/Time/Format.{DateTimeFormatterBuilder => PrimBuilder}
 
     /// 
