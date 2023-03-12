@@ -146,11 +146,11 @@ namespace Time/Format/DateTimeFormatterBuilder {
         let style1 = Time/Format/TextStyle.marshal(style);
         liftSetter!(Interop/Time/Format/DateTimeFormatterBuilder.appendGenericZoneText!(style1))
 
-    pub def appendGenericZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, r, Unit] = region rc {
+    pub def appendGenericZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, r, Unit] =
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = Interop/Util/HashSet.fromFoldable(rc, preferredZones) |> Interop/Util/SetZ.toSetHH;
+        let s1 = Interop/Util/SetZ.fromFoldableViaHashSetHH(preferredZones);
         liftSetter!(Interop/Time/Format/DateTimeFormatterBuilder.appendGenericZoneTextWithZones!(style1, s1))
-    }
+
 
     pub def appendInstant!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         liftSetter!(Interop/Time/Format/DateTimeFormatterBuilder.appendInstant!)
@@ -200,11 +200,11 @@ namespace Time/Format/DateTimeFormatterBuilder {
         let style1 = Time/Format/TextStyle.marshal(style);
         liftSetter!(Interop/Time/Format/DateTimeFormatterBuilder.appendZoneText!(style1))
 
-    pub def appendZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, r, Unit] = region rc {
+    pub def appendZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, r, Unit] =
         let style1 = Time/Format/TextStyle.marshal(style);
-        let s1 = Interop/Util/HashSet.fromFoldable(rc, preferredZones) |> Interop/Util/SetZ.toSetHH;
+        let s1 = Interop/Util/SetZ.fromFoldableViaHashSetHH(preferredZones);
         liftSetter!(Interop/Time/Format/DateTimeFormatterBuilder.appendZoneTextWithZones!(style1, s1))
-    }
+    
 
 
     pub def optionalStart!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
