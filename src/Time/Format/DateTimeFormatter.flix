@@ -33,12 +33,10 @@ namespace Time/Format {
 
     instance FromString[DateTimeFormatter[t]] {
         pub def fromString(s: String): Option[DateTimeFormatter[t]] =
-            import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter \ {};
-            try {
-                Some(DateTimeFormatter(ofPattern(String.trim(s))))
-            } catch {
-                case _: ##java.lang.Exception => None
-            }
+            Result.tryCatch(_ -> {
+                import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter \ {};
+                DateTimeFormatter(ofPattern(String.trim(s)))
+            }) |> Result.toOption
     }
 
     /// Phantom arguments to restrict the type of DateTimeFormatter
@@ -139,14 +137,10 @@ namespace Time/Format/DateTimeFormatter {
     /// ## `from` functions
 
     pub def fromPattern(pattern: String): Result[String, DateTimeFormatter[t]] =
-        import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter \ {};
-        try {
-            Ok(DateTimeFormatter(ofPattern(String.trim(pattern))))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+        Result.tryCatch(_ -> {
+            import static java.time.format.DateTimeFormatter.ofPattern(String): ##java.time.format.DateTimeFormatter \ {};
+            DateTimeFormatter(ofPattern(String.trim(pattern)))
+        })
 
 
     pub def fromLocalizedTime(style: FormatStyle): DateTimeFormatter[TimeFormat] =

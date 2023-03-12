@@ -37,13 +37,11 @@ namespace Time {
     ///
     instance FromString[YearMonth] {
         pub def fromString(s: String): Option[YearMonth] = 
-        import static java.time.YearMonth.parse(##java.lang.CharSequence): ##java.time.YearMonth \ {};        
-        try {
-            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Some(YearMonth(parse(cs)))
-        } catch {
-            case _: ##java.time.format.DateTimeParseException => None
-        }
+            Result.tryCatch(_ -> {
+                import static java.time.YearMonth.parse(##java.lang.CharSequence): ##java.time.YearMonth \ {};        
+                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
+                YearMonth(parse(cs))
+            }) |> Result.toOption
     }
 
 
@@ -158,16 +156,12 @@ namespace Time/YearMonth {
     /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, YearMonth] =
-        import static java.time.YearMonth.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.YearMonth \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.YearMonth.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.YearMonth \ {};
             let DateTimeFormatter(fmtr) = formatter;
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(YearMonth(parse(cs, fmtr)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            YearMonth(parse(cs, fmtr))
+        })
     
     ///
     /// Returns YearMonth `x` as a String using `formatter`.

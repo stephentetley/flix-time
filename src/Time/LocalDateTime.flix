@@ -43,13 +43,11 @@ namespace Time {
     ///
     instance FromString[LocalDateTime] {
         pub def fromString(s: String): Option[LocalDateTime] =
-            import static java.time.LocalDateTime.parse(##java.lang.CharSequence): ##java.time.LocalDateTime \ {};
-            try {
+            Result.tryCatch(_ -> {
+                import static java.time.LocalDateTime.parse(##java.lang.CharSequence): ##java.time.LocalDateTime \ {};
                 let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-                Some(LocalDateTime(parse(cs)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
+                LocalDateTime(parse(cs))
+            }) |> Result.toOption
     }
 
     instance Eq[LocalDateTime] {
@@ -235,16 +233,12 @@ namespace Time/LocalDateTime {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, LocalDateTime] =
-        import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDateTime \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.LocalDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDateTime \ {};
             let DateTimeFormatter(fmtr) = formatter;
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(LocalDateTime(parse(cs, fmtr)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            LocalDateTime(parse(cs, fmtr))
+        })
 
     ///
     /// Returns LocalDateTime `x` as a String using `formatter`.

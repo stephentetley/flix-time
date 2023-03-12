@@ -35,13 +35,11 @@ namespace Time {
     ///
     instance FromString[Year] {
         pub def fromString(s: String): Option[Year] =
-            import static java.time.Year.parse(##java.lang.CharSequence): ##java.time.Year \ {};
-            try {
+            Result.tryCatch(_ -> {
+                import static java.time.Year.parse(##java.lang.CharSequence): ##java.time.Year \ {};
                 let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-                Some(Year(parse(cs)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
+                Year(parse(cs))
+            }) |> Result.toOption
     }
 
     instance Eq[Year] {
@@ -134,32 +132,26 @@ namespace Time/Year {
     /// ## `at` functions
 
     pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
-        import java.time.Year.atDay(Int32): ##java.time.LocalDate \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import java.time.Year.atDay(Int32): ##java.time.LocalDate \ {};
             let Year(x1) = x;
-            Some(LocalDate(atDay(x1, dayOfYear)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
+            LocalDate(atDay(x1, dayOfYear))
+        }) |> Result.toOption
 
     pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
-        import java.time.Year.atMonth(Int32): ##java.time.YearMonth \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import java.time.Year.atMonth(Int32): ##java.time.YearMonth \ {};
             let Year(x1) = x;
-            Some(YearMonth(atMonth(x1, month)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
+            YearMonth(atMonth(x1, month))
+        }) |> Result.toOption
 
     pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
-        import java.time.Year.atMonth(##java.time.Month): ##java.time.YearMonth \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import java.time.Year.atMonth(##java.time.Month): ##java.time.YearMonth \ {};
             let Year(x1) = x;
             let m1 = Time/Month.marshal(month);
-            Some(YearMonth(atMonth(x1, m1)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
+            YearMonth(atMonth(x1, m1))
+        }) |> Result.toOption
 
     pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
         import java.time.Year.atMonthDay(##java.time.MonthDay): ##java.time.LocalDate \ {};
@@ -205,16 +197,12 @@ namespace Time/Year {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, Year] =
-        import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.Year \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.Year.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.Year \ {};
             let DateTimeFormatter(fmtr) = formatter;
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(Year(parse(cs, fmtr)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            Year(parse(cs, fmtr))
+        })
 
     ///
     /// Returns the Year `x` as a String using `formatter`.

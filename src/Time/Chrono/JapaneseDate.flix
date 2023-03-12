@@ -162,14 +162,12 @@ namespace Time/Chrono/JapaneseDate {
     ///         |> Result.getWithDefault(-1)
 
     /// def getChronoFieldHelper(x: JapaneseDate, field: ChronoField): Result[String, Int32] =
-    ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
-    ///     try {
+    ///     Result.tryCatch(_ -> {
+    ///         import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///         let JapaneseDate(x1) = x;
     ///         let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
-    ///         Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1))
-    ///     } catch {
-    ///         case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
-    ///     }
+    ///         get(x1 as ##java.time.temporal.TemporalAccessor, field1)
+    ///     })
         
 
 

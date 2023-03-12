@@ -44,13 +44,11 @@ namespace Time {
     ///
     instance FromString[DurationZ] {
         pub def fromString(s: String): Option[DurationZ] =
-            import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
-            try {
+            Result.tryCatch(_ -> {
+                import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
                 let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-                Some(DurationZ(parse(cs)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
+                DurationZ(parse(cs))
+            }) |> Result.toOption
     }
 
     instance Eq[DurationZ] {
@@ -287,15 +285,11 @@ namespace Time/DurationZ {
     /// ## `parse` / `format` functions
 
     pub def parse(s: String): Result[String, DurationZ] =
-        import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(DurationZ(parse(cs)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            DurationZ(parse(cs))
+        })
 
     /// Note - alias of `toString`
     pub def format(x: DurationZ): String =

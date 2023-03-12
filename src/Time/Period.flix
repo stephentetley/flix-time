@@ -37,13 +37,11 @@ namespace Time {
     ///
     instance FromString[Period] {
         pub def fromString(s: String): Option[Period] =
-            import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
-            try {
+            Result.tryCatch(_ -> {
+                import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
                 let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-                Some(Period(parse(cs)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
+                Period(parse(cs))
+            }) |> Result.toOption
     }
 
     instance Eq[Period] {
@@ -173,15 +171,11 @@ namespace Time/Period {
     /// ## `parse` / `format` functions        
 
     pub def parse(s: String): Result[String, Period] =
-        import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.Period.parse(##java.lang.CharSequence): ##java.time.Period \ {};
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(Period(parse(cs)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            Period(parse(cs))
+        })
 
     /// Note - alias of `toString`
     pub def format(x: Period): String =

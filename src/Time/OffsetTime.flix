@@ -41,13 +41,11 @@ namespace Time {
     ///
     instance FromString[OffsetTime] {
         pub def fromString(s: String): Option[OffsetTime] =
-            import static java.time.OffsetTime.parse(##java.lang.CharSequence): ##java.time.OffsetTime \ {};
-            try {
+            Result.tryCatch(_ -> {
+                import static java.time.OffsetTime.parse(##java.lang.CharSequence): ##java.time.OffsetTime \ {};
                 let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-                Some(OffsetTime(parse(cs)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
+                OffsetTime(parse(cs))
+            }) |> Result.toOption
     }
 
     instance Eq[OffsetTime] {
@@ -181,16 +179,12 @@ namespace Time/OffsetTime {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[TimeFormat], s: String): Result[String, OffsetTime] =
-        import static java.time.OffsetTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.OffsetTime \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.OffsetTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.OffsetTime \ {};
             let DateTimeFormatter(fmtr) = formatter;
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(OffsetTime(parse(cs, fmtr)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            OffsetTime(parse(cs, fmtr))
+        })
 
     ///
     /// Returns OffsetTime `x` as a String using `formatter`.

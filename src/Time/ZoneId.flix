@@ -84,18 +84,14 @@ namespace Time/ZoneId {
     /// ## Constructors
 
     pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
-        import static java.time.ZoneId.of(String): ##java.time.ZoneId \ {};
-        try {
-            Ok(ZoneId(of(zoneId.zoneId)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+        Result.tryCatch(_ -> {
+            import static java.time.ZoneId.of(String): ##java.time.ZoneId \ {};
+            ZoneId(of(zoneId.zoneId))
+        })
         
 
     pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] =
-        Interop/Flix/Util.try(_ -> {
+        Result.tryCatch(_ -> {
             import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId \ {};
             let jmap = Interop/Util/MapZ.fromFlixMapViaHashMapHH(aliases);
             ZoneId(of(zoneId.zoneId, jmap))
@@ -110,14 +106,10 @@ namespace Time/ZoneId {
     }
 
     pub def systemDefault(): Result[String, ZoneId] \ IO =
-        import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId \ IO;
-        try {
-            Ok(ZoneId(systemDefault()))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
-        }
+        Result.tryCatch(_ -> {
+            import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId \ IO;
+            ZoneId(systemDefault())
+        })
 
 
     /// ## `from` functions
@@ -184,13 +176,11 @@ namespace Time/ZoneId {
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =
-        import java.time.ZoneId.getRules(): ##java.time.zone.ZoneRules \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import java.time.ZoneId.getRules(): ##java.time.zone.ZoneRules \ {};
             let ZoneId(x1) = x;
-            Some(ZoneRules(getRules(x1)))
-        } catch {
-            case _: ##java.lang.Exception => None
-        }
+            ZoneRules(getRules(x1))
+        }) |> Result.toOption
 
     ///
     pub def normalized(x: ZoneId): ZoneId =

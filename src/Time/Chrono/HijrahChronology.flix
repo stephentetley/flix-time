@@ -134,15 +134,11 @@ namespace Time/Chrono/HijrahChronology {
         HijrahDate(dateNow(x1, zone1))
 
     pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] = 
-        try {
+        Result.tryCatch(_ -> {
             import java.time.chrono.HijrahChronology.dateEpochDay(Int64): ##java.time.chrono.HijrahDate \ {};
             let HijrahChronology(x1) = x;
-            dateEpochDay(x1, epochDay) |> HijrahDate |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-               Err(getMessage(ex))
-        }
+            HijrahDate(dateEpochDay(x1, epochDay))
+        })
 
     pub def toString(x: HijrahChronology): String =
         Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x) 

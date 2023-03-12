@@ -43,13 +43,11 @@ namespace Time {
     ///
     instance FromString[LocalDate] {
         pub def fromString(s: String): Option[LocalDate] =
-            import static java.time.LocalDate.parse(##java.lang.CharSequence): ##java.time.LocalDate \ {};
-            try {
+            Result.tryCatch(_ -> {
+                import static java.time.LocalDate.parse(##java.lang.CharSequence): ##java.time.LocalDate \ {};
                 let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-                Some(LocalDate(parse(cs)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
+                LocalDate(parse(cs))
+            }) |> Result.toOption
     }
 
     instance Eq[LocalDate] {
@@ -247,16 +245,12 @@ namespace Time/LocalDate {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, LocalDate] = 
-        import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate \ {};
             let DateTimeFormatter(fmtr) = formatter;
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(LocalDate(parse(cs, fmtr)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            LocalDate(parse(cs, fmtr))
+        })
 
     ///
     /// Returns LocalDate `x` as a String using `formatter`.
@@ -641,10 +635,10 @@ namespace Time/LocalDate {
 
 
     def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: LocalDate): LocalDate =
-        import java.time.LocalDate.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalDate \ {} as withTF;                   
+        import java.time.LocalDate.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalDate \ {} as with1;
         try {
             let LocalDate(x1) = x;
-            LocalDate(withTF(x1, field, i))
+            LocalDate(with1(x1, field, i))
         } catch {
             /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception => 

@@ -42,13 +42,11 @@ namespace Time {
     ///
     instance FromString[ZonedDateTime] {
         pub def fromString(s: String): Option[ZonedDateTime] =
-            import static java.time.ZonedDateTime.parse(##java.lang.CharSequence): ##java.time.ZonedDateTime \ {};
-            try {
+            Result.tryCatch(_ -> {
+                import static java.time.ZonedDateTime.parse(##java.lang.CharSequence): ##java.time.ZonedDateTime \ {};
                 let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-                Some(ZonedDateTime(parse(cs)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
+                ZonedDateTime(parse(cs))
+            }) |> Result.toOption
     }
 
     instance Eq[ZonedDateTime] {
@@ -214,16 +212,12 @@ namespace Time/ZonedDateTime {
     /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, ZonedDateTime] =
-        import static java.time.ZonedDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.ZonedDateTime \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.ZonedDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.ZonedDateTime \ {};
             let DateTimeFormatter(fmtr) = formatter;
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(ZonedDateTime(parse(cs, fmtr)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            ZonedDateTime(parse(cs, fmtr))
+        })
 
     ///
     /// Returns ZonedDateTime `x` as a String using `formatter`.

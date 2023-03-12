@@ -43,13 +43,11 @@ namespace Time {
     ///
     instance FromString[InstantZ] {
         pub def fromString(s: String): Option[InstantZ] =
-            import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
-            try {
+            Result.tryCatch(_ -> {
+                import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
                 let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-                Some(InstantZ(parse(cs)))
-            } catch {
-                case _: ##java.time.format.DateTimeParseException => None
-            }
+                InstantZ(parse(cs))
+            }) |> Result.toOption
     }
 
     instance Eq[InstantZ] {
@@ -202,15 +200,11 @@ namespace Time/InstantZ {
     /// ## `parse` / `format` functions
 
     pub def parse(s: String): Result[String, InstantZ] =
-        import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
-        try {
+        Result.tryCatch(_ -> {
+            import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
             let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
-            Ok(InstantZ(parse(cs)))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            InstantZ(parse(cs))
+        })
 
     pub def format(x: InstantZ): String =
         import java.time.Instant.toString(): String \ {};

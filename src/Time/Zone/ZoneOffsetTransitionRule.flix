@@ -129,7 +129,7 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
                                                                     ##java.time.ZoneOffset,
                                                                     ##java.time.ZoneOffset
                                                                     ): ##java.time.zone.ZoneOffsetTransitionRule \ {};
-        try {
+        Result.tryCatch(_ -> {
             ZoneOffsetTransitionRule(of(Time/Month.marshal(r.month), 
                                         r.dayOfMonthIndicator,
                                         Time/DayOfWeek.marshal(r.dayOfWeek),
@@ -139,12 +139,8 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
                                         Time/ZoneOffset.getZoneOffset(r.standardOffset),
                                         Time/ZoneOffset.getZoneOffset(r.offsetBefore),
                                         Time/ZoneOffset.getZoneOffset(r.offsetAfter)
-                                        )) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+                                        ))
+        })
 
     /// ## predicates / comparisons
     

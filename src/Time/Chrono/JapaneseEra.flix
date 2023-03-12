@@ -73,12 +73,10 @@ namespace Time/Chrono/JapaneseEra {
         x1
 
     pub def japaneseEra(japaneseEra: {japaneseEra = Int32}): Option[JapaneseEra] =
-        import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra \ {};
-        try {
-            Some(JapaneseEra(of(japaneseEra.japaneseEra)))
-        } catch {
-            case _: ##java.time.DateTimeException => None
-        }
+        Result.tryCatch(_ -> {
+            import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra \ {};
+            JapaneseEra(of(japaneseEra.japaneseEra))
+        }) |> Result.toOption
 
     pub def heisei(): JapaneseEra = 
         import static get java.time.chrono.JapaneseEra.HEISEI: ##java.time.chrono.JapaneseEra \ {} as getHEISEI;
