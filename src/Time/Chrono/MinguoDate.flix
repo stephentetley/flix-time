@@ -60,7 +60,7 @@ namespace Time/Chrono/MinguoDate {
         import java.time.chrono.MinguoDate.equals(##java.lang.Object): Bool \ {};
         let MinguoDate(x1) = x;
         let MinguoDate(y1) = y;
-        equals(x1, unsafe_cast y1 as ##java.lang.Object)
+        equals(x1, checked_cast(y1))
 
     pub def hashCode(x: MinguoDate): Int32 = 
         import java.time.chrono.MinguoDate.hashCode(): Int32 \ {};
@@ -72,7 +72,7 @@ namespace Time/Chrono/MinguoDate {
     pub def toLocalDate(x: MinguoDate): LocalDate =
         import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
         let MinguoDate(x1) = x;
-        LocalDate(fromDate(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor))
+        LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
     /// pub def getDayOfWeek(x: MinguoDate): Int32 = 
     ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek)

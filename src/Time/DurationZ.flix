@@ -46,7 +46,7 @@ namespace Time {
         pub def fromString(s: String): Option[DurationZ] =
             Result.tryCatch(_ -> {
                 import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
-                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
+                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
                 DurationZ(parse(cs))
             }) |> Result.toOption
     }
@@ -56,7 +56,7 @@ namespace Time {
             import java.time.Duration.equals(##java.lang.Object): Bool \ {};
             let DurationZ(x1) = x;
             let DurationZ(y1) = y;
-            equals(x1, unsafe_cast y1 as ##java.lang.Object)
+            equals(x1, checked_cast(y1))
     }
 
     instance Hash[DurationZ] {
@@ -113,10 +113,10 @@ namespace Time {
     instance Interop/Flix.Marshal[DurationZ] {
         pub def toJavaObject(x: DurationZ): ##java.lang.Object =
             let DurationZ(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): DurationZ = 
-            DurationZ(unsafe_cast o as ##java.time.Duration)
+            DurationZ(unchecked_cast(o as ##java.time.Duration))
     }
 
 }
@@ -287,7 +287,7 @@ namespace Time/DurationZ {
     pub def parse(s: String): Result[String, DurationZ] =
         Result.tryCatch(_ -> {
             import static java.time.Duration.parse(##java.lang.CharSequence): ##java.time.Duration \ {};
-            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
+            let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
             DurationZ(parse(cs))
         })
 
@@ -367,31 +367,31 @@ namespace Time/DurationZ {
     
     pub def truncatedToNanos(x: DurationZ): DurationZ = 
         import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
-        truncatedToHelper(unsafe_cast get_NANOS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unchecked_cast(get_NANOS() as ##java.time.temporal.TemporalUnit), x)
 
     pub def truncatedToMicros(x: DurationZ): DurationZ = 
         import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
-        truncatedToHelper(unsafe_cast get_MICROS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unchecked_cast(get_MICROS() as ##java.time.temporal.TemporalUnit), x)
 
     pub def truncatedToMillis(x: DurationZ): DurationZ = 
         import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
-        truncatedToHelper(unsafe_cast get_MILLIS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unchecked_cast(get_MILLIS() as ##java.time.temporal.TemporalUnit), x)
 
     pub def truncatedToSeconds(x: DurationZ): DurationZ = 
         import static get java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-        truncatedToHelper(unsafe_cast get_SECONDS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unchecked_cast(get_SECONDS() as ##java.time.temporal.TemporalUnit), x)
 
     pub def truncatedToMinutes(x: DurationZ): DurationZ = 
         import static get java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-        truncatedToHelper(unsafe_cast get_MINUTES() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unchecked_cast(get_MINUTES() as ##java.time.temporal.TemporalUnit), x)
 
     pub def truncatedToHours(x: DurationZ): DurationZ = 
         import static get java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-        truncatedToHelper(unsafe_cast get_HOURS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), x)
 
     pub def truncatedToHalfDays(x: DurationZ): DurationZ = 
         import static get java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-        truncatedToHelper(unsafe_cast get_HALF_DAYS() as ##java.time.temporal.TemporalUnit, x)
+        truncatedToHelper(unchecked_cast(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit), x)
 
 
     /// ## plus / minus functions

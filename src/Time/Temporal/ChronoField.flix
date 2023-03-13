@@ -96,21 +96,21 @@ namespace Time/Temporal {
     instance Interop/Flix.Marshal[ChronoField] {
         pub def toJavaObject(x: ChronoField): ##java.lang.Object =
             let x1 = Time/Temporal/ChronoField.marshal(x);
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ChronoField = 
-            let x1 = unsafe_cast o as ##java.time.temporal.ChronoField;
+            let x1 = unchecked_cast(o as ##java.time.temporal.ChronoField);
             Time/Temporal/ChronoField.unmarshal(x1)
     }
 
     instance Time/Temporal.ImplementsTemporalField[ChronoField] {
         pub def toTemporalField(x: ChronoField): TemporalField = 
             let x1 = Time/Temporal/ChronoField.marshal(x);
-            TemporalField(unsafe_cast x1 as ##java.time.temporal.TemporalField)
+            TemporalField(unchecked_cast(x1 as ##java.time.temporal.TemporalField))
 
         pub def fromTemporalField(x: TemporalField): ChronoField = 
             let TemporalField(x1) = x;
-            Time/Temporal/ChronoField.unmarshal(unsafe_cast x1 as ##java.time.temporal.ChronoField)
+            Time/Temporal/ChronoField.unmarshal(unchecked_cast(x1 as ##java.time.temporal.ChronoField))
     }
 
 
@@ -197,8 +197,8 @@ namespace Time/Temporal/ChronoField {
 
     def primEquals(x: ##java.time.temporal.ChronoField, y: ##java.time.temporal.ChronoField): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
 

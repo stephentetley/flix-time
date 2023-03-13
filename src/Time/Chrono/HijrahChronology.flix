@@ -42,31 +42,31 @@ namespace Time/Chrono {
     instance Interop/Flix.Marshal[HijrahChronology] {
         pub def toJavaObject(x: HijrahChronology): ##java.lang.Object =
             let HijrahChronology(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
-            HijrahChronology(unsafe_cast o as ##java.time.chrono.HijrahChronology)
+            HijrahChronology(unchecked_cast(o as ##java.time.chrono.HijrahChronology))
     }
 
 
     instance Interop/Time/Chrono.ImpChronology[HijrahChronology] {
         pub def toChronology(x: HijrahChronology): Chronology = 
             let HijrahChronology(x1) = x;
-            Chronology(unsafe_cast x1 as ##java.time.chrono.Chronology)
+            Chronology(unchecked_cast(x1 as ##java.time.chrono.Chronology))
 
         pub def fromChronology(x: Chronology): HijrahChronology = 
             let Chronology(x1) = x;
-            HijrahChronology(unsafe_cast x1 as ##java.time.chrono.HijrahChronology)
+            HijrahChronology(unchecked_cast(x1 as ##java.time.chrono.HijrahChronology))
     }
 
     instance Interop/Time/Chrono.SubAbstractChronology[HijrahChronology] {
         pub def toAbstractChronology(x: HijrahChronology): AbstractChronology = 
             let HijrahChronology(x1) = x;
-            AbstractChronology(unsafe_cast x1 as ##java.time.chrono.AbstractChronology)
+            AbstractChronology(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
 
         pub def fromAbstractChronology(x: AbstractChronology): HijrahChronology = 
             let AbstractChronology(x1) = x;
-            HijrahChronology(unsafe_cast x1 as ##java.time.chrono.HijrahChronology)
+            HijrahChronology(unchecked_cast(x1 as ##java.time.chrono.HijrahChronology))
     }
 
 }

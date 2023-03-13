@@ -43,8 +43,8 @@ namespace Time/Chrono/ThaiBuddhistEra {
 
     def primEquals(x: ##java.time.chrono.ThaiBuddhistEra, y: ##java.time.chrono.ThaiBuddhistEra): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =

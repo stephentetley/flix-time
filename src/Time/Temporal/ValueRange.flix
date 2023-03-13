@@ -24,10 +24,10 @@
     instance Interop/Flix.Marshal[ValueRange] {
         pub def toJavaObject(x: ValueRange): ##java.lang.Object =
             let ValueRange(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ValueRange = 
-            ValueRange(unsafe_cast o as ##java.time.temporal.ValueRange)
+            ValueRange(unchecked_cast(o as ##java.time.temporal.ValueRange))
     }
 
 }

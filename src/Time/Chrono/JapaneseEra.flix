@@ -49,11 +49,11 @@ namespace Time/Chrono {
     instance Time/Chrono.ImplementsEra[JapaneseEra] {
         pub def toEra(x: JapaneseEra): Era = 
             let JapaneseEra(x1) = x;
-            Era(unsafe_cast x1 as ##java.time.chrono.Era)
+            Era(unchecked_cast(x1 as ##java.time.chrono.Era))
 
         pub def fromEra(x: Era): JapaneseEra = 
             let Era(x1) = x;
-            JapaneseEra(unsafe_cast x1 as ##java.time.chrono.JapaneseEra)
+            JapaneseEra(unchecked_cast(x1 as ##java.time.chrono.JapaneseEra))
 
     }
 
@@ -108,12 +108,12 @@ namespace Time/Chrono/JapaneseEra {
         import java.lang.Object.equals(##java.lang.Object): Bool \ {};
         let JapaneseEra(x1) = x;
         let JapaneseEra(y1) = y;
-        equals(unsafe_cast x1 as ##java.lang.Object, unsafe_cast y1 as ##java.lang.Object)
+        equals(checked_cast(x1), checked_cast(y1))
 
     pub def hashCode(x: JapaneseEra): Int32 = 
         import java.lang.Object.hashCode(): Int32 \ {};
         let JapaneseEra(x1) = x;
-        hashCode(unsafe_cast x1 as ##java.lang.Object)
+        hashCode(checked_cast(x1))
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: JapaneseEra): String = 

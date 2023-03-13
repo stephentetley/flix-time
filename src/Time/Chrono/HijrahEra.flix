@@ -29,21 +29,21 @@ namespace Time/Chrono {
     instance Interop/Flix.Marshal[HijrahEra] {
         pub def toJavaObject(x: HijrahEra): ##java.lang.Object =
             let x1 = Time/Chrono/HijrahEra.marshal(x);
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
-            let x1 = unsafe_cast o as ##java.time.chrono.HijrahEra;
+            let x1 = unchecked_cast(o as ##java.time.chrono.HijrahEra);
             Time/Chrono/HijrahEra.unmarshal(x1)
     }
     
     instance Time/Chrono.ImplementsEra[HijrahEra] {
         pub def toEra(x: HijrahEra): Era = 
             let x1 = Time/Chrono/HijrahEra.marshal(x);
-            Era(unsafe_cast x1 as ##java.time.chrono.Era)
+            Era(unchecked_cast(x1 as ##java.time.chrono.Era))
 
         pub def fromEra(x: Era): HijrahEra = 
             let Era(x1) = x;
-            Time/Chrono/HijrahEra.unmarshal(unsafe_cast x1 as ##java.time.chrono.HijrahEra)
+            Time/Chrono/HijrahEra.unmarshal(unchecked_cast(x1 as ##java.time.chrono.HijrahEra))
     }
 
 
@@ -65,8 +65,8 @@ namespace Time/Chrono/HijrahEra {
 
     def primEquals(x: ##java.time.chrono.HijrahEra, y: ##java.time.chrono.HijrahEra): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.chrono.HijrahEra): HijrahEra = 

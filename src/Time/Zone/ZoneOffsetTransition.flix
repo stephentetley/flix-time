@@ -34,7 +34,7 @@ namespace Time/Zone {
             import java.time.zone.ZoneOffsetTransition.equals(##java.lang.Object): Bool \ {};
             let ZoneOffsetTransition(x1) = x;
             let ZoneOffsetTransition(y1) = y;
-            equals(x1, unsafe_cast y1 as ##java.lang.Object)
+            equals(x1, checked_cast(y1))
     }
 
     instance Hash[ZoneOffsetTransition] {
@@ -57,10 +57,10 @@ namespace Time/Zone {
     instance Interop/Flix.Marshal[ZoneOffsetTransition] {
         pub def toJavaObject(x: ZoneOffsetTransition): ##java.lang.Object =
             let ZoneOffsetTransition(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ZoneOffsetTransition = 
-            ZoneOffsetTransition(unsafe_cast o as ##java.time.zone.ZoneOffsetTransition)
+            ZoneOffsetTransition(unchecked_cast(o as ##java.time.zone.ZoneOffsetTransition))
     }
 
 }

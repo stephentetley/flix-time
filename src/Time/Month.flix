@@ -57,10 +57,10 @@ namespace Time {
     instance Interop/Flix.Marshal[Month] {
         pub def toJavaObject(x: Month): ##java.lang.Object =
             let x1 = Time/Month.marshal(x);
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): Month = 
-            let x1 = unsafe_cast o as ##java.time.Month;
+            let x1 = unchecked_cast(o as ##java.time.Month);
             Time/Month.unmarshal(x1)
     }
 
@@ -113,8 +113,8 @@ namespace Time/Month {
 
     def primEquals(x: ##java.time.Month, y: ##java.time.Month): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.Month): Month =
@@ -159,22 +159,22 @@ namespace Time/Month {
         }
 
     pub def fromLocalDate(x: LocalDate): Month = 
-        fromHelper(unsafe_cast Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unchecked_cast(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromLocalDateTime(x: LocalDateTime): Month = 
-        fromHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unchecked_cast(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromMonthDay(x: MonthDay): Month = 
-        fromHelper(unsafe_cast Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unchecked_cast(Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
-        fromHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromYearMonth(x: YearMonth): Month = 
-        fromHelper(unsafe_cast Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unchecked_cast(Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): Month = 
-        fromHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     /// ## Month functions
     

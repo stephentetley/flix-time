@@ -27,10 +27,10 @@ namespace Time/Format {
     instance Interop/Flix.Marshal[SignStyle] {
         pub def toJavaObject(x: SignStyle): ##java.lang.Object =
             let x1 = Time/Format/SignStyle.marshal(x);
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): SignStyle = 
-            let x1 = unsafe_cast o as ##java.time.format.SignStyle;
+            let x1 = unchecked_cast(o as ##java.time.format.SignStyle);
             Time/Format/SignStyle.unmarshal(x1)
     }
 
@@ -59,8 +59,8 @@ namespace Time/Format/SignStyle {
 
     def primEquals(x: ##java.time.format.SignStyle, y: ##java.time.format.SignStyle): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.format.SignStyle): SignStyle = 

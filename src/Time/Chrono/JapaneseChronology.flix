@@ -23,7 +23,7 @@ namespace Time/Chrono {
         pub def toString(x: JapaneseChronology): String =
             import java.time.chrono.AbstractChronology.toString(): String \ {};
             let JapaneseChronology(x1) = x;
-            toString(unsafe_cast x1 as ##java.time.chrono.AbstractChronology)
+            toString(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
     }
 }
 

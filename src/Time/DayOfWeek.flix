@@ -52,10 +52,10 @@ namespace Time {
     instance Interop/Flix.Marshal[DayOfWeek] {
         pub def toJavaObject(x: DayOfWeek): ##java.lang.Object =
             let x1 = Time/DayOfWeek.marshal(x);
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): DayOfWeek = 
-            let x1 = unsafe_cast o as ##java.time.DayOfWeek;
+            let x1 = unchecked_cast(o as ##java.time.DayOfWeek);
             Time/DayOfWeek.unmarshal(x1)
     }
 
@@ -110,8 +110,8 @@ namespace Time/DayOfWeek {
 
     def primEquals(x: ##java.time.DayOfWeek, y: ##java.time.DayOfWeek): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
 

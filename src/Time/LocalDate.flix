@@ -45,7 +45,7 @@ namespace Time {
         pub def fromString(s: String): Option[LocalDate] =
             Result.tryCatch(_ -> {
                 import static java.time.LocalDate.parse(##java.lang.CharSequence): ##java.time.LocalDate \ {};
-                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
+                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
                 LocalDate(parse(cs))
             }) |> Result.toOption
     }
@@ -55,7 +55,7 @@ namespace Time {
             import java.time.LocalDate.equals(##java.lang.Object): Bool \ {};
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
-            equals(x1, unsafe_cast y1 as ##java.lang.Object)
+            equals(x1, checked_cast(y1))
     }
 
     instance Hash[LocalDate] {
@@ -71,7 +71,7 @@ namespace Time {
             import java.time.LocalDate.compareTo(##java.time.chrono.ChronoLocalDate): Int32 \ {};
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
-            compareTo(x1, unsafe_cast y1 as ##java.time.chrono.ChronoLocalDate) |> Comparison.fromInt32
+            compareTo(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate)) |> Comparison.fromInt32
     }
 
 
@@ -80,20 +80,20 @@ namespace Time {
     instance Interop/Flix.Marshal[LocalDate] {
         pub def toJavaObject(x: LocalDate): ##java.lang.Object =
             let LocalDate(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): LocalDate = 
-            LocalDate(unsafe_cast o as ##java.time.LocalDate)
+            LocalDate(unchecked_cast(o as ##java.time.LocalDate))
     }
 
     instance Interop/Time/Temporal.ImpTemporalAccessor[LocalDate] {
         pub def toTemporalAccessor(x: LocalDate): TemporalAccessor = 
             let LocalDate(x1) = x;
-            TemporalAccessor(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor)
+            TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
 
         pub def fromTemporalAccessor(x: TemporalAccessor): LocalDate = 
             let TemporalAccessor(x1) = x;
-            LocalDate(unsafe_cast x1 as ##java.time.LocalDate)
+            LocalDate(unchecked_cast(x1 as ##java.time.LocalDate))
     }
 }
 
@@ -222,18 +222,12 @@ namespace Time/LocalDate {
         Interop/Time/Temporal.ImpTemporalAccessor.toTemporalAccessor(x) 
             |> fromTemporalAccessor
 
-    // pub def fromOffsetDateTime(x: OffsetDateTime): LocalDate = 
-    //     fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
-    // pub def fromZonedDateTime(x: ZonedDateTime): LocalDate = 
-    //     fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
-
     /// ## `to` functions
 
     pub def toEpochDay(x: LocalDate): Int64 =
         import java.time.chrono.ChronoLocalDate.toEpochDay(): Int64 \ {};
         let LocalDate(x1) = x;
-        toEpochDay(unsafe_cast x1 as ##java.time.chrono.ChronoLocalDate)
+        toEpochDay(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
 
 
     /// ## `parse` / `format` functions
@@ -248,7 +242,7 @@ namespace Time/LocalDate {
         Result.tryCatch(_ -> {
             import static java.time.LocalDate.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.LocalDate \ {};
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
+            let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
             LocalDate(parse(cs, fmtr))
         })
 
@@ -272,7 +266,7 @@ namespace Time/LocalDate {
         import java.time.LocalDate.isBefore(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        isBefore(x1, unsafe_cast y1 as ##java.time.chrono.ChronoLocalDate)
+        isBefore(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate))
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -281,7 +275,7 @@ namespace Time/LocalDate {
         import java.time.LocalDate.isAfter(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        isAfter(x1, unsafe_cast y1 as ##java.time.chrono.ChronoLocalDate)
+        isAfter(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate))
 
 
     pub def isLeapYear(x: LocalDate): Bool =
@@ -412,45 +406,45 @@ namespace Time/LocalDate {
 
     pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
-        getHelper(unsafe_cast get_ALIGNED_DAY_OF_WEEK_IN_MONTH() as ##java.time.temporal.TemporalField, x)
+        getHelper(unchecked_cast(get_ALIGNED_DAY_OF_WEEK_IN_MONTH() as ##java.time.temporal.TemporalField), x)
     
     pub def getAlignedDayOfWeekInYear(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_YEAR;
-        getHelper(unsafe_cast get_ALIGNED_DAY_OF_WEEK_IN_YEAR() as ##java.time.temporal.TemporalField, x)
+        getHelper(unchecked_cast(get_ALIGNED_DAY_OF_WEEK_IN_YEAR() as ##java.time.temporal.TemporalField), x)
 
     pub def getAlignedWeekOfMonth(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_WEEK_OF_MONTH;
-        getHelper(unsafe_cast get_ALIGNED_WEEK_OF_MONTH() as ##java.time.temporal.TemporalField, x)
+        getHelper(unchecked_cast(get_ALIGNED_WEEK_OF_MONTH() as ##java.time.temporal.TemporalField), x)
 
     pub def getAlignedWeekOfYear(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_WEEK_OF_YEAR;
-        getHelper(unsafe_cast get_ALIGNED_WEEK_OF_YEAR() as ##java.time.temporal.TemporalField, x)
+        getHelper(unchecked_cast(get_ALIGNED_WEEK_OF_YEAR() as ##java.time.temporal.TemporalField), x)
 
 
     pub def getEra(x: LocalDate): Int64 =
         import static get java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField \ {} as get_ERA;
-        getHelper(unsafe_cast get_ERA() as ##java.time.temporal.TemporalField, x)
+        getHelper(unchecked_cast(get_ERA() as ##java.time.temporal.TemporalField), x)
 
     pub def adjustMonthDay(i: MonthDay, x: LocalDate): LocalDate =
-        let i1 = unsafe_cast Time/MonthDay.getMonthDay(i) as ##java.time.temporal.TemporalAdjuster;
+        let i1 = unchecked_cast(Time/MonthDay.getMonthDay(i) as ##java.time.temporal.TemporalAdjuster);
         withTemporalAdjusterHelper(i1, x)
 
     pub def adjustYearMonth(i: YearMonth, x: LocalDate): LocalDate =
-        let i1 = unsafe_cast Time/YearMonth.getYearMonth(i) as ##java.time.temporal.TemporalAdjuster;
+        let i1 = unchecked_cast(Time/YearMonth.getYearMonth(i) as ##java.time.temporal.TemporalAdjuster);
         withTemporalAdjusterHelper(i1, x)
 
 
     pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
         import static get java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField \ {} as get_EPOCH_DAY;
-        withTemporalFieldHelper(unsafe_cast get_EPOCH_DAY() as ##java.time.temporal.TemporalField, i, x)
+        withTemporalFieldHelper(unchecked_cast(get_EPOCH_DAY() as ##java.time.temporal.TemporalField), i, x)
 
     /// DayOfWeek methods
 
     pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/DayOfWeek.marshal(x);
-        let d1 = unsafe_cast getLocalDate(d) as ##java.time.temporal.Temporal;
-        LocalDate(unsafe_cast adjustInto(x1, d1) as ##java.time.LocalDate)
+        let d1 = unchecked_cast(getLocalDate(d) as ##java.time.temporal.Temporal);
+        LocalDate(unchecked_cast(adjustInto(x1, d1) as ##java.time.LocalDate))
 
     
     pub def adjustToFirstDayOfMonth(x: LocalDate): LocalDate = 
@@ -519,27 +513,27 @@ namespace Time/LocalDate {
 
     pub def plusDecades(x: LocalDate, i: Int64): LocalDate = 
         import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit \ {} as get_DECADES;
-        plusHelper(x, i, unsafe_cast get_DECADES() as ##java.time.temporal.TemporalUnit)
+        plusHelper(x, i, unchecked_cast(get_DECADES() as ##java.time.temporal.TemporalUnit))
 
     pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
         import static get java.time.temporal.ChronoUnit.DECADES:##java.time.temporal.ChronoUnit \ {} as get_DECADES;
-        minusHelper(x, i, unsafe_cast get_DECADES() as ##java.time.temporal.TemporalUnit)
+        minusHelper(x, i, unchecked_cast(get_DECADES() as ##java.time.temporal.TemporalUnit))
 
     pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
         import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
-        plusHelper(x, i, unsafe_cast get_CENTURIES() as ##java.time.temporal.TemporalUnit)
+        plusHelper(x, i, unchecked_cast(get_CENTURIES() as ##java.time.temporal.TemporalUnit))
 
     pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
         import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
-        minusHelper(x, i, unsafe_cast get_CENTURIES() as ##java.time.temporal.TemporalUnit)
+        minusHelper(x, i, unchecked_cast(get_CENTURIES() as ##java.time.temporal.TemporalUnit))
 
     pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
         import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit \ {} as get_MILLENNIA;
-        plusHelper(x, i, unsafe_cast get_MILLENNIA() as ##java.time.temporal.TemporalUnit)
+        plusHelper(x, i, unchecked_cast(get_MILLENNIA() as ##java.time.temporal.TemporalUnit))
 
     pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
         import static get java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit \ {} as get_MILLENNIA;
-        minusHelper(x, i, unsafe_cast get_MILLENNIA() as ##java.time.temporal.TemporalUnit)
+        minusHelper(x, i, unchecked_cast(get_MILLENNIA() as ##java.time.temporal.TemporalUnit))
 
 
     /// Period methods
@@ -547,14 +541,14 @@ namespace Time/LocalDate {
     pub def plusPeriod(i: LocalDate, x: Period): LocalDate =
         import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/Period.getPeriod(x);
-        let i1 = unsafe_cast getLocalDate(i) as ##java.time.temporal.Temporal;
-        LocalDate(unsafe_cast addTo(x1, i1) as ##java.time.LocalDate)
+        let i1 = unchecked_cast(getLocalDate(i) as ##java.time.temporal.Temporal);
+        LocalDate(unchecked_cast(addTo(x1, i1) as ##java.time.LocalDate))
     
     pub def minusPeriod(i: LocalDate, x: Period): LocalDate =
         import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
         let x1 = Time/Period.getPeriod(x);
-        let i1 = unsafe_cast getLocalDate(i) as ##java.time.temporal.Temporal;
-        LocalDate(unsafe_cast subtractFrom(x1, i1) as ##java.time.LocalDate)
+        let i1 = unchecked_cast(getLocalDate(i) as ##java.time.temporal.Temporal);
+        LocalDate(unchecked_cast(subtractFrom(x1, i1) as ##java.time.LocalDate))
 
 
     /// ## between / until functions
@@ -562,21 +556,21 @@ namespace Time/LocalDate {
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalDate, end = LocalDate}): Int64 = 
         import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getLocalDate(r.start);
-        let e1 = unsafe_cast getLocalDate(r.end) as ##java.time.temporal.Temporal;
+        let e1 = unchecked_cast(getLocalDate(r.end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 
     pub def daysUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
         import static get java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-        untilHelper(unsafe_cast get_DAYS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), r)
 
     pub def monthsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
-        untilHelper(unsafe_cast get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unchecked_cast(get_MONTHS() as ##java.time.temporal.TemporalUnit), r)
 
     pub def yearsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-        untilHelper(unsafe_cast get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unchecked_cast(get_YEARS() as ##java.time.temporal.TemporalUnit), r)
 
     pub def quarterYearsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
         import static get java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;

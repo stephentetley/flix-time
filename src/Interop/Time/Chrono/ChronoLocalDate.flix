@@ -41,7 +41,7 @@ namespace Interop/Time/Chrono/ChronoLocalDate {
         import java.time.chrono.ChronoLocalDate.equals(##java.lang.Object): Bool \ {};
         let ChronoLocalDate(x1) = x;
         let ChronoLocalDate(y1) = y;
-        equals(x1, unsafe_cast y1 as ##java.lang.Object)
+        equals(x1, checked_cast(y1))
 
 
     pub def compareTo(x: ChronoLocalDate, y: ChronoLocalDate): Int32 =

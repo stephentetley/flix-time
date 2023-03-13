@@ -39,7 +39,7 @@ namespace Time {
         pub def fromString(s: String): Option[YearMonth] = 
             Result.tryCatch(_ -> {
                 import static java.time.YearMonth.parse(##java.lang.CharSequence): ##java.time.YearMonth \ {};        
-                let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
+                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
                 YearMonth(parse(cs))
             }) |> Result.toOption
     }
@@ -50,7 +50,7 @@ namespace Time {
             import java.time.YearMonth.equals(##java.lang.Object): Bool \ {};
             let YearMonth(x1) = x;
             let YearMonth(y1) = y;
-            equals(x1, unsafe_cast y1 as ##java.lang.Object)
+            equals(x1, checked_cast(y1))
     }
 
     instance Hash[YearMonth] {
@@ -73,10 +73,10 @@ namespace Time {
     instance Interop/Flix.Marshal[YearMonth] {
         pub def toJavaObject(x: YearMonth): ##java.lang.Object =
             let YearMonth(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): YearMonth = 
-            YearMonth(unsafe_cast o as ##java.time.YearMonth)
+            YearMonth(unchecked_cast(o as ##java.time.YearMonth))
     }
 
 }
@@ -136,16 +136,16 @@ namespace Time/YearMonth {
         }
 
     pub def fromLocalDate(x: LocalDate): YearMonth = 
-        fromTemporalAccessorHelper(unsafe_cast Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unchecked_cast(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromLocalDateTime(x: LocalDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unsafe_cast Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unchecked_cast(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetDateTime(x: OffsetDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     /// ## `parse` / `format` functions  
 
@@ -159,7 +159,7 @@ namespace Time/YearMonth {
         Result.tryCatch(_ -> {
             import static java.time.YearMonth.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.YearMonth \ {};
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = unsafe_cast String.trim(s) as ##java.lang.CharSequence;
+            let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
             YearMonth(parse(cs, fmtr))
         })
     
@@ -287,16 +287,16 @@ namespace Time/YearMonth {
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = YearMonth, end = YearMonth}): Int64 = 
         import java.time.YearMonth.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
         let b1 = getYearMonth(r.start);
-        let e1 = unsafe_cast getYearMonth(r.end) as ##java.time.temporal.Temporal;
+        let e1 = unchecked_cast(getYearMonth(r.end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 
     pub def monthsUntil(r: {start = YearMonth, end = YearMonth}): Int64 = 
         import static get java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
-        untilHelper(unsafe_cast get_MONTHS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unchecked_cast(get_MONTHS() as ##java.time.temporal.TemporalUnit), r)
 
     pub def yearsUntil(r: {start = YearMonth, end = YearMonth}): Int64 = 
         import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-        untilHelper(unsafe_cast get_YEARS() as ##java.time.temporal.TemporalUnit, r)
+        untilHelper(unchecked_cast(get_YEARS() as ##java.time.temporal.TemporalUnit), r)
 
 }

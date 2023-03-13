@@ -27,21 +27,21 @@ namespace Time/Chrono {
     instance Interop/Flix.Marshal[IsoEra] {
         pub def toJavaObject(x: IsoEra): ##java.lang.Object =
             let x1 = Time/Chrono/IsoEra.marshal(x);
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): IsoEra = 
-            let x1 = unsafe_cast o as ##java.time.chrono.IsoEra;
+            let x1 = unchecked_cast(o as ##java.time.chrono.IsoEra);
             Time/Chrono/IsoEra.unmarshal(x1)
     }
 
     instance Time/Chrono.ImplementsEra[IsoEra] {
         pub def toEra(x: IsoEra): Era = 
             let x1 = Time/Chrono/IsoEra.marshal(x);
-            Era(unsafe_cast x1 as ##java.time.chrono.Era)
+            Era(unchecked_cast(x1 as ##java.time.chrono.Era))
 
         pub def fromEra(x: Era): IsoEra = 
             let Era(x1) = x;
-            Time/Chrono/IsoEra.unmarshal(unsafe_cast x1 as ##java.time.chrono.IsoEra)
+            Time/Chrono/IsoEra.unmarshal(unchecked_cast(x1 as ##java.time.chrono.IsoEra))
 
     }
 
@@ -67,8 +67,8 @@ namespace Time/Chrono/IsoEra {
 
     def primEquals(x: ##java.time.chrono.IsoEra, y: ##java.time.chrono.IsoEra): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.chrono.IsoEra): IsoEra = 
@@ -90,7 +90,7 @@ namespace Time/Chrono/IsoEra {
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: IsoEra): String = 
         import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let x1 = unsafe_cast marshal(x) as ##java.time.chrono.Era;
+        let x1 = unchecked_cast(marshal(x) as ##java.time.chrono.Era);
         let style1 = Time/Format/TextStyle.marshal(style);
         let locale1 = Interop/Util/Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)

@@ -28,10 +28,10 @@ namespace Time {
     instance Interop/Flix.Marshal[Clock] {
         pub def toJavaObject(x: Clock): ##java.lang.Object =
             let Clock(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): Clock = 
-            Clock(unsafe_cast o as ##java.time.Clock)
+            Clock(unchecked_cast(o as ##java.time.Clock))
     }
 
 }
@@ -106,13 +106,13 @@ namespace Time/Clock {
     /// ## Clock functions
 
     ///
-    /// Impure so not a ToString instance.
+    /// Impure as Clock keeps changing (so not a ToString instance).
     /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
     ///
     pub def toString(x: Clock): String \ IO =
         import java.lang.Object.toString(): String \ IO;
         let Clock(x1) = x;
-        let o1 = unsafe_cast x1 as ##java.lang.Object;
+        let o1 = checked_cast(x1);
         toString(o1)
 
     pub def millis(x: Clock): Int64 \ IO =

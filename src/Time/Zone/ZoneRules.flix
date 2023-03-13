@@ -34,7 +34,7 @@ namespace Time/Zone {
             import java.time.zone.ZoneRules.equals(##java.lang.Object): Bool \ {};
             let ZoneRules(x1) = x;
             let ZoneRules(y1) = y;
-            equals(x1, unsafe_cast y1 as ##java.lang.Object)
+            equals(x1, checked_cast(y1))
     }
 
     instance Hash[ZoneRules] {
@@ -48,10 +48,10 @@ namespace Time/Zone {
     instance Interop/Flix.Marshal[ZoneRules] {
         pub def toJavaObject(x: ZoneRules): ##java.lang.Object =
             let ZoneRules(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ZoneRules = 
-            ZoneRules(unsafe_cast o as ##java.time.zone.ZoneRules)
+            ZoneRules(unchecked_cast(o as ##java.time.zone.ZoneRules))
     }
 
 }

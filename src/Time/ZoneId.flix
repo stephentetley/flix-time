@@ -37,7 +37,7 @@ namespace Time {
             import java.time.ZoneId.equals(##java.lang.Object): Bool \ {};
             let ZoneId(x1) = x;
             let ZoneId(y1) = y;
-            equals(x1, unsafe_cast y1 as ##java.lang.Object)
+            equals(x1, checked_cast(y1))
     }
 
     instance Hash[ZoneId] {
@@ -50,10 +50,10 @@ namespace Time {
     instance Interop/Flix.Marshal[ZoneId] {
         pub def toJavaObject(x: ZoneId): ##java.lang.Object =
             let ZoneId(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ZoneId = 
-            ZoneId(unsafe_cast o as ##java.time.ZoneId)
+            ZoneId(unchecked_cast(o as ##java.time.ZoneId))
     }
 
 }
@@ -136,16 +136,16 @@ namespace Time/ZoneId {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
-        fromTemporalAccessorHelper(unsafe_cast Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetTime(x: OffsetTime): ZoneId = 
-        fromTemporalAccessorHelper(unsafe_cast Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
-        fromTemporalAccessorHelper(unsafe_cast Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
-        fromTemporalAccessorHelper(unsafe_cast Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor)
+        fromTemporalAccessorHelper(unchecked_cast(Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor))
 
 
     /// ## ZoneId functions

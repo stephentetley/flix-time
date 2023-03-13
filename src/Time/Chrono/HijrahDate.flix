@@ -52,21 +52,21 @@ namespace Time/Chrono {
     instance Interop/Time/Temporal.ImpTemporalAccessor[HijrahDate] {
         pub def toTemporalAccessor(x: HijrahDate): TemporalAccessor = 
             let HijrahDate(x1) = x;
-            TemporalAccessor(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor)
+            TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
 
         pub def fromTemporalAccessor(x: TemporalAccessor): HijrahDate = 
             let TemporalAccessor(x1) = x;
-            HijrahDate(unsafe_cast x1 as ##java.time.chrono.HijrahDate)
+            HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
     }
 
     instance Interop/Time/Chrono.ImpChronoLocalDate[HijrahDate] {
         pub def toChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
             let HijrahDate(x1) = x;
-            ChronoLocalDate(unsafe_cast x1 as ##java.time.chrono.ChronoLocalDate)
+            ChronoLocalDate(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
 
         pub def fromChronoLocalDate(x: ChronoLocalDate): HijrahDate = 
             let ChronoLocalDate(x1) = x;
-            HijrahDate(unsafe_cast x1 as ##java.time.chrono.HijrahDate)
+            HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
     }
 
 
@@ -121,7 +121,7 @@ namespace Time/Chrono/HijrahDate {
         import java.time.chrono.HijrahDate.equals(##java.lang.Object): Bool \ {};
         let HijrahDate(x1) = x;
         let HijrahDate(y1) = y;
-        equals(x1, unsafe_cast y1 as ##java.lang.Object)
+        equals(x1, checked_cast(y1))
 
     pub def hashCode(x: HijrahDate): Int32 = 
         import java.time.chrono.HijrahDate.hashCode(): Int32 \ {};
@@ -156,7 +156,7 @@ namespace Time/Chrono/HijrahDate {
     pub def toLocalDate(x: HijrahDate): LocalDate =
         import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
         let HijrahDate(x1) = x;
-        LocalDate(fromDate(unsafe_cast x1 as ##java.time.temporal.TemporalAccessor))
+        LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
     pub def getChronology(x: HijrahDate): HijrahChronology = 
         import java.time.chrono.HijrahDate.getChronology(): ##java.time.chrono.HijrahChronology \ {};
@@ -188,14 +188,14 @@ namespace Time/Chrono/HijrahDate {
         import java.time.chrono.HijrahDate.plus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate \ {};
         let HijrahDate(x1) = x;
         let Period(amount1) = amount;
-        let tamount1 = unsafe_cast amount1 as ##java.time.temporal.TemporalAmount;
+        let tamount1 = unchecked_cast(amount1 as ##java.time.temporal.TemporalAmount);
         HijrahDate(plus(x1, tamount1))
 
     pub def minusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
         import java.time.chrono.HijrahDate.minus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate \ {};
         let HijrahDate(x1) = x;
         let Period(amount1) = amount;
-        let tamount1 = unsafe_cast amount1 as ##java.time.temporal.TemporalAmount;
+        let tamount1 = unchecked_cast(amount1 as ##java.time.temporal.TemporalAmount);
         HijrahDate(minus(x1, tamount1))
 
 

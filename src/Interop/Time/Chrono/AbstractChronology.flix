@@ -41,13 +41,13 @@ namespace Interop/Time/Chrono/AbstractChronology {
         import java.time.chrono.AbstractChronology.equals(##java.lang.Object): Bool \ {};
         let AbstractChronology(x1) = x;
         let AbstractChronology(y1) = y;
-        equals(x1, unsafe_cast y1 as ##java.lang.Object)
+        equals(x1, checked_cast(y1))
 
 
     pub def compareTo(x: AbstractChronology, y: AbstractChronology): Int32 =
         import java.time.chrono.AbstractChronology.compareTo(##java.time.chrono.Chronology): Int32 \ {};
         let AbstractChronology(x1) = x;
         let AbstractChronology(y1) = y;
-        compareTo(x1, unsafe_cast y1 as ##java.time.chrono.Chronology)
+        compareTo(x1, unchecked_cast(y1 as ##java.time.chrono.Chronology))
 
 }

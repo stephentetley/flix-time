@@ -29,10 +29,10 @@ namespace Time/Format {
     instance Interop/Flix.Marshal[TextStyle] {
         pub def toJavaObject(x: TextStyle): ##java.lang.Object =
             let x1 = Time/Format/TextStyle.marshal(x);
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): TextStyle = 
-            let x1 = unsafe_cast o as ##java.time.format.TextStyle;
+            let x1 = unchecked_cast(o as ##java.time.format.TextStyle);
             Time/Format/TextStyle.unmarshal(x1)
     }
 
@@ -63,8 +63,8 @@ namespace Time/Format/TextStyle {
 
     def primEquals(x: ##java.time.format.TextStyle, y: ##java.time.format.TextStyle): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
     pub def unmarshal(x: ##java.time.format.TextStyle): TextStyle = 

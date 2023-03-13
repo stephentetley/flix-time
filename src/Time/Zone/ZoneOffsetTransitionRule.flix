@@ -34,7 +34,7 @@ namespace Time/Zone {
             import java.time.zone.ZoneOffsetTransitionRule.equals(##java.lang.Object): Bool \ {};
             let ZoneOffsetTransitionRule(x1) = x;
             let ZoneOffsetTransitionRule(y1) = y;
-            equals(x1, unsafe_cast y1 as ##java.lang.Object)
+            equals(x1, checked_cast(y1))
 
     }
 
@@ -48,10 +48,10 @@ namespace Time/Zone {
     instance Interop/Flix.Marshal[ZoneOffsetTransitionRule] {
         pub def toJavaObject(x: ZoneOffsetTransitionRule): ##java.lang.Object =
             let ZoneOffsetTransitionRule(x1) = x;
-            unsafe_cast x1 as ##java.lang.Object
+            checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ZoneOffsetTransitionRule = 
-            ZoneOffsetTransitionRule(unsafe_cast o as ##java.time.zone.ZoneOffsetTransitionRule)
+            ZoneOffsetTransitionRule(unchecked_cast(o as ##java.time.zone.ZoneOffsetTransitionRule))
     }
 
 }
@@ -93,8 +93,8 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
 
     def primEqualsTimeDefinition(x: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition, y: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unsafe_cast x as ##java.lang.Enum;
-        let y1 = unsafe_cast y as ##java.lang.Object;
+        let x1 = unchecked_cast(x as ##java.lang.Enum);
+        let y1 = checked_cast(y);
         equals(x1, y1)
 
     pub def unmarshalTimeDefinition(x: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition): TimeDefinition = 
