@@ -16,6 +16,9 @@
 
 namespace Time {
 
+    use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
+
     ///
     /// A wrapper around a Java ZoneOffset.
     ///
@@ -71,14 +74,14 @@ namespace Time {
 namespace Time/ZoneOffset {
 
 
-    use Time.ZoneOffset;
-    use Time.ZoneOffset.{ZoneOffset};
+    use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
 
-    use Time/Zone.ZoneRules;
-    use Time/Zone.ZoneRules.{ZoneRules};
-    use Time.OffsetDateTime;
-    use Time.OffsetTime;
-    use Time.ZonedDateTime;
+    use Time/Zone.ZoneRules
+    use Time/Zone.ZoneRules.{ZoneRules}
+    use Time.OffsetDateTime
+    use Time.OffsetTime
+    use Time.ZonedDateTime
 
     /// ## Unwrap
 

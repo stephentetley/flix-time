@@ -18,6 +18,9 @@
 
 namespace Time {
 
+    use Time.MonthDay
+    use Time.MonthDay.{MonthDay}
+
     ///
     /// A wrapper around java.time.MonthDay.
     ///
@@ -81,19 +84,19 @@ namespace Time {
 
 namespace Time/MonthDay {
 
-    use Time.MonthDay;
-    use Time.MonthDay.{MonthDay};
+    use Time.MonthDay
+    use Time.MonthDay.{MonthDay}
     
-    use Time/Format.DateFormat;
-    use Time/Format.DateTimeFormatter;
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time.LocalDate;
-    use Time.LocalDateTime;
-    use Time.Month;
-    use Time.OffsetDateTime;
-    use Time.ZonedDateTime;
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Format.DateFormat
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.LocalDate
+    use Time.LocalDateTime
+    use Time.Month
+    use Time.OffsetDateTime
+    use Time.ZonedDateTime
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
     
     /// ## Unwrap
 

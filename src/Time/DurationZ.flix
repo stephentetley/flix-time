@@ -20,6 +20,9 @@
 
 namespace Time {
 
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+
     ///
     /// A measure of time represented internally as seconds and a nanoseconds adjustment.
     ///

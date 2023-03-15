@@ -18,6 +18,13 @@
 
 namespace Time/Temporal {
 
+    use Time/Temporal.ChronoField
+    use Time/Temporal.ChronoField.{NanoOfSecond, NanoOfDay, MicroOfSecond, MicroOfDay, 
+        MilliOfSecond, MilliOfDay, SecondOfMinute, SecondOfDay, MinuteOfHour, MinuteOfDay, 
+        HourOfAmPm, ClockHourOfAmPm, HourOfDay, ClockHourOfDay, AmPmOfDay, DayOfWeek, 
+        AlignedDayOfWeekInMonth, AlignedDayOfWeekInYear, DayOfMonth, DayOfYear, EpochDay, 
+        AlignedWeekOfMonth, AlignedWeekOfYear, MonthOfYear, ProlepticMonth, YearOfEra, 
+        Year, Era, InstantSeconds, OffsetSeconds}
     use Time/Temporal.TemporalField
     use Time/Temporal.TemporalField.{TemporalField}
 

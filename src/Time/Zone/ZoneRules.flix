@@ -17,6 +17,9 @@
 
 namespace Time/Zone {
 
+    use Time/Zone.ZoneRules
+    use Time/Zone.ZoneRules.{ZoneRules}
+
     ///
     /// A wrapper around a Java ZoneRules.
     ///
@@ -58,18 +61,18 @@ namespace Time/Zone {
 
 namespace Time/Zone/ZoneRules {
 
-    use Time/Zone.ZoneRules;
-    use Time/Zone.ZoneRules.{ZoneRules};
-    use Time/Zone.ZoneOffsetTransition;
-    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition};
-    use Time.DurationZ;
-    use Time.DurationZ.{DurationZ};
-    use Time.InstantZ;
-    use Time.InstantZ.{InstantZ};
-    use Time.LocalDateTime;
-    use Time.LocalDateTime.{LocalDateTime};
-    use Time.ZoneOffset;
-    use Time.ZoneOffset.{ZoneOffset};
+    use Time/Zone.ZoneRules
+    use Time/Zone.ZoneRules.{ZoneRules}
+    use Time/Zone.ZoneOffsetTransition
+    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
+    use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
 
     /// ## Unwrap
 

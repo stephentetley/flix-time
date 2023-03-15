@@ -16,6 +16,9 @@
 
 namespace Time/Format {
 
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+
     ///
     /// A wrapper around a Java DateTimeFormatter for date-time formats.
     ///

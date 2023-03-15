@@ -16,6 +16,9 @@
 
  namespace Time/Temporal {
 
+    use Time/Temporal.ValueRange
+    use Time/Temporal.ValueRange.{ValueRange}
+    
     /// Final Class
 
     pub enum ValueRange(##java.time.temporal.ValueRange)

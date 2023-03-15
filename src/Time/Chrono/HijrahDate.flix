@@ -16,6 +16,8 @@
 
 namespace Time/Chrono {
 
+    use Time/Chrono.HijrahDate
+    use Time/Chrono.HijrahDate.{HijrahDate}
     use Interop/Time/Chrono.ChronoLocalDate
     use Interop/Time/Chrono.ChronoLocalDate.{ChronoLocalDate}
     use Interop/Time/Temporal.TemporalAccessor
@@ -75,19 +77,19 @@ namespace Time/Chrono {
 namespace Time/Chrono/HijrahDate {
 
 
-    use Time/Chrono.HijrahDate;
-    use Time/Chrono.HijrahDate.{HijrahDate};
-    use Time/Chrono.HijrahChronology;
-    use Time/Chrono.HijrahChronology.{HijrahChronology};
-    use Time/Chrono.HijrahEra;
-    use Time.Clock;
-    use Time.Clock.{Clock};
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
-    use Time.Period;    
-    use Time.Period.{Period};
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Chrono.HijrahDate
+    use Time/Chrono.HijrahDate.{HijrahDate}
+    use Time/Chrono.HijrahChronology
+    use Time/Chrono.HijrahChronology.{HijrahChronology}
+    use Time/Chrono.HijrahEra
+    use Time.Clock
+    use Time.Clock.{Clock}
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
+    use Time.Period
+    use Time.Period.{Period}
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
 
     pub def getHijrahDate(x: HijrahDate): ##java.time.chrono.HijrahDate = 
         let HijrahDate(x1) = x;

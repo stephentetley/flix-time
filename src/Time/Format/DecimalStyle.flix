@@ -16,6 +16,8 @@
 
 namespace Time/Format {
 
+    use Time/Format.DecimalStyle
+    use Time/Format.DecimalStyle.{DecimalStyle}
 
     /// Immutable
     ///
@@ -56,10 +58,10 @@ namespace Time/Format {
 
 namespace Time/Format/DecimalStyle {
 
-    use Interop/Util.Locale;
+    use Interop/Util.Locale
 
-    use Time/Format.DecimalStyle;
-    use Time/Format.DecimalStyle.{DecimalStyle};
+    use Time/Format.DecimalStyle
+    use Time/Format.DecimalStyle.{DecimalStyle}
 
     /// ## Unwrap
 

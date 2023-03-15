@@ -21,6 +21,9 @@
 namespace Time {
 
 
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
+
     ///
     /// A wrapper around a Java instant.
     ///

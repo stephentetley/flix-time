@@ -18,6 +18,8 @@
 
 namespace Time {
 
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
     use Interop/Time/Temporal.TemporalAccessor
     use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
 

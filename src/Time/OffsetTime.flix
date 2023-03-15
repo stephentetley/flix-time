@@ -18,6 +18,9 @@
 namespace Time {
 
 
+    use Time.OffsetTime
+    use Time.OffsetTime.{OffsetTime}
+
     ///
     /// A wrapper around a Java OffsetTime.
     ///
@@ -88,23 +91,23 @@ namespace Time {
 
 namespace Time/OffsetTime {
 
-    use Time.OffsetTime;
-    use Time.OffsetTime.{OffsetTime};
-    use Time/Format.DateTimeFormatter;
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Format.TimeFormat;
-    use Time.DurationZ;
-    use Time.DurationZ.{DurationZ};
-    use Time.InstantZ;
-    use Time.InstantZ.{InstantZ};
-    use Time.LocalTime;
-    use Time.LocalTime.{LocalTime};
-    use Time.OffsetDateTime;
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
-    use Time.ZonedDateTime;
-    use Time.ZoneOffset;
-    use Time.ZoneOffset.{ZoneOffset};
+    use Time.OffsetTime
+    use Time.OffsetTime.{OffsetTime}
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time/Format.TimeFormat
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
+    use Time.LocalTime
+    use Time.LocalTime.{LocalTime}
+    use Time.OffsetDateTime
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
+    use Time.ZonedDateTime
+    use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
 
     /// ## Unwrap
 

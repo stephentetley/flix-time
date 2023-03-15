@@ -15,7 +15,10 @@
  */
 
 namespace Time/Chrono {
-    
+
+    use Time/Chrono.MinguoDate
+    use Time/Chrono.MinguoDate.{MinguoDate}
+
     ///
     /// A wrapper around java.time.chrono.MinguoDate.
     ///
@@ -43,10 +46,10 @@ namespace Time/Chrono {
 namespace Time/Chrono/MinguoDate {
 
 
-    use Time/Chrono.MinguoDate;
-    use Time/Chrono.MinguoDate.{MinguoDate};
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
+    use Time/Chrono.MinguoDate
+    use Time/Chrono.MinguoDate.{MinguoDate}
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
 
     ///
     /// Returns ___

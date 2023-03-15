@@ -16,6 +16,9 @@
 
 namespace Time/Chrono {
 
+    use Time/Chrono.IsoChronology
+    use Time/Chrono.IsoChronology.{IsoChronology}
+
     pub enum IsoChronology(##java.time.chrono.IsoChronology)
     
     instance ToString[IsoChronology] {
@@ -38,11 +41,11 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/IsoChronology {
 
-    use Time/Chrono.IsoChronology;
-    use Time/Chrono.IsoChronology.{IsoChronology};    
-    use Time/Chrono.IsoEra;
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
+    use Time/Chrono.IsoChronology
+    use Time/Chrono.IsoChronology.{IsoChronology}
+    use Time/Chrono.IsoEra
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
 
     pub def getInstance(): IsoChronology \ IO = 
         import static get java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology \ IO as get_INSTANCE;

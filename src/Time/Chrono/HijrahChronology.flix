@@ -16,6 +16,8 @@
 
 namespace Time/Chrono {
 
+    use Time/Chrono.HijrahChronology
+    use Time/Chrono.HijrahChronology.{HijrahChronology}
     use Interop/Time/Chrono.AbstractChronology
     use Interop/Time/Chrono.AbstractChronology.{AbstractChronology}
     use Interop/Time/Chrono.Chronology

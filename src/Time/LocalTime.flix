@@ -18,6 +18,8 @@
 
 namespace Time {
 
+    use Time.LocalTime
+    use Time.LocalTime.{LocalTime}
 
     ///
     /// A wrapper around a Java LocalTime.
@@ -88,22 +90,22 @@ namespace Time {
 
 namespace Time/LocalTime {
 
-    use Time.LocalTime;
-    use Time.LocalTime.{LocalTime};
+    use Time.LocalTime
+    use Time.LocalTime.{LocalTime}
     
-    use Time/Format.DateTimeFormatter;
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Format.TimeFormat;
-    use Time.LocalDateTime;
-    use Time.OffsetDateTime;
-    use Time.OffsetTime;
-    use Time.DurationZ;
-    use Time.DurationZ.{DurationZ};
-    use Time.InstantZ;
-    use Time.InstantZ.{InstantZ};
-    use Time.ZonedDateTime;
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time/Format.TimeFormat
+    use Time.LocalDateTime
+    use Time.OffsetDateTime
+    use Time.OffsetTime
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
+    use Time.ZonedDateTime
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
 
     /// ## Unwrap
 

@@ -18,6 +18,8 @@
 
 namespace Time {
 
+    use Time.DayOfWeek
+    use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
     use Interop/Time/Temporal.TemporalAccessor
     use Interop/Time/Temporal.TemporalAccessor.TemporalAccessor
 

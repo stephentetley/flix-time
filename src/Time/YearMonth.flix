@@ -17,6 +17,9 @@
 
 namespace Time {
 
+    use Time.YearMonth
+    use Time.YearMonth.{YearMonth}
+
     ///
     /// A wrapper around java.time.YearMonth.
     ///
@@ -83,18 +86,18 @@ namespace Time {
 
 namespace Time/YearMonth {
 
-    use Time.YearMonth;
-    use Time.YearMonth.{YearMonth};
+    use Time.YearMonth
+    use Time.YearMonth.{YearMonth}
 
-    use Time/Format.DateFormat;
-    use Time/Format.DateTimeFormatter;
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time.LocalDate;
-    use Time.LocalDateTime;
-    use Time.Month;
-    use Time.OffsetDateTime;
-    use Time.Year;
-    use Time.ZonedDateTime;
+    use Time/Format.DateFormat
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.LocalDate
+    use Time.LocalDateTime
+    use Time.Month
+    use Time.OffsetDateTime
+    use Time.Year
+    use Time.ZonedDateTime
 
 
     /// ## Unwrap

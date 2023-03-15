@@ -17,6 +17,9 @@
 
 namespace Time {
 
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
+
     ///
     /// A wrapper around a Java ZoneId.
     ///
@@ -60,19 +63,19 @@ namespace Time {
 
 namespace Time/ZoneId {
 
-    use Interop/Util.Locale;
+    use Interop/Util.Locale
 
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
     
-    use Time/Format.TextStyle;
-    use Time/Zone.ZoneRules;
-    use Time/Zone.ZoneRules.{ZoneRules};
-    use Time.OffsetDateTime;
-    use Time.OffsetTime;
-    use Time.ZoneOffset;
-    use Time.ZoneOffset.{ZoneOffset};
-    use Time.ZonedDateTime;
+    use Time/Format.TextStyle
+    use Time/Zone.ZoneRules
+    use Time/Zone.ZoneRules.{ZoneRules}
+    use Time.OffsetDateTime
+    use Time.OffsetTime
+    use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
+    use Time.ZonedDateTime
 
     /// ## Unwrap
 

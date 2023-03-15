@@ -17,11 +17,16 @@
 
 namespace Time {
 
+    use Time.Clock
+    use Time.Clock.{Clock}
+
     ///
     /// A wrapper around a Java Clock.
     ///
     /// We currently consider Clock "immutable" as the factory methods like `fixed`
     /// always return an immutable clock. 
+    ///
+    /// TODO - add region?
     ///
     pub enum Clock(##java.time.Clock)
 

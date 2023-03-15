@@ -17,6 +17,9 @@
 
 namespace Time/Chrono {
 
+    use Time/Chrono.JapaneseChronology
+    use Time/Chrono.JapaneseChronology.{JapaneseChronology}
+
     pub enum JapaneseChronology(##java.time.chrono.JapaneseChronology)
 
     instance ToString[JapaneseChronology] {
@@ -31,16 +34,16 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/JapaneseChronology {
 
-    use Time/Chrono.JapaneseChronology;
-    use Time/Chrono.JapaneseChronology.{JapaneseChronology};
-    use Time/Chrono.JapaneseDate;
-    use Time/Chrono.JapaneseDate.{JapaneseDate};
-    use Time/Chrono.JapaneseEra;
-    use Time/Chrono.JapaneseEra.{JapaneseEra};
-    use Time.Clock;
-    use Time.Clock.{Clock};
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Chrono.JapaneseChronology
+    use Time/Chrono.JapaneseChronology.{JapaneseChronology}
+    use Time/Chrono.JapaneseDate
+    use Time/Chrono.JapaneseDate.{JapaneseDate}
+    use Time/Chrono.JapaneseEra
+    use Time/Chrono.JapaneseEra.{JapaneseEra}
+    use Time.Clock
+    use Time.Clock.{Clock}
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
 
 
     pub def getInstance(): JapaneseChronology \ IO = 

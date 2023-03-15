@@ -17,6 +17,9 @@
 
 namespace Time/Zone {
 
+    use Time/Zone.ZoneOffsetTransition
+    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
+
     ///
     /// A wrapper around a Java ZoneOffsetTransition.
     ///
@@ -67,16 +70,16 @@ namespace Time/Zone {
 
 namespace Time/Zone/ZoneOffsetTransition {
 
-    use Time/Zone.ZoneOffsetTransition;
-    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition};
-    use Time.ZoneOffset;
-    use Time.ZoneOffset.{ZoneOffset};
-    use Time.LocalDateTime;
-    use Time.LocalDateTime.{LocalDateTime};
-    use Time.DurationZ;
-    use Time.DurationZ.{DurationZ};
-    use Time.InstantZ;
-    use Time.InstantZ.{InstantZ};
+    use Time/Zone.ZoneOffsetTransition
+    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
+    use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
 
     /// ## Unwrap
 

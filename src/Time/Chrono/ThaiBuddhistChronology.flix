@@ -16,6 +16,9 @@
 
 namespace Time/Chrono {
 
+    use Time/Chrono.ThaiBuddhistChronology
+    use Time/Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology}
+
     pub enum ThaiBuddhistChronology(##java.time.chrono.ThaiBuddhistChronology)
 
     instance ToString[ThaiBuddhistChronology] {
@@ -28,15 +31,15 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/ThaiBuddhistChronology {
 
-    use Time/Chrono.ThaiBuddhistChronology;
-    use Time/Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology};
-    use Time/Chrono.ThaiBuddhistDate;
-    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate};
-    use Time/Chrono.ThaiBuddhistEra;
-    use Time.Clock;
-    use Time.Clock.{Clock};
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Chrono.ThaiBuddhistChronology
+    use Time/Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology}
+    use Time/Chrono.ThaiBuddhistDate
+    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time/Chrono.ThaiBuddhistEra
+    use Time.Clock
+    use Time.Clock.{Clock}
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
 
     pub def getInstance(): ThaiBuddhistChronology \ IO = 
         import static get java.time.chrono.ThaiBuddhistChronology.INSTANCE: ##java.time.chrono.ThaiBuddhistChronology \ IO as getINSTANCE;

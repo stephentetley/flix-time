@@ -17,6 +17,8 @@
 
 namespace Time {
 
+    use Time.Year
+    use Time.Year.{Year}
 
     ///
     /// A wrapper around java.time.Year.
@@ -79,26 +81,26 @@ namespace Time {
 
 namespace Time/Year {
 
-    use Time.Year;
-    use Time.Year.{Year};
+    use Time.Year
+    use Time.Year.{Year}
 
-    use Time/Format.DateFormat;
-    use Time/Format.DateTimeFormatter;
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time.Clock;
-    use Time.Clock.{Clock};
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
-    use Time.LocalDateTime;
-    use Time.Month;
-    use Time.MonthDay;
-    use Time.MonthDay.{MonthDay};
-    use Time.OffsetDateTime;
-    use Time.YearMonth;
-    use Time.YearMonth.{YearMonth};
-    use Time.ZonedDateTime;
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Format.DateFormat
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.Clock
+    use Time.Clock.{Clock}
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
+    use Time.LocalDateTime
+    use Time.Month
+    use Time.MonthDay
+    use Time.MonthDay.{MonthDay}
+    use Time.OffsetDateTime
+    use Time.YearMonth
+    use Time.YearMonth.{YearMonth}
+    use Time.ZonedDateTime
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
 
     /// ## Unwrap
 

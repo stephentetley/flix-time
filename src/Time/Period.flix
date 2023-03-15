@@ -18,6 +18,9 @@
 namespace Time {
 
 
+    use Time.Period
+    use Time.Period.{Period}
+
     ///
     /// A wrapper around a Java Period.
     ///
@@ -109,11 +112,11 @@ namespace Time {
 
 namespace Time/Period {
 
-    use Time.Period;
-    use Time.Period.{Period};
+    use Time.Period
+    use Time.Period.{Period}
 
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
     
 
     /// ## Unwrap

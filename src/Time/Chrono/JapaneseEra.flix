@@ -17,6 +17,8 @@
 namespace Time/Chrono {
 
 
+    use Time/Chrono.JapaneseEra
+    use Time/Chrono.JapaneseEra.{JapaneseEra}
     use Time/Chrono.Era
     use Time/Chrono.Era.{Era}
 
@@ -61,11 +63,11 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/JapaneseEra {
 
-    use Interop/Util.Locale;
+    use Interop/Util.Locale
 
-    use Time/Chrono.JapaneseEra;
-    use Time/Chrono.JapaneseEra.{JapaneseEra};
-    use Time/Format.TextStyle;
+    use Time/Chrono.JapaneseEra
+    use Time/Chrono.JapaneseEra.{JapaneseEra}
+    use Time/Format.TextStyle
 
 
     pub def getJapaneseEra(x: JapaneseEra): ##java.time.chrono.JapaneseEra = 

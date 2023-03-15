@@ -17,7 +17,10 @@
 /// Notes - implements ChronoLocalDate
 
 namespace Time/Chrono {
-    
+
+    use Time/Chrono.JapaneseDate
+    use Time/Chrono.JapaneseDate.{JapaneseDate}
+
     ///
     /// A wrapper around java.time.chrono.JapaneseDate.
     ///
@@ -46,20 +49,20 @@ namespace Time/Chrono {
 namespace Time/Chrono/JapaneseDate {
 
 
-    use Time/Chrono.JapaneseDate;
-    use Time/Chrono.JapaneseDate.{JapaneseDate};
-    use Time/Chrono.HijrahDate;
-    use Time/Chrono.HijrahDate.{HijrahDate};
-    use Time/Chrono.MinguoDate;
-    use Time/Chrono.MinguoDate.{MinguoDate};
-    use Time/Chrono.ThaiBuddhistDate;
-    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate};
-    use Time/Chrono.JapaneseChronology;
-    use Time/Chrono.JapaneseChronology.{JapaneseChronology};
-    use Time/Chrono.JapaneseEra;
-    use Time/Chrono.JapaneseEra.{JapaneseEra};
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
+    use Time/Chrono.JapaneseDate
+    use Time/Chrono.JapaneseDate.{JapaneseDate}
+    use Time/Chrono.HijrahDate
+    use Time/Chrono.HijrahDate.{HijrahDate}
+    use Time/Chrono.MinguoDate
+    use Time/Chrono.MinguoDate.{MinguoDate}
+    use Time/Chrono.ThaiBuddhistDate
+    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time/Chrono.JapaneseChronology
+    use Time/Chrono.JapaneseChronology.{JapaneseChronology}
+    use Time/Chrono.JapaneseEra
+    use Time/Chrono.JapaneseEra.{JapaneseEra}
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
 
     
     ///

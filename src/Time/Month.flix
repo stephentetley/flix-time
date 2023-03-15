@@ -19,6 +19,14 @@
 namespace Time {
 
 
+    use Time.Month
+    use Time.Month.{
+        January, February, March, 
+        April, May, June, 
+        July, August, September, 
+        October, November, December
+    }
+    
     pub enum Month with Eq, Order, ToString, Hash, Boxable {
         case January,
         case February,
@@ -68,18 +76,23 @@ namespace Time {
 
 namespace Time/Month {
 
-    use Interop/Util.Locale;
+    use Interop/Util.Locale
 
-    use Time.Month;
-    use Time.Month.{January, February, March, April, May, June, July, August, September, October, November, December};
+    use Time.Month
+    use Time.Month.{
+        January, February, March, 
+        April, May, June, 
+        July, August, September, 
+        October, November, December
+    }
 
-    use Time/Format.TextStyle;
-    use Time.LocalDate;
-    use Time.LocalDateTime;
-    use Time.MonthDay;
-    use Time.OffsetDateTime;    
-    use Time.YearMonth;
-    use Time.ZonedDateTime;
+    use Time/Format.TextStyle
+    use Time.LocalDate
+    use Time.LocalDateTime
+    use Time.MonthDay
+    use Time.OffsetDateTime
+    use Time.YearMonth
+    use Time.ZonedDateTime
 
     /// ## Marshal enums
 

@@ -18,6 +18,8 @@
 
 namespace Time {
 
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     use Interop/Time/Temporal.TemporalAccessor
     use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
 
@@ -102,31 +104,31 @@ namespace Time {
 
 namespace Time/LocalDateTime {
 
-    use Time.LocalDateTime;
-    use Time.LocalDateTime.{LocalDateTime};
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     
-    use Time/Format.DateTimeFormatter;
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter};
-    use Time/Format.DateTimeFormat;
-    use Time.DayOfWeek;
-    use Time.DurationZ;
-    use Time.DurationZ.{DurationZ};
-    use Time.InstantZ;
-    use Time.InstantZ.{InstantZ};
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
-    use Time.LocalTime;
-    use Time.LocalTime.{LocalTime};
-    use Time.Month;
-    use Time.MonthDay;
-    use Time.Period;
-    use Time.OffsetDateTime;
-    use Time.YearMonth;
-    use Time.ZonedDateTime;
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
-    use Time.ZoneOffset;
-    use Time.ZoneOffset.{ZoneOffset};
+    use Time/Format.DateTimeFormatter
+    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time/Format.DateTimeFormat
+    use Time.DayOfWeek
+    use Time.DurationZ
+    use Time.DurationZ.{DurationZ}
+    use Time.InstantZ
+    use Time.InstantZ.{InstantZ}
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
+    use Time.LocalTime
+    use Time.LocalTime.{LocalTime}
+    use Time.Month
+    use Time.MonthDay
+    use Time.Period
+    use Time.OffsetDateTime
+    use Time.YearMonth
+    use Time.ZonedDateTime
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
+    use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
 
     /// ## Unwrap
 

@@ -38,8 +38,8 @@ namespace Time/Format {
 
 namespace Time/Format/FormatStyle {
 
-    use Time/Format.FormatStyle;
-    use Time/Format.FormatStyle.{Full, Long, Medium, Short};
+    use Time/Format.FormatStyle
+    use Time/Format.FormatStyle.{Full, Long, Medium, Short}
 
     pub def marshal(x: FormatStyle): ##java.time.format.FormatStyle = 
         import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;

@@ -49,13 +49,13 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/IsoEra {
 
-    use Interop/Util.Locale;
+    use Interop/Util.Locale
 
-    use Time/Chrono.IsoEra;
-    use Time/Chrono.IsoEra.{BCE, CE};
-    use Time/Format.TextStyle;  
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
+    use Time/Chrono.IsoEra
+    use Time/Chrono.IsoEra.{BCE, CE}
+    use Time/Format.TextStyle
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
 
     pub def marshal(x: IsoEra): ##java.time.chrono.IsoEra = 
         import static get java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;

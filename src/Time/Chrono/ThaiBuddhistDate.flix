@@ -16,6 +16,9 @@
 
 namespace Time/Chrono {
     
+    use Time/Chrono.ThaiBuddhistDate
+    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+
     ///
     /// A wrapper around java.time.chrono.ThaiBuddhistDate.
     ///
@@ -43,10 +46,10 @@ namespace Time/Chrono {
 namespace Time/Chrono/ThaiBuddhistDate {
 
 
-    use Time/Chrono.ThaiBuddhistDate;
-    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate};
-    use Time.LocalDate;
-    use Time.LocalDate.{LocalDate};
+    use Time/Chrono.ThaiBuddhistDate
+    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
 
     ///
     /// Returns ___

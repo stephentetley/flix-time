@@ -16,6 +16,9 @@
 
 namespace Time/Chrono {
 
+    use Time/Chrono.MinguoChronology
+    use Time/Chrono.MinguoChronology.{MinguoChronology}
+
     pub enum MinguoChronology(##java.time.chrono.MinguoChronology)
 
     instance ToString[MinguoChronology] {
@@ -29,15 +32,15 @@ namespace Time/Chrono {
 
 namespace Time/Chrono/MinguoChronology {
 
-    use Time/Chrono.MinguoChronology;
-    use Time/Chrono.MinguoChronology.{MinguoChronology};
-    use Time/Chrono.MinguoDate;
-    use Time/Chrono.MinguoDate.{MinguoDate};
-    use Time/Chrono.MinguoEra;
-    use Time.Clock;
-    use Time.Clock.{Clock};
-    use Time.ZoneId;
-    use Time.ZoneId.{ZoneId};
+    use Time/Chrono.MinguoChronology
+    use Time/Chrono.MinguoChronology.{MinguoChronology}
+    use Time/Chrono.MinguoDate
+    use Time/Chrono.MinguoDate.{MinguoDate}
+    use Time/Chrono.MinguoEra
+    use Time.Clock
+    use Time.Clock.{Clock}
+    use Time.ZoneId
+    use Time.ZoneId.{ZoneId}
 
     pub def getInstance(): MinguoChronology \ IO = 
         import static get java.time.chrono.MinguoChronology.INSTANCE: ##java.time.chrono.MinguoChronology \ IO as getINSTANCE;

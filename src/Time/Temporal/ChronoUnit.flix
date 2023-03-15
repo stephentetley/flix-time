@@ -18,6 +18,9 @@
 
 namespace Time/Temporal {
 
+    use Time/Temporal.ChronoUnit
+    use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes, Hours, HalfDays, Days, 
+        Weeks, Months, Years, Decades, Centuries, Millenia, Eras, Forever}
     use Time/Temporal.TemporalUnit
     use Time/Temporal.TemporalUnit.{TemporalUnit}
 
