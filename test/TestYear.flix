@@ -16,9 +16,10 @@
 
 namespace TestYear {
 
-    use ToString.toString;
-    use LowerBound.minValue;
-    use UpperBound.maxValue;
+    use ToString.toString
+    use LowerBound.minValue
+    use UpperBound.maxValue
+    use Comparison.{LessThan, EqualTo, GreaterThan}
 
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
