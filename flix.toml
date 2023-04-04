@@ -1,11 +1,11 @@
 [package]
 name        = "flix-time"
 description = "A project to wrap Java's time library so it can be used by Flix."
-version     = "0.1.0"
+version     = "0.1.1"
 flix        = "0.34.0"
 license     = "Apache-2.0"
 authors     = ["Stephen Tetley <stephen.tetley@gmail.com>"]
 
 [dependencies]
-"github:stephentetley/graded-lib"                = "0.1.0"
+"github:stephentetley/graded-lib"                = "0.2.0"
 "github:stephentetley/interop-base"              = "0.2.0"
