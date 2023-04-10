@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-namespace Time/Chrono {
+mod Time.Chrono {
     
-    use Time/Chrono.ThaiBuddhistDate
-    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time.Chrono.ThaiBuddhistDate
+    use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
 
     ///
     /// A wrapper around java.time.chrono.ThaiBuddhistDate.
@@ -35,19 +35,19 @@ namespace Time/Chrono {
     }
 
     instance Eq[ThaiBuddhistDate] {
-        pub def eq(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = Time/Chrono/ThaiBuddhistDate.equals(x, y)
+        pub def eq(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = Time.Chrono.ThaiBuddhistDate.equals(x, y)
     }
     
     instance Hash[ThaiBuddhistDate] {
-        pub def hash(x: ThaiBuddhistDate): Int32 = Time/Chrono/ThaiBuddhistDate.hashCode(x)
+        pub def hash(x: ThaiBuddhistDate): Int32 = Time.Chrono.ThaiBuddhistDate.hashCode(x)
     } 
 }
 
-namespace Time/Chrono/ThaiBuddhistDate {
+mod Time.Chrono.ThaiBuddhistDate {
 
 
-    use Time/Chrono.ThaiBuddhistDate
-    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time.Chrono.ThaiBuddhistDate
+    use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
@@ -78,27 +78,27 @@ namespace Time/Chrono/ThaiBuddhistDate {
 
 
     /// pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfWeek)
     ///         |> Result.getWithDefault(-1)
         
     /// pub def getDayOfMonth(x: ThaiBuddhistDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfMonth)
     ///         |> Result.getWithDefault(-1)
     
     /// pub def getDayOfYear(x: ThaiBuddhistDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfYear)
     ///         |> Result.getWithDefault(-1)
 
     /// pub def getMonthOfYear(x: ThaiBuddhistDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.MonthOfYear)
     ///         |> Result.getWithDefault(-1)
 
     /// pub def getYear(x: ThaiBuddhistDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.Year)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.Year)
     ///         |> Result.getWithDefault(-1)
 
     /// pub def getYearOfEra(x: ThaiBuddhistDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.YearOfEra)
     ///         |> Result.getWithDefault(-1)
 
 
@@ -106,7 +106,7 @@ namespace Time/Chrono/ThaiBuddhistDate {
     ///     import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///     try {
     ///         let ThaiBuddhistDate(x1) = x;
-    ///         let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+    ///         let field1 = Time.Temporal.ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
     ///         Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1))
     ///     } catch {
     ///         case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")

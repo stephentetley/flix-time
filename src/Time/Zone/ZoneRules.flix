@@ -15,10 +15,10 @@
  */
 
 
-namespace Time/Zone {
+mod Time.Zone {
 
-    use Time/Zone.ZoneRules
-    use Time/Zone.ZoneRules.{ZoneRules}
+    use Time.Zone.ZoneRules
+    use Time.Zone.ZoneRules.{ZoneRules}
 
     ///
     /// A wrapper around a Java ZoneRules.
@@ -48,7 +48,7 @@ namespace Time/Zone {
 
     }
 
-    instance Interop/Flix.Marshal[ZoneRules] {
+    instance Interop.Flix.Marshal[ZoneRules] {
         pub def toJavaObject(x: ZoneRules): ##java.lang.Object =
             let ZoneRules(x1) = x;
             checked_cast(x1)
@@ -59,12 +59,12 @@ namespace Time/Zone {
 
 }
 
-namespace Time/Zone/ZoneRules {
+mod Time.Zone.ZoneRules {
 
-    use Time/Zone.ZoneRules
-    use Time/Zone.ZoneRules.{ZoneRules}
-    use Time/Zone.ZoneOffsetTransition
-    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
+    use Time.Zone.ZoneRules
+    use Time.Zone.ZoneRules.{ZoneRules}
+    use Time.Zone.ZoneOffsetTransition
+    use Time.Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
     use Time.InstantZ
@@ -115,7 +115,7 @@ namespace Time/Zone/ZoneRules {
             import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List \ {};
             let LocalDateTime(ldt1) = ldt;
             let ZoneRules(x1) = x;
-            getValidOffsets(x1, ldt1) |> Interop/Util/ListZ.wrapHH(r) |> Interop/Util/ListZ.toFlixList
+            getValidOffsets(x1, ldt1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixList
         }
 
     pub def getDaylightSavings(instant: InstantZ, x: ZoneRules): DurationZ =
@@ -149,7 +149,7 @@ namespace Time/Zone/ZoneRules {
         region r { 
             import java.time.zone.ZoneRules.getTransitions(): ##java.util.List \ {};
             let ZoneRules(x1) = x;
-            getTransitions(x1) |> Interop/Util/ListZ.wrapHH(r) |> Interop/Util/ListZ.toFlixList
+            getTransitions(x1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixList
         }
 
 }

@@ -16,13 +16,13 @@
 
 
 
-namespace Time/Temporal {
+mod Time.Temporal {
 
-    use Time/Temporal.ChronoUnit
-    use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes, Hours, HalfDays, Days, 
+    use Time.Temporal.ChronoUnit
+    use Time.Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes, Hours, HalfDays, Days, 
         Weeks, Months, Years, Decades, Centuries, Millenia, Eras, Forever}
-    use Time/Temporal.TemporalUnit
-    use Time/Temporal.TemporalUnit.{TemporalUnit}
+    use Time.Temporal.TemporalUnit
+    use Time.Temporal.TemporalUnit.{TemporalUnit}
 
     ///
     /// ChronoUnit
@@ -68,33 +68,33 @@ namespace Time/Temporal {
         }
     }
 
-    instance Interop/Flix.Marshal[ChronoUnit] {
+    instance Interop.Flix.Marshal[ChronoUnit] {
         pub def toJavaObject(x: ChronoUnit): ##java.lang.Object =
-            let x1 = Time/Temporal/ChronoUnit.marshal(x);
+            let x1 = Time.Temporal.ChronoUnit.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ChronoUnit = 
             let x1 = unchecked_cast(o as ##java.time.temporal.ChronoUnit);
-            Time/Temporal/ChronoUnit.unmarshal(x1)
+            Time.Temporal.ChronoUnit.unmarshal(x1)
     }
 
-    instance Time/Temporal.ImplementsTemporalUnit[ChronoUnit] {
+    instance Time.Temporal.ImplementsTemporalUnit[ChronoUnit] {
         pub def toTemporalUnit(x: ChronoUnit): TemporalUnit = 
-            let x1 = Time/Temporal/ChronoUnit.marshal(x);
+            let x1 = Time.Temporal.ChronoUnit.marshal(x);
             TemporalUnit(unchecked_cast(x1 as ##java.time.temporal.TemporalUnit))
 
         pub def fromTemporalUnit(x: TemporalUnit): ChronoUnit = 
             let TemporalUnit(x1) = x;
-            Time/Temporal/ChronoUnit.unmarshal(unchecked_cast(x1 as ##java.time.temporal.ChronoUnit))
+            Time.Temporal.ChronoUnit.unmarshal(unchecked_cast(x1 as ##java.time.temporal.ChronoUnit))
     }
 
 
 }
 
-namespace Time/Temporal/ChronoUnit {
+mod Time.Temporal.ChronoUnit {
 
-    use Time/Temporal.ChronoUnit
-    use Time/Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes, Hours, HalfDays, Days, 
+    use Time.Temporal.ChronoUnit
+    use Time.Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes, Hours, HalfDays, Days, 
         Weeks, Months, Years, Decades, Centuries, Millenia, Eras, Forever}
 
     use Time.DurationZ

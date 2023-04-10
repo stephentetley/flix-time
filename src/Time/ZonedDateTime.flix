@@ -15,12 +15,12 @@
  */
 
 
-namespace Time {
+mod Time {
 
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
-    use Interop/Time/Temporal.TemporalAccessor
-    use Interop/Time/Temporal.TemporalAccessor.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A wrapper around a Java ZonedDateTime.
@@ -80,7 +80,7 @@ namespace Time {
 
     instance Boxable[ZonedDateTime]
 
-    instance Interop/Flix.Marshal[ZonedDateTime] {
+    instance Interop.Flix.Marshal[ZonedDateTime] {
         pub def toJavaObject(x: ZonedDateTime): ##java.lang.Object =
             let ZonedDateTime(x1) = x;
             checked_cast(x1)
@@ -89,7 +89,7 @@ namespace Time {
             ZonedDateTime(unchecked_cast(o as ##java.time.ZonedDateTime))
     }
 
-    instance Interop/Time/Temporal.ImpTemporalAccessor[ZonedDateTime] {
+    instance Interop.Time.Temporal.ImpTemporalAccessor[ZonedDateTime] {
         pub def toTemporalAccessor(x: ZonedDateTime): TemporalAccessor =
             let ZonedDateTime(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
@@ -101,13 +101,13 @@ namespace Time {
 
 }
 
-namespace Time/ZonedDateTime {
+mod Time.ZonedDateTime {
 
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
-    use Time/Format.DateTimeFormatter
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
-    use Time/Format.DateTimeFormat
+    use Time.Format.DateTimeFormatter
+    use Time.Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.Format.DateTimeFormat
     use Time.DayOfWeek
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
@@ -138,7 +138,7 @@ namespace Time/ZonedDateTime {
     pub def zonedDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, 
                             minute = Int32, second = Int32, nanoSecond = Int32, zoneId = ZoneId}): ZonedDateTime =
         import static java.time.ZonedDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
-        ZonedDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneId.getZoneId(r.zoneId)))
+        ZonedDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, Time.ZoneId.getZoneId(r.zoneId)))
 
 
     /// ## `now` and "abstract constructors" (e.g. `epoch`)
@@ -175,7 +175,7 @@ namespace Time/ZonedDateTime {
         ZonedDateTime(of(d1, t1, z1))
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
 
     /// ## `to` functions
@@ -269,7 +269,7 @@ namespace Time/ZonedDateTime {
     pub def getMonth(x: ZonedDateTime): Month =
         import java.time.ZonedDateTime.getMonth(): ##java.time.Month \ {};
         let ZonedDateTime(x1) = x;
-        Time/Month.unmarshal(getMonth(x1))
+        Time.Month.unmarshal(getMonth(x1))
 
     pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withMonth(Int32): ##java.time.ZonedDateTime \ {};
@@ -307,7 +307,7 @@ namespace Time/ZonedDateTime {
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
         import java.time.ZonedDateTime.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let ZonedDateTime(x1) = x;
-        Time/DayOfWeek.unmarshal(getDayOfWeek(x1))
+        Time.DayOfWeek.unmarshal(getDayOfWeek(x1))
 
     // no setDayOfWeek
 
@@ -354,13 +354,13 @@ namespace Time/ZonedDateTime {
     pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        let zone1 = Time/ZoneId.getZoneId(zone);
+        let zone1 = Time.ZoneId.getZoneId(zone);
         ZonedDateTime(withZoneSameInstant(x1, zone1))
 
     pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withZoneSameLocal(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        let zone1 = Time/ZoneId.getZoneId(zone);
+        let zone1 = Time.ZoneId.getZoneId(zone);
         ZonedDateTime(withZoneSameLocal(x1, zone1))
 
 
@@ -383,7 +383,7 @@ namespace Time/ZonedDateTime {
 
     pub def adjustDayOfWeek(x: DayOfWeek, d: ZonedDateTime): ZonedDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/DayOfWeek.marshal(x);
+        let x1 = Time.DayOfWeek.marshal(x);
         let d1 = unchecked_cast(getZonedDateTime(d) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.ZonedDateTime))
 
@@ -391,7 +391,7 @@ namespace Time/ZonedDateTime {
 
     pub def adjustMonthDay(x: MonthDay, d: ZonedDateTime): ZonedDateTime = 
         import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/MonthDay.getMonthDay(x);
+        let x1 = Time.MonthDay.getMonthDay(x);
         let d1 = unchecked_cast(getZonedDateTime(d) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.ZonedDateTime))
 
@@ -399,7 +399,7 @@ namespace Time/ZonedDateTime {
 
     pub def adjustZoneOffset(zo: ZoneOffset, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let zo1 = Time/ZoneOffset.getZoneOffset(zo);
+        let zo1 = Time.ZoneOffset.getZoneOffset(zo);
         let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(adjustInto(zo1, dt1) as ##java.time.ZonedDateTime))
 
@@ -407,7 +407,7 @@ namespace Time/ZonedDateTime {
 
     pub def adjustYearMonth(x: YearMonth, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/YearMonth.getYearMonth(x);
+        let x1 = Time.YearMonth.getYearMonth(x);
         let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.ZonedDateTime))
 
@@ -415,7 +415,7 @@ namespace Time/ZonedDateTime {
 
     pub def adjustLocalDate(x: LocalDate, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalDate.getLocalDate(x);
+        let x1 = Time.LocalDate.getLocalDate(x);
         let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.ZonedDateTime))
 
@@ -423,7 +423,7 @@ namespace Time/ZonedDateTime {
 
     pub def adjustLocalDateTime(x: LocalDateTime, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalDateTime.getLocalDateTime(x);
+        let x1 = Time.LocalDateTime.getLocalDateTime(x);
         let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.ZonedDateTime))
 
@@ -431,7 +431,7 @@ namespace Time/ZonedDateTime {
 
     pub def adjustLocalTime(x: LocalTime, dt: ZonedDateTime): ZonedDateTime = 
         import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalTime.getLocalTime(x);
+        let x1 = Time.LocalTime.getLocalTime(x);
         let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.ZonedDateTime))
 
@@ -533,13 +533,13 @@ namespace Time/ZonedDateTime {
 
     pub def plusPeriod(i: ZonedDateTime, x: Period): ZonedDateTime =
         import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/Period.getPeriod(x);
+        let x1 = Time.Period.getPeriod(x);
         let i1 = unchecked_cast(getZonedDateTime(i) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(addTo(x1, i1) as ##java.time.ZonedDateTime))
     
     pub def minusPeriod(i: ZonedDateTime, x: Period): ZonedDateTime =
         import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/Period.getPeriod(x);
+        let x1 = Time.Period.getPeriod(x);
         let i1 = unchecked_cast(getZonedDateTime(i) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.ZonedDateTime))
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace TestMonthDay {
+mod TestMonthDay {
 
     use ToString.toString;
 
@@ -24,7 +24,7 @@ namespace TestMonthDay {
 
     @test
     def toString01(): String = 
-        Time/MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString
+        Time.MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString
 
     /////////////////////////////////////////////////////////////////////////////
     // fromLocalDate                                                           //
@@ -32,8 +32,8 @@ namespace TestMonthDay {
 
     @test
     def fromLocalDate01(): Time.MonthDay \ IO = 
-        let date = Time/LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
-        let md = Time/MonthDay.fromLocalDate(date);
+        let date = Time.LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
+        let md = Time.MonthDay.fromLocalDate(date);
         println("MonthDay.fromLocalDate01(): ${md}");
         md
 
@@ -43,15 +43,15 @@ namespace TestMonthDay {
 
     /// @test
     /// def get01(): Int32 \ IO =         
-    ///     let md = Time/MonthDay.monthDay({month = 1, dayOfMonth = 1});
-    ///     let i = Time/MonthDay.get(Time/Temporal/ChronoField.monthOfYear(), md);
+    ///     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
+    ///     let i = Time.MonthDay.get(Time.Temporal.ChronoField.monthOfYear(), md);
     ///     println("MonthDay.get01(): ${i}");
     ///     i
 
     /// @test
     /// def get02(): Int32 \ IO =         
-    ///     let md = Time/MonthDay.monthDay({month = 1, dayOfMonth = 1});
-    ///     let i = Time/MonthDay.get(Time/Temporal/ChronoField.dayOfMonth(), md);
+    ///     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
+    ///     let i = Time.MonthDay.get(Time.Temporal.ChronoField.dayOfMonth(), md);
     ///     println("MonthDay.get02(): ${i}");
     ///     i  
 }

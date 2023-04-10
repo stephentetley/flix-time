@@ -16,7 +16,7 @@
 
 
 
-namespace TestInstant {
+mod TestInstant {
 
     use ToString.toString;
 
@@ -25,7 +25,7 @@ namespace TestInstant {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/InstantZ.epoch())
+    def toString01(): String = toString(Time.InstantZ.epoch())
 
 
 

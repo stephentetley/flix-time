@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Interop/Time/Chrono {
+mod Interop.Time.Chrono {
 
     /// Interface...
 
@@ -27,20 +27,20 @@ namespace Interop/Time/Chrono {
 
 }
 
-namespace Interop/Time/Chrono/Chronology {
+mod Interop.Time.Chrono.Chronology {
 
 
-    use Time/Format.TextStyle
+    use Time.Format.TextStyle
 
-    use Interop/Time/Chrono.Chronology
-    use Interop/Time/Chrono.Chronology.{Chronology}
-    use Interop/Util.Locale
-    use Interop/Util.Locale.{Locale}
+    use Interop.Time.Chrono.Chronology
+    use Interop.Time.Chrono.Chronology.{Chronology}
+    use Interop.Util.Locale
+    use Interop.Util.Locale.{Locale}
 
     pub def getDisplayName(sty: TextStyle, loc: Locale, x: Chronology): String = 
         import java.time.chrono.Chronology.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};        
         let Locale(loc1) = loc;
-        let sty1 = Time/Format/TextStyle.marshal(sty);
+        let sty1 = Time.Format.TextStyle.marshal(sty);
         let Chronology(x1) = x;
         getDisplayName(x1, sty1, loc1)
 

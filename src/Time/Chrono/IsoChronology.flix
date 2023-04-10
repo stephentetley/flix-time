@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
-    use Time/Chrono.IsoChronology
-    use Time/Chrono.IsoChronology.{IsoChronology}
+    use Time.Chrono.IsoChronology
+    use Time.Chrono.IsoChronology.{IsoChronology}
 
     pub enum IsoChronology(##java.time.chrono.IsoChronology)
     
@@ -28,7 +28,7 @@ namespace Time/Chrono {
             toString(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
     }
 
-    instance Interop/Flix.Marshal[IsoChronology] {
+    instance Interop.Flix.Marshal[IsoChronology] {
         pub def toJavaObject(x: IsoChronology): ##java.lang.Object =
             let IsoChronology(x1) = x;
             checked_cast(x1)
@@ -39,11 +39,11 @@ namespace Time/Chrono {
 
 }
 
-namespace Time/Chrono/IsoChronology {
+mod Time.Chrono.IsoChronology {
 
-    use Time/Chrono.IsoChronology
-    use Time/Chrono.IsoChronology.{IsoChronology}
-    use Time/Chrono.IsoEra
+    use Time.Chrono.IsoChronology
+    use Time.Chrono.IsoChronology.{IsoChronology}
+    use Time.Chrono.IsoEra
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
@@ -64,13 +64,13 @@ namespace Time/Chrono/IsoChronology {
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
         import java.time.chrono.IsoChronology.eraOf(Int32): ##java.time.chrono.IsoEra \ {};
         let IsoChronology(x1) = x;
-        Time/Chrono/IsoEra.unmarshal(eraOf(x1, i))
+        Time.Chrono.IsoEra.unmarshal(eraOf(x1, i))
 
     /// pub def eras(x: IsoChronology): List[IsoEra] = 
     ///     import java.time.chrono.IsoChronology.eras(): ##java.util.List \ {};
     ///     let IsoChronology(x1) = x;
     ///     let jxs = eras(x1);
-    ///     Interop/Collections/... .unmarshalList(o -> Time/Chrono/IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs)
+    ///     Interop.Collections/... .unmarshalList(o -> Time.Chrono.IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs)
 
 
     pub def getId(x: IsoChronology): String = 

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
-    use Time/Chrono.ThaiBuddhistChronology
-    use Time/Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology}
+    use Time.Chrono.ThaiBuddhistChronology
+    use Time.Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology}
 
     pub enum ThaiBuddhistChronology(##java.time.chrono.ThaiBuddhistChronology)
 
@@ -29,13 +29,13 @@ namespace Time/Chrono {
     }
 }
 
-namespace Time/Chrono/ThaiBuddhistChronology {
+mod Time.Chrono.ThaiBuddhistChronology {
 
-    use Time/Chrono.ThaiBuddhistChronology
-    use Time/Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology}
-    use Time/Chrono.ThaiBuddhistDate
-    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
-    use Time/Chrono.ThaiBuddhistEra
+    use Time.Chrono.ThaiBuddhistChronology
+    use Time.Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology}
+    use Time.Chrono.ThaiBuddhistDate
+    use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time.Chrono.ThaiBuddhistEra
     use Time.Clock
     use Time.Clock.{Clock}
     use Time.ZoneId
@@ -73,6 +73,6 @@ namespace Time/Chrono/ThaiBuddhistChronology {
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): ThaiBuddhistEra = 
         import java.time.chrono.ThaiBuddhistChronology.eraOf(Int32): ##java.time.chrono.ThaiBuddhistEra \ {};
         let ThaiBuddhistChronology(x1) = x;
-        Time/Chrono/ThaiBuddhistEra.unmarshal(eraOf(x1, i))
+        Time.Chrono.ThaiBuddhistEra.unmarshal(eraOf(x1, i))
 
 }

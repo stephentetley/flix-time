@@ -15,7 +15,7 @@
  */
 
 
-namespace Time {
+mod Time {
 
     use Time.YearMonth
     use Time.YearMonth.{YearMonth}
@@ -73,7 +73,7 @@ namespace Time {
     }
 
 
-    instance Interop/Flix.Marshal[YearMonth] {
+    instance Interop.Flix.Marshal[YearMonth] {
         pub def toJavaObject(x: YearMonth): ##java.lang.Object =
             let YearMonth(x1) = x;
             checked_cast(x1)
@@ -84,14 +84,14 @@ namespace Time {
 
 }
 
-namespace Time/YearMonth {
+mod Time.YearMonth {
 
     use Time.YearMonth
     use Time.YearMonth.{YearMonth}
 
-    use Time/Format.DateFormat
-    use Time/Format.DateTimeFormatter
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.Format.DateFormat
+    use Time.Format.DateTimeFormatter
+    use Time.Format.DateTimeFormatter.{DateTimeFormatter}
     use Time.LocalDate
     use Time.LocalDateTime
     use Time.Month
@@ -114,7 +114,7 @@ namespace Time/YearMonth {
 
     pub def yearMonthWithMonth(r: {year = Int32, month = Month}): YearMonth =
         import static java.time.YearMonth.of(Int32, ##java.time.Month): ##java.time.YearMonth \ {};
-        let m1 = Time/Month.marshal(r.month);
+        let m1 = Time.Month.marshal(r.month);
         YearMonth(of(r.year, m1))
 
 
@@ -139,16 +139,16 @@ namespace Time/YearMonth {
         }
 
     pub def fromLocalDate(x: LocalDate): YearMonth = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromLocalDateTime(x: LocalDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetDateTime(x: OffsetDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     /// ## `parse` / `format` functions  
 
@@ -234,7 +234,7 @@ namespace Time/YearMonth {
 
     pub def getMonth(x: YearMonth): Month =
         import java.time.YearMonth.getMonth(): ##java.time.Month \ {};
-        use Time/Month.{unmarshal};
+        use Time.Month.{unmarshal};
         let YearMonth(x1) = x;
         (getMonth(x1) |> unmarshal)
 

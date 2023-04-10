@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
-    use Time/Chrono.HijrahDate
-    use Time/Chrono.HijrahDate.{HijrahDate}
-    use Interop/Time/Chrono.ChronoLocalDate
-    use Interop/Time/Chrono.ChronoLocalDate.{ChronoLocalDate}
-    use Interop/Time/Temporal.TemporalAccessor
-    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
+    use Time.Chrono.HijrahDate
+    use Time.Chrono.HijrahDate.{HijrahDate}
+    use Interop.Time.Chrono.ChronoLocalDate
+    use Interop.Time.Chrono.ChronoLocalDate.{ChronoLocalDate}
+    use Interop.Time.Temporal.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around java.time.chrono.HijrahDate.
@@ -39,19 +39,19 @@ namespace Time/Chrono {
     }
 
     instance Eq[HijrahDate] {
-        pub def eq(x: HijrahDate, y: HijrahDate): Bool = Time/Chrono/HijrahDate.equals(x, y)
+        pub def eq(x: HijrahDate, y: HijrahDate): Bool = Time.Chrono.HijrahDate.equals(x, y)
     }
     
     instance Order[HijrahDate] {
         pub def compare(x: HijrahDate, y: HijrahDate): Comparison = 
-            Time/Chrono/HijrahDate.compareTo(x, y) |> Comparison.fromInt32
+            Time.Chrono.HijrahDate.compareTo(x, y) |> Comparison.fromInt32
     }
 
     instance Hash[HijrahDate] {
-        pub def hash(x: HijrahDate): Int32 = Time/Chrono/HijrahDate.hashCode(x)
+        pub def hash(x: HijrahDate): Int32 = Time.Chrono.HijrahDate.hashCode(x)
     }  
 
-    instance Interop/Time/Temporal.ImpTemporalAccessor[HijrahDate] {
+    instance Interop.Time.Temporal.ImpTemporalAccessor[HijrahDate] {
         pub def toTemporalAccessor(x: HijrahDate): TemporalAccessor = 
             let HijrahDate(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
@@ -61,7 +61,7 @@ namespace Time/Chrono {
             HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
     }
 
-    instance Interop/Time/Chrono.ImpChronoLocalDate[HijrahDate] {
+    instance Interop.Time.Chrono.ImpChronoLocalDate[HijrahDate] {
         pub def toChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
             let HijrahDate(x1) = x;
             ChronoLocalDate(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
@@ -74,14 +74,14 @@ namespace Time/Chrono {
 
 }
 
-namespace Time/Chrono/HijrahDate {
+mod Time.Chrono.HijrahDate {
 
 
-    use Time/Chrono.HijrahDate
-    use Time/Chrono.HijrahDate.{HijrahDate}
-    use Time/Chrono.HijrahChronology
-    use Time/Chrono.HijrahChronology.{HijrahChronology}
-    use Time/Chrono.HijrahEra
+    use Time.Chrono.HijrahDate
+    use Time.Chrono.HijrahDate.{HijrahDate}
+    use Time.Chrono.HijrahChronology
+    use Time.Chrono.HijrahChronology.{HijrahChronology}
+    use Time.Chrono.HijrahEra
     use Time.Clock
     use Time.Clock.{Clock}
     use Time.LocalDate
@@ -132,28 +132,28 @@ namespace Time/Chrono/HijrahDate {
 
 
     pub def compareTo(x: HijrahDate, y: HijrahDate): Int32 = 
-        let x1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(y);
-        Interop/Time/Chrono/ChronoLocalDate.compareTo(x1, y1)
+        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let y1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        Interop.Time.Chrono.ChronoLocalDate.compareTo(x1, y1)
 
     pub def isAfter(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(y);
-        Interop/Time/Chrono/ChronoLocalDate.isAfter(x1, y1)
+        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let y1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        Interop.Time.Chrono.ChronoLocalDate.isAfter(x1, y1)
 
     pub def isBefore(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(y);
-        Interop/Time/Chrono/ChronoLocalDate.isBefore(x1, y1)
+        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let y1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        Interop.Time.Chrono.ChronoLocalDate.isBefore(x1, y1)
 
     pub def isEqual(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(y);
-        Interop/Time/Chrono/ChronoLocalDate.isEqual(x1, y1)
+        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let y1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        Interop.Time.Chrono.ChronoLocalDate.isEqual(x1, y1)
 
     pub def toEpochDay(x: HijrahDate): Int64 = 
-        let x1 = Interop/Time/Chrono/ImpChronoLocalDate.toChronoLocalDate(x);
-        Interop/Time/Chrono/ChronoLocalDate.toEpochDay(x1)
+        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        Interop.Time.Chrono.ChronoLocalDate.toEpochDay(x1)
 
     pub def toLocalDate(x: HijrahDate): LocalDate =
         import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
@@ -168,7 +168,7 @@ namespace Time/Chrono/HijrahDate {
     pub def getEra(x: HijrahDate): HijrahEra = 
         import java.time.chrono.HijrahDate.getEra(): ##java.time.chrono.HijrahEra \ {};
         let HijrahDate(x1) = x;
-        Time/Chrono/HijrahEra.unmarshal(getEra(x1))
+        Time.Chrono.HijrahEra.unmarshal(getEra(x1))
 
     pub def isLeapYear(x: HijrahDate): Bool = 
         import java.time.chrono.HijrahDate.isLeapYear(): Bool \ {};

@@ -16,7 +16,7 @@
 
 
 
-namespace Time {
+mod Time {
 
     use Time.LocalTime
     use Time.LocalTime.{LocalTime}
@@ -77,7 +77,7 @@ namespace Time {
 
     instance Boxable[LocalTime]
 
-    instance Interop/Flix.Marshal[LocalTime] {
+    instance Interop.Flix.Marshal[LocalTime] {
         pub def toJavaObject(x: LocalTime): ##java.lang.Object =
             let LocalTime(x1) = x;
             checked_cast(x1)
@@ -88,14 +88,14 @@ namespace Time {
 
 }
 
-namespace Time/LocalTime {
+mod Time.LocalTime {
 
     use Time.LocalTime
     use Time.LocalTime.{LocalTime}
     
-    use Time/Format.DateTimeFormatter
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
-    use Time/Format.TimeFormat
+    use Time.Format.DateTimeFormatter
+    use Time.Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.Format.TimeFormat
     use Time.LocalDateTime
     use Time.OffsetDateTime
     use Time.OffsetTime
@@ -183,16 +183,16 @@ namespace Time/LocalTime {
         }
 
     pub def fromLocalDateTime(x: LocalDateTime): LocalTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetDateTime(x: OffsetDateTime): LocalTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetTime(x: OffsetTime): LocalTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): LocalTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
 
     /// ## `to` functions

@@ -18,7 +18,7 @@
 
 
 
-namespace Time {
+mod Time {
 
 
     use Time.InstantZ
@@ -79,7 +79,7 @@ namespace Time {
 
     instance Boxable[InstantZ]
 
-    instance Interop/Flix.Marshal[InstantZ] {
+    instance Interop.Flix.Marshal[InstantZ] {
         pub def toJavaObject(x: InstantZ): ##java.lang.Object =
             let InstantZ(x1) = x;
             checked_cast(x1)
@@ -90,7 +90,7 @@ namespace Time {
 
 }   
 
-namespace Time/InstantZ {
+mod Time.InstantZ {
 
     use Time.InstantZ
     use Time.InstantZ.{InstantZ}
@@ -106,8 +106,8 @@ namespace Time/InstantZ {
     use Time.ZoneId.{ZoneId}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
-    use Interop/Time/Temporal.TemporalAccessor
-    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
+    use Interop.Time.Temporal.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
 
     /// ## Unwrap
 
@@ -175,7 +175,7 @@ namespace Time/InstantZ {
     def fromTemporalAccessor(x: TemporalAccessor): InstantZ = 
         import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant \ {} as fromTA;
         try {
-            Interop/Time/Temporal/TemporalAccessor.getHH(x) 
+            Interop.Time.Temporal.TemporalAccessor.getHH(x) 
                 |> fromTA
                 |> InstantZ
         } catch {
@@ -186,11 +186,11 @@ namespace Time/InstantZ {
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
-        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     /// ## `to` functions
@@ -366,13 +366,13 @@ namespace Time/InstantZ {
 
     pub def plusPeriod(i: InstantZ, x: Period): InstantZ =
         import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/Period.getPeriod(x);
+        let x1 = Time.Period.getPeriod(x);
         let i1 = unchecked_cast(getInstant(i) as ##java.time.temporal.Temporal);
         InstantZ(unchecked_cast(addTo(x1, i1) as ##java.time.Instant))
     
     pub def minusPeriod(i: InstantZ, x: Period): InstantZ =
         import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/Period.getPeriod(x);
+        let x1 = Time.Period.getPeriod(x);
         let i1 = unchecked_cast(getInstant(i) as ##java.time.temporal.Temporal);
         InstantZ(unchecked_cast(subtractFrom(x1, i1) as ##java.time.Instant))
 

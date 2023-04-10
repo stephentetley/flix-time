@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
- namespace Interop/Time/Temporal {
+ mod Interop.Time.Temporal {
 
     /// Interface...
 

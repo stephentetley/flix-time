@@ -15,7 +15,7 @@
  */
 
 
-namespace Time {
+mod Time {
 
 
     use Time.OffsetTime
@@ -78,7 +78,7 @@ namespace Time {
 
     instance Boxable[OffsetTime]
 
-    instance Interop/Flix.Marshal[OffsetTime] {
+    instance Interop.Flix.Marshal[OffsetTime] {
         pub def toJavaObject(x: OffsetTime): ##java.lang.Object =
             let OffsetTime(x1) = x;
             checked_cast(x1)
@@ -89,13 +89,13 @@ namespace Time {
 
 }
 
-namespace Time/OffsetTime {
+mod Time.OffsetTime {
 
     use Time.OffsetTime
     use Time.OffsetTime.{OffsetTime}
-    use Time/Format.DateTimeFormatter
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
-    use Time/Format.TimeFormat
+    use Time.Format.DateTimeFormatter
+    use Time.Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.Format.TimeFormat
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
     use Time.InstantZ
@@ -119,7 +119,7 @@ namespace Time/OffsetTime {
 
     pub def offsetTime(r: { hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32, offset = ZoneOffset}): OffsetTime =
         import static java.time.OffsetTime.of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetTime \ {};
-        OffsetTime(of(r.hour, r.minute, r.second, r.nanoSecond, Time/ZoneOffset.getZoneOffset(r.offset)))
+        OffsetTime(of(r.hour, r.minute, r.second, r.nanoSecond, Time.ZoneOffset.getZoneOffset(r.offset)))
 
     /// ## `now` and "abstract constructors" if any
 
@@ -168,10 +168,10 @@ namespace Time/OffsetTime {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): OffsetTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     /// ## `parse` / `format` functions        
 
@@ -293,7 +293,7 @@ namespace Time/OffsetTime {
 
     pub def adjustLocalTime(x: LocalTime, dt: OffsetTime): OffsetTime = 
         import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalTime.getLocalTime(x);
+        let x1 = Time.LocalTime.getLocalTime(x);
         let dt1 = unchecked_cast(getOffsetTime(dt) as ##java.time.temporal.Temporal);
         OffsetTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetTime))
 

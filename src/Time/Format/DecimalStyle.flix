@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-namespace Time/Format {
+mod Time.Format {
 
-    use Time/Format.DecimalStyle
-    use Time/Format.DecimalStyle.{DecimalStyle}
+    use Time.Format.DecimalStyle
+    use Time.Format.DecimalStyle.{DecimalStyle}
 
     /// Immutable
     ///
@@ -46,7 +46,7 @@ namespace Time/Format {
             hashCode(x1)
     } 
     
-    instance Interop/Flix.Marshal[DecimalStyle] {
+    instance Interop.Flix.Marshal[DecimalStyle] {
         pub def toJavaObject(x: DecimalStyle): ##java.lang.Object =
             let DecimalStyle(x1) = x;
             checked_cast(x1)
@@ -56,12 +56,12 @@ namespace Time/Format {
     }
 }
 
-namespace Time/Format/DecimalStyle {
+mod Time.Format.DecimalStyle {
 
-    use Interop/Util.Locale
+    use Interop.Util.Locale
 
-    use Time/Format.DecimalStyle
-    use Time/Format.DecimalStyle.{DecimalStyle}
+    use Time.Format.DecimalStyle
+    use Time.Format.DecimalStyle.{DecimalStyle}
 
     /// ## Unwrap
 
@@ -78,7 +78,7 @@ namespace Time/Format/DecimalStyle {
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
         import static java.time.format.DecimalStyle.of(##java.util.Locale): ##java.time.format.DecimalStyle \ IO;
-        let loc1 = Interop/Util/Locale.getHH(loc);
+        let loc1 = Interop.Util.Locale.getHH(loc);
         DecimalStyle(of(loc1))
 
     pub def decimalStyleWithDefaultLocale(): DecimalStyle \ IO = 
@@ -91,8 +91,8 @@ namespace Time/Format/DecimalStyle {
     pub def getAvailableLocales(): List[Locale] = region r {
         import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set \ {};
         getAvailableLocales() 
-            |> Interop/Util/SetZ.wrapHH(r)
-            |> Interop/Util/SetZ.toFlixList
+            |> Interop.Util.SetZ.wrapHH(r)
+            |> Interop.Util.SetZ.toFlixList
     }
 
     // Note - should the Locale module provide a function marshal and unmarshal functions

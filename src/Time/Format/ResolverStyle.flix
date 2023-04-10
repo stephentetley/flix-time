@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time/Format {
+mod Time.Format {
 
     pub enum ResolverStyle with Eq, Order, ToString, Hash, Boxable {
         case Lenient
@@ -22,22 +22,22 @@ namespace Time/Format {
         case Strict
     }
 
-    instance Interop/Flix.Marshal[ResolverStyle] {
+    instance Interop.Flix.Marshal[ResolverStyle] {
         pub def toJavaObject(x: ResolverStyle): ##java.lang.Object =
-            let x1 = Time/Format/ResolverStyle.marshal(x);
+            let x1 = Time.Format.ResolverStyle.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ResolverStyle = 
             let x1 = unchecked_cast(o as ##java.time.format.ResolverStyle);
-            Time/Format/ResolverStyle.unmarshal(x1)
+            Time.Format.ResolverStyle.unmarshal(x1)
     }
 
 }
 
-namespace Time/Format/ResolverStyle {
+mod Time.Format.ResolverStyle {
 
-    use Time/Format.ResolverStyle;
-    use Time/Format.ResolverStyle.{Lenient, Smart, Strict};
+    use Time.Format.ResolverStyle;
+    use Time.Format.ResolverStyle.{Lenient, Smart, Strict};
     
 
 

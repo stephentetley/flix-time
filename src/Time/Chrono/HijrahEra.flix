@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
-    use Time/Chrono.Era
-    use Time/Chrono.Era.{Era}
+    use Time.Chrono.Era
+    use Time.Chrono.Era.{Era}
 
     ///
     /// Enum / Java Enum
@@ -26,36 +26,36 @@ namespace Time/Chrono {
         case AH
     }   
  
-    instance Interop/Flix.Marshal[HijrahEra] {
+    instance Interop.Flix.Marshal[HijrahEra] {
         pub def toJavaObject(x: HijrahEra): ##java.lang.Object =
-            let x1 = Time/Chrono/HijrahEra.marshal(x);
+            let x1 = Time.Chrono.HijrahEra.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
             let x1 = unchecked_cast(o as ##java.time.chrono.HijrahEra);
-            Time/Chrono/HijrahEra.unmarshal(x1)
+            Time.Chrono.HijrahEra.unmarshal(x1)
     }
     
-    instance Time/Chrono.ImplementsEra[HijrahEra] {
+    instance Time.Chrono.ImplementsEra[HijrahEra] {
         pub def toEra(x: HijrahEra): Era = 
-            let x1 = Time/Chrono/HijrahEra.marshal(x);
+            let x1 = Time.Chrono.HijrahEra.marshal(x);
             Era(unchecked_cast(x1 as ##java.time.chrono.Era))
 
         pub def fromEra(x: Era): HijrahEra = 
             let Era(x1) = x;
-            Time/Chrono/HijrahEra.unmarshal(unchecked_cast(x1 as ##java.time.chrono.HijrahEra))
+            Time.Chrono.HijrahEra.unmarshal(unchecked_cast(x1 as ##java.time.chrono.HijrahEra))
     }
 
 
 }
 
-namespace Time/Chrono/HijrahEra {
+mod Time.Chrono.HijrahEra {
 
-    use Interop/Util.Locale;
+    use Interop.Util.Locale;
 
-    use Time/Chrono.HijrahEra;
-    use Time/Chrono.HijrahEra.{AH};
-    use Time/Format.TextStyle;
+    use Time.Chrono.HijrahEra;
+    use Time.Chrono.HijrahEra.{AH};
+    use Time.Format.TextStyle;
 
     pub def marshal(x: HijrahEra): ##java.time.chrono.HijrahEra = 
         import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
@@ -88,8 +88,8 @@ namespace Time/Chrono/HijrahEra {
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String = 
         import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshal(x);
-        let style1 = Time/Format/TextStyle.marshal(style);
-        let locale1 = Interop/Util/Locale.getHH(locale);
+        let style1 = Time.Format.TextStyle.marshal(style);
+        let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)
         
  

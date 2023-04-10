@@ -15,10 +15,10 @@
  */
 
 
-namespace Time/Zone {
+mod Time.Zone {
 
-    use Time/Zone.ZoneOffsetTransitionRule
-    use Time/Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule}
+    use Time.Zone.ZoneOffsetTransitionRule
+    use Time.Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule}
 
     ///
     /// A wrapper around a Java ZoneOffsetTransitionRule.
@@ -48,7 +48,7 @@ namespace Time/Zone {
             hashCode(x1)
     }
 
-    instance Interop/Flix.Marshal[ZoneOffsetTransitionRule] {
+    instance Interop.Flix.Marshal[ZoneOffsetTransitionRule] {
         pub def toJavaObject(x: ZoneOffsetTransitionRule): ##java.lang.Object =
             let ZoneOffsetTransitionRule(x1) = x;
             checked_cast(x1)
@@ -59,13 +59,13 @@ namespace Time/Zone {
 
 }
 
-namespace Time/Zone/ZoneOffsetTransitionRule {
+mod Time.Zone.ZoneOffsetTransitionRule {
 
-    use Time/Zone.ZoneOffsetTransitionRule
-    use Time/Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule}
-    use Time/Zone/ZoneOffsetTransitionRule.TimeDefinition.{Standard, UTC, Wall}
-    use Time/Zone.ZoneOffsetTransition
-    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
+    use Time.Zone.ZoneOffsetTransitionRule
+    use Time.Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule}
+    use Time.Zone.ZoneOffsetTransitionRule.TimeDefinition.{Standard, UTC, Wall}
+    use Time.Zone.ZoneOffsetTransition
+    use Time.Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
     use Time.DayOfWeek
     use Time.Month
     use Time.LocalTime
@@ -134,15 +134,15 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
                                                                     ##java.time.ZoneOffset
                                                                     ): ##java.time.zone.ZoneOffsetTransitionRule \ {};
         Result.tryCatch(_ -> {
-            ZoneOffsetTransitionRule(of(Time/Month.marshal(r.month), 
+            ZoneOffsetTransitionRule(of(Time.Month.marshal(r.month), 
                                         r.dayOfMonthIndicator,
-                                        Time/DayOfWeek.marshal(r.dayOfWeek),
-                                        Time/LocalTime.getLocalTime(r.time),
+                                        Time.DayOfWeek.marshal(r.dayOfWeek),
+                                        Time.LocalTime.getLocalTime(r.time),
                                         r.timeEndOfDay,
                                         marshalTimeDefinition(r.timeDefinition),
-                                        Time/ZoneOffset.getZoneOffset(r.standardOffset),
-                                        Time/ZoneOffset.getZoneOffset(r.offsetBefore),
-                                        Time/ZoneOffset.getZoneOffset(r.offsetAfter)
+                                        Time.ZoneOffset.getZoneOffset(r.standardOffset),
+                                        Time.ZoneOffset.getZoneOffset(r.offsetBefore),
+                                        Time.ZoneOffset.getZoneOffset(r.offsetAfter)
                                         ))
         })
 
@@ -175,7 +175,7 @@ namespace Time/Zone/ZoneOffsetTransitionRule {
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
         import java.time.zone.ZoneOffsetTransitionRule.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        getDayOfWeek(x1) |> Time/DayOfWeek.unmarshal
+        getDayOfWeek(x1) |> Time.DayOfWeek.unmarshal
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 

@@ -16,10 +16,10 @@
 
 /// Notes - implements ChronoLocalDate
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
-    use Time/Chrono.JapaneseDate
-    use Time/Chrono.JapaneseDate.{JapaneseDate}
+    use Time.Chrono.JapaneseDate
+    use Time.Chrono.JapaneseDate.{JapaneseDate}
 
     ///
     /// A wrapper around java.time.chrono.JapaneseDate.
@@ -37,30 +37,30 @@ namespace Time/Chrono {
     }
 
     instance Eq[JapaneseDate] {
-        pub def eq(x: JapaneseDate, y: JapaneseDate): Bool = Time/Chrono/JapaneseDate.equals(x, y)
+        pub def eq(x: JapaneseDate, y: JapaneseDate): Bool = Time.Chrono.JapaneseDate.equals(x, y)
     }
     
     instance Hash[JapaneseDate] {
-        pub def hash(x: JapaneseDate): Int32 = Time/Chrono/JapaneseDate.hashCode(x)
+        pub def hash(x: JapaneseDate): Int32 = Time.Chrono.JapaneseDate.hashCode(x)
     }  
 
 }
 
-namespace Time/Chrono/JapaneseDate {
+mod Time.Chrono.JapaneseDate {
 
 
-    use Time/Chrono.JapaneseDate
-    use Time/Chrono.JapaneseDate.{JapaneseDate}
-    use Time/Chrono.HijrahDate
-    use Time/Chrono.HijrahDate.{HijrahDate}
-    use Time/Chrono.MinguoDate
-    use Time/Chrono.MinguoDate.{MinguoDate}
-    use Time/Chrono.ThaiBuddhistDate
-    use Time/Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
-    use Time/Chrono.JapaneseChronology
-    use Time/Chrono.JapaneseChronology.{JapaneseChronology}
-    use Time/Chrono.JapaneseEra
-    use Time/Chrono.JapaneseEra.{JapaneseEra}
+    use Time.Chrono.JapaneseDate
+    use Time.Chrono.JapaneseDate.{JapaneseDate}
+    use Time.Chrono.HijrahDate
+    use Time.Chrono.HijrahDate.{HijrahDate}
+    use Time.Chrono.MinguoDate
+    use Time.Chrono.MinguoDate.{MinguoDate}
+    use Time.Chrono.ThaiBuddhistDate
+    use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time.Chrono.JapaneseChronology
+    use Time.Chrono.JapaneseChronology.{JapaneseChronology}
+    use Time.Chrono.JapaneseEra
+    use Time.Chrono.JapaneseEra.{JapaneseEra}
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
@@ -141,34 +141,34 @@ namespace Time/Chrono/JapaneseDate {
         lengthOfMonth(x1)
     
     /// pub def getDayOfWeek(x: JapaneseDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfWeek)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfWeek)
     ///         |> Result.getWithDefault(-1)
         
     /// pub def getDayOfMonth(x: JapaneseDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfMonth)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfMonth)
     ///         |> Result.getWithDefault(-1)
 
     /// pub def getDayOfYear(x: JapaneseDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.DayOfYear)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfYear)
     ///         |> Result.getWithDefault(-1)
 
     /// pub def getMonthOfYear(x: JapaneseDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.MonthOfYear)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.MonthOfYear)
     ///         |> Result.getWithDefault(-1)
 
     /// pub def getYear(x: JapaneseDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.Year)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.Year)
     ///         |> Result.getWithDefault(-1)
 
     /// pub def getYearOfEra(x: JapaneseDate): Int32 = 
-    ///     getChronoFieldHelper(x, Time/Temporal/ChronoField.YearOfEra)
+    ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.YearOfEra)
     ///         |> Result.getWithDefault(-1)
 
     /// def getChronoFieldHelper(x: JapaneseDate, field: ChronoField): Result[String, Int32] =
     ///     Result.tryCatch(_ -> {
     ///         import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///         let JapaneseDate(x1) = x;
-    ///         let field1 = Time/Temporal/ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
+    ///         let field1 = Time.Temporal.ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
     ///         get(x1 as ##java.time.temporal.TemporalAccessor, field1)
     ///     })
         

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time/Format {
+mod Time.Format {
 
 
     pub enum FormatStyle with Eq, Order, ToString, Hash, Boxable {
@@ -24,22 +24,22 @@ namespace Time/Format {
         case Short
     }
     
-    instance Interop/Flix.Marshal[FormatStyle] {
+    instance Interop.Flix.Marshal[FormatStyle] {
         pub def toJavaObject(x: FormatStyle): ##java.lang.Object =
-            let x1 = Time/Format/FormatStyle.marshal(x);
+            let x1 = Time.Format.FormatStyle.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): FormatStyle = 
             let x1 = unchecked_cast(o as ##java.time.format.FormatStyle);
-            Time/Format/FormatStyle.unmarshal(x1)
+            Time.Format.FormatStyle.unmarshal(x1)
     }
 
 }
 
-namespace Time/Format/FormatStyle {
+mod Time.Format.FormatStyle {
 
-    use Time/Format.FormatStyle
-    use Time/Format.FormatStyle.{Full, Long, Medium, Short}
+    use Time.Format.FormatStyle
+    use Time.Format.FormatStyle.{Full, Long, Medium, Short}
 
     pub def marshal(x: FormatStyle): ##java.time.format.FormatStyle = 
         import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;

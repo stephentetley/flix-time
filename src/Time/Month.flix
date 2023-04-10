@@ -16,7 +16,7 @@
 
 
 
-namespace Time {
+mod Time {
 
 
     use Time.Month
@@ -62,21 +62,21 @@ namespace Time {
     }
 
 
-    instance Interop/Flix.Marshal[Month] {
+    instance Interop.Flix.Marshal[Month] {
         pub def toJavaObject(x: Month): ##java.lang.Object =
-            let x1 = Time/Month.marshal(x);
+            let x1 = Time.Month.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): Month = 
             let x1 = unchecked_cast(o as ##java.time.Month);
-            Time/Month.unmarshal(x1)
+            Time.Month.unmarshal(x1)
     }
 
 }
 
-namespace Time/Month {
+mod Time.Month {
 
-    use Interop/Util.Locale
+    use Interop.Util.Locale
 
     use Time.Month
     use Time.Month.{
@@ -86,7 +86,7 @@ namespace Time/Month {
         October, November, December
     }
 
-    use Time/Format.TextStyle
+    use Time.Format.TextStyle
     use Time.LocalDate
     use Time.LocalDateTime
     use Time.MonthDay
@@ -172,30 +172,30 @@ namespace Time/Month {
         }
 
     pub def fromLocalDate(x: LocalDate): Month = 
-        fromHelper(unchecked_cast(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
+        fromHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromLocalDateTime(x: LocalDateTime): Month = 
-        fromHelper(unchecked_cast(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromMonthDay(x: MonthDay): Month = 
-        fromHelper(unchecked_cast(Time/MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor))
+        fromHelper(unchecked_cast(Time.MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
-        fromHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromYearMonth(x: YearMonth): Month = 
-        fromHelper(unchecked_cast(Time/YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor))
+        fromHelper(unchecked_cast(Time.YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): Month = 
-        fromHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     /// ## Month functions
     
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
         import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshal(x);
-        let s1 = Time/Format/TextStyle.marshal(style);
-        let locale1 = Interop/Util/Locale.getHH(locale);
+        let s1 = Time.Format.TextStyle.marshal(style);
+        let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, s1, locale1)
 
     pub def getValue(x: Month): Int32 =

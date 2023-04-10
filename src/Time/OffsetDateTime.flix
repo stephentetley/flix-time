@@ -15,12 +15,12 @@
  */
 
 
-namespace Time {
+mod Time {
     
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
-    use Interop/Time/Temporal.TemporalAccessor
-    use Interop/Time/Temporal.TemporalAccessor.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A wrapper around a Java OffsetDateTime.
@@ -77,7 +77,7 @@ namespace Time {
 
     instance Boxable[OffsetDateTime]
 
-    instance Interop/Flix.Marshal[OffsetDateTime] {
+    instance Interop.Flix.Marshal[OffsetDateTime] {
         pub def toJavaObject(x: OffsetDateTime): ##java.lang.Object =
             let OffsetDateTime(x1) = x;
             checked_cast(x1)
@@ -86,7 +86,7 @@ namespace Time {
             OffsetDateTime(unchecked_cast(o as ##java.time.OffsetDateTime))
     }
 
-    instance Interop/Time/Temporal.ImpTemporalAccessor[OffsetDateTime] {
+    instance Interop.Time.Temporal.ImpTemporalAccessor[OffsetDateTime] {
         pub def toTemporalAccessor(x: OffsetDateTime): TemporalAccessor =
             let OffsetDateTime(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
@@ -98,13 +98,13 @@ namespace Time {
 
 }
 
-namespace Time/OffsetDateTime {
+mod Time.OffsetDateTime {
 
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
-    use Time/Format.DateTimeFormat
-    use Time/Format.DateTimeFormatter
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.Format.DateTimeFormat
+    use Time.Format.DateTimeFormatter
+    use Time.Format.DateTimeFormatter.{DateTimeFormatter}
     use Time.DayOfWeek
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
@@ -207,7 +207,7 @@ namespace Time/OffsetDateTime {
         }
 
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
-        let x1 = unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor);
+        let x1 = unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor);
         fromTemporalAccessorHelper(x1)
 
     /// ## `to` functions
@@ -338,7 +338,7 @@ namespace Time/OffsetDateTime {
         compare(cmp, checked_cast(x1), checked_cast(y1)) |> Comparison.fromInt32
 
     /// ## Getters and Setters
-    /// Get/Set...
+    /// Get / Set...
 
     pub def getOffset(x: OffsetDateTime): ZoneOffset =
         import java.time.OffsetDateTime.getOffset(): ##java.time.ZoneOffset \ {};
@@ -404,12 +404,12 @@ namespace Time/OffsetDateTime {
     pub def getDayOfWeek(x: OffsetDateTime): DayOfWeek =
         import java.time.OffsetDateTime.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let OffsetDateTime(x1) = x;
-        Time/DayOfWeek.unmarshal(getDayOfWeek(x1))
+        Time.DayOfWeek.unmarshal(getDayOfWeek(x1))
 
 
     pub def adjustDayOfWeek(x: DayOfWeek, d: OffsetDateTime): OffsetDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/DayOfWeek.marshal(x);
+        let x1 = Time.DayOfWeek.marshal(x);
         let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.OffsetDateTime))
 
@@ -438,7 +438,7 @@ namespace Time/OffsetDateTime {
     pub def getMonth(x: OffsetDateTime): Month =
         import java.time.OffsetDateTime.getMonth(): ##java.time.Month \ {};
         let OffsetDateTime(x1) = x;
-        Time/Month.unmarshal(getMonth(x1))
+        Time.Month.unmarshal(getMonth(x1))
 
     pub def getMonthValue(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getMonth(): ##java.time.Month \ {};
@@ -470,7 +470,7 @@ namespace Time/OffsetDateTime {
 
     pub def adjustMonthDay(x: MonthDay, d: OffsetDateTime): OffsetDateTime = 
         import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/MonthDay.getMonthDay(x);
+        let x1 = Time.MonthDay.getMonthDay(x);
         let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.OffsetDateTime))
 
@@ -483,7 +483,7 @@ namespace Time/OffsetDateTime {
 
     pub def adjustYearMonth(x: YearMonth, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/YearMonth.getYearMonth(x);
+        let x1 = Time.YearMonth.getYearMonth(x);
         let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetDateTime))
 
@@ -497,7 +497,7 @@ namespace Time/OffsetDateTime {
 
     pub def adjustLocalDate(x: LocalDate, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalDate.getLocalDate(x);
+        let x1 = Time.LocalDate.getLocalDate(x);
         let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetDateTime))
 
@@ -510,7 +510,7 @@ namespace Time/OffsetDateTime {
 
     pub def adjustLocalDateTime(x: LocalDateTime, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalDateTime.getLocalDateTime(x);
+        let x1 = Time.LocalDateTime.getLocalDateTime(x);
         let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetDateTime))
 
@@ -524,7 +524,7 @@ namespace Time/OffsetDateTime {
 
     pub def adjustLocalTime(x: LocalTime, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalTime.getLocalTime(x);
+        let x1 = Time.LocalTime.getLocalTime(x);
         let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetDateTime))
 
@@ -536,7 +536,7 @@ namespace Time/OffsetDateTime {
 
     pub def adjustZoneOffset(zo: ZoneOffset, dt: OffsetDateTime): OffsetDateTime = 
         import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let zo1 = Time/ZoneOffset.getZoneOffset(zo);
+        let zo1 = Time.ZoneOffset.getZoneOffset(zo);
         let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(adjustInto(zo1, dt1) as ##java.time.OffsetDateTime))
 
@@ -651,13 +651,13 @@ namespace Time/OffsetDateTime {
 
     pub def plusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
         import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/Period.getPeriod(x);
+        let x1 = Time.Period.getPeriod(x);
         let i1 = unchecked_cast(getOffsetDateTime(i) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(addTo(x1, i1) as ##java.time.OffsetDateTime))
     
     pub def minusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
         import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/Period.getPeriod(x);
+        let x1 = Time.Period.getPeriod(x);
         let i1 = unchecked_cast(getOffsetDateTime(i) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.OffsetDateTime))
 

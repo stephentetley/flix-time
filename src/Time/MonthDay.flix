@@ -16,7 +16,7 @@
 
 
 
-namespace Time {
+mod Time {
 
     use Time.MonthDay
     use Time.MonthDay.{MonthDay}
@@ -71,7 +71,7 @@ namespace Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Interop/Flix.Marshal[MonthDay] {
+    instance Interop.Flix.Marshal[MonthDay] {
         pub def toJavaObject(x: MonthDay): ##java.lang.Object =
             let MonthDay(x1) = x;
             checked_cast(x1)
@@ -82,14 +82,14 @@ namespace Time {
 
 }
 
-namespace Time/MonthDay {
+mod Time.MonthDay {
 
     use Time.MonthDay
     use Time.MonthDay.{MonthDay}
     
-    use Time/Format.DateFormat
-    use Time/Format.DateTimeFormatter
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.Format.DateFormat
+    use Time.Format.DateTimeFormatter
+    use Time.Format.DateTimeFormatter.{DateTimeFormatter}
     use Time.LocalDate
     use Time.LocalDateTime
     use Time.Month
@@ -112,7 +112,7 @@ namespace Time/MonthDay {
 
     pub def monthDayWithMonth(r: {month = Month, dayOfMonth = Int32}): MonthDay =
         import static java.time.MonthDay.of(##java.time.Month, Int32): ##java.time.MonthDay \ {};
-        let m1 = Time/Month.marshal(r.month);
+        let m1 = Time.Month.marshal(r.month);
         MonthDay(of(m1, r.dayOfMonth))
 
     /// ## `now` and "abstract constructors" if any
@@ -140,15 +140,15 @@ namespace Time/MonthDay {
         }
 
     pub def fromLocalDate(x: LocalDate): MonthDay = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
         
     pub def fromLocalDateTime(x: LocalDateTime): MonthDay = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
         
     pub def fromOffsetDateTime(x: OffsetDateTime): MonthDay = 
         import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
         try {
-            let x1 = unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor);
+            let x1 = unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor);
             MonthDay(fromTA(x1))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -159,7 +159,7 @@ namespace Time/MonthDay {
     pub def fromZonedDateTime(x: ZonedDateTime): MonthDay = 
         import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
         try {
-            let x1 = unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor);
+            let x1 = unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor);
             MonthDay(fromTA(x1))
         } catch {
             case ex: ##java.lang.Exception => 
@@ -236,13 +236,13 @@ namespace Time/MonthDay {
 
     pub def getMonth(x: MonthDay): Month =
         import java.time.MonthDay.getMonth(): ##java.time.Month \ {};
-        use Time/Month.{unmarshal};
+        use Time.Month.{unmarshal};
         let MonthDay(x1) = x;
         unmarshal(getMonth(x1))
 
     pub def withMonth(month: Month, x: MonthDay): MonthDay =
         import java.time.MonthDay.with(##java.time.Month): ##java.time.MonthDay \ {};
-        use Time/Month.{marshal};
+        use Time.Month.{marshal};
         let MonthDay(x1) = x;
         let m1 = marshal(month);
         MonthDay(with(x1, m1))

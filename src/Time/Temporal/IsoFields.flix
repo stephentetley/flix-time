@@ -16,12 +16,12 @@
 
 
 
-namespace Time/Temporal/IsoFields {
+mod Time.Temporal.IsoFields {
 
-    use Time/Temporal/TemporalField
-    use Time/Temporal/TemporalField.{TemporalField}
-    use Time/Temporal/TemporalUnit
-    use Time/Temporal/TemporalUnit.{TemporalUnit}
+    use Time.Temporal.TemporalField
+    use Time.Temporal.TemporalField.{TemporalField}
+    use Time.Temporal.TemporalUnit
+    use Time.Temporal.TemporalUnit.{TemporalUnit}
 
     pub def dayOfQuarter(): TemporalField =
         import static get java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;

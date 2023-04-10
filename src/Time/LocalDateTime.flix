@@ -16,12 +16,12 @@
 
 
 
-namespace Time {
+mod Time {
 
     use Time.LocalDateTime
     use Time.LocalDateTime.{LocalDateTime}
-    use Interop/Time/Temporal.TemporalAccessor
-    use Interop/Time/Temporal.TemporalAccessor.{TemporalAccessor}
+    use Interop.Time.Temporal.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around a Java LocalDateTime.
@@ -81,7 +81,7 @@ namespace Time {
 
     instance Boxable[LocalDateTime]
 
-    instance Interop/Flix.Marshal[LocalDateTime] {
+    instance Interop.Flix.Marshal[LocalDateTime] {
         pub def toJavaObject(x: LocalDateTime): ##java.lang.Object =
             let LocalDateTime(x1) = x;
             checked_cast(x1)
@@ -90,7 +90,7 @@ namespace Time {
             LocalDateTime(unchecked_cast(o as ##java.time.LocalDateTime))
     }
 
-    instance Interop/Time/Temporal.ImpTemporalAccessor[LocalDateTime] {
+    instance Interop.Time.Temporal.ImpTemporalAccessor[LocalDateTime] {
         pub def toTemporalAccessor(x: LocalDateTime): TemporalAccessor = 
             let LocalDateTime(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
@@ -102,14 +102,14 @@ namespace Time {
 
 }
 
-namespace Time/LocalDateTime {
+mod Time.LocalDateTime {
 
     use Time.LocalDateTime
     use Time.LocalDateTime.{LocalDateTime}
     
-    use Time/Format.DateTimeFormatter
-    use Time/Format.DateTimeFormatter.{DateTimeFormatter}
-    use Time/Format.DateTimeFormat
+    use Time.Format.DateTimeFormatter
+    use Time.Format.DateTimeFormatter.{DateTimeFormatter}
+    use Time.Format.DateTimeFormat
     use Time.DayOfWeek
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
@@ -202,10 +202,10 @@ namespace Time/LocalDateTime {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
 
     /// ## `to` functions
@@ -295,7 +295,7 @@ namespace Time/LocalDateTime {
     pub def getMonth(x: LocalDateTime): Month =
         import java.time.LocalDateTime.getMonth(): ##java.time.Month \ {};
         let LocalDateTime(x1) = x;
-        Time/Month.unmarshal(getMonth(x1))
+        Time.Month.unmarshal(getMonth(x1))
 
     pub def withMonth(month: Int32, x: LocalDateTime): LocalDateTime =
         import java.time.LocalDateTime.withMonth(Int32): ##java.time.LocalDateTime \ {};
@@ -325,7 +325,7 @@ namespace Time/LocalDateTime {
     pub def getDayOfWeek(x: LocalDateTime): DayOfWeek =
         import java.time.LocalDateTime.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let LocalDateTime(x1) = x;
-        Time/DayOfWeek.unmarshal(getDayOfWeek(x1))
+        Time.DayOfWeek.unmarshal(getDayOfWeek(x1))
 
     pub def getHour(x: LocalDateTime): Int32 =
         import java.time.LocalDateTime.getHour(): Int32 \ {};
@@ -371,7 +371,7 @@ namespace Time/LocalDateTime {
 
     pub def adjustYearMonth(x: YearMonth, dt: LocalDateTime): LocalDateTime = 
         import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/YearMonth.getYearMonth(x);
+        let x1 = Time.YearMonth.getYearMonth(x);
         let dt1 = unchecked_cast(getLocalDateTime(dt) as ##java.time.temporal.Temporal);
         LocalDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.LocalDateTime))
 
@@ -379,7 +379,7 @@ namespace Time/LocalDateTime {
 
     pub def adjustLocalDate(x: LocalDate, dt: LocalDateTime): LocalDateTime = 
         import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalDate.getLocalDate(x);
+        let x1 = Time.LocalDate.getLocalDate(x);
         let dt1 = unchecked_cast(getLocalDateTime(dt) as ##java.time.temporal.Temporal);
         LocalDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.LocalDateTime))
 
@@ -387,7 +387,7 @@ namespace Time/LocalDateTime {
 
     pub def adjustLocalTime(x: LocalTime, dt: LocalDateTime): LocalDateTime = 
         import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/LocalTime.getLocalTime(x);
+        let x1 = Time.LocalTime.getLocalTime(x);
         let dt1 = unchecked_cast(getLocalDateTime(dt) as ##java.time.temporal.Temporal);
         LocalDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.LocalDateTime))
 
@@ -395,7 +395,7 @@ namespace Time/LocalDateTime {
 
     pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/DayOfWeek.marshal(x);
+        let x1 = Time.DayOfWeek.marshal(x);
         let d1 = unchecked_cast(getLocalDateTime(d) as ##java.time.temporal.Temporal);
         LocalDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.LocalDateTime))
 
@@ -403,7 +403,7 @@ namespace Time/LocalDateTime {
 
     pub def adjustMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
         import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/MonthDay.getMonthDay(x);
+        let x1 = Time.MonthDay.getMonthDay(x);
         let d1 = unchecked_cast(getLocalDateTime(d) as ##java.time.temporal.Temporal);
         LocalDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.LocalDateTime))
 
@@ -504,13 +504,13 @@ namespace Time/LocalDateTime {
 
     pub def plusPeriod(i: LocalDateTime, x: Period): LocalDateTime =
         import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/Period.getPeriod(x);
+        let x1 = Time.Period.getPeriod(x);
         let i1 = unchecked_cast(getLocalDateTime(i) as ##java.time.temporal.Temporal);
         LocalDateTime(unchecked_cast(addTo(x1, i1) as ##java.time.LocalDateTime))
     
     pub def minusPeriod(i: LocalDateTime, x: Period): LocalDateTime =
         import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time/Period.getPeriod(x);
+        let x1 = Time.Period.getPeriod(x);
         let i1 = unchecked_cast(getLocalDateTime(i) as ##java.time.temporal.Temporal);
         LocalDateTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.LocalDateTime))
 

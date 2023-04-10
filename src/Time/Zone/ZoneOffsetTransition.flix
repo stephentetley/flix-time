@@ -15,10 +15,10 @@
  */
 
 
-namespace Time/Zone {
+mod Time.Zone {
 
-    use Time/Zone.ZoneOffsetTransition
-    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
+    use Time.Zone.ZoneOffsetTransition
+    use Time.Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
 
     ///
     /// A wrapper around a Java ZoneOffsetTransition.
@@ -57,7 +57,7 @@ namespace Time/Zone {
         
     instance Boxable[ZoneOffsetTransition]
 
-    instance Interop/Flix.Marshal[ZoneOffsetTransition] {
+    instance Interop.Flix.Marshal[ZoneOffsetTransition] {
         pub def toJavaObject(x: ZoneOffsetTransition): ##java.lang.Object =
             let ZoneOffsetTransition(x1) = x;
             checked_cast(x1)
@@ -68,10 +68,10 @@ namespace Time/Zone {
 
 }
 
-namespace Time/Zone/ZoneOffsetTransition {
+mod Time.Zone.ZoneOffsetTransition {
 
-    use Time/Zone.ZoneOffsetTransition
-    use Time/Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
+    use Time.Zone.ZoneOffsetTransition
+    use Time.Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
     use Time.LocalDateTime
@@ -91,8 +91,8 @@ namespace Time/Zone/ZoneOffsetTransition {
 
     pub def zoneOffsetTransition(r: {transition = LocalDateTime, before = ZoneOffset, after = ZoneOffset}): ZoneOffsetTransition =
         import static java.time.zone.ZoneOffsetTransition.of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset): ##java.time.zone.ZoneOffsetTransition \ {};
-        use Time/ZoneOffset.{getZoneOffset};
-        ZoneOffsetTransition(of(Time/LocalDateTime.getLocalDateTime(r.transition), getZoneOffset(r.before), getZoneOffset(r.after)))
+        use Time.ZoneOffset.{getZoneOffset};
+        ZoneOffsetTransition(of(Time.LocalDateTime.getLocalDateTime(r.transition), getZoneOffset(r.before), getZoneOffset(r.after)))
     
     /// ## `to` functions
 

@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-namespace TestDayOfWeek {
+mod TestDayOfWeek {
 
 
     /////////////////////////////////////////////////////////////////////////////
-    // toString                                                              //
+    // toString                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): Bool = ToString.toString(Time/DayOfWeek.Monday) == "Monday"
+    def toString01(): Bool = ToString.toString(Time.DayOfWeek.Monday) == "Monday"
 
     /////////////////////////////////////////////////////////////////////////////
     // fromString                                                              //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def fromString01(): Bool = FromString.fromString("Monday") == Some(Time/DayOfWeek.Monday)
+    def fromString01(): Bool = FromString.fromString("Monday") == Some(Time.DayOfWeek.Monday)
 
 
     @test
@@ -40,14 +40,14 @@ namespace TestDayOfWeek {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def eq01(): Bool = Time/DayOfWeek.Monday == Time/DayOfWeek.Monday
+    def eq01(): Bool = Time.DayOfWeek.Monday == Time.DayOfWeek.Monday
 
     /////////////////////////////////////////////////////////////////////////////
     // neq                                                                      //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def neq01(): Bool = Time/DayOfWeek.Monday != Time/DayOfWeek.Tuesday
+    def neq01(): Bool = Time.DayOfWeek.Monday != Time.DayOfWeek.Tuesday
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -56,11 +56,11 @@ namespace TestDayOfWeek {
 
     @test
     def dayOfWeek01(): Bool = 
-        Time/DayOfWeek.dayOfWeek(1) == Some(Time/DayOfWeek.Monday)
+        Time.DayOfWeek.dayOfWeek(1) == Some(Time.DayOfWeek.Monday)
 
     @test
     def dayOfWeek02(): Bool = 
-        Time/DayOfWeek.dayOfWeek(0) == None
+        Time.DayOfWeek.dayOfWeek(0) == None
 
     /////////////////////////////////////////////////////////////////////////////
     // fromLocalDate                                                           //
@@ -68,13 +68,13 @@ namespace TestDayOfWeek {
 
     @test
     def fromLocalDate01(): Bool = 
-        let date = Time/LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 1});
-        Time/DayOfWeek.fromLocalDate(date) == Time/DayOfWeek.Sunday
+        let date = Time.LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 1});
+        Time.DayOfWeek.fromLocalDate(date) == Time.DayOfWeek.Sunday
 
     @test
     def fromLocalDate02(): Bool =
-        let date = Time/LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 2});
-        Time/DayOfWeek.fromLocalDate(date) == Time/DayOfWeek.Monday
+        let date = Time.LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 2});
+        Time.DayOfWeek.fromLocalDate(date) == Time.DayOfWeek.Monday
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -83,8 +83,8 @@ namespace TestDayOfWeek {
 
     @test
     def getValue01(): Int32 \ IO =         
-        let dow = Time/DayOfWeek.Monday;
-        let i = Time/DayOfWeek.getValue(dow);
+        let dow = Time.DayOfWeek.Monday;
+        let i = Time.DayOfWeek.getValue(dow);
         println("DayOfWeek.dayOfWeek(): ${i}");
         i
 
@@ -93,7 +93,7 @@ namespace TestDayOfWeek {
     /////////////////////////////////////////////////////////////////////////////
     
     pub def getDisplayName01(): Bool \ IO =         
-        Time/DayOfWeek.getDisplayName(Time/Format/TextStyle.Full, Interop/Util/Locale.getDefault(), Time/DayOfWeek.Monday) != ""
+        Time.DayOfWeek.getDisplayName(Time.Format.TextStyle.Full, Interop.Util.Locale.getDefault(), Time.DayOfWeek.Monday) != ""
 
 
 }

@@ -15,7 +15,7 @@
  */
 
 
-namespace Time {
+mod Time {
 
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
@@ -50,7 +50,7 @@ namespace Time {
             hashCode(x1)
     }
 
-    instance Interop/Flix.Marshal[ZoneId] {
+    instance Interop.Flix.Marshal[ZoneId] {
         pub def toJavaObject(x: ZoneId): ##java.lang.Object =
             let ZoneId(x1) = x;
             checked_cast(x1)
@@ -61,16 +61,16 @@ namespace Time {
 
 }
 
-namespace Time/ZoneId {
+mod Time.ZoneId {
 
-    use Interop/Util.Locale
+    use Interop.Util.Locale
 
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
     
-    use Time/Format.TextStyle
-    use Time/Zone.ZoneRules
-    use Time/Zone.ZoneRules.{ZoneRules}
+    use Time.Format.TextStyle
+    use Time.Zone.ZoneRules
+    use Time.Zone.ZoneRules.{ZoneRules}
     use Time.OffsetDateTime
     use Time.OffsetTime
     use Time.ZoneOffset
@@ -96,7 +96,7 @@ namespace Time/ZoneId {
     pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] =
         Result.tryCatch(_ -> {
             import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId \ {};
-            let jmap = Interop/Util/MapZ.fromFlixMapViaHashMapHH(aliases);
+            let jmap = Interop.Util.MapZ.fromFlixMapViaHashMapHH(aliases);
             ZoneId(of(zoneId.zoneId, jmap))
         })
 
@@ -139,24 +139,24 @@ namespace Time/ZoneId {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetTime(x: OffsetTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor))
 
 
     /// ## ZoneId functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
         import java.time.ZoneId.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let style1 = Time/Format/TextStyle.marshal(style);
-        let locale1 = Interop/Util/Locale.getHH(locale);
+        let style1 = Time.Format.TextStyle.marshal(style);
+        let locale1 = Interop.Util.Locale.getHH(locale);
         let ZoneId(z1) = z;
         getDisplayName(z1, style1, locale1)
 
@@ -171,7 +171,7 @@ namespace Time/ZoneId {
     pub def getAvailableZoneIds(): Set[String] \ IO =
         import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set \ IO;
         try {
-            getAvailableZoneIds()  |> Interop/Util/SetZ.wrapHH(Static) |> Interop/Util/SetZ.toFlixSet
+            getAvailableZoneIds()  |> Interop.Util.SetZ.wrapHH(Static) |> Interop.Util.SetZ.toFlixSet
         } catch {
             case _: ##java.lang.Exception => Set.empty()
         }

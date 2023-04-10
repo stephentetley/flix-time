@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time/Temporal {
+mod Time.Temporal {
 
     /// Interface...
 
@@ -27,10 +27,10 @@ namespace Time/Temporal {
 
 }
 
-namespace Time/Temporal/TemporalField {
+mod Time.Temporal.TemporalField {
 
-    use Time/Temporal.TemporalField
-    use Time/Temporal.TemporalField.{TemporalField}
+    use Time.Temporal.TemporalField
+    use Time.Temporal.TemporalField.{TemporalField}
 
     pub def getHH(x: TemporalField): ##java.time.temporal.TemporalField = 
         let TemporalField(x1) = x;

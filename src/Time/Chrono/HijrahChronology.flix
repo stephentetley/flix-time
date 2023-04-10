@@ -14,34 +14,34 @@
  * limitations under the License.
  */
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
-    use Time/Chrono.HijrahChronology
-    use Time/Chrono.HijrahChronology.{HijrahChronology}
-    use Interop/Time/Chrono.AbstractChronology
-    use Interop/Time/Chrono.AbstractChronology.{AbstractChronology}
-    use Interop/Time/Chrono.Chronology
-    use Interop/Time/Chrono.Chronology.{Chronology}
+    use Time.Chrono.HijrahChronology
+    use Time.Chrono.HijrahChronology.{HijrahChronology}
+    use Interop.Time.Chrono.AbstractChronology
+    use Interop.Time.Chrono.AbstractChronology.{AbstractChronology}
+    use Interop.Time.Chrono.Chronology
+    use Interop.Time.Chrono.Chronology.{Chronology}
 
     pub enum HijrahChronology(##java.time.chrono.HijrahChronology)
 
     instance ToString[HijrahChronology] {
         pub def toString(x: HijrahChronology): String =
-            Time/Chrono/HijrahChronology.toString(x)
+            Time.Chrono.HijrahChronology.toString(x)
     }
 
     instance Eq[HijrahChronology] {
         pub def eq(x: HijrahChronology, y: HijrahChronology): Bool =
-            Time/Chrono/HijrahChronology.equals(x, y)
+            Time.Chrono.HijrahChronology.equals(x, y)
     }
 
     instance Order[HijrahChronology] {
         pub def compare(x: HijrahChronology, y: HijrahChronology): Comparison =
-            Time/Chrono/HijrahChronology.compare(x, y)
+            Time.Chrono.HijrahChronology.compare(x, y)
     }
 
 
-    instance Interop/Flix.Marshal[HijrahChronology] {
+    instance Interop.Flix.Marshal[HijrahChronology] {
         pub def toJavaObject(x: HijrahChronology): ##java.lang.Object =
             let HijrahChronology(x1) = x;
             checked_cast(x1)
@@ -51,7 +51,7 @@ namespace Time/Chrono {
     }
 
 
-    instance Interop/Time/Chrono.ImpChronology[HijrahChronology] {
+    instance Interop.Time.Chrono.ImpChronology[HijrahChronology] {
         pub def toChronology(x: HijrahChronology): Chronology = 
             let HijrahChronology(x1) = x;
             Chronology(unchecked_cast(x1 as ##java.time.chrono.Chronology))
@@ -61,7 +61,7 @@ namespace Time/Chrono {
             HijrahChronology(unchecked_cast(x1 as ##java.time.chrono.HijrahChronology))
     }
 
-    instance Interop/Time/Chrono.SubAbstractChronology[HijrahChronology] {
+    instance Interop.Time.Chrono.SubAbstractChronology[HijrahChronology] {
         pub def toAbstractChronology(x: HijrahChronology): AbstractChronology = 
             let HijrahChronology(x1) = x;
             AbstractChronology(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
@@ -74,23 +74,23 @@ namespace Time/Chrono {
 }
 
 
-namespace Time/Chrono/HijrahChronology {
+mod Time.Chrono.HijrahChronology {
 
-    use Time/Chrono.HijrahChronology
-    use Time/Chrono.HijrahChronology.{HijrahChronology}
-    use Time/Chrono.HijrahDate
-    use Time/Chrono.HijrahDate.{HijrahDate}
-    use Time/Chrono.HijrahEra
-    use Time/Chrono.Era.{Era}
-    use Time/Format.ResolverStyle
-    use Time/Format.TextStyle
+    use Time.Chrono.HijrahChronology
+    use Time.Chrono.HijrahChronology.{HijrahChronology}
+    use Time.Chrono.HijrahDate
+    use Time.Chrono.HijrahDate.{HijrahDate}
+    use Time.Chrono.HijrahEra
+    use Time.Chrono.Era.{Era}
+    use Time.Format.ResolverStyle
+    use Time.Format.TextStyle
     use Time.Clock
     use Time.Clock.{Clock}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
     
-    use Interop/Util.Locale
+    use Interop.Util.Locale
 
     pub def getHijrahChronology(x: HijrahChronology): ##java.time.chrono.HijrahChronology = 
         let HijrahChronology(x1) = x;
@@ -111,7 +111,7 @@ namespace Time/Chrono/HijrahChronology {
                         x: HijrahChronology): HijrahDate =
         import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
-        let era1 = Time/Chrono/ImplementsEra.toEra(r.era) |> Time/Chrono/Era.getHH;
+        let era1 = Time.Chrono.ImplementsEra.toEra(r.era) |> Time.Chrono.Era.getHH;
         HijrahDate(date(x1, era1, r.yearOfEra, r.month, r.dayOfMonth))
 
 
@@ -143,23 +143,23 @@ namespace Time/Chrono/HijrahChronology {
         })
 
     pub def toString(x: HijrahChronology): String =
-        Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x) 
-            |> Interop/Time/Chrono/AbstractChronology.toString
+        Interop.Time.Chrono.SubAbstractChronology.toAbstractChronology(x) 
+            |> Interop.Time.Chrono.AbstractChronology.toString
             
     pub def equals(x: HijrahChronology, y: HijrahChronology): Bool =
-        let x1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x);
-        let y1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(y);
-        Interop/Time/Chrono/AbstractChronology.equals(x1, y1)
+        let x1 = Interop.Time.Chrono.SubAbstractChronology.toAbstractChronology(x);
+        let y1 = Interop.Time.Chrono.SubAbstractChronology.toAbstractChronology(y);
+        Interop.Time.Chrono.AbstractChronology.equals(x1, y1)
 
     pub def compare(x: HijrahChronology, y: HijrahChronology): Comparison =
-        let x1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(x);
-        let y1 = Interop/Time/Chrono.SubAbstractChronology.toAbstractChronology(y);
-        Interop/Time/Chrono/AbstractChronology.compareTo(x1, y1) |> Comparison.fromInt32
+        let x1 = Interop.Time.Chrono.SubAbstractChronology.toAbstractChronology(x);
+        let y1 = Interop.Time.Chrono.SubAbstractChronology.toAbstractChronology(y);
+        Interop.Time.Chrono.AbstractChronology.compareTo(x1, y1) |> Comparison.fromInt32
 
 
     pub def getDisplayName(sty: TextStyle, loc: Locale, x: HijrahChronology): String = 
-        Interop/Time/Chrono.ImpChronology.toChronology(x)
-            |> Interop/Time/Chrono/Chronology.getDisplayName(sty, loc)
+        Interop.Time.Chrono.ImpChronology.toChronology(x)
+            |> Interop.Time.Chrono.Chronology.getDisplayName(sty, loc)
 
     pub def getCalendarType(x: HijrahChronology): String = 
         import java.time.chrono.HijrahChronology.getCalendarType(): String \ {};
@@ -169,12 +169,12 @@ namespace Time/Chrono/HijrahChronology {
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra = 
         import java.time.chrono.HijrahChronology.eraOf(Int32): ##java.time.chrono.HijrahEra \ {};
         let HijrahChronology(x1) = x;
-        Time/Chrono/HijrahEra.unmarshal(eraOf(x1, i))
+        Time.Chrono.HijrahEra.unmarshal(eraOf(x1, i))
 
     pub def eras(x: HijrahChronology): List[HijrahEra] = region r {
         import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};
         let HijrahChronology(x1) = x;
-        eras(x1) |> Interop/Util/ListZ.wrapHH(r) |> Interop/Util/ListZ.toFlixList
+        eras(x1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixList
     }
 
     pub def getId(x: HijrahChronology): String = 
@@ -191,17 +191,17 @@ namespace Time/Chrono/HijrahChronology {
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 = 
         import java.time.chrono.HijrahChronology.prolepticYear(##java.time.chrono.Era, Int32): Int32 \ {};
         let HijrahChronology(x1) = x;
-        let Era(era1) = Time/Chrono/ImplementsEra.toEra(era);
+        let Era(era1) = Time.Chrono.ImplementsEra.toEra(era);
         prolepticYear(x1, era1, yearOfEra)
 
 
     /// pub def resolveDate(fieldValues: List[(a, Int64)], resolverStyle: ResolverStyle, x: HijrahChronology): HijrahDate with TemporalField[a] =
     ///     import java.time.chrono.HijrahChronology.resolveDate(##java.util.Map, ##java.time.format.ResolverStyle): ##java.time.chrono.HijrahDate \ {};
     ///     let x1 = getHijrahChronology(x);
-    ///     let resolverStyle1 = Time/Format/ResolverStyle.marshal(resolverStyle);
-    ///     let upcastKey = field -> Time/Temporal/TemporalField.marshalToNativeTemporalField(field) as ##java.lang.Object;
-    ///     let upcastVal = i -> Interop/Collections/... /Marshal.marshalInt64(i) as ##java.lang.Object;
-    ///     let fieldValues1 = Interop/Collections/... /Marshal.marshalAssocListToMap(upcastKey, upcastVal, fieldValues);
+    ///     let resolverStyle1 = Time.Format.ResolverStyle.marshal(resolverStyle);
+    ///     let upcastKey = field -> Time.Temporal.TemporalField.marshalToNativeTemporalField(field) as ##java.lang.Object;
+    ///     let upcastVal = i -> Interop.Collections/... /Marshal.marshalInt64(i) as ##java.lang.Object;
+    ///     let fieldValues1 = Interop.Collections/... /Marshal.marshalAssocListToMap(upcastKey, upcastVal, fieldValues);
     ///     HijrahDate(resolveDate(x1, fieldValues1, resolverStyle1))
 
 }

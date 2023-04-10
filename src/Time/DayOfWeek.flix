@@ -16,12 +16,12 @@
 
 
 
-namespace Time {
+mod Time {
 
     use Time.DayOfWeek
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
-    use Interop/Time/Temporal.TemporalAccessor
-    use Interop/Time/Temporal.TemporalAccessor.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor
+    use Interop.Time.Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A day of the week.
@@ -51,32 +51,32 @@ namespace Time {
         }
     }
 
-    instance Interop/Flix.Marshal[DayOfWeek] {
+    instance Interop.Flix.Marshal[DayOfWeek] {
         pub def toJavaObject(x: DayOfWeek): ##java.lang.Object =
-            let x1 = Time/DayOfWeek.marshal(x);
+            let x1 = Time.DayOfWeek.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): DayOfWeek = 
             let x1 = unchecked_cast(o as ##java.time.DayOfWeek);
-            Time/DayOfWeek.unmarshal(x1)
+            Time.DayOfWeek.unmarshal(x1)
     }
 
 }
 
-namespace Time/DayOfWeek {
+mod Time.DayOfWeek {
 
 
     use Time.DayOfWeek
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
 
-    use Time/Format.TextStyle
+    use Time.Format.TextStyle
     use Time.LocalDate
     use Time.LocalDateTime
     use Time.OffsetDateTime
     use Time.ZonedDateTime
 
-    use Interop/Time/Temporal.TemporalAccessor
-    use Interop/Util.Locale
+    use Interop.Time.Temporal.TemporalAccessor
+    use Interop.Util.Locale
 
     /// 1 (Monday) to 7 (Sunday)
     pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
@@ -141,7 +141,7 @@ namespace Time/DayOfWeek {
     def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
         import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek \ {} as fromTA;
         try {
-            Interop/Time/Temporal/TemporalAccessor.getHH(x) |> fromTA |> unmarshal
+            Interop.Time.Temporal.TemporalAccessor.getHH(x) |> fromTA |> unmarshal
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
@@ -149,19 +149,19 @@ namespace Time/DayOfWeek {
         }
     
     pub def fromLocalDate(x: LocalDate): DayOfWeek = 
-        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
-        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
-        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
-        Interop/Time/Temporal/ImpTemporalAccessor.toTemporalAccessor(x)
+        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
 
@@ -170,8 +170,8 @@ namespace Time/DayOfWeek {
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshal(x);
-        let s1 = Time/Format/TextStyle.marshal(style);
-        let locale1 = Interop/Util/Locale.getHH(locale);
+        let s1 = Time.Format.TextStyle.marshal(style);
+        let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, s1, locale1)
 
 

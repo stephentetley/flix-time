@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Interop/Time/Chrono {
+mod Interop.Time.Chrono {
 
     /// Abstract Class...
 
@@ -27,10 +27,10 @@ namespace Interop/Time/Chrono {
 
 }
 
-namespace Interop/Time/Chrono/AbstractChronology {
+mod Interop.Time.Chrono.AbstractChronology {
 
-    use Interop/Time/Chrono.AbstractChronology
-    use Interop/Time/Chrono.AbstractChronology.{AbstractChronology}
+    use Interop.Time.Chrono.AbstractChronology
+    use Interop.Time.Chrono.AbstractChronology.{AbstractChronology}
 
     pub def toString(x: AbstractChronology): String =
         import java.time.chrono.AbstractChronology.toString(): String \ {};

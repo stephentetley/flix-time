@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time/Temporal {
+mod Time.Temporal {
 
     /// Interface...
 
@@ -27,10 +27,10 @@ namespace Time/Temporal {
 
 }
 
-namespace Time/Temporal/TemporalUnit {
+mod Time.Temporal.TemporalUnit {
 
-    use Time/Temporal.TemporalUnit
-    use Time/Temporal.TemporalUnit.{TemporalUnit}
+    use Time.Temporal.TemporalUnit
+    use Time.Temporal.TemporalUnit.{TemporalUnit}
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
 

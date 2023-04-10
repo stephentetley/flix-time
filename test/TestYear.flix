@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace TestYear {
+mod TestYear {
 
     use ToString.toString
     use LowerBound.minValue
@@ -26,7 +26,7 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String = toString(Time/Year.year(isoYear = 1970))
+    def toString01(): String = toString(Time.Year.year(isoYear = 1970))
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -34,41 +34,41 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def less01(): Bool = Time/Year.year(isoYear = 2020) < Time/Year.year(isoYear = 2021)
+    def less01(): Bool = Time.Year.year(isoYear = 2020) < Time.Year.year(isoYear = 2021)
 
     /////////////////////////////////////////////////////////////////////////////
     // lessEq                                                                  //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def lessEq01(): Bool = Time/Year.year(isoYear = 2020) <= Time/Year.year(isoYear = 2021)
+    def lessEq01(): Bool = Time.Year.year(isoYear = 2020) <= Time.Year.year(isoYear = 2021)
 
     /////////////////////////////////////////////////////////////////////////////
     // greater                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def greater01(): Bool = Time/Year.year(isoYear = 2021) > Time/Year.year(isoYear = 2020)
+    def greater01(): Bool = Time.Year.year(isoYear = 2021) > Time.Year.year(isoYear = 2020)
 
     /////////////////////////////////////////////////////////////////////////////
     // greaterEq                                                               //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def greaterEq01(): Bool = Time/Year.year(isoYear = 2021) >= Time/Year.year(isoYear = 2020)
+    def greaterEq01(): Bool = Time.Year.year(isoYear = 2021) >= Time.Year.year(isoYear = 2020)
 
     /////////////////////////////////////////////////////////////////////////////
     // compare                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def compare01(): Bool = Order.compare(Time/Year.year(isoYear = 2020), Time/Year.year(isoYear = 2021)) == LessThan
+    def compare01(): Bool = Order.compare(Time.Year.year(isoYear = 2020), Time.Year.year(isoYear = 2021)) == LessThan
 
     @test
-    def compare02(): Bool = Order.compare(Time/Year.year(isoYear = 2020), Time/Year.year(isoYear = 2020)) == EqualTo
+    def compare02(): Bool = Order.compare(Time.Year.year(isoYear = 2020), Time.Year.year(isoYear = 2020)) == EqualTo
 
     @test
-    def compare03(): Bool = Order.compare(Time/Year.year(isoYear = 2021), Time/Year.year(isoYear = 2020)) == GreaterThan
+    def compare03(): Bool = Order.compare(Time.Year.year(isoYear = 2021), Time.Year.year(isoYear = 2020)) == GreaterThan
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -77,9 +77,9 @@ namespace TestYear {
 
     @test
     def until01(): Int64 \ IO = 
-        let t1 = Time/Year.year(isoYear = 2020);
-        let t2 = Time/Year.year(isoYear = 2028);
-        let diff = Time/Year.yearsUntil({ start = t1, end = t2 });
+        let t1 = Time.Year.year(isoYear = 2020);
+        let t2 = Time.Year.year(isoYear = 2028);
+        let diff = Time.Year.yearsUntil({ start = t1, end = t2 });
         println("Year.until01(): ${diff}");
         diff
 
@@ -88,8 +88,8 @@ namespace TestYear {
     /// /////////////////////////////////////////////////////////////////////////////
     /// @test
     /// def fromTemporalAccessor01(): Result[String, Time.Year] \ IO = 
-    ///     let t1 = Time/Year.year(isoYear = 2020);
-    ///     let t2 = Time/Year.fromTemporalAccessor(t1);
+    ///     let t1 = Time.Year.year(isoYear = 2020);
+    ///     let t2 = Time.Year.fromTemporalAccessor(t1);
     ///     println("fromTemporalAccessor01(): ${t2}");
     ///     t2
 
@@ -98,9 +98,9 @@ namespace TestYear {
     /////////////////////////////////////////////////////////////////////////////
     /// @test
     /// def withTemporalAdjuster01(): Time.Year \ IO = 
-    ///     let t1 = Time/Year.year(isoYear = 2020);
-    ///     let t2 = Time/Year.year(isoYear = 2028);
-    ///     let t3 = Time/Year.withTemporalAdjuster(t2, t1);
+    ///     let t1 = Time.Year.year(isoYear = 2020);
+    ///     let t2 = Time.Year.year(isoYear = 2028);
+    ///     let t3 = Time.Year.withTemporalAdjuster(t2, t1);
     ///     println("withTemporalAdjuster01(): ${t3}");
     ///     t3
 }

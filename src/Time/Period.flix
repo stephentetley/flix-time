@@ -15,7 +15,7 @@
  */
 
 
-namespace Time {
+mod Time {
 
 
     use Time.Period
@@ -95,11 +95,11 @@ namespace Time {
 
     /// Addition
     instance Monoid[Period] {
-        pub def empty(): Period = Time/Period.zero()
+        pub def empty(): Period = Time.Period.zero()
     }
 
 
-    instance Interop/Flix.Marshal[Period] {
+    instance Interop.Flix.Marshal[Period] {
         pub def toJavaObject(x: Period): ##java.lang.Object =
             let Period(x1) = x;
             checked_cast(x1)
@@ -110,7 +110,7 @@ namespace Time {
     
 }
 
-namespace Time/Period {
+mod Time.Period {
 
     use Time.Period
     use Time.Period.{Period}

@@ -15,7 +15,7 @@
  */
 
 
-namespace Time {
+mod Time {
 
     use Time.Clock
     use Time.Clock.{Clock}
@@ -30,7 +30,7 @@ namespace Time {
     ///
     pub enum Clock(##java.time.Clock)
 
-    instance Interop/Flix.Marshal[Clock] {
+    instance Interop.Flix.Marshal[Clock] {
         pub def toJavaObject(x: Clock): ##java.lang.Object =
             let Clock(x1) = x;
             checked_cast(x1)
@@ -41,7 +41,7 @@ namespace Time {
 
 }
 
-namespace Time/Clock {
+mod Time.Clock {
 
     use Time.Clock
     use Time.Clock.{Clock}
@@ -140,7 +140,7 @@ namespace Time/Clock {
     pub def withZone(zone: ZoneId, c: Clock): Clock \ IO =
         import java.time.Clock.withZone(##java.time.ZoneId): ##java.time.Clock \ IO;
         let Clock(c1) = c;
-        Clock(withZone(c1, Time/ZoneId.getZoneId(zone)))
+        Clock(withZone(c1, Time.ZoneId.getZoneId(zone)))
 
     
 }

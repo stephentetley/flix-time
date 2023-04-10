@@ -16,17 +16,17 @@
 
 
 
-namespace Time/Temporal {
+mod Time.Temporal {
 
-    use Time/Temporal.ChronoField
-    use Time/Temporal.ChronoField.{NanoOfSecond, NanoOfDay, MicroOfSecond, MicroOfDay, 
+    use Time.Temporal.ChronoField
+    use Time.Temporal.ChronoField.{NanoOfSecond, NanoOfDay, MicroOfSecond, MicroOfDay, 
         MilliOfSecond, MilliOfDay, SecondOfMinute, SecondOfDay, MinuteOfHour, MinuteOfDay, 
         HourOfAmPm, ClockHourOfAmPm, HourOfDay, ClockHourOfDay, AmPmOfDay, DayOfWeek, 
         AlignedDayOfWeekInMonth, AlignedDayOfWeekInYear, DayOfMonth, DayOfYear, EpochDay, 
         AlignedWeekOfMonth, AlignedWeekOfYear, MonthOfYear, ProlepticMonth, YearOfEra, 
         Year, Era, InstantSeconds, OffsetSeconds}
-    use Time/Temporal.TemporalField
-    use Time/Temporal.TemporalField.{TemporalField}
+    use Time.Temporal.TemporalField
+    use Time.Temporal.TemporalField.{TemporalField}
 
     ///
     /// ChronoField
@@ -100,33 +100,33 @@ namespace Time/Temporal {
         }
     }
 
-    instance Interop/Flix.Marshal[ChronoField] {
+    instance Interop.Flix.Marshal[ChronoField] {
         pub def toJavaObject(x: ChronoField): ##java.lang.Object =
-            let x1 = Time/Temporal/ChronoField.marshal(x);
+            let x1 = Time.Temporal.ChronoField.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ChronoField = 
             let x1 = unchecked_cast(o as ##java.time.temporal.ChronoField);
-            Time/Temporal/ChronoField.unmarshal(x1)
+            Time.Temporal.ChronoField.unmarshal(x1)
     }
 
-    instance Time/Temporal.ImplementsTemporalField[ChronoField] {
+    instance Time.Temporal.ImplementsTemporalField[ChronoField] {
         pub def toTemporalField(x: ChronoField): TemporalField = 
-            let x1 = Time/Temporal/ChronoField.marshal(x);
+            let x1 = Time.Temporal.ChronoField.marshal(x);
             TemporalField(unchecked_cast(x1 as ##java.time.temporal.TemporalField))
 
         pub def fromTemporalField(x: TemporalField): ChronoField = 
             let TemporalField(x1) = x;
-            Time/Temporal/ChronoField.unmarshal(unchecked_cast(x1 as ##java.time.temporal.ChronoField))
+            Time.Temporal.ChronoField.unmarshal(unchecked_cast(x1 as ##java.time.temporal.ChronoField))
     }
 
 
 }
 
-namespace Time/Temporal/ChronoField {
+mod Time.Temporal.ChronoField {
 
-    use Time/Temporal.ChronoField
-    use Time/Temporal.ChronoField.{NanoOfSecond, NanoOfDay, MicroOfSecond, MicroOfDay, 
+    use Time.Temporal.ChronoField
+    use Time.Temporal.ChronoField.{NanoOfSecond, NanoOfDay, MicroOfSecond, MicroOfDay, 
         MilliOfSecond, MilliOfDay, SecondOfMinute, SecondOfDay, MinuteOfHour, MinuteOfDay, 
         HourOfAmPm, ClockHourOfAmPm, HourOfDay, ClockHourOfDay, AmPmOfDay, DayOfWeek, 
         AlignedDayOfWeekInMonth, AlignedDayOfWeekInYear, DayOfMonth, DayOfYear, EpochDay, 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
 
     pub enum MinguoEra with Eq, Order, ToString, Hash, Boxable {
@@ -25,13 +25,13 @@ namespace Time/Chrono {
 
 }
 
-namespace Time/Chrono/MinguoEra {
+mod Time.Chrono.MinguoEra {
 
-    use Interop/Util.Locale;
+    use Interop.Util.Locale;
 
-    use Time/Chrono.MinguoEra;
-    use Time/Chrono.MinguoEra.{BEFORE_ROC, ROC};
-    use Time/Format.TextStyle;
+    use Time.Chrono.MinguoEra;
+    use Time.Chrono.MinguoEra.{BEFORE_ROC, ROC};
+    use Time.Format.TextStyle;
 
     pub def marshal(x: MinguoEra): ##java.time.chrono.MinguoEra = 
         import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
@@ -65,8 +65,8 @@ namespace Time/Chrono/MinguoEra {
     pub def getDisplayName(style: TextStyle, locale: Locale, x: MinguoEra): String = 
         import java.time.chrono.MinguoEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshal(x);
-        let style1 = Time/Format/TextStyle.marshal(style);
-        let locale1 = Interop/Util/Locale.getHH(locale);
+        let style1 = Time.Format.TextStyle.marshal(style);
+        let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)
 
 

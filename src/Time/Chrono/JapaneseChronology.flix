@@ -15,10 +15,10 @@
  */
 
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
-    use Time/Chrono.JapaneseChronology
-    use Time/Chrono.JapaneseChronology.{JapaneseChronology}
+    use Time.Chrono.JapaneseChronology
+    use Time.Chrono.JapaneseChronology.{JapaneseChronology}
 
     pub enum JapaneseChronology(##java.time.chrono.JapaneseChronology)
 
@@ -32,14 +32,14 @@ namespace Time/Chrono {
 
 /// TODO should provide functions from the TemporalUnit interface
 
-namespace Time/Chrono/JapaneseChronology {
+mod Time.Chrono.JapaneseChronology {
 
-    use Time/Chrono.JapaneseChronology
-    use Time/Chrono.JapaneseChronology.{JapaneseChronology}
-    use Time/Chrono.JapaneseDate
-    use Time/Chrono.JapaneseDate.{JapaneseDate}
-    use Time/Chrono.JapaneseEra
-    use Time/Chrono.JapaneseEra.{JapaneseEra}
+    use Time.Chrono.JapaneseChronology
+    use Time.Chrono.JapaneseChronology.{JapaneseChronology}
+    use Time.Chrono.JapaneseDate
+    use Time.Chrono.JapaneseDate.{JapaneseDate}
+    use Time.Chrono.JapaneseEra
+    use Time.Chrono.JapaneseEra.{JapaneseEra}
     use Time.Clock
     use Time.Clock.{Clock}
     use Time.ZoneId

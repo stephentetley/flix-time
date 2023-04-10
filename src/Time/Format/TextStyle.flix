@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time/Format {
+mod Time.Format {
 
     pub enum TextStyle with Eq, Order, ToString, Hash, Boxable {
         case Full
@@ -26,22 +26,22 @@ namespace Time/Format {
     }
 
 
-    instance Interop/Flix.Marshal[TextStyle] {
+    instance Interop.Flix.Marshal[TextStyle] {
         pub def toJavaObject(x: TextStyle): ##java.lang.Object =
-            let x1 = Time/Format/TextStyle.marshal(x);
+            let x1 = Time.Format.TextStyle.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): TextStyle = 
             let x1 = unchecked_cast(o as ##java.time.format.TextStyle);
-            Time/Format/TextStyle.unmarshal(x1)
+            Time.Format.TextStyle.unmarshal(x1)
     }
 
 }
 
-namespace Time/Format/TextStyle {
+mod Time.Format.TextStyle {
 
-    use Time/Format.TextStyle;
-    use Time/Format.TextStyle.{Full, FullStandalone, Narrow, NarrowStandalone,
+    use Time.Format.TextStyle;
+    use Time.Format.TextStyle.{Full, FullStandalone, Narrow, NarrowStandalone,
             Short, ShortStandalone};
 
 

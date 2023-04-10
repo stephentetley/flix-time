@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time/Chrono {
+mod Time.Chrono {
 
     /// Interface...
 
@@ -27,12 +27,12 @@ namespace Time/Chrono {
 
 }
 
-namespace Time/Chrono/Era {
+mod Time.Chrono.Era {
 
-    use Time/Chrono.Era
-    use Time/Chrono.Era.{Era}
-    use Time/Format.TextStyle
-    use Interop/Util.Locale
+    use Time.Chrono.Era
+    use Time.Chrono.Era.{Era}
+    use Time.Format.TextStyle
+    use Interop.Util.Locale
 
     pub def getHH(x: Era): ##java.time.chrono.Era = 
         let Era(x1) = x;
@@ -40,8 +40,8 @@ namespace Time/Chrono/Era {
 
     pub def getDisplayName(style: TextStyle, locale: Locale, e: Era): String =
         import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let style1 = Time/Format/TextStyle.marshal(style);
-        let locale1 = Interop/Util/Locale.getHH(locale);
+        let style1 = Time.Format.TextStyle.marshal(style);
+        let locale1 = Interop.Util.Locale.getHH(locale);
         let Era(e1) = e;
         getDisplayName(e1, style1, locale1)
 

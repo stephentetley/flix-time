@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
- namespace Time/Temporal {
+ mod Time.Temporal {
 
-    use Time/Temporal.ValueRange
-    use Time/Temporal.ValueRange.{ValueRange}
+    use Time.Temporal.ValueRange
+    use Time.Temporal.ValueRange.{ValueRange}
     
     /// Final Class
 
     pub enum ValueRange(##java.time.temporal.ValueRange)
 
 
-    instance Interop/Flix.Marshal[ValueRange] {
+    instance Interop.Flix.Marshal[ValueRange] {
         pub def toJavaObject(x: ValueRange): ##java.lang.Object =
             let ValueRange(x1) = x;
             checked_cast(x1)
@@ -35,10 +35,10 @@
 
 }
 
-namespace Time/Temporal/ValueRange {
+mod Time.Temporal.ValueRange {
 
-    use Time/Temporal.ValueRange
-    use Time/Temporal.ValueRange.{ValueRange}
+    use Time.Temporal.ValueRange
+    use Time.Temporal.ValueRange.{ValueRange}
 
     /// ## Unwrap
 

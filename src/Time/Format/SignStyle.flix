@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time/Format {
+mod Time.Format {
 
     pub enum SignStyle with Eq, Order, ToString, Hash, Boxable {
         case Always
@@ -24,22 +24,22 @@ namespace Time/Format {
         case NonNegative
     }
 
-    instance Interop/Flix.Marshal[SignStyle] {
+    instance Interop.Flix.Marshal[SignStyle] {
         pub def toJavaObject(x: SignStyle): ##java.lang.Object =
-            let x1 = Time/Format/SignStyle.marshal(x);
+            let x1 = Time.Format.SignStyle.marshal(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): SignStyle = 
             let x1 = unchecked_cast(o as ##java.time.format.SignStyle);
-            Time/Format/SignStyle.unmarshal(x1)
+            Time.Format.SignStyle.unmarshal(x1)
     }
 
 }
 
-namespace Time/Format/SignStyle {
+mod Time.Format.SignStyle {
 
-    use Time/Format.SignStyle;
-    use Time/Format.SignStyle.{Always, ExceedsPad, Never, Normal, NonNegative};
+    use Time.Format.SignStyle;
+    use Time.Format.SignStyle.{Always, ExceedsPad, Never, Normal, NonNegative};
     
 
 

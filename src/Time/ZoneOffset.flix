@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Time {
+mod Time {
 
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
@@ -60,7 +60,7 @@ namespace Time {
 
     instance Boxable[ZoneOffset]
 
-    instance Interop/Flix.Marshal[ZoneOffset] {
+    instance Interop.Flix.Marshal[ZoneOffset] {
         pub def toJavaObject(x: ZoneOffset): ##java.lang.Object =
             let ZoneOffset(x1) = x;
             checked_cast(x1)
@@ -71,14 +71,14 @@ namespace Time {
 
 }
 
-namespace Time/ZoneOffset {
+mod Time.ZoneOffset {
 
 
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
 
-    use Time/Zone.ZoneRules
-    use Time/Zone.ZoneRules.{ZoneRules}
+    use Time.Zone.ZoneRules
+    use Time.Zone.ZoneRules.{ZoneRules}
     use Time.OffsetDateTime
     use Time.OffsetTime
     use Time.ZonedDateTime
@@ -136,13 +136,13 @@ namespace Time/ZoneOffset {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
             
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time/ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
     
     /// ## ZoneOffset functions
 

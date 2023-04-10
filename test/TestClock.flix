@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace TestClock {
+mod TestClock {
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ namespace TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String \ IO = Time/Clock.toString(Time/Clock.systemClockDefaultZone())
+    def toString01(): String \ IO = Time.Clock.toString(Time.Clock.systemClockDefaultZone())
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -31,11 +31,11 @@ namespace TestClock {
 
     @test
     def fixedClock01(): Bool \ IO = 
-        let i = Time/InstantZ.now();
-        let z = Time/ZoneId.utc();
-        let c = Time/Clock.fixedClock(i, z);
-        let ci1 = Time/Clock.instant(c);
-        let ci2 = Time/Clock.instant(c);
+        let i = Time.InstantZ.now();
+        let z = Time.ZoneId.utc();
+        let c = Time.Clock.fixedClock(i, z);
+        let ci1 = Time.Clock.instant(c);
+        let ci2 = Time.Clock.instant(c);
         ci1 == ci2
         
     /////////////////////////////////////////////////////////////////////////////
@@ -44,8 +44,8 @@ namespace TestClock {
 
     @test
     def systemClock01(): Bool \ IO = 
-        let c = Time/Clock.systemClock(Time/ZoneId.utc());
-        Time/Clock.millis(c) > 0i64
+        let c = Time.Clock.systemClock(Time.ZoneId.utc());
+        Time.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // systemClockDefaultZone                                                  //
@@ -53,8 +53,8 @@ namespace TestClock {
 
     @test
     def systemClockDefaultZone01(): Bool \ IO = 
-        let c = Time/Clock.systemClockDefaultZone();
-        Time/Clock.millis(c) > 0i64
+        let c = Time.Clock.systemClockDefaultZone();
+        Time.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // systemClockUTC                                                          //
@@ -62,8 +62,8 @@ namespace TestClock {
 
     @test
     def systemClockUTC01(): Bool \ IO = 
-        let c = Time/Clock.systemClockUTC();
-        Time/Clock.millis(c) > 0i64
+        let c = Time.Clock.systemClockUTC();
+        Time.Clock.millis(c) > 0i64
        
     /////////////////////////////////////////////////////////////////////////////
     // offset                                                                  //
@@ -71,8 +71,8 @@ namespace TestClock {
 
     @test
     def offset01(): Bool \ IO = 
-        let c = Time/Clock.offset(Time/DurationZ.zero(), Time/Clock.systemClockUTC());
-        Time/Clock.millis(c) > 0i64
+        let c = Time.Clock.offset(Time.DurationZ.zero(), Time.Clock.systemClockUTC());
+        Time.Clock.millis(c) > 0i64
        
     /////////////////////////////////////////////////////////////////////////////
     // tick                                                                    //
@@ -80,8 +80,8 @@ namespace TestClock {
 
     @test
     def tick01(): Bool \ IO = 
-        let c = Time/Clock.tick(Time/DurationZ.zero(), Time/Clock.systemClockUTC());
-        Time/Clock.millis(c) > 0i64
+        let c = Time.Clock.tick(Time.DurationZ.zero(), Time.Clock.systemClockUTC());
+        Time.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // tickMillis                                                              //
@@ -89,8 +89,8 @@ namespace TestClock {
 
     @test
     def tickMillis01(): Bool \ IO = 
-        let c = Time/Clock.tickMillis(Time/ZoneId.utc());
-        Time/Clock.millis(c) > 0i64
+        let c = Time.Clock.tickMillis(Time.ZoneId.utc());
+        Time.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // tickSeconds                                                             //
@@ -98,8 +98,8 @@ namespace TestClock {
 
     @test
     def tickSeconds01(): Bool \ IO = 
-        let c = Time/Clock.tickSeconds(Time/ZoneId.utc());
-        Time/Clock.millis(c) > 0i64
+        let c = Time.Clock.tickSeconds(Time.ZoneId.utc());
+        Time.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // tickMinutes                                                             //
@@ -107,7 +107,7 @@ namespace TestClock {
 
     @test
     def tickMinutes01(): Bool \ IO = 
-        let c = Time/Clock.tickMinutes(Time/ZoneId.utc());
-        Time/Clock.millis(c) > 0i64
+        let c = Time.Clock.tickMinutes(Time.ZoneId.utc());
+        Time.Clock.millis(c) > 0i64
 
 }
