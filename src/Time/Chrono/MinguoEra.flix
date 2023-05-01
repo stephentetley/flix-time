@@ -17,7 +17,7 @@
 mod Time.Chrono {
 
 
-    pub enum MinguoEra with Eq, Order, ToString, Hash, Boxable {
+    pub enum MinguoEra with Eq, Order, ToString, Hash {
         case BEFORE_ROC
         case ROC
     }   

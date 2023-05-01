@@ -16,7 +16,7 @@
 
 mod Time.Format {
 
-    pub enum ResolverStyle with Eq, Order, ToString, Hash, Boxable {
+    pub enum ResolverStyle with Eq, Order, ToString, Hash {
         case Lenient
         case Smart
         case Strict

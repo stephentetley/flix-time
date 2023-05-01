@@ -58,8 +58,6 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Boxable[ZoneOffset]
-
     instance Interop.Flix.Marshal[ZoneOffset] {
         pub def toJavaObject(x: ZoneOffset): ##java.lang.Object =
             let ZoneOffset(x1) = x;

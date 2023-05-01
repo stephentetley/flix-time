@@ -75,8 +75,6 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Boxable[LocalTime]
-
     instance Interop.Flix.Marshal[LocalTime] {
         pub def toJavaObject(x: LocalTime): ##java.lang.Object =
             let LocalTime(x1) = x;

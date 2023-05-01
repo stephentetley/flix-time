@@ -79,7 +79,7 @@ mod Time.Zone.ZoneOffsetTransitionRule {
         let ZoneOffsetTransitionRule(x1) = x;
         x1
 
-    pub enum TimeDefinition with Eq, Order, ToString, Hash, Boxable {
+    pub enum TimeDefinition with Eq, Order, ToString, Hash {
         case Standard
         case UTC
         case Wall

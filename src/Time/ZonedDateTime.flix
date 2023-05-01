@@ -77,9 +77,6 @@ mod Time {
             compareTo(cx1, cy1) |> Comparison.fromInt32
     }
 
-
-    instance Boxable[ZonedDateTime]
-
     instance Interop.Flix.Marshal[ZonedDateTime] {
         pub def toJavaObject(x: ZonedDateTime): ##java.lang.Object =
             let ZonedDateTime(x1) = x;

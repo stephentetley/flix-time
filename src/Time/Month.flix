@@ -27,7 +27,7 @@ mod Time {
         October, November, December
     }
     
-    pub enum Month with Eq, Order, ToString, Hash, Boxable {
+    pub enum Month with Eq, Order, ToString, Hash {
         case January,
         case February,
         case March,

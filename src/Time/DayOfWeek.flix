@@ -28,7 +28,7 @@ mod Time {
     ///
     /// Days are reprepresented as an enum from Monday to Sunday.
     ///
-    pub enum DayOfWeek with Eq, Order, ToString, Hash, Boxable {
+    pub enum DayOfWeek with Eq, Order, ToString, Hash {
         case Monday
         case Tuesday
         case Wednesday

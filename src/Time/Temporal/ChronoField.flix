@@ -31,7 +31,7 @@ mod Time.Temporal {
     ///
     /// ChronoField
     ///
-    pub enum ChronoField with Eq, Order, ToString, Hash, Boxable {
+    pub enum ChronoField with Eq, Order, ToString, Hash {
         case NanoOfSecond
         case NanoOfDay
         case MicroOfSecond

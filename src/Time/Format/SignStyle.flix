@@ -16,7 +16,7 @@
 
 mod Time.Format {
 
-    pub enum SignStyle with Eq, Order, ToString, Hash, Boxable {
+    pub enum SignStyle with Eq, Order, ToString, Hash {
         case Always
         case ExceedsPad
         case Never

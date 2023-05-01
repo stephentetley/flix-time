@@ -27,7 +27,7 @@ mod Time.Temporal {
     ///
     /// ChronoUnit
     ///
-    pub enum ChronoUnit with Eq, Order, ToString, Hash, Boxable {
+    pub enum ChronoUnit with Eq, Order, ToString, Hash {
         case Nanos
         case Micros
         case Millis

@@ -16,7 +16,7 @@
 
 mod Time.Format {
 
-    pub enum TextStyle with Eq, Order, ToString, Hash, Boxable {
+    pub enum TextStyle with Eq, Order, ToString, Hash {
         case Full
         case FullStandalone
         case Narrow

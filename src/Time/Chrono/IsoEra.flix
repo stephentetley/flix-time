@@ -19,7 +19,7 @@ mod Time.Chrono {
     use Time.Chrono.Era
     use Time.Chrono.Era.{Era}
 
-    pub enum IsoEra with Eq, Order, ToString, Hash, Boxable {
+    pub enum IsoEra with Eq, Order, ToString, Hash {
         case BCE
         case CE
     }   

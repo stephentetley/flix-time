@@ -22,7 +22,7 @@ mod Time.Chrono {
     ///
     /// Enum / Java Enum
     ///
-    pub enum HijrahEra with Eq, Order, ToString, Boxable, Hash {
+    pub enum HijrahEra with Eq, Order, ToString, Hash {
         case AH
     }   
  

@@ -76,9 +76,6 @@ mod Time {
             compareTo(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate)) |> Comparison.fromInt32
     }
 
-
-    instance Boxable[LocalDate]
-
     instance Interop.Flix.Marshal[LocalDate] {
         pub def toJavaObject(x: LocalDate): ##java.lang.Object =
             let LocalDate(x1) = x;

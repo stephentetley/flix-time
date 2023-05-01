@@ -77,8 +77,6 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Boxable[DurationZ]
-
     instance Add[DurationZ] {
         pub def add(x: DurationZ, y: DurationZ): DurationZ =
             import java.time.Duration.plus(##java.time.Duration): ##java.time.Duration \ {};

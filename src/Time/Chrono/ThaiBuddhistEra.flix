@@ -17,7 +17,7 @@
 mod Time.Chrono {
 
 
-    pub enum ThaiBuddhistEra with Eq, Order, ToString, Hash, Boxable {
+    pub enum ThaiBuddhistEra with Eq, Order, ToString, Hash {
         case BEFORE_BE
         case BE
     }   

@@ -54,8 +54,6 @@ mod Time.Zone {
             let ZoneOffsetTransition(y1) = y;
             compareTo(x1, y1) |> Comparison.fromInt32
     }
-        
-    instance Boxable[ZoneOffsetTransition]
 
     instance Interop.Flix.Marshal[ZoneOffsetTransition] {
         pub def toJavaObject(x: ZoneOffsetTransition): ##java.lang.Object =
