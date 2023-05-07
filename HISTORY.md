@@ -1,4 +1,4 @@
-### (pending)
+### v0.2.2
    Updated dependencies.
 
 ### v0.2.1
