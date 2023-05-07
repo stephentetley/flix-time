@@ -1,3 +1,6 @@
+### (pending)
+   Updated dependencies.
+
 ### v0.2.1
    Updated dependencies.
    Removed `Boxable` instances.
