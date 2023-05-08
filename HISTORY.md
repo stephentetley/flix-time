@@ -1,3 +1,7 @@
+### v0.2.3
+   Updated dependencies.
+   Added `GradedError` instance to `DateTimeFormatterBuilder`.
+
 ### v0.2.2
    Updated dependencies.
 

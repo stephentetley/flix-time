@@ -47,6 +47,23 @@ mod Time.Format {
             Time.Format.DateTimeFormatterBuilder.flatMap(f, ma)
     }
 
+    instance GradedError[DateTimeFormatterBuilder[r, ka]] {
+        pub def throwError(msg: String): DateTimeFormatterBuilder[r, ka, ef, a] = 
+            Time.Format.DateTimeFormatterBuilder.throwError(msg)
+        
+        pub def mapError(f: String -> String \ ef1, 
+                            ma: DateTimeFormatterBuilder[r, ka, ef, a]): DateTimeFormatterBuilder[r, ka, ef and ef1, a] = 
+            Time.Format.DateTimeFormatterBuilder.mapError(f, ma)
+        
+        pub def catchError(ma: DateTimeFormatterBuilder[r, ka, ef, a], 
+                            hdlr: String -> DateTimeFormatterBuilder[r, ka, ef1, a] \ ef2): DateTimeFormatterBuilder[r, ka, ef and ef1 and ef2, a] = 
+            Time.Format.DateTimeFormatterBuilder.catchError(ma, hdlr)
+
+        pub def reifyError(ma: DateTimeFormatterBuilder[r, ka, ef, a]): DateTimeFormatterBuilder[r, ka, ef, Result[String, a]] = 
+            Time.Format.DateTimeFormatterBuilder.reifyError(ma)
+    }
+
+
 }
 
 
@@ -84,7 +101,17 @@ mod Time.Format.DateTimeFormatterBuilder {
 
     pub def throwError(msg: String): DateTimeFormatterBuilder[r, ka, ef, a] = 
         DateTimeFormatterBuilder(Graded.Builder.throwError(msg))
+    
+    pub def mapError(f: String -> String \ ef1, 
+                        ma: DateTimeFormatterBuilder[r, ka, ef, a]): DateTimeFormatterBuilder[r, ka, ef and ef1, a] = 
+        DateTimeFormatterBuilder(Graded.Builder.mapError(f, getDateTimeFormatterBuilder(ma)))
+    
+    pub def catchError(ma: DateTimeFormatterBuilder[r, ka, ef, a], 
+                        hdlr: String -> DateTimeFormatterBuilder[r, ka, ef1, a] \ ef2): DateTimeFormatterBuilder[r, ka, ef and ef1 and ef2, a] = 
+        DateTimeFormatterBuilder(Graded.Builder.catchError(getDateTimeFormatterBuilder(ma), msg -> getDateTimeFormatterBuilder(hdlr(msg))))
 
+    pub def reifyError(ma: DateTimeFormatterBuilder[r, ka, ef, a]): DateTimeFormatterBuilder[r, ka, ef, Result[String, a]] = 
+        DateTimeFormatterBuilder(Graded.Builder.reifyError(getDateTimeFormatterBuilder(ma)))
 
     def liftSetter!(f: PrimBuilder[r] -> PrimBuilder[r] \ {ef, Write(r)}): DateTimeFormatterBuilder[r, ka, r and ef, Unit] =
         DateTimeFormatterBuilder(Graded.Builder.liftSetter!(f)) |> GradedFunctor.ignore
