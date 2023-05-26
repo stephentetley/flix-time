@@ -1,3 +1,7 @@
+### v0.3.0
+   Updated dependencies.
+   Removed region `Read` and `Write`.
+
 ### v0.2.3
    Updated dependencies.
    Added `GradedError` instance to `DateTimeFormatterBuilder`.
