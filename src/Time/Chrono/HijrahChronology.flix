@@ -169,7 +169,7 @@ mod Time.Chrono.HijrahChronology {
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra = 
         import java.time.chrono.HijrahChronology.eraOf(Int32): ##java.time.chrono.HijrahEra \ {};
         let HijrahChronology(x1) = x;
-        Time.Chrono.HijrahEra.unmarshal(eraOf(x1, i))
+        Time.Chrono.HijrahEra.unmarshalHijrahEra(eraOf(x1, i))
 
     pub def eras(x: HijrahChronology): List[HijrahEra] = region r {
         import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};

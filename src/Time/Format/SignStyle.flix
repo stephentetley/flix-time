@@ -26,12 +26,12 @@ mod Time.Format {
 
     instance Interop.Flix.Marshal[SignStyle] {
         pub def toJavaObject(x: SignStyle): ##java.lang.Object =
-            let x1 = Time.Format.SignStyle.marshal(x);
+            let x1 = Time.Format.SignStyle.marshalSignStyle(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): SignStyle = 
             let x1 = unchecked_cast(o as ##java.time.format.SignStyle);
-            Time.Format.SignStyle.unmarshal(x1)
+            Time.Format.SignStyle.unmarshalSignStyle(x1)
     }
 
 }
@@ -43,7 +43,7 @@ mod Time.Format.SignStyle {
     
 
 
-    pub def marshal(x: SignStyle): ##java.time.format.SignStyle = 
+    pub def marshalSignStyle(x: SignStyle): ##java.time.format.SignStyle = 
         import static get java.time.format.SignStyle.ALWAYS: ##java.time.format.SignStyle \ {} as get_ALWAYS;
         import static get java.time.format.SignStyle.EXCEEDS_PAD: ##java.time.format.SignStyle \ {} as get_EXCEEDS_PAD;
         import static get java.time.format.SignStyle.NEVER: ##java.time.format.SignStyle \ {} as get_NEVER;
@@ -63,7 +63,7 @@ mod Time.Format.SignStyle {
         let y1 = checked_cast(y);
         equals(x1, y1)
 
-    pub def unmarshal(x: ##java.time.format.SignStyle): SignStyle = 
+    pub def unmarshalSignStyle(x: ##java.time.format.SignStyle): SignStyle = 
         import static get java.time.format.SignStyle.ALWAYS: ##java.time.format.SignStyle \ {} as get_ALWAYS;
         import static get java.time.format.SignStyle.EXCEEDS_PAD: ##java.time.format.SignStyle \ {} as get_EXCEEDS_PAD;
         import static get java.time.format.SignStyle.NEVER: ##java.time.format.SignStyle \ {} as get_NEVER;
@@ -75,6 +75,7 @@ mod Time.Format.SignStyle {
             case x1 if primEquals(x1, get_NEVER())              => Never
             case x1 if primEquals(x1, get_NORMAL())             => Normal
             case x1 if primEquals(x1, get_NOT_NEGATIVE())       => NonNegative
+            case _                                              => bug!("unmarshalSignStyle")
         }
 
 }

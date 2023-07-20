@@ -33,7 +33,7 @@ mod Time.Chrono.ThaiBuddhistEra {
     use Time.Chrono.ThaiBuddhistEra.{BEFORE_BE, BE}
     use Time.Format.TextStyle
 
-    pub def marshal(x: ThaiBuddhistEra): ##java.time.chrono.ThaiBuddhistEra = 
+    pub def marshalThaiBuddhistEra(x: ThaiBuddhistEra): ##java.time.chrono.ThaiBuddhistEra = 
         import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBEFORE_BE;
         import static get java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBE;
         match x {
@@ -47,17 +47,18 @@ mod Time.Chrono.ThaiBuddhistEra {
         let y1 = checked_cast(y);
         equals(x1, y1)
 
-    pub def unmarshal(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
+    pub def unmarshalThaiBuddhistEra(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
         import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBEFORE_BE;
         import static get java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBE;
         match x {
             case x1 if primEquals(x1, getBEFORE_BE())  => BEFORE_BE
             case x1 if primEquals(x1, getBE())         => BE
+            case _                                      => bug!("unmarshalThaiBuddhistEra")
         }
 
     pub def getValue(x: ThaiBuddhistEra): Int32 = 
         import java.time.chrono.ThaiBuddhistEra.getValue(): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalThaiBuddhistEra(x);
         getValue(x1)
 
 
@@ -65,8 +66,8 @@ mod Time.Chrono.ThaiBuddhistEra {
     /// 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: ThaiBuddhistEra): String = 
         import java.time.chrono.ThaiBuddhistEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let x1 = marshal(x);
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let x1 = marshalThaiBuddhistEra(x);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)
         

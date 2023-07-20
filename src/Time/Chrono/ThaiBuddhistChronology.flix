@@ -73,6 +73,6 @@ mod Time.Chrono.ThaiBuddhistChronology {
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): ThaiBuddhistEra = 
         import java.time.chrono.ThaiBuddhistChronology.eraOf(Int32): ##java.time.chrono.ThaiBuddhistEra \ {};
         let ThaiBuddhistChronology(x1) = x;
-        Time.Chrono.ThaiBuddhistEra.unmarshal(eraOf(x1, i))
+        Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(eraOf(x1, i))
 
 }

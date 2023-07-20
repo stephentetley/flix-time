@@ -28,22 +28,22 @@ mod Time.Chrono {
  
     instance Interop.Flix.Marshal[HijrahEra] {
         pub def toJavaObject(x: HijrahEra): ##java.lang.Object =
-            let x1 = Time.Chrono.HijrahEra.marshal(x);
+            let x1 = Time.Chrono.HijrahEra.marshalHijrahEra(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
             let x1 = unchecked_cast(o as ##java.time.chrono.HijrahEra);
-            Time.Chrono.HijrahEra.unmarshal(x1)
+            Time.Chrono.HijrahEra.unmarshalHijrahEra(x1)
     }
     
     instance Time.Chrono.ImplementsEra[HijrahEra] {
         pub def toEra(x: HijrahEra): Era = 
-            let x1 = Time.Chrono.HijrahEra.marshal(x);
+            let x1 = Time.Chrono.HijrahEra.marshalHijrahEra(x);
             Era(unchecked_cast(x1 as ##java.time.chrono.Era))
 
         pub def fromEra(x: Era): HijrahEra = 
             let Era(x1) = x;
-            Time.Chrono.HijrahEra.unmarshal(unchecked_cast(x1 as ##java.time.chrono.HijrahEra))
+            Time.Chrono.HijrahEra.unmarshalHijrahEra(unchecked_cast(x1 as ##java.time.chrono.HijrahEra))
     }
 
 
@@ -57,7 +57,7 @@ mod Time.Chrono.HijrahEra {
     use Time.Chrono.HijrahEra.{AH};
     use Time.Format.TextStyle;
 
-    pub def marshal(x: HijrahEra): ##java.time.chrono.HijrahEra = 
+    pub def marshalHijrahEra(x: HijrahEra): ##java.time.chrono.HijrahEra = 
         import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
         match x {
             case AH         => getAH()            
@@ -69,15 +69,16 @@ mod Time.Chrono.HijrahEra {
         let y1 = checked_cast(y);
         equals(x1, y1)
 
-    pub def unmarshal(x: ##java.time.chrono.HijrahEra): HijrahEra = 
+    pub def unmarshalHijrahEra(x: ##java.time.chrono.HijrahEra): HijrahEra = 
         import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
         match x {
-            case x1 if primEquals(x1, getAH())     => AH
+            case x1 if primEquals(x1, getAH())      => AH
+            case _                                  => bug!("unmarshalHijrahEra")
         }
 
     pub def getValue(x: HijrahEra): Int32 = 
         import java.time.chrono.HijrahEra.getValue(): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalHijrahEra(x);
         getValue(x1)
 
 
@@ -87,8 +88,8 @@ mod Time.Chrono.HijrahEra {
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String = 
         import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let x1 = marshal(x);
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let x1 = marshalHijrahEra(x);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)
         

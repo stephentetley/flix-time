@@ -106,9 +106,10 @@ mod Time.Zone.ZoneOffsetTransitionRule {
         import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.UTC: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_UTC;
         import static get java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.WALL: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_WALL;
         match x {
-            case x1 if primEqualsTimeDefinition(x1, get_STANDARD())           => Standard
-            case x1 if primEqualsTimeDefinition(x1, get_UTC())                => UTC
-            case x1 if primEqualsTimeDefinition(x1, get_WALL())               => Wall
+            case x1 if primEqualsTimeDefinition(x1, get_STANDARD())     => Standard
+            case x1 if primEqualsTimeDefinition(x1, get_UTC())          => UTC
+            case x1 if primEqualsTimeDefinition(x1, get_WALL())         => Wall
+            case _                                                      => bug!("unmarshalTimeDefinition")
         }
 
 
@@ -134,9 +135,9 @@ mod Time.Zone.ZoneOffsetTransitionRule {
                                                                     ##java.time.ZoneOffset
                                                                     ): ##java.time.zone.ZoneOffsetTransitionRule \ {};
         Result.tryCatch(_ -> {
-            ZoneOffsetTransitionRule(of(Time.Month.marshal(r.month), 
+            ZoneOffsetTransitionRule(of(Time.Month.marshalMonth(r.month), 
                                         r.dayOfMonthIndicator,
-                                        Time.DayOfWeek.marshal(r.dayOfWeek),
+                                        Time.DayOfWeek.marshalDayOfWeek(r.dayOfWeek),
                                         Time.LocalTime.getLocalTime(r.time),
                                         r.timeEndOfDay,
                                         marshalTimeDefinition(r.timeDefinition),
@@ -175,7 +176,7 @@ mod Time.Zone.ZoneOffsetTransitionRule {
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
         import java.time.zone.ZoneOffsetTransitionRule.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        getDayOfWeek(x1) |> Time.DayOfWeek.unmarshal
+        getDayOfWeek(x1) |> Time.DayOfWeek.unmarshalDayOfWeek
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 

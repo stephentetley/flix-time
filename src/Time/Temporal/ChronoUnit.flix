@@ -70,22 +70,22 @@ mod Time.Temporal {
 
     instance Interop.Flix.Marshal[ChronoUnit] {
         pub def toJavaObject(x: ChronoUnit): ##java.lang.Object =
-            let x1 = Time.Temporal.ChronoUnit.marshal(x);
+            let x1 = Time.Temporal.ChronoUnit.marshalChronoUnit(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ChronoUnit = 
             let x1 = unchecked_cast(o as ##java.time.temporal.ChronoUnit);
-            Time.Temporal.ChronoUnit.unmarshal(x1)
+            Time.Temporal.ChronoUnit.unmarshalChronoUnit(x1)
     }
 
     instance Time.Temporal.ImplementsTemporalUnit[ChronoUnit] {
         pub def toTemporalUnit(x: ChronoUnit): TemporalUnit = 
-            let x1 = Time.Temporal.ChronoUnit.marshal(x);
+            let x1 = Time.Temporal.ChronoUnit.marshalChronoUnit(x);
             TemporalUnit(unchecked_cast(x1 as ##java.time.temporal.TemporalUnit))
 
         pub def fromTemporalUnit(x: TemporalUnit): ChronoUnit = 
             let TemporalUnit(x1) = x;
-            Time.Temporal.ChronoUnit.unmarshal(unchecked_cast(x1 as ##java.time.temporal.ChronoUnit))
+            Time.Temporal.ChronoUnit.unmarshalChronoUnit(unchecked_cast(x1 as ##java.time.temporal.ChronoUnit))
     }
 
 
@@ -102,7 +102,7 @@ mod Time.Temporal.ChronoUnit {
 
     /// ## Marshal enums
 
-    pub def marshal(x: ChronoUnit): ##java.time.temporal.ChronoUnit =
+    pub def marshalChronoUnit(x: ChronoUnit): ##java.time.temporal.ChronoUnit =
         import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
         import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
         import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
@@ -145,7 +145,7 @@ mod Time.Temporal.ChronoUnit {
         equals(x1, y1)
 
 
-    pub def unmarshal(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
+    pub def unmarshalChronoUnit(x: ##java.time.temporal.ChronoUnit): ChronoUnit =
         import static get java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
         import static get java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
         import static get java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
@@ -179,13 +179,14 @@ mod Time.Temporal.ChronoUnit {
             case x1 if primEquals(x1, get_MILLENNIA())  => Millenia
             case x1 if primEquals(x1, get_ERAS())       => Eras
             case x1 if primEquals(x1, get_FOREVER())    => Forever
+            case _                                      => bug!("unmarshalTimeDefinition")     
         }
 
     /// ## ChronoUnit functions
 
     pub def getDuration(x: ChronoUnit): DurationZ =
         import java.time.temporal.ChronoUnit.getDuration(): ##java.time.Duration \ {};
-        let x1 = marshal(x);
+        let x1 = marshalChronoUnit(x);
         getDuration(x1) |> DurationZ
 
 

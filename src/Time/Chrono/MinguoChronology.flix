@@ -75,6 +75,6 @@ mod Time.Chrono.MinguoChronology {
     pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
         import java.time.chrono.MinguoChronology.eraOf(Int32): ##java.time.chrono.MinguoEra \ {};
         let MinguoChronology(x1) = x;
-        Time.Chrono.MinguoEra.unmarshal(eraOf(x1, i))
+        Time.Chrono.MinguoEra.unmarshalMinguoEra(eraOf(x1, i))
 
 }

@@ -26,12 +26,12 @@ mod Time.Format {
     
     instance Interop.Flix.Marshal[FormatStyle] {
         pub def toJavaObject(x: FormatStyle): ##java.lang.Object =
-            let x1 = Time.Format.FormatStyle.marshal(x);
+            let x1 = Time.Format.FormatStyle.marshalFormatStyle(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): FormatStyle = 
             let x1 = unchecked_cast(o as ##java.time.format.FormatStyle);
-            Time.Format.FormatStyle.unmarshal(x1)
+            Time.Format.FormatStyle.unmarshalFormatStyle(x1)
     }
 
 }
@@ -41,7 +41,7 @@ mod Time.Format.FormatStyle {
     use Time.Format.FormatStyle
     use Time.Format.FormatStyle.{Full, Long, Medium, Short}
 
-    pub def marshal(x: FormatStyle): ##java.time.format.FormatStyle = 
+    pub def marshalFormatStyle(x: FormatStyle): ##java.time.format.FormatStyle = 
         import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;
         import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle \ {} as get_LONG;
         import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle \ {} as get_MEDIUM;
@@ -59,7 +59,7 @@ mod Time.Format.FormatStyle {
         let y1 = checked_cast(y);
         equals(x1, y1)
 
-    pub def unmarshal(x: ##java.time.format.FormatStyle): FormatStyle = 
+    pub def unmarshalFormatStyle(x: ##java.time.format.FormatStyle): FormatStyle = 
         import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;
         import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle \ {} as get_LONG;
         import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle \ {} as get_MEDIUM;
@@ -69,5 +69,6 @@ mod Time.Format.FormatStyle {
             case x1 if primEquals(x1, get_LONG())   => Long
             case x1 if primEquals(x1, get_MEDIUM()) => Medium
             case x1 if primEquals(x1, get_SHORT())  => Short
+            case _                                  => bug!("unmarshalFormatStyle")
         }
 }

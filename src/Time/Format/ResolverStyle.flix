@@ -24,12 +24,12 @@ mod Time.Format {
 
     instance Interop.Flix.Marshal[ResolverStyle] {
         pub def toJavaObject(x: ResolverStyle): ##java.lang.Object =
-            let x1 = Time.Format.ResolverStyle.marshal(x);
+            let x1 = Time.Format.ResolverStyle.marshalResolverStyle(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): ResolverStyle = 
             let x1 = unchecked_cast(o as ##java.time.format.ResolverStyle);
-            Time.Format.ResolverStyle.unmarshal(x1)
+            Time.Format.ResolverStyle.unmarshalResolverStyle(x1)
     }
 
 }
@@ -41,7 +41,7 @@ mod Time.Format.ResolverStyle {
     
 
 
-    pub def marshal(x: ResolverStyle): ##java.time.format.ResolverStyle = 
+    pub def marshalResolverStyle(x: ResolverStyle): ##java.time.format.ResolverStyle = 
         import static get java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle \ {} as getLENIENT;
         import static get java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle \ {} as getSMART;
         import static get java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle \ {} as getSTRICT;
@@ -57,14 +57,15 @@ mod Time.Format.ResolverStyle {
         let y1 = checked_cast(y);
         equals(x1, y1)
 
-    pub def unmarshal(x: ##java.time.format.ResolverStyle): ResolverStyle = 
+    pub def unmarshalResolverStyle(x: ##java.time.format.ResolverStyle): ResolverStyle = 
         import static get java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle \ {} as getLENIENT;
         import static get java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle \ {} as getSMART;
         import static get java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle \ {} as getSTRICT;
         match x {
-            case x1 if primEquals(x1, getLENIENT())             => Lenient
-            case x1 if primEquals(x1, getSMART())               => Smart
-            case x1 if primEquals(x1, getSTRICT())              => Strict            
+            case x1 if primEquals(x1, getLENIENT())         => Lenient
+            case x1 if primEquals(x1, getSMART())           => Smart
+            case x1 if primEquals(x1, getSTRICT())          => Strict
+            case _                                          => bug!("unmarshalResolverStyle")
         }
 
 }

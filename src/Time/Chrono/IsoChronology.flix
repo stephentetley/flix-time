@@ -64,7 +64,7 @@ mod Time.Chrono.IsoChronology {
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
         import java.time.chrono.IsoChronology.eraOf(Int32): ##java.time.chrono.IsoEra \ {};
         let IsoChronology(x1) = x;
-        Time.Chrono.IsoEra.unmarshal(eraOf(x1, i))
+        Time.Chrono.IsoEra.unmarshalIsoEra(eraOf(x1, i))
 
     /// pub def eras(x: IsoChronology): List[IsoEra] = 
     ///     import java.time.chrono.IsoChronology.eras(): ##java.util.List \ {};

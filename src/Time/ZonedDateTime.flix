@@ -266,7 +266,7 @@ mod Time.ZonedDateTime {
     pub def getMonth(x: ZonedDateTime): Month =
         import java.time.ZonedDateTime.getMonth(): ##java.time.Month \ {};
         let ZonedDateTime(x1) = x;
-        Time.Month.unmarshal(getMonth(x1))
+        Time.Month.unmarshalMonth(getMonth(x1))
 
     pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
         import java.time.ZonedDateTime.withMonth(Int32): ##java.time.ZonedDateTime \ {};
@@ -304,7 +304,7 @@ mod Time.ZonedDateTime {
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
         import java.time.ZonedDateTime.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let ZonedDateTime(x1) = x;
-        Time.DayOfWeek.unmarshal(getDayOfWeek(x1))
+        Time.DayOfWeek.unmarshalDayOfWeek(getDayOfWeek(x1))
 
     // no setDayOfWeek
 
@@ -380,7 +380,7 @@ mod Time.ZonedDateTime {
 
     pub def adjustDayOfWeek(x: DayOfWeek, d: ZonedDateTime): ZonedDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time.DayOfWeek.marshal(x);
+        let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
         let d1 = unchecked_cast(getZonedDateTime(d) as ##java.time.temporal.Temporal);
         ZonedDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.ZonedDateTime))
 

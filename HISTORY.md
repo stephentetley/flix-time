@@ -1,3 +1,7 @@
+### v0.4.0
+   Changed names of `marshal` and `unmarshal` functions to include what they are marshalling.
+   Added missing fall through cases to pattern matches.
+
 ### v0.3.1
    Updated dependencies.
 

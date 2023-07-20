@@ -402,12 +402,12 @@ mod Time.OffsetDateTime {
     pub def getDayOfWeek(x: OffsetDateTime): DayOfWeek =
         import java.time.OffsetDateTime.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let OffsetDateTime(x1) = x;
-        Time.DayOfWeek.unmarshal(getDayOfWeek(x1))
+        Time.DayOfWeek.unmarshalDayOfWeek(getDayOfWeek(x1))
 
 
     pub def adjustDayOfWeek(x: DayOfWeek, d: OffsetDateTime): OffsetDateTime = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time.DayOfWeek.marshal(x);
+        let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
         let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.Temporal);
         OffsetDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.OffsetDateTime))
 
@@ -436,7 +436,7 @@ mod Time.OffsetDateTime {
     pub def getMonth(x: OffsetDateTime): Month =
         import java.time.OffsetDateTime.getMonth(): ##java.time.Month \ {};
         let OffsetDateTime(x1) = x;
-        Time.Month.unmarshal(getMonth(x1))
+        Time.Month.unmarshalMonth(getMonth(x1))
 
     pub def getMonthValue(x: OffsetDateTime): Int32 =
         import java.time.OffsetDateTime.getMonth(): ##java.time.Month \ {};

@@ -64,12 +64,12 @@ mod Time {
 
     instance Interop.Flix.Marshal[Month] {
         pub def toJavaObject(x: Month): ##java.lang.Object =
-            let x1 = Time.Month.marshal(x);
+            let x1 = Time.Month.marshalMonth(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): Month = 
             let x1 = unchecked_cast(o as ##java.time.Month);
-            Time.Month.unmarshal(x1)
+            Time.Month.unmarshalMonth(x1)
     }
 
 }
@@ -96,7 +96,7 @@ mod Time.Month {
 
     /// ## Marshal enums
 
-    pub def marshal(x: Month): ##java.time.Month =
+    pub def marshalMonth(x: Month): ##java.time.Month =
         import static get java.time.Month.JANUARY: ##java.time.Month \ {} as get_JANUARY;
         import static get java.time.Month.FEBRUARY: ##java.time.Month \ {} as get_FEBRUARY;
         import static get java.time.Month.MARCH: ##java.time.Month \ {} as get_MARCH;
@@ -130,7 +130,7 @@ mod Time.Month {
         let y1 = checked_cast(y);
         equals(x1, y1)
 
-    pub def unmarshal(x: ##java.time.Month): Month =
+    pub def unmarshalMonth(x: ##java.time.Month): Month =
         import static get java.time.Month.JANUARY: ##java.time.Month \ {} as get_JANUARY;
         import static get java.time.Month.FEBRUARY: ##java.time.Month \ {} as get_FEBRUARY;
         import static get java.time.Month.MARCH: ##java.time.Month \ {} as get_MARCH;
@@ -144,18 +144,19 @@ mod Time.Month {
         import static get java.time.Month.NOVEMBER: ##java.time.Month \ {} as get_NOVEMBER;
         import static get java.time.Month.DECEMBER: ##java.time.Month \ {} as get_DECEMBER;
         match x {
-            case x1 if primEquals(x1, get_JANUARY())     => January
-            case x1 if primEquals(x1, get_FEBRUARY())    => February
-            case x1 if primEquals(x1, get_MARCH())       => March
-            case x1 if primEquals(x1, get_APRIL())       => April
-            case x1 if primEquals(x1, get_MAY())         => May
-            case x1 if primEquals(x1, get_JUNE())        => June
-            case x1 if primEquals(x1, get_JULY())        => July
-            case x1 if primEquals(x1, get_AUGUST())      => August
-            case x1 if primEquals(x1, get_SEPTEMBER())   => September
-            case x1 if primEquals(x1, get_OCTOBER())     => October
-            case x1 if primEquals(x1, get_NOVEMBER())    => November
-            case x1 if primEquals(x1, get_DECEMBER())    => December
+            case x1 if primEquals(x1, get_JANUARY())    => January
+            case x1 if primEquals(x1, get_FEBRUARY())   => February
+            case x1 if primEquals(x1, get_MARCH())      => March
+            case x1 if primEquals(x1, get_APRIL())      => April
+            case x1 if primEquals(x1, get_MAY())        => May
+            case x1 if primEquals(x1, get_JUNE())       => June
+            case x1 if primEquals(x1, get_JULY())       => July
+            case x1 if primEquals(x1, get_AUGUST())     => August
+            case x1 if primEquals(x1, get_SEPTEMBER())  => September
+            case x1 if primEquals(x1, get_OCTOBER())    => October
+            case x1 if primEquals(x1, get_NOVEMBER())   => November
+            case x1 if primEquals(x1, get_DECEMBER())   => December
+            case _                                      => bug!("unmarshalMonth")
         }
 
     /// ## `from` functions
@@ -164,7 +165,7 @@ mod Time.Month {
     def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
         import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month \ {} as fromTA;
         try {
-            unmarshal(fromTA(x))
+            unmarshalMonth(fromTA(x))
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
@@ -193,54 +194,54 @@ mod Time.Month {
     
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
         import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let x1 = marshal(x);
-        let s1 = Time.Format.TextStyle.marshal(style);
+        let x1 = marshalMonth(x);
+        let s1 = Time.Format.TextStyle.marshalTextStyle(style);
         let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, s1, locale1)
 
     pub def getValue(x: Month): Int32 =
         import java.time.Month.getValue(): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalMonth(x);
         getValue(x1)
 
     pub def firstDayOfYear(leap: Bool, x: Month): Int32 =
         import java.time.Month.firstDayOfYear(Bool): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalMonth(x);
         firstDayOfYear(x1, leap)
 
     pub def firstMonthOfQuarter(x: Month): Month =
         import java.time.Month.firstMonthOfQuarter(): ##java.time.Month \ {};
-        let x1 = marshal(x);
-        unmarshal(firstMonthOfQuarter(x1))
+        let x1 = marshalMonth(x);
+        unmarshalMonth(firstMonthOfQuarter(x1))
 
     pub def maxLength(x: Month): Int32 =
         import java.time.Month.maxLength(): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalMonth(x);
         maxLength(x1)
 
     pub def minLength(x: Month): Int32 =
         import java.time.Month.minLength(): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalMonth(x);
         minLength(x1)
 
     pub def length(leap: Bool, x: Month): Int32 =
         import java.time.Month.length(Bool): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalMonth(x);
         length(x1, leap)
 
     /// ## plus / minus functions
 
     pub def plus(x:Month, y: Int64): Month =
         import java.time.Month.plus(Int64): ##java.time.Month \ {};
-        let x1 = marshal(x);
+        let x1 = marshalMonth(x);
         let x2 = plus(x1, y);
-        unmarshal(x2)
+        unmarshalMonth(x2)
 
     pub def minus(x:Month, y: Int64): Month =
         import java.time.Month.minus(Int64): ##java.time.Month \ {};
-        let x1 = marshal(x);
+        let x1 = marshalMonth(x);
         let x2 = minus(x1, y);
-        unmarshal(x2)
+        unmarshalMonth(x2)
 
 
 

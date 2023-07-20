@@ -151,7 +151,7 @@ mod Time.Year {
         Result.tryCatch(_ -> {
             import java.time.Year.atMonth(##java.time.Month): ##java.time.YearMonth \ {};
             let Year(x1) = x;
-            let m1 = Time.Month.marshal(month);
+            let m1 = Time.Month.marshalMonth(month);
             YearMonth(atMonth(x1, m1))
         }) |> Result.toOption
 

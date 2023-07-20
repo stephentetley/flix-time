@@ -155,7 +155,7 @@ mod Time.ZoneId {
 
     pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
         import java.time.ZoneId.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let locale1 = Interop.Util.Locale.getHH(locale);
         let ZoneId(z1) = z;
         getDisplayName(z1, style1, locale1)

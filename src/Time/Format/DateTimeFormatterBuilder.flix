@@ -156,7 +156,7 @@ mod Time.Format.DateTimeFormatterBuilder {
 
 
     pub def appendChronologyText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendChronologyText!(style1))
 
     /// Java 16
@@ -168,11 +168,11 @@ mod Time.Format.DateTimeFormatterBuilder {
 
 
     pub def appendGenericZoneText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendGenericZoneText!(style1))
 
     pub def appendGenericZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, r, Unit] =
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let s1 = Interop.Util.SetZ.fromFoldableViaHashSetHH(preferredZones);
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendGenericZoneTextWithZones!(style1, s1))
 
@@ -190,12 +190,12 @@ mod Time.Format.DateTimeFormatterBuilder {
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendLiteralString!(s))
 
     pub def appendLocalized!(timeStyle: {timeStyle = FormatStyle}, dateStyle: {dateStyle = FormatStyle}): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        let timeStyle1 = Time.Format.FormatStyle.marshal(timeStyle.timeStyle);
-        let dateStyle1 = Time.Format.FormatStyle.marshal(dateStyle.dateStyle);
+        let timeStyle1 = Time.Format.FormatStyle.marshalFormatStyle(timeStyle.timeStyle);
+        let dateStyle1 = Time.Format.FormatStyle.marshalFormatStyle(dateStyle.dateStyle);
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendLocalized!(timeStyle = timeStyle1, dateStyle = dateStyle1))
 
     pub def appendLocalizedOffset!(style: TextStyle): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendLocalizedOffset!(style1))
 
 
@@ -222,11 +222,11 @@ mod Time.Format.DateTimeFormatterBuilder {
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendZoneRegionId!)
 
     pub def appendZoneText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendZoneText!(style1))
 
     pub def appendZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, r, Unit] =
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let s1 = Interop.Util.SetZ.fromFoldableViaHashSetHH(preferredZones);
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendZoneTextWithZones!(style1, s1))
     

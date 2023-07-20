@@ -121,7 +121,7 @@ mod Time.Chrono.JapaneseEra {
     pub def getDisplayName(style: TextStyle, locale: Locale, x: JapaneseEra): String = 
         import java.time.chrono.JapaneseEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = getJapaneseEra(x);
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)
 

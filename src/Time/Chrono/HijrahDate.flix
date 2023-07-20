@@ -168,7 +168,7 @@ mod Time.Chrono.HijrahDate {
     pub def getEra(x: HijrahDate): HijrahEra = 
         import java.time.chrono.HijrahDate.getEra(): ##java.time.chrono.HijrahEra \ {};
         let HijrahDate(x1) = x;
-        Time.Chrono.HijrahEra.unmarshal(getEra(x1))
+        Time.Chrono.HijrahEra.unmarshalHijrahEra(getEra(x1))
 
     pub def isLeapYear(x: HijrahDate): Bool = 
         import java.time.chrono.HijrahDate.isLeapYear(): Bool \ {};

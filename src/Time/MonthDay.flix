@@ -112,7 +112,7 @@ mod Time.MonthDay {
 
     pub def monthDayWithMonth(r: {month = Month, dayOfMonth = Int32}): MonthDay =
         import static java.time.MonthDay.of(##java.time.Month, Int32): ##java.time.MonthDay \ {};
-        let m1 = Time.Month.marshal(r.month);
+        let m1 = Time.Month.marshalMonth(r.month);
         MonthDay(of(m1, r.dayOfMonth))
 
     /// ## `now` and "abstract constructors" if any
@@ -236,15 +236,13 @@ mod Time.MonthDay {
 
     pub def getMonth(x: MonthDay): Month =
         import java.time.MonthDay.getMonth(): ##java.time.Month \ {};
-        use Time.Month.{unmarshal};
         let MonthDay(x1) = x;
-        unmarshal(getMonth(x1))
+        Time.Month.unmarshalMonth(getMonth(x1))
 
     pub def withMonth(month: Month, x: MonthDay): MonthDay =
         import java.time.MonthDay.with(##java.time.Month): ##java.time.MonthDay \ {};
-        use Time.Month.{marshal};
         let MonthDay(x1) = x;
-        let m1 = marshal(month);
+        let m1 = Time.Month.marshalMonth(month);
         MonthDay(with(x1, m1))
 
     pub def getMonthValue(x: MonthDay): Int32 =

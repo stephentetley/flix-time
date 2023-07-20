@@ -40,7 +40,7 @@ mod Interop.Time.Chrono.Chronology {
     pub def getDisplayName(sty: TextStyle, loc: Locale, x: Chronology): String = 
         import java.time.chrono.Chronology.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};        
         let Locale(loc1) = loc;
-        let sty1 = Time.Format.TextStyle.marshal(sty);
+        let sty1 = Time.Format.TextStyle.marshalTextStyle(sty);
         let Chronology(x1) = x;
         getDisplayName(x1, sty1, loc1)
 

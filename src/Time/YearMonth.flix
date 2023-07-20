@@ -114,7 +114,7 @@ mod Time.YearMonth {
 
     pub def yearMonthWithMonth(r: {year = Int32, month = Month}): YearMonth =
         import static java.time.YearMonth.of(Int32, ##java.time.Month): ##java.time.YearMonth \ {};
-        let m1 = Time.Month.marshal(r.month);
+        let m1 = Time.Month.marshalMonth(r.month);
         YearMonth(of(r.year, m1))
 
 
@@ -234,9 +234,8 @@ mod Time.YearMonth {
 
     pub def getMonth(x: YearMonth): Month =
         import java.time.YearMonth.getMonth(): ##java.time.Month \ {};
-        use Time.Month.{unmarshal};
         let YearMonth(x1) = x;
-        (getMonth(x1) |> unmarshal)
+        getMonth(x1) |> Time.Month.unmarshalMonth
 
     pub def withMonth(month: Month, x: YearMonth): YearMonth =
         yearMonthWithMonth({year = getYear(x), month = month})

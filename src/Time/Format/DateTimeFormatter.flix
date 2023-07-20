@@ -148,23 +148,23 @@ mod Time.Format.DateTimeFormatter {
 
     pub def fromLocalizedTime(style: FormatStyle): DateTimeFormatter[TimeFormat] =
         import static java.time.format.DateTimeFormatter.ofLocalizedTime(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter \ {};
-        let style1 = Time.Format.FormatStyle.marshal(style);
+        let style1 = Time.Format.FormatStyle.marshalFormatStyle(style);
         DateTimeFormatter(ofLocalizedTime(style1))
 
     pub def fromLocalizedDateTime(style: FormatStyle): DateTimeFormatter[DateTimeFormat] =
         import static java.time.format.DateTimeFormatter.ofLocalizedDateTime(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter \ {};
-        let style1 = Time.Format.FormatStyle.marshal(style);
+        let style1 = Time.Format.FormatStyle.marshalFormatStyle(style);
         DateTimeFormatter(ofLocalizedDateTime(style1))
 
     pub def fromLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter[DateTimeFormat] =
         import static java.time.format.DateTimeFormatter.ofLocalizedDateTime(##java.time.format.FormatStyle, ##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter \ {};
-        let d1 = Time.Format.FormatStyle.marshal(dateStyle);
-        let t1 = Time.Format.FormatStyle.marshal(timeStyle);
+        let d1 = Time.Format.FormatStyle.marshalFormatStyle(dateStyle);
+        let t1 = Time.Format.FormatStyle.marshalFormatStyle(timeStyle);
         DateTimeFormatter(ofLocalizedDateTime(d1, t1))
 
     pub def fromLocalizedDate(style: FormatStyle): DateTimeFormatter[DateFormat] =
         import static java.time.format.DateTimeFormatter.ofLocalizedDate(##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatter \ {};
-        let style1 = Time.Format.FormatStyle.marshal(style);
+        let style1 = Time.Format.FormatStyle.marshalFormatStyle(style);
         DateTimeFormatter(ofLocalizedDate(style1))
 
     /// ## Getters and Setters
@@ -206,12 +206,12 @@ mod Time.Format.DateTimeFormatter {
     pub def getResolverStyle(x: DateTimeFormatter[t]): ResolverStyle =
         import java.time.format.DateTimeFormatter.getResolverStyle(): ##java.time.format.ResolverStyle \ {};
         let DateTimeFormatter(x1) = x;
-        Time.Format.ResolverStyle.unmarshal(getResolverStyle(x1))
+        Time.Format.ResolverStyle.unmarshalResolverStyle(getResolverStyle(x1))
 
     pub def withResolverStyle(style: ResolverStyle, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         import java.time.format.DateTimeFormatter.withResolverStyle(##java.time.format.ResolverStyle): ##java.time.format.DateTimeFormatter \ {};
         let DateTimeFormatter(x1) = x;
-        let style1 = Time.Format.ResolverStyle.marshal(style);
+        let style1 = Time.Format.ResolverStyle.marshalResolverStyle(style);
         DateTimeFormatter(withResolverStyle(x1, style1))
 
 }

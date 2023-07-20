@@ -139,7 +139,7 @@ mod Time.LocalDate {
 
     pub def localDateWithMonth(r: {year = Int32, month = Month, dayOfMonth = Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32): ##java.time.LocalDate \ {};
-        let m1 = Time.Month.marshal(r.month);
+        let m1 = Time.Month.marshalMonth(r.month);
         LocalDate(of(r.year, m1, r.dayOfMonth))
 
     /// ## `now` and "abstract constructors" (e.g. `epoch`)
@@ -351,16 +351,15 @@ mod Time.LocalDate {
 
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
-        use Time.DayOfWeek.{unmarshal};
         import java.time.LocalDate.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let LocalDate(x1) = x;
-        unmarshal(getDayOfWeek(x1))
+        Time.DayOfWeek.unmarshalDayOfWeek(getDayOfWeek(x1))
 
 
     pub def getMonth(x: LocalDate): Month =
         import java.time.LocalDate.getMonth(): ##java.time.Month \ {};
         let LocalDate(x1) = x;
-        Time.Month.unmarshal(getMonth(x1))
+        Time.Month.unmarshalMonth(getMonth(x1))
 
 
     pub def getMonthValue(x: LocalDate): Int32 =
@@ -441,7 +440,7 @@ mod Time.LocalDate {
 
     pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
         import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-        let x1 = Time.DayOfWeek.marshal(x);
+        let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
         let d1 = unchecked_cast(getLocalDate(d) as ##java.time.temporal.Temporal);
         LocalDate(unchecked_cast(adjustInto(x1, d1) as ##java.time.LocalDate))
 

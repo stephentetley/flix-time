@@ -33,7 +33,7 @@ mod Time.Chrono.MinguoEra {
     use Time.Chrono.MinguoEra.{BEFORE_ROC, ROC};
     use Time.Format.TextStyle;
 
-    pub def marshal(x: MinguoEra): ##java.time.chrono.MinguoEra = 
+    pub def marshalMinguoEra(x: MinguoEra): ##java.time.chrono.MinguoEra = 
         import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
         import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
         match x {
@@ -47,25 +47,26 @@ mod Time.Chrono.MinguoEra {
         let y1 = checked_cast(y);
         equals(x1, y1)
 
-    pub def unmarshal(x: ##java.time.chrono.MinguoEra): MinguoEra =
+    pub def unmarshalMinguoEra(x: ##java.time.chrono.MinguoEra): MinguoEra =
         import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
         import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
         match x {
             case x1 if primEquals(x1, getBEFORE_ROC())  => BEFORE_ROC
             case x1 if primEquals(x1, getROC())         => ROC
+            case _                                      => bug!("unmarshalMinguoEra")
         }
 
     pub def getValue(x: MinguoEra): Int32 = 
         import java.time.chrono.MinguoEra.getValue(): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalMinguoEra(x);
         getValue(x1)
 
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: MinguoEra): String = 
         import java.time.chrono.MinguoEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let x1 = marshal(x);
-        let style1 = Time.Format.TextStyle.marshal(style);
+        let x1 = marshalMinguoEra(x);
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, style1, locale1)
 

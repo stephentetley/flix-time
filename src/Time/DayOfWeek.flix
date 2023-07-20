@@ -53,12 +53,12 @@ mod Time {
 
     instance Interop.Flix.Marshal[DayOfWeek] {
         pub def toJavaObject(x: DayOfWeek): ##java.lang.Object =
-            let x1 = Time.DayOfWeek.marshal(x);
+            let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): DayOfWeek = 
             let x1 = unchecked_cast(o as ##java.time.DayOfWeek);
-            Time.DayOfWeek.unmarshal(x1)
+            Time.DayOfWeek.unmarshalDayOfWeek(x1)
     }
 
 }
@@ -92,7 +92,7 @@ mod Time.DayOfWeek {
 
     /// ## Marshal enums
 
-    pub def marshal(x: DayOfWeek): ##java.time.DayOfWeek =
+    pub def marshalDayOfWeek(x: DayOfWeek): ##java.time.DayOfWeek =
         import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek \ {} as get_MONDAY;
         import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek \ {} as get_TUESDAY;
         import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek \ {} as get_WEDNESDAY;
@@ -117,7 +117,7 @@ mod Time.DayOfWeek {
         equals(x1, y1)
 
 
-    pub def unmarshal(x: ##java.time.DayOfWeek): Time.DayOfWeek =
+    pub def unmarshalDayOfWeek(x: ##java.time.DayOfWeek): Time.DayOfWeek =
         import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek \ {} as get_MONDAY;
         import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek \ {} as get_TUESDAY;
         import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek \ {} as get_WEDNESDAY;
@@ -126,13 +126,14 @@ mod Time.DayOfWeek {
         import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek \ {} as get_SATURDAY;
         import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek \ {} as get_SUNDAY;
         match x {
-            case x1 if primEquals(x1, get_MONDAY())      => Monday
-            case x1 if primEquals(x1, get_TUESDAY())     => Tuesday
-            case x1 if primEquals(x1, get_WEDNESDAY())   => Wednesday
-            case x1 if primEquals(x1, get_THURSDAY())    => Thursday
-            case x1 if primEquals(x1, get_FRIDAY())      => Friday
-            case x1 if primEquals(x1, get_SATURDAY())    => Saturday
-            case x1 if primEquals(x1, get_SUNDAY())      => Sunday
+            case x1 if primEquals(x1, get_MONDAY())     => Monday
+            case x1 if primEquals(x1, get_TUESDAY())    => Tuesday
+            case x1 if primEquals(x1, get_WEDNESDAY())  => Wednesday
+            case x1 if primEquals(x1, get_THURSDAY())   => Thursday
+            case x1 if primEquals(x1, get_FRIDAY())     => Friday
+            case x1 if primEquals(x1, get_SATURDAY())   => Saturday
+            case x1 if primEquals(x1, get_SUNDAY())     => Sunday
+            case _                                      => bug!("unmarshalDayOfWeek")
         }
 
     /// ## `from` functions
@@ -141,7 +142,7 @@ mod Time.DayOfWeek {
     def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
         import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek \ {} as fromTA;
         try {
-            Interop.Time.Temporal.TemporalAccessor.getHH(x) |> fromTA |> unmarshal
+            Interop.Time.Temporal.TemporalAccessor.getHH(x) |> fromTA |> unmarshalDayOfWeek
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
@@ -169,15 +170,15 @@ mod Time.DayOfWeek {
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let x1 = marshal(x);
-        let s1 = Time.Format.TextStyle.marshal(style);
+        let x1 = marshalDayOfWeek(x);
+        let s1 = Time.Format.TextStyle.marshalTextStyle(style);
         let locale1 = Interop.Util.Locale.getHH(locale);
         getDisplayName(x1, s1, locale1)
 
 
     pub def getValue(x: DayOfWeek): Int32 =
         import java.time.DayOfWeek.getValue(): Int32 \ {};
-        let x1 = marshal(x);
+        let x1 = marshalDayOfWeek(x);
         getValue(x1)
 
 
@@ -185,15 +186,15 @@ mod Time.DayOfWeek {
 
     pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
         import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek \ {};
-        let x1 = marshal(x);
+        let x1 = marshalDayOfWeek(x);
         let x2 = plus(x1, days);
-        unmarshal(x2)
+        unmarshalDayOfWeek(x2)
 
     pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
         import java.time.DayOfWeek.minus(Int64): ##java.time.DayOfWeek \ {};
-        let x1 = marshal(x);
+        let x1 = marshalDayOfWeek(x);
         let x2 = minus(x1, days);
-        unmarshal(x2)
+        unmarshalDayOfWeek(x2)
 
 
 }

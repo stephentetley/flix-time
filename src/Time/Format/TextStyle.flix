@@ -28,12 +28,12 @@ mod Time.Format {
 
     instance Interop.Flix.Marshal[TextStyle] {
         pub def toJavaObject(x: TextStyle): ##java.lang.Object =
-            let x1 = Time.Format.TextStyle.marshal(x);
+            let x1 = Time.Format.TextStyle.marshalTextStyle(x);
             checked_cast(x1)
 
         pub def fromJavaObject(o: ##java.lang.Object): TextStyle = 
             let x1 = unchecked_cast(o as ##java.time.format.TextStyle);
-            Time.Format.TextStyle.unmarshal(x1)
+            Time.Format.TextStyle.unmarshalTextStyle(x1)
     }
 
 }
@@ -45,7 +45,7 @@ mod Time.Format.TextStyle {
             Short, ShortStandalone};
 
 
-    pub def marshal(x: TextStyle): ##java.time.format.TextStyle = 
+    pub def marshalTextStyle(x: TextStyle): ##java.time.format.TextStyle = 
         import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle \ {} as getFULL;
         import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle \ {} as getFULL_STANDALONE;
         import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle \ {} as getNARROW;
@@ -67,7 +67,7 @@ mod Time.Format.TextStyle {
         let y1 = checked_cast(y);
         equals(x1, y1)
 
-    pub def unmarshal(x: ##java.time.format.TextStyle): TextStyle = 
+    pub def unmarshalTextStyle(x: ##java.time.format.TextStyle): TextStyle = 
         import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle \ {} as getFULL;
         import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle \ {} as getFULL_STANDALONE;
         import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle \ {} as getNARROW;
@@ -81,6 +81,7 @@ mod Time.Format.TextStyle {
             case x1 if primEquals(x1, getNARROW_STANDALONE())   => NarrowStandalone
             case x1 if primEquals(x1, getSHORT())               => Short
             case x1 if primEquals(x1, getSHORT_STANDALONE())    => ShortStandalone
+            case _                                              => bug!("unmarshalTextStyle")
         }
 
     
@@ -88,17 +89,17 @@ mod Time.Format.TextStyle {
 
     pub def isStandalone(x: TextStyle): Bool =
         import java.time.format.TextStyle.isStandalone(): Bool \ {};
-        let x1 = marshal(x);
+        let x1 = marshalTextStyle(x);
         isStandalone(x1)
 
     /// ## Getters and Setters
     
     pub def asStandalone(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asStandalone(): ##java.time.format.TextStyle \ {};
-        marshal(x) |> asStandalone |> unmarshal
+        marshalTextStyle(x) |> asStandalone |> unmarshalTextStyle
     
     pub def asNormal(x: TextStyle): TextStyle =
         import java.time.format.TextStyle.asNormal(): ##java.time.format.TextStyle \ {};
-        marshal(x) |> asNormal |> unmarshal
+        marshalTextStyle(x) |> asNormal |> unmarshalTextStyle
 
 }
