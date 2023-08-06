@@ -48,13 +48,10 @@ mod Time.Zone {
 
     }
 
-    instance Interop.Flix.Marshal[ZoneRules] {
+    instance Interop.Flix.GoesToJava[ZoneRules] {
         pub def toJavaObject(x: ZoneRules): ##java.lang.Object =
             let ZoneRules(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): ZoneRules = 
-            ZoneRules(unchecked_cast(o as ##java.time.zone.ZoneRules))
     }
 
 }
@@ -80,6 +77,10 @@ mod Time.Zone.ZoneRules {
         let ZoneRules(x1) = x;
         x1
     
+    pub def fromJavaObject(o: ##java.lang.Object): ZoneRules = 
+        ZoneRules(unchecked_cast(o as ##java.time.zone.ZoneRules))
+
+
     /// ## Constructors
 
     pub def zoneRules(offset: ZoneOffset): ZoneRules =
@@ -115,7 +116,7 @@ mod Time.Zone.ZoneRules {
             import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List \ {};
             let LocalDateTime(ldt1) = ldt;
             let ZoneRules(x1) = x;
-            getValidOffsets(x1, ldt1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixList
+            getValidOffsets(x1, ldt1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixListWith(Time.ZoneOffset.fromJavaObject)
         }
 
     pub def getDaylightSavings(instant: InstantZ, x: ZoneRules): DurationZ =
@@ -149,7 +150,7 @@ mod Time.Zone.ZoneRules {
         region r { 
             import java.time.zone.ZoneRules.getTransitions(): ##java.util.List \ {};
             let ZoneRules(x1) = x;
-            getTransitions(x1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixList
+            getTransitions(x1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixListWith(Time.Zone.ZoneOffsetTransition.fromJavaObject)
         }
 
 }

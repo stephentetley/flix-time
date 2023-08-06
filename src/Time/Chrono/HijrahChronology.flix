@@ -41,13 +41,10 @@ mod Time.Chrono {
     }
 
 
-    instance Interop.Flix.Marshal[HijrahChronology] {
+    instance Interop.Flix.GoesToJava[HijrahChronology] {
         pub def toJavaObject(x: HijrahChronology): ##java.lang.Object =
             let HijrahChronology(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
-            HijrahChronology(unchecked_cast(o as ##java.time.chrono.HijrahChronology))
     }
 
 
@@ -95,6 +92,9 @@ mod Time.Chrono.HijrahChronology {
     pub def getHijrahChronology(x: HijrahChronology): ##java.time.chrono.HijrahChronology = 
         let HijrahChronology(x1) = x;
         x1
+
+    pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
+        HijrahChronology(unchecked_cast(o as ##java.time.chrono.HijrahChronology))
 
 
     pub def getInstance(): HijrahChronology \ IO =
@@ -174,7 +174,9 @@ mod Time.Chrono.HijrahChronology {
     pub def eras(x: HijrahChronology): List[HijrahEra] = region r {
         import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};
         let HijrahChronology(x1) = x;
-        eras(x1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixList
+        eras(x1) 
+            |> Interop.Util.ListZ.wrapHH(r) 
+            |> Interop.Util.ListZ.toFlixListWith(Time.Chrono.HijrahEra.fromJavaObject)
     }
 
     pub def getId(x: HijrahChronology): String = 

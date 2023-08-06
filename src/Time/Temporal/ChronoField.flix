@@ -100,14 +100,10 @@ mod Time.Temporal {
         }
     }
 
-    instance Interop.Flix.Marshal[ChronoField] {
+    instance Interop.Flix.GoesToJava[ChronoField] {
         pub def toJavaObject(x: ChronoField): ##java.lang.Object =
             let x1 = Time.Temporal.ChronoField.marshalChronoField(x);
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): ChronoField = 
-            let x1 = unchecked_cast(o as ##java.time.temporal.ChronoField);
-            Time.Temporal.ChronoField.unmarshalChronoField(x1)
     }
 
     instance Time.Temporal.ImplementsTemporalField[ChronoField] {

@@ -68,13 +68,10 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Interop.Flix.Marshal[Year]{
+    instance Interop.Flix.GoesToJava[Year]{
         pub def toJavaObject(x: Year): ##java.lang.Object =
             let Year(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): Year = 
-            Year(unchecked_cast(o as ##java.time.Year))
     }
 
 }

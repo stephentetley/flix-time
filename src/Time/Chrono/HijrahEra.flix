@@ -26,14 +26,10 @@ mod Time.Chrono {
         case AH
     }   
  
-    instance Interop.Flix.Marshal[HijrahEra] {
+    instance Interop.Flix.GoesToJava[HijrahEra] {
         pub def toJavaObject(x: HijrahEra): ##java.lang.Object =
             let x1 = Time.Chrono.HijrahEra.marshalHijrahEra(x);
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
-            let x1 = unchecked_cast(o as ##java.time.chrono.HijrahEra);
-            Time.Chrono.HijrahEra.unmarshalHijrahEra(x1)
     }
     
     instance Time.Chrono.ImplementsEra[HijrahEra] {
@@ -57,11 +53,19 @@ mod Time.Chrono.HijrahEra {
     use Time.Chrono.HijrahEra.{AH};
     use Time.Format.TextStyle;
 
+
+
+    pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
+        unmarshalHijrahEra(unchecked_cast(o as ##java.time.chrono.HijrahEra))
+
+
     pub def marshalHijrahEra(x: HijrahEra): ##java.time.chrono.HijrahEra = 
         import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
         match x {
             case AH         => getAH()            
         }
+
+
 
     def primEquals(x: ##java.time.chrono.HijrahEra, y: ##java.time.chrono.HijrahEra): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};

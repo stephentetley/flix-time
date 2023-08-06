@@ -28,13 +28,10 @@ mod Time.Chrono {
             toString(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
     }
 
-    instance Interop.Flix.Marshal[IsoChronology] {
+    instance Interop.Flix.GoesToJava[IsoChronology] {
         pub def toJavaObject(x: IsoChronology): ##java.lang.Object =
             let IsoChronology(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): IsoChronology = 
-            IsoChronology(unchecked_cast(o as ##java.time.chrono.IsoChronology))
     }
 
 }

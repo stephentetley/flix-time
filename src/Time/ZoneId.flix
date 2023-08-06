@@ -50,13 +50,10 @@ mod Time {
             hashCode(x1)
     }
 
-    instance Interop.Flix.Marshal[ZoneId] {
+    instance Interop.Flix.GoesToJava[ZoneId] {
         pub def toJavaObject(x: ZoneId): ##java.lang.Object =
             let ZoneId(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): ZoneId = 
-            ZoneId(unchecked_cast(o as ##java.time.ZoneId))
     }
 
 }
@@ -83,6 +80,8 @@ mod Time.ZoneId {
         let ZoneId(x1) = x;
         x1
 
+    pub def fromJavaObject(o: ##java.lang.Object): ZoneId = 
+        ZoneId(unchecked_cast(o as ##java.time.ZoneId))
 
     /// ## Constructors
 

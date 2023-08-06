@@ -99,13 +99,10 @@ mod Time {
     }
 
 
-    instance Interop.Flix.Marshal[Period] {
+    instance Interop.Flix.GoesToJava[Period] {
         pub def toJavaObject(x: Period): ##java.lang.Object =
             let Period(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): Period = 
-            Period(unchecked_cast(o as ##java.time.Period))
     }
     
 }

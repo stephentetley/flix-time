@@ -1,3 +1,7 @@
+### v0.5.0
+   Updated dependencies.
+   Changed `Marshal` instances to `GoesToJava`.
+
 ### v0.4.0
    Changed names of `marshal` and `unmarshal` functions to include what they are marshalling.
    Added missing fall through cases to pattern matches.
@@ -21,7 +25,7 @@
    Removed `Boxable` instances.
 
 ### v0.2.0
-   Updated to use `mod` rather than `mod`.
+   Updated to use `mod` rather than `namespace`.
 
 ### v0.1.1
    Version bump to use updated `graded-lib` dependency.

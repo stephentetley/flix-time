@@ -55,13 +55,10 @@ mod Time.Zone {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Interop.Flix.Marshal[ZoneOffsetTransition] {
+    instance Interop.Flix.GoesToJava[ZoneOffsetTransition] {
         pub def toJavaObject(x: ZoneOffsetTransition): ##java.lang.Object =
             let ZoneOffsetTransition(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): ZoneOffsetTransition = 
-            ZoneOffsetTransition(unchecked_cast(o as ##java.time.zone.ZoneOffsetTransition))
     }
 
 }
@@ -84,6 +81,9 @@ mod Time.Zone.ZoneOffsetTransition {
     pub def getZoneOffsetTransition(x: ZoneOffsetTransition): ##java.time.zone.ZoneOffsetTransition = 
         let ZoneOffsetTransition(x1) = x;
         x1
+
+    pub def fromJavaObject(o: ##java.lang.Object): ZoneOffsetTransition = 
+        ZoneOffsetTransition(unchecked_cast(o as ##java.time.zone.ZoneOffsetTransition))
 
     /// ## Constructors
 

@@ -71,13 +71,10 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Interop.Flix.Marshal[MonthDay] {
+    instance Interop.Flix.GoesToJava[MonthDay] {
         pub def toJavaObject(x: MonthDay): ##java.lang.Object =
             let MonthDay(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): MonthDay = 
-            MonthDay(unchecked_cast(o as ##java.time.MonthDay))
     }
 
 }

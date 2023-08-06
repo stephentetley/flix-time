@@ -76,13 +76,10 @@ mod Time {
             compareTo(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate)) |> Comparison.fromInt32
     }
 
-    instance Interop.Flix.Marshal[LocalDate] {
+    instance Interop.Flix.GoesToJava[LocalDate] {
         pub def toJavaObject(x: LocalDate): ##java.lang.Object =
             let LocalDate(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): LocalDate = 
-            LocalDate(unchecked_cast(o as ##java.time.LocalDate))
     }
 
     instance Interop.Time.Temporal.ImpTemporalAccessor[LocalDate] {
@@ -130,6 +127,9 @@ mod Time.LocalDate {
     pub def getLocalDate(x: LocalDate): ##java.time.LocalDate = 
         let LocalDate(x1) = x;
         x1
+
+    pub def fromJavaObject(o: ##java.lang.Object): LocalDate = 
+        LocalDate(unchecked_cast(o as ##java.time.LocalDate))
 
     /// ## Constructors
 
@@ -300,7 +300,7 @@ mod Time.LocalDate {
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let strm = datesUntil(s1, e1);
-        Interop.Util.Stream.Stream.wrapHH(r, strm) |> Interop.Util.Stream.Stream.iterator(r)
+        Interop.Util.Stream.Stream.wrapHH(r, strm) |> Interop.Util.Stream.Stream.iterator(r, fromJavaObject)
 
     pub def datesUntilWithStep(r: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r, r] \ r = 
         import java.time.LocalDate.datesUntil(##java.time.LocalDate, ##java.time.Period): ##java.util.stream.Stream \ r;
@@ -308,7 +308,7 @@ mod Time.LocalDate {
         let LocalDate(e1) = e;
         let step1 = Time.Period.getPeriod(step);
         let strm = datesUntil(s1, e1, step1);
-        Interop.Util.Stream.Stream.wrapHH(r, strm) |> Interop.Util.Stream.Stream.iterator(r)
+        Interop.Util.Stream.Stream.wrapHH(r, strm) |> Interop.Util.Stream.Stream.iterator(r, fromJavaObject)
 
     /// ## Getters and Setters
 

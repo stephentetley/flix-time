@@ -46,19 +46,17 @@ mod Time.Format {
             hashCode(x1)
     } 
     
-    instance Interop.Flix.Marshal[DecimalStyle] {
+    instance Interop.Flix.GoesToJava[DecimalStyle] {
         pub def toJavaObject(x: DecimalStyle): ##java.lang.Object =
             let DecimalStyle(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): DecimalStyle = 
-            DecimalStyle(unchecked_cast(o as ##java.time.format.DecimalStyle))
     }
 }
 
 mod Time.Format.DecimalStyle {
 
     use Interop.Util.Locale
+    use Interop.Util.SetZ
 
     use Time.Format.DecimalStyle
     use Time.Format.DecimalStyle.{DecimalStyle}
@@ -92,7 +90,11 @@ mod Time.Format.DecimalStyle {
         import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set \ {};
         getAvailableLocales() 
             |> Interop.Util.SetZ.wrapHH(r)
-            |> Interop.Util.SetZ.toFlixList
+            |> setZToFlixList(Interop.Util.Locale.fromJavaObject)
+    }
+
+    def setZToFlixList(fromJava: ##java.lang.Object -> a, s: SetZ[a, r]): List[a] \ r = region rc {
+        Interop.Util.SetZ.toFlixIterator(rc, fromJava, s) |> Iterator.toList
     }
 
     // Note - should the Locale module provide a function marshal and unmarshal functions

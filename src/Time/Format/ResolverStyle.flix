@@ -22,14 +22,10 @@ mod Time.Format {
         case Strict
     }
 
-    instance Interop.Flix.Marshal[ResolverStyle] {
+    instance Interop.Flix.GoesToJava[ResolverStyle] {
         pub def toJavaObject(x: ResolverStyle): ##java.lang.Object =
             let x1 = Time.Format.ResolverStyle.marshalResolverStyle(x);
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): ResolverStyle = 
-            let x1 = unchecked_cast(o as ##java.time.format.ResolverStyle);
-            Time.Format.ResolverStyle.unmarshalResolverStyle(x1)
     }
 
 }

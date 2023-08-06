@@ -30,13 +30,10 @@ mod Time {
     ///
     pub enum Clock(##java.time.Clock)
 
-    instance Interop.Flix.Marshal[Clock] {
+    instance Interop.Flix.GoesToJava[Clock] {
         pub def toJavaObject(x: Clock): ##java.lang.Object =
             let Clock(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): Clock = 
-            Clock(unchecked_cast(o as ##java.time.Clock))
     }
 
 }
