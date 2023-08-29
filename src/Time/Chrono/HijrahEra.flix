@@ -46,12 +46,12 @@ mod Time.Chrono {
 }
 
 mod Time.Chrono.HijrahEra {
+    
+    use Locale.{Locale}
 
-    use Interop.Util.Locale;
-
-    use Time.Chrono.HijrahEra;
-    use Time.Chrono.HijrahEra.{AH};
-    use Time.Format.TextStyle;
+    use Time.Chrono.HijrahEra
+    use Time.Chrono.HijrahEra.{AH}
+    use Time.Format.TextStyle
 
 
 
@@ -94,7 +94,7 @@ mod Time.Chrono.HijrahEra {
         import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshalHijrahEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let locale1 = Interop.Util.Locale.getHH(locale);
+        let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1)
         
  

@@ -72,8 +72,6 @@ mod Time {
 
 mod Time.Month {
 
-    use Interop.Util.Locale
-
     use Time.Month
     use Time.Month.{
         January, February, March, 
@@ -90,6 +88,8 @@ mod Time.Month {
     use Time.YearMonth
     use Time.ZonedDateTime
 
+    use Locale.{Locale}
+    
     /// ## Marshal enums
 
     pub def marshalMonth(x: Month): ##java.time.Month =
@@ -192,7 +192,7 @@ mod Time.Month {
         import java.time.Month.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshalMonth(x);
         let s1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let locale1 = Interop.Util.Locale.getHH(locale);
+        let Locale(locale1) = locale;
         getDisplayName(x1, s1, locale1)
 
     pub def getValue(x: Month): Int32 =

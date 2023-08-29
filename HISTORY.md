@@ -1,3 +1,6 @@
+### v0.6.0
+   Added dependency on `charset-locale`.
+   
 ### v0.5.0
    Updated dependencies.
    Changed `Marshal` instances to `GoesToJava`.

@@ -29,10 +29,10 @@ mod Time.Chrono {
 
 mod Time.Chrono.Era {
 
+    use Locale.{Locale}
     use Time.Chrono.Era
     use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
-    use Interop.Util.Locale
 
     pub def getHH(x: Era): ##java.time.chrono.Era = 
         let Era(x1) = x;
@@ -41,7 +41,7 @@ mod Time.Chrono.Era {
     pub def getDisplayName(style: TextStyle, locale: Locale, e: Era): String =
         import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let locale1 = Interop.Util.Locale.getHH(locale);
+        let Locale(locale1) = locale;
         let Era(e1) = e;
         getDisplayName(e1, style1, locale1)
 

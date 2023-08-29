@@ -44,8 +44,8 @@ mod Time.Chrono {
 }
 
 mod Time.Chrono.IsoEra {
-
-    use Interop.Util.Locale
+    
+    use Locale.{Locale}
 
     use Time.Chrono.IsoEra
     use Time.Chrono.IsoEra.{BCE, CE}
@@ -89,7 +89,7 @@ mod Time.Chrono.IsoEra {
         import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = unchecked_cast(marshalIsoEra(x) as ##java.time.chrono.Era);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let locale1 = Interop.Util.Locale.getHH(locale);
+        let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1)
         
 

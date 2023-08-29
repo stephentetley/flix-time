@@ -61,7 +61,8 @@ mod Time {
 
 mod Time.DayOfWeek {
 
-
+    use Locale.{Locale}
+    
     use Time.DayOfWeek
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
 
@@ -72,7 +73,6 @@ mod Time.DayOfWeek {
     use Time.ZonedDateTime
 
     use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Util.Locale
 
     /// 1 (Monday) to 7 (Sunday)
     pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
@@ -168,7 +168,7 @@ mod Time.DayOfWeek {
         import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshalDayOfWeek(x);
         let s1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let locale1 = Interop.Util.Locale.getHH(locale);
+        let Locale(locale1) = locale;
         getDisplayName(x1, s1, locale1)
 
 

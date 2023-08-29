@@ -52,8 +52,7 @@ mod Time.Format {
 mod Time.Format.DateTimeFormatter {
 
     
-    use Interop.Util.Locale
-    use Interop.Util.Locale.{Locale}
+    use Locale.{Locale}
 
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
@@ -186,11 +185,11 @@ mod Time.Format.DateTimeFormatter {
         let DateTimeFormatter(x1) = x;
         Locale(getLocale(x1))
 
-    pub def withLocale(loc: Locale, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
+    pub def withLocale(locale: Locale, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         import java.time.format.DateTimeFormatter.withLocale(##java.util.Locale): ##java.time.format.DateTimeFormatter \ {};
-        let loc1 = Interop.Util.Locale.getHH(loc);
+        let Locale(locale1) = locale;
         let DateTimeFormatter(x1) = x;
-        DateTimeFormatter(withLocale(x1, loc1))
+        DateTimeFormatter(withLocale(x1, locale1))
 
     pub def getDecimalStyle(x: DateTimeFormatter[t]): DecimalStyle =
         import java.time.format.DateTimeFormatter.getDecimalStyle(): ##java.time.format.DecimalStyle \ {};

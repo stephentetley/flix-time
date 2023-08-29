@@ -34,8 +34,7 @@ mod Interop.Time.Chrono.Chronology {
 
     use Interop.Time.Chrono.Chronology
     use Interop.Time.Chrono.Chronology.{Chronology}
-    use Interop.Util.Locale
-    use Interop.Util.Locale.{Locale}
+    use Locale.{Locale}
 
     pub def getDisplayName(sty: TextStyle, loc: Locale, x: Chronology): String = 
         import java.time.chrono.Chronology.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};        

@@ -93,7 +93,7 @@ mod TestDayOfWeek {
     /////////////////////////////////////////////////////////////////////////////
     
     pub def getDisplayName01(): Bool \ IO =         
-        Time.DayOfWeek.getDisplayName(Time.Format.TextStyle.Full, Interop.Util.Locale.getDefault(), Time.DayOfWeek.Monday) != ""
+        Time.DayOfWeek.getDisplayName(Time.Format.TextStyle.Full, Locale.getDefault(), Time.DayOfWeek.Monday) != ""
 
 
 }

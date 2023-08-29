@@ -55,7 +55,7 @@ mod Time.Format {
 
 mod Time.Format.DecimalStyle {
 
-    use Interop.Util.Locale
+    use Locale.{Locale}
     use Interop.Util.SetZ
 
     use Time.Format.DecimalStyle
@@ -76,7 +76,7 @@ mod Time.Format.DecimalStyle {
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
         import static java.time.format.DecimalStyle.of(##java.util.Locale): ##java.time.format.DecimalStyle \ IO;
-        let loc1 = Interop.Util.Locale.getHH(loc);
+        let Locale(loc1) = loc;
         DecimalStyle(of(loc1))
 
     pub def decimalStyleWithDefaultLocale(): DecimalStyle \ IO = 

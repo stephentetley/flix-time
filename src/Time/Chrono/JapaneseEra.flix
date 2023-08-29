@@ -63,8 +63,8 @@ mod Time.Chrono {
 
 mod Time.Chrono.JapaneseEra {
 
-    use Interop.Util.Locale
-
+    use Locale.{Locale}
+    
     use Time.Chrono.JapaneseEra
     use Time.Chrono.JapaneseEra.{JapaneseEra}
     use Time.Format.TextStyle
@@ -122,7 +122,7 @@ mod Time.Chrono.JapaneseEra {
         import java.time.chrono.JapaneseEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = getJapaneseEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let locale1 = Interop.Util.Locale.getHH(locale);
+        let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1)
 
 

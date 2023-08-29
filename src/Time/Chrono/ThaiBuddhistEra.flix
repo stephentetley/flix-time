@@ -27,7 +27,7 @@ mod Time.Chrono {
 
 mod Time.Chrono.ThaiBuddhistEra {
 
-    use Interop.Util.Locale
+    use Locale.{Locale}
 
     use Time.Chrono.ThaiBuddhistEra
     use Time.Chrono.ThaiBuddhistEra.{BEFORE_BE, BE}
@@ -68,7 +68,7 @@ mod Time.Chrono.ThaiBuddhistEra {
         import java.time.chrono.ThaiBuddhistEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshalThaiBuddhistEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let locale1 = Interop.Util.Locale.getHH(locale);
+        let Locale(locale1) = locale;
         getDisplayName(x1, style1, locale1)
         
 

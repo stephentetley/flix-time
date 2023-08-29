@@ -60,7 +60,6 @@ mod Time {
 
 mod Time.ZoneId {
 
-    use Interop.Util.Locale
 
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
@@ -73,7 +72,7 @@ mod Time.ZoneId {
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
     use Time.ZonedDateTime
-
+    use Locale.{Locale}
     /// ## Unwrap
 
     pub def getZoneId(x: ZoneId): ##java.time.ZoneId = 
@@ -155,7 +154,7 @@ mod Time.ZoneId {
     pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
         import java.time.ZoneId.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let locale1 = Interop.Util.Locale.getHH(locale);
+        let Locale(locale1) = locale;
         let ZoneId(z1) = z;
         getDisplayName(z1, style1, locale1)
 

@@ -16,7 +16,7 @@
 
 mod Time.Format {
 
-
+/*
     /// Is API is too large to use Setter from flix-interop?
 
     use Interop.Time.Format.{DateTimeFormatterBuilder => PrimBuilder}
@@ -62,14 +62,14 @@ mod Time.Format {
         pub def reifyError(ma: DateTimeFormatterBuilder[r, ka, ef, a]): DateTimeFormatterBuilder[r, ka, ef, Result[String, a]] = 
             Time.Format.DateTimeFormatterBuilder.reifyError(ma)
     }
-
+*/
 
 }
 
 
 mod Time.Format.DateTimeFormatterBuilder {
-
-    use Interop.Util.Locale
+/*
+    use Locale.{Locale}
     use Interop.Time.Format.{DateTimeFormatterBuilder => PrimBuilder}
     
     use Time.Format.DateTimeFormatterBuilder
@@ -139,7 +139,7 @@ mod Time.Format.DateTimeFormatterBuilder {
 
     pub def toFormatterWithLocale(rc: Region[r], loc: Locale, ma: DateTimeFormatterBuilder[r, a, ef, a]): Result[String, DateTimeFormatter[ftype]] \ {ef, r} = 
         let state1 = Interop.Time.Format.DateTimeFormatterBuilder.new(rc);
-        let loc1 = Interop.Util.Locale.getHH(loc);
+        let Locale(loc1) = loc;
         match runBuilder(ma, state1) {
             case Err(msg) => Err(msg)
             case Ok(_)    => Ok(DateTimeFormatter(Interop.Time.Format.DateTimeFormatterBuilder.toFormatterWithLocale(loc1, state1)))
@@ -256,5 +256,5 @@ mod Time.Format.DateTimeFormatterBuilder {
 
     pub def parseLenient!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.parseLenient!)
-
+*/
 }   

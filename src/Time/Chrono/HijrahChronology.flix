@@ -86,8 +86,6 @@ mod Time.Chrono.HijrahChronology {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
-    
-    use Interop.Util.Locale
 
     pub def getHijrahChronology(x: HijrahChronology): ##java.time.chrono.HijrahChronology = 
         let HijrahChronology(x1) = x;
