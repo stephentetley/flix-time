@@ -169,7 +169,8 @@ mod Time.ZoneId {
     pub def getAvailableZoneIds(): Set[String] \ IO =
         import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set \ IO;
         try {
-            getAvailableZoneIds()  |> Interop.Util.SetZ.wrapHH(Static) |> Interop.Util.SetZ.toFlixSet
+            let s = getAvailableZoneIds();
+            Adaptor.fromSet(s)
         } catch {
             case _: ##java.lang.Exception => Set.empty()
         }

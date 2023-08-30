@@ -112,12 +112,13 @@ mod Time.Zone.ZoneRules {
 
 
     pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] =
-        region r {
-            import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List \ {};
-            let LocalDateTime(ldt1) = ldt;
-            let ZoneRules(x1) = x;
-            getValidOffsets(x1, ldt1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixListWith(Time.ZoneOffset.fromJavaObject)
-        }
+        import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List \ {};
+        let LocalDateTime(ldt1) = ldt;
+        let ZoneRules(x1) = x;
+        let xs = getValidOffsets(x1, ldt1);
+        let xs1: List[##java.time.ZoneOffset] = Adaptor.fromList(xs);
+        List.map(z -> ZoneOffset(z), xs1)
+
 
     pub def getDaylightSavings(instant: InstantZ, x: ZoneRules): DurationZ =
         import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant): ##java.time.Duration \ {};
@@ -146,11 +147,11 @@ mod Time.Zone.ZoneRules {
         let InstantZ(instant1) = instant;
         ZoneOffsetTransition(previousTransition(x1, instant1))
 
-    pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] =
-        region r { 
-            import java.time.zone.ZoneRules.getTransitions(): ##java.util.List \ {};
-            let ZoneRules(x1) = x;
-            getTransitions(x1) |> Interop.Util.ListZ.wrapHH(r) |> Interop.Util.ListZ.toFlixListWith(Time.Zone.ZoneOffsetTransition.fromJavaObject)
-        }
+    pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = 
+        import java.time.zone.ZoneRules.getTransitions(): ##java.util.List \ {};
+        let ZoneRules(x1) = x;
+        let xs = getTransitions(x1);
+        let xs1: List[##java.time.zone.ZoneOffsetTransition] = Adaptor.fromList(xs);
+        List.map(z -> ZoneOffsetTransition(z), xs1)
 
 }

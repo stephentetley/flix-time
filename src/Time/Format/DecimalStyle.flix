@@ -86,16 +86,24 @@ mod Time.Format.DecimalStyle {
 
     /// ## DecimalStyle functions
 
-    pub def getAvailableLocales(): List[Locale] = region r {
+    pub def getAvailableLocales(): List[Locale] =
         import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set \ {};
-        getAvailableLocales() 
-            |> Interop.Util.SetZ.wrapHH(r)
-            |> setZToFlixList(Interop.Util.Locale.fromJavaObject)
+        let locs = getAvailableLocales();
+        let locs1: List[##java.util.Locale] = fromSetAsList(locs);
+        List.map(l -> Locale(l), locs1)
+
+
+    // def setZToFlixList(fromJava: ##java.lang.Object -> a, s: SetZ[a, r]): List[a] \ r = region rc {
+    //     Interop.Util.SetZ.toFlixIterator(rc, fromJava, s) |> Iterator.toList
+    // }
+
+
+    /// Candidate for Adaptor...
+    def fromSetAsList(l: ##java.util.Set): List[a] = region rc {
+        import java.util.Set.iterator(): ##java.util.Iterator \ rc;
+        iterator(l) |> Adaptor.fromIterator(rc, Proxy.Proxy: Proxy[a]) |> Iterator.toList
     }
 
-    def setZToFlixList(fromJava: ##java.lang.Object -> a, s: SetZ[a, r]): List[a] \ r = region rc {
-        Interop.Util.SetZ.toFlixIterator(rc, fromJava, s) |> Iterator.toList
-    }
 
     // Note - should the Locale module provide a function marshal and unmarshal functions
     // so a client doesn't have to use: `o -> Locale(o as ##java.util.Locale)` ?

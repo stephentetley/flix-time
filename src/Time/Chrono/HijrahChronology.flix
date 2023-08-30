@@ -169,13 +169,12 @@ mod Time.Chrono.HijrahChronology {
         let HijrahChronology(x1) = x;
         Time.Chrono.HijrahEra.unmarshalHijrahEra(eraOf(x1, i))
 
-    pub def eras(x: HijrahChronology): List[HijrahEra] = region r {
+    pub def eras(hc: HijrahChronology): List[HijrahEra] =
         import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};
-        let HijrahChronology(x1) = x;
-        eras(x1) 
-            |> Interop.Util.ListZ.wrapHH(r) 
-            |> Interop.Util.ListZ.toFlixListWith(Time.Chrono.HijrahEra.fromJavaObject)
-    }
+        let HijrahChronology(hc1) = hc;
+        let eras1: List[##java.time.chrono.HijrahEra] = eras(hc1) |> Adaptor.fromList;
+        List.map(Time.Chrono.HijrahEra.unmarshalHijrahEra, eras1)
+
 
     pub def getId(x: HijrahChronology): String = 
         import java.time.chrono.HijrahChronology.getId(): String \ {};
