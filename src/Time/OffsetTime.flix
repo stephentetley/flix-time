@@ -75,12 +75,6 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Interop.Flix.GoesToJava[OffsetTime] {
-        pub def toJavaObject(x: OffsetTime): ##java.lang.Object =
-            let OffsetTime(x1) = x;
-            checked_cast(x1)
-    }
-
 }
 
 mod Time.OffsetTime {

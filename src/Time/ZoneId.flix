@@ -50,12 +50,6 @@ mod Time {
             hashCode(x1)
     }
 
-    instance Interop.Flix.GoesToJava[ZoneId] {
-        pub def toJavaObject(x: ZoneId): ##java.lang.Object =
-            let ZoneId(x1) = x;
-            checked_cast(x1)
-    }
-
 }
 
 mod Time.ZoneId {
@@ -90,11 +84,11 @@ mod Time.ZoneId {
             ZoneId(of(zoneId.zoneId))
         })
         
-
-    pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] =
+    /// Ideally not in IO...
+    pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] \ IO =
         Result.tryCatch(_ -> {
             import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId \ {};
-            let jmap = Interop.Util.MapZ.fromFlixMapViaHashMapHH(aliases);
+            let jmap = Adaptor.toMap(aliases);
             ZoneId(of(zoneId.zoneId, jmap))
         })
 

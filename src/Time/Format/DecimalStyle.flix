@@ -46,17 +46,11 @@ mod Time.Format {
             hashCode(x1)
     } 
     
-    instance Interop.Flix.GoesToJava[DecimalStyle] {
-        pub def toJavaObject(x: DecimalStyle): ##java.lang.Object =
-            let DecimalStyle(x1) = x;
-            checked_cast(x1)
-    }
 }
 
 mod Time.Format.DecimalStyle {
 
     use Locale.{Locale}
-    use Interop.Util.SetZ
 
     use Time.Format.DecimalStyle
     use Time.Format.DecimalStyle.{DecimalStyle}

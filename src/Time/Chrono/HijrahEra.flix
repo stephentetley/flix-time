@@ -25,12 +25,6 @@ mod Time.Chrono {
     pub enum HijrahEra with Eq, Order, ToString, Hash {
         case AH
     }   
- 
-    instance Interop.Flix.GoesToJava[HijrahEra] {
-        pub def toJavaObject(x: HijrahEra): ##java.lang.Object =
-            let x1 = Time.Chrono.HijrahEra.marshalHijrahEra(x);
-            checked_cast(x1)
-    }
     
     instance Time.Chrono.ImplementsEra[HijrahEra] {
         pub def toEra(x: HijrahEra): Era = 

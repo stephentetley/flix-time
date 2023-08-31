@@ -48,12 +48,6 @@ mod Time.Zone {
             hashCode(x1)
     }
 
-    instance Interop.Flix.GoesToJava[ZoneOffsetTransitionRule] {
-        pub def toJavaObject(x: ZoneOffsetTransitionRule): ##java.lang.Object =
-            let ZoneOffsetTransitionRule(x1) = x;
-            checked_cast(x1)
-    }
-
 }
 
 mod Time.Zone.ZoneOffsetTransitionRule {

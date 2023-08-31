@@ -48,12 +48,6 @@ mod Time.Zone {
 
     }
 
-    instance Interop.Flix.GoesToJava[ZoneRules] {
-        pub def toJavaObject(x: ZoneRules): ##java.lang.Object =
-            let ZoneRules(x1) = x;
-            checked_cast(x1)
-    }
-
 }
 
 mod Time.Zone.ZoneRules {

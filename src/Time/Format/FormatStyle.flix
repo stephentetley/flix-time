@@ -23,12 +23,6 @@ mod Time.Format {
         case Medium
         case Short
     }
-    
-    instance Interop.Flix.GoesToJava[FormatStyle] {
-        pub def toJavaObject(x: FormatStyle): ##java.lang.Object =
-            let x1 = Time.Format.FormatStyle.marshalFormatStyle(x);
-            checked_cast(x1)
-    }
 
 }
 

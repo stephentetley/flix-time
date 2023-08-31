@@ -78,12 +78,6 @@ mod Time {
             compareTo(x1, cy1) |> Comparison.fromInt32
     }
 
-    instance Interop.Flix.GoesToJava[LocalDateTime] {
-        pub def toJavaObject(x: LocalDateTime): ##java.lang.Object =
-            let LocalDateTime(x1) = x;
-            checked_cast(x1)
-    }
-
     instance Interop.Time.Temporal.ImpTemporalAccessor[LocalDateTime] {
         pub def toTemporalAccessor(x: LocalDateTime): TemporalAccessor = 
             let LocalDateTime(x1) = x;

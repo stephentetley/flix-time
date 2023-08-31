@@ -24,12 +24,6 @@ mod Time.Chrono {
         case CE
     }   
 
-    instance Interop.Flix.GoesToJava[IsoEra] {
-        pub def toJavaObject(x: IsoEra): ##java.lang.Object =
-            let x1 = Time.Chrono.IsoEra.marshalIsoEra(x);
-            checked_cast(x1)
-    }
-
     instance Time.Chrono.ImplementsEra[IsoEra] {
         pub def toEra(x: IsoEra): Era = 
             let x1 = Time.Chrono.IsoEra.marshalIsoEra(x);

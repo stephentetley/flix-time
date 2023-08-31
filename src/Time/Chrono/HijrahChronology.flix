@@ -41,13 +41,6 @@ mod Time.Chrono {
     }
 
 
-    instance Interop.Flix.GoesToJava[HijrahChronology] {
-        pub def toJavaObject(x: HijrahChronology): ##java.lang.Object =
-            let HijrahChronology(x1) = x;
-            checked_cast(x1)
-    }
-
-
     instance Interop.Time.Chrono.ImpChronology[HijrahChronology] {
         pub def toChronology(x: HijrahChronology): Chronology = 
             let HijrahChronology(x1) = x;

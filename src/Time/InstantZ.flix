@@ -77,12 +77,6 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Interop.Flix.GoesToJava[InstantZ] {
-        pub def toJavaObject(x: InstantZ): ##java.lang.Object =
-            let InstantZ(x1) = x;
-            checked_cast(x1)
-    }
-
 }   
 
 mod Time.InstantZ {

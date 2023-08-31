@@ -26,12 +26,6 @@ mod Time.Format {
     }
 
 
-    instance Interop.Flix.GoesToJava[TextStyle] {
-        pub def toJavaObject(x: TextStyle): ##java.lang.Object =
-            let x1 = Time.Format.TextStyle.marshalTextStyle(x);
-            checked_cast(x1)
-    }
-
 }
 
 mod Time.Format.TextStyle {

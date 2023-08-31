@@ -98,12 +98,6 @@ mod Time {
         pub def empty(): Period = Time.Period.zero()
     }
 
-
-    instance Interop.Flix.GoesToJava[Period] {
-        pub def toJavaObject(x: Period): ##java.lang.Object =
-            let Period(x1) = x;
-            checked_cast(x1)
-    }
     
 }
 

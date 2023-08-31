@@ -24,12 +24,6 @@ mod Time.Format {
         case NonNegative
     }
 
-    instance Interop.Flix.GoesToJava[SignStyle] {
-        pub def toJavaObject(x: SignStyle): ##java.lang.Object =
-            let x1 = Time.Format.SignStyle.marshalSignStyle(x);
-            checked_cast(x1)
-    }
-
 }
 
 mod Time.Format.SignStyle {

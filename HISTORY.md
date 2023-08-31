@@ -1,3 +1,6 @@
+### v0.7.0
+   Removed `interop-base` dependency.
+
 ### v0.6.0
    Added dependency on `charset-locale`.
    Commented out `DateTimeFormatterBuilder`.

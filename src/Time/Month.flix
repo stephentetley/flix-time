@@ -62,12 +62,6 @@ mod Time {
     }
 
 
-    instance Interop.Flix.GoesToJava[Month] {
-        pub def toJavaObject(x: Month): ##java.lang.Object =
-            let x1 = Time.Month.marshalMonth(x);
-            checked_cast(x1)
-    }
-
 }
 
 mod Time.Month {

@@ -111,12 +111,6 @@ mod Time {
     }
 
 
-    instance Interop.Flix.GoesToJava[DurationZ] {
-        pub def toJavaObject(x: DurationZ): ##java.lang.Object =
-            let DurationZ(x1) = x;
-            checked_cast(x1)
-    }
-
 }
 
 mod Time.DurationZ {

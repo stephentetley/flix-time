@@ -51,11 +51,6 @@ mod Time {
         }
     }
 
-    instance Interop.Flix.GoesToJava[DayOfWeek] {
-        pub def toJavaObject(x: DayOfWeek): ##java.lang.Object =
-            let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
-            checked_cast(x1)
-    }
 
 }
 

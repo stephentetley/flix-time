@@ -68,12 +68,6 @@ mod Time.Temporal {
         }
     }
 
-    instance Interop.Flix.GoesToJava[ChronoUnit] {
-        pub def toJavaObject(x: ChronoUnit): ##java.lang.Object =
-            let x1 = Time.Temporal.ChronoUnit.marshalChronoUnit(x);
-            checked_cast(x1)
-    }
-
     instance Time.Temporal.ImplementsTemporalUnit[ChronoUnit] {
         pub def toTemporalUnit(x: ChronoUnit): TemporalUnit = 
             let x1 = Time.Temporal.ChronoUnit.marshalChronoUnit(x);
