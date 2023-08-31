@@ -1,6 +1,7 @@
 ### v0.6.0
    Added dependency on `charset-locale`.
-   
+   Commented out `DateTimeFormatterBuilder`.
+
 ### v0.5.0
    Updated dependencies.
    Changed `Marshal` instances to `GoesToJava`.

@@ -93,11 +93,6 @@ mod Time.Format.DecimalStyle {
         List.map(l -> Locale(l), locs1)
 
 
-    // def setZToFlixList(fromJava: ##java.lang.Object -> a, s: SetZ[a, r]): List[a] \ r = region rc {
-    //     Interop.Util.SetZ.toFlixIterator(rc, fromJava, s) |> Iterator.toList
-    // }
-
-
     /// Candidate for Adaptor...
     def fromSetAsList(l: ##java.util.Set): List[a] = region rc {
         import java.util.Set.iterator(): ##java.util.Iterator \ rc;
