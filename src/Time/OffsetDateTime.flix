@@ -19,8 +19,8 @@ mod Time {
     
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A wrapper around a Java OffsetDateTime.
@@ -75,7 +75,7 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Interop.Time.Temporal.ImpTemporalAccessor[OffsetDateTime] {
+    instance Time.Internal.Temporal.ImpTemporalAccessor[OffsetDateTime] {
         pub def toTemporalAccessor(x: OffsetDateTime): TemporalAccessor =
             let OffsetDateTime(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))

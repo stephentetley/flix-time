@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-mod Interop.Time.Chrono {
+mod Time.Internal.Chrono {
 
     /// Interface...
 
@@ -27,13 +27,13 @@ mod Interop.Time.Chrono {
 
 }
 
-mod Interop.Time.Chrono.Chronology {
+mod Time.Internal.Chrono.Chronology {
 
 
     use Time.Format.TextStyle
 
-    use Interop.Time.Chrono.Chronology
-    use Interop.Time.Chrono.Chronology.{Chronology}
+    use Time.Internal.Chrono.Chronology
+    use Time.Internal.Chrono.Chronology.{Chronology}
     use Locale.{Locale}
 
     pub def getDisplayName(sty: TextStyle, loc: Locale, x: Chronology): String = 

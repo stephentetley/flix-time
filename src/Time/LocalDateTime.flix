@@ -20,8 +20,8 @@ mod Time {
 
     use Time.LocalDateTime
     use Time.LocalDateTime.{LocalDateTime}
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around a Java LocalDateTime.
@@ -78,7 +78,7 @@ mod Time {
             compareTo(x1, cy1) |> Comparison.fromInt32
     }
 
-    instance Interop.Time.Temporal.ImpTemporalAccessor[LocalDateTime] {
+    instance Time.Internal.Temporal.ImpTemporalAccessor[LocalDateTime] {
         pub def toTemporalAccessor(x: LocalDateTime): TemporalAccessor = 
             let LocalDateTime(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))

@@ -95,8 +95,8 @@ mod Time.InstantZ {
     use Time.ZoneId.{ZoneId}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     /// ## Unwrap
 
@@ -164,7 +164,7 @@ mod Time.InstantZ {
     def fromTemporalAccessor(x: TemporalAccessor): InstantZ = 
         import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant \ {} as fromTA;
         try {
-            Interop.Time.Temporal.TemporalAccessor.getHH(x) 
+            Time.Internal.Temporal.TemporalAccessor.getHH(x) 
                 |> fromTA
                 |> InstantZ
         } catch {
@@ -175,11 +175,11 @@ mod Time.InstantZ {
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
-        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     /// ## `to` functions

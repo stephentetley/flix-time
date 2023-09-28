@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-mod Interop.Time.Chrono {
+mod Time.Internal.Chrono {
 
     /// Interface...
 
@@ -27,10 +27,10 @@ mod Interop.Time.Chrono {
 
 }
 
-mod Interop.Time.Chrono.ChronoLocalDate {
+mod Time.Internal.Chrono.ChronoLocalDate {
 
-    use Interop.Time.Chrono.ChronoLocalDate
-    use Interop.Time.Chrono.ChronoLocalDate.{ChronoLocalDate}
+    use Time.Internal.Chrono.ChronoLocalDate
+    use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
 
     pub def toString(x: ChronoLocalDate): String =
         import java.time.chrono.ChronoLocalDate.toString(): String \ {};

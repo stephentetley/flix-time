@@ -19,8 +19,8 @@ mod Time {
 
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A wrapper around a Java ZonedDateTime.
@@ -77,7 +77,7 @@ mod Time {
             compareTo(cx1, cy1) |> Comparison.fromInt32
     }
 
-    instance Interop.Time.Temporal.ImpTemporalAccessor[ZonedDateTime] {
+    instance Time.Internal.Temporal.ImpTemporalAccessor[ZonedDateTime] {
         pub def toTemporalAccessor(x: ZonedDateTime): TemporalAccessor =
             let ZonedDateTime(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))

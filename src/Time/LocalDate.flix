@@ -20,8 +20,8 @@ mod Time {
 
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around a Java LocalDate.
@@ -76,7 +76,7 @@ mod Time {
             compareTo(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate)) |> Comparison.fromInt32
     }
 
-    instance Interop.Time.Temporal.ImpTemporalAccessor[LocalDate] {
+    instance Time.Internal.Temporal.ImpTemporalAccessor[LocalDate] {
         pub def toTemporalAccessor(x: LocalDate): TemporalAccessor = 
             let LocalDate(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
@@ -113,8 +113,8 @@ mod Time.LocalDate {
     use Time.ZoneId.{ZoneId}
     use Time.InstantZ
     use Time.InstantZ.{InstantZ}
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     /// ## Unwrap
 
@@ -212,7 +212,7 @@ mod Time.LocalDate {
 
     /// TODO - idiomatic Flix is `toSomeDatatype` in the respective module rather than `fromSomeDatatype`
     pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
-        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x) 
+        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x) 
             |> fromTemporalAccessor
 
     /// ## `to` functions

@@ -18,10 +18,10 @@ mod Time.Chrono {
 
     use Time.Chrono.HijrahDate
     use Time.Chrono.HijrahDate.{HijrahDate}
-    use Interop.Time.Chrono.ChronoLocalDate
-    use Interop.Time.Chrono.ChronoLocalDate.{ChronoLocalDate}
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
+    use Time.Internal.Chrono.ChronoLocalDate
+    use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around java.time.chrono.HijrahDate.
@@ -51,7 +51,7 @@ mod Time.Chrono {
         pub def hash(x: HijrahDate): Int32 = Time.Chrono.HijrahDate.hashCode(x)
     }  
 
-    instance Interop.Time.Temporal.ImpTemporalAccessor[HijrahDate] {
+    instance Time.Internal.Temporal.ImpTemporalAccessor[HijrahDate] {
         pub def toTemporalAccessor(x: HijrahDate): TemporalAccessor = 
             let HijrahDate(x1) = x;
             TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
@@ -61,7 +61,7 @@ mod Time.Chrono {
             HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
     }
 
-    instance Interop.Time.Chrono.ImpChronoLocalDate[HijrahDate] {
+    instance Time.Internal.Chrono.ImpChronoLocalDate[HijrahDate] {
         pub def toChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
             let HijrahDate(x1) = x;
             ChronoLocalDate(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
@@ -132,28 +132,28 @@ mod Time.Chrono.HijrahDate {
 
 
     pub def compareTo(x: HijrahDate, y: HijrahDate): Int32 = 
-        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
-        Interop.Time.Chrono.ChronoLocalDate.compareTo(x1, y1)
+        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let y1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        Time.Internal.Chrono.ChronoLocalDate.compareTo(x1, y1)
 
     pub def isAfter(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
-        Interop.Time.Chrono.ChronoLocalDate.isAfter(x1, y1)
+        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let y1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        Time.Internal.Chrono.ChronoLocalDate.isAfter(x1, y1)
 
     pub def isBefore(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
-        Interop.Time.Chrono.ChronoLocalDate.isBefore(x1, y1)
+        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let y1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        Time.Internal.Chrono.ChronoLocalDate.isBefore(x1, y1)
 
     pub def isEqual(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
-        Interop.Time.Chrono.ChronoLocalDate.isEqual(x1, y1)
+        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let y1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        Time.Internal.Chrono.ChronoLocalDate.isEqual(x1, y1)
 
     pub def toEpochDay(x: HijrahDate): Int64 = 
-        let x1 = Interop.Time.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        Interop.Time.Chrono.ChronoLocalDate.toEpochDay(x1)
+        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        Time.Internal.Chrono.ChronoLocalDate.toEpochDay(x1)
 
     pub def toLocalDate(x: HijrahDate): LocalDate =
         import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;

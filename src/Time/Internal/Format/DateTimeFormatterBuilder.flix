@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
- mod Interop.Time.Format {
+ mod Time.Internal.Format {
 
     /// Class / Mutable
 
@@ -23,10 +23,10 @@
 
 }
 
- mod Interop.Time.Format.DateTimeFormatterBuilder {
+ mod Time.Internal.Format.DateTimeFormatterBuilder {
 
-    use Interop.Time.Format.DateTimeFormatterBuilder
-    use Interop.Time.Format.DateTimeFormatterBuilder.DateTimeFormatterBuilder
+    use Time.Internal.Format.DateTimeFormatterBuilder
+    use Time.Internal.Format.DateTimeFormatterBuilder.DateTimeFormatterBuilder
 
     /// ## Unwrap
     pub def getHH(x: DateTimeFormatterBuilder[r]): ##java.time.format.DateTimeFormatterBuilder = 

@@ -20,8 +20,8 @@ mod Time {
 
     use Time.DayOfWeek
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A day of the week.
@@ -67,7 +67,7 @@ mod Time.DayOfWeek {
     use Time.OffsetDateTime
     use Time.ZonedDateTime
 
-    use Interop.Time.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor
 
     /// 1 (Monday) to 7 (Sunday)
     pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
@@ -133,7 +133,7 @@ mod Time.DayOfWeek {
     def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
         import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek \ {} as fromTA;
         try {
-            Interop.Time.Temporal.TemporalAccessor.getHH(x) |> fromTA |> unmarshalDayOfWeek
+            Time.Internal.Temporal.TemporalAccessor.getHH(x) |> fromTA |> unmarshalDayOfWeek
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
@@ -141,19 +141,19 @@ mod Time.DayOfWeek {
         }
     
     pub def fromLocalDate(x: LocalDate): DayOfWeek = 
-        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
-        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
-        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
-        Interop.Time.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
             |> fromTemporalAccessor
 
 

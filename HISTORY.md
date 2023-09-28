@@ -1,3 +1,6 @@
+### v0.8.0
+   Renamed `Interop.Time` namespace to `Time.Internal`.
+
 ### v0.7.0
    Removed `interop-base` dependency.
 

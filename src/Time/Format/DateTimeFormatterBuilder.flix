@@ -19,7 +19,7 @@ mod Time.Format {
 /*
     /// Is API is too large to use Setter from flix-interop?
 
-    use Interop.Time.Format.{DateTimeFormatterBuilder => PrimBuilder}
+    use Time.Internal.Format.{DateTimeFormatterBuilder => PrimBuilder}
 
     /// 
     /// `ka` is the continuation answer type
@@ -70,7 +70,7 @@ mod Time.Format {
 mod Time.Format.DateTimeFormatterBuilder {
 /*
     use Locale.{Locale}
-    use Interop.Time.Format.{DateTimeFormatterBuilder => PrimBuilder}
+    use Time.Internal.Format.{DateTimeFormatterBuilder => PrimBuilder}
     
     use Time.Format.DateTimeFormatterBuilder
     use Time.Format.DateTimeFormatterBuilder.{DateTimeFormatterBuilder}
@@ -131,33 +131,33 @@ mod Time.Format.DateTimeFormatterBuilder {
 
 
     pub def toFormatter(rc: Region[r], ma: DateTimeFormatterBuilder[r, a, ef, a]): Result[String, DateTimeFormatter[ftype]] \ {ef, r} = 
-        let state1 = Interop.Time.Format.DateTimeFormatterBuilder.new(rc);
+        let state1 = Time.Internal.Format.DateTimeFormatterBuilder.new(rc);
         match runBuilder(ma, state1) {
             case Err(msg) => Err(msg)
-            case Ok(_)    => Ok(DateTimeFormatter(Interop.Time.Format.DateTimeFormatterBuilder.toFormatter(state1)))
+            case Ok(_)    => Ok(DateTimeFormatter(Time.Internal.Format.DateTimeFormatterBuilder.toFormatter(state1)))
         }
 
     pub def toFormatterWithLocale(rc: Region[r], loc: Locale, ma: DateTimeFormatterBuilder[r, a, ef, a]): Result[String, DateTimeFormatter[ftype]] \ {ef, r} = 
-        let state1 = Interop.Time.Format.DateTimeFormatterBuilder.new(rc);
+        let state1 = Time.Internal.Format.DateTimeFormatterBuilder.new(rc);
         let Locale(loc1) = loc;
         match runBuilder(ma, state1) {
             case Err(msg) => Err(msg)
-            case Ok(_)    => Ok(DateTimeFormatter(Interop.Time.Format.DateTimeFormatterBuilder.toFormatterWithLocale(loc1, state1)))
+            case Ok(_)    => Ok(DateTimeFormatter(Time.Internal.Format.DateTimeFormatterBuilder.toFormatterWithLocale(loc1, state1)))
         }
 
 
 
     pub def append!(fmt: DateTimeFormatter[ftype]): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         let fmt1 = Time.Format.DateTimeFormatter.getDateTimeFormatter(fmt);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.append!(fmt1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.append!(fmt1))
 
     pub def appendChronologyId!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendChronologyId!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendChronologyId!)
 
 
     pub def appendChronologyText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendChronologyText!(style1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendChronologyText!(style1))
 
     /// Java 16
 
@@ -169,92 +169,92 @@ mod Time.Format.DateTimeFormatterBuilder {
 
     pub def appendGenericZoneText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendGenericZoneText!(style1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendGenericZoneText!(style1))
 
     pub def appendGenericZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, r, Unit] =
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let s1 = Interop.Util.SetZ.fromFoldableViaHashSetHH(preferredZones);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendGenericZoneTextWithZones!(style1, s1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendGenericZoneTextWithZones!(style1, s1))
 
 
     pub def appendInstant!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendInstant!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendInstant!)
 
     pub def appendInstantWithFractionalDigits!(fractionalDigits: Int32): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendInstantWithFractionalDigits!(fractionalDigits))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendInstantWithFractionalDigits!(fractionalDigits))
 
     pub def appendLiteralChar!(ch: Char): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendLiteralChar!(ch))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendLiteralChar!(ch))
 
     pub def appendLiteralString!(s: String): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendLiteralString!(s))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendLiteralString!(s))
 
     pub def appendLocalized!(timeStyle: {timeStyle = FormatStyle}, dateStyle: {dateStyle = FormatStyle}): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         let timeStyle1 = Time.Format.FormatStyle.marshalFormatStyle(timeStyle.timeStyle);
         let dateStyle1 = Time.Format.FormatStyle.marshalFormatStyle(dateStyle.dateStyle);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendLocalized!(timeStyle = timeStyle1, dateStyle = dateStyle1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendLocalized!(timeStyle = timeStyle1, dateStyle = dateStyle1))
 
     pub def appendLocalizedOffset!(style: TextStyle): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendLocalizedOffset!(style1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendLocalizedOffset!(style1))
 
 
     pub def appendOffset!(pattern: {pattern = String}, noOffsetText: {noOffsetText = String}): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendOffset!(pattern, noOffsetText))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendOffset!(pattern, noOffsetText))
 
     pub def appendOffsetId!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendOffsetId!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendOffsetId!)
 
     pub def appendOptional!(fmt: DateTimeFormatter[ftype]): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         let fmt1 = Time.Format.DateTimeFormatter.getDateTimeFormatter(fmt);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendOptional!(fmt1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendOptional!(fmt1))
 
     pub def appendPattern!(patt: String): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendPattern!(patt))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendPattern!(patt))
 
     pub def appendZoneId!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendZoneId!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendZoneId!)
 
     pub def appendZoneOrOffsetId!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendZoneOrOffsetId!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendZoneOrOffsetId!)
 
     pub def appendZoneRegionId!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendZoneRegionId!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendZoneRegionId!)
 
     pub def appendZoneText!(style: TextStyle): DateTimeFormatterBuilder[r, ka, r, Unit] = 
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendZoneText!(style1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendZoneText!(style1))
 
     pub def appendZoneTextWithZones!(style: TextStyle, preferredZones: List[ZoneId]): DateTimeFormatterBuilder[r, ka, r, Unit] =
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let s1 = Interop.Util.SetZ.fromFoldableViaHashSetHH(preferredZones);
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.appendZoneTextWithZones!(style1, s1))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.appendZoneTextWithZones!(style1, s1))
     
 
 
     pub def optionalStart!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.optionalStart!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.optionalStart!)
 
     pub def optionalEnd!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.optionalEnd!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.optionalEnd!)
 
     pub def padNext!(n: Int32): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.padNext!(n))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.padNext!(n))
 
     pub def padNextWithChar!(n: Int32, ch: Char): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.padNextWithChar!(n, ch))
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.padNextWithChar!(n, ch))
 
 
     pub def parseCaseSensitive!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.parseCaseSensitive!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.parseCaseSensitive!)
 
     pub def parseCaseInsensitive!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.parseCaseInsensitive!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.parseCaseInsensitive!)
 
     pub def parseStrict!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.parseStrict!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.parseStrict!)
 
     pub def parseLenient!(): DateTimeFormatterBuilder[r, ka, r, Unit] = 
-        liftSetter!(Interop.Time.Format.DateTimeFormatterBuilder.parseLenient!)
+        liftSetter!(Time.Internal.Format.DateTimeFormatterBuilder.parseLenient!)
 */
 }   

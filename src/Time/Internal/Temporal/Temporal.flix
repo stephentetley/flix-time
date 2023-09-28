@@ -14,26 +14,15 @@
  * limitations under the License.
  */
 
-mod Interop.Time.Temporal {
+ mod Time.Internal.Temporal {
 
     /// Interface...
 
-    pub enum TemporalAccessor(##java.time.temporal.TemporalAccessor)
+    pub enum Temporal(##java.time.temporal.Temporal)
 
-    pub class ImpTemporalAccessor[t: Type] {
-        pub def toTemporalAccessor(s: t): TemporalAccessor
-        pub def fromTemporalAccessor(s: TemporalAccessor): t
+    pub class ImplementsTemporal[t: Type] {
+        pub def toTemporal(s: t): Temporal
+        pub def fromTemporal(s: Temporal): t
     }
 
 }
-
-mod Interop.Time.Temporal.TemporalAccessor {
-
-    use Interop.Time.Temporal.TemporalAccessor
-    use Interop.Time.Temporal.TemporalAccessor.{TemporalAccessor}
-
-    pub def getHH(x: TemporalAccessor): ##java.time.temporal.TemporalAccessor = 
-        let TemporalAccessor(x1) = x;
-        x1
-
-}        
