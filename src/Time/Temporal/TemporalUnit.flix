@@ -30,10 +30,6 @@ mod Time.Temporal.TemporalUnit {
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
 
-    pub def getHH(x: TemporalUnit): ##java.time.temporal.TemporalUnit = 
-        let TemporalUnit(x1) = x;
-        x1
-
     pub def getDuration(x: TemporalUnit): DurationZ = 
         import java.time.temporal.TemporalUnit.getDuration(): ##java.time.Duration \ {};
         let TemporalUnit(x1) = x;

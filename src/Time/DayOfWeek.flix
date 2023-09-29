@@ -133,7 +133,8 @@ mod Time.DayOfWeek {
     def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
         import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek \ {} as fromTA;
         try {
-            Time.Internal.Temporal.TemporalAccessor.getHH(x) |> fromTA |> unmarshalDayOfWeek
+            let Time.Internal.Temporal.TemporalAccessor.TemporalAccessor(x1) = x;
+            unmarshalDayOfWeek(fromTA(x1))
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};

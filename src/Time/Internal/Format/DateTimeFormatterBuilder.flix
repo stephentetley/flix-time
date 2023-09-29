@@ -28,10 +28,6 @@
     use Time.Internal.Format.DateTimeFormatterBuilder
     use Time.Internal.Format.DateTimeFormatterBuilder.DateTimeFormatterBuilder
 
-    /// ## Unwrap
-    pub def getHH(x: DateTimeFormatterBuilder[r]): ##java.time.format.DateTimeFormatterBuilder = 
-        let DateTimeFormatterBuilder(x1) = x;
-        x1
 
     pub def new(_: Region[r]): DateTimeFormatterBuilder[r] \ r = 
         import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as new1;

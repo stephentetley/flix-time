@@ -198,7 +198,8 @@ mod Time.DurationZ {
     def ofTemporalUnit(amount: Int64, tu: TemporalUnit): DurationZ =
         import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
         try {
-             Time.Temporal.TemporalUnit.getHH(tu) |> of(amount) |> DurationZ
+             let TemporalUnit(tu1) = tu;
+             DurationZ(of(amount, tu1))
         } catch { 
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};

@@ -34,10 +34,6 @@ mod Time.Temporal.ValueRange {
 
     /// ## Unwrap
 
-    pub def getHH(x: ValueRange): ##java.time.temporal.ValueRange = 
-        let ValueRange(x1) = x;
-        x1
-
     pub def isFixed(x: ValueRange): Bool = 
         import java.time.temporal.ValueRange.isFixed(): Bool \ {};
         let ValueRange(x1) = x;

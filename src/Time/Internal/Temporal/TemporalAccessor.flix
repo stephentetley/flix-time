@@ -32,8 +32,5 @@ mod Time.Internal.Temporal.TemporalAccessor {
     use Time.Internal.Temporal.TemporalAccessor
     use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
-    pub def getHH(x: TemporalAccessor): ##java.time.temporal.TemporalAccessor = 
-        let TemporalAccessor(x1) = x;
-        x1
 
 }        

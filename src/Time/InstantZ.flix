@@ -164,9 +164,8 @@ mod Time.InstantZ {
     def fromTemporalAccessor(x: TemporalAccessor): InstantZ = 
         import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant \ {} as fromTA;
         try {
-            Time.Internal.Temporal.TemporalAccessor.getHH(x) 
-                |> fromTA
-                |> InstantZ
+            let TemporalAccessor(x1) = x;
+            InstantZ(fromTA(x1))
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
