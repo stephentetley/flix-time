@@ -25,7 +25,7 @@ mod Time.Format {
     /// This uses a phantom type parameter to restrict the application of
     /// specific format types (date, time, date-time).
     ///
-    pub enum DateTimeFormatter[_ftype](##java.time.format.DateTimeFormatter)
+    pub enum DateTimeFormatter[_ftype: Type](##java.time.format.DateTimeFormatter)
 
     instance ToString[DateTimeFormatter[t]] {
         pub def toString(x: DateTimeFormatter[t]): String =
