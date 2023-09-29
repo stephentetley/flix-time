@@ -20,9 +20,5 @@
 
     pub enum Temporal(##java.time.temporal.Temporal)
 
-    pub class ImplementsTemporal[t: Type] {
-        pub def toTemporal(s: t): Temporal
-        pub def fromTemporal(s: Temporal): t
-    }
 
 }

@@ -16,8 +16,6 @@
 
 mod Time.Chrono {
 
-    use Time.Chrono.Era
-    use Time.Chrono.Era.{Era}
 
     ///
     /// Enum / Java Enum
@@ -25,17 +23,6 @@ mod Time.Chrono {
     pub enum HijrahEra with Eq, Order, ToString, Hash {
         case AH
     }   
-    
-    instance Time.Chrono.ImplementsEra[HijrahEra] {
-        pub def toEra(x: HijrahEra): Era = 
-            let x1 = Time.Chrono.HijrahEra.marshalHijrahEra(x);
-            Era(unchecked_cast(x1 as ##java.time.chrono.Era))
-
-        pub def fromEra(x: Era): HijrahEra = 
-            let Era(x1) = x;
-            Time.Chrono.HijrahEra.unmarshalHijrahEra(unchecked_cast(x1 as ##java.time.chrono.HijrahEra))
-    }
-
 
 }
 
@@ -45,6 +32,8 @@ mod Time.Chrono.HijrahEra {
 
     use Time.Chrono.HijrahEra
     use Time.Chrono.HijrahEra.{AH}
+    use Time.Chrono.Era
+    use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
 
 
@@ -83,6 +72,10 @@ mod Time.Chrono.HijrahEra {
 
     /// 
 
+
+    pub def asEra(x: HijrahEra): Era = 
+        let x1 = Time.Chrono.HijrahEra.marshalHijrahEra(x);
+        Era(unchecked_cast(x1 as ##java.time.chrono.Era))
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String = 
         import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};

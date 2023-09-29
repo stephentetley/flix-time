@@ -20,10 +20,6 @@ mod Time.Internal.Chrono {
 
     pub enum ChronoLocalDate(##java.time.chrono.ChronoLocalDate)
 
-    pub class ImpChronoLocalDate[t: Type] {
-        pub def toChronoLocalDate(s: t): ChronoLocalDate
-        pub def fromChronoLocalDate(s: ChronoLocalDate): t
-    }
 
 }
 

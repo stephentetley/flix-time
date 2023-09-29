@@ -18,10 +18,6 @@ mod Time.Chrono {
 
     use Time.Chrono.HijrahChronology
     use Time.Chrono.HijrahChronology.{HijrahChronology}
-    use Time.Internal.Chrono.AbstractChronology
-    use Time.Internal.Chrono.AbstractChronology.{AbstractChronology}
-    use Time.Internal.Chrono.Chronology
-    use Time.Internal.Chrono.Chronology.{Chronology}
 
     pub enum HijrahChronology(##java.time.chrono.HijrahChronology)
 
@@ -41,25 +37,6 @@ mod Time.Chrono {
     }
 
 
-    instance Time.Internal.Chrono.ImpChronology[HijrahChronology] {
-        pub def toChronology(x: HijrahChronology): Chronology = 
-            let HijrahChronology(x1) = x;
-            Chronology(unchecked_cast(x1 as ##java.time.chrono.Chronology))
-
-        pub def fromChronology(x: Chronology): HijrahChronology = 
-            let Chronology(x1) = x;
-            HijrahChronology(unchecked_cast(x1 as ##java.time.chrono.HijrahChronology))
-    }
-
-    instance Time.Internal.Chrono.SubAbstractChronology[HijrahChronology] {
-        pub def toAbstractChronology(x: HijrahChronology): AbstractChronology = 
-            let HijrahChronology(x1) = x;
-            AbstractChronology(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
-
-        pub def fromAbstractChronology(x: AbstractChronology): HijrahChronology = 
-            let AbstractChronology(x1) = x;
-            HijrahChronology(unchecked_cast(x1 as ##java.time.chrono.HijrahChronology))
-    }
 
 }
 
@@ -78,6 +55,10 @@ mod Time.Chrono.HijrahChronology {
     use Time.Clock.{Clock}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
+    use Time.Internal.Chrono.AbstractChronology
+    use Time.Internal.Chrono.AbstractChronology.{AbstractChronology}
+    use Time.Internal.Chrono.Chronology
+    use Time.Internal.Chrono.Chronology.{Chronology}
 
 
     pub def getHijrahChronology(x: HijrahChronology): ##java.time.chrono.HijrahChronology = 
@@ -87,6 +68,14 @@ mod Time.Chrono.HijrahChronology {
     pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
         HijrahChronology(unchecked_cast(o as ##java.time.chrono.HijrahChronology))
 
+
+    pub def asAbstractChronology(x: HijrahChronology): AbstractChronology = 
+        let HijrahChronology(x1) = x;
+        AbstractChronology(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
+
+    pub def asChronology(x: HijrahChronology): Chronology = 
+        let HijrahChronology(x1) = x;
+        Chronology(unchecked_cast(x1 as ##java.time.chrono.Chronology))
 
     pub def getInstance(): HijrahChronology \ IO =
         import static get java.time.chrono.HijrahChronology.INSTANCE: ##java.time.chrono.HijrahChronology \ IO as getINSTANCE;
@@ -102,7 +91,7 @@ mod Time.Chrono.HijrahChronology {
                         x: HijrahChronology): HijrahDate =
         import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
-        let era1 = Time.Chrono.ImplementsEra.toEra(r.era) |> Time.Chrono.Era.getHH;
+        let Era(era1) = Time.Chrono.HijrahEra.asEra(r.era);
         HijrahDate(date(x1, era1, r.yearOfEra, r.month, r.dayOfMonth))
 
 
@@ -134,22 +123,22 @@ mod Time.Chrono.HijrahChronology {
         })
 
     pub def toString(x: HijrahChronology): String =
-        Time.Internal.Chrono.SubAbstractChronology.toAbstractChronology(x) 
+        asAbstractChronology(x) 
             |> Time.Internal.Chrono.AbstractChronology.toString
             
     pub def equals(x: HijrahChronology, y: HijrahChronology): Bool =
-        let x1 = Time.Internal.Chrono.SubAbstractChronology.toAbstractChronology(x);
-        let y1 = Time.Internal.Chrono.SubAbstractChronology.toAbstractChronology(y);
+        let x1 = asAbstractChronology(x);
+        let y1 = asAbstractChronology(y);
         Time.Internal.Chrono.AbstractChronology.equals(x1, y1)
 
     pub def compare(x: HijrahChronology, y: HijrahChronology): Comparison =
-        let x1 = Time.Internal.Chrono.SubAbstractChronology.toAbstractChronology(x);
-        let y1 = Time.Internal.Chrono.SubAbstractChronology.toAbstractChronology(y);
+        let x1 = asAbstractChronology(x);
+        let y1 = asAbstractChronology(y);
         Time.Internal.Chrono.AbstractChronology.compareTo(x1, y1) |> Comparison.fromInt32
 
 
     pub def getDisplayName(sty: TextStyle, loc: Locale, x: HijrahChronology): String = 
-        Time.Internal.Chrono.ImpChronology.toChronology(x)
+        asChronology(x)
             |> Time.Internal.Chrono.Chronology.getDisplayName(sty, loc)
 
     pub def getCalendarType(x: HijrahChronology): String = 
@@ -183,7 +172,7 @@ mod Time.Chrono.HijrahChronology {
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 = 
         import java.time.chrono.HijrahChronology.prolepticYear(##java.time.chrono.Era, Int32): Int32 \ {};
         let HijrahChronology(x1) = x;
-        let Era(era1) = Time.Chrono.ImplementsEra.toEra(era);
+        let Era(era1) = Time.Chrono.HijrahEra.asEra(era);
         prolepticYear(x1, era1, yearOfEra)
 
 

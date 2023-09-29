@@ -61,15 +61,15 @@ mod Time.Chrono {
             HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
     }
 
-    instance Time.Internal.Chrono.ImpChronoLocalDate[HijrahDate] {
-        pub def toChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
-            let HijrahDate(x1) = x;
-            ChronoLocalDate(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
+    // instance Time.Internal.Chrono.ImpChronoLocalDate[HijrahDate] {
+    //     pub def toChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
+    //         let HijrahDate(x1) = x;
+    //         ChronoLocalDate(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
 
-        pub def fromChronoLocalDate(x: ChronoLocalDate): HijrahDate = 
-            let ChronoLocalDate(x1) = x;
-            HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
-    }
+    //     pub def fromChronoLocalDate(x: ChronoLocalDate): HijrahDate = 
+    //         let ChronoLocalDate(x1) = x;
+    //         HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
+    // }
 
 
 }
@@ -90,11 +90,17 @@ mod Time.Chrono.HijrahDate {
     use Time.Period.{Period}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
+    use Time.Internal.Chrono.ChronoLocalDate
+    use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
 
     pub def getHijrahDate(x: HijrahDate): ##java.time.chrono.HijrahDate = 
         let HijrahDate(x1) = x;
         x1
 
+
+    pub def asChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
+        let HijrahDate(x1) = x;
+        ChronoLocalDate(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
 
     pub def hijrahDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
         import static java.time.chrono.HijrahDate.of(Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
@@ -132,27 +138,27 @@ mod Time.Chrono.HijrahDate {
 
 
     pub def compareTo(x: HijrahDate, y: HijrahDate): Int32 = 
-        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        let x1 = asChronoLocalDate(x);
+        let y1 = asChronoLocalDate(y);
         Time.Internal.Chrono.ChronoLocalDate.compareTo(x1, y1)
 
     pub def isAfter(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        let x1 = asChronoLocalDate(x);
+        let y1 = asChronoLocalDate(y);
         Time.Internal.Chrono.ChronoLocalDate.isAfter(x1, y1)
 
     pub def isBefore(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        let x1 = asChronoLocalDate(x);
+        let y1 = asChronoLocalDate(y);
         Time.Internal.Chrono.ChronoLocalDate.isBefore(x1, y1)
 
     pub def isEqual(x: HijrahDate, y: HijrahDate): Bool = 
-        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
-        let y1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(y);
+        let x1 = asChronoLocalDate(x);
+        let y1 = asChronoLocalDate(y);
         Time.Internal.Chrono.ChronoLocalDate.isEqual(x1, y1)
 
     pub def toEpochDay(x: HijrahDate): Int64 = 
-        let x1 = Time.Internal.Chrono.ImpChronoLocalDate.toChronoLocalDate(x);
+        let x1 = asChronoLocalDate(x);
         Time.Internal.Chrono.ChronoLocalDate.toEpochDay(x1)
 
     pub def toLocalDate(x: HijrahDate): LocalDate =

@@ -16,24 +16,12 @@
 
 mod Time.Chrono {
 
-    use Time.Chrono.Era
-    use Time.Chrono.Era.{Era}
 
     pub enum IsoEra with Eq, Order, ToString, Hash {
         case BCE
         case CE
     }   
 
-    instance Time.Chrono.ImplementsEra[IsoEra] {
-        pub def toEra(x: IsoEra): Era = 
-            let x1 = Time.Chrono.IsoEra.marshalIsoEra(x);
-            Era(unchecked_cast(x1 as ##java.time.chrono.Era))
-
-        pub def fromEra(x: Era): IsoEra = 
-            let Era(x1) = x;
-            Time.Chrono.IsoEra.unmarshalIsoEra(unchecked_cast(x1 as ##java.time.chrono.IsoEra))
-
-    }
 
 }
 
@@ -43,6 +31,8 @@ mod Time.Chrono.IsoEra {
 
     use Time.Chrono.IsoEra
     use Time.Chrono.IsoEra.{BCE, CE}
+    use Time.Chrono.Era
+    use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
@@ -75,6 +65,10 @@ mod Time.Chrono.IsoEra {
         let x1 = marshalIsoEra(x);
         getValue(x1)
 
+
+    pub def asEra(x: IsoEra): Era = 
+        let x1 = Time.Chrono.IsoEra.marshalIsoEra(x);
+        Era(unchecked_cast(x1 as ##java.time.chrono.Era))
 
     /// Era interface functions
 

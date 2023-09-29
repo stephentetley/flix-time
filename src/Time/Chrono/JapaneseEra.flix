@@ -19,8 +19,6 @@ mod Time.Chrono {
 
     use Time.Chrono.JapaneseEra
     use Time.Chrono.JapaneseEra.{JapaneseEra}
-    use Time.Chrono.Era
-    use Time.Chrono.Era.{Era}
 
     ///
     /// A wrapper around java.time.chrono.JapaneseEra.
@@ -48,17 +46,6 @@ mod Time.Chrono {
     } 
 
 
-    instance Time.Chrono.ImplementsEra[JapaneseEra] {
-        pub def toEra(x: JapaneseEra): Era = 
-            let JapaneseEra(x1) = x;
-            Era(unchecked_cast(x1 as ##java.time.chrono.Era))
-
-        pub def fromEra(x: Era): JapaneseEra = 
-            let Era(x1) = x;
-            JapaneseEra(unchecked_cast(x1 as ##java.time.chrono.JapaneseEra))
-
-    }
-
 }
 
 mod Time.Chrono.JapaneseEra {
@@ -67,9 +54,14 @@ mod Time.Chrono.JapaneseEra {
     
     use Time.Chrono.JapaneseEra
     use Time.Chrono.JapaneseEra.{JapaneseEra}
+    use Time.Chrono.Era
+    use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
 
-
+    pub def asEra(x: JapaneseEra): Era = 
+        let JapaneseEra(x1) = x;
+        Era(unchecked_cast(x1 as ##java.time.chrono.Era))
+        
     pub def getJapaneseEra(x: JapaneseEra): ##java.time.chrono.JapaneseEra = 
         let JapaneseEra(x1) = x;
         x1

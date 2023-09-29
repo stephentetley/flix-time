@@ -20,10 +20,6 @@ mod Time.Internal.Chrono {
 
     pub enum AbstractChronology(##java.time.chrono.AbstractChronology)
 
-    pub class SubAbstractChronology[t: Type] {
-        pub def toAbstractChronology(s: t): AbstractChronology
-        pub def fromAbstractChronology(s: AbstractChronology): t
-    }
 
 }
 
