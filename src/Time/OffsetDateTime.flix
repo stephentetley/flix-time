@@ -19,8 +19,6 @@ mod Time {
     
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A wrapper around a Java OffsetDateTime.
@@ -75,22 +73,14 @@ mod Time {
             compareTo(x1, y1) |> Comparison.fromInt32
     }
 
-    instance Time.Internal.Temporal.ImpTemporalAccessor[OffsetDateTime] {
-        pub def toTemporalAccessor(x: OffsetDateTime): TemporalAccessor =
-            let OffsetDateTime(x1) = x;
-            TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
-
-        pub def fromTemporalAccessor(x: TemporalAccessor): OffsetDateTime = 
-            let TemporalAccessor(x1) = x;
-            OffsetDateTime(unchecked_cast(x1 as ##java.time.OffsetDateTime))
-    }
-
 }
 
 mod Time.OffsetDateTime {
 
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
     use Time.Format.DateTimeFormat
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
@@ -125,6 +115,10 @@ mod Time.OffsetDateTime {
     pub def getOffsetDateTime(x: OffsetDateTime): ##java.time.OffsetDateTime = 
         let OffsetDateTime(x1) = x;
         x1
+
+    pub def asTemporalAccessor(x: OffsetDateTime): TemporalAccessor =
+        let OffsetDateTime(x1) = x;
+        TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
 
     /// ## Constructors
 

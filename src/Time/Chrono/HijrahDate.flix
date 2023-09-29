@@ -18,10 +18,6 @@ mod Time.Chrono {
 
     use Time.Chrono.HijrahDate
     use Time.Chrono.HijrahDate.{HijrahDate}
-    use Time.Internal.Chrono.ChronoLocalDate
-    use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around java.time.chrono.HijrahDate.
@@ -51,27 +47,6 @@ mod Time.Chrono {
         pub def hash(x: HijrahDate): Int32 = Time.Chrono.HijrahDate.hashCode(x)
     }  
 
-    instance Time.Internal.Temporal.ImpTemporalAccessor[HijrahDate] {
-        pub def toTemporalAccessor(x: HijrahDate): TemporalAccessor = 
-            let HijrahDate(x1) = x;
-            TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
-
-        pub def fromTemporalAccessor(x: TemporalAccessor): HijrahDate = 
-            let TemporalAccessor(x1) = x;
-            HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
-    }
-
-    // instance Time.Internal.Chrono.ImpChronoLocalDate[HijrahDate] {
-    //     pub def toChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
-    //         let HijrahDate(x1) = x;
-    //         ChronoLocalDate(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
-
-    //     pub def fromChronoLocalDate(x: ChronoLocalDate): HijrahDate = 
-    //         let ChronoLocalDate(x1) = x;
-    //         HijrahDate(unchecked_cast(x1 as ##java.time.chrono.HijrahDate))
-    // }
-
-
 }
 
 mod Time.Chrono.HijrahDate {
@@ -79,6 +54,10 @@ mod Time.Chrono.HijrahDate {
 
     use Time.Chrono.HijrahDate
     use Time.Chrono.HijrahDate.{HijrahDate}
+    use Time.Internal.Chrono.ChronoLocalDate
+    use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
     use Time.Chrono.HijrahChronology
     use Time.Chrono.HijrahChronology.{HijrahChronology}
     use Time.Chrono.HijrahEra
@@ -90,13 +69,14 @@ mod Time.Chrono.HijrahDate {
     use Time.Period.{Period}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
-    use Time.Internal.Chrono.ChronoLocalDate
-    use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
 
     pub def getHijrahDate(x: HijrahDate): ##java.time.chrono.HijrahDate = 
         let HijrahDate(x1) = x;
         x1
 
+    pub def asTemporalAccessor(x: HijrahDate): TemporalAccessor = 
+        let HijrahDate(x1) = x;
+        TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
 
     pub def asChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
         let HijrahDate(x1) = x;

@@ -19,8 +19,6 @@ mod Time {
 
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.TemporalAccessor
 
     ///
     /// A wrapper around a Java ZonedDateTime.
@@ -77,15 +75,6 @@ mod Time {
             compareTo(cx1, cy1) |> Comparison.fromInt32
     }
 
-    instance Time.Internal.Temporal.ImpTemporalAccessor[ZonedDateTime] {
-        pub def toTemporalAccessor(x: ZonedDateTime): TemporalAccessor =
-            let ZonedDateTime(x1) = x;
-            TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
-
-        pub def fromTemporalAccessor(x: TemporalAccessor): ZonedDateTime = 
-            let TemporalAccessor(x1) = x;
-            ZonedDateTime(unchecked_cast(x1 as ##java.time.ZonedDateTime))
-    }
 
 }
 
@@ -93,6 +82,8 @@ mod Time.ZonedDateTime {
 
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
     use Time.Format.DateTimeFormat
@@ -120,6 +111,9 @@ mod Time.ZonedDateTime {
         let ZonedDateTime(x1) = x;
         x1
 
+    pub def asTemporalAccessor(x: ZonedDateTime): TemporalAccessor =
+        let ZonedDateTime(x1) = x;
+        TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
 
     /// ## Constructors
 

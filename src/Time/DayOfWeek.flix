@@ -141,19 +141,19 @@ mod Time.DayOfWeek {
         }
     
     pub def fromLocalDate(x: LocalDate): DayOfWeek = 
-        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.LocalDate.asTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
-        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.LocalDateTime.asTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
-        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.OffsetDateTime.asTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
-        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.ZonedDateTime.asTemporalAccessor(x)
             |> fromTemporalAccessor
 
 

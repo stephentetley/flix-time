@@ -175,11 +175,11 @@ mod Time.InstantZ {
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
-        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.OffsetDateTime.asTemporalAccessor(x)
             |> fromTemporalAccessor
 
     pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x)
+        Time.ZonedDateTime.asTemporalAccessor(x)
             |> fromTemporalAccessor
 
     /// ## `to` functions

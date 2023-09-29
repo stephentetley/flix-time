@@ -20,10 +20,10 @@ mod Time.Internal.Temporal {
 
     pub enum TemporalAccessor(##java.time.temporal.TemporalAccessor)
 
-    pub class ImpTemporalAccessor[t: Type] {
-        pub def toTemporalAccessor(s: t): TemporalAccessor
-        pub def fromTemporalAccessor(s: TemporalAccessor): t
-    }
+    // pub class ImpTemporalAccessor[t: Type] {
+    //     pub def toTemporalAccessor(s: t): TemporalAccessor
+    //     pub def fromTemporalAccessor(s: TemporalAccessor): t
+    // }
 
 }
 

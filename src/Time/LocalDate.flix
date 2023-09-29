@@ -20,8 +20,6 @@ mod Time {
 
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     ///
     /// A wrapper around a Java LocalDate.
@@ -76,21 +74,14 @@ mod Time {
             compareTo(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate)) |> Comparison.fromInt32
     }
 
-    instance Time.Internal.Temporal.ImpTemporalAccessor[LocalDate] {
-        pub def toTemporalAccessor(x: LocalDate): TemporalAccessor = 
-            let LocalDate(x1) = x;
-            TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
-
-        pub def fromTemporalAccessor(x: TemporalAccessor): LocalDate = 
-            let TemporalAccessor(x1) = x;
-            LocalDate(unchecked_cast(x1 as ##java.time.LocalDate))
-    }
 }
 
 mod Time.LocalDate {
 
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
+    use Time.Internal.Temporal.TemporalAccessor
+    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
     use Time.Format.DateFormat
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
@@ -121,6 +112,12 @@ mod Time.LocalDate {
     pub def getLocalDate(x: LocalDate): ##java.time.LocalDate = 
         let LocalDate(x1) = x;
         x1
+
+
+    pub def asTemporalAccessor(x: LocalDate): TemporalAccessor = 
+        let LocalDate(x1) = x;
+        TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
+
 
     pub def fromJavaObject(o: ##java.lang.Object): LocalDate = 
         LocalDate(unchecked_cast(o as ##java.time.LocalDate))
@@ -212,7 +209,7 @@ mod Time.LocalDate {
 
     /// TODO - idiomatic Flix is `toSomeDatatype` in the respective module rather than `fromSomeDatatype`
     pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
-        Time.Internal.Temporal.ImpTemporalAccessor.toTemporalAccessor(x) 
+        Time.LocalDateTime.asTemporalAccessor(x) 
             |> fromTemporalAccessor
 
     /// ## `to` functions
