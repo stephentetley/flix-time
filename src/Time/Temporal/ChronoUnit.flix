@@ -21,8 +21,7 @@ mod Time.Temporal {
     use Time.Temporal.ChronoUnit
     use Time.Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes, Hours, HalfDays, Days, 
         Weeks, Months, Years, Decades, Centuries, Millenia, Eras, Forever}
-    use Time.Temporal.TemporalUnit
-    use Time.Temporal.TemporalUnit.{TemporalUnit}
+
 
     ///
     /// ChronoUnit
@@ -68,17 +67,6 @@ mod Time.Temporal {
         }
     }
 
-    instance Time.Temporal.ImplementsTemporalUnit[ChronoUnit] {
-        pub def toTemporalUnit(x: ChronoUnit): TemporalUnit = 
-            let x1 = Time.Temporal.ChronoUnit.marshalChronoUnit(x);
-            TemporalUnit(unchecked_cast(x1 as ##java.time.temporal.TemporalUnit))
-
-        pub def fromTemporalUnit(x: TemporalUnit): ChronoUnit = 
-            let TemporalUnit(x1) = x;
-            Time.Temporal.ChronoUnit.unmarshalChronoUnit(unchecked_cast(x1 as ##java.time.temporal.ChronoUnit))
-    }
-
-
 }
 
 mod Time.Temporal.ChronoUnit {
@@ -86,7 +74,8 @@ mod Time.Temporal.ChronoUnit {
     use Time.Temporal.ChronoUnit
     use Time.Temporal.ChronoUnit.{Nanos, Micros, Millis, Seconds, Minutes, Hours, HalfDays, Days, 
         Weeks, Months, Years, Decades, Centuries, Millenia, Eras, Forever}
-
+    use Time.Temporal.TemporalUnit
+    use Time.Temporal.TemporalUnit.{TemporalUnit}
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
 
@@ -171,6 +160,12 @@ mod Time.Temporal.ChronoUnit {
             case x1 if primEquals(x1, get_FOREVER())    => Forever
             case _                                      => bug!("unmarshalTimeDefinition")     
         }
+
+
+    pub def asTemporalUnit(x: ChronoUnit): TemporalUnit = 
+        let x1 = Time.Temporal.ChronoUnit.marshalChronoUnit(x);
+        TemporalUnit(unchecked_cast(x1 as ##java.time.temporal.TemporalUnit))
+
 
     /// ## ChronoUnit functions
 

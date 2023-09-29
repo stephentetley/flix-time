@@ -20,10 +20,10 @@ mod Time.Temporal {
 
     pub enum TemporalField(##java.time.temporal.TemporalField)
 
-    pub class ImplementsTemporalField[t: Type] {
-        pub def toTemporalField(s: t): TemporalField
-        pub def fromTemporalField(s: TemporalField): t
-    }
+    // pub class ImplementsTemporalField[t: Type] {
+    //     pub def toTemporalField(s: t): TemporalField
+    //     pub def fromTemporalField(s: TemporalField): t
+    // }
 
 }
 

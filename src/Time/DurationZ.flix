@@ -207,7 +207,7 @@ mod Time.DurationZ {
 
     pub def ofHalfDays(i: Int64): DurationZ = 
         Time.Temporal.ChronoUnit.HalfDays 
-            |> Time.Temporal.ImplementsTemporalUnit.toTemporalUnit
+            |> Time.Temporal.ChronoUnit.asTemporalUnit
             |> ofTemporalUnit(i)
 
 
@@ -452,12 +452,12 @@ mod Time.DurationZ {
 
     pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
         Time.Temporal.ChronoUnit.HalfDays
-            |> Time.Temporal.ImplementsTemporalUnit.toTemporalUnit
+            |> Time.Temporal.ChronoUnit.asTemporalUnit
             |> plusHelper(x, i)
 
     pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
         Time.Temporal.ChronoUnit.HalfDays
-            |> Time.Temporal.ImplementsTemporalUnit.toTemporalUnit
+            |> Time.Temporal.ChronoUnit.asTemporalUnit
             |> minusHelper(x, i)
 
     /// ## multiply / divide functions

@@ -25,8 +25,6 @@ mod Time.Temporal {
         AlignedDayOfWeekInMonth, AlignedDayOfWeekInYear, DayOfMonth, DayOfYear, EpochDay, 
         AlignedWeekOfMonth, AlignedWeekOfYear, MonthOfYear, ProlepticMonth, YearOfEra, 
         Year, Era, InstantSeconds, OffsetSeconds}
-    use Time.Temporal.TemporalField
-    use Time.Temporal.TemporalField.{TemporalField}
 
     ///
     /// ChronoField
@@ -100,16 +98,6 @@ mod Time.Temporal {
         }
     }
 
-    instance Time.Temporal.ImplementsTemporalField[ChronoField] {
-        pub def toTemporalField(x: ChronoField): TemporalField = 
-            let x1 = Time.Temporal.ChronoField.marshalChronoField(x);
-            TemporalField(unchecked_cast(x1 as ##java.time.temporal.TemporalField))
-
-        pub def fromTemporalField(x: TemporalField): ChronoField = 
-            let TemporalField(x1) = x;
-            Time.Temporal.ChronoField.unmarshalChronoField(unchecked_cast(x1 as ##java.time.temporal.ChronoField))
-    }
-
 
 }
 
@@ -122,6 +110,8 @@ mod Time.Temporal.ChronoField {
         AlignedDayOfWeekInMonth, AlignedDayOfWeekInYear, DayOfMonth, DayOfYear, EpochDay, 
         AlignedWeekOfMonth, AlignedWeekOfYear, MonthOfYear, ProlepticMonth, YearOfEra, 
         Year, Era, InstantSeconds, OffsetSeconds}
+    use Time.Temporal.TemporalField
+    use Time.Temporal.TemporalField.{TemporalField}
 
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
@@ -264,5 +254,9 @@ mod Time.Temporal.ChronoField {
             case _                                                          => bug!("unmarshalChronoField")
         }
 
+
+    pub def asTemporalField(x: ChronoField): TemporalField = 
+        let x1 = Time.Temporal.ChronoField.marshalChronoField(x);
+        TemporalField(unchecked_cast(x1 as ##java.time.temporal.TemporalField))
 
 }

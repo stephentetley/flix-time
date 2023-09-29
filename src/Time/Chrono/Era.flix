@@ -20,10 +20,6 @@ mod Time.Chrono {
 
     pub enum Era(##java.time.chrono.Era)
 
-    // pub class ImplementsEra[t: Type] {
-    //     pub def toEra(s: t): Era
-    //     pub def fromEra(s: Era): t
-    // }
 
 }
 

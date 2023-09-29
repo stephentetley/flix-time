@@ -20,10 +20,10 @@ mod Time.Temporal {
 
     pub enum TemporalUnit(##java.time.temporal.TemporalUnit)
 
-    pub class ImplementsTemporalUnit[t: Type] {
-        pub def toTemporalUnit(s: t): TemporalUnit
-        pub def fromTemporalUnit(s: TemporalUnit): t
-    }
+    // pub class ImplementsTemporalUnit[t: Type] {
+    //     pub def toTemporalUnit(s: t): TemporalUnit
+    //     pub def fromTemporalUnit(s: TemporalUnit): t
+    // }
 
 }
 
