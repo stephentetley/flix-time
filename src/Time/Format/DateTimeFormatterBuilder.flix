@@ -146,49 +146,61 @@ mod Time.Format.DateTimeFormatterBuilder {
             discard appendLocalizedOffset(b, style1)
         })
 
-/*
+
     pub def appendOffset!(pattern: {pattern = String}, 
-                            noOffsetText: {noOffsetText = String}, 
-                            b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
-        import java.time.format.DateTimeFormatterBuilder.appendOffset(String, String): ##java.time.format.DateTimeFormatterBuilder \ r;
-        let DateTimeFormatterBuilder(b1) = b;
-        appendOffset(b1, pattern.pattern, noOffsetText.noOffsetText) |> DateTimeFormatterBuilder
+                            noOffsetText: {noOffsetText = String}): DateTimeFormatterBuilder[r] = 
+        DateTimeFormatterBuilder(b -> {
+            import java.time.format.DateTimeFormatterBuilder.appendOffset(String, String): ##java.time.format.DateTimeFormatterBuilder \ r;
+            discard appendOffset(b, pattern.pattern, noOffsetText.noOffsetText)
+        })
 
-    pub def appendOffsetId!(b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
-        import java.time.format.DateTimeFormatterBuilder.appendOffsetId(): ##java.time.format.DateTimeFormatterBuilder \ r;
-        let DateTimeFormatterBuilder(b1) = b;
-        appendOffsetId(b1) |> DateTimeFormatterBuilder
 
-    pub def appendOptional!(fmt: ##java.time.format.DateTimeFormatter, b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
-        import java.time.format.DateTimeFormatterBuilder.appendOptional(##java.time.format.DateTimeFormatter): ##java.time.format.DateTimeFormatterBuilder \ r;
-        let DateTimeFormatterBuilder(b1) = b;
-        appendOptional(b1, fmt) |> DateTimeFormatterBuilder
+    pub def appendOffsetId!(): DateTimeFormatterBuilder[r] = 
+        DateTimeFormatterBuilder(b -> {
+            import java.time.format.DateTimeFormatterBuilder.appendOffsetId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+            discard appendOffsetId(b)
+        })
 
-    pub def appendPattern!(patt: String, b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
-        import java.time.format.DateTimeFormatterBuilder.appendPattern(String): ##java.time.format.DateTimeFormatterBuilder \ r;
-        let DateTimeFormatterBuilder(b1) = b;
-        appendPattern(b1, patt) |> DateTimeFormatterBuilder
+    pub def appendOptional!(fmt: DateTimeFormatter[t]): DateTimeFormatterBuilder[r] = 
+        DateTimeFormatterBuilder(b -> { 
+            import java.time.format.DateTimeFormatterBuilder.appendOptional(##java.time.format.DateTimeFormatter): ##java.time.format.DateTimeFormatterBuilder \ r;
+            let DateTimeFormatter(fmt1) = fmt;
+            discard appendOptional(b, fmt1)
+        })
 
-    pub def appendZoneId!(b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
-        import java.time.format.DateTimeFormatterBuilder.appendZoneId(): ##java.time.format.DateTimeFormatterBuilder \ r;
-        let DateTimeFormatterBuilder(b1) = b;
-        appendZoneId(b1) |> DateTimeFormatterBuilder
+    pub def appendPattern!(patt: String): DateTimeFormatterBuilder[r] = 
+        DateTimeFormatterBuilder(b -> {
+            import java.time.format.DateTimeFormatterBuilder.appendPattern(String): ##java.time.format.DateTimeFormatterBuilder \ r;
+            discard appendPattern(b, patt) 
+        })
 
-    pub def appendZoneOrOffsetId!(b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
-        import java.time.format.DateTimeFormatterBuilder.appendZoneOrOffsetId(): ##java.time.format.DateTimeFormatterBuilder \ r;
-        let DateTimeFormatterBuilder(b1) = b;
-        appendZoneOrOffsetId(b1) |> DateTimeFormatterBuilder
+    pub def appendZoneId!(): DateTimeFormatterBuilder[r] = 
+        DateTimeFormatterBuilder(b -> {
+            import java.time.format.DateTimeFormatterBuilder.appendZoneId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+            discard appendZoneId(b)
+        })
 
-    pub def appendZoneRegionId!(b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
-        import java.time.format.DateTimeFormatterBuilder.appendZoneRegionId(): ##java.time.format.DateTimeFormatterBuilder \ r;
-        let DateTimeFormatterBuilder(b1) = b;
-        appendZoneRegionId(b1) |> DateTimeFormatterBuilder
 
-    pub def appendZoneText!(style: ##java.time.format.TextStyle, b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
-        import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
-        let DateTimeFormatterBuilder(b1) = b;
-        appendZoneText(b1, style) |> DateTimeFormatterBuilder
+    pub def appendZoneOrOffsetId!(): DateTimeFormatterBuilder[r] = 
+        DateTimeFormatterBuilder(b -> {
+            import java.time.format.DateTimeFormatterBuilder.appendZoneOrOffsetId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+            discard appendZoneOrOffsetId(b)
+        })
 
+    pub def appendZoneRegionId!(): DateTimeFormatterBuilder[r] = 
+        DateTimeFormatterBuilder(b -> {
+            import java.time.format.DateTimeFormatterBuilder.appendZoneRegionId(): ##java.time.format.DateTimeFormatterBuilder \ r;
+            discard appendZoneRegionId(b)
+        })
+
+    pub def appendZoneText!(style: TextStyle): DateTimeFormatterBuilder[r] = 
+        DateTimeFormatterBuilder(b -> {
+            import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
+            let style1 = Time.Format.TextStyle.marshalTextStyle(style);
+            discard appendZoneText(b, style1)
+        })
+
+/*
     pub def appendZoneTextWithZones!(style: ##java.time.format.TextStyle, preferredZones: ##java.util.Set, b: DateTimeFormatterBuilder[r]): DateTimeFormatterBuilder[r] \ r = 
         import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ r;
         let DateTimeFormatterBuilder(b1) = b;
