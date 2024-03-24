@@ -291,15 +291,15 @@ mod Time.Year {
 
 
     pub def yearsUntil(r: {start = Year, end = Year}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
+        import static java_get_field java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
         untilHelper(unchecked_cast(get_YEARS() as ##java.time.temporal.TemporalUnit), r)
 
     pub def decadesUntil(r: {start = Year, end = Year}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit \ {} as get_DECADES;
+        import static java_get_field java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit \ {} as get_DECADES;
         untilHelper(unchecked_cast(get_DECADES() as ##java.time.temporal.TemporalUnit), r)
 
     pub def centuriesUntil(r: {start = Year, end = Year}): Int64 = 
-        import static get java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
+        import static java_get_field java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
         untilHelper(unchecked_cast(get_CENTURIES() as ##java.time.temporal.TemporalUnit), r)
 
 

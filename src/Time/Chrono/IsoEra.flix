@@ -38,8 +38,8 @@ mod Time.Chrono.IsoEra {
     use Time.LocalDate.{LocalDate}
 
     pub def marshalIsoEra(x: IsoEra): ##java.time.chrono.IsoEra = 
-        import static get java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;
-        import static get java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra \ {} as get_CE;
+        import static java_get_field java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;
+        import static java_get_field java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra \ {} as get_CE;
         match x {
             case BCE        => get_BCE()
             case CE         => get_CE()
@@ -52,8 +52,8 @@ mod Time.Chrono.IsoEra {
         equals(x1, y1)
 
     pub def unmarshalIsoEra(x: ##java.time.chrono.IsoEra): IsoEra = 
-        import static get java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;
-        import static get java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra \ {} as get_CE;
+        import static java_get_field java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;
+        import static java_get_field java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra \ {} as get_CE;
         match x {
             case x1 if primEquals(x1, get_BCE())    => BCE
             case x1 if primEquals(x1, get_CE())     => CE

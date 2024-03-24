@@ -77,63 +77,63 @@ mod Time.Format.DateTimeFormatter {
     /// Builtin DateTime Formatters
 
     pub def iso_local_date_time(): DateTimeFormatter[DateTimeFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_LOCAL_DATE_TIME;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_LOCAL_DATE_TIME;
         DateTimeFormatter(get_ISO_LOCAL_DATE_TIME())
 
     pub def iso_offset_date_time(): DateTimeFormatter[DateTimeFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_OFFSET_DATE_TIME;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_OFFSET_DATE_TIME;
         DateTimeFormatter(get_ISO_OFFSET_DATE_TIME())
 
     pub def iso_zoned_date_time(): DateTimeFormatter[DateTimeFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_ZONED_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_ZONED_DATE_TIME;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_ZONED_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_ZONED_DATE_TIME;
         DateTimeFormatter(get_ISO_ZONED_DATE_TIME())
 
     pub def iso_date_time(): DateTimeFormatter[DateTimeFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_DATE_TIME;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_DATE_TIME;
         DateTimeFormatter(get_ISO_DATE_TIME())
 
     pub def rfc_1123_date_time(): DateTimeFormatter[DateTimeFormat] =
-        import static get java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_RFC_1123_DATE_TIME;
+        import static java_get_field java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME: ##java.time.format.DateTimeFormatter \ {} as get_RFC_1123_DATE_TIME;
         DateTimeFormatter(get_RFC_1123_DATE_TIME())
 
     /// Builtin Date Formatters
 
     pub def basic_iso_date(): DateTimeFormatter[DateFormat] =
-        import static get java.time.format.DateTimeFormatter.BASIC_ISO_DATE: ##java.time.format.DateTimeFormatter \ {} as get_BASIC_ISO_DATE;
+        import static java_get_field java.time.format.DateTimeFormatter.BASIC_ISO_DATE: ##java.time.format.DateTimeFormatter \ {} as get_BASIC_ISO_DATE;
         DateTimeFormatter(get_BASIC_ISO_DATE())
 
     pub def iso_local_date(): DateTimeFormatter[DateFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_LOCAL_DATE;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_LOCAL_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_LOCAL_DATE;
         DateTimeFormatter(get_ISO_LOCAL_DATE())
 
     pub def iso_offset_date(): DateTimeFormatter[DateFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_OFFSET_DATE;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_OFFSET_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_OFFSET_DATE;
         DateTimeFormatter(get_ISO_OFFSET_DATE())
 
     pub def iso_date(): DateTimeFormatter[DateFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_DATE;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_DATE;
         DateTimeFormatter(get_ISO_DATE())
 
     pub def iso_oridinal_date(): DateTimeFormatter[DateFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_ORDINAL_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_ORDINAL_DATE;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_ORDINAL_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_ORDINAL_DATE;
         DateTimeFormatter(get_ISO_ORDINAL_DATE())
 
     pub def iso_week_date(): DateTimeFormatter[DateFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_WEEK_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_WEEK_DATE;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_WEEK_DATE: ##java.time.format.DateTimeFormatter \ {} as get_ISO_WEEK_DATE;
         DateTimeFormatter(get_ISO_WEEK_DATE())
 
     /// Builtin Time Formatters
 
     pub def iso_local_time(): DateTimeFormatter[TimeFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_LOCAL_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_LOCAL_TIME;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_LOCAL_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_LOCAL_TIME;
         DateTimeFormatter(get_ISO_LOCAL_TIME())
 
     pub def iso_offset_time(): DateTimeFormatter[TimeFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_OFFSET_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_OFFSET_TIME;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_OFFSET_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_OFFSET_TIME;
         DateTimeFormatter(get_ISO_OFFSET_TIME())
 
     pub def basic_iso_time(): DateTimeFormatter[TimeFormat] =
-        import static get java.time.format.DateTimeFormatter.ISO_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_TIME;
+        import static java_get_field java.time.format.DateTimeFormatter.ISO_TIME: ##java.time.format.DateTimeFormatter \ {} as get_ISO_TIME;
         DateTimeFormatter(get_ISO_TIME())
 
     /// ## `from` functions

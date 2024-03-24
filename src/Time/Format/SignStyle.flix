@@ -34,11 +34,11 @@ mod Time.Format.SignStyle {
 
 
     pub def marshalSignStyle(x: SignStyle): ##java.time.format.SignStyle = 
-        import static get java.time.format.SignStyle.ALWAYS: ##java.time.format.SignStyle \ {} as get_ALWAYS;
-        import static get java.time.format.SignStyle.EXCEEDS_PAD: ##java.time.format.SignStyle \ {} as get_EXCEEDS_PAD;
-        import static get java.time.format.SignStyle.NEVER: ##java.time.format.SignStyle \ {} as get_NEVER;
-        import static get java.time.format.SignStyle.NORMAL: ##java.time.format.SignStyle \ {} as get_NORMAL;
-        import static get java.time.format.SignStyle.NOT_NEGATIVE: ##java.time.format.SignStyle \ {} as get_NOT_NEGATIVE;
+        import static java_get_field java.time.format.SignStyle.ALWAYS: ##java.time.format.SignStyle \ {} as get_ALWAYS;
+        import static java_get_field java.time.format.SignStyle.EXCEEDS_PAD: ##java.time.format.SignStyle \ {} as get_EXCEEDS_PAD;
+        import static java_get_field java.time.format.SignStyle.NEVER: ##java.time.format.SignStyle \ {} as get_NEVER;
+        import static java_get_field java.time.format.SignStyle.NORMAL: ##java.time.format.SignStyle \ {} as get_NORMAL;
+        import static java_get_field java.time.format.SignStyle.NOT_NEGATIVE: ##java.time.format.SignStyle \ {} as get_NOT_NEGATIVE;
         match x {
             case Always             => get_ALWAYS()
             case ExceedsPad         => get_EXCEEDS_PAD()
@@ -54,11 +54,11 @@ mod Time.Format.SignStyle {
         equals(x1, y1)
 
     pub def unmarshalSignStyle(x: ##java.time.format.SignStyle): SignStyle = 
-        import static get java.time.format.SignStyle.ALWAYS: ##java.time.format.SignStyle \ {} as get_ALWAYS;
-        import static get java.time.format.SignStyle.EXCEEDS_PAD: ##java.time.format.SignStyle \ {} as get_EXCEEDS_PAD;
-        import static get java.time.format.SignStyle.NEVER: ##java.time.format.SignStyle \ {} as get_NEVER;
-        import static get java.time.format.SignStyle.NORMAL: ##java.time.format.SignStyle \ {} as get_NORMAL;
-        import static get java.time.format.SignStyle.NOT_NEGATIVE: ##java.time.format.SignStyle \ {} as get_NOT_NEGATIVE;
+        import static java_get_field java.time.format.SignStyle.ALWAYS: ##java.time.format.SignStyle \ {} as get_ALWAYS;
+        import static java_get_field java.time.format.SignStyle.EXCEEDS_PAD: ##java.time.format.SignStyle \ {} as get_EXCEEDS_PAD;
+        import static java_get_field java.time.format.SignStyle.NEVER: ##java.time.format.SignStyle \ {} as get_NEVER;
+        import static java_get_field java.time.format.SignStyle.NORMAL: ##java.time.format.SignStyle \ {} as get_NORMAL;
+        import static java_get_field java.time.format.SignStyle.NOT_NEGATIVE: ##java.time.format.SignStyle \ {} as get_NOT_NEGATIVE;
         match x {
             case x1 if primEquals(x1, get_ALWAYS())             => Always
             case x1 if primEquals(x1, get_EXCEEDS_PAD())        => ExceedsPad

@@ -43,7 +43,7 @@ mod Time.Chrono.HijrahEra {
 
 
     pub def marshalHijrahEra(x: HijrahEra): ##java.time.chrono.HijrahEra = 
-        import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
+        import static java_get_field java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
         match x {
             case AH         => getAH()            
         }
@@ -57,7 +57,7 @@ mod Time.Chrono.HijrahEra {
         equals(x1, y1)
 
     pub def unmarshalHijrahEra(x: ##java.time.chrono.HijrahEra): HijrahEra = 
-        import static get java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
+        import static java_get_field java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
         match x {
             case x1 if primEquals(x1, getAH())      => AH
             case _                                  => bug!("unmarshalHijrahEra")

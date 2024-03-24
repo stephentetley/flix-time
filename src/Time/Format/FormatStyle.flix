@@ -32,10 +32,10 @@ mod Time.Format.FormatStyle {
     use Time.Format.FormatStyle.{Full, Long, Medium, Short}
 
     pub def marshalFormatStyle(x: FormatStyle): ##java.time.format.FormatStyle = 
-        import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;
-        import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle \ {} as get_LONG;
-        import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle \ {} as get_MEDIUM;
-        import static get java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle \ {} as get_SHORT;
+        import static java_get_field java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;
+        import static java_get_field java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle \ {} as get_LONG;
+        import static java_get_field java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle \ {} as get_MEDIUM;
+        import static java_get_field java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle \ {} as get_SHORT;
         match x {
             case Full               => get_FULL()
             case Long               => get_LONG()
@@ -50,10 +50,10 @@ mod Time.Format.FormatStyle {
         equals(x1, y1)
 
     pub def unmarshalFormatStyle(x: ##java.time.format.FormatStyle): FormatStyle = 
-        import static get java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;
-        import static get java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle \ {} as get_LONG;
-        import static get java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle \ {} as get_MEDIUM;
-        import static get java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle \ {} as get_SHORT;
+        import static java_get_field java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;
+        import static java_get_field java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle \ {} as get_LONG;
+        import static java_get_field java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle \ {} as get_MEDIUM;
+        import static java_get_field java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle \ {} as get_SHORT;
         match x {
             case x1 if primEquals(x1, get_FULL())   => Full
             case x1 if primEquals(x1, get_LONG())   => Long

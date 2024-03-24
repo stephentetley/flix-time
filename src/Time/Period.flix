@@ -129,7 +129,7 @@ mod Time.Period {
     /// The period of zero.
     ///
     pub def zero(): Period =
-        import static get java.time.Period.ZERO: ##java.time.Period \ {} as getZERO;
+        import static java_get_field java.time.Period.ZERO: ##java.time.Period \ {} as getZERO;
         Period(getZERO())
 
 

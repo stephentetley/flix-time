@@ -32,9 +32,9 @@ mod Time.Format.ResolverStyle {
 
 
     pub def marshalResolverStyle(x: ResolverStyle): ##java.time.format.ResolverStyle = 
-        import static get java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle \ {} as getLENIENT;
-        import static get java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle \ {} as getSMART;
-        import static get java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle \ {} as getSTRICT;
+        import static java_get_field java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle \ {} as getLENIENT;
+        import static java_get_field java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle \ {} as getSMART;
+        import static java_get_field java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle \ {} as getSTRICT;
         match x {
             case Lenient            => getLENIENT()
             case Smart              => getSMART()
@@ -48,9 +48,9 @@ mod Time.Format.ResolverStyle {
         equals(x1, y1)
 
     pub def unmarshalResolverStyle(x: ##java.time.format.ResolverStyle): ResolverStyle = 
-        import static get java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle \ {} as getLENIENT;
-        import static get java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle \ {} as getSMART;
-        import static get java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle \ {} as getSTRICT;
+        import static java_get_field java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle \ {} as getLENIENT;
+        import static java_get_field java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle \ {} as getSMART;
+        import static java_get_field java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle \ {} as getSTRICT;
         match x {
             case x1 if primEquals(x1, getLENIENT())         => Lenient
             case x1 if primEquals(x1, getSMART())           => Smart

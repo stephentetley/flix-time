@@ -39,7 +39,7 @@ mod Time.Chrono.IsoChronology {
     use Time.LocalDate.{LocalDate}
 
     pub def getInstance(): IsoChronology \ IO = 
-        import static get java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology \ IO as get_INSTANCE;
+        import static java_get_field java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology \ IO as get_INSTANCE;
         IsoChronology(get_INSTANCE())
 
     pub def getCalendarType(x: IsoChronology): String = 

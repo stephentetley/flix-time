@@ -47,7 +47,7 @@ mod Time.Chrono.JapaneseChronology {
 
 
     pub def getInstance(): JapaneseChronology \ IO = 
-        import static get java.time.chrono.JapaneseChronology.INSTANCE: ##java.time.chrono.JapaneseChronology \ IO as getINSTANCE;
+        import static java_get_field java.time.chrono.JapaneseChronology.INSTANCE: ##java.time.chrono.JapaneseChronology \ IO as getINSTANCE;
         JapaneseChronology(getINSTANCE())
 
     pub def getCalendarType(x: JapaneseChronology): String = 

@@ -42,7 +42,7 @@ mod Time.Chrono.ThaiBuddhistChronology {
     use Time.ZoneId.{ZoneId}
 
     pub def getInstance(): ThaiBuddhistChronology \ IO = 
-        import static get java.time.chrono.ThaiBuddhistChronology.INSTANCE: ##java.time.chrono.ThaiBuddhistChronology \ IO as getINSTANCE;
+        import static java_get_field java.time.chrono.ThaiBuddhistChronology.INSTANCE: ##java.time.chrono.ThaiBuddhistChronology \ IO as getINSTANCE;
         ThaiBuddhistChronology(getINSTANCE())
 
     pub def getCalendarType(x: ThaiBuddhistChronology): String  = 

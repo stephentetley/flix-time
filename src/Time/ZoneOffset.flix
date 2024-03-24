@@ -88,15 +88,15 @@ mod Time.ZoneOffset {
     /// ___
     ///
     pub def utc(): ZoneOffset =
-        import static get java.time.ZoneOffset.UTC: ##java.time.ZoneOffset \ {} as get_UTC;
+        import static java_get_field java.time.ZoneOffset.UTC: ##java.time.ZoneOffset \ {} as get_UTC;
         ZoneOffset(get_UTC())
 
     pub def min(): ZoneOffset =
-        import static get java.time.ZoneOffset.MIN: ##java.time.ZoneOffset \ {} as get_MIN;
+        import static java_get_field java.time.ZoneOffset.MIN: ##java.time.ZoneOffset \ {} as get_MIN;
         ZoneOffset(get_MIN())
 
     pub def max(): ZoneOffset =
-        import static get java.time.ZoneOffset.MAX: ##java.time.ZoneOffset \ {} as get_MAX;
+        import static java_get_field java.time.ZoneOffset.MAX: ##java.time.ZoneOffset \ {} as get_MAX;
         ZoneOffset(get_MAX())
 
     /// ## `of` functions
@@ -158,7 +158,7 @@ mod Time.ZoneOffset {
 
 
     pub def getOffsetSeconds(x: ZoneOffset): Int32 =
-        import static get java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField \ {} as get_OFFSET_SECONDS;
+        import static java_get_field java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField \ {} as get_OFFSET_SECONDS;
         getHelper(unchecked_cast(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField), x)
 
 

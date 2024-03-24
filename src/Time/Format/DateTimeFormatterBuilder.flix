@@ -46,7 +46,7 @@ mod Time.Format.DateTimeFormatterBuilder {
 
     pub def toFormatter(_: Region[r], b: DateTimeFormatterBuilder[r]): DateTimeFormatter[t] \ r = 
         import java.time.format.DateTimeFormatterBuilder.toFormatter(): ##java.time.format.DateTimeFormatter \ r;
-        import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as newDateTimeFormatterBuilder;
+        import java_new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as newDateTimeFormatterBuilder;
         let DateTimeFormatterBuilder(f1) = b;
         let build = newDateTimeFormatterBuilder();
         f1(build);
@@ -56,7 +56,7 @@ mod Time.Format.DateTimeFormatterBuilder {
     //     
     pub def toFormatterWithLocale(_: Region[r], loc: Locale, b: DateTimeFormatterBuilder[r]): DateTimeFormatter[t] \ r = 
         import java.time.format.DateTimeFormatterBuilder.toFormatter(##java.util.Locale): ##java.time.format.DateTimeFormatter \ r;
-        import new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as newDateTimeFormatterBuilder;
+        import java_new java.time.format.DateTimeFormatterBuilder(): ##java.time.format.DateTimeFormatterBuilder \ r as newDateTimeFormatterBuilder;
         let DateTimeFormatterBuilder(f1) = b;
         let Locale(loc1) = loc;
         let build = newDateTimeFormatterBuilder();

@@ -65,7 +65,7 @@ mod Time.Format.DecimalStyle {
     /// ## "abstract constructors" (e.g. `standard`)
 
     pub def standard(): DecimalStyle =
-        import static get java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle \ {} as get_STANDARD;
+        import static java_get_field java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle \ {} as get_STANDARD;
         DecimalStyle(get_STANDARD())
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 

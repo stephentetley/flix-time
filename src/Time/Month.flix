@@ -87,18 +87,18 @@ mod Time.Month {
     /// ## Marshal enums
 
     pub def marshalMonth(x: Month): ##java.time.Month =
-        import static get java.time.Month.JANUARY: ##java.time.Month \ {} as get_JANUARY;
-        import static get java.time.Month.FEBRUARY: ##java.time.Month \ {} as get_FEBRUARY;
-        import static get java.time.Month.MARCH: ##java.time.Month \ {} as get_MARCH;
-        import static get java.time.Month.APRIL: ##java.time.Month \ {} as get_APRIL;
-        import static get java.time.Month.MAY: ##java.time.Month \ {} as get_MAY;
-        import static get java.time.Month.JUNE: ##java.time.Month \ {} as get_JUNE;
-        import static get java.time.Month.JULY: ##java.time.Month \ {} as get_JULY;
-        import static get java.time.Month.AUGUST: ##java.time.Month \ {} as get_AUGUST;
-        import static get java.time.Month.SEPTEMBER: ##java.time.Month \ {} as get_SEPTEMBER;
-        import static get java.time.Month.OCTOBER: ##java.time.Month \ {} as get_OCTOBER;
-        import static get java.time.Month.NOVEMBER: ##java.time.Month \ {} as get_NOVEMBER;
-        import static get java.time.Month.DECEMBER: ##java.time.Month \ {} as get_DECEMBER;
+        import static java_get_field java.time.Month.JANUARY: ##java.time.Month \ {} as get_JANUARY;
+        import static java_get_field java.time.Month.FEBRUARY: ##java.time.Month \ {} as get_FEBRUARY;
+        import static java_get_field java.time.Month.MARCH: ##java.time.Month \ {} as get_MARCH;
+        import static java_get_field java.time.Month.APRIL: ##java.time.Month \ {} as get_APRIL;
+        import static java_get_field java.time.Month.MAY: ##java.time.Month \ {} as get_MAY;
+        import static java_get_field java.time.Month.JUNE: ##java.time.Month \ {} as get_JUNE;
+        import static java_get_field java.time.Month.JULY: ##java.time.Month \ {} as get_JULY;
+        import static java_get_field java.time.Month.AUGUST: ##java.time.Month \ {} as get_AUGUST;
+        import static java_get_field java.time.Month.SEPTEMBER: ##java.time.Month \ {} as get_SEPTEMBER;
+        import static java_get_field java.time.Month.OCTOBER: ##java.time.Month \ {} as get_OCTOBER;
+        import static java_get_field java.time.Month.NOVEMBER: ##java.time.Month \ {} as get_NOVEMBER;
+        import static java_get_field java.time.Month.DECEMBER: ##java.time.Month \ {} as get_DECEMBER;
         match x {
             case January    => get_JANUARY()
             case February   => get_FEBRUARY()
@@ -121,18 +121,18 @@ mod Time.Month {
         equals(x1, y1)
 
     pub def unmarshalMonth(x: ##java.time.Month): Month =
-        import static get java.time.Month.JANUARY: ##java.time.Month \ {} as get_JANUARY;
-        import static get java.time.Month.FEBRUARY: ##java.time.Month \ {} as get_FEBRUARY;
-        import static get java.time.Month.MARCH: ##java.time.Month \ {} as get_MARCH;
-        import static get java.time.Month.APRIL: ##java.time.Month \ {} as get_APRIL;
-        import static get java.time.Month.MAY: ##java.time.Month \ {} as get_MAY;
-        import static get java.time.Month.JUNE: ##java.time.Month \ {} as get_JUNE;
-        import static get java.time.Month.JULY: ##java.time.Month \ {} as get_JULY;
-        import static get java.time.Month.AUGUST: ##java.time.Month \ {} as get_AUGUST;
-        import static get java.time.Month.SEPTEMBER: ##java.time.Month \ {} as get_SEPTEMBER;
-        import static get java.time.Month.OCTOBER: ##java.time.Month \ {} as get_OCTOBER;
-        import static get java.time.Month.NOVEMBER: ##java.time.Month \ {} as get_NOVEMBER;
-        import static get java.time.Month.DECEMBER: ##java.time.Month \ {} as get_DECEMBER;
+        import static java_get_field java.time.Month.JANUARY: ##java.time.Month \ {} as get_JANUARY;
+        import static java_get_field java.time.Month.FEBRUARY: ##java.time.Month \ {} as get_FEBRUARY;
+        import static java_get_field java.time.Month.MARCH: ##java.time.Month \ {} as get_MARCH;
+        import static java_get_field java.time.Month.APRIL: ##java.time.Month \ {} as get_APRIL;
+        import static java_get_field java.time.Month.MAY: ##java.time.Month \ {} as get_MAY;
+        import static java_get_field java.time.Month.JUNE: ##java.time.Month \ {} as get_JUNE;
+        import static java_get_field java.time.Month.JULY: ##java.time.Month \ {} as get_JULY;
+        import static java_get_field java.time.Month.AUGUST: ##java.time.Month \ {} as get_AUGUST;
+        import static java_get_field java.time.Month.SEPTEMBER: ##java.time.Month \ {} as get_SEPTEMBER;
+        import static java_get_field java.time.Month.OCTOBER: ##java.time.Month \ {} as get_OCTOBER;
+        import static java_get_field java.time.Month.NOVEMBER: ##java.time.Month \ {} as get_NOVEMBER;
+        import static java_get_field java.time.Month.DECEMBER: ##java.time.Month \ {} as get_DECEMBER;
         match x {
             case x1 if primEquals(x1, get_JANUARY())    => January
             case x1 if primEquals(x1, get_FEBRUARY())   => February

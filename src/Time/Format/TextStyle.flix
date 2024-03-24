@@ -36,12 +36,12 @@ mod Time.Format.TextStyle {
 
 
     pub def marshalTextStyle(x: TextStyle): ##java.time.format.TextStyle = 
-        import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle \ {} as getFULL;
-        import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle \ {} as getFULL_STANDALONE;
-        import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle \ {} as getNARROW;
-        import static get java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle \ {} as getNARROW_STANDALONE;	
-        import static get java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle \ {} as getSHORT;
-        import static get java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle \ {} as getSHORT_STANDALONE;
+        import static java_get_field java.time.format.TextStyle.FULL: ##java.time.format.TextStyle \ {} as getFULL;
+        import static java_get_field java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle \ {} as getFULL_STANDALONE;
+        import static java_get_field java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle \ {} as getNARROW;
+        import static java_get_field java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle \ {} as getNARROW_STANDALONE;	
+        import static java_get_field java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle \ {} as getSHORT;
+        import static java_get_field java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle \ {} as getSHORT_STANDALONE;
         match x {
             case Full               => getFULL()
             case FullStandalone     => getFULL_STANDALONE()
@@ -58,12 +58,12 @@ mod Time.Format.TextStyle {
         equals(x1, y1)
 
     pub def unmarshalTextStyle(x: ##java.time.format.TextStyle): TextStyle = 
-        import static get java.time.format.TextStyle.FULL: ##java.time.format.TextStyle \ {} as getFULL;
-        import static get java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle \ {} as getFULL_STANDALONE;
-        import static get java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle \ {} as getNARROW;
-        import static get java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle \ {} as getNARROW_STANDALONE;	
-        import static get java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle \ {} as getSHORT;
-        import static get java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle \ {} as getSHORT_STANDALONE;
+        import static java_get_field java.time.format.TextStyle.FULL: ##java.time.format.TextStyle \ {} as getFULL;
+        import static java_get_field java.time.format.TextStyle.FULL_STANDALONE: ##java.time.format.TextStyle \ {} as getFULL_STANDALONE;
+        import static java_get_field java.time.format.TextStyle.NARROW: ##java.time.format.TextStyle \ {} as getNARROW;
+        import static java_get_field java.time.format.TextStyle.NARROW_STANDALONE: ##java.time.format.TextStyle \ {} as getNARROW_STANDALONE;	
+        import static java_get_field java.time.format.TextStyle.SHORT: ##java.time.format.TextStyle \ {} as getSHORT;
+        import static java_get_field java.time.format.TextStyle.SHORT_STANDALONE: ##java.time.format.TextStyle \ {} as getSHORT_STANDALONE;
         match x {
             case x1 if primEquals(x1, getFULL())                => Full
             case x1 if primEquals(x1, getFULL_STANDALONE())     => FullStandalone

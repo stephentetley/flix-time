@@ -34,8 +34,8 @@ mod Time.Chrono.MinguoEra {
     use Time.Format.TextStyle
 
     pub def marshalMinguoEra(x: MinguoEra): ##java.time.chrono.MinguoEra = 
-        import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
-        import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
+        import static java_get_field java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
+        import static java_get_field java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
         match x {
             case BEFORE_ROC => getBEFORE_ROC()
             case ROC        => getROC() 
@@ -48,8 +48,8 @@ mod Time.Chrono.MinguoEra {
         equals(x1, y1)
 
     pub def unmarshalMinguoEra(x: ##java.time.chrono.MinguoEra): MinguoEra =
-        import static get java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
-        import static get java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
+        import static java_get_field java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
+        import static java_get_field java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
         match x {
             case x1 if primEquals(x1, getBEFORE_ROC())  => BEFORE_ROC
             case x1 if primEquals(x1, getROC())         => ROC

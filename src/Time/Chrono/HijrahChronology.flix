@@ -78,7 +78,7 @@ mod Time.Chrono.HijrahChronology {
         Chronology(unchecked_cast(x1 as ##java.time.chrono.Chronology))
 
     pub def getInstance(): HijrahChronology \ IO =
-        import static get java.time.chrono.HijrahChronology.INSTANCE: ##java.time.chrono.HijrahChronology \ IO as getINSTANCE;
+        import static java_get_field java.time.chrono.HijrahChronology.INSTANCE: ##java.time.chrono.HijrahChronology \ IO as getINSTANCE;
         HijrahChronology(getINSTANCE())
 
     pub def date(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}, 

@@ -73,24 +73,24 @@ mod Time.Chrono.JapaneseEra {
         }) |> Result.toOption
 
     pub def heisei(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.HEISEI: ##java.time.chrono.JapaneseEra \ {} as getHEISEI;
+        import static java_get_field java.time.chrono.JapaneseEra.HEISEI: ##java.time.chrono.JapaneseEra \ {} as getHEISEI;
         JapaneseEra(getHEISEI())
 
     pub def meiji(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.MEIJI: ##java.time.chrono.JapaneseEra \ {} as getMEIJI;
+        import static java_get_field java.time.chrono.JapaneseEra.MEIJI: ##java.time.chrono.JapaneseEra \ {} as getMEIJI;
         JapaneseEra(getMEIJI())
 
     /// Java 13
     /// pub def reiwa(): JapaneseEra = 
-    ///     import static get java.time.chrono.JapaneseEra.REIWA: ##java.time.chrono.JapaneseEra \ {} as getREIWA;
+    ///     import static java_get_field java.time.chrono.JapaneseEra.REIWA: ##java.time.chrono.JapaneseEra \ {} as getREIWA;
     ///     JapaneseEra(getREIWA())
 
     pub def showa(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.SHOWA: ##java.time.chrono.JapaneseEra \ {} as getSHOWA;
+        import static java_get_field java.time.chrono.JapaneseEra.SHOWA: ##java.time.chrono.JapaneseEra \ {} as getSHOWA;
         JapaneseEra(getSHOWA())
 
     pub def taisho(): JapaneseEra = 
-        import static get java.time.chrono.JapaneseEra.TAISHO: ##java.time.chrono.JapaneseEra \ {} as getTAISHO;
+        import static java_get_field java.time.chrono.JapaneseEra.TAISHO: ##java.time.chrono.JapaneseEra \ {} as getTAISHO;
         JapaneseEra(getTAISHO())
 
     pub def getValue(x: JapaneseEra): Int32 = 

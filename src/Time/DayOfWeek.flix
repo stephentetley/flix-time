@@ -84,13 +84,13 @@ mod Time.DayOfWeek {
     /// ## Marshal enums
 
     pub def marshalDayOfWeek(x: DayOfWeek): ##java.time.DayOfWeek =
-        import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek \ {} as get_MONDAY;
-        import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek \ {} as get_TUESDAY;
-        import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek \ {} as get_WEDNESDAY;
-        import static get java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek \ {} as get_THURSDAY;
-        import static get java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek \ {} as get_FRIDAY;
-        import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek \ {} as get_SATURDAY;
-        import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek \ {} as get_SUNDAY;
+        import static java_get_field java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek \ {} as get_MONDAY;
+        import static java_get_field java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek \ {} as get_TUESDAY;
+        import static java_get_field java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek \ {} as get_WEDNESDAY;
+        import static java_get_field java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek \ {} as get_THURSDAY;
+        import static java_get_field java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek \ {} as get_FRIDAY;
+        import static java_get_field java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek \ {} as get_SATURDAY;
+        import static java_get_field java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek \ {} as get_SUNDAY;
         match x {
             case Monday     => get_MONDAY()
             case Tuesday    => get_TUESDAY()
@@ -109,13 +109,13 @@ mod Time.DayOfWeek {
 
 
     pub def unmarshalDayOfWeek(x: ##java.time.DayOfWeek): Time.DayOfWeek =
-        import static get java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek \ {} as get_MONDAY;
-        import static get java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek \ {} as get_TUESDAY;
-        import static get java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek \ {} as get_WEDNESDAY;
-        import static get java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek \ {} as get_THURSDAY;
-        import static get java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek \ {}  as get_FRIDAY;
-        import static get java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek \ {} as get_SATURDAY;
-        import static get java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek \ {} as get_SUNDAY;
+        import static java_get_field java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek \ {} as get_MONDAY;
+        import static java_get_field java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek \ {} as get_TUESDAY;
+        import static java_get_field java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek \ {} as get_WEDNESDAY;
+        import static java_get_field java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek \ {} as get_THURSDAY;
+        import static java_get_field java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek \ {}  as get_FRIDAY;
+        import static java_get_field java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek \ {} as get_SATURDAY;
+        import static java_get_field java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek \ {} as get_SUNDAY;
         match x {
             case x1 if primEquals(x1, get_MONDAY())     => Monday
             case x1 if primEquals(x1, get_TUESDAY())    => Tuesday

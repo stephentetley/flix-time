@@ -43,7 +43,7 @@ mod Time.Chrono.MinguoChronology {
     use Time.ZoneId.{ZoneId}
 
     pub def getInstance(): MinguoChronology \ IO = 
-        import static get java.time.chrono.MinguoChronology.INSTANCE: ##java.time.chrono.MinguoChronology \ IO as getINSTANCE;
+        import static java_get_field java.time.chrono.MinguoChronology.INSTANCE: ##java.time.chrono.MinguoChronology \ IO as getINSTANCE;
         MinguoChronology(getINSTANCE())
 
     pub def getCalendarType(x: MinguoChronology): String = 

@@ -34,8 +34,8 @@ mod Time.Chrono.ThaiBuddhistEra {
     use Time.Format.TextStyle
 
     pub def marshalThaiBuddhistEra(x: ThaiBuddhistEra): ##java.time.chrono.ThaiBuddhistEra = 
-        import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBEFORE_BE;
-        import static get java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBE;
+        import static java_get_field java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBEFORE_BE;
+        import static java_get_field java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBE;
         match x {
             case BEFORE_BE  => getBEFORE_BE()
             case BE         => getBE() 
@@ -48,8 +48,8 @@ mod Time.Chrono.ThaiBuddhistEra {
         equals(x1, y1)
 
     pub def unmarshalThaiBuddhistEra(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
-        import static get java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBEFORE_BE;
-        import static get java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBE;
+        import static java_get_field java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBEFORE_BE;
+        import static java_get_field java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBE;
         match x {
             case x1 if primEquals(x1, getBEFORE_BE())  => BEFORE_BE
             case x1 if primEquals(x1, getBE())         => BE

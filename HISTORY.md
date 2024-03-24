@@ -1,3 +1,6 @@
+### v0.9.0
+   Updated to work with Flix compiler 0.45.0.
+
 ### v0.8.0
    Renamed `Interop.Time` namespace to `Time.Internal`.
    Simplfied supertype casting to use "as_" functions rather than type classes.
