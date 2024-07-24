@@ -176,13 +176,13 @@ mod Time.Chrono.HijrahChronology {
         prolepticYear(x1, era1, yearOfEra)
 
 
-    /// pub def resolveDate(fieldValues: List[(a, Int64)], resolverStyle: ResolverStyle, x: HijrahChronology): HijrahDate with TemporalField[a] =
-    ///     import java.time.chrono.HijrahChronology.resolveDate(##java.util.Map, ##java.time.format.ResolverStyle): ##java.time.chrono.HijrahDate \ {};
-    ///     let x1 = getHijrahChronology(x);
-    ///     let resolverStyle1 = Time.Format.ResolverStyle.marshal(resolverStyle);
-    ///     let upcastKey = field -> Time.Temporal.TemporalField.marshalToNativeTemporalField(field) as ##java.lang.Object;
-    ///     let upcastVal = i -> Interop.Collections/... /Marshal.marshalInt64(i) as ##java.lang.Object;
-    ///     let fieldValues1 = Interop.Collections/... /Marshal.marshalAssocListToMap(upcastKey, upcastVal, fieldValues);
-    ///     HijrahDate(resolveDate(x1, fieldValues1, resolverStyle1))
+    // pub def resolveDate(fieldValues: List[(a, Int64)], resolverStyle: ResolverStyle, x: HijrahChronology): HijrahDate with TemporalField[a] =
+    //     import java.time.chrono.HijrahChronology.resolveDate(##java.util.Map, ##java.time.format.ResolverStyle): ##java.time.chrono.HijrahDate \ {};
+    //     let x1 = getHijrahChronology(x);
+    //     let resolverStyle1 = Time.Format.ResolverStyle.marshal(resolverStyle);
+    //     let upcastKey = field -> Time.Temporal.TemporalField.marshalToNativeTemporalField(field) as ##java.lang.Object;
+    //     let upcastVal = i -> Interop.Collections/... /Marshal.marshalInt64(i) as ##java.lang.Object;
+    //     let fieldValues1 = Interop.Collections/... /Marshal.marshalAssocListToMap(upcastKey, upcastVal, fieldValues);
+    //     HijrahDate(resolveDate(x1, fieldValues1, resolverStyle1))
 
 }

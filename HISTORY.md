@@ -1,3 +1,6 @@
+### v0.10.0
+   Updated to with Flix compiler 0.48.0.
+
 ### v0.9.0
    Updated to work with Flix compiler 0.45.0.
 

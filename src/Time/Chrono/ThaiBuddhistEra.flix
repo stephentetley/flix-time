@@ -73,24 +73,25 @@ mod Time.Chrono.ThaiBuddhistEra {
         
 
         
-    /// /// NOTE - maybe this should return Option [/ Result] ?
-    /// pub def adjustInto(t: a, x: ThaiBuddhistEra): a with Temporal[a] = 
-    ///     import java.time.chrono.Era.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    ///     let x1 = marshal(x) as ##java.time.chrono.Era;
-    ///     let t1 = Time.Temporal.Temporal.marshalToNativeTemporal(t);
-    ///     Time.Temporal.Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
+    // NOTE - maybe this should return Option [/ Result] ?
+
+    // pub def adjustInto(t: a, x: ThaiBuddhistEra): a with Temporal[a] = 
+    //     import java.time.chrono.Era.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
+    //     let x1 = marshal(x) as ##java.time.chrono.Era;
+    //     let t1 = Time.Temporal.Temporal.marshalToNativeTemporal(t);
+    //     Time.Temporal.Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
 
  
-    /// pub def get(t: a, x: ThaiBuddhistEra): Int32 with TemporalField[a] = 
-    ///     import java.time.chrono.Era.get(##java.time.temporal.TemporalField): Int32 \ {};
-    ///     let x1 = marshal(x) as ##java.time.chrono.Era;
-    ///     let t1 = Time.Temporal.TemporalField.marshalToNativeTemporalField(t);
-    ///     get(x1, t1)
+    // pub def get(t: a, x: ThaiBuddhistEra): Int32 with TemporalField[a] = 
+    //     import java.time.chrono.Era.get(##java.time.temporal.TemporalField): Int32 \ {};
+    //     let x1 = marshal(x) as ##java.time.chrono.Era;
+    //     let t1 = Time.Temporal.TemporalField.marshalToNativeTemporalField(t);
+    //     get(x1, t1)
 
-    /// pub def getLong(t: a, x: ThaiBuddhistEra): Int64 with TemporalField[a] = 
-    ///     import java.time.chrono.Era.getLong(##java.time.temporal.TemporalField): Int64 \ {};
-    ///     let x1 = marshal(x) as ##java.time.chrono.Era;
-    ///     let t1 = Time.Temporal.TemporalField.marshalToNativeTemporalField(t);
-    ///     getLong(x1, t1)
+    // pub def getLong(t: a, x: ThaiBuddhistEra): Int64 with TemporalField[a] = 
+    //     import java.time.chrono.Era.getLong(##java.time.temporal.TemporalField): Int64 \ {};
+    //     let x1 = marshal(x) as ##java.time.chrono.Era;
+    //     let t1 = Time.Temporal.TemporalField.marshalToNativeTemporalField(t);
+    //     getLong(x1, t1)
 
 }

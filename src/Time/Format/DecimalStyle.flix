@@ -90,7 +90,8 @@ mod Time.Format.DecimalStyle {
     /// Candidate for Adaptor...
     def fromSetAsList(l: ##java.util.Set): List[a] = region rc {
         import java.util.Set.iterator(): ##java.util.Iterator \ rc;
-        iterator(l) |> Adaptor.fromIterator(rc, Proxy.Proxy: Proxy[a]) |> Iterator.toList
+        let proxy: Proxy[a] = Proxy.Proxy;
+        iterator(l) |> Adaptor.fromIterator(rc, proxy) |> Iterator.toList
     }
 
 

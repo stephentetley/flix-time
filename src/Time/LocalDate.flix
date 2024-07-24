@@ -291,7 +291,8 @@ mod Time.LocalDate {
         let LocalDate(s1) = s;
         let LocalDate(e1) = e;
         let strm = datesUntil(s1, e1);
-        fromStream(rc, Proxy.Proxy: Proxy[##java.time.LocalDate], strm) |> Iterator.map(d -> LocalDate(d))
+        let proxy: Proxy[##java.time.LocalDate] = Proxy.Proxy;
+        fromStream(rc, proxy, strm) |> Iterator.map(d -> LocalDate(d))
 
     pub def datesUntilWithStep(rc: Region[r], s: LocalDate, e: LocalDate, step: Period): Iterator[LocalDate, r, r]  = 
         import java.time.LocalDate.datesUntil(##java.time.LocalDate, ##java.time.Period): ##java.util.stream.Stream \ {};
@@ -299,7 +300,8 @@ mod Time.LocalDate {
         let LocalDate(e1) = e;
         let step1 = Time.Period.getPeriod(step);
         let strm = datesUntil(s1, e1, step1);
-        fromStream(rc, Proxy.Proxy: Proxy[##java.time.LocalDate], strm) |> Iterator.map(d -> LocalDate(d))
+        let proxy: Proxy[##java.time.LocalDate] = Proxy.Proxy;
+        fromStream(rc, proxy, strm) |> Iterator.map(d -> LocalDate(d))
 
     /// Candidate from Adaptor in stdlib...
     pub def fromStream(rc: Region[r], proxy: Proxy[a], strm: ##java.util.stream.Stream): Iterator[a, r, r] =
@@ -573,7 +575,7 @@ mod Time.LocalDate {
         import static java_get_field java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
         untilHelper(get_QUARTER_YEARS(), r)
 
-    /// ## generic helper functions
+    // ## generic helper functions
 
     def getHelper(field: ##java.time.temporal.TemporalField, x: LocalDate): Int64 = 
         import java.time.LocalDate.getLong(##java.time.temporal.TemporalField): Int64 \ {};
@@ -631,10 +633,11 @@ mod Time.LocalDate {
             let LocalDate(x1) = x;
             LocalDate(with1(x1, field, i))
         } catch {
-            /// case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-            case ex: ##java.lang.Exception => 
+            // case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
+            case ex: ##java.lang.Exception => {
                 import java.lang.Throwable.getMessage(): String \ {};
                 bug!(getMessage(ex))
+            }
         }
 
 

@@ -86,9 +86,9 @@ mod Time.Chrono.JapaneseDate {
         JapaneseDate(now())
 
     pub def fromLocalDate(x: LocalDate): JapaneseDate = 
-        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {};
+        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as from1;
         let LocalDate(x1) = x;
-        JapaneseDate(from(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+        JapaneseDate(from1(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
 
     pub def toLocalDate(x: JapaneseDate): LocalDate =

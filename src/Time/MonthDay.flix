@@ -232,10 +232,10 @@ mod Time.MonthDay {
         Time.Month.unmarshalMonth(getMonth(x1))
 
     pub def withMonth(month: Month, x: MonthDay): MonthDay =
-        import java.time.MonthDay.with(##java.time.Month): ##java.time.MonthDay \ {};
+        import java.time.MonthDay.with(##java.time.Month): ##java.time.MonthDay \ {} as with1;
         let MonthDay(x1) = x;
         let m1 = Time.Month.marshalMonth(month);
-        MonthDay(with(x1, m1))
+        MonthDay(with1(x1, m1))
 
     pub def getMonthValue(x: MonthDay): Int32 =
         import java.time.MonthDay.getMonthValue(): Int32 \ {};

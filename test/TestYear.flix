@@ -83,24 +83,27 @@ mod TestYear {
         println("Year.until01(): ${diff}");
         diff
 
-    /// /////////////////////////////////////////////////////////////////////////////
-    /// // fromTemporalAccessor                                                    //
-    /// /////////////////////////////////////////////////////////////////////////////
-    /// @test
-    /// def fromTemporalAccessor01(): Result[String, Time.Year] \ IO = 
-    ///     let t1 = Time.Year.year(isoYear = 2020);
-    ///     let t2 = Time.Year.fromTemporalAccessor(t1);
-    ///     println("fromTemporalAccessor01(): ${t2}");
-    ///     t2
+    /////////////////////////////////////////////////////////////////////////////
+    // fromTemporalAccessor                                                    //
+    /////////////////////////////////////////////////////////////////////////////
+
+    // @test
+    // def fromTemporalAccessor01(): Result[String, Time.Year] \ IO = 
+    //     let t1 = Time.Year.year(isoYear = 2020);
+    //     let t2 = Time.Year.fromTemporalAccessor(t1);
+    //     println("fromTemporalAccessor01(): ${t2}");
+    //     t2
 
     /////////////////////////////////////////////////////////////////////////////
     // withTemporalAdjuster                                                    //
     /////////////////////////////////////////////////////////////////////////////
-    /// @test
-    /// def withTemporalAdjuster01(): Time.Year \ IO = 
-    ///     let t1 = Time.Year.year(isoYear = 2020);
-    ///     let t2 = Time.Year.year(isoYear = 2028);
-    ///     let t3 = Time.Year.withTemporalAdjuster(t2, t1);
-    ///     println("withTemporalAdjuster01(): ${t3}");
-    ///     t3
+
+    // @test
+    // def withTemporalAdjuster01(): Time.Year \ IO = 
+    //     let t1 = Time.Year.year(isoYear = 2020);
+    //     let t2 = Time.Year.year(isoYear = 2028);
+    //     let t3 = Time.Year.withTemporalAdjuster(t2, t1);
+    //     println("withTemporalAdjuster01(): ${t3}");
+    //     t3
+
 }

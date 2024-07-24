@@ -41,17 +41,18 @@ mod TestMonthDay {
     // get                                                                     //
     /////////////////////////////////////////////////////////////////////////////
 
-    /// @test
-    /// def get01(): Int32 \ IO =         
-    ///     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
-    ///     let i = Time.MonthDay.get(Time.Temporal.ChronoField.monthOfYear(), md);
-    ///     println("MonthDay.get01(): ${i}");
-    ///     i
+    // @test
+    // def get01(): Int32 \ IO =         
+    //     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
+    //     let i = Time.MonthDay.get(Time.Temporal.ChronoField.monthOfYear(), md);
+    //     println("MonthDay.get01(): ${i}");
+    //     i
 
-    /// @test
-    /// def get02(): Int32 \ IO =         
-    ///     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
-    ///     let i = Time.MonthDay.get(Time.Temporal.ChronoField.dayOfMonth(), md);
-    ///     println("MonthDay.get02(): ${i}");
-    ///     i  
+    // @test
+    // def get02(): Int32 \ IO =         
+    //     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
+    //     let i = Time.MonthDay.get(Time.Temporal.ChronoField.dayOfMonth(), md);
+    //     println("MonthDay.get02(): ${i}");
+    //     i  
+
 }
