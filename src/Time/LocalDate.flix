@@ -204,7 +204,7 @@ mod Time.LocalDate {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
     /// TODO - idiomatic Flix is `toSomeDatatype` in the respective module rather than `fromSomeDatatype`
@@ -585,7 +585,7 @@ mod Time.LocalDate {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
 
@@ -597,7 +597,7 @@ mod Time.LocalDate {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
 
@@ -610,7 +610,7 @@ mod Time.LocalDate {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
 
@@ -623,7 +623,7 @@ mod Time.LocalDate {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
 
@@ -636,7 +636,7 @@ mod Time.LocalDate {
             // case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
             case ex: ##java.lang.Exception => {
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
             }
         }
 

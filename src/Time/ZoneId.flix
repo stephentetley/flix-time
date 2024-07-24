@@ -127,7 +127,7 @@ mod Time.ZoneId {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 

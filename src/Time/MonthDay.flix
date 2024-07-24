@@ -128,7 +128,7 @@ mod Time.MonthDay {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
     pub def fromLocalDate(x: LocalDate): MonthDay = 
@@ -145,7 +145,7 @@ mod Time.MonthDay {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
     pub def fromZonedDateTime(x: ZonedDateTime): MonthDay = 
@@ -156,7 +156,7 @@ mod Time.MonthDay {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
     /// ## `parse` / `format` functions

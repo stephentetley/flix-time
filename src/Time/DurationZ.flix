@@ -203,7 +203,7 @@ mod Time.DurationZ {
         } catch { 
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
     pub def ofHalfDays(i: Int64): DurationZ = 
@@ -486,7 +486,7 @@ mod Time.DurationZ {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
     
 
@@ -501,7 +501,7 @@ mod Time.DurationZ {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
     
 

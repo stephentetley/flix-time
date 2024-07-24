@@ -126,7 +126,7 @@ mod Time.YearMonth {
         } catch {
             case ex: ##java.lang.Exception => 
                 import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(ex))
+                bug!(getMessage(checked_cast(ex)))
         }
 
     pub def fromLocalDate(x: LocalDate): YearMonth = 
