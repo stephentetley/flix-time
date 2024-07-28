@@ -67,27 +67,33 @@ mod Time.ZoneId {
     use Time.ZoneOffset.{ZoneOffset}
     use Time.ZonedDateTime
     use Locale.{Locale}
+    
+    import java.time.{ZoneId => JZoneId}
+    import java.time.{ZoneOffset => JZoneOffset}
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
+    import java.time.zone.{ZoneRules => JZoneRules}
+
     /// ## Unwrap
 
-    pub def getZoneId(x: ZoneId): ##java.time.ZoneId = 
+    pub def getZoneId(x: ZoneId): JZoneId = 
         let ZoneId(x1) = x;
         x1
 
     pub def fromJavaObject(o: ##java.lang.Object): ZoneId = 
-        ZoneId(unchecked_cast(o as ##java.time.ZoneId))
+        ZoneId(unchecked_cast(o as JZoneId))
 
     /// ## Constructors
 
     pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
         Result.tryCatch(_ -> {
-            import static java.time.ZoneId.of(String): ##java.time.ZoneId \ {};
+            import static java.time.ZoneId.of(String): JZoneId \ {};
             ZoneId(of(zoneId.zoneId))
         })
         
     /// Ideally not in IO...
     pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] \ IO =
         Result.tryCatch(_ -> {
-            import static java.time.ZoneId.of(String, ##java.util.Map): ##java.time.ZoneId \ {};
+            import static java.time.ZoneId.of(String, ##java.util.Map): JZoneId \ {};
             let jmap = Adaptor.toMap(aliases);
             ZoneId(of(zoneId.zoneId, jmap))
         })
@@ -102,7 +108,7 @@ mod Time.ZoneId {
 
     pub def systemDefault(): Result[String, ZoneId] \ IO =
         Result.tryCatch(_ -> {
-            import static java.time.ZoneId.systemDefault(): ##java.time.ZoneId \ IO;
+            import static java.time.ZoneId.systemDefault(): JZoneId \ IO;
             ZoneId(systemDefault())
         })
 
@@ -110,7 +116,7 @@ mod Time.ZoneId {
     /// ## `from` functions
 
     pub def fromOffset(r: {prefix = Option[String], offset = ZoneOffset}): ZoneId =
-        import static java.time.ZoneId.ofOffset(String, ##java.time.ZoneOffset): ##java.time.ZoneId \ {};
+        import static java.time.ZoneId.ofOffset(String, JZoneOffset): JZoneId \ {};
         let p1 = match r.prefix {
             case Some(s) => s
             case _       => ""
@@ -120,8 +126,8 @@ mod Time.ZoneId {
 
     /// `fromTemporalAccessor` specialized
     
-    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZoneId = 
-        import static java.time.ZoneId.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneId \ {} as fromTA;
+    def fromTemporalAccessorHelper(x: JTemporalAccessor): ZoneId = 
+        import static java.time.ZoneId.from(JTemporalAccessor): JZoneId \ {} as fromTA;
         try {
             ZoneId(fromTA(x))
         } catch {
@@ -131,16 +137,16 @@ mod Time.ZoneId {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as JTemporalAccessor))
 
     pub def fromOffsetTime(x: OffsetTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as JTemporalAccessor))
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as JTemporalAccessor))
 
     pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.ZoneOffset.getZoneOffset(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZoneOffset.getZoneOffset(x) as JTemporalAccessor))
 
 
     /// ## ZoneId functions
@@ -173,14 +179,14 @@ mod Time.ZoneId {
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =
         Result.tryCatch(_ -> {
-            import java.time.ZoneId.getRules(): ##java.time.zone.ZoneRules \ {};
+            import java.time.ZoneId.getRules(): JZoneRules \ {};
             let ZoneId(x1) = x;
             ZoneRules(getRules(x1))
         }) |> Result.toOption
 
     ///
     pub def normalized(x: ZoneId): ZoneId =
-        import java.time.ZoneId.normalized(): ##java.time.ZoneId \ {};
+        import java.time.ZoneId.normalized(): JZoneId \ {};
         let ZoneId(x1) = x;
         ZoneId(normalized(x1))
 

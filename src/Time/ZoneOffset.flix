@@ -71,15 +71,19 @@ mod Time.ZoneOffset {
     use Time.OffsetDateTime
     use Time.OffsetTime
     use Time.ZonedDateTime
+    import java.time.{ZoneOffset => JZoneOffset}
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor, 
+            TemporalField => JTemporalField, ChronoField => JChronoField}
+    import java.time.zone.{ZoneRules => JZoneRules}
 
     /// ## Unwrap
 
-    pub def getZoneOffset(x: ZoneOffset): ##java.time.ZoneOffset = 
+    pub def getZoneOffset(x: ZoneOffset): JZoneOffset = 
         let ZoneOffset(x1) = x;
         x1
 
     pub def fromJavaObject(o: ##java.lang.Object): ZoneOffset = 
-        ZoneOffset(unchecked_cast(o as ##java.time.ZoneOffset))
+        ZoneOffset(unchecked_cast(o as JZoneOffset))
 
 
     /// ## "abstract constructors" (e.g. `utc`)
@@ -88,38 +92,38 @@ mod Time.ZoneOffset {
     /// ___
     ///
     pub def utc(): ZoneOffset =
-        import static java_get_field java.time.ZoneOffset.UTC: ##java.time.ZoneOffset \ {} as get_UTC;
+        import static java_get_field java.time.ZoneOffset.UTC: JZoneOffset \ {} as get_UTC;
         ZoneOffset(get_UTC())
 
     pub def min(): ZoneOffset =
-        import static java_get_field java.time.ZoneOffset.MIN: ##java.time.ZoneOffset \ {} as get_MIN;
+        import static java_get_field java.time.ZoneOffset.MIN: JZoneOffset \ {} as get_MIN;
         ZoneOffset(get_MIN())
 
     pub def max(): ZoneOffset =
-        import static java_get_field java.time.ZoneOffset.MAX: ##java.time.ZoneOffset \ {} as get_MAX;
+        import static java_get_field java.time.ZoneOffset.MAX: JZoneOffset \ {} as get_MAX;
         ZoneOffset(get_MAX())
 
     /// ## `of` functions
 
     pub def ofHours(hours: Int32): ZoneOffset =
-        import static java.time.ZoneOffset.ofHours(Int32): ##java.time.ZoneOffset \ {};
+        import static java.time.ZoneOffset.ofHours(Int32): JZoneOffset \ {};
         ZoneOffset(ofHours(hours))
 
     pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset =
-        import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): ##java.time.ZoneOffset \ {};
+        import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): JZoneOffset \ {};
         ZoneOffset(ofHoursMinutes(r.hours, r.minutes))
 
     pub def ofHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
-        import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): ##java.time.ZoneOffset \ {};
+        import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): JZoneOffset \ {};
         ZoneOffset(ofHoursMinutesSeconds(r.hours, r.minutes, r.seconds))
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
-        import static java.time.ZoneOffset.ofTotalSeconds(Int32): ##java.time.ZoneOffset \ {};
+        import static java.time.ZoneOffset.ofTotalSeconds(Int32): JZoneOffset \ {};
         ZoneOffset(ofTotalSeconds(seconds))
 
     /// `fromTemporalAccessor` specialized
-    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZoneOffset = 
-        import static java.time.ZoneOffset.from(##java.time.temporal.TemporalAccessor): ##java.time.ZoneOffset \ {} as fromTA;
+    def fromTemporalAccessorHelper(x: JTemporalAccessor): ZoneOffset = 
+        import static java.time.ZoneOffset.from(JTemporalAccessor): JZoneOffset \ {} as fromTA;
         try {
             ZoneOffset(fromTA(x))
         } catch {
@@ -129,13 +133,13 @@ mod Time.ZoneOffset {
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as JTemporalAccessor))
 
     pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as JTemporalAccessor))
             
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as JTemporalAccessor))
     
     /// ## ZoneOffset functions
 
@@ -145,7 +149,7 @@ mod Time.ZoneOffset {
         getId(x1)
 
     pub def getRules(x: ZoneOffset): ZoneRules =
-        import java.time.ZoneOffset.getRules(): ##java.time.zone.ZoneRules \ {};
+        import java.time.ZoneOffset.getRules(): JZoneRules \ {};
         let ZoneOffset(x1) = x;
         ZoneRules(getRules(x1))
 
@@ -158,14 +162,14 @@ mod Time.ZoneOffset {
 
 
     pub def getOffsetSeconds(x: ZoneOffset): Int32 =
-        import static java_get_field java.time.temporal.ChronoField.OFFSET_SECONDS: ##java.time.temporal.ChronoField \ {} as get_OFFSET_SECONDS;
-        getHelper(unchecked_cast(get_OFFSET_SECONDS() as ##java.time.temporal.TemporalField), x)
+        import static java_get_field java.time.temporal.ChronoField.OFFSET_SECONDS: JChronoField \ {} as get_OFFSET_SECONDS;
+        getHelper(unchecked_cast(get_OFFSET_SECONDS() as JTemporalField), x)
 
 
     /// ## generic helper functions
 
-    def getHelper(field: ##java.time.temporal.TemporalField, x: ZoneOffset): Int32 =
-        import java.time.ZoneOffset.get(##java.time.temporal.TemporalField): Int32 \ {};
+    def getHelper(field: JTemporalField, x: ZoneOffset): Int32 =
+        import java.time.ZoneOffset.get(JTemporalField): Int32 \ {};
         try {
             let ZoneOffset(x1) = x;
             get(x1, field)
