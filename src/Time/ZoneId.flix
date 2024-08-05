@@ -72,6 +72,7 @@ mod Time.ZoneId {
     import java.time.{ZoneOffset => JZoneOffset}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.time.zone.{ZoneRules => JZoneRules}
+    import java.lang.{Exception, Throwable}
 
     /// ## Unwrap
 
@@ -85,17 +86,13 @@ mod Time.ZoneId {
     /// ## Constructors
 
     pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
-        Result.tryCatch(_ -> {
-            import static java.time.ZoneId.of(String): JZoneId \ {};
-            ZoneId(of(zoneId#zoneId))
-        })
+        Result.tryCatch(_ -> ZoneId(unsafe JZoneId.of(zoneId#zoneId)))
         
     /// Ideally not in IO...
     pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] \ IO =
         Result.tryCatch(_ -> {
-            import static java.time.ZoneId.of(String, ##java.util.Map): JZoneId \ {};
             let jmap = Adaptor.toMap(aliases);
-            ZoneId(of(zoneId#zoneId, jmap))
+            ZoneId(unsafe JZoneId.of(zoneId#zoneId, jmap))
         })
 
 
@@ -107,22 +104,18 @@ mod Time.ZoneId {
     }
 
     pub def systemDefault(): Result[String, ZoneId] \ IO =
-        Result.tryCatch(_ -> {
-            import static java.time.ZoneId.systemDefault(): JZoneId \ IO;
-            ZoneId(systemDefault())
-        })
+        Result.tryCatch(_ -> ZoneId(JZoneId.systemDefault()))
 
 
     /// ## `from` functions
 
     pub def fromOffset(r: {prefix = Option[String], offset = ZoneOffset}): ZoneId =
-        import static java.time.ZoneId.ofOffset(String, JZoneOffset): JZoneId \ {};
         let p1 = match r#prefix {
             case Some(s) => s
             case _       => ""
         };
         let ZoneOffset(o1) = r#offset;
-        ZoneId(ofOffset(p1, o1))
+        ZoneId(unsafe JZoneId.ofOffset(p1, o1))
 
     /// `fromTemporalAccessor` specialized
     
@@ -131,9 +124,8 @@ mod Time.ZoneId {
         try {
             ZoneId(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
+            case ex: Exception => 
+                bug!(unsafe ex.getMessage())
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
@@ -152,43 +144,39 @@ mod Time.ZoneId {
     /// ## ZoneId functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
-        import java.time.ZoneId.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
         let ZoneId(z1) = z;
-        getDisplayName(z1, style1, locale1)
+        unsafe z1.getDisplayName(style1, locale1)
 
     ///
     /// Returns the unique ID of the time zone.
     ///
     pub def getTimeZoneId(x: ZoneId): String =
-        import java.time.ZoneId.getId(): String \ {};
         let ZoneId(x1) = x;
-        getId(x1)
+        unsafe x1.getId()
 
     pub def getAvailableZoneIds(): Set[String] \ IO =
-        import static java.time.ZoneId.getAvailableZoneIds(): ##java.util.Set \ IO;
         try {
-            let s = getAvailableZoneIds();
+            let s = JZoneId.getAvailableZoneIds();
             Adaptor.fromSet(s)
         } catch {
-            case _: ##java.lang.Exception => Set.empty()
+            case _: Exception => Set.empty()
         }
 
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =
         Result.tryCatch(_ -> {
-            import java.time.ZoneId.getRules(): JZoneRules \ {};
             let ZoneId(x1) = x;
-            ZoneRules(getRules(x1))
+            ZoneRules(unsafe x1.getRules())
         }) |> Result.toOption
 
-    ///
-    pub def normalized(x: ZoneId): ZoneId =
-        import java.time.ZoneId.normalized(): JZoneId \ {};
-        let ZoneId(x1) = x;
-        ZoneId(normalized(x1))
+    //
+    // pub def normalized(x: ZoneId): ZoneId =
+    //     let ZoneId(x1) = x;
+    //     let x2 = unsafe x1.normalized();
+    //     ZoneId(x2)
 
 
 }

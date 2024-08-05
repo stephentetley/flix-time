@@ -75,7 +75,7 @@ mod Time.ZoneOffset {
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor, 
             TemporalField => JTemporalField, ChronoField => JChronoField}
     import java.time.zone.{ZoneRules => JZoneRules}
-
+    import java.lang.{Exception, Throwable}
     /// ## Unwrap
 
     pub def getZoneOffset(x: ZoneOffset): JZoneOffset = 
@@ -91,44 +91,35 @@ mod Time.ZoneOffset {
     ///
     /// ___
     ///
-    pub def utc(): ZoneOffset =
-        ZoneOffset(unsafe JZoneOffset.UTC)
+    pub def utc(): ZoneOffset = ZoneOffset(unsafe JZoneOffset.UTC)
 
-    pub def min(): ZoneOffset =
-        import static java_get_field java.time.ZoneOffset.MIN: JZoneOffset \ {} as get_MIN;
-        ZoneOffset(get_MIN())
+    pub def min(): ZoneOffset = ZoneOffset(unsafe JZoneOffset.MIN)
 
-    pub def max(): ZoneOffset =
-        import static java_get_field java.time.ZoneOffset.MAX: JZoneOffset \ {} as get_MAX;
-        ZoneOffset(get_MAX())
+    pub def max(): ZoneOffset = ZoneOffset(unsafe JZoneOffset.MAX)
 
     /// ## `of` functions
 
     pub def ofHours(hours: Int32): ZoneOffset =
-        import static java.time.ZoneOffset.ofHours(Int32): JZoneOffset \ {};
-        ZoneOffset(ofHours(hours))
+        ZoneOffset(unsafe JZoneOffset.ofHours(hours))
 
-    pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset =
-        import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): JZoneOffset \ {};
-        ZoneOffset(ofHoursMinutes(r#hours, r#minutes))
+    pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset = 
+        ZoneOffset(unsafe JZoneOffset.ofHoursMinutes(r#hours, r#minutes))
 
     pub def ofHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
-        import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): JZoneOffset \ {};
-        ZoneOffset(ofHoursMinutesSeconds(r#hours, r#minutes, r#seconds))
+        ZoneOffset(unsafe JZoneOffset.ofHoursMinutesSeconds(r#hours, r#minutes, r#seconds))
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
-        import static java.time.ZoneOffset.ofTotalSeconds(Int32): JZoneOffset \ {};
-        ZoneOffset(ofTotalSeconds(seconds))
+        ZoneOffset(unsafe JZoneOffset.ofTotalSeconds(seconds))
 
     /// `fromTemporalAccessor` specialized
+    // Leave as is for now...
     def fromTemporalAccessorHelper(x: JTemporalAccessor): ZoneOffset = 
         import static java.time.ZoneOffset.from(JTemporalAccessor): JZoneOffset \ {} as fromTA;
         try {
             ZoneOffset(fromTA(x))
         } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
+            case ex: Exception => 
+                bug!(unsafe ex.getMessage())
         }
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
@@ -143,19 +134,16 @@ mod Time.ZoneOffset {
     /// ## ZoneOffset functions
 
     pub def getId(x: ZoneOffset): String =
-        import java.time.ZoneOffset.getId(): String \ {};
         let ZoneOffset(x1) = x;
-        getId(x1)
+        unsafe x1.getId()
 
     pub def getRules(x: ZoneOffset): ZoneRules =
-        import java.time.ZoneOffset.getRules(): JZoneRules \ {};
         let ZoneOffset(x1) = x;
-        ZoneRules(getRules(x1))
+        ZoneRules(unsafe x1.getRules())
 
     pub def getTotalSeconds(x: ZoneOffset): Int32 =
-        import java.time.ZoneOffset.getTotalSeconds(): Int32 \ {};
         let ZoneOffset(x1) = x;
-        getTotalSeconds(x1)
+        unsafe x1.getTotalSeconds()
 
 
 
@@ -168,14 +156,12 @@ mod Time.ZoneOffset {
     /// ## generic helper functions
 
     def getHelper(field: JTemporalField, x: ZoneOffset): Int32 =
-        import java.time.ZoneOffset.get(JTemporalField): Int32 \ {};
         try {
             let ZoneOffset(x1) = x;
-            get(x1, field)
+            unsafe x1.get(field)
         } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
+            case ex: Exception => 
+                bug!(unsafe ex.getMessage())
         }
 
 
