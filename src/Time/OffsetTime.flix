@@ -107,7 +107,7 @@ mod Time.OffsetTime {
 
     pub def offsetTime(r: { hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32, offset = ZoneOffset}): OffsetTime =
         import static java.time.OffsetTime.of(Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetTime \ {};
-        OffsetTime(of(r.hour, r.minute, r.second, r.nanoSecond, Time.ZoneOffset.getZoneOffset(r.offset)))
+        OffsetTime(of(r#hour, r#minute, r#second, r#nanoSecond, Time.ZoneOffset.getZoneOffset(r#offset)))
 
     /// ## `now` and "abstract constructors" if any
 
@@ -131,14 +131,14 @@ mod Time.OffsetTime {
     pub def fromLocalTime(offset: {offset = ZoneOffset}, x: LocalTime): OffsetTime =
         import static java.time.OffsetTime.of(##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetTime \ {};
         let LocalTime(x1) = x;
-        let ZoneOffset(o1) = offset.offset;
+        let ZoneOffset(o1) = offset#offset;
         OffsetTime(of(x1, o1))
 
 
     pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): OffsetTime =
         import static java.time.OffsetTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.OffsetTime \ {};
         let InstantZ(x1) = x;
-        let ZoneId(z1) = zone.zone;
+        let ZoneId(z1) = zone#zone;
         OffsetTime(ofInstant(x1, z1))
 
 
@@ -356,15 +356,15 @@ mod Time.OffsetTime {
     
     pub def between(r: {start = OffsetTime, end = OffsetTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = unchecked_cast(getOffsetTime(r.start) as ##java.time.temporal.Temporal);
-        let e1 = unchecked_cast(getOffsetTime(r.end) as ##java.time.temporal.Temporal);
+        let s1 = unchecked_cast(getOffsetTime(r#start) as ##java.time.temporal.Temporal);
+        let e1 = unchecked_cast(getOffsetTime(r#end) as ##java.time.temporal.Temporal);
         DurationZ(between(s1, e1))
 
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = OffsetTime, end = OffsetTime}): Int64 = 
         import java.time.OffsetTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getOffsetTime(r.start);
-        let e1 = unchecked_cast(getOffsetTime(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getOffsetTime(r#start);
+        let e1 = unchecked_cast(getOffsetTime(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 

@@ -87,7 +87,7 @@ mod Time.ZoneId {
     pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
         Result.tryCatch(_ -> {
             import static java.time.ZoneId.of(String): JZoneId \ {};
-            ZoneId(of(zoneId.zoneId))
+            ZoneId(of(zoneId#zoneId))
         })
         
     /// Ideally not in IO...
@@ -95,7 +95,7 @@ mod Time.ZoneId {
         Result.tryCatch(_ -> {
             import static java.time.ZoneId.of(String, ##java.util.Map): JZoneId \ {};
             let jmap = Adaptor.toMap(aliases);
-            ZoneId(of(zoneId.zoneId, jmap))
+            ZoneId(of(zoneId#zoneId, jmap))
         })
 
 
@@ -117,11 +117,11 @@ mod Time.ZoneId {
 
     pub def fromOffset(r: {prefix = Option[String], offset = ZoneOffset}): ZoneId =
         import static java.time.ZoneId.ofOffset(String, JZoneOffset): JZoneId \ {};
-        let p1 = match r.prefix {
+        let p1 = match r#prefix {
             case Some(s) => s
             case _       => ""
         };
-        let ZoneOffset(o1) = r.offset;
+        let ZoneOffset(o1) = r#offset;
         ZoneId(ofOffset(p1, o1))
 
     /// `fromTemporalAccessor` specialized

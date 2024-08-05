@@ -69,7 +69,7 @@ mod Time.Chrono.JapaneseEra {
     pub def japaneseEra(japaneseEra: {japaneseEra = Int32}): Option[JapaneseEra] =
         Result.tryCatch(_ -> {
             import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra \ {};
-            JapaneseEra(of(japaneseEra.japaneseEra))
+            JapaneseEra(of(japaneseEra#japaneseEra))
         }) |> Result.toOption
 
     pub def heisei(): JapaneseEra = 

@@ -100,12 +100,12 @@ mod Time.MonthDay {
 
     pub def monthDay(r: {month = Int32, dayOfMonth = Int32}): MonthDay =
         import static java.time.MonthDay.of(Int32, Int32): ##java.time.MonthDay \ {};
-        MonthDay(of(r.month, r.dayOfMonth))
+        MonthDay(of(r#month, r#dayOfMonth))
 
     pub def monthDayWithMonth(r: {month = Month, dayOfMonth = Int32}): MonthDay =
         import static java.time.MonthDay.of(##java.time.Month, Int32): ##java.time.MonthDay \ {};
-        let m1 = Time.Month.marshalMonth(r.month);
-        MonthDay(of(m1, r.dayOfMonth))
+        let m1 = Time.Month.marshalMonth(r#month);
+        MonthDay(of(m1, r#dayOfMonth))
 
     /// ## `now` and "abstract constructors" if any
 

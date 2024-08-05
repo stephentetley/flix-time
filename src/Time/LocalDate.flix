@@ -126,12 +126,12 @@ mod Time.LocalDate {
 
     pub def localDate(r: {year = Int32, month = Int32, dayOfMonth = Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, Int32, Int32): ##java.time.LocalDate \ {};
-        LocalDate(of(r.year, r.month, r.dayOfMonth))
+        LocalDate(of(r#year, r#month, r#dayOfMonth))
 
     pub def localDateWithMonth(r: {year = Int32, month = Month, dayOfMonth = Int32}): LocalDate =
         import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32): ##java.time.LocalDate \ {};
-        let m1 = Time.Month.marshalMonth(r.month);
-        LocalDate(of(r.year, m1, r.dayOfMonth))
+        let m1 = Time.Month.marshalMonth(r#month);
+        LocalDate(of(r#year, m1, r#dayOfMonth))
 
     /// ## `now` and "abstract constructors" (e.g. `epoch`)
 
@@ -187,7 +187,7 @@ mod Time.LocalDate {
     pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDate =
         import static java.time.LocalDate.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDate \ {};
         let InstantZ(x1) = x;
-        let ZoneId(z1) = zone.zone;
+        let ZoneId(z1) = zone#zone;
         LocalDate(ofInstant(x1, z1))
 
     pub def ofEpochDay(x: Int64): LocalDate =
@@ -554,8 +554,8 @@ mod Time.LocalDate {
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalDate, end = LocalDate}): Int64 = 
         import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getLocalDate(r.start);
-        let e1 = unchecked_cast(getLocalDate(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getLocalDate(r#start);
+        let e1 = unchecked_cast(getLocalDate(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 

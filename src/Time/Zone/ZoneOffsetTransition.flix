@@ -85,7 +85,7 @@ mod Time.Zone.ZoneOffsetTransition {
     pub def zoneOffsetTransition(r: {transition = LocalDateTime, before = ZoneOffset, after = ZoneOffset}): ZoneOffsetTransition =
         import static java.time.zone.ZoneOffsetTransition.of(##java.time.LocalDateTime, ##java.time.ZoneOffset, ##java.time.ZoneOffset): ##java.time.zone.ZoneOffsetTransition \ {};
         use Time.ZoneOffset.{getZoneOffset};
-        ZoneOffsetTransition(of(Time.LocalDateTime.getLocalDateTime(r.transition), getZoneOffset(r.before), getZoneOffset(r.after)))
+        ZoneOffsetTransition(of(Time.LocalDateTime.getLocalDateTime(r#transition), getZoneOffset(r#before), getZoneOffset(r#after)))
     
     /// ## `to` functions
 

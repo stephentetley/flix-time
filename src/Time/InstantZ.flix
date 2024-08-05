@@ -108,7 +108,7 @@ mod Time.InstantZ {
 
     pub def instant(r: {epochSecond = Int64, nano = Int64}): InstantZ =
         import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant \ {};
-        InstantZ(ofEpochSecond(r.epochSecond, r.nano))
+        InstantZ(ofEpochSecond(r#epochSecond, r#nano))
 
     /// ## `now` and "abstract constructors" (e.g. `epoch`)
 
@@ -369,8 +369,8 @@ mod Time.InstantZ {
 
     pub def between(r: {start = InstantZ, end = InstantZ}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = unchecked_cast(getInstant(r.start) as ##java.time.temporal.Temporal);
-        let e1 = unchecked_cast(getInstant(r.end) as ##java.time.temporal.Temporal);
+        let s1 = unchecked_cast(getInstant(r#start) as ##java.time.temporal.Temporal);
+        let e1 = unchecked_cast(getInstant(r#end) as ##java.time.temporal.Temporal);
         DurationZ(between(s1, e1))
 
 
@@ -378,8 +378,8 @@ mod Time.InstantZ {
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = InstantZ, end = InstantZ}): Int64 = 
         import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getInstant(r.start);
-        let e1 = unchecked_cast(getInstant(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getInstant(r#start);
+        let e1 = unchecked_cast(getInstant(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 

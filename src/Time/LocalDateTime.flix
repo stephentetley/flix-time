@@ -122,17 +122,17 @@ mod Time.LocalDateTime {
 
     pub def localDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime \ {};
-        LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute))
+        LocalDateTime(of(r#year, r#month, r#dayOfMonth, r#hour, r#minute))
 
     pub def localDateTimeWithSecond(r: {year = Int32, month = Int32, dayOfMonth = Int32,
                                 hour = Int32, minute = Int32, second = Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime \ {};
-        LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second))
+        LocalDateTime(of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second))
 
     pub def localDateTimeWithSecondAndNano(r: {year = Int32, month = Int32, dayOfMonth = Int32,
                                         hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32}): LocalDateTime =
         import static java.time.LocalDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32): ##java.time.LocalDateTime \ {};
-        LocalDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond))
+        LocalDateTime(of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond))
 
 
     /// ## `now` and "abstract constructors" if any
@@ -163,13 +163,13 @@ mod Time.LocalDateTime {
 
     pub def ofEpochSecond(offset: {offset = ZoneOffset}, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
         import static java.time.LocalDateTime.ofEpochSecond(Int64, Int32, ##java.time.ZoneOffset): ##java.time.LocalDateTime \ {};
-        let ZoneOffset(o1) = offset.offset;
+        let ZoneOffset(o1) = offset#offset;
         LocalDateTime(ofEpochSecond(epochSecond, nanoOfSecond, o1))
 
     pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDateTime =
         import static java.time.LocalDateTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalDateTime \ {};
         let InstantZ(x1) = x;
-        let ZoneId(z1) = zone.zone;
+        let ZoneId(z1) = zone#zone;
         LocalDateTime(ofInstant(x1, z1))
 
     /// # `fromTemporalAccessor` specialized
@@ -515,16 +515,16 @@ mod Time.LocalDateTime {
 
     pub def between(r: {start = LocalDateTime, end = LocalDateTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = unchecked_cast(getLocalDateTime(r.start) as ##java.time.temporal.Temporal);
-        let e1 = unchecked_cast(getLocalDateTime(r.end) as ##java.time.temporal.Temporal);
+        let s1 = unchecked_cast(getLocalDateTime(r#start) as ##java.time.temporal.Temporal);
+        let e1 = unchecked_cast(getLocalDateTime(r#end) as ##java.time.temporal.Temporal);
         DurationZ(between(s1, e1)) 
                             
 
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
         import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getLocalDateTime(r.start);
-        let e1 = unchecked_cast(getLocalDateTime(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getLocalDateTime(r#start);
+        let e1 = unchecked_cast(getLocalDateTime(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 

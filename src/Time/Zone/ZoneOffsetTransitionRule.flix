@@ -126,15 +126,15 @@ mod Time.Zone.ZoneOffsetTransitionRule {
                                                                     ##java.time.ZoneOffset
                                                                     ): ##java.time.zone.ZoneOffsetTransitionRule \ {};
         Result.tryCatch(_ -> {
-            ZoneOffsetTransitionRule(of(Time.Month.marshalMonth(r.month), 
-                                        r.dayOfMonthIndicator,
-                                        Time.DayOfWeek.marshalDayOfWeek(r.dayOfWeek),
-                                        Time.LocalTime.getLocalTime(r.time),
-                                        r.timeEndOfDay,
-                                        marshalTimeDefinition(r.timeDefinition),
-                                        Time.ZoneOffset.getZoneOffset(r.standardOffset),
-                                        Time.ZoneOffset.getZoneOffset(r.offsetBefore),
-                                        Time.ZoneOffset.getZoneOffset(r.offsetAfter)
+            ZoneOffsetTransitionRule(of(Time.Month.marshalMonth(r#month), 
+                                        r#dayOfMonthIndicator,
+                                        Time.DayOfWeek.marshalDayOfWeek(r#dayOfWeek),
+                                        Time.LocalTime.getLocalTime(r#time),
+                                        r#timeEndOfDay,
+                                        marshalTimeDefinition(r#timeDefinition),
+                                        Time.ZoneOffset.getZoneOffset(r#standardOffset),
+                                        Time.ZoneOffset.getZoneOffset(r#offsetBefore),
+                                        Time.ZoneOffset.getZoneOffset(r#offsetAfter)
                                         ))
         })
 

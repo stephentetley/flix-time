@@ -1,5 +1,6 @@
-### v______
-   Usiing import aliases for Java types.
+### v0.11.0
+   Updated to use new Java interop.
+   Updated to use hash as record field accessor.
 
 ### v0.10.0
    Updated to with Flix compiler 0.48.0 and updated `charset-locale` dependency.

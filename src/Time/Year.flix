@@ -103,7 +103,7 @@ mod Time.Year {
 
     pub def year(isoYear: {isoYear = Int32}): Year =
         import static java.time.Year.of(Int32): ##java.time.Year \ {};
-        Year(of(isoYear.isoYear))
+        Year(of(isoYear#isoYear))
 
 
     /// ## `now` and "abstract constructors" if any
@@ -285,8 +285,8 @@ mod Time.Year {
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = Year, end = Year}): Int64 = 
         import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getYear(r.start);
-        let e1 = unchecked_cast(getYear(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getYear(r#start);
+        let e1 = unchecked_cast(getYear(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 

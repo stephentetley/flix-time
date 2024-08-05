@@ -85,14 +85,14 @@ mod Time.Chrono.HijrahChronology {
                  x: HijrahChronology): HijrahDate =
         import java.time.chrono.HijrahChronology.date(Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
-        HijrahDate(date(x1, r.prolepticYear, r.month, r.dayOfMonth))
+        HijrahDate(date(x1, r#prolepticYear, r#month, r#dayOfMonth))
 
     pub def dateWithEra(r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}, 
                         x: HijrahChronology): HijrahDate =
         import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
-        let Era(era1) = Time.Chrono.HijrahEra.asEra(r.era);
-        HijrahDate(date(x1, era1, r.yearOfEra, r.month, r.dayOfMonth))
+        let Era(era1) = Time.Chrono.HijrahEra.asEra(r#era);
+        HijrahDate(date(x1, era1, r#yearOfEra, r#month, r#dayOfMonth))
 
 
     pub def dateNow(x: HijrahChronology): HijrahDate \ IO = 

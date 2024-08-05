@@ -135,7 +135,7 @@ mod Time.DurationZ {
     ///
     pub def duration(r: {seconds = Int64, nanos = Int64}): DurationZ =
         import static java.time.Duration.ofSeconds(Int64, Int64): ##java.time.Duration \ {};
-        DurationZ(ofSeconds(r.seconds, r.nanos))
+        DurationZ(ofSeconds(r#seconds, r#nanos))
 
     /// ## "abstract constructors" (e.g. `zero`)
 

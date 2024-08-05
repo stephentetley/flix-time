@@ -120,7 +120,7 @@ mod Time.ZonedDateTime {
     pub def zonedDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, 
                             minute = Int32, second = Int32, nanoSecond = Int32, zoneId = ZoneId}): ZonedDateTime =
         import static java.time.ZonedDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
-        ZonedDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, Time.ZoneId.getZoneId(r.zoneId)))
+        ZonedDateTime(of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, Time.ZoneId.getZoneId(r#zoneId)))
 
 
     /// ## `now` and "abstract constructors" (e.g. `epoch`)
@@ -145,7 +145,7 @@ mod Time.ZonedDateTime {
     pub def fromLocalDateTime(zone: {zone = ZoneId},dateTime: LocalDateTime): ZonedDateTime =
         import static java.time.ZonedDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let LocalDateTime(dt1) = dateTime;
-        let ZoneId(z1) = zone.zone;
+        let ZoneId(z1) = zone#zone;
         ZonedDateTime(of(dt1, z1))
 
 
@@ -153,7 +153,7 @@ mod Time.ZonedDateTime {
         import static java.time.ZonedDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
-        let ZoneId(z1) = zone.zone;
+        let ZoneId(z1) = zone#zone;
         ZonedDateTime(of(d1, t1, z1))
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
@@ -532,16 +532,16 @@ mod Time.ZonedDateTime {
 
     pub def between(r: {start = ZonedDateTime, end = ZonedDateTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = unchecked_cast(getZonedDateTime(r.start) as ##java.time.temporal.Temporal);
-        let e1 = unchecked_cast(getZonedDateTime(r.end) as ##java.time.temporal.Temporal);
+        let s1 = unchecked_cast(getZonedDateTime(r#start) as ##java.time.temporal.Temporal);
+        let e1 = unchecked_cast(getZonedDateTime(r#end) as ##java.time.temporal.Temporal);
         DurationZ(between(s1, e1))
 
     /// `until` specialized
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
         import java.time.ZonedDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getZonedDateTime(r.start);
-        let e1 = unchecked_cast(getZonedDateTime(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getZonedDateTime(r#start);
+        let e1 = unchecked_cast(getZonedDateTime(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
     pub def secondsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 

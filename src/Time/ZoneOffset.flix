@@ -92,8 +92,7 @@ mod Time.ZoneOffset {
     /// ___
     ///
     pub def utc(): ZoneOffset =
-        import static java_get_field java.time.ZoneOffset.UTC: JZoneOffset \ {} as get_UTC;
-        ZoneOffset(get_UTC())
+        ZoneOffset(unsafe JZoneOffset.UTC)
 
     pub def min(): ZoneOffset =
         import static java_get_field java.time.ZoneOffset.MIN: JZoneOffset \ {} as get_MIN;
@@ -111,11 +110,11 @@ mod Time.ZoneOffset {
 
     pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutes(Int32, Int32): JZoneOffset \ {};
-        ZoneOffset(ofHoursMinutes(r.hours, r.minutes))
+        ZoneOffset(ofHoursMinutes(r#hours, r#minutes))
 
     pub def ofHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
         import static java.time.ZoneOffset.ofHoursMinutesSeconds(Int32, Int32, Int32): JZoneOffset \ {};
-        ZoneOffset(ofHoursMinutesSeconds(r.hours, r.minutes, r.seconds))
+        ZoneOffset(ofHoursMinutesSeconds(r#hours, r#minutes, r#seconds))
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
         import static java.time.ZoneOffset.ofTotalSeconds(Int32): JZoneOffset \ {};

@@ -125,8 +125,8 @@ mod Time.OffsetDateTime {
     pub def offsetDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32,
                     second = Int32, nanoSecond = Int32, offset = ZoneOffset}): OffsetDateTime =
         import static java.time.OffsetDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
-        let ZoneOffset(o1) = r.offset;
-        OffsetDateTime(of(r.year, r.month, r.dayOfMonth, r.hour, r.minute, r.second, r.nanoSecond, o1))
+        let ZoneOffset(o1) = r#offset;
+        OffsetDateTime(of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, o1))
 
 
     /// ## `now` functions
@@ -151,20 +151,20 @@ mod Time.OffsetDateTime {
     pub def atZoneSameInstant(zone: {zone = ZoneId}, x: OffsetDateTime): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let OffsetDateTime(x1) = x;
-        let ZoneId(z1) = zone.zone;
+        let ZoneId(z1) = zone#zone;
         ZonedDateTime(atZoneSameInstant(x1, z1))
 
     pub def atZoneSimilarLocal(zone: {zone = ZoneId}, x: OffsetDateTime): ZonedDateTime =
         import java.time.OffsetDateTime.atZoneSimilarLocal(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let OffsetDateTime(x1) = x;
-        let ZoneId(z1) = zone.zone;
+        let ZoneId(z1) = zone#zone;
         ZonedDateTime(atZoneSimilarLocal(x1, z1))
 
 
     pub def fromLocalDateTime(offset: {offset = ZoneOffset}, dateTime: LocalDateTime): OffsetDateTime =
         import static java.time.OffsetDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let LocalDateTime(dt1) = dateTime;
-        let ZoneOffset(o1) = offset.offset;
+        let ZoneOffset(o1) = offset#offset;
         OffsetDateTime(of(dt1, o1))
 
 
@@ -174,7 +174,7 @@ mod Time.OffsetDateTime {
         import static java.time.OffsetDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
-        let ZoneOffset(o1) = offset.offset;
+        let ZoneOffset(o1) = offset#offset;
         OffsetDateTime(of(d1, t1, o1))
 
     /// `fromTemporalAccessor` specialized
@@ -650,15 +650,15 @@ mod Time.OffsetDateTime {
 
     pub def between(r: {start = OffsetDateTime, end = OffsetDateTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = unchecked_cast(getOffsetDateTime(r.start) as ##java.time.temporal.Temporal);
-        let e1 = unchecked_cast(getOffsetDateTime(r.end) as ##java.time.temporal.Temporal);
+        let s1 = unchecked_cast(getOffsetDateTime(r#start) as ##java.time.temporal.Temporal);
+        let e1 = unchecked_cast(getOffsetDateTime(r#end) as ##java.time.temporal.Temporal);
         DurationZ(between(s1, e1))
 
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
         import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getOffsetDateTime(r.start);
-        let e1 = unchecked_cast(getOffsetDateTime(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getOffsetDateTime(r#start);
+        let e1 = unchecked_cast(getOffsetDateTime(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 

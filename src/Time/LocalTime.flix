@@ -107,15 +107,15 @@ mod Time.LocalTime {
 
     pub def localTime(r: {hour = Int32, minute = Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32): ##java.time.LocalTime \ {};
-        LocalTime(of(r.hour, r.minute))
+        LocalTime(of(r#hour, r#minute))
 
     pub def localTimeWithSecond(r: {hour = Int32, minute = Int32, second = Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32, Int32): ##java.time.LocalTime \ {};
-        LocalTime(of(r.hour, r.minute, r.second))
+        LocalTime(of(r#hour, r#minute, r#second))
 
     pub def localTimeWithSecondAndNano(r: {hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32}): LocalTime =
         import static java.time.LocalTime.of(Int32, Int32, Int32, Int32): ##java.time.LocalTime \ {};
-        LocalTime(of(r.hour, r.minute, r.second, r.nanoSecond))
+        LocalTime(of(r#hour, r#minute, r#second, r#nanoSecond))
 
 
     /// ## `now` and "abstract constructors" (e.g. `midnight`)
@@ -148,7 +148,7 @@ mod Time.LocalTime {
     pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalTime =
         import static java.time.LocalTime.ofInstant(##java.time.Instant, ##java.time.ZoneId): ##java.time.LocalTime \ {};
         let InstantZ(x1) = x;
-        let ZoneId(z1) = zone.zone;
+        let ZoneId(z1) = zone#zone;
         LocalTime(ofInstant(x1, z1))
 
 
@@ -363,15 +363,15 @@ mod Time.LocalTime {
 
     pub def between(r: {start = LocalTime, end = LocalTime}): DurationZ =
         import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-        let s1 = unchecked_cast(getLocalTime(r.start) as ##java.time.temporal.Temporal);
-        let e1 = unchecked_cast(getLocalTime(r.end) as ##java.time.temporal.Temporal);
+        let s1 = unchecked_cast(getLocalTime(r#start) as ##java.time.temporal.Temporal);
+        let e1 = unchecked_cast(getLocalTime(r#end) as ##java.time.temporal.Temporal);
         DurationZ(between(s1, e1)) 
 
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalTime, end = LocalTime}): Int64 = 
         import java.time.LocalTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getLocalTime(r.start);
-        let e1 = unchecked_cast(getLocalTime(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getLocalTime(r#start);
+        let e1 = unchecked_cast(getLocalTime(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 

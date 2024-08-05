@@ -134,8 +134,8 @@ mod Time.Format.DateTimeFormatterBuilder {
                                 dateStyle: {dateStyle = FormatStyle}): DateTimeFormatterBuilder[r] = 
         DateTimeFormatterBuilder(b -> {
             import java.time.format.DateTimeFormatterBuilder.appendLocalized(##java.time.format.FormatStyle, ##java.time.format.FormatStyle): ##java.time.format.DateTimeFormatterBuilder \ r;
-            let timeStyle1 = Time.Format.FormatStyle.marshalFormatStyle(timeStyle.timeStyle);
-            let dateStyle1 = Time.Format.FormatStyle.marshalFormatStyle(dateStyle.dateStyle);
+            let timeStyle1 = Time.Format.FormatStyle.marshalFormatStyle(timeStyle#timeStyle);
+            let dateStyle1 = Time.Format.FormatStyle.marshalFormatStyle(dateStyle#dateStyle);
             discard appendLocalized(b, timeStyle1, dateStyle1)
         })
 
@@ -151,7 +151,7 @@ mod Time.Format.DateTimeFormatterBuilder {
                             noOffsetText: {noOffsetText = String}): DateTimeFormatterBuilder[r] = 
         DateTimeFormatterBuilder(b -> {
             import java.time.format.DateTimeFormatterBuilder.appendOffset(String, String): ##java.time.format.DateTimeFormatterBuilder \ r;
-            discard appendOffset(b, pattern.pattern, noOffsetText.noOffsetText)
+            discard appendOffset(b, pattern#pattern, noOffsetText#noOffsetText)
         })
 
 

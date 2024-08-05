@@ -101,12 +101,12 @@ mod Time.YearMonth {
 
     pub def yearMonth(r: {year = Int32, month = Int32}): YearMonth =
         import static java.time.YearMonth.of(Int32, Int32): ##java.time.YearMonth \ {};
-        YearMonth(of(r.year, r.month))
+        YearMonth(of(r#year, r#month))
 
     pub def yearMonthWithMonth(r: {year = Int32, month = Month}): YearMonth =
         import static java.time.YearMonth.of(Int32, ##java.time.Month): ##java.time.YearMonth \ {};
-        let m1 = Time.Month.marshalMonth(r.month);
-        YearMonth(of(r.year, m1))
+        let m1 = Time.Month.marshalMonth(r#month);
+        YearMonth(of(r#year, m1))
 
 
     /// ## `now` and "abstract constructors" if any
@@ -279,8 +279,8 @@ mod Time.YearMonth {
 
     def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = YearMonth, end = YearMonth}): Int64 = 
         import java.time.YearMonth.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-        let b1 = getYearMonth(r.start);
-        let e1 = unchecked_cast(getYearMonth(r.end) as ##java.time.temporal.Temporal);
+        let b1 = getYearMonth(r#start);
+        let e1 = unchecked_cast(getYearMonth(r#end) as ##java.time.temporal.Temporal);
         until(b1, e1, u)
 
 
