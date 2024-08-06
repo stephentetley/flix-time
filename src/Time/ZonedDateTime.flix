@@ -104,7 +104,7 @@ mod Time.ZonedDateTime {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
     use Time.ZoneOffset
-
+    import java.time.{ZonedDateTime => JZonedDateTime}
     /// ## Unwrap
 
     pub def getZonedDateTime(x: ZonedDateTime): ##java.time.ZonedDateTime = 
@@ -119,8 +119,7 @@ mod Time.ZonedDateTime {
 
     pub def zonedDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, 
                             minute = Int32, second = Int32, nanoSecond = Int32, zoneId = ZoneId}): ZonedDateTime =
-        import static java.time.ZonedDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
-        ZonedDateTime(of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, Time.ZoneId.getZoneId(r#zoneId)))
+        ZonedDateTime(unsafe JZonedDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, Time.ZoneId.getZoneId(r#zoneId)))
 
 
     /// ## `now` and "abstract constructors" (e.g. `epoch`)
@@ -128,33 +127,28 @@ mod Time.ZonedDateTime {
     ///
     /// Returns the current date-time from the system clock using the system zone id.
     ///
-    pub def now(): ZonedDateTime \ IO =
-        import static java.time.ZonedDateTime.now(): ##java.time.ZonedDateTime \ IO;
-        ZonedDateTime(now())
+    pub def now(): ZonedDateTime \ IO = ZonedDateTime(JZonedDateTime.now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): ZonedDateTime \ IO =
-        import static java.time.ZonedDateTime.now(##java.time.ZoneId): ##java.time.ZonedDateTime \ IO;
         let ZoneId(z1) = zone;
-        ZonedDateTime(now(z1))
+        ZonedDateTime(JZonedDateTime.now(z1))
 
     /// ## `from` functions
 
     pub def fromLocalDateTime(zone: {zone = ZoneId},dateTime: LocalDateTime): ZonedDateTime =
-        import static java.time.ZonedDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let LocalDateTime(dt1) = dateTime;
         let ZoneId(z1) = zone#zone;
-        ZonedDateTime(of(dt1, z1))
+        ZonedDateTime(unsafe JZonedDateTime.of(dt1, z1))
 
 
     pub def fromLocalDateLocalTime(zone: {zone = ZoneId}, date: LocalDate, time: LocalTime): ZonedDateTime =
-        import static java.time.ZonedDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
         let ZoneId(z1) = zone#zone;
-        ZonedDateTime(of(d1, t1, z1))
+        ZonedDateTime(unsafe JZonedDateTime.of(d1, t1, z1))
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
         fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
@@ -166,26 +160,23 @@ mod Time.ZonedDateTime {
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDateTime(x: ZonedDateTime): LocalDateTime =
-        import java.time.ZonedDateTime.toLocalDateTime(): ##java.time.LocalDateTime \ {};
         let ZonedDateTime(x1) = x;
-        LocalDateTime(toLocalDateTime(x1))
+        LocalDateTime(unsafe x1.toLocalDateTime())
 
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDate(x: ZonedDateTime): LocalDate =
-        import java.time.ZonedDateTime.toLocalDate(): ##java.time.LocalDate \ {};
         let ZonedDateTime(x1) = x;
-        LocalDate(toLocalDate(x1))
+        LocalDate(unsafe x1.toLocalDate())
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalTime(x: ZonedDateTime): LocalTime =
-        import java.time.ZonedDateTime.toLocalTime(): ##java.time.LocalTime \ {};
         let ZonedDateTime(x1) = x;
-        LocalTime(toLocalTime(x1))
+        LocalTime(unsafe x1.toLocalTime())
 
     /// ## `parse` / `format` functions
 
@@ -197,20 +188,18 @@ mod Time.ZonedDateTime {
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, ZonedDateTime] =
         Result.tryCatch(_ -> {
-            import static java.time.ZonedDateTime.parse(##java.lang.CharSequence, ##java.time.format.DateTimeFormatter): ##java.time.ZonedDateTime \ {};
             let DateTimeFormatter(fmtr) = formatter;
             let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
-            ZonedDateTime(parse(cs, fmtr))
+            ZonedDateTime(unsafe JZonedDateTime.parse(cs, fmtr))
         })
 
     ///
     /// Returns ZonedDateTime `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: ZonedDateTime): String =
-        import java.time.ZonedDateTime.format(##java.time.format.DateTimeFormatter): String \ {};
         let ZonedDateTime(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
-        format(x1, fmtr)
+        unsafe x1.format(fmtr)
 
     /// ## predicates / comparisons
 
@@ -239,24 +228,20 @@ mod Time.ZonedDateTime {
     /// ## Getters and Setters
 
     pub def getYear(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.getYear(): Int32 \ {} ;
         let ZonedDateTime(x1) = x;
-        getYear(x1)
+        unsafe x1.getYear()
 
     pub def withYear(year: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withYear(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(withYear(x1, year))
+        ZonedDateTime(unsafe x1.withYear(year))
 
     pub def getMonth(x: ZonedDateTime): Month =
-        import java.time.ZonedDateTime.getMonth(): ##java.time.Month \ {};
         let ZonedDateTime(x1) = x;
-        Time.Month.unmarshalMonth(getMonth(x1))
+        Time.Month.unmarshalMonth(unsafe x1.getMonth())
 
     pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withMonth(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(withMonth(x1, month))
+        ZonedDateTime(unsafe x1.withMonth(month))
 
 
     pub def getMonthValue(x: ZonedDateTime): Int32 =
@@ -267,41 +252,34 @@ mod Time.ZonedDateTime {
 
 
     pub def getDayOfYear(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.getDayOfYear(): Int32 \ {};
         let ZonedDateTime(x1) = x;
-        getDayOfYear(x1)
+        unsafe x1.getDayOfYear()
 
     pub def withDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withDayOfYear(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(withDayOfYear(x1, dayOfYear))
+        ZonedDateTime(unsafe x1.withDayOfYear(dayOfYear))
 
     pub def getDayOfMonth(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.getDayOfMonth(): Int32 \ {};
         let ZonedDateTime(x1) = x;
-        getDayOfMonth(x1)
+        unsafe x1.getDayOfMonth()
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withDayOfMonth(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(withDayOfMonth(x1, dayOfMonth))
+        ZonedDateTime(unsafe x1.withDayOfMonth(dayOfMonth))
 
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
-        import java.time.ZonedDateTime.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let ZonedDateTime(x1) = x;
-        Time.DayOfWeek.unmarshalDayOfWeek(getDayOfWeek(x1))
+        Time.DayOfWeek.unmarshalDayOfWeek(unsafe x1.getDayOfWeek())
 
     // no setDayOfWeek
 
     pub def getHour(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.getHour(): Int32 \ {};
         let ZonedDateTime(x1) = x;
-        getHour(x1)
+        unsafe x1.getHour()
 
     pub def withHour(hour: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withHour(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(withHour(x1, hour))
+        ZonedDateTime(unsafe x1.withHour(hour))
 
     pub def getMinute(x: ZonedDateTime): Int32 =
         import java.time.ZonedDateTime.getMinute(): Int32 \ {};
