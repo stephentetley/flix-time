@@ -56,51 +56,40 @@ mod Time.Clock {
 
     /// Pure or Impure? 
     pub def fixedClock(inst: InstantZ, zone: ZoneId): Clock \ IO =
-        import static java.time.Clock.fixed(##java.time.Instant, ##java.time.ZoneId): JClock \ IO;
         let InstantZ(inst1) = inst;
         let ZoneId(zone1) = zone;
-        Clock(fixed(inst1, zone1))
+        Clock(JClock.fixed(inst1, zone1))
 
     pub def systemClock(zone: ZoneId): Clock \ IO =
-        import static java.time.Clock.system(##java.time.ZoneId): JClock \ IO;
         let ZoneId(zone1) = zone;
-        Clock(system(zone1))
+        Clock(JClock.system(zone1))
 
-    pub def systemClockDefaultZone(): Clock \ IO =
-        import static java.time.Clock.systemDefaultZone(): JClock \ IO;
-        Clock(systemDefaultZone())
+    pub def systemClockDefaultZone(): Clock \ IO = Clock(JClock.systemDefaultZone())
 
-    pub def systemClockUTC(): Clock \ IO =
-        import static java.time.Clock.systemUTC(): JClock \ IO;
-        Clock(systemUTC())
+    pub def systemClockUTC(): Clock \ IO = Clock(JClock.systemUTC())
 
     pub def offset(d: DurationZ, c: Clock): Clock \ IO =
-        import static java.time.Clock.offset(JClock, ##java.time.Duration): JClock \ IO;
         let DurationZ(d1) = d;
         let Clock(c1) = c;
-        Clock(offset(c1, d1))
+        Clock(JClock.offset(c1, d1))
 
     pub def tick(d: DurationZ, c: Clock): Clock \ IO =
-        import static java.time.Clock.tick(JClock, ##java.time.Duration): JClock \ IO;
         let DurationZ(d1) = d;
         let Clock(c1) = c;
-        Clock(tick(c1, d1))
+        Clock(JClock.tick(c1, d1))
 
 
     pub def tickMillis(zoneId: ZoneId): Clock \ IO =
-        import static java.time.Clock.tickMillis(##java.time.ZoneId): JClock \ IO;
         let ZoneId(zoneId1) = zoneId;
-        Clock(tickMillis(zoneId1))
+        Clock(JClock.tickMillis(zoneId1))
 
     pub def tickSeconds(zoneId: ZoneId): Clock \ IO =
-        import static java.time.Clock.tickSeconds(##java.time.ZoneId): JClock \ IO;
         let ZoneId(zoneId1) = zoneId;
-        Clock(tickSeconds(zoneId1))
+        Clock(JClock.tickSeconds(zoneId1))
 
     pub def tickMinutes(zoneId: ZoneId): Clock \ IO =
-        import static java.time.Clock.tickMinutes(##java.time.ZoneId): JClock \ IO;
         let ZoneId(zoneId1) = zoneId;
-        Clock(tickMinutes(zoneId1))
+        Clock(JClock.tickMinutes(zoneId1))
 
     /// ## Clock functions
 
@@ -109,32 +98,28 @@ mod Time.Clock {
     /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
     ///
     pub def toString(x: Clock): String \ IO =
-        import java.lang.Object.toString(): String \ IO;
         let Clock(x1) = x;
-        let o1 = checked_cast(x1);
-        toString(o1)
+        x1.toString()
 
     pub def millis(x: Clock): Int64 \ IO =
-        import java.time.Clock.millis(): Int64 \ IO;
         let Clock(x1) = x;
-        millis(x1)
+        x1.millis()
 
     pub def instant(x: Clock): InstantZ \ IO =
-        import java.time.Clock.instant(): ##java.time.Instant \ IO;
         let Clock(x1) = x;
-        InstantZ(instant(x1))
+        InstantZ(x1.instant())
 
 
     /// ## Getters and Setters
 
     pub def getZone(c: Clock): ZoneId \ IO =
-        import java.time.Clock.getZone(): ##java.time.ZoneId \ IO;
-        ZoneId(getZone(getClock(c)))
+        let Clock(c1) = c;
+        ZoneId(c1.getZone())
 
     pub def withZone(zone: ZoneId, c: Clock): Clock \ IO =
-        import java.time.Clock.withZone(##java.time.ZoneId): JClock \ IO;
         let Clock(c1) = c;
-        Clock(withZone(c1, Time.ZoneId.getZoneId(zone)))
+        let ZoneId(zone1) = zone;
+        Clock(c1.withZone(zone1))
 
     
 }

@@ -282,52 +282,43 @@ mod Time.ZonedDateTime {
         ZonedDateTime(unsafe x1.withHour(hour))
 
     pub def getMinute(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.getMinute(): Int32 \ {};
         let ZonedDateTime(x1) = x;
-        getMinute(x1)
+        unsafe x1.getMinute()
 
     pub def withMinute(minute: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withMinute(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(withMinute(x1, minute))
+        ZonedDateTime(unsafe x1.withMinute(minute))
 
     pub def getSecond(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.getSecond(): Int32 \ {};
         let ZonedDateTime(x1) = x;
-        getSecond(x1)
+        unsafe x1.getSecond()
 
     pub def withSecond(second: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withSecond(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(withSecond(x1, second))
+        ZonedDateTime(unsafe x1.withSecond(second))
 
     pub def getNano(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.getNano(): Int32 \ {};
         let ZonedDateTime(x1) = x;
-        getNano(x1)
+        unsafe x1.getNano()
 
     pub def withNano(nano: Int32, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withNano(Int32): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(withNano(x1, nano))
+        ZonedDateTime(unsafe x1.withNano(nano))
 
     pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        let zone1 = Time.ZoneId.getZoneId(zone);
-        ZonedDateTime(withZoneSameInstant(x1, zone1))
+        let ZoneId(zone1) = zone;
+        ZonedDateTime(unsafe x1.withZoneSameInstant(zone1))
 
     pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
-        import java.time.ZonedDateTime.withZoneSameLocal(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(x1) = x;
-        let zone1 = Time.ZoneId.getZoneId(zone);
-        ZonedDateTime(withZoneSameLocal(x1, zone1))
+        let ZoneId(zone1) = zone;
+        ZonedDateTime(unsafe x1.withZoneSameLocal(zone1))
 
 
-    pub def withToFixedOffsetZone(t: ZonedDateTime): ZonedDateTime = 
-        import java.time.ZonedDateTime.withFixedOffsetZone(): ##java.time.ZonedDateTime \ {};
+    pub def withFixedOffsetZone(t: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(t1) = t;
-        ZonedDateTime(withFixedOffsetZone(t1))
+        ZonedDateTime(unsafe t1.withFixedOffsetZone())
 
     pub def withEarlierOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
         import java.time.ZonedDateTime.withEarlierOffsetAtOverlap(): ##java.time.ZonedDateTime \ {};
@@ -335,9 +326,8 @@ mod Time.ZonedDateTime {
         ZonedDateTime(withEarlierOffsetAtOverlap(t1))
 
     pub def withLaterOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
-        import java.time.ZonedDateTime.withLaterOffsetAtOverlap(): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(t1) = t;
-        ZonedDateTime(withLaterOffsetAtOverlap(t1))
+        ZonedDateTime(unsafe t1.withLaterOffsetAtOverlap())
 
     /// DayOfWeek methods
 

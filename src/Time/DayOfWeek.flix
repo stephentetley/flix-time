@@ -68,6 +68,7 @@ mod Time.DayOfWeek {
     use Time.ZonedDateTime
 
     use Time.Internal.Temporal.TemporalAccessor
+    import java.time.{DayOfWeek => JDayOfWeek}
 
     /// 1 (Monday) to 7 (Sunday)
     pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
@@ -84,21 +85,14 @@ mod Time.DayOfWeek {
     /// ## Marshal enums
 
     pub def marshalDayOfWeek(x: DayOfWeek): ##java.time.DayOfWeek =
-        import static java_get_field java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek \ {} as get_MONDAY;
-        import static java_get_field java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek \ {} as get_TUESDAY;
-        import static java_get_field java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek \ {} as get_WEDNESDAY;
-        import static java_get_field java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek \ {} as get_THURSDAY;
-        import static java_get_field java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek \ {} as get_FRIDAY;
-        import static java_get_field java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek \ {} as get_SATURDAY;
-        import static java_get_field java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek \ {} as get_SUNDAY;
         match x {
-            case Monday     => get_MONDAY()
-            case Tuesday    => get_TUESDAY()
-            case Wednesday  => get_WEDNESDAY()
-            case Thursday   => get_THURSDAY()
-            case Friday     => get_FRIDAY()
-            case Saturday   => get_SATURDAY()
-            case Sunday     => get_SUNDAY() 
+            case Monday     => unsafe JDayOfWeek.MONDAY
+            case Tuesday    => unsafe JDayOfWeek.TUESDAY
+            case Wednesday  => unsafe JDayOfWeek.WEDNESDAY
+            case Thursday   => unsafe JDayOfWeek.THURSDAY
+            case Friday     => unsafe JDayOfWeek.FRIDAY
+            case Saturday   => unsafe JDayOfWeek.SATURDAY
+            case Sunday     => unsafe JDayOfWeek.SUNDAY 
         }
 
     def primEquals(x: ##java.time.DayOfWeek, y: ##java.time.DayOfWeek): Bool =
@@ -109,21 +103,14 @@ mod Time.DayOfWeek {
 
 
     pub def unmarshalDayOfWeek(x: ##java.time.DayOfWeek): Time.DayOfWeek =
-        import static java_get_field java.time.DayOfWeek.MONDAY: ##java.time.DayOfWeek \ {} as get_MONDAY;
-        import static java_get_field java.time.DayOfWeek.TUESDAY: ##java.time.DayOfWeek \ {} as get_TUESDAY;
-        import static java_get_field java.time.DayOfWeek.WEDNESDAY: ##java.time.DayOfWeek \ {} as get_WEDNESDAY;
-        import static java_get_field java.time.DayOfWeek.THURSDAY: ##java.time.DayOfWeek \ {} as get_THURSDAY;
-        import static java_get_field java.time.DayOfWeek.FRIDAY: ##java.time.DayOfWeek \ {}  as get_FRIDAY;
-        import static java_get_field java.time.DayOfWeek.SATURDAY: ##java.time.DayOfWeek \ {} as get_SATURDAY;
-        import static java_get_field java.time.DayOfWeek.SUNDAY: ##java.time.DayOfWeek \ {} as get_SUNDAY;
         match x {
-            case x1 if primEquals(x1, get_MONDAY())     => Monday
-            case x1 if primEquals(x1, get_TUESDAY())    => Tuesday
-            case x1 if primEquals(x1, get_WEDNESDAY())  => Wednesday
-            case x1 if primEquals(x1, get_THURSDAY())   => Thursday
-            case x1 if primEquals(x1, get_FRIDAY())     => Friday
-            case x1 if primEquals(x1, get_SATURDAY())   => Saturday
-            case x1 if primEquals(x1, get_SUNDAY())     => Sunday
+            case x1 if primEquals(x1, unsafe JDayOfWeek.MONDAY)     => Monday
+            case x1 if primEquals(x1, unsafe JDayOfWeek.TUESDAY)    => Tuesday
+            case x1 if primEquals(x1, unsafe JDayOfWeek.WEDNESDAY)  => Wednesday
+            case x1 if primEquals(x1, unsafe JDayOfWeek.THURSDAY)   => Thursday
+            case x1 if primEquals(x1, unsafe JDayOfWeek.FRIDAY)     => Friday
+            case x1 if primEquals(x1, unsafe JDayOfWeek.SATURDAY)   => Saturday
+            case x1 if primEquals(x1, unsafe JDayOfWeek.SUNDAY)     => Sunday
             case _                                      => bug!("unmarshalDayOfWeek")
         }
 
@@ -161,31 +148,27 @@ mod Time.DayOfWeek {
     /// ## DayOfWeek functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
-        import java.time.DayOfWeek.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshalDayOfWeek(x);
         let s1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1, s1, locale1)
+        unsafe x1.getDisplayName(s1, locale1)
 
 
     pub def getValue(x: DayOfWeek): Int32 =
-        import java.time.DayOfWeek.getValue(): Int32 \ {};
         let x1 = marshalDayOfWeek(x);
-        getValue(x1)
+        unsafe x1.getValue()
 
 
     /// ## plus / minus functions
 
     pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
-        import java.time.DayOfWeek.plus(Int64): ##java.time.DayOfWeek \ {};
         let x1 = marshalDayOfWeek(x);
-        let x2 = plus(x1, days);
+        let x2 = unsafe x1.plus(days);
         unmarshalDayOfWeek(x2)
 
     pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
-        import java.time.DayOfWeek.minus(Int64): ##java.time.DayOfWeek \ {};
         let x1 = marshalDayOfWeek(x);
-        let x2 = minus(x1, days);
+        let x2 = unsafe x1.minus(days);
         unmarshalDayOfWeek(x2)
 
 
