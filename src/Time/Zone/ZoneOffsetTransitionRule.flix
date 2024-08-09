@@ -63,6 +63,8 @@ mod Time.Zone.ZoneOffsetTransitionRule {
     use Time.LocalTime.{LocalTime}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
+    import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule}
+    import java.time.zone.{ZoneOffsetTransitionRule$TimeDefinition => JTimeDefinition}
     
     /// ## Unwrap
 
@@ -77,13 +79,10 @@ mod Time.Zone.ZoneOffsetTransitionRule {
     }
 
     pub def marshalTimeDefinition(x: TimeDefinition): ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition = 
-        import static java_get_field java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.STANDARD: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_STANDARD;
-        import static java_get_field java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.UTC: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_UTC;
-        import static java_get_field java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.WALL: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_WALL;
         match x {
-            case Standard           => get_STANDARD()
-            case UTC                => get_UTC()
-            case Wall               => get_WALL()
+            case Standard           => unsafe JTimeDefinition.STANDARD
+            case UTC                => unsafe JTimeDefinition.UTC
+            case Wall               => unsafe JTimeDefinition.WALL
         }
 
     def primEqualsTimeDefinition(x: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition, y: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition): Bool =

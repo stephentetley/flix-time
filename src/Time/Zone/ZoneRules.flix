@@ -64,6 +64,7 @@ mod Time.Zone.ZoneRules {
     use Time.LocalDateTime.{LocalDateTime}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
+    import java.time.zone.{ZoneRules => JZoneRules}
 
     /// ## Unwrap
 
@@ -78,73 +79,63 @@ mod Time.Zone.ZoneRules {
     /// ## Constructors
 
     pub def zoneRules(offset: ZoneOffset): ZoneRules =
-        import static java.time.zone.ZoneRules.of(##java.time.ZoneOffset): ##java.time.zone.ZoneRules \ {};
         let ZoneOffset(x1) = offset;
-        ZoneRules(of(x1))
+        ZoneRules(unsafe JZoneRules.of(x1))
 
     /// ## ZoneRules functions
 
     pub def getOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
-        import java.time.zone.ZoneRules.getOffset(##java.time.Instant): ##java.time.ZoneOffset \ {};
         let ZoneRules(x1) = x;
         let InstantZ(inst1) = inst;
-        ZoneOffset(getOffset(x1, inst1))
+        ZoneOffset(unsafe x1.getOffset(inst1))
 
 
     pub def getOffsetWithLocalDateTime(ldt: LocalDateTime, x: ZoneRules): ZoneOffset =
-        import java.time.zone.ZoneRules.getOffset(##java.time.LocalDateTime): ##java.time.ZoneOffset \ {};
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
-        ZoneOffset(getOffset(x1, ldt1))
+        ZoneOffset(unsafe x1.getOffset(ldt1))
 
 
     pub def getStandardOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
-        import java.time.zone.ZoneRules.getStandardOffset(##java.time.Instant): ##java.time.ZoneOffset \ {};
         let ZoneRules(x1) = x;
         let InstantZ(inst1) = inst;
-        ZoneOffset(getStandardOffset(x1, inst1))
+        ZoneOffset(unsafe x1.getStandardOffset(inst1))
 
 
     pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] =
-        import java.time.zone.ZoneRules.getValidOffsets(##java.time.LocalDateTime): ##java.util.List \ {};
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
-        let xs = getValidOffsets(x1, ldt1);
+        let xs = unsafe x1.getValidOffsets(ldt1);
         let xs1: List[##java.time.ZoneOffset] = Adaptor.fromList(xs);
         List.map(z -> ZoneOffset(z), xs1)
 
 
     pub def getDaylightSavings(instant: InstantZ, x: ZoneRules): DurationZ =
-        import java.time.zone.ZoneRules.getDaylightSavings(##java.time.Instant): ##java.time.Duration \ {};
         let ZoneRules(x1) = x;
         let InstantZ(instant1) = instant;
-        DurationZ(getDaylightSavings(x1, instant1))
+        DurationZ(unsafe x1.getDaylightSavings(instant1))
 
     pub def isDaylightSavings(instant: InstantZ, x: ZoneRules): Bool =
-        import java.time.zone.ZoneRules.isDaylightSavings(##java.time.Instant): Bool \ {};
         let ZoneRules(x1) = x;
         let InstantZ(instant1) = instant;
-        isDaylightSavings(x1, instant1)
+        unsafe x1.isDaylightSavings(instant1)
 
 
     pub def isValidOffset(ldt: LocalDateTime, offset: ZoneOffset, x: ZoneRules): Bool =
-        import java.time.zone.ZoneRules.isValidOffset(##java.time.LocalDateTime, ##java.time.ZoneOffset): Bool \ {};
         let ZoneRules(x1) = x;
         let LocalDateTime(ldt1) = ldt;
         let ZoneOffset(offset1) = offset;
-        isValidOffset(x1, ldt1, offset1)
+        unsafe x1.isValidOffset(ldt1, offset1)
 
 
     pub def previousTransition(instant: InstantZ, x: ZoneRules): ZoneOffsetTransition =
-        import java.time.zone.ZoneRules.previousTransition(##java.time.Instant): ##java.time.zone.ZoneOffsetTransition \ {};
         let ZoneRules(x1) = x;
         let InstantZ(instant1) = instant;
-        ZoneOffsetTransition(previousTransition(x1, instant1))
+        ZoneOffsetTransition(unsafe x1.previousTransition(instant1))
 
     pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = 
-        import java.time.zone.ZoneRules.getTransitions(): ##java.util.List \ {};
         let ZoneRules(x1) = x;
-        let xs = getTransitions(x1);
+        let xs = unsafe x1.getTransitions();
         let xs1: List[##java.time.zone.ZoneOffsetTransition] = Adaptor.fromList(xs);
         List.map(z -> ZoneOffsetTransition(z), xs1)
 
