@@ -30,42 +30,30 @@ mod Time.Format.SignStyle {
 
     use Time.Format.SignStyle;
     use Time.Format.SignStyle.{Always, ExceedsPad, Never, Normal, NonNegative};
-    
+    import java.time.format.{SignStyle => JSignStyle}
 
 
-    pub def marshalSignStyle(x: SignStyle): ##java.time.format.SignStyle = 
-        import static java_get_field java.time.format.SignStyle.ALWAYS: ##java.time.format.SignStyle \ {} as get_ALWAYS;
-        import static java_get_field java.time.format.SignStyle.EXCEEDS_PAD: ##java.time.format.SignStyle \ {} as get_EXCEEDS_PAD;
-        import static java_get_field java.time.format.SignStyle.NEVER: ##java.time.format.SignStyle \ {} as get_NEVER;
-        import static java_get_field java.time.format.SignStyle.NORMAL: ##java.time.format.SignStyle \ {} as get_NORMAL;
-        import static java_get_field java.time.format.SignStyle.NOT_NEGATIVE: ##java.time.format.SignStyle \ {} as get_NOT_NEGATIVE;
+    pub def marshalSignStyle(x: SignStyle): JSignStyle = 
         match x {
-            case Always             => get_ALWAYS()
-            case ExceedsPad         => get_EXCEEDS_PAD()
-            case Never              => get_NEVER()
-            case Normal             => get_NORMAL()
-            case NonNegative        => get_NOT_NEGATIVE()
+            case Always             => unsafe JSignStyle.ALWAYS
+            case ExceedsPad         => unsafe JSignStyle.EXCEEDS_PAD
+            case Never              => unsafe JSignStyle.NEVER
+            case Normal             => unsafe JSignStyle.NORMAL
+            case NonNegative        => unsafe JSignStyle.NOT_NEGATIVE
         }
 
     def primEquals(x: ##java.time.format.SignStyle, y: ##java.time.format.SignStyle): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
         let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        unsafe x1.equals(y)
 
     pub def unmarshalSignStyle(x: ##java.time.format.SignStyle): SignStyle = 
-        import static java_get_field java.time.format.SignStyle.ALWAYS: ##java.time.format.SignStyle \ {} as get_ALWAYS;
-        import static java_get_field java.time.format.SignStyle.EXCEEDS_PAD: ##java.time.format.SignStyle \ {} as get_EXCEEDS_PAD;
-        import static java_get_field java.time.format.SignStyle.NEVER: ##java.time.format.SignStyle \ {} as get_NEVER;
-        import static java_get_field java.time.format.SignStyle.NORMAL: ##java.time.format.SignStyle \ {} as get_NORMAL;
-        import static java_get_field java.time.format.SignStyle.NOT_NEGATIVE: ##java.time.format.SignStyle \ {} as get_NOT_NEGATIVE;
         match x {
-            case x1 if primEquals(x1, get_ALWAYS())             => Always
-            case x1 if primEquals(x1, get_EXCEEDS_PAD())        => ExceedsPad
-            case x1 if primEquals(x1, get_NEVER())              => Never
-            case x1 if primEquals(x1, get_NORMAL())             => Normal
-            case x1 if primEquals(x1, get_NOT_NEGATIVE())       => NonNegative
-            case _                                              => bug!("unmarshalSignStyle")
+            case x1 if primEquals(x1, unsafe JSignStyle.ALWAYS)         => Always
+            case x1 if primEquals(x1, unsafe JSignStyle.EXCEEDS_PAD)    => ExceedsPad
+            case x1 if primEquals(x1, unsafe JSignStyle.NEVER)          => Never
+            case x1 if primEquals(x1, unsafe JSignStyle.NORMAL)         => Normal
+            case x1 if primEquals(x1, unsafe JSignStyle.NOT_NEGATIVE)   => NonNegative
+            case _                                                      => bug!("unmarshalSignStyle")
         }
 
 }

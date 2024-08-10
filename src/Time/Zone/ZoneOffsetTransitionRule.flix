@@ -114,18 +114,8 @@ mod Time.Zone.ZoneOffsetTransitionRule {
                                         standardOffset = ZoneOffset, 
                                         offsetBefore = ZoneOffset,
                                         offsetAfter = ZoneOffset}): Result[String, ZoneOffsetTransitionRule] =
-        import static java.time.zone.ZoneOffsetTransitionRule.of(##java.time.Month, 
-                                                                    Int32,
-                                                                    ##java.time.DayOfWeek,
-                                                                    ##java.time.LocalTime,
-                                                                    Bool,
-                                                                    ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition,
-                                                                    ##java.time.ZoneOffset,
-                                                                    ##java.time.ZoneOffset,
-                                                                    ##java.time.ZoneOffset
-                                                                    ): ##java.time.zone.ZoneOffsetTransitionRule \ {};
         Result.tryCatch(_ -> {
-            ZoneOffsetTransitionRule(of(Time.Month.marshalMonth(r#month), 
+            ZoneOffsetTransitionRule(unsafe JZoneOffsetTransitionRule.of(Time.Month.marshalMonth(r#month), 
                                         r#dayOfMonthIndicator,
                                         Time.DayOfWeek.marshalDayOfWeek(r#dayOfWeek),
                                         Time.LocalTime.getLocalTime(r#time),
@@ -140,56 +130,47 @@ mod Time.Zone.ZoneOffsetTransitionRule {
     /// ## predicates / comparisons
     
     pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
-        import java.time.zone.ZoneOffsetTransitionRule.isMidnightEndOfDay(): Bool \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        isMidnightEndOfDay(x1)
+        unsafe x1.isMidnightEndOfDay()
 
 
     /// ## ZoneOffsetTransitionRule functions
 
     pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
-        import java.time.zone.ZoneOffsetTransitionRule.createTransition(Int32): ##java.time.zone.ZoneOffsetTransition \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffsetTransition(createTransition(x1, year))
+        ZoneOffsetTransition(unsafe x1.createTransition(year))
 
 
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
-        import java.time.zone.ZoneOffsetTransitionRule.getTimeDefinition(): ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        getTimeDefinition(x1) |> unmarshalTimeDefinition
+        unsafe x1.getTimeDefinition() |> unmarshalTimeDefinition
 
     pub def getDayOfMonthIndicator(x: ZoneOffsetTransitionRule): Int32  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getDayOfMonthIndicator(): Int32 \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        getDayOfMonthIndicator(x1)
+        unsafe x1.getDayOfMonthIndicator()
 
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getDayOfWeek(): ##java.time.DayOfWeek \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        getDayOfWeek(x1) |> Time.DayOfWeek.unmarshalDayOfWeek
+        unsafe x1.getDayOfWeek() |> Time.DayOfWeek.unmarshalDayOfWeek
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getLocalTime(): ##java.time.LocalTime \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        LocalTime(getLocalTime(x1))
+        LocalTime(unsafe x1.getLocalTime())
 
 
     pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getStandardOffset(): ##java.time.ZoneOffset \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffset(getStandardOffset(x1))
+        ZoneOffset(unsafe x1.getStandardOffset())
 
     pub def getOffsetBefore(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getOffsetBefore(): ##java.time.ZoneOffset \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffset(getOffsetBefore(x1))
+        ZoneOffset(unsafe x1.getOffsetBefore())
 
 
     pub def getOffsetAfter(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        import java.time.zone.ZoneOffsetTransitionRule.getOffsetAfter(): ##java.time.ZoneOffset \ {};
         let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffset(getOffsetAfter(x1))
+        ZoneOffset(unsafe x1.getOffsetAfter())
 
 
 }
