@@ -54,44 +54,38 @@ mod Time.Format.DecimalStyle {
 
     use Time.Format.DecimalStyle
     use Time.Format.DecimalStyle.{DecimalStyle}
-
+    import java.time.format.{DecimalStyle => JDecimalStyle}
     /// ## Unwrap
 
-    pub def getDecimalStyle(x: DecimalStyle): ##java.time.format.DecimalStyle = 
+    pub def getDecimalStyle(x: DecimalStyle): JDecimalStyle = 
         let DecimalStyle(x1) = x;
         x1
 
 
     /// ## "abstract constructors" (e.g. `standard`)
 
-    pub def standard(): DecimalStyle =
-        import static java_get_field java.time.format.DecimalStyle.STANDARD: ##java.time.format.DecimalStyle \ {} as get_STANDARD;
-        DecimalStyle(get_STANDARD())
+    pub def standard(): DecimalStyle = DecimalStyle(unsafe JDecimalStyle.STANDARD)
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
-        import static java.time.format.DecimalStyle.of(##java.util.Locale): ##java.time.format.DecimalStyle \ IO;
         let Locale(loc1) = loc;
-        DecimalStyle(of(loc1))
+        DecimalStyle(JDecimalStyle.of(loc1))
 
     pub def decimalStyleWithDefaultLocale(): DecimalStyle \ IO = 
-        import static java.time.format.DecimalStyle.ofDefaultLocale(): ##java.time.format.DecimalStyle \ IO;
-        DecimalStyle(ofDefaultLocale())
+        DecimalStyle(JDecimalStyle.ofDefaultLocale())
 
 
     /// ## DecimalStyle functions
 
-    pub def getAvailableLocales(): List[Locale] =
-        import static java.time.format.DecimalStyle.getAvailableLocales(): ##java.util.Set \ {};
-        let locs = getAvailableLocales();
+    pub def getAvailableLocales(): List[Locale] \ IO =
+        let locs = JDecimalStyle.getAvailableLocales();
         let locs1: List[##java.util.Locale] = fromSetAsList(locs);
         List.map(l -> Locale(l), locs1)
 
 
     /// Candidate for Adaptor...
     def fromSetAsList(l: ##java.util.Set): List[a] = region rc {
-        import java.util.Set.iterator(): ##java.util.Iterator \ rc;
         let proxy: Proxy[a] = Proxy.Proxy;
-        iterator(l) |> Adaptor.fromIterator(rc, proxy) |> Iterator.toList
+        unsafe l.iterator() |> Adaptor.fromIterator(rc, proxy) |> Iterator.toList
     }
 
 
@@ -101,40 +95,36 @@ mod Time.Format.DecimalStyle {
     /// ## Getters and Setters
 
     pub def getDecimalSeparator(x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.getDecimalSeparator(): Char \ {};
-        getDecimalStyle(x) |> getDecimalSeparator
+        let DecimalStyle(x1) = x;
+        unsafe x1.getDecimalSeparator()
 
 
     pub def withDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
-        import java.time.format.DecimalStyle.withDecimalSeparator(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
-        withDecimalSeparator(x1, sep) |> DecimalStyle
+        DecimalStyle(unsafe x1.withDecimalSeparator(sep))
 
     pub def getNegativeSign(x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.getNegativeSign(): Char \ {};
-        getDecimalStyle(x) |> getNegativeSign
+        let DecimalStyle(x1) = x;
+        unsafe x1.getNegativeSign()
 
     pub def withNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
-        import java.time.format.DecimalStyle.withNegativeSign(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
-        withNegativeSign(x1, sign) |> DecimalStyle
+        DecimalStyle(unsafe x1.withNegativeSign(sign))
 
     pub def getPositiveSign(x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.getPositiveSign(): Char \ {};
-        getDecimalStyle(x) |> getPositiveSign
+        let DecimalStyle(x1) = x;
+        unsafe x1.getPositiveSign()
 
     pub def withPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
-        import java.time.format.DecimalStyle.withPositiveSign(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
-        withPositiveSign(x1, sign) |> DecimalStyle
+        DecimalStyle(unsafe x1.withPositiveSign(sign))
 
     pub def getZeroDigit(x: DecimalStyle): Char = 
-        import java.time.format.DecimalStyle.getZeroDigit(): Char \ {};
-        getDecimalStyle(x) |> getZeroDigit
+        let DecimalStyle(x1) = x;
+        unsafe x1.getZeroDigit()
 
     pub def withZeroDigit(digit: Char, x: DecimalStyle): DecimalStyle = 
-        import java.time.format.DecimalStyle.withZeroDigit(Char): ##java.time.format.DecimalStyle \ {};
         let DecimalStyle(x1) = x;
-        withZeroDigit(x1, digit) |> DecimalStyle
+        DecimalStyle(unsafe x1.withZeroDigit(digit))
 
 }

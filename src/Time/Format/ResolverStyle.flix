@@ -28,34 +28,26 @@ mod Time.Format.ResolverStyle {
 
     use Time.Format.ResolverStyle;
     use Time.Format.ResolverStyle.{Lenient, Smart, Strict};
-    
+    import java.time.format.{ResolverStyle => JResolverStyle}
 
 
-    pub def marshalResolverStyle(x: ResolverStyle): ##java.time.format.ResolverStyle = 
-        import static java_get_field java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle \ {} as getLENIENT;
-        import static java_get_field java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle \ {} as getSMART;
-        import static java_get_field java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle \ {} as getSTRICT;
+    pub def marshalResolverStyle(x: ResolverStyle): JResolverStyle= 
         match x {
-            case Lenient            => getLENIENT()
-            case Smart              => getSMART()
-            case Strict             => getSTRICT()
+            case Lenient            => unsafe JResolverStyle.LENIENT
+            case Smart              => unsafe JResolverStyle.SMART
+            case Strict             => unsafe JResolverStyle.STRICT
         }
 
-    def primEquals(x: ##java.time.format.ResolverStyle, y: ##java.time.format.ResolverStyle): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
+    def primEquals(x: JResolverStyle, y: JResolverStyle): Bool =
         let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        unsafe x1.equals(y)
 
     pub def unmarshalResolverStyle(x: ##java.time.format.ResolverStyle): ResolverStyle = 
-        import static java_get_field java.time.format.ResolverStyle.LENIENT: ##java.time.format.ResolverStyle \ {} as getLENIENT;
-        import static java_get_field java.time.format.ResolverStyle.SMART: ##java.time.format.ResolverStyle \ {} as getSMART;
-        import static java_get_field java.time.format.ResolverStyle.STRICT: ##java.time.format.ResolverStyle \ {} as getSTRICT;
         match x {
-            case x1 if primEquals(x1, getLENIENT())         => Lenient
-            case x1 if primEquals(x1, getSMART())           => Smart
-            case x1 if primEquals(x1, getSTRICT())          => Strict
-            case _                                          => bug!("unmarshalResolverStyle")
+            case x1 if primEquals(x1, unsafe JResolverStyle.LENIENT)    => Lenient
+            case x1 if primEquals(x1, unsafe JResolverStyle.SMART)      => Smart
+            case x1 if primEquals(x1, unsafe JResolverStyle.STRICT)     => Strict
+            case _                                                      => bug!("unmarshalResolverStyle")
         }
 
 }

@@ -30,35 +30,26 @@ mod Time.Format.FormatStyle {
 
     use Time.Format.FormatStyle
     use Time.Format.FormatStyle.{Full, Long, Medium, Short}
+    import java.time.format.{FormatStyle => JFormatStyle}
 
-    pub def marshalFormatStyle(x: FormatStyle): ##java.time.format.FormatStyle = 
-        import static java_get_field java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;
-        import static java_get_field java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle \ {} as get_LONG;
-        import static java_get_field java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle \ {} as get_MEDIUM;
-        import static java_get_field java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle \ {} as get_SHORT;
+    pub def marshalFormatStyle(x: FormatStyle): JFormatStyle = 
         match x {
-            case Full               => get_FULL()
-            case Long               => get_LONG()
-            case Medium             => get_MEDIUM()
-            case Short              => get_SHORT()
+            case Full               => unsafe JFormatStyle.FULL
+            case Long               => unsafe JFormatStyle.LONG
+            case Medium             => unsafe JFormatStyle.MEDIUM
+            case Short              => unsafe JFormatStyle.SHORT
         }
 
-    def primEquals(x: ##java.time.format.FormatStyle, y: ##java.time.format.FormatStyle): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
+    def primEquals(x: JFormatStyle, y: JFormatStyle): Bool =
         let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        unsafe x1.equals(y)
 
-    pub def unmarshalFormatStyle(x: ##java.time.format.FormatStyle): FormatStyle = 
-        import static java_get_field java.time.format.FormatStyle.FULL: ##java.time.format.FormatStyle \ {} as get_FULL;
-        import static java_get_field java.time.format.FormatStyle.LONG: ##java.time.format.FormatStyle \ {} as get_LONG;
-        import static java_get_field java.time.format.FormatStyle.MEDIUM: ##java.time.format.FormatStyle \ {} as get_MEDIUM;
-        import static java_get_field java.time.format.FormatStyle.SHORT: ##java.time.format.FormatStyle \ {} as get_SHORT;
+    pub def unmarshalFormatStyle(x: JFormatStyle): FormatStyle = 
         match x {
-            case x1 if primEquals(x1, get_FULL())   => Full
-            case x1 if primEquals(x1, get_LONG())   => Long
-            case x1 if primEquals(x1, get_MEDIUM()) => Medium
-            case x1 if primEquals(x1, get_SHORT())  => Short
-            case _                                  => bug!("unmarshalFormatStyle")
+            case x1 if primEquals(x1, unsafe JFormatStyle.FULL)     => Full
+            case x1 if primEquals(x1, unsafe JFormatStyle.LONG)     => Long
+            case x1 if primEquals(x1, unsafe JFormatStyle.MEDIUM)   => Medium
+            case x1 if primEquals(x1, unsafe JFormatStyle.SHORT)    => Short
+            case _                                                  => bug!("unmarshalFormatStyle")
         }
 }

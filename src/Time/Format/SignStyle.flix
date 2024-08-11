@@ -42,11 +42,11 @@ mod Time.Format.SignStyle {
             case NonNegative        => unsafe JSignStyle.NOT_NEGATIVE
         }
 
-    def primEquals(x: ##java.time.format.SignStyle, y: ##java.time.format.SignStyle): Bool =
+    def primEquals(x: JSignStyle, y: JSignStyle): Bool =
         let x1 = unchecked_cast(x as ##java.lang.Enum);
         unsafe x1.equals(y)
 
-    pub def unmarshalSignStyle(x: ##java.time.format.SignStyle): SignStyle = 
+    pub def unmarshalSignStyle(x: JSignStyle): SignStyle = 
         match x {
             case x1 if primEquals(x1, unsafe JSignStyle.ALWAYS)         => Always
             case x1 if primEquals(x1, unsafe JSignStyle.EXCEEDS_PAD)    => ExceedsPad
