@@ -29,21 +29,18 @@ mod Time.Internal.Chrono.AbstractChronology {
     use Time.Internal.Chrono.AbstractChronology.{AbstractChronology}
 
     pub def toString(x: AbstractChronology): String =
-        import java.time.chrono.AbstractChronology.toString(): String \ {};
         let AbstractChronology(x1) = x;
-        toString(x1)
+        unsafe x1.toString()
 
     pub def equals(x: AbstractChronology, y: AbstractChronology): Bool =
-        import java.time.chrono.AbstractChronology.equals(##java.lang.Object): Bool \ {};
         let AbstractChronology(x1) = x;
         let AbstractChronology(y1) = y;
-        equals(x1, checked_cast(y1))
+        unsafe x1.equals(unchecked_cast(y1 as ##java.lang.Object))
 
 
     pub def compareTo(x: AbstractChronology, y: AbstractChronology): Int32 =
-        import java.time.chrono.AbstractChronology.compareTo(##java.time.chrono.Chronology): Int32 \ {};
         let AbstractChronology(x1) = x;
         let AbstractChronology(y1) = y;
-        compareTo(x1, unchecked_cast(y1 as ##java.time.chrono.Chronology))
+        unsafe x1.compareTo(unchecked_cast(y1 as ##java.time.chrono.Chronology))
 
 }

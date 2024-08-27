@@ -31,8 +31,7 @@ mod Time.Temporal.TemporalUnit {
     use Time.DurationZ.{DurationZ}
 
     pub def getDuration(x: TemporalUnit): DurationZ = 
-        import java.time.temporal.TemporalUnit.getDuration(): ##java.time.Duration \ {};
         let TemporalUnit(x1) = x;
-        getDuration(x1) |> DurationZ
+        DurationZ(unsafe x1.getDuration())
 
 }        

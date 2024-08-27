@@ -22,28 +22,18 @@ mod Time.Temporal.IsoFields {
     use Time.Temporal.TemporalField.{TemporalField}
     use Time.Temporal.TemporalUnit
     use Time.Temporal.TemporalUnit.{TemporalUnit}
+    import java.time.temporal.{IsoFields => JIsoFields}
 
-    pub def dayOfQuarter(): TemporalField =
-        import static java_get_field java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;
-        get_DAY_OF_QUARTER() |> TemporalField
+    pub def dayOfQuarter(): TemporalField = TemporalField(unsafe JIsoFields.DAY_OF_QUARTER)
 
-    pub def quarterOfYear(): TemporalField =
-        import static java_get_field java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField \ {} as get_QUARTER_OF_YEAR;
-        get_QUARTER_OF_YEAR() |> TemporalField
+    pub def quarterOfYear(): TemporalField = TemporalField(unsafe JIsoFields.QUARTER_OF_YEAR)
 
-    pub def quarterYears(): TemporalUnit =
-        import static java_get_field java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
-        get_QUARTER_YEARS() |> TemporalUnit
+    // pub def quarterYears(): TemporalUnit = TemporalField(unsafe JIsoFields.QUARTER_YEARS)
 
-    pub def weekBasedYear(): TemporalField =
-        import static java_get_field java.time.temporal.IsoFields.WEEK_BASED_YEAR: ##java.time.temporal.TemporalField \ {} as get_WEEK_BASED_YEAR;
-        get_WEEK_BASED_YEAR() |> TemporalField
+    pub def weekBasedYear(): TemporalField = TemporalField(unsafe JIsoFields.WEEK_BASED_YEAR)
 
-    pub def weekBasedYears(): TemporalUnit =
-        import static java_get_field java.time.temporal.IsoFields.WEEK_BASED_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_WEEK_BASED_YEARS;
-        get_WEEK_BASED_YEARS() |> TemporalUnit
+    // pub def weekBasedYears(): TemporalUnit = TemporalField(unsafe JIsoFields.WEEK_BASED_YEARS)
 
-    pub def weekOfWeekBasedYear(): TemporalField =
-        import static java_get_field java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR: ##java.time.temporal.TemporalField \ {} as get_WEEK_OF_WEEK_BASED_YEAR;
-        get_WEEK_OF_WEEK_BASED_YEAR() |> TemporalField
+    pub def weekOfWeekBasedYear(): TemporalField = TemporalField(unsafe JIsoFields.WEEK_OF_WEEK_BASED_YEAR)
+
 }

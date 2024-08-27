@@ -35,42 +35,35 @@ mod Time.Temporal.ValueRange {
     /// ## Unwrap
 
     pub def isFixed(x: ValueRange): Bool = 
-        import java.time.temporal.ValueRange.isFixed(): Bool \ {};
         let ValueRange(x1) = x;
-        isFixed(x1)
+        unsafe x1.isFixed()
 
     pub def isIntValue(x: ValueRange): Bool = 
-        import java.time.temporal.ValueRange.isIntValue(): Bool \ {};
         let ValueRange(x1) = x;
-        isIntValue(x1)
+        unsafe x1.isIntValue()
 
     pub def isValidValue(i: Int64, x: ValueRange): Bool = 
-        import java.time.temporal.ValueRange.isValidValue(Int64): Bool \ {};
         let ValueRange(x1) = x;
-        isValidValue(x1, i)
+        unsafe x1.isValidValue(i)
 
     pub def isValidIntValue(i: Int64, x: ValueRange): Bool = 
-        import java.time.temporal.ValueRange.isValidIntValue(Int64): Bool \ {};
         let ValueRange(x1) = x;
-        isValidIntValue(x1, i)
+        unsafe x1.isValidIntValue(i)
 
     pub def getMinimum(x: ValueRange): Int64 = 
-        import java.time.temporal.ValueRange.getMinimum(): Int64 \ {};
         let ValueRange(x1) = x;
-        getMinimum(x1)
+        unsafe x1.getMinimum()
 
     pub def getLargestMinimum(x: ValueRange): Int64 = 
-        import java.time.temporal.ValueRange.getLargestMinimum(): Int64 \ {};
         let ValueRange(x1) = x;
-        getLargestMinimum(x1)
+        unsafe x1.getLargestMinimum()
 
     pub def getSmallestMaximum(x: ValueRange): Int64 = 
-        import java.time.temporal.ValueRange.getSmallestMaximum(): Int64 \ {};
         let ValueRange(x1) = x;
-        getSmallestMaximum(x1)
+        unsafe x1.getSmallestMaximum()
 
     pub def getMaximum(x: ValueRange): Int64 = 
-        import java.time.temporal.ValueRange.getMaximum(): Int64 \ {};
         let ValueRange(x1) = x;
-        getMaximum(x1)
+        unsafe x1.getMaximum()
+
 }

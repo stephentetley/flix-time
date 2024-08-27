@@ -29,44 +29,37 @@ mod Time.Internal.Chrono.ChronoLocalDate {
     use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
 
     pub def toString(x: ChronoLocalDate): String =
-        import java.time.chrono.ChronoLocalDate.toString(): String \ {};
         let ChronoLocalDate(x1) = x;
-        toString(x1)
+        unsafe x1.toString()
 
     pub def equals(x: ChronoLocalDate, y: ChronoLocalDate): Bool =
-        import java.time.chrono.ChronoLocalDate.equals(##java.lang.Object): Bool \ {};
         let ChronoLocalDate(x1) = x;
         let ChronoLocalDate(y1) = y;
-        equals(x1, checked_cast(y1))
+        unsafe x1.equals(unchecked_cast(y1 as ##java.lang.Object))
 
 
     pub def compareTo(x: ChronoLocalDate, y: ChronoLocalDate): Int32 =
-        import java.time.chrono.ChronoLocalDate.compareTo(##java.time.chrono.ChronoLocalDate): Int32 \ {};
         let ChronoLocalDate(x1) = x;
         let ChronoLocalDate(y1) = y;
-        compareTo(x1, y1)
+        unsafe x1.compareTo(y1)
 
     pub def toEpochDay(x: ChronoLocalDate): Int64 =
-        import java.time.chrono.ChronoLocalDate.toEpochDay(): Int64 \ {};
         let ChronoLocalDate(x1) = x;
-        toEpochDay(x1)
+        unsafe x1.toEpochDay()
 
     pub def isAfter(x: ChronoLocalDate, y: ChronoLocalDate): Bool =
-        import java.time.chrono.ChronoLocalDate.isAfter(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let ChronoLocalDate(x1) = x;
         let ChronoLocalDate(y1) = y;
-        isAfter(x1, y1)
+        unsafe x1.isAfter(y1)
 
     pub def isBefore(x: ChronoLocalDate, y: ChronoLocalDate): Bool =
-        import java.time.chrono.ChronoLocalDate.isBefore(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let ChronoLocalDate(x1) = x;
         let ChronoLocalDate(y1) = y;
-        isBefore(x1, y1)
+        unsafe x1.isBefore(y1)
 
     pub def isEqual(x: ChronoLocalDate, y: ChronoLocalDate): Bool =
-        import java.time.chrono.ChronoLocalDate.isEqual(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let ChronoLocalDate(x1) = x;
         let ChronoLocalDate(y1) = y;
-        isEqual(x1, y1)        
+        unsafe x1.isEqual(y1)
 
 }

@@ -84,7 +84,7 @@ mod Time.DayOfWeek {
 
     /// ## Marshal enums
 
-    pub def marshalDayOfWeek(x: DayOfWeek): ##java.time.DayOfWeek =
+    pub def marshalDayOfWeek(x: DayOfWeek): JDayOfWeek =
         match x {
             case Monday     => unsafe JDayOfWeek.MONDAY
             case Tuesday    => unsafe JDayOfWeek.TUESDAY
@@ -95,14 +95,14 @@ mod Time.DayOfWeek {
             case Sunday     => unsafe JDayOfWeek.SUNDAY 
         }
 
-    def primEquals(x: ##java.time.DayOfWeek, y: ##java.time.DayOfWeek): Bool =
+    def primEquals(x: JDayOfWeek, y: JDayOfWeek): Bool =
         import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
         let x1 = unchecked_cast(x as ##java.lang.Enum);
         let y1 = checked_cast(y);
         equals(x1, y1)
 
 
-    pub def unmarshalDayOfWeek(x: ##java.time.DayOfWeek): Time.DayOfWeek =
+    pub def unmarshalDayOfWeek(x: JDayOfWeek): Time.DayOfWeek =
         match x {
             case x1 if primEquals(x1, unsafe JDayOfWeek.MONDAY)     => Monday
             case x1 if primEquals(x1, unsafe JDayOfWeek.TUESDAY)    => Tuesday
