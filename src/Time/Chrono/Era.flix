@@ -32,15 +32,13 @@ mod Time.Chrono.Era {
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, e: Era): String =
-        import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
         let Era(e1) = e;
-        getDisplayName(e1, style1, locale1)
+        unsafe e1.getDisplayName(style1, locale1)
 
     pub def getValue(e: Era): Int32 =
-        import java.time.chrono.Era.getValue(): Int32 \ {};
         let Era(e1) = e;
-        getValue(e1)
+        unsafe e1.getValue()
 
 }

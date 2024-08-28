@@ -20,34 +20,35 @@ mod Time {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
+    import java.lang.{Object}
+    import java.time.{ZoneId => JZoneId}
+
     ///
     /// A wrapper around a Java ZoneId.
     ///
-    pub enum ZoneId(##java.time.ZoneId)
+    pub enum ZoneId(JZoneId)
 
     ///
     /// Returns the given ZoneId `x` as a String.
     ///
     instance ToString[ZoneId] {
         pub def toString(x: ZoneId): String =
-            import java.time.ZoneId.toString(): String \ {};
             let ZoneId(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     instance Eq[ZoneId] {
         pub def eq(x: ZoneId, y: ZoneId): Bool =
-            import java.time.ZoneId.equals(##java.lang.Object): Bool \ {};
             let ZoneId(x1) = x;
             let ZoneId(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
     }
 
     instance Hash[ZoneId] {
         pub def hash(x: ZoneId): Int32 =
-            import java.time.ZoneId.hashCode(): Int32 \ {};
             let ZoneId(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
     }
 
 }
@@ -72,18 +73,18 @@ mod Time.ZoneId {
     import java.time.{ZoneOffset => JZoneOffset}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.time.zone.{ZoneRules => JZoneRules}
-    import java.lang.{Exception, Throwable}
+    import java.lang.{Object, Exception, Throwable}
 
-    /// ## Unwrap
+    /// Unwrap
 
     pub def getZoneId(x: ZoneId): JZoneId = 
         let ZoneId(x1) = x;
         x1
 
-    pub def fromJavaObject(o: ##java.lang.Object): ZoneId = 
+    pub def fromJavaObject(o: Object): ZoneId = 
         ZoneId(unchecked_cast(o as JZoneId))
 
-    /// ## Constructors
+    /// Constructors
 
     pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
         Result.tryCatch(_ -> ZoneId(unsafe JZoneId.of(zoneId#zoneId)))
@@ -96,7 +97,7 @@ mod Time.ZoneId {
         })
 
 
-    /// ## "abstract constructors" (e.g. `utc`)
+    /// "abstract constructors" (e.g. `utc`)
 
     pub def utc(): ZoneId = match zoneId(zoneId = "Z") {
         case Ok(z)  => z
@@ -107,7 +108,7 @@ mod Time.ZoneId {
         Result.tryCatch(_ -> ZoneId(JZoneId.systemDefault()))
 
 
-    /// ## `from` functions
+    /// `from` functions
 
     pub def fromOffset(r: {prefix = Option[String], offset = ZoneOffset}): ZoneId =
         let p1 = match r#prefix {
@@ -120,9 +121,8 @@ mod Time.ZoneId {
     /// `fromTemporalAccessor` specialized
     
     def fromTemporalAccessorHelper(x: JTemporalAccessor): ZoneId = 
-        import static java.time.ZoneId.from(JTemporalAccessor): JZoneId \ {} as fromTA;
         try {
-            ZoneId(fromTA(x))
+            ZoneId(unsafe JZoneId.from(x))
         } catch {
             case ex: Exception => 
                 bug!(unsafe ex.getMessage())
@@ -141,7 +141,7 @@ mod Time.ZoneId {
         fromTemporalAccessorHelper(unchecked_cast(Time.ZoneOffset.getZoneOffset(x) as JTemporalAccessor))
 
 
-    /// ## ZoneId functions
+    /// ZoneId functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);

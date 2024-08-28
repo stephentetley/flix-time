@@ -20,19 +20,22 @@ mod Time {
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
 
+    import java.time.{ZonedDateTime => JZonedDateTime}
+    import java.time.chrono.{ChronoZonedDateTime}
+    import java.lang.{Object, CharSequence}
+
     ///
     /// A wrapper around a Java ZonedDateTime.
     ///
-    pub enum ZonedDateTime(##java.time.ZonedDateTime)
+    pub enum ZonedDateTime(JZonedDateTime)
 
     ///
     /// Returns the given date-time `x` as a String using ISO-8601 representation.
     ///
     instance ToString[ZonedDateTime] {
         pub def toString(x: ZonedDateTime): String =
-            import java.time.ZonedDateTime.toString(): String \ {};
             let ZonedDateTime(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     ///
@@ -43,36 +46,34 @@ mod Time {
     instance FromString[ZonedDateTime] {
         pub def fromString(s: String): Option[ZonedDateTime] =
             Result.tryCatch(_ -> {
-                import static java.time.ZonedDateTime.parse(##java.lang.CharSequence): ##java.time.ZonedDateTime \ {};
-                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
-                ZonedDateTime(parse(cs))
+                let s1 = String.trim(s);
+                let cs  = (checked_cast(s1) : CharSequence);
+                ZonedDateTime(unsafe JZonedDateTime.parse(cs))
             }) |> Result.toOption
     }
 
     instance Eq[ZonedDateTime] {
         pub def eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
-            import java.time.ZonedDateTime.equals(##java.lang.Object): Bool \ {};
             let ZonedDateTime(x1) = x;
             let ZonedDateTime(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
     }
 
     instance Hash[ZonedDateTime] {
         pub def hash(x: ZonedDateTime): Int32 =
-            import java.time.ZonedDateTime.hashCode(): Int32 \ {};
             let ZonedDateTime(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
     }
 
     instance Order[ZonedDateTime] {
         pub def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison =
             // Have to use ChronoZonedDateTime...
-            import java.time.chrono.ChronoZonedDateTime.compareTo(##java.time.chrono.ChronoZonedDateTime): Int32 \ {};
             let ZonedDateTime(x1) = x;
             let ZonedDateTime(y1) = y;
-            let cx1 = unchecked_cast(x1 as ##java.time.chrono.ChronoZonedDateTime);
-            let cy1 = unchecked_cast(y1 as ##java.time.chrono.ChronoZonedDateTime);
-            compareTo(cx1, cy1) |> Comparison.fromInt32
+            let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
+            let cy1 = (checked_cast(y1) : ChronoZonedDateTime);
+            unsafe cx1.compareTo(cy1) |> Comparison.fromInt32
     }
 
 
@@ -105,6 +106,10 @@ mod Time.ZonedDateTime {
     use Time.ZoneId.{ZoneId}
     use Time.ZoneOffset
     import java.time.{ZonedDateTime => JZonedDateTime}
+    import java.time.{LocalDateTime => JLocalDateTime, LocalDate => JLocalDate}
+    import java.time.chrono.{ChronoZonedDateTime, ChronoLocalDate, ChronoLocalDateTime}
+    import java.lang.{CharSequence}
+
     /// ## Unwrap
 
     pub def getZonedDateTime(x: ZonedDateTime): ##java.time.ZonedDateTime = 
@@ -161,7 +166,11 @@ mod Time.ZonedDateTime {
     ///
     pub def toLocalDateTime(x: ZonedDateTime): LocalDateTime =
         let ZonedDateTime(x1) = x;
-        LocalDateTime(unsafe x1.toLocalDateTime())
+        let cx1 : ChronoZonedDateTime = (checked_cast(x1) : ChronoZonedDateTime);
+        let ans : ChronoLocalDateTime = unsafe cx1.toLocalDateTime();
+        let ans1 : JLocalDateTime = unchecked_cast(ans as JLocalDateTime);
+        LocalDateTime(ans1)
+        
 
 
     ///
@@ -169,7 +178,10 @@ mod Time.ZonedDateTime {
     ///
     pub def toLocalDate(x: ZonedDateTime): LocalDate =
         let ZonedDateTime(x1) = x;
-        LocalDate(unsafe x1.toLocalDate())
+        let cx1 : ChronoZonedDateTime = (checked_cast(x1) : ChronoZonedDateTime);
+        let ans : ChronoLocalDate = unsafe cx1.toLocalDate();
+        let ans1 : JLocalDate = unchecked_cast(ans as JLocalDate);
+        LocalDate(ans1)
 
     ///
     /// Returns the given date-time `x` as __.
@@ -189,7 +201,8 @@ mod Time.ZonedDateTime {
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, ZonedDateTime] =
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
-            let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
+            let s1 = String.trim(s);
+            let cs  = (checked_cast(s1) : CharSequence);
             ZonedDateTime(unsafe JZonedDateTime.parse(cs, fmtr))
         })
 
@@ -207,23 +220,21 @@ mod Time.ZonedDateTime {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: ZonedDateTime, y: ZonedDateTime): Bool =
-        import java.time.chrono.ChronoZonedDateTime.isBefore(##java.time.chrono.ChronoZonedDateTime): Bool \ {};
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
-        let cx1 = unchecked_cast(x1 as ##java.time.chrono.ChronoZonedDateTime);
-        let cy1 = unchecked_cast(y1 as ##java.time.chrono.ChronoZonedDateTime);
-        isBefore(cx1, cy1)
+        let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
+        let cy1 = (checked_cast(y1) : ChronoZonedDateTime);
+        unsafe cx1.isBefore(cy1)
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: ZonedDateTime, y: ZonedDateTime): Bool =
-        import java.time.chrono.ChronoZonedDateTime.isAfter(##java.time.chrono.ChronoZonedDateTime): Bool \ {};
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
-        let cx1 = unchecked_cast(x1 as ##java.time.chrono.ChronoZonedDateTime);
-        let cy1 = unchecked_cast(y1 as ##java.time.chrono.ChronoZonedDateTime);
-        isAfter(cx1, cy1)
+        let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
+        let cy1 = (checked_cast(y1) : ChronoZonedDateTime);
+        unsafe cx1.isAfter(cy1)
 
     /// ## Getters and Setters
 
@@ -308,12 +319,18 @@ mod Time.ZonedDateTime {
     pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let ZoneId(zone1) = zone;
-        ZonedDateTime(unsafe x1.withZoneSameInstant(zone1))
+        let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
+        let ans = unsafe cx1.withZoneSameInstant(zone1);
+        let ans1 : JZonedDateTime = unchecked_cast(ans as JZonedDateTime);
+        ZonedDateTime(ans1)
 
     pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let ZoneId(zone1) = zone;
-        ZonedDateTime(unsafe x1.withZoneSameLocal(zone1))
+        let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
+        let ans = unsafe cx1.withZoneSameLocal(zone1);
+        let ans1 : JZonedDateTime = unchecked_cast(ans as JZonedDateTime);
+        ZonedDateTime(ans1)
 
 
     pub def withFixedOffsetZone(t: ZonedDateTime): ZonedDateTime = 
@@ -321,13 +338,18 @@ mod Time.ZonedDateTime {
         ZonedDateTime(unsafe t1.withFixedOffsetZone())
 
     pub def withEarlierOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
-        import java.time.ZonedDateTime.withEarlierOffsetAtOverlap(): ##java.time.ZonedDateTime \ {};
         let ZonedDateTime(t1) = t;
-        ZonedDateTime(withEarlierOffsetAtOverlap(t1))
+        let ct1 = (checked_cast(t1) : ChronoZonedDateTime);
+        let ans = unsafe ct1.withEarlierOffsetAtOverlap();
+        let ans1 : JZonedDateTime = unchecked_cast(ans as JZonedDateTime);
+        ZonedDateTime(ans1)
 
     pub def withLaterOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(t1) = t;
-        ZonedDateTime(unsafe t1.withLaterOffsetAtOverlap())
+        let ct1 = (checked_cast(t1) : ChronoZonedDateTime);
+        let ans = unsafe ct1.withLaterOffsetAtOverlap();
+        let ans1 : JZonedDateTime = unchecked_cast(ans as JZonedDateTime);
+        ZonedDateTime(ans1)
 
     /// DayOfWeek methods
 

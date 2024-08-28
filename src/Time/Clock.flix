@@ -110,16 +110,16 @@ mod Time.Clock {
         InstantZ(x1.instant())
 
 
-    /// ## Getters and Setters
+    // Getters and Setters (getZone and withZone are abstract in Java)
 
-    pub def getZone(c: Clock): ZoneId \ IO =
-        let Clock(c1) = c;
-        ZoneId(c1.getZone())
+    // pub def getZone(c: Clock): ZoneId \ IO =
+    //     let Clock(c1) = c;
+    //     ZoneId(c1.getZone())
 
-    pub def withZone(zone: ZoneId, c: Clock): Clock \ IO =
-        let Clock(c1) = c;
-        let ZoneId(zone1) = zone;
-        Clock(c1.withZone(zone1))
+    // pub def withZone(zone: ZoneId, c: Clock): Clock \ IO =
+    //     let Clock(c1) = c;
+    //     let ZoneId(zone1) = zone;
+    //     Clock(c1.withZone(zone1))
 
     
 }

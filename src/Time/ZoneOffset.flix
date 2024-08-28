@@ -19,43 +19,43 @@ mod Time {
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
 
+    import java.lang.{Object}
+    import java.time.{ZoneOffset => JZoneOffset}
+
     ///
     /// A wrapper around a Java ZoneOffset.
     ///
-    pub enum ZoneOffset(##java.time.ZoneOffset)
+    pub enum ZoneOffset(JZoneOffset)
 
     ///
     /// Returns the given ZoneOffset `x` as a String.
     ///
     instance ToString[ZoneOffset] {
         pub def toString(x: ZoneOffset): String =
-            import java.time.ZoneOffset.toString(): String \ {};
             let ZoneOffset(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     instance Eq[ZoneOffset] {
         pub def eq(x: ZoneOffset, y: ZoneOffset): Bool =
-            import java.time.ZoneOffset.equals(##java.lang.Object): Bool \ {};
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
     }
 
     instance Hash[ZoneOffset] {
         pub def hash(x: ZoneOffset): Int32 = 
-            import java.time.ZoneOffset.hashCode(): Int32 \ {};
             let ZoneOffset(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
 
     }
 
     instance Order[ZoneOffset] {
         pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison =
-            import java.time.ZoneOffset.compareTo(##java.time.ZoneOffset): Int32 \ {};
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
-            compareTo(x1, y1) |> Comparison.fromInt32
+            unsafe x1.compareTo(y1) |> Comparison.fromInt32
     }
 
 }
@@ -75,18 +75,18 @@ mod Time.ZoneOffset {
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor, 
             TemporalField => JTemporalField, ChronoField => JChronoField}
     import java.time.zone.{ZoneRules => JZoneRules}
-    import java.lang.{Exception, Throwable}
-    /// ## Unwrap
+    import java.lang.{Object, Exception, Throwable}
+    
 
     pub def getZoneOffset(x: ZoneOffset): JZoneOffset = 
         let ZoneOffset(x1) = x;
         x1
 
-    pub def fromJavaObject(o: ##java.lang.Object): ZoneOffset = 
+    pub def fromJavaObject(o: Object): ZoneOffset = 
         ZoneOffset(unchecked_cast(o as JZoneOffset))
 
 
-    /// ## "abstract constructors" (e.g. `utc`)
+    /// "abstract constructors" (e.g. `utc`)
 
     ///
     /// ___
@@ -97,7 +97,7 @@ mod Time.ZoneOffset {
 
     pub def max(): ZoneOffset = ZoneOffset(unsafe JZoneOffset.MAX)
 
-    /// ## `of` functions
+    /// `of` functions
 
     pub def ofHours(hours: Int32): ZoneOffset =
         ZoneOffset(unsafe JZoneOffset.ofHours(hours))
@@ -131,7 +131,7 @@ mod Time.ZoneOffset {
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
         fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as JTemporalAccessor))
     
-    /// ## ZoneOffset functions
+    /// ZoneOffset functions
 
     pub def getId(x: ZoneOffset): String =
         let ZoneOffset(x1) = x;
@@ -153,7 +153,7 @@ mod Time.ZoneOffset {
         getHelper(unchecked_cast(get_OFFSET_SECONDS() as JTemporalField), x)
 
 
-    /// ## generic helper functions
+    /// generic helper functions
 
     def getHelper(field: JTemporalField, x: ZoneOffset): Int32 =
         try {

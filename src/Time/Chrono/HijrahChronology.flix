@@ -81,11 +81,11 @@ mod Time.Chrono.HijrahChronology {
         import static java_get_field java.time.chrono.HijrahChronology.INSTANCE: ##java.time.chrono.HijrahChronology \ IO as getINSTANCE;
         HijrahChronology(getINSTANCE())
 
-    pub def date(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}, 
-                 x: HijrahChronology): HijrahDate =
-        import java.time.chrono.HijrahChronology.date(Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
-        let HijrahChronology(x1) = x;
-        HijrahDate(date(x1, r#prolepticYear, r#month, r#dayOfMonth))
+    // pub def date(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}, 
+    //              x: HijrahChronology): HijrahDate =
+    //     import java.time.chrono.HijrahChronology.date(Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
+    //     let HijrahChronology(x1) = x;
+    //     HijrahDate(unsafe x1.date(r#prolepticYear, r#month, r#dayOfMonth))
 
     pub def dateWithEra(r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}, 
                         x: HijrahChronology): HijrahDate =

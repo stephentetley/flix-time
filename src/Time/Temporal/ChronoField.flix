@@ -154,10 +154,9 @@ mod Time.Temporal.ChronoField {
         }
 
     def primEquals(x: JChronoField, y: JChronoField): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
         let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        let y1 = unchecked_cast(y as ##java.lang.Object);
+        unsafe x1.equals(y1)
 
 
     pub def unmarshalChronoField(x: ##java.time.temporal.ChronoField): ChronoField =

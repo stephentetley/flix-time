@@ -32,27 +32,22 @@ mod Time.Chrono.ThaiBuddhistEra {
     use Time.Chrono.ThaiBuddhistEra
     use Time.Chrono.ThaiBuddhistEra.{BEFORE_BE, BE}
     use Time.Format.TextStyle
-
-    pub def marshalThaiBuddhistEra(x: ThaiBuddhistEra): ##java.time.chrono.ThaiBuddhistEra = 
-        import static java_get_field java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBEFORE_BE;
-        import static java_get_field java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBE;
+    import java.time.chrono.{ThaiBuddhistEra => JThaiBuddhistEra}
+    pub def marshalThaiBuddhistEra(x: ThaiBuddhistEra): JThaiBuddhistEra = 
         match x {
-            case BEFORE_BE  => getBEFORE_BE()
-            case BE         => getBE() 
+            case BEFORE_BE  => unsafe JThaiBuddhistEra.BEFORE_BE
+            case BE         => unsafe JThaiBuddhistEra.BE
         }
 
-    def primEquals(x: ##java.time.chrono.ThaiBuddhistEra, y: ##java.time.chrono.ThaiBuddhistEra): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
+    def primEquals(x: JThaiBuddhistEra, y: JThaiBuddhistEra): Bool =
         let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        let y1 = unchecked_cast(y as ##java.lang.Object);
+        unsafe x1.equals(y1)
 
     pub def unmarshalThaiBuddhistEra(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
-        import static java_get_field java.time.chrono.ThaiBuddhistEra.BEFORE_BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBEFORE_BE;
-        import static java_get_field java.time.chrono.ThaiBuddhistEra.BE: ##java.time.chrono.ThaiBuddhistEra \ {} as getBE;
         match x {
-            case x1 if primEquals(x1, getBEFORE_BE())  => BEFORE_BE
-            case x1 if primEquals(x1, getBE())         => BE
+            case x1 if primEquals(x1, unsafe JThaiBuddhistEra.BEFORE_BE)  => BEFORE_BE
+            case x1 if primEquals(x1, unsafe JThaiBuddhistEra.BE)         => BE
             case _                                      => bug!("unmarshalThaiBuddhistEra")
         }
 
@@ -63,13 +58,12 @@ mod Time.Chrono.ThaiBuddhistEra {
 
 
 
-    /// 
+    //
     pub def getDisplayName(style: TextStyle, locale: Locale, x: ThaiBuddhistEra): String = 
-        import java.time.chrono.ThaiBuddhistEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshalThaiBuddhistEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1, style1, locale1)
+        unsafe x1.getDisplayName(style1, locale1)
         
 
         
