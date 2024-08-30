@@ -78,7 +78,11 @@ mod Time.Temporal.ChronoUnit {
     use Time.Temporal.TemporalUnit.{TemporalUnit}
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
+
     import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.{Duration => JDuration}
+    import java.lang.{Enum => JEnum}
+
     /// ## Marshal enums
 
     pub def marshalChronoUnit(x: ChronoUnit): JChronoUnit =
@@ -102,10 +106,9 @@ mod Time.Temporal.ChronoUnit {
         }
 
     def primEquals(x: JChronoUnit, y: JChronoUnit): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
 
     pub def unmarshalChronoUnit(x: JChronoUnit): ChronoUnit =
@@ -135,10 +138,10 @@ mod Time.Temporal.ChronoUnit {
         TemporalUnit(unchecked_cast(x1 as ##java.time.temporal.TemporalUnit))
 
 
-    /// ## ChronoUnit functions
+    /// ChronoUnit functions
 
     pub def getDuration(x: ChronoUnit): DurationZ =
-        import java.time.temporal.ChronoUnit.getDuration(): ##java.time.Duration \ {};
+        import java.time.temporal.ChronoUnit.getDuration(): JDuration \ {};
         let x1 = marshalChronoUnit(x);
         getDuration(x1) |> DurationZ
 

@@ -33,7 +33,9 @@ mod Time.Format.TextStyle {
     use Time.Format.TextStyle;
     use Time.Format.TextStyle.{Full, FullStandalone, Narrow, NarrowStandalone,
             Short, ShortStandalone};
+
     import java.time.format.{TextStyle => JTextStyle}
+    import java.lang.{Enum => JEnum}
 
 
     pub def marshalTextStyle(x: TextStyle): JTextStyle = 
@@ -47,8 +49,9 @@ mod Time.Format.TextStyle {
         }
 
     def primEquals(x: JTextStyle, y: JTextStyle): Bool =
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        unsafe x1.equals(y)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
     pub def unmarshalTextStyle(x: JTextStyle): TextStyle = 
         match x {
@@ -62,13 +65,13 @@ mod Time.Format.TextStyle {
         }
 
     
-    /// ## predicates / comparisons
+    /// predicates / comparisons
 
     pub def isStandalone(x: TextStyle): Bool =
         let x1 = marshalTextStyle(x);
         unsafe x1.isStandalone()
 
-    /// ## Getters and Setters
+    /// Getters and Setters
     
     pub def asStandalone(x: TextStyle): TextStyle =
         let x1 = marshalTextStyle(x);

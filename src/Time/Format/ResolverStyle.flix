@@ -28,7 +28,9 @@ mod Time.Format.ResolverStyle {
 
     use Time.Format.ResolverStyle;
     use Time.Format.ResolverStyle.{Lenient, Smart, Strict};
+
     import java.time.format.{ResolverStyle => JResolverStyle}
+    import java.lang.{Enum => JEnum}
 
 
     pub def marshalResolverStyle(x: ResolverStyle): JResolverStyle= 
@@ -39,8 +41,9 @@ mod Time.Format.ResolverStyle {
         }
 
     def primEquals(x: JResolverStyle, y: JResolverStyle): Bool =
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        unsafe x1.equals(y)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
     pub def unmarshalResolverStyle(x: ##java.time.format.ResolverStyle): ResolverStyle = 
         match x {

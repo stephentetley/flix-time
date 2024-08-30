@@ -69,6 +69,7 @@ mod Time.DayOfWeek {
 
     use Time.Internal.Temporal.TemporalAccessor
     import java.time.{DayOfWeek => JDayOfWeek}
+    import java.lang.{Enum => JEnum}
 
     /// 1 (Monday) to 7 (Sunday)
     pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
@@ -96,10 +97,9 @@ mod Time.DayOfWeek {
         }
 
     def primEquals(x: JDayOfWeek, y: JDayOfWeek): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
 
     pub def unmarshalDayOfWeek(x: JDayOfWeek): Time.DayOfWeek =

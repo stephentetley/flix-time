@@ -115,9 +115,11 @@ mod Time.Temporal.ChronoField {
 
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
+    
     import java.time.temporal.{ChronoField => JChronoField}
+    import java.lang.{Enum => JEnum}
 
-    /// ## Marshal enums
+    /// Marshal enums
 
     pub def marshalChronoField(x: ChronoField): JChronoField =
         match x {
@@ -154,12 +156,12 @@ mod Time.Temporal.ChronoField {
         }
 
     def primEquals(x: JChronoField, y: JChronoField): Bool =
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = unchecked_cast(y as ##java.lang.Object);
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
         unsafe x1.equals(y1)
 
 
-    pub def unmarshalChronoField(x: ##java.time.temporal.ChronoField): ChronoField =
+    pub def unmarshalChronoField(x: JChronoField): ChronoField =
         match x {
             case x1 if primEquals(x1, unsafe JChronoField.NANO_OF_SECOND)               => NanoOfSecond
             case x1 if primEquals(x1, unsafe JChronoField.NANO_OF_DAY)                  => NanoOfDay

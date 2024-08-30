@@ -18,10 +18,12 @@
 
     use Time.Temporal.ValueRange
     use Time.Temporal.ValueRange.{ValueRange}
+
+    import java.time.temporal.{ValueRange => JValueRange}
     
     /// Final Class
 
-    pub enum ValueRange(##java.time.temporal.ValueRange)
+    pub enum ValueRange(JValueRange)
 
 
 
@@ -32,7 +34,7 @@ mod Time.Temporal.ValueRange {
     use Time.Temporal.ValueRange
     use Time.Temporal.ValueRange.{ValueRange}
 
-    /// ## Unwrap
+    /// Unwrap
 
     pub def isFixed(x: ValueRange): Bool = 
         let ValueRange(x1) = x;

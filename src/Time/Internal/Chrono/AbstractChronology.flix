@@ -16,9 +16,11 @@
 
 mod Time.Internal.Chrono {
 
+    import java.time.chrono.{AbstractChronology => JAbstractChronology}
+
     /// Abstract Class...
 
-    pub enum AbstractChronology(##java.time.chrono.AbstractChronology)
+    pub enum AbstractChronology(JAbstractChronology)
 
 
 }

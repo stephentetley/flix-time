@@ -92,7 +92,7 @@ mod Time.Format.DecimalStyle {
     // Note - should the Locale module provide a function marshal and unmarshal functions
     // so a client doesn't have to use: `o -> Locale(o as ##java.util.Locale)` ?
 
-    /// ## Getters and Setters
+    /// Getters and Setters
 
     pub def getDecimalSeparator(x: DecimalStyle): Char = 
         let DecimalStyle(x1) = x;

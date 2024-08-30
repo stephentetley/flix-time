@@ -33,6 +33,8 @@ mod Time.Chrono.MinguoEra {
     use Time.Chrono.MinguoEra.{BEFORE_ROC, ROC}
     use Time.Format.TextStyle
 
+    import java.lang.{Enum => JEnum}
+
     pub def marshalMinguoEra(x: MinguoEra): ##java.time.chrono.MinguoEra = 
         import static java_get_field java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
         import static java_get_field java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
@@ -42,10 +44,9 @@ mod Time.Chrono.MinguoEra {
         }
 
     def primEquals(x: ##java.time.chrono.MinguoEra, y: ##java.time.chrono.MinguoEra): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
     pub def unmarshalMinguoEra(x: ##java.time.chrono.MinguoEra): MinguoEra =
         import static java_get_field java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;

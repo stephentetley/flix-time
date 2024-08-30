@@ -84,6 +84,7 @@ mod Time.Month {
 
     use Locale.{Locale}
     import java.time.{Month => JMonth}
+    import java.lang.{Enum => JEnum}
     
     /// ## Marshal enums
 
@@ -104,10 +105,9 @@ mod Time.Month {
         }
 
     def primEquals(x: ##java.time.Month, y: ##java.time.Month): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
     pub def unmarshalMonth(x: ##java.time.Month): Month =
         match x {

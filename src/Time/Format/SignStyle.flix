@@ -28,9 +28,11 @@ mod Time.Format {
 
 mod Time.Format.SignStyle {
 
-    use Time.Format.SignStyle;
-    use Time.Format.SignStyle.{Always, ExceedsPad, Never, Normal, NonNegative};
+    use Time.Format.SignStyle
+    use Time.Format.SignStyle.{Always, ExceedsPad, Never, Normal, NonNegative}
+
     import java.time.format.{SignStyle => JSignStyle}
+    import java.lang.{Enum => JEnum}
 
 
     pub def marshalSignStyle(x: SignStyle): JSignStyle = 
@@ -43,8 +45,9 @@ mod Time.Format.SignStyle {
         }
 
     def primEquals(x: JSignStyle, y: JSignStyle): Bool =
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        unsafe x1.equals(y)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
     pub def unmarshalSignStyle(x: JSignStyle): SignStyle = 
         match x {

@@ -32,7 +32,10 @@ mod Time.Chrono.ThaiBuddhistEra {
     use Time.Chrono.ThaiBuddhistEra
     use Time.Chrono.ThaiBuddhistEra.{BEFORE_BE, BE}
     use Time.Format.TextStyle
+
     import java.time.chrono.{ThaiBuddhistEra => JThaiBuddhistEra}
+    import java.lang.{Enum => JEnum}
+
     pub def marshalThaiBuddhistEra(x: ThaiBuddhistEra): JThaiBuddhistEra = 
         match x {
             case BEFORE_BE  => unsafe JThaiBuddhistEra.BEFORE_BE
@@ -40,8 +43,8 @@ mod Time.Chrono.ThaiBuddhistEra {
         }
 
     def primEquals(x: JThaiBuddhistEra, y: JThaiBuddhistEra): Bool =
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = unchecked_cast(y as ##java.lang.Object);
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
         unsafe x1.equals(y1)
 
     pub def unmarshalThaiBuddhistEra(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =

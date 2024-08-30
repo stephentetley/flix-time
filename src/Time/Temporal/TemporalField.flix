@@ -16,9 +16,11 @@
 
 mod Time.Temporal {
 
+    import java.time.temporal.{TemporalField => JTemporalField}
+
     /// Interface...
 
-    pub enum TemporalField(##java.time.temporal.TemporalField)
+    pub enum TemporalField(JTemporalField)
 
 }
 

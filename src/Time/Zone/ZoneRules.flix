@@ -20,32 +20,32 @@ mod Time.Zone {
     use Time.Zone.ZoneRules
     use Time.Zone.ZoneRules.{ZoneRules}
 
+    import java.time.zone.{ZoneRules => JZoneRules}
+    import java.lang.{Object}
+
     ///
     /// A wrapper around a Java ZoneRules.
     ///
-    pub enum ZoneRules(##java.time.zone.ZoneRules)
+    pub enum ZoneRules(JZoneRules)
 
     instance ToString[ZoneRules] {
         pub def toString(x: ZoneRules): String =
-            import java.time.zone.ZoneRules.toString(): String \ {};
             let ZoneRules(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     instance Eq[ZoneRules] {
         pub def eq(x: ZoneRules, y: ZoneRules): Bool = 
-            import java.time.zone.ZoneRules.equals(##java.lang.Object): Bool \ {};
             let ZoneRules(x1) = x;
             let ZoneRules(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
     }
 
     instance Hash[ZoneRules] {
         pub def hash(x: ZoneRules): Int32 =
-            import java.time.zone.ZoneRules.hashCode(): Int32 \ {};
             let ZoneRules(x1) = x;
-            hashCode(x1)
-
+            unsafe x1.hashCode()
     }
 
 }
@@ -64,25 +64,25 @@ mod Time.Zone.ZoneRules {
     use Time.LocalDateTime.{LocalDateTime}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
+
     import java.time.zone.{ZoneRules => JZoneRules}
+    import java.time.zone.{ZoneOffsetTransition => JZoneOffsetTransition}
+    import java.time.{ZoneOffset => JZoneOffset}
+    
+    /// Unwrap
 
-    /// ## Unwrap
-
-    pub def getZoneRules(x: ZoneRules): ##java.time.zone.ZoneRules = 
+    pub def getZoneRules(x: ZoneRules): JZoneRules = 
         let ZoneRules(x1) = x;
         x1
     
-    pub def fromJavaObject(o: ##java.lang.Object): ZoneRules = 
-        ZoneRules(unchecked_cast(o as ##java.time.zone.ZoneRules))
 
-
-    /// ## Constructors
+    /// Constructors
 
     pub def zoneRules(offset: ZoneOffset): ZoneRules =
         let ZoneOffset(x1) = offset;
         ZoneRules(unsafe JZoneRules.of(x1))
 
-    /// ## ZoneRules functions
+    /// ZoneRules functions
 
     pub def getOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
         let ZoneRules(x1) = x;
@@ -106,7 +106,7 @@ mod Time.Zone.ZoneRules {
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
         let xs = unsafe x1.getValidOffsets(ldt1);
-        let xs1: List[##java.time.ZoneOffset] = Adaptor.fromList(xs);
+        let xs1: List[JZoneOffset] = Adaptor.fromList(xs);
         List.map(z -> ZoneOffset(z), xs1)
 
 
@@ -136,7 +136,7 @@ mod Time.Zone.ZoneRules {
     pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = 
         let ZoneRules(x1) = x;
         let xs = unsafe x1.getTransitions();
-        let xs1: List[##java.time.zone.ZoneOffsetTransition] = Adaptor.fromList(xs);
+        let xs1: List[JZoneOffsetTransition] = Adaptor.fromList(xs);
         List.map(z -> ZoneOffsetTransition(z), xs1)
 
 }

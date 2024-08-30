@@ -21,10 +21,13 @@ mod Time {
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
+    import java.lang.{Object}
+    import java.time.{LocalDate => JLocalDate}
+
     ///
     /// A wrapper around a Java LocalDate.
     ///
-    pub enum LocalDate(##java.time.LocalDate)
+    pub enum LocalDate(JLocalDate)
 
     ///
     /// Returns the given date `x` as a string using the Java builtin toString method.
@@ -52,10 +55,10 @@ mod Time {
 
     instance Eq[LocalDate] {
         pub def eq(x: LocalDate, y: LocalDate): Bool =
-            import java.time.LocalDate.equals(##java.lang.Object): Bool \ {};
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
     }
 
     instance Hash[LocalDate] {

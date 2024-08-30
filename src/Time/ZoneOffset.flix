@@ -71,6 +71,7 @@ mod Time.ZoneOffset {
     use Time.OffsetDateTime
     use Time.OffsetTime
     use Time.ZonedDateTime
+
     import java.time.{ZoneOffset => JZoneOffset}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor, 
             TemporalField => JTemporalField, ChronoField => JChronoField}
@@ -111,25 +112,20 @@ mod Time.ZoneOffset {
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
         ZoneOffset(unsafe JZoneOffset.ofTotalSeconds(seconds))
 
-    /// `fromTemporalAccessor` specialized
-    // Leave as is for now...
-    def fromTemporalAccessorHelper(x: JTemporalAccessor): ZoneOffset = 
-        import static java.time.ZoneOffset.from(JTemporalAccessor): JZoneOffset \ {} as fromTA;
-        try {
-            ZoneOffset(fromTA(x))
-        } catch {
-            case ex: Exception => 
-                bug!(unsafe ex.getMessage())
-        }
+    // `from(TemporalAccessor x)` has problems - instead we can write the functions 
+    // we want by calling the respective object
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as JTemporalAccessor))
+        let Time.OffsetDateTime.OffsetDateTime(x1) = x;
+        ZoneOffset(unsafe x1.getOffset())
 
     pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as JTemporalAccessor))
+        let Time.OffsetTime.OffsetTime(x1) = x;
+        ZoneOffset(unsafe x1.getOffset())
             
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as JTemporalAccessor))
+        let Time.ZonedDateTime.ZonedDateTime(x1) = x;
+        ZoneOffset(unsafe x1.getOffset())
     
     /// ZoneOffset functions
 

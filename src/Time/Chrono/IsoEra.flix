@@ -37,6 +37,8 @@ mod Time.Chrono.IsoEra {
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
+    import java.lang.{Enum => JEnum}
+    
     pub def marshalIsoEra(x: IsoEra): ##java.time.chrono.IsoEra = 
         import static java_get_field java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;
         import static java_get_field java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra \ {} as get_CE;
@@ -46,10 +48,9 @@ mod Time.Chrono.IsoEra {
         }
 
     def primEquals(x: ##java.time.chrono.IsoEra, y: ##java.time.chrono.IsoEra): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
     pub def unmarshalIsoEra(x: ##java.time.chrono.IsoEra): IsoEra = 
         import static java_get_field java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;

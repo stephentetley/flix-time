@@ -20,32 +20,33 @@ mod Time.Zone {
     use Time.Zone.ZoneOffsetTransitionRule
     use Time.Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule}
 
+    import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule}
+    import java.lang.{Object}
+
     ///
     /// A wrapper around a Java ZoneOffsetTransitionRule.
     ///
-    pub enum ZoneOffsetTransitionRule(##java.time.zone.ZoneOffsetTransitionRule)
+    pub enum ZoneOffsetTransitionRule(JZoneOffsetTransitionRule)
 
     instance ToString[ZoneOffsetTransitionRule] {
         pub def toString(x: ZoneOffsetTransitionRule): String =
-            import java.time.zone.ZoneOffsetTransitionRule.toString(): String \ {};
             let ZoneOffsetTransitionRule(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     instance Eq[ZoneOffsetTransitionRule] {
         pub def eq(x: ZoneOffsetTransitionRule, y: ZoneOffsetTransitionRule): Bool = 
-            import java.time.zone.ZoneOffsetTransitionRule.equals(##java.lang.Object): Bool \ {};
             let ZoneOffsetTransitionRule(x1) = x;
             let ZoneOffsetTransitionRule(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
 
     }
 
     instance Hash[ZoneOffsetTransitionRule] {
         pub def hash(x: ZoneOffsetTransitionRule): Int32 = 
-            import java.time.zone.ZoneOffsetTransitionRule.hashCode(): Int32 \ {};
             let ZoneOffsetTransitionRule(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
     }
 
 }
@@ -63,12 +64,14 @@ mod Time.Zone.ZoneOffsetTransitionRule {
     use Time.LocalTime.{LocalTime}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
+
     import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule}
     import java.time.zone.{ZoneOffsetTransitionRule$TimeDefinition => JTimeDefinition}
+    import java.lang.{Enum => JEnum}
     
     /// ## Unwrap
 
-    pub def getZoneOffsetTransitionRule(x: ZoneOffsetTransitionRule): ##java.time.zone.ZoneOffsetTransitionRule = 
+    pub def getZoneOffsetTransitionRule(x: ZoneOffsetTransitionRule): JZoneOffsetTransitionRule = 
         let ZoneOffsetTransitionRule(x1) = x;
         x1
 
@@ -78,27 +81,23 @@ mod Time.Zone.ZoneOffsetTransitionRule {
         case Wall
     }
 
-    pub def marshalTimeDefinition(x: TimeDefinition): ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition = 
+    pub def marshalTimeDefinition(x: TimeDefinition): JTimeDefinition = 
         match x {
             case Standard           => unsafe JTimeDefinition.STANDARD
             case UTC                => unsafe JTimeDefinition.UTC
             case Wall               => unsafe JTimeDefinition.WALL
         }
 
-    def primEqualsTimeDefinition(x: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition, y: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+    def primEqualsTimeDefinition(x: JTimeDefinition, y: JTimeDefinition): Bool =
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
-    pub def unmarshalTimeDefinition(x: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition): TimeDefinition = 
-        import static java_get_field java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.STANDARD: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_STANDARD;
-        import static java_get_field java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.UTC: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_UTC;
-        import static java_get_field java.time.zone.ZoneOffsetTransitionRule$TimeDefinition.WALL: ##java.time.zone.ZoneOffsetTransitionRule$TimeDefinition \ {} as get_WALL;
+    pub def unmarshalTimeDefinition(x: JTimeDefinition): TimeDefinition = 
         match x {
-            case x1 if primEqualsTimeDefinition(x1, get_STANDARD())     => Standard
-            case x1 if primEqualsTimeDefinition(x1, get_UTC())          => UTC
-            case x1 if primEqualsTimeDefinition(x1, get_WALL())         => Wall
+            case x1 if primEqualsTimeDefinition(x1, unsafe JTimeDefinition.STANDARD)     => Standard
+            case x1 if primEqualsTimeDefinition(x1, unsafe JTimeDefinition.UTC)          => UTC
+            case x1 if primEqualsTimeDefinition(x1, unsafe JTimeDefinition.WALL)         => Wall
             case _                                                      => bug!("unmarshalTimeDefinition")
         }
 

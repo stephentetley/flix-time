@@ -30,7 +30,9 @@ mod Time.Format.FormatStyle {
 
     use Time.Format.FormatStyle
     use Time.Format.FormatStyle.{Full, Long, Medium, Short}
+
     import java.time.format.{FormatStyle => JFormatStyle}
+    import java.lang.{Enum => JEnum}
 
     pub def marshalFormatStyle(x: FormatStyle): JFormatStyle = 
         match x {
@@ -41,8 +43,9 @@ mod Time.Format.FormatStyle {
         }
 
     def primEquals(x: JFormatStyle, y: JFormatStyle): Bool =
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        unsafe x1.equals(y)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
     pub def unmarshalFormatStyle(x: JFormatStyle): FormatStyle = 
         match x {

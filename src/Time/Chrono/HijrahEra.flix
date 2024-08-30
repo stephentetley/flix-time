@@ -36,6 +36,7 @@ mod Time.Chrono.HijrahEra {
     use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
 
+    import java.lang.{Enum => JEnum}
 
 
     pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
@@ -51,10 +52,9 @@ mod Time.Chrono.HijrahEra {
 
 
     def primEquals(x: ##java.time.chrono.HijrahEra, y: ##java.time.chrono.HijrahEra): Bool =
-        import java.lang.Enum.equals(##java.lang.Object): Bool \ {};
-        let x1 = unchecked_cast(x as ##java.lang.Enum);
-        let y1 = checked_cast(y);
-        equals(x1, y1)
+        let x1 = (checked_cast(x) : JEnum);
+        let y1 = (checked_cast(y) : JEnum);
+        unsafe x1.equals(y1)
 
     pub def unmarshalHijrahEra(x: ##java.time.chrono.HijrahEra): HijrahEra = 
         import static java_get_field java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
