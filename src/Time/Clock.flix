@@ -20,6 +20,8 @@ mod Time {
     use Time.Clock
     use Time.Clock.{Clock}
 
+    import java.time.{Clock => JClock}
+
     ///
     /// A wrapper around a Java Clock.
     ///
@@ -28,7 +30,7 @@ mod Time {
     ///
     /// TODO - add region?
     ///
-    pub enum Clock(##java.time.Clock)
+    pub enum Clock(JClock)
 
 
 }
@@ -43,16 +45,17 @@ mod Time.Clock {
     use Time.InstantZ.{InstantZ}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
+
     import java.time.{Clock => JClock}
 
 
-    /// ## Unwrap
+    /// Unwrap
 
-    pub def getClock(x: Clock): ##java.time.Clock = 
+    pub def getClock(x: Clock): JClock = 
         let Clock(x1) = x;
         x1
 
-    /// ## "factory methods" (e.g. `fixedClock`)
+    /// "factory methods" (e.g. `fixedClock`)
 
     /// Pure or Impure? 
     pub def fixedClock(inst: InstantZ, zone: ZoneId): Clock \ IO =
@@ -91,7 +94,7 @@ mod Time.Clock {
         let ZoneId(zoneId1) = zoneId;
         Clock(JClock.tickMinutes(zoneId1))
 
-    /// ## Clock functions
+    /// Clock functions
 
     ///
     /// Impure as Clock keeps changing (so not a ToString instance).

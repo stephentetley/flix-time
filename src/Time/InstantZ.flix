@@ -24,19 +24,21 @@ mod Time {
     use Time.InstantZ
     use Time.InstantZ.{InstantZ}
 
+    import java.time.{Instant => JInstant}
+    import java.lang.{Object, CharSequence}
+
     ///
     /// A wrapper around a Java instant.
     ///
-    pub enum InstantZ(##java.time.Instant)
+    pub enum InstantZ(JInstant)
     
     ///
     /// Returns the given instant `x` as a String using ISO-8601 representation.
     ///
     instance ToString[InstantZ] {
         pub def toString(x: InstantZ): String =
-            import java.time.Instant.toString(): String \ {};
             let InstantZ(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     ///
@@ -47,34 +49,32 @@ mod Time {
     instance FromString[InstantZ] {
         pub def fromString(s: String): Option[InstantZ] =
             Result.tryCatch(_ -> {
-                import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
-                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
-                InstantZ(parse(cs))
+                let s1 = String.trim(s);
+                let cs  = (checked_cast(s1) : CharSequence);
+                InstantZ(unsafe JInstant.parse(cs))
             }) |> Result.toOption
     }
 
     instance Eq[InstantZ] {
         pub def eq(x: InstantZ, y: InstantZ): Bool =
-            import java.time.Instant.equals(##java.lang.Object): Bool \ {};
             let InstantZ(x1) = x;
             let InstantZ(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
     }
 
     instance Hash[InstantZ] {
         pub def hash(x: InstantZ): Int32 =
-            import java.time.Instant.hashCode(): Int32 \ {};
             let InstantZ(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
     }
 
 
     instance Order[InstantZ] {
         pub def compare(x: InstantZ, y: InstantZ): Comparison =
-            import java.time.Instant.compareTo(##java.time.Instant): Int32 \ {};
             let InstantZ(x1) = x;
             let InstantZ(y1) = y;
-            compareTo(x1, y1) |> Comparison.fromInt32
+            unsafe x1.compareTo(y1) |> Comparison.fromInt32
     }
 
 }   
@@ -98,66 +98,56 @@ mod Time.InstantZ {
     use Time.Internal.Temporal.TemporalAccessor
     use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
-    /// ## Unwrap
+    import java.time.{Instant => JInstant}
+    import java.lang.{Object, CharSequence}
 
-    pub def getInstant(x: InstantZ): ##java.time.Instant = 
+    /// Unwrap
+
+    pub def getInstant(x: InstantZ): JInstant = 
         let InstantZ(x1) = x;
         x1
 
-    /// ## Constructors
+    /// Constructors
 
     pub def instant(r: {epochSecond = Int64, nano = Int64}): InstantZ =
-        import static java.time.Instant.ofEpochSecond(Int64, Int64): ##java.time.Instant \ {};
-        InstantZ(ofEpochSecond(r#epochSecond, r#nano))
+        InstantZ(unsafe JInstant.ofEpochSecond(r#epochSecond, r#nano))
 
-    /// ## `now` and "abstract constructors" (e.g. `epoch`)
+    /// `now` and "abstract constructors" (e.g. `epoch`)
 
     ///
     /// Returns the current time from the system clock.
     ///
-    pub def now(): InstantZ \ IO =
-        import static java.time.Instant.now(): ##java.time.Instant \ IO;
-        InstantZ(now())
+    pub def now(): InstantZ \ IO = InstantZ(JInstant.now())
 
     ///
     /// Returns the start of epoch instant - 1970-01-01T00:00:00Z
     ///
-    pub def epoch(): InstantZ =
-        import static java_get_field java.time.Instant.EPOCH: ##java.time.Instant \ {} as get_EPOCH;
-        InstantZ(get_EPOCH())
+    pub def epoch(): InstantZ = InstantZ(unsafe JInstant.EPOCH)
 
-    pub def min(): InstantZ =
-        import static java_get_field java.time.Instant.MIN: ##java.time.Instant \ {} as get_MIN;
-        InstantZ(get_MIN())
+    pub def min(): InstantZ = InstantZ(unsafe JInstant.MIN)
     
-    pub def max(): InstantZ =
-        import static java_get_field java.time.Instant.MAX: ##java.time.Instant \ {} as get_MAX;
-        InstantZ(get_MAX())
+    pub def max(): InstantZ = InstantZ(unsafe JInstant.MAX)
 
-    /// ## `at` functions
+    /// `at` functions
 
     pub def atOffset(x: InstantZ, offset: ZoneOffset): OffsetDateTime =
-        import java.time.Instant.atOffset(##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let InstantZ(x1) = x;
         let ZoneOffset(offset1) = offset;
-        OffsetDateTime(atOffset(x1, offset1))
+        OffsetDateTime(unsafe x1.atOffset(offset1))
 
     pub def atZone(x: InstantZ, zone: ZoneId): ZonedDateTime =
-        import java.time.Instant.atZone(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let InstantZ(x1) = x;
         let ZoneId(zone1) = zone;
-        ZonedDateTime(atZone(x1, zone1))
+        ZonedDateTime(unsafe x1.atZone(zone1))
 
-    /// ## `of` functions
+    /// `of` functions
 
     pub def ofEpochSecond(epochSecond: Int64): InstantZ =
-        import static java.time.Instant.ofEpochSecond(Int64): ##java.time.Instant \ {};
-        InstantZ(ofEpochSecond(epochSecond))
+        InstantZ(unsafe JInstant.ofEpochSecond(epochSecond))
 
 
     pub def ofEpochMilli(epochMilli: Int64): InstantZ =
-        import static java.time.Instant.ofEpochMilli(Int64): ##java.time.Instant \ {};
-        InstantZ(ofEpochMilli(epochMilli))
+        InstantZ(unsafe JInstant.ofEpochMilli(epochMilli))
 
 
     /// # `fromTemporalAccessor` specialized
@@ -177,64 +167,58 @@ mod Time.InstantZ {
         Time.OffsetDateTime.asTemporalAccessor(x)
             |> fromTemporalAccessor
 
-    pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-        Time.ZonedDateTime.asTemporalAccessor(x)
-            |> fromTemporalAccessor
+    // pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
+    //     Time.ZonedDateTime.asTemporalAccessor(x)
+    //         |> fromTemporalAccessor
 
-    /// ## `to` functions
+    /// `to` functions
 
     pub def toEpochMilli(x: InstantZ): Int64 =
-        import java.time.Instant.toEpochMilli(): Int64 \ {};
         let InstantZ(x1) = x;
-        toEpochMilli(x1)
+        unsafe x1.toEpochMilli()
 
-    /// ## `parse` / `format` functions
+    /// `parse` / `format` functions
 
     pub def parse(s: String): Result[String, InstantZ] =
         Result.tryCatch(_ -> {
-            import static java.time.Instant.parse(##java.lang.CharSequence): ##java.time.Instant \ {};
-            let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
-            InstantZ(parse(cs))
+            let s1 = String.trim(s);
+            let cs  = (checked_cast(s1) : CharSequence);
+            InstantZ(unsafe JInstant.parse(cs))
         })
 
     pub def format(x: InstantZ): String =
-        import java.time.Instant.toString(): String \ {};
         let InstantZ(x1) = x;
-        toString(x1)
+        unsafe x1.toString()
 
 
-    /// ## predicates / comparisons
+    /// predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: InstantZ, y: InstantZ): Bool =
-        import java.time.Instant.isBefore(##java.time.Instant): Bool \ {};
         let InstantZ(x1) = x;
         let InstantZ(y1) = y;
-        isBefore(x1, y1)
+        unsafe x1.isBefore(y1)
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: InstantZ, y: InstantZ): Bool =
-        import java.time.Instant.isAfter(##java.time.Instant): Bool \ {};
         let InstantZ(x1) = x;
         let InstantZ(y1) = y;
-        isAfter(x1, y1)
+        unsafe x1.isAfter(y1)
 
     
-    /// ## Getters and Setters
+    /// Getters and Setters
 
     pub def getEpochSecond(x: InstantZ): Int64 =
-        import java.time.Instant.getEpochSecond(): Int64 \ {};
         let InstantZ(x1) = x;
-        getEpochSecond(x1)
+        unsafe x1.getEpochSecond()
 
     pub def getNano(x: InstantZ): Int32 =
-        import java.time.Instant.getNano(): Int32 \ {};
         let InstantZ(x1) = x;
-        getNano(x1)
+        unsafe x1.getNano()
 
 
     pub def getNanoOfSecond(x: InstantZ): Int64 =
@@ -313,29 +297,24 @@ mod Time.InstantZ {
     /// ## plus / minus functions
 
     pub def plusSeconds(x: InstantZ, seconds: Int64): InstantZ =
-        import java.time.Instant.plusSeconds(Int64): ##java.time.Instant \ {};
         let InstantZ(x1) = x;
-        InstantZ(plusSeconds(x1, seconds))
+        InstantZ(unsafe x1.plusSeconds(seconds))
 
     pub def minusSeconds(x: InstantZ, seconds: Int64): InstantZ =
-        import java.time.Instant.minusSeconds(Int64): ##java.time.Instant \ {};
         let InstantZ(x1) = x;
-        InstantZ(minusSeconds(x1, seconds))
+        InstantZ(unsafe x1.minusSeconds(seconds))
 
     pub def plusMillis(x: InstantZ, millis: Int64): InstantZ =
-        import java.time.Instant.plusMillis(Int64): ##java.time.Instant \ {};
         let InstantZ(x1) = x;
-        InstantZ(plusMillis(x1, millis))
+        InstantZ(unsafe x1.plusMillis(millis))
 
     pub def minusMillis(x: InstantZ, millis: Int64): InstantZ =
-        import java.time.Instant.minusMillis(Int64): ##java.time.Instant \ {};
         let InstantZ(x1) = x;
-        InstantZ(minusMillis(x1, millis))
+        InstantZ(unsafe x1.minusMillis(millis))
 
     pub def plusNanos(x: InstantZ, nanos: Int64): InstantZ =
-        import java.time.Instant.plusNanos(Int64): ##java.time.Instant \ {};
         let InstantZ(x1) = x;
-        InstantZ(plusNanos(x1, nanos))
+        InstantZ(unsafe x1.plusNanos(nanos))
 
 
     pub def plusDuration(i: InstantZ, x: DurationZ): InstantZ =

@@ -110,24 +110,24 @@ mod Time.ZonedDateTime {
     import java.time.chrono.{ChronoZonedDateTime, ChronoLocalDate, ChronoLocalDateTime}
     import java.lang.{CharSequence}
 
-    /// ## Unwrap
+    /// Unwrap
 
-    pub def getZonedDateTime(x: ZonedDateTime): ##java.time.ZonedDateTime = 
+    pub def getZonedDateTime(x: ZonedDateTime): JZonedDateTime = 
         let ZonedDateTime(x1) = x;
         x1
 
-    pub def asTemporalAccessor(x: ZonedDateTime): TemporalAccessor =
-        let ZonedDateTime(x1) = x;
-        TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
+    // pub def asTemporalAccessor(x: ZonedDateTime): TemporalAccessor =
+    //     let ZonedDateTime(x1) = x;
+    //     TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
 
-    /// ## Constructors
+    /// Constructors
 
     pub def zonedDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, 
                             minute = Int32, second = Int32, nanoSecond = Int32, zoneId = ZoneId}): ZonedDateTime =
         ZonedDateTime(unsafe JZonedDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, Time.ZoneId.getZoneId(r#zoneId)))
 
 
-    /// ## `now` and "abstract constructors" (e.g. `epoch`)
+    /// `now` and "abstract constructors" (e.g. `epoch`)
 
     ///
     /// Returns the current date-time from the system clock using the system zone id.
@@ -141,7 +141,7 @@ mod Time.ZonedDateTime {
         let ZoneId(z1) = zone;
         ZonedDateTime(JZonedDateTime.now(z1))
 
-    /// ## `from` functions
+    /// `from` functions
 
     pub def fromLocalDateTime(zone: {zone = ZoneId},dateTime: LocalDateTime): ZonedDateTime =
         let LocalDateTime(dt1) = dateTime;
@@ -155,8 +155,8 @@ mod Time.ZonedDateTime {
         let ZoneId(z1) = zone#zone;
         ZonedDateTime(unsafe JZonedDateTime.of(d1, t1, z1))
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
+    //     fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
 
     /// `to` functions
@@ -190,7 +190,7 @@ mod Time.ZonedDateTime {
         let ZonedDateTime(x1) = x;
         LocalTime(unsafe x1.toLocalTime())
 
-    /// ## `parse` / `format` functions
+    /// `parse` / `format` functions
 
     ///
     /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.
@@ -214,7 +214,7 @@ mod Time.ZonedDateTime {
         let DateTimeFormatter(fmtr) = formatter;
         unsafe x1.format(fmtr)
 
-    /// ## predicates / comparisons
+    /// predicates / comparisons
 
     ///
     /// Returns `true` if `x` is before `y`.
@@ -236,7 +236,7 @@ mod Time.ZonedDateTime {
         let cy1 = (checked_cast(y1) : ChronoZonedDateTime);
         unsafe cx1.isAfter(cy1)
 
-    /// ## Getters and Setters
+    /// Getters and Setters
 
     pub def getYear(x: ZonedDateTime): Int32 =
         let ZonedDateTime(x1) = x;
@@ -256,10 +256,9 @@ mod Time.ZonedDateTime {
 
 
     pub def getMonthValue(x: ZonedDateTime): Int32 =
-        import java.time.ZonedDateTime.getMonth(): ##java.time.Month \ {};
-        import java.time.Month.getValue(): Int32 \ {};
         let ZonedDateTime(x1) = x;
-        getValue(getMonth(x1))
+        let mon = unsafe x1.getMonth();
+        unsafe mon.getValue()
 
 
     pub def getDayOfYear(x: ZonedDateTime): Int32 =
@@ -567,17 +566,17 @@ mod Time.ZonedDateTime {
         untilHelper(get_QUARTER_YEARS(), r)
 
 
-    /// ## generic helper functions
+    // generic helper functions
 
-    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZonedDateTime = 
-        import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime \ {} as fromTA;
-        try {
-            ZonedDateTime(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
-        }
+    // def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZonedDateTime = 
+    //     import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime \ {} as fromTA;
+    //     try {
+    //         ZonedDateTime(fromTA(x))
+    //     } catch {
+    //         case ex: ##java.lang.Exception => 
+    //             import java.lang.Throwable.getMessage(): String \ {};
+    //             bug!(getMessage(checked_cast(ex)))
+    //     }
 
 
 }

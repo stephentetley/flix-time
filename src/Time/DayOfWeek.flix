@@ -83,7 +83,7 @@ mod Time.DayOfWeek {
         case _ => None
     }
 
-    /// ## Marshal enums
+    /// Marshal enums
 
     pub def marshalDayOfWeek(x: DayOfWeek): JDayOfWeek =
         match x {
@@ -114,7 +114,7 @@ mod Time.DayOfWeek {
             case _                                      => bug!("unmarshalDayOfWeek")
         }
 
-    /// ## `from` functions
+    /// `from` functions
 
     /// `fromTemporalAccessor` specialized
     def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
@@ -140,12 +140,12 @@ mod Time.DayOfWeek {
         Time.OffsetDateTime.asTemporalAccessor(x)
             |> fromTemporalAccessor
 
-    pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
-        Time.ZonedDateTime.asTemporalAccessor(x)
-            |> fromTemporalAccessor
+    // pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
+    //     Time.ZonedDateTime.asTemporalAccessor(x)
+    //         |> fromTemporalAccessor
 
 
-    /// ## DayOfWeek functions
+    /// DayOfWeek functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
         let x1 = marshalDayOfWeek(x);
@@ -159,7 +159,7 @@ mod Time.DayOfWeek {
         unsafe x1.getValue()
 
 
-    /// ## plus / minus functions
+    /// plus / minus functions
 
     pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
         let x1 = marshalDayOfWeek(x);

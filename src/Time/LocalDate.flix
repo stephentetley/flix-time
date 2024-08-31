@@ -21,8 +21,8 @@ mod Time {
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
-    import java.lang.{Object}
     import java.time.{LocalDate => JLocalDate}
+    import java.lang.{Object}
 
     ///
     /// A wrapper around a Java LocalDate.
