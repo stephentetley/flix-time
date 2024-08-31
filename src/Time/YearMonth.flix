@@ -20,19 +20,21 @@ mod Time {
     use Time.YearMonth
     use Time.YearMonth.{YearMonth}
 
+    import java.time.{YearMonth => JYearMonth}
+    import java.lang.{Object, CharSequence}
+
     ///
     /// A wrapper around java.time.YearMonth.
     ///
-    pub enum YearMonth(##java.time.YearMonth)
+    pub enum YearMonth(JYearMonth)
 
     ///
     ///
     ///
     instance ToString[YearMonth] {
         pub def toString(x: YearMonth): String =
-            import java.time.YearMonth.toString(): String \ {};
             let YearMonth(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     ///
@@ -41,35 +43,32 @@ mod Time {
     instance FromString[YearMonth] {
         pub def fromString(s: String): Option[YearMonth] = 
             Result.tryCatch(_ -> {
-                import static java.time.YearMonth.parse(##java.lang.CharSequence): ##java.time.YearMonth \ {};        
-                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
-                YearMonth(parse(cs))
+                let s1 = String.trim(s);
+                let cs  = (checked_cast(s1) : CharSequence);
+                YearMonth(unsafe JYearMonth.parse(cs))
             }) |> Result.toOption
     }
 
 
     instance Eq[YearMonth] {
         pub def eq(x: YearMonth, y: YearMonth): Bool =
-            import java.time.YearMonth.equals(##java.lang.Object): Bool \ {};
             let YearMonth(x1) = x;
             let YearMonth(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
     }
 
     instance Hash[YearMonth] {
         pub def hash(x: YearMonth): Int32 =
-            import java.time.YearMonth.hashCode(): Int32 \ {};
             let YearMonth(x1) = x;
-            hashCode(x1)
-
+            unsafe x1.hashCode()
     }
 
     instance Order[YearMonth] {
         pub def compare(x: YearMonth, y: YearMonth): Comparison =
-            import java.time.YearMonth.compareTo(##java.time.YearMonth): Int32 \ {};
             let YearMonth(x1) = x;
             let YearMonth(y1) = y;
-            compareTo(x1, y1) |> Comparison.fromInt32
+            unsafe x1.compareTo(y1) |> Comparison.fromInt32
     }
 
 

@@ -20,6 +20,9 @@ mod Time {
     use Time.Year
     use Time.Year.{Year}
 
+    import java.time.{Year => JYear}
+    import java.lang.{Object, CharSequence}
+
     ///
     /// A wrapper around java.time.Year.
     ///
@@ -27,9 +30,8 @@ mod Time {
 
     instance ToString[Year] {
         pub def toString(x: Year): String =
-            import java.time.Year.toString(): String \ {};
             let Year(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     ///
@@ -38,34 +40,32 @@ mod Time {
     instance FromString[Year] {
         pub def fromString(s: String): Option[Year] =
             Result.tryCatch(_ -> {
-                import static java.time.Year.parse(##java.lang.CharSequence): ##java.time.Year \ {};
-                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
-                Year(parse(cs))
+                let s1 = String.trim(s);
+                let cs  = (checked_cast(s1) : CharSequence);
+                Year(unsafe JYear.parse(cs))
             }) |> Result.toOption
     }
 
     instance Eq[Year] {
         pub def eq(x: Year, y: Year): Bool = 
-            import java.time.Year.equals(##java.lang.Object): Bool \ {};
             let Year(x1) = x;
             let Year(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
 
     }
 
     instance Hash[Year] {
         pub def hash(x: Year): Int32 =
-            import java.time.Year.hashCode(): Int32 \ {};
             let Year(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
     }
 
     instance Order[Year] {
         pub def compare(x: Year, y: Year): Comparison =
-            import java.time.Year.compareTo(##java.time.Year): Int32 \ {};
             let Year(x1) = x;
             let Year(y1) = y;
-            compareTo(x1, y1) |> Comparison.fromInt32
+            unsafe x1.compareTo(y1) |> Comparison.fromInt32
     }
 
 }

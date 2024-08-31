@@ -159,7 +159,7 @@ mod Time.ZonedDateTime {
         fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
 
-    /// ## `to` functions
+    /// `to` functions
 
     ///
     /// Returns the given date-time `x` as __.

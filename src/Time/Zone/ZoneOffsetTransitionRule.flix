@@ -69,7 +69,7 @@ mod Time.Zone.ZoneOffsetTransitionRule {
     import java.time.zone.{ZoneOffsetTransitionRule$TimeDefinition => JTimeDefinition}
     import java.lang.{Enum => JEnum}
     
-    /// ## Unwrap
+    /// Unwrap
 
     pub def getZoneOffsetTransitionRule(x: ZoneOffsetTransitionRule): JZoneOffsetTransitionRule = 
         let ZoneOffsetTransitionRule(x1) = x;
@@ -102,7 +102,7 @@ mod Time.Zone.ZoneOffsetTransitionRule {
         }
 
 
-    /// ## Constructors
+    /// Constructors
 
     pub def zoneOffsetTransitionRule(r: {month = Month, 
                                         dayOfMonthIndicator = Int32, 
@@ -126,14 +126,14 @@ mod Time.Zone.ZoneOffsetTransitionRule {
                                         ))
         })
 
-    /// ## predicates / comparisons
+    /// predicates / comparisons
     
     pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
         let ZoneOffsetTransitionRule(x1) = x;
         unsafe x1.isMidnightEndOfDay()
 
 
-    /// ## ZoneOffsetTransitionRule functions
+    /// ZoneOffsetTransitionRule functions
 
     pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
         let ZoneOffsetTransitionRule(x1) = x;
