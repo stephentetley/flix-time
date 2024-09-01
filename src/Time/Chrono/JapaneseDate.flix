@@ -21,10 +21,12 @@ mod Time.Chrono {
     use Time.Chrono.JapaneseDate
     use Time.Chrono.JapaneseDate.{JapaneseDate}
 
+    import java.time.chrono.{JapaneseDate => JJapaneseDate}
+
     ///
     /// A wrapper around java.time.chrono.JapaneseDate.
     ///
-    pub enum JapaneseDate(##java.time.chrono.JapaneseDate)
+    pub enum JapaneseDate(JJapaneseDate)
     
     ///
     /// Returns the given JapaneseDate `x` as a String.

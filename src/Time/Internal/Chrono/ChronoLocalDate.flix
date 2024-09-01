@@ -16,9 +16,11 @@
 
 mod Time.Internal.Chrono {
 
+    import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
+
     /// Interface...
 
-    pub enum ChronoLocalDate(##java.time.chrono.ChronoLocalDate)
+    pub enum ChronoLocalDate(JChronoLocalDate)
 
 
 }

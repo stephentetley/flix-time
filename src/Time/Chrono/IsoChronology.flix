@@ -19,7 +19,9 @@ mod Time.Chrono {
     use Time.Chrono.IsoChronology
     use Time.Chrono.IsoChronology.{IsoChronology}
 
-    pub enum IsoChronology(##java.time.chrono.IsoChronology)
+    import java.time.chrono.{IsoChronology => JIsoChronology}
+
+    pub enum IsoChronology(JIsoChronology)
     
     instance ToString[IsoChronology] {
         pub def toString(x: IsoChronology): String =

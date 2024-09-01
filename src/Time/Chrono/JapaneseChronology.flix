@@ -20,7 +20,9 @@ mod Time.Chrono {
     use Time.Chrono.JapaneseChronology
     use Time.Chrono.JapaneseChronology.{JapaneseChronology}
 
-    pub enum JapaneseChronology(##java.time.chrono.JapaneseChronology)
+    import java.time.chrono.{JapaneseChronology => JJapaneseChronology}
+
+    pub enum JapaneseChronology(JJapaneseChronology)
 
     instance ToString[JapaneseChronology] {
         pub def toString(x: JapaneseChronology): String =

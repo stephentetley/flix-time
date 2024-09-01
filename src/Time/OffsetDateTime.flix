@@ -20,10 +20,12 @@ mod Time {
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
 
+    import java.time.{OffsetDateTime => JOffsetDateTime}
+
     ///
     /// A wrapper around a Java OffsetDateTime.
     ///
-    pub enum OffsetDateTime(##java.time.OffsetDateTime)
+    pub enum OffsetDateTime(JOffsetDateTime)
 
     ///
     /// Returns the given date-time `x` as a String using ISO-8601 representation.

@@ -21,10 +21,11 @@ mod Time {
     use Time.LocalTime
     use Time.LocalTime.{LocalTime}
 
+    import java.time.{LocalTime => JLocalTime}
     ///
     /// A wrapper around a Java LocalTime.
     ///
-    pub enum LocalTime(##java.time.LocalTime)
+    pub enum LocalTime(JLocalTime)
 
     ///
     /// Returns the given time `x` as a string using __.

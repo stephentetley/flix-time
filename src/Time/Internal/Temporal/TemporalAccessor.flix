@@ -16,9 +16,11 @@
 
 mod Time.Internal.Temporal {
 
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
+
     /// Interface...
 
-    pub enum TemporalAccessor(##java.time.temporal.TemporalAccessor)
+    pub enum TemporalAccessor(JTemporalAccessor)
 
     // pub class ImpTemporalAccessor[t: Type] {
     //     pub def toTemporalAccessor(s: t): TemporalAccessor

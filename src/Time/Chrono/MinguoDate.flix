@@ -19,10 +19,12 @@ mod Time.Chrono {
     use Time.Chrono.MinguoDate
     use Time.Chrono.MinguoDate.{MinguoDate}
 
+    import java.time.chrono.{MinguoDate => JMinguoDate}
+
     ///
     /// A wrapper around java.time.chrono.MinguoDate.
     ///
-    pub enum MinguoDate(##java.time.chrono.MinguoDate)
+    pub enum MinguoDate(JMinguoDate)
     
     ///
     /// Returns the given MinguoDate `x` as a String.

@@ -21,10 +21,12 @@ mod Time {
     use Time.LocalDateTime
     use Time.LocalDateTime.{LocalDateTime}
 
+    import java.time.{LocalDateTime => JLocalDateTime}
+
     ///
     /// A wrapper around a Java LocalDateTime.
     ///
-    pub enum LocalDateTime(##java.time.LocalDateTime)
+    pub enum LocalDateTime(JLocalDateTime)
 
     ///
     /// Returns the given date-time `x` as a String using ISO-8601 representation.

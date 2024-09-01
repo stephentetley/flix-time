@@ -19,10 +19,12 @@ mod Time.Chrono {
     use Time.Chrono.ThaiBuddhistDate
     use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
 
+    import java.time.chrono.{ThaiBuddhistDate => JThaiBuddhistDate}
+
     ///
     /// A wrapper around java.time.chrono.ThaiBuddhistDate.
     ///
-    pub enum ThaiBuddhistDate(##java.time.chrono.ThaiBuddhistDate)
+    pub enum ThaiBuddhistDate(JThaiBuddhistDate)
     
     ///
     /// Returns the given ThaiBuddhistDate `x` as a String.

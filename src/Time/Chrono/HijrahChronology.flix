@@ -19,7 +19,9 @@ mod Time.Chrono {
     use Time.Chrono.HijrahChronology
     use Time.Chrono.HijrahChronology.{HijrahChronology}
 
-    pub enum HijrahChronology(##java.time.chrono.HijrahChronology)
+    import java.time.chrono.{HijrahChronology => JHijrahChronology}
+
+    pub enum HijrahChronology(JHijrahChronology)
 
     instance ToString[HijrahChronology] {
         pub def toString(x: HijrahChronology): String =

@@ -16,9 +16,11 @@
 
 mod Time.Internal.Chrono {
 
+    import java.time.chrono.{Chronology => JChronology}
+
     /// Interface...
 
-    pub enum Chronology(##java.time.chrono.Chronology)
+    pub enum Chronology(JChronology)
 
 
 }

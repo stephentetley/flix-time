@@ -19,7 +19,9 @@ mod Time.Chrono {
     use Time.Chrono.MinguoChronology
     use Time.Chrono.MinguoChronology.{MinguoChronology}
 
-    pub enum MinguoChronology(##java.time.chrono.MinguoChronology)
+    import java.time.chrono.{MinguoChronology => JMinguoChronology}
+
+    pub enum MinguoChronology(JMinguoChronology)
 
     instance ToString[MinguoChronology] {
         pub def toString(x: MinguoChronology): String =

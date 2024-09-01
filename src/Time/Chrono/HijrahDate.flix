@@ -19,10 +19,12 @@ mod Time.Chrono {
     use Time.Chrono.HijrahDate
     use Time.Chrono.HijrahDate.{HijrahDate}
 
+    import java.time.chrono.{HijrahDate => JHijrahDate}
+
     ///
     /// A wrapper around java.time.chrono.HijrahDate.
     ///
-    pub enum HijrahDate(##java.time.chrono.HijrahDate)
+    pub enum HijrahDate(JHijrahDate)
     
     ///
     /// Returns the given HijrahDate `x` as a String.

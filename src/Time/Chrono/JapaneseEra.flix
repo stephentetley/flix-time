@@ -20,12 +20,14 @@ mod Time.Chrono {
     use Time.Chrono.JapaneseEra
     use Time.Chrono.JapaneseEra.{JapaneseEra}
 
+    import java.time.chrono.{JapaneseEra => JJapaneseEra}
+
     ///
     /// A wrapper around java.time.chrono.JapaneseEra.
     ///
     /// In Java, JapaneseEra is a class not an enum unlike HijrahEra
     ///
-    pub enum JapaneseEra(##java.time.chrono.JapaneseEra)
+    pub enum JapaneseEra(JJapaneseEra)
     
     ///
     /// Returns the given JapaneseEra `x` as a String.

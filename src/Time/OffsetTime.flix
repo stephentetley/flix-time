@@ -21,10 +21,12 @@ mod Time {
     use Time.OffsetTime
     use Time.OffsetTime.{OffsetTime}
 
+    import java.time.{OffsetTime => JOffsetTime}
+
     ///
     /// A wrapper around a Java OffsetTime.
     ///
-    pub enum OffsetTime(##java.time.OffsetTime)
+    pub enum OffsetTime(JOffsetTime)
 
 
     ///

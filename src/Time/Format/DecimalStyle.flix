@@ -19,9 +19,11 @@ mod Time.Format {
     use Time.Format.DecimalStyle
     use Time.Format.DecimalStyle.{DecimalStyle}
 
+    import java.time.format.{DecimalStyle => JDecimalStyle}
+
     /// Immutable
     ///
-    pub enum DecimalStyle(##java.time.format.DecimalStyle)
+    pub enum DecimalStyle(JDecimalStyle)
 
 
     instance ToString[DecimalStyle] {

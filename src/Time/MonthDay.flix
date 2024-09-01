@@ -21,10 +21,12 @@ mod Time {
     use Time.MonthDay
     use Time.MonthDay.{MonthDay}
 
+    import java.time.{MonthDay => JMonthDay}
+
     ///
     /// A wrapper around java.time.MonthDay.
     ///
-    pub enum MonthDay(##java.time.MonthDay)
+    pub enum MonthDay(JMonthDay)
 
 
     instance ToString[MonthDay] {

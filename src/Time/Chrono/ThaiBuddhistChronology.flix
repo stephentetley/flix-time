@@ -19,7 +19,9 @@ mod Time.Chrono {
     use Time.Chrono.ThaiBuddhistChronology
     use Time.Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology}
 
-    pub enum ThaiBuddhistChronology(##java.time.chrono.ThaiBuddhistChronology)
+    import java.time.chrono.{ThaiBuddhistChronology => JThaiBuddhistChronology}
+
+    pub enum ThaiBuddhistChronology(JThaiBuddhistChronology)
 
     instance ToString[ThaiBuddhistChronology] {
         pub def toString(x: ThaiBuddhistChronology): String =
