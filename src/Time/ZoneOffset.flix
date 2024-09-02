@@ -19,8 +19,8 @@ mod Time {
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
 
-    import java.lang.{Object}
     import java.time.{ZoneOffset => JZoneOffset}
+    import java.lang.{Object}
 
     ///
     /// A wrapper around a Java ZoneOffset.

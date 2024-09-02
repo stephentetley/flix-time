@@ -30,12 +30,12 @@ mod TestMonthDay {
     // fromLocalDate                                                           //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def fromLocalDate01(): Time.MonthDay \ IO = 
-        let date = Time.LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
-        let md = Time.MonthDay.fromLocalDate(date);
-        println("MonthDay.fromLocalDate01(): ${md}");
-        md
+    // @test
+    // def fromLocalDate01(): Time.MonthDay \ IO = 
+    //     let date = Time.LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
+    //     let md = Time.MonthDay.fromLocalDate(date);
+    //     println("MonthDay.fromLocalDate01(): ${md}");
+    //     md
 
     /////////////////////////////////////////////////////////////////////////////
     // get                                                                     //

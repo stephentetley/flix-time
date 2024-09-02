@@ -22,7 +22,8 @@ mod Time {
     use Time.LocalDate.{LocalDate}
 
     import java.time.{LocalDate => JLocalDate}
-    import java.lang.{Object}
+    import java.time.chrono.{ChronoLocalDate}
+    import java.lang.{Object, CharSequence}
 
     ///
     /// A wrapper around a Java LocalDate.
@@ -34,9 +35,8 @@ mod Time {
     ///
     instance ToString[LocalDate] {
         pub def toString(x: LocalDate): String =
-            import java.time.LocalDate.toString(): String \ {};
             let LocalDate(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     ///
@@ -47,9 +47,9 @@ mod Time {
     instance FromString[LocalDate] {
         pub def fromString(s: String): Option[LocalDate] =
             Result.tryCatch(_ -> {
-                import static java.time.LocalDate.parse(##java.lang.CharSequence): ##java.time.LocalDate \ {};
-                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
-                LocalDate(parse(cs))
+                let s1 = String.trim(s);
+                let cs  = (checked_cast(s1) : CharSequence);
+                LocalDate(unsafe JLocalDate.parse(cs))
             }) |> Result.toOption
     }
 
@@ -63,18 +63,17 @@ mod Time {
 
     instance Hash[LocalDate] {
         pub def hash(x: LocalDate): Int32 =
-            import java.time.LocalDate.hashCode(): Int32 \ {};
             let LocalDate(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
     }
 
 
     instance Order[LocalDate] {
         pub def compare(x: LocalDate, y: LocalDate): Comparison =
-            import java.time.LocalDate.compareTo(##java.time.chrono.ChronoLocalDate): Int32 \ {};
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
-            compareTo(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate)) |> Comparison.fromInt32
+            let cy1 = (checked_cast(y1) : ChronoLocalDate);
+            unsafe x1.compareTo(cy1) |> Comparison.fromInt32
     }
 
 }
@@ -110,9 +109,11 @@ mod Time.LocalDate {
     use Time.Internal.Temporal.TemporalAccessor
     use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
-    /// ## Unwrap
+    import java.time.{LocalDate => JLocalDate}
 
-    pub def getLocalDate(x: LocalDate): ##java.time.LocalDate = 
+    /// Unwrap
+
+    pub def getLocalDate(x: LocalDate): JLocalDate = 
         let LocalDate(x1) = x;
         x1
 
@@ -125,25 +126,21 @@ mod Time.LocalDate {
     pub def fromJavaObject(o: ##java.lang.Object): LocalDate = 
         LocalDate(unchecked_cast(o as ##java.time.LocalDate))
 
-    /// ## Constructors
+    // Constructors
 
     pub def localDate(r: {year = Int32, month = Int32, dayOfMonth = Int32}): LocalDate =
-        import static java.time.LocalDate.of(Int32, Int32, Int32): ##java.time.LocalDate \ {};
-        LocalDate(of(r#year, r#month, r#dayOfMonth))
+        LocalDate(unsafe JLocalDate.of(r#year, r#month, r#dayOfMonth))
 
     pub def localDateWithMonth(r: {year = Int32, month = Month, dayOfMonth = Int32}): LocalDate =
-        import static java.time.LocalDate.of(Int32, ##java.time.Month, Int32): ##java.time.LocalDate \ {};
         let m1 = Time.Month.marshalMonth(r#month);
-        LocalDate(of(r#year, m1, r#dayOfMonth))
+        LocalDate(unsafe JLocalDate.of(r#year, m1, r#dayOfMonth))
 
-    /// ## `now` and "abstract constructors" (e.g. `epoch`)
+    // `now` and "abstract constructors" (e.g. `epoch`)
 
     ///
     /// Returns the current date from the system clock.
     ///
-    pub def now(): LocalDate \ IO =
-        import static java.time.LocalDate.now(): ##java.time.LocalDate \ IO;
-        LocalDate(now())
+    pub def now(): LocalDate \ IO = LocalDate(JLocalDate.now())
 
     ///
     /// Returns the current date from the system clock using zoneId.

@@ -86,9 +86,9 @@ mod Time.Month {
     import java.time.{Month => JMonth}
     import java.lang.{Enum => JEnum}
     
-    /// ## Marshal enums
+    /// # Marshal enums
 
-    pub def marshalMonth(x: Month): ##java.time.Month =
+    pub def marshalMonth(x: Month): JMonth =
         match x {
             case January    => unsafe JMonth.JANUARY
             case February   => unsafe JMonth.FEBRUARY
@@ -104,12 +104,12 @@ mod Time.Month {
             case December   => unsafe JMonth.DECEMBER
         }
 
-    def primEquals(x: ##java.time.Month, y: ##java.time.Month): Bool =
+    def primEquals(x: JMonth, y: JMonth): Bool =
         let x1 = (checked_cast(x) : JEnum);
         let y1 = (checked_cast(y) : JEnum);
         unsafe x1.equals(y1)
 
-    pub def unmarshalMonth(x: ##java.time.Month): Month =
+    pub def unmarshalMonth(x: JMonth): Month =
         match x {
             case x1 if primEquals(x1, unsafe JMonth.JANUARY)    => January
             case x1 if primEquals(x1, unsafe JMonth.FEBRUARY)   => February
@@ -126,38 +126,38 @@ mod Time.Month {
             case _                                      => bug!("unmarshalMonth")
         }
 
-    /// ## `from` functions
+    // `from` functions
 
-    /// `fromTemporalAccessor` specialized
-    def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
-        import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month \ {} as fromTA;
-        try {
-            unmarshalMonth(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
-        }
+    // /// `fromTemporalAccessor` specialized
+    // def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
+    //     import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month \ {} as fromTA;
+    //     try {
+    //         unmarshalMonth(fromTA(x))
+    //     } catch {
+    //         case ex: ##java.lang.Exception => 
+    //             import java.lang.Throwable.getMessage(): String \ {};
+    //             bug!(getMessage(checked_cast(ex)))
+    //     }
 
-    pub def fromLocalDate(x: LocalDate): Month = 
-        fromHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromLocalDate(x: LocalDate): Month = 
+    //     fromHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
 
-    pub def fromLocalDateTime(x: LocalDateTime): Month = 
-        fromHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromLocalDateTime(x: LocalDateTime): Month = 
+    //     fromHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
-    pub def fromMonthDay(x: MonthDay): Month = 
-        fromHelper(unchecked_cast(Time.MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromMonthDay(x: MonthDay): Month = 
+    //     fromHelper(unchecked_cast(Time.MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor))
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
-        fromHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
+    //     fromHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
-    pub def fromYearMonth(x: YearMonth): Month = 
-        fromHelper(unchecked_cast(Time.YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromYearMonth(x: YearMonth): Month = 
+    //     fromHelper(unchecked_cast(Time.YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor))
 
-    pub def fromZonedDateTime(x: ZonedDateTime): Month = 
-        fromHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromZonedDateTime(x: ZonedDateTime): Month = 
+    //     fromHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
-    /// ## Month functions
+    /// Month functions
     
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
         let x1 = marshalMonth(x);
@@ -189,7 +189,7 @@ mod Time.Month {
         let x1 = marshalMonth(x);
         unsafe x1.length(leap)
 
-    /// ## plus / minus functions
+    // plus / minus functions
 
     pub def plus(x:Month, y: Int64): Month =
         let x1 = marshalMonth(x);

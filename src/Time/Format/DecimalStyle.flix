@@ -20,6 +20,7 @@ mod Time.Format {
     use Time.Format.DecimalStyle.{DecimalStyle}
 
     import java.time.format.{DecimalStyle => JDecimalStyle}
+    import java.lang.{Object}
 
     /// Immutable
     ///
@@ -28,24 +29,22 @@ mod Time.Format {
 
     instance ToString[DecimalStyle] {
         pub def toString(x: DecimalStyle): String =
-            import java.time.format.DecimalStyle.toString(): String \ {};
             let DecimalStyle(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
     
     instance Eq[DecimalStyle] {
         pub def eq(x: DecimalStyle, y: DecimalStyle): Bool =
-            import java.time.format.DecimalStyle.equals(##java.lang.Object): Bool \ {};
             let DecimalStyle(x1) = x;
             let DecimalStyle(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
     }
 
     instance Hash[DecimalStyle] {
         pub def hash(x: DecimalStyle): Int32 = 
-            import java.time.format.DecimalStyle.hashCode(): Int32 \ {};
             let DecimalStyle(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
     } 
     
 }
@@ -56,7 +55,9 @@ mod Time.Format.DecimalStyle {
 
     use Time.Format.DecimalStyle
     use Time.Format.DecimalStyle.{DecimalStyle}
+    
     import java.time.format.{DecimalStyle => JDecimalStyle}
+
     /// ## Unwrap
 
     pub def getDecimalStyle(x: DecimalStyle): JDecimalStyle = 
