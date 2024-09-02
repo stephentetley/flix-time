@@ -21,6 +21,7 @@ mod Time {
     use Time.OffsetDateTime.{OffsetDateTime}
 
     import java.time.{OffsetDateTime => JOffsetDateTime}
+    import java.lang.{Object, CharSequence}
 
     ///
     /// A wrapper around a Java OffsetDateTime.
@@ -32,9 +33,8 @@ mod Time {
     ///
     instance ToString[OffsetDateTime] {
         pub def toString(x: OffsetDateTime): String =
-            import java.time.OffsetDateTime.toString(): String \ {};
             let OffsetDateTime(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     ///
@@ -45,34 +45,32 @@ mod Time {
     instance FromString[OffsetDateTime] {
         pub def fromString(s: String): Option[OffsetDateTime] =
             Result.tryCatch(_ -> {
-                import static java.time.OffsetDateTime.parse(##java.lang.CharSequence): ##java.time.OffsetDateTime \ {};
-                let cs = unchecked_cast(String.trim(s) as ##java.lang.CharSequence);
-                OffsetDateTime(parse(cs))
+                let s1 = String.trim(s);
+                let cs  = (checked_cast(s1) : CharSequence);
+                OffsetDateTime(unsafe JOffsetDateTime.parse(cs))
             }) |> Result.toOption
     }
 
     instance Eq[OffsetDateTime] {
         pub def eq(x: OffsetDateTime, y: OffsetDateTime): Bool =
-            import java.time.OffsetDateTime.equals(##java.lang.Object): Bool \ {};
             let OffsetDateTime(x1) = x;
             let OffsetDateTime(y1) = y;
-            equals(x1, checked_cast(y1))
+            let obj = (checked_cast(y1) : Object);
+            unsafe x1.equals(obj)
 
     }
 
     instance Hash[OffsetDateTime] {
         pub def hash(x: OffsetDateTime): Int32 =
-            import java.time.OffsetDateTime.hashCode(): Int32 \ {};
             let OffsetDateTime(x1) = x;
-            hashCode(x1)
+            unsafe x1.hashCode()
     }
 
     instance Order[OffsetDateTime] {
         pub def compare(x: OffsetDateTime, y: OffsetDateTime): Comparison =
-            import java.time.OffsetDateTime.compareTo(##java.time.OffsetDateTime): Int32 \ {};
             let OffsetDateTime(x1) = x;
             let OffsetDateTime(y1) = y;
-            compareTo(x1, y1) |> Comparison.fromInt32
+            unsafe x1.compareTo(y1) |> Comparison.fromInt32
     }
 
 }
@@ -112,9 +110,12 @@ mod Time.OffsetDateTime {
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
 
-    /// ## Unwrap
+    import java.time.{OffsetDateTime => JOffsetDateTime}
+    import java.lang.{Object, CharSequence}
 
-    pub def getOffsetDateTime(x: OffsetDateTime): ##java.time.OffsetDateTime = 
+    /// Unwrap
+
+    pub def getOffsetDateTime(x: OffsetDateTime): JOffsetDateTime = 
         let OffsetDateTime(x1) = x;
         x1
 
@@ -122,122 +123,109 @@ mod Time.OffsetDateTime {
         let OffsetDateTime(x1) = x;
         TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
 
-    /// ## Constructors
+    /// Constructors
 
     pub def offsetDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32,
                     second = Int32, nanoSecond = Int32, offset = ZoneOffset}): OffsetDateTime =
-        import static java.time.OffsetDateTime.of(Int32, Int32, Int32, Int32, Int32, Int32, Int32, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let ZoneOffset(o1) = r#offset;
-        OffsetDateTime(of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, o1))
+        OffsetDateTime(unsafe JOffsetDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, o1))
 
 
-    /// ## `now` functions
+    /// `now` functions
 
     ///
     /// Returns the current date-time from the system clock using the system zone id.
     ///
-    pub def now(): OffsetDateTime \ IO =
-        import static java.time.OffsetDateTime.now(): ##java.time.OffsetDateTime \ IO;
-        OffsetDateTime(now())
+    pub def now(): OffsetDateTime \ IO = OffsetDateTime(JOffsetDateTime.now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetDateTime \ IO =
-        import static java.time.OffsetDateTime.now(##java.time.ZoneId): ##java.time.OffsetDateTime \ IO;
         let ZoneId(z1) = zone;
-        OffsetDateTime(now(z1))
+        OffsetDateTime(JOffsetDateTime.now(z1))
 
-    /// ## `at` functions
+    /// `at` functions
 
     pub def atZoneSameInstant(zone: {zone = ZoneId}, x: OffsetDateTime): ZonedDateTime =
-        import java.time.OffsetDateTime.atZoneSameInstant(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let OffsetDateTime(x1) = x;
         let ZoneId(z1) = zone#zone;
-        ZonedDateTime(atZoneSameInstant(x1, z1))
+        ZonedDateTime(unsafe x1.atZoneSameInstant(z1))
 
     pub def atZoneSimilarLocal(zone: {zone = ZoneId}, x: OffsetDateTime): ZonedDateTime =
-        import java.time.OffsetDateTime.atZoneSimilarLocal(##java.time.ZoneId): ##java.time.ZonedDateTime \ {};
         let OffsetDateTime(x1) = x;
         let ZoneId(z1) = zone#zone;
-        ZonedDateTime(atZoneSimilarLocal(x1, z1))
+        ZonedDateTime(unsafe x1.atZoneSimilarLocal(z1))
 
 
     pub def fromLocalDateTime(offset: {offset = ZoneOffset}, dateTime: LocalDateTime): OffsetDateTime =
-        import static java.time.OffsetDateTime.of(##java.time.LocalDateTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let LocalDateTime(dt1) = dateTime;
         let ZoneOffset(o1) = offset#offset;
-        OffsetDateTime(of(dt1, o1))
+        OffsetDateTime(unsafe JOffsetDateTime.of(dt1, o1))
 
 
-    /// ## `from` functions
+    /// `from` functions
 
     pub def fromLocalDateLocalTime(offset: {offset = ZoneOffset}, date: LocalDate, time: LocalTime): OffsetDateTime =
-        import static java.time.OffsetDateTime.of(##java.time.LocalDate, ##java.time.LocalTime, ##java.time.ZoneOffset): ##java.time.OffsetDateTime \ {};
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
         let ZoneOffset(o1) = offset#offset;
-        OffsetDateTime(of(d1, t1, o1))
+        OffsetDateTime(unsafe JOffsetDateTime.of(d1, t1, o1))
 
     /// `fromTemporalAccessor` specialized
 
-    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): OffsetDateTime = 
-        import static java.time.OffsetDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetDateTime \ {} as fromTA;
-        try {
-            OffsetDateTime(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
-        }
+    // def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): OffsetDateTime = 
+    //     import static java.time.OffsetDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetDateTime \ {} as fromTA;
+    //     try {
+    //         OffsetDateTime(fromTA(x))
+    //     } catch {
+    //         case ex: ##java.lang.Exception => 
+    //             import java.lang.Throwable.getMessage(): String \ {};
+    //             bug!(getMessage(checked_cast(ex)))
+    //     }
 
-    pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
-        let x1 = unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor);
-        fromTemporalAccessorHelper(x1)
+    // pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
+    //     let x1 = unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor);
+    //     fromTemporalAccessorHelper(x1)
 
-    /// ## `to` functions
+    /// `to` functions
 
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDate(x: OffsetDateTime): LocalDate =
-        import java.time.OffsetDateTime.toLocalDate(): ##java.time.LocalDate \ {};
         let OffsetDateTime(x1) = x;
-        LocalDate(toLocalDate(x1))
+        LocalDate(unsafe x1.toLocalDate())
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalTime(x: OffsetDateTime): LocalTime =
-        import java.time.OffsetDateTime.toLocalTime(): ##java.time.LocalTime \ {};
         let OffsetDateTime(x1) = x;
-        LocalTime(toLocalTime(x1))
+        LocalTime(unsafe x1.toLocalTime())
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
-        import java.time.OffsetDateTime.toLocalDateTime(): ##java.time.LocalDateTime \ {};
         let OffsetDateTime(x1) = x;
-        LocalDateTime(toLocalDateTime(x1))
+        LocalDateTime(unsafe x1.toLocalDateTime())
 
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toOffsetTime(x: OffsetDateTime): OffsetTime =
-        import java.time.OffsetDateTime.toOffsetTime(): ##java.time.OffsetTime \ {};
         let OffsetDateTime(x1) = x;
-        OffsetTime(toOffsetTime(x1))
+        OffsetTime(unsafe x1.toOffsetTime())
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toZonedDateTime(x: OffsetDateTime): ZonedDateTime =
-        import java.time.OffsetDateTime.toZonedDateTime(): ##java.time.ZonedDateTime \ {};
         let OffsetDateTime(x1) = x;
-        ZonedDateTime(toZonedDateTime(x1))
+        ZonedDateTime(unsafe x1.toZonedDateTime())
 
 
     pub def toInstant(x: OffsetDateTime): InstantZ =
