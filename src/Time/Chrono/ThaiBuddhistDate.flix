@@ -31,9 +31,8 @@ mod Time.Chrono {
     ///
     instance ToString[ThaiBuddhistDate] {
         pub def toString(x: ThaiBuddhistDate): String =
-            import java.time.chrono.ThaiBuddhistDate.toString(): String \ {};
             let ThaiBuddhistDate(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     instance Eq[ThaiBuddhistDate] {
@@ -53,30 +52,29 @@ mod Time.Chrono.ThaiBuddhistDate {
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
+    import java.time.chrono.{ThaiBuddhistDate => JThaiBuddhistDate}
+    import java.lang.{Object}
     ///
     /// Returns ___
     ///
-    pub def now(): ThaiBuddhistDate \ IO =
-        import static java.time.chrono.ThaiBuddhistDate.now(): ##java.time.chrono.ThaiBuddhistDate \ IO;
-        ThaiBuddhistDate(now())
+    pub def now(): ThaiBuddhistDate \ IO = ThaiBuddhistDate(JThaiBuddhistDate.now())
 
 
     pub def equals(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = 
-        import java.time.chrono.ThaiBuddhistDate.equals(##java.lang.Object): Bool \ {};
         let ThaiBuddhistDate(x1) = x;
         let ThaiBuddhistDate(y1) = y;
-        equals(x1, checked_cast(y1))
+        let obj = (checked_cast(y1) : Object);
+        unsafe x1.equals(obj)
 
     pub def hashCode(x: ThaiBuddhistDate): Int32 = 
-        import java.time.chrono.ThaiBuddhistDate.hashCode(): Int32 \ {};
         let ThaiBuddhistDate(x1) = x;
-        hashCode(x1)
+        unsafe x1.hashCode()
 
 
-    pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
-        let ThaiBuddhistDate(x1) = x;
-        LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    // pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
+    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
+    //     let ThaiBuddhistDate(x1) = x;
+    //     LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
 
     // pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 

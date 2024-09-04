@@ -25,9 +25,8 @@ mod Time.Chrono {
 
     instance ToString[ThaiBuddhistChronology] {
         pub def toString(x: ThaiBuddhistChronology): String =
-            import java.time.chrono.AbstractChronology.toString(): String \ {};
             let ThaiBuddhistChronology(x1) = x;
-            toString(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
+            unsafe x1.toString()
     }
 }
 
@@ -43,38 +42,52 @@ mod Time.Chrono.ThaiBuddhistChronology {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
+    import java.time.chrono.{ThaiBuddhistChronology => JThaiBuddhistChronology}
+    import java.time.chrono.{Chronology => JChronology, 
+        ChronoLocalDate => JChronoLocalDate,
+        Era => JEra,
+        ThaiBuddhistDate => JThaiBuddhistDate, 
+        ThaiBuddhistEra => JThaiBuddhistEra}
+
     pub def getInstance(): ThaiBuddhistChronology \ IO = 
-        import static java_get_field java.time.chrono.ThaiBuddhistChronology.INSTANCE: ##java.time.chrono.ThaiBuddhistChronology \ IO as getINSTANCE;
-        ThaiBuddhistChronology(getINSTANCE())
+        ThaiBuddhistChronology(JThaiBuddhistChronology.INSTANCE)
 
     pub def getCalendarType(x: ThaiBuddhistChronology): String  = 
-        import java.time.chrono.ThaiBuddhistChronology.getCalendarType(): String \ {};
         let ThaiBuddhistChronology(x1) = x;
-        getCalendarType(x1)
+        unsafe x1.getCalendarType()
 
     pub def dateNow(x: ThaiBuddhistChronology): ThaiBuddhistDate \ IO = 
-        import java.time.chrono.ThaiBuddhistChronology.dateNow(): ##java.time.chrono.ThaiBuddhistDate \ IO;
         let ThaiBuddhistChronology(x1) = x;
-        ThaiBuddhistDate(dateNow(x1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow();
+        let ans1 = unchecked_cast(ans as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans1)
 
     pub def dateNowWithClock(x: ThaiBuddhistChronology, clock: Clock): ThaiBuddhistDate \ IO =
-        import java.time.chrono.ThaiBuddhistChronology.dateNow(##java.time.Clock): ##java.time.chrono.ThaiBuddhistDate \ IO;
         let ThaiBuddhistChronology(x1) = x;
         let Clock(clock1) = clock;
-        ThaiBuddhistDate(dateNow(x1, clock1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow(clock1);
+        let ans1 = unchecked_cast(ans as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans1)
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: ThaiBuddhistChronology, zone: ZoneId): ThaiBuddhistDate \ IO =
-        import java.time.chrono.ThaiBuddhistChronology.dateNow(##java.time.ZoneId): ##java.time.chrono.ThaiBuddhistDate \ IO;
         let ThaiBuddhistChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        ThaiBuddhistDate(dateNow(x1, zone1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow(zone1);
+        let ans1 = unchecked_cast(ans as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans1)
 
+    // Todo Result[]
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): ThaiBuddhistEra = 
-        import java.time.chrono.ThaiBuddhistChronology.eraOf(Int32): ##java.time.chrono.ThaiBuddhistEra \ {};
         let ThaiBuddhistChronology(x1) = x;
-        Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(eraOf(x1, i))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JEra = unsafe cx1.eraOf(i);
+        let ans1 = unchecked_cast(ans as JThaiBuddhistEra); 
+        Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans1)
 
 }

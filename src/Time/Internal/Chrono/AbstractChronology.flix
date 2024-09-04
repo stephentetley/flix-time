@@ -30,6 +30,9 @@ mod Time.Internal.Chrono.AbstractChronology {
     use Time.Internal.Chrono.AbstractChronology
     use Time.Internal.Chrono.AbstractChronology.{AbstractChronology}
 
+    import java.time.chrono.{Chronology => JChronology}
+    import java.lang.{Object}
+    
     pub def toString(x: AbstractChronology): String =
         let AbstractChronology(x1) = x;
         unsafe x1.toString()
@@ -37,12 +40,14 @@ mod Time.Internal.Chrono.AbstractChronology {
     pub def equals(x: AbstractChronology, y: AbstractChronology): Bool =
         let AbstractChronology(x1) = x;
         let AbstractChronology(y1) = y;
-        unsafe x1.equals(unchecked_cast(y1 as ##java.lang.Object))
+        let obj = (checked_cast(y1) : Object);
+        unsafe x1.equals(obj)
 
 
     pub def compareTo(x: AbstractChronology, y: AbstractChronology): Int32 =
         let AbstractChronology(x1) = x;
         let AbstractChronology(y1) = y;
-        unsafe x1.compareTo(unchecked_cast(y1 as ##java.time.chrono.Chronology))
+        let cy1 = (checked_cast(y1) : JChronology);
+        unsafe x1.compareTo(cy1)
 
 }
