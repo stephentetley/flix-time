@@ -111,6 +111,7 @@ mod Time.OffsetDateTime {
     use Time.ZoneOffset.{ZoneOffset}
 
     import java.time.{OffsetDateTime => JOffsetDateTime}
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.lang.{Object, CharSequence}
 
     /// Unwrap
@@ -121,7 +122,8 @@ mod Time.OffsetDateTime {
 
     pub def asTemporalAccessor(x: OffsetDateTime): TemporalAccessor =
         let OffsetDateTime(x1) = x;
-        TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
+        let cx1 = unchecked_cast(x1 as JTemporalAccessor);
+        TemporalAccessor(cx1)
 
     /// Constructors
 

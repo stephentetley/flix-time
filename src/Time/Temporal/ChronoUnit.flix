@@ -80,6 +80,7 @@ mod Time.Temporal.ChronoUnit {
     use Time.DurationZ.{DurationZ}
 
     import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{TemporalUnit => JTemporalUnit}
     import java.time.{Duration => JDuration}
     import java.lang.{Enum => JEnum}
 
@@ -135,15 +136,15 @@ mod Time.Temporal.ChronoUnit {
 
     pub def asTemporalUnit(x: ChronoUnit): TemporalUnit = 
         let x1 = Time.Temporal.ChronoUnit.marshalChronoUnit(x);
-        TemporalUnit(unchecked_cast(x1 as ##java.time.temporal.TemporalUnit))
+        let cx1 = unchecked_cast(x1 as JTemporalUnit);
+        TemporalUnit(cx1)
 
 
     /// ChronoUnit functions
 
     pub def getDuration(x: ChronoUnit): DurationZ =
-        import java.time.temporal.ChronoUnit.getDuration(): JDuration \ {};
         let x1 = marshalChronoUnit(x);
-        getDuration(x1) |> DurationZ
+        DurationZ(unsafe x1.getDuration())
 
 
 

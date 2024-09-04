@@ -112,31 +112,31 @@ mod Time.YearMonth {
 
     pub def now(): YearMonth \ IO = YearMonth(JYearMonth.now())
 
-    /// ## `from` functions
+    // `from` functions
 
-    /// `fromTemporalAccessor` specialized
+    // `fromTemporalAccessor` specialized
 
-    def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): YearMonth = 
-        import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.YearMonth \ {} as fromTA;
-        try {
-            YearMonth(fromTA(x))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
-        }
+    // def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): YearMonth = 
+    //     import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.YearMonth \ {} as fromTA;
+    //     try {
+    //         YearMonth(fromTA(x))
+    //     } catch {
+    //         case ex: ##java.lang.Exception => 
+    //             import java.lang.Throwable.getMessage(): String \ {};
+    //             bug!(getMessage(checked_cast(ex)))
+    //     }
 
-    pub def fromLocalDate(x: LocalDate): YearMonth = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromLocalDate(x: LocalDate): YearMonth = 
+    //     fromTemporalAccessorHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
 
-    pub def fromLocalDateTime(x: LocalDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromLocalDateTime(x: LocalDateTime): YearMonth = 
+    //     fromTemporalAccessorHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromOffsetDateTime(x: OffsetDateTime): YearMonth = 
+    //     fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
-    pub def fromZonedDateTime(x: ZonedDateTime): YearMonth = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    // pub def fromZonedDateTime(x: ZonedDateTime): YearMonth = 
+    //     fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
 
     /// `parse` / `format` functions  
 

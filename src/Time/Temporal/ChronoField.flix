@@ -117,6 +117,7 @@ mod Time.Temporal.ChronoField {
     use Time.DurationZ.{DurationZ}
     
     import java.time.temporal.{ChronoField => JChronoField}
+    import java.time.temporal.{TemporalField => JTemporalField}
     import java.lang.{Enum => JEnum}
 
     /// Marshal enums
@@ -199,6 +200,7 @@ mod Time.Temporal.ChronoField {
 
     pub def asTemporalField(x: ChronoField): TemporalField = 
         let x1 = Time.Temporal.ChronoField.marshalChronoField(x);
-        TemporalField(unchecked_cast(x1 as ##java.time.temporal.TemporalField))
+        let cx1 = unchecked_cast(x1 as JTemporalField);
+        TemporalField(cx1)
 
 }
