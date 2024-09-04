@@ -16,9 +16,11 @@
 
  mod Time.Internal.Temporal {
 
+    import java.time.temporal.{Temporal => JTemporal}
+
     /// Interface...
 
-    pub enum Temporal(##java.time.temporal.Temporal)
+    pub enum Temporal(JTemporal)
 
 
 }

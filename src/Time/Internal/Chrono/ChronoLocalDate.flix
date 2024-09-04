@@ -30,6 +30,8 @@ mod Time.Internal.Chrono.ChronoLocalDate {
     use Time.Internal.Chrono.ChronoLocalDate
     use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
 
+    import java.lang.{Object, CharSequence}
+
     pub def toString(x: ChronoLocalDate): String =
         let ChronoLocalDate(x1) = x;
         unsafe x1.toString()
@@ -37,7 +39,8 @@ mod Time.Internal.Chrono.ChronoLocalDate {
     pub def equals(x: ChronoLocalDate, y: ChronoLocalDate): Bool =
         let ChronoLocalDate(x1) = x;
         let ChronoLocalDate(y1) = y;
-        unsafe x1.equals(unchecked_cast(y1 as ##java.lang.Object))
+        let obj = (checked_cast(y1) : Object);
+        unsafe x1.equals(obj)
 
 
     pub def compareTo(x: ChronoLocalDate, y: ChronoLocalDate): Int32 =

@@ -57,6 +57,7 @@ mod Time.Format.DecimalStyle {
     use Time.Format.DecimalStyle.{DecimalStyle}
     
     import java.time.format.{DecimalStyle => JDecimalStyle}
+    import java.util.{Locale => JLocale, Set => JSet}
 
     /// ## Unwrap
 
@@ -81,12 +82,12 @@ mod Time.Format.DecimalStyle {
 
     pub def getAvailableLocales(): List[Locale] \ IO =
         let locs = JDecimalStyle.getAvailableLocales();
-        let locs1: List[##java.util.Locale] = fromSetAsList(locs);
+        let locs1: List[JLocale] = fromSetAsList(locs);
         List.map(l -> Locale(l), locs1)
 
 
     /// Candidate for Adaptor...
-    def fromSetAsList(l: ##java.util.Set): List[a] = region rc {
+    def fromSetAsList(l: JSet): List[a] = region rc {
         let proxy: Proxy[a] = Proxy.Proxy;
         unsafe l.iterator() |> Adaptor.fromIterator(rc, proxy) |> Iterator.toList
     }

@@ -45,7 +45,7 @@ mod Time.Format.ResolverStyle {
         let y1 = (checked_cast(y) : JEnum);
         unsafe x1.equals(y1)
 
-    pub def unmarshalResolverStyle(x: ##java.time.format.ResolverStyle): ResolverStyle = 
+    pub def unmarshalResolverStyle(x: JResolverStyle): ResolverStyle = 
         match x {
             case x1 if primEquals(x1, unsafe JResolverStyle.LENIENT)    => Lenient
             case x1 if primEquals(x1, unsafe JResolverStyle.SMART)      => Smart
