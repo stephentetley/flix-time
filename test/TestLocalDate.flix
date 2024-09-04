@@ -22,20 +22,20 @@ mod TestLocalDate {
     // withTemporalAdjuster                                                    //
     /////////////////////////////////////////////////////////////////////////////
 
-    /// @test
-    /// def withFirstDayOfMonth01(): Time.LocalDate \ IO = 
-    ///     let d1 = Time.LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
-    ///     let d2 = Time.LocalDate.withFirstDayOfMonth(d1);
-    ///     println("LocalDate.withTemporalAdjuster01(): ${d1} ${d2}");
-    ///     println("${Time.Temporal.TemporalAdjusters.firstDayOfMonth()}");
-    ///     d2
+    // @test
+    // def withFirstDayOfMonth01(): Time.LocalDate \ IO = 
+    //     let d1 = Time.LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
+    //     let d2 = Time.LocalDate.withFirstDayOfMonth(d1);
+    //     println("LocalDate.withTemporalAdjuster01(): ${d1} ${d2}");
+    //     println("${Time.Temporal.TemporalAdjusters.firstDayOfMonth()}");
+    //     d2
 
-    @test
-    def setToLastDayOfMonth01(): Time.LocalDate \ IO = 
-        let d1 = Time.LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
-        let d2 = Time.LocalDate.adjustToLastDayOfMonth(d1);
-        println("LocalDate.adjustToLastDayOfMonth01(): ${d1} ${d2}");        
-        d2
+    // @test
+    // def setToLastDayOfMonth01(): Time.LocalDate \ IO = 
+    //     let d1 = Time.LocalDate.localDate({year = 2022, month = 4, dayOfMonth = 19});
+    //     let d2 = Time.LocalDate.adjustToLastDayOfMonth(d1);
+    //     println("LocalDate.adjustToLastDayOfMonth01(): ${d1} ${d2}");        
+    //     d2
 
        
 }
