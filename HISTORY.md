@@ -1,3 +1,6 @@
+### v0.12.0
+   Reimplemented `DateTimeFormatterBuilder` to use a struct.
+
 ### v0.11.0
    Updated to use new Java interop (module level import declarations).
    Updated to use hash as record field accessor.
