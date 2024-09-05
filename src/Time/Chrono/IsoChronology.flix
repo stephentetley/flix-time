@@ -25,9 +25,8 @@ mod Time.Chrono {
     
     instance ToString[IsoChronology] {
         pub def toString(x: IsoChronology): String =
-            import java.time.chrono.AbstractChronology.toString(): String \ {};
             let IsoChronology(x1) = x;
-            toString(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
+            unsafe x1.toString()
     }
 
 }
@@ -40,24 +39,37 @@ mod Time.Chrono.IsoChronology {
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
+    import java.time.chrono.{IsoChronology => JIsoChronology}
+    import java.time.chrono.{Chronology => JChronology, 
+        ChronoLocalDate => JChronoLocalDate, 
+        Era => JEra, 
+        IsoEra => JIsoEra}
+    import java.time.{LocalDate => JLocalDate}
+
+
     pub def getInstance(): IsoChronology \ IO = 
-        import static java_get_field java.time.chrono.IsoChronology.INSTANCE: ##java.time.chrono.IsoChronology \ IO as get_INSTANCE;
-        IsoChronology(get_INSTANCE())
+        IsoChronology(JIsoChronology.INSTANCE)
 
     pub def getCalendarType(x: IsoChronology): String = 
-        import java.time.chrono.IsoChronology.getCalendarType(): String \ {};
         let IsoChronology(x1) = x;
-        getCalendarType(x1)
+        unsafe x1.getCalendarType()
 
     pub def dateNow(x: IsoChronology): LocalDate \ IO = 
-        import java.time.chrono.IsoChronology.dateNow(): ##java.time.LocalDate \ IO;
         let IsoChronology(x1) = x;
-        LocalDate(dateNow(x1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow();
+        let ans1 = unchecked_cast(ans as JLocalDate);
+        LocalDate(ans1)
+
+
 
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
-        import java.time.chrono.IsoChronology.eraOf(Int32): ##java.time.chrono.IsoEra \ {};
         let IsoChronology(x1) = x;
-        Time.Chrono.IsoEra.unmarshalIsoEra(eraOf(x1, i))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JEra = unsafe cx1.eraOf(i);
+        let ans1 = unchecked_cast(ans as JIsoEra); 
+        Time.Chrono.IsoEra.unmarshalIsoEra(ans1)
+
 
     /// pub def eras(x: IsoChronology): List[IsoEra] = 
     ///     import java.time.chrono.IsoChronology.eras(): ##java.util.List \ {};
@@ -67,8 +79,7 @@ mod Time.Chrono.IsoChronology {
 
 
     pub def getId(x: IsoChronology): String = 
-        import java.time.chrono.IsoChronology.getId(): String \ {};
         let IsoChronology(x1) = x;
-        getId(x1)
+        unsafe x1.getId()
 
 }

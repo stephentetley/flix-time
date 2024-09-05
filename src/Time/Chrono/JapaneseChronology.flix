@@ -26,10 +26,10 @@ mod Time.Chrono {
 
     instance ToString[JapaneseChronology] {
         pub def toString(x: JapaneseChronology): String =
-            import java.time.chrono.AbstractChronology.toString(): String \ {};
             let JapaneseChronology(x1) = x;
-            toString(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
+            unsafe x1.toString()
     }
+
 }
 
 /// TODO should provide functions from the TemporalUnit interface
@@ -48,39 +48,53 @@ mod Time.Chrono.JapaneseChronology {
     use Time.ZoneId.{ZoneId}
 
 
+    import java.time.chrono.{JapaneseChronology => JJapaneseChronology}
+    import java.time.chrono.{Chronology => JChronology, 
+        ChronoLocalDate => JChronoLocalDate,
+        Era => JEra,
+        JapaneseDate => JJapaneseDate, 
+        JapaneseEra => JJapaneseEra}
+
     pub def getInstance(): JapaneseChronology \ IO = 
-        import static java_get_field java.time.chrono.JapaneseChronology.INSTANCE: ##java.time.chrono.JapaneseChronology \ IO as getINSTANCE;
-        JapaneseChronology(getINSTANCE())
+        JapaneseChronology(JJapaneseChronology.INSTANCE)
 
     pub def getCalendarType(x: JapaneseChronology): String = 
-        import java.time.chrono.JapaneseChronology.getCalendarType(): String \ {};
         let JapaneseChronology(x1) = x;
-        getCalendarType(x1)
+        unsafe x1.getCalendarType()
 
     pub def dateNow(x: JapaneseChronology): JapaneseDate \ IO = 
-        import java.time.chrono.JapaneseChronology.dateNow(): ##java.time.chrono.JapaneseDate \ IO;
         let JapaneseChronology(x1) = x;
-        JapaneseDate(dateNow(x1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow();
+        let ans1 = unchecked_cast(ans as JJapaneseDate);
+        JapaneseDate(ans1)
+
 
     pub def dateNowWithClock(x: JapaneseChronology, clock: Clock): JapaneseDate \ IO =
-        import java.time.chrono.JapaneseChronology.dateNow(##java.time.Clock): ##java.time.chrono.JapaneseDate \ IO;
         let JapaneseChronology(x1) = x;
         let Clock(clock1) = clock;
-        JapaneseDate(dateNow(x1, clock1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow(clock1);
+        let ans1 = unchecked_cast(ans as JJapaneseDate);
+        JapaneseDate(ans1)
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate \ IO =
-        import java.time.chrono.JapaneseChronology.dateNow(##java.time.ZoneId): ##java.time.chrono.JapaneseDate \ IO;
         let JapaneseChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        JapaneseDate(dateNow(x1, zone1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow(zone1);
+        let ans1 = unchecked_cast(ans as JJapaneseDate);
+        JapaneseDate(ans1)
 
     pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
-        import java.time.chrono.JapaneseChronology.eraOf(Int32): ##java.time.chrono.JapaneseEra \ {};
         let JapaneseChronology(x1) = x;
-        JapaneseEra(eraOf(x1, i))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JEra = unsafe cx1.eraOf(i);
+        let ans1 = unchecked_cast(ans as JJapaneseEra);         
+        JapaneseEra(ans1)
 
 
 }

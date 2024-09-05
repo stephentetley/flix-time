@@ -36,37 +36,36 @@ mod Time.Chrono.HijrahEra {
     use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
 
+    import java.time.chrono.{HijrahEra => JHijrahEra}
+    import java.time.chrono.{Era => JEra}
     import java.lang.{Enum => JEnum}
 
 
-    pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
-        unmarshalHijrahEra(unchecked_cast(o as ##java.time.chrono.HijrahEra))
+    // pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
+    //     unmarshalHijrahEra(unchecked_cast(o as ##java.time.chrono.HijrahEra))
 
 
-    pub def marshalHijrahEra(x: HijrahEra): ##java.time.chrono.HijrahEra = 
-        import static java_get_field java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
+    pub def marshalHijrahEra(x: HijrahEra): JHijrahEra = 
         match x {
-            case AH         => getAH()            
+            case AH         => unsafe JHijrahEra.AH
         }
 
 
 
-    def primEquals(x: ##java.time.chrono.HijrahEra, y: ##java.time.chrono.HijrahEra): Bool =
+    def primEquals(x: JHijrahEra, y: JHijrahEra): Bool =
         let x1 = (checked_cast(x) : JEnum);
         let y1 = (checked_cast(y) : JEnum);
         unsafe x1.equals(y1)
 
-    pub def unmarshalHijrahEra(x: ##java.time.chrono.HijrahEra): HijrahEra = 
-        import static java_get_field java.time.chrono.HijrahEra.AH: ##java.time.chrono.HijrahEra \ {} as getAH;
+    pub def unmarshalHijrahEra(x: JHijrahEra): HijrahEra = 
         match x {
-            case x1 if primEquals(x1, getAH())      => AH
+            case x1 if primEquals(x1, unsafe JHijrahEra.AH)      => AH
             case _                                  => bug!("unmarshalHijrahEra")
         }
 
     pub def getValue(x: HijrahEra): Int32 = 
-        import java.time.chrono.HijrahEra.getValue(): Int32 \ {};
         let x1 = marshalHijrahEra(x);
-        getValue(x1)
+        unsafe x1.getValue()
 
 
 
@@ -74,15 +73,16 @@ mod Time.Chrono.HijrahEra {
 
 
     pub def asEra(x: HijrahEra): Era = 
-        let x1 = Time.Chrono.HijrahEra.marshalHijrahEra(x);
-        Era(unchecked_cast(x1 as ##java.time.chrono.Era))
+        let x1 = marshalHijrahEra(x);
+        let ans = (checked_cast(x1) : JEra);
+        Era(ans)
+
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String = 
-        import java.time.chrono.HijrahEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshalHijrahEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1, style1, locale1)
+        unsafe x1.getDisplayName(style1, locale1)
         
  
 }

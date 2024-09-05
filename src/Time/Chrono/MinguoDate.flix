@@ -54,7 +54,7 @@ mod Time.Chrono.MinguoDate {
     use Time.LocalDate.{LocalDate}
 
     import java.time.chrono.{MinguoDate => JMinguoDate}
-    import java.lang.{Object, CharSequence}
+    import java.lang.{Object}
 
     ///
     /// Returns ___

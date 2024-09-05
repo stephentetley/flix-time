@@ -37,49 +37,46 @@ mod Time.Chrono.IsoEra {
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
+    import java.time.chrono.{IsoEra => JIsoEra}
+    import java.time.chrono.{Era => JEra}
     import java.lang.{Enum => JEnum}
     
-    pub def marshalIsoEra(x: IsoEra): ##java.time.chrono.IsoEra = 
-        import static java_get_field java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;
-        import static java_get_field java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra \ {} as get_CE;
+    pub def marshalIsoEra(x: IsoEra): JIsoEra = 
         match x {
-            case BCE        => get_BCE()
-            case CE         => get_CE()
+            case BCE        => unsafe JIsoEra.BCE
+            case CE         => unsafe JIsoEra.CE
         }
 
-    def primEquals(x: ##java.time.chrono.IsoEra, y: ##java.time.chrono.IsoEra): Bool =
+    def primEquals(x: JIsoEra, y: JIsoEra): Bool =
         let x1 = (checked_cast(x) : JEnum);
         let y1 = (checked_cast(y) : JEnum);
         unsafe x1.equals(y1)
 
-    pub def unmarshalIsoEra(x: ##java.time.chrono.IsoEra): IsoEra = 
-        import static java_get_field java.time.chrono.IsoEra.BCE: ##java.time.chrono.IsoEra \ {} as get_BCE;
-        import static java_get_field java.time.chrono.IsoEra.CE: ##java.time.chrono.IsoEra \ {} as get_CE;
+    pub def unmarshalIsoEra(x: JIsoEra): IsoEra = 
         match x {
-            case x1 if primEquals(x1, get_BCE())    => BCE
-            case x1 if primEquals(x1, get_CE())     => CE
+            case x1 if primEquals(x1, unsafe JIsoEra.BCE)    => BCE
+            case x1 if primEquals(x1, unsafe JIsoEra.CE)     => CE
             case _                                  => bug!("unmarshalIsoEra")
         }
 
     pub def getValue(x: IsoEra): Int32 = 
-        import java.time.chrono.IsoEra.getValue(): Int32 \ {};
         let x1 = marshalIsoEra(x);
-        getValue(x1)
+        unsafe x1.getValue()
 
 
     pub def asEra(x: IsoEra): Era = 
-        let x1 = Time.Chrono.IsoEra.marshalIsoEra(x);
-        Era(unchecked_cast(x1 as ##java.time.chrono.Era))
+        let x1 = marshalIsoEra(x);
+        let ans = (checked_cast(x1) : JEra);
+        Era(ans)
 
     /// Era interface functions
 
 
-    pub def getDisplayName(style: TextStyle, locale: Locale, x: IsoEra): String = 
-        import java.time.chrono.Era.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
-        let x1 = unchecked_cast(marshalIsoEra(x) as ##java.time.chrono.Era);
+    pub def getDisplayName(style: TextStyle, locale: Locale, x: IsoEra): String =
+        let x1 = marshalIsoEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1, style1, locale1)
+        unsafe x1.getDisplayName(style1, locale1)
         
 
 

@@ -28,17 +28,6 @@ mod Time.Chrono {
             Time.Chrono.HijrahChronology.toString(x)
     }
 
-    instance Eq[HijrahChronology] {
-        pub def eq(x: HijrahChronology, y: HijrahChronology): Bool =
-            Time.Chrono.HijrahChronology.equals(x, y)
-    }
-
-    instance Order[HijrahChronology] {
-        pub def compare(x: HijrahChronology, y: HijrahChronology): Comparison =
-            Time.Chrono.HijrahChronology.compare(x, y)
-    }
-
-
 
 }
 
@@ -62,26 +51,31 @@ mod Time.Chrono.HijrahChronology {
     use Time.Internal.Chrono.Chronology
     use Time.Internal.Chrono.Chronology.{Chronology}
 
+    import java.time.chrono.{HijrahChronology => JHijrahChronology}
+    import java.time.chrono.{Chronology => JChronology, 
+        ChronoLocalDate => JChronoLocalDate, 
+        HijrahDate => JHijrahDate,
+        Era => JEra, 
+        HijrahEra => JHijrahEra}
 
-    pub def getHijrahChronology(x: HijrahChronology): ##java.time.chrono.HijrahChronology = 
+    pub def getHijrahChronology(x: HijrahChronology): JHijrahChronology = 
         let HijrahChronology(x1) = x;
         x1
 
-    pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
-        HijrahChronology(unchecked_cast(o as ##java.time.chrono.HijrahChronology))
+    // pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
+    //     HijrahChronology(unchecked_cast(o as ##java.time.chrono.HijrahChronology))
 
 
-    pub def asAbstractChronology(x: HijrahChronology): AbstractChronology = 
-        let HijrahChronology(x1) = x;
-        AbstractChronology(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
+    // pub def asAbstractChronology(x: HijrahChronology): AbstractChronology = 
+    //     let HijrahChronology(x1) = x;
+    //     AbstractChronology(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
 
-    pub def asChronology(x: HijrahChronology): Chronology = 
-        let HijrahChronology(x1) = x;
-        Chronology(unchecked_cast(x1 as ##java.time.chrono.Chronology))
+    // pub def asChronology(x: HijrahChronology): Chronology = 
+    //     let HijrahChronology(x1) = x;
+    //     Chronology(unchecked_cast(x1 as ##java.time.chrono.Chronology))
 
     pub def getInstance(): HijrahChronology \ IO =
-        import static java_get_field java.time.chrono.HijrahChronology.INSTANCE: ##java.time.chrono.HijrahChronology \ IO as getINSTANCE;
-        HijrahChronology(getINSTANCE())
+        HijrahChronology(JHijrahChronology.INSTANCE)
 
     // pub def date(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}, 
     //              x: HijrahChronology): HijrahDate =
@@ -91,91 +85,92 @@ mod Time.Chrono.HijrahChronology {
 
     pub def dateWithEra(r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}, 
                         x: HijrahChronology): HijrahDate =
-        import java.time.chrono.HijrahChronology.date(##java.time.chrono.Era, Int32, Int32, Int32): ##java.time.chrono.HijrahDate \ {};
         let HijrahChronology(x1) = x;
+        let cx1 = (checked_cast(x1): JChronology);
         let Era(era1) = Time.Chrono.HijrahEra.asEra(r#era);
-        HijrahDate(date(x1, era1, r#yearOfEra, r#month, r#dayOfMonth))
+        let ans : JChronoLocalDate = unsafe cx1.date(era1, r#yearOfEra, r#month, r#dayOfMonth);
+        let ans1 = unchecked_cast(ans as JHijrahDate);
+        HijrahDate(ans1)
 
 
     pub def dateNow(x: HijrahChronology): HijrahDate \ IO = 
-        import java.time.chrono.HijrahChronology.dateNow(): ##java.time.chrono.HijrahDate \ IO;
         let HijrahChronology(x1) = x;
-        HijrahDate(dateNow(x1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow();
+        let ans1 = unchecked_cast(ans as JHijrahDate);
+        HijrahDate(ans1)
 
     pub def dateNowWithClock(x: HijrahChronology, clock: Clock): HijrahDate \ IO =
-        import java.time.chrono.HijrahChronology.dateNow(##java.time.Clock): ##java.time.chrono.HijrahDate \ IO;
         let HijrahChronology(x1) = x;
         let Clock(clock1) = clock;
-        HijrahDate(dateNow(x1, clock1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow(clock1);
+        let ans1 = unchecked_cast(ans as JHijrahDate);
+        HijrahDate(ans1)
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: HijrahChronology, zone: ZoneId): HijrahDate \ IO =
-        import java.time.chrono.HijrahChronology.dateNow(##java.time.ZoneId): ##java.time.chrono.HijrahDate \ IO;
         let HijrahChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        HijrahDate(dateNow(x1, zone1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow(zone1);
+        let ans1 = unchecked_cast(ans as JHijrahDate);
+        HijrahDate(ans1)
 
     pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] = 
         Result.tryCatch(_ -> {
-            import java.time.chrono.HijrahChronology.dateEpochDay(Int64): ##java.time.chrono.HijrahDate \ {};
             let HijrahChronology(x1) = x;
-            HijrahDate(dateEpochDay(x1, epochDay))
+            let cx1 = (checked_cast(x1): JChronology);
+            let ans : JChronoLocalDate = unsafe cx1.dateEpochDay(epochDay);
+            let ans1 = unchecked_cast(ans as JHijrahDate);
+            HijrahDate(ans1)
         })
 
     pub def toString(x: HijrahChronology): String =
-        asAbstractChronology(x) 
-            |> Time.Internal.Chrono.AbstractChronology.toString
+        let HijrahChronology(x1) = x;
+        unsafe x1.toString()
             
-    pub def equals(x: HijrahChronology, y: HijrahChronology): Bool =
-        let x1 = asAbstractChronology(x);
-        let y1 = asAbstractChronology(y);
-        Time.Internal.Chrono.AbstractChronology.equals(x1, y1)
 
-    pub def compare(x: HijrahChronology, y: HijrahChronology): Comparison =
-        let x1 = asAbstractChronology(x);
-        let y1 = asAbstractChronology(y);
-        Time.Internal.Chrono.AbstractChronology.compareTo(x1, y1) |> Comparison.fromInt32
+    pub def getDisplayName(style: TextStyle, loc: Locale, x: HijrahChronology): String = 
+        let HijrahChronology(x1) = x;
+        let s1 = Time.Format.TextStyle.marshalTextStyle(style);
+        let Locale.Locale(loc1) = loc;
+        unsafe x1.getDisplayName(s1, loc1)
 
-
-    pub def getDisplayName(sty: TextStyle, loc: Locale, x: HijrahChronology): String = 
-        asChronology(x)
-            |> Time.Internal.Chrono.Chronology.getDisplayName(sty, loc)
 
     pub def getCalendarType(x: HijrahChronology): String = 
-        import java.time.chrono.HijrahChronology.getCalendarType(): String \ {};
         let HijrahChronology(x1) = x;
-        getCalendarType(x1)
+        unsafe x1.getCalendarType()
 
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra = 
-        import java.time.chrono.HijrahChronology.eraOf(Int32): ##java.time.chrono.HijrahEra \ {};
         let HijrahChronology(x1) = x;
-        Time.Chrono.HijrahEra.unmarshalHijrahEra(eraOf(x1, i))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JEra = unsafe cx1.eraOf(i);
+        let ans1 = unchecked_cast(ans as JHijrahEra); 
+        Time.Chrono.HijrahEra.unmarshalHijrahEra(ans1)
 
-    pub def eras(hc: HijrahChronology): List[HijrahEra] =
-        import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};
-        let HijrahChronology(hc1) = hc;
-        let eras1: List[##java.time.chrono.HijrahEra] = eras(hc1) |> Adaptor.fromList;
-        List.map(Time.Chrono.HijrahEra.unmarshalHijrahEra, eras1)
+    // pub def eras(hc: HijrahChronology): List[HijrahEra] =
+    //     import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};
+    //     let HijrahChronology(hc1) = hc;
+    //     let eras1: List[##java.time.chrono.HijrahEra] = eras(hc1) |> Adaptor.fromList;
+    //     List.map(Time.Chrono.HijrahEra.unmarshalHijrahEra, eras1)
 
 
     pub def getId(x: HijrahChronology): String = 
-        import java.time.chrono.HijrahChronology.getId(): String \ {};
         let HijrahChronology(x1) = x;
-        getId(x1)
+        unsafe x1.getId()
         
     pub def isLeapYear(prolepticYear: Int64, x: HijrahChronology): Bool = 
-        import java.time.chrono.HijrahChronology.isLeapYear(Int64): Bool \ {};
         let HijrahChronology(x1) = x;
-        isLeapYear(x1, prolepticYear)
+        unsafe x1.isLeapYear(prolepticYear)
 
     
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 = 
-        import java.time.chrono.HijrahChronology.prolepticYear(##java.time.chrono.Era, Int32): Int32 \ {};
         let HijrahChronology(x1) = x;
         let Era(era1) = Time.Chrono.HijrahEra.asEra(era);
-        prolepticYear(x1, era1, yearOfEra)
+        unsafe x1.prolepticYear(era1, yearOfEra)
 
 
     // pub def resolveDate(fieldValues: List[(a, Int64)], resolverStyle: ResolverStyle, x: HijrahChronology): HijrahDate with TemporalField[a] =
