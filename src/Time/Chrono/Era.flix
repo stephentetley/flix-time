@@ -15,10 +15,12 @@
  */
 
 mod Time.Chrono {
+    
+    import java.time.chrono.{Era => JEra}
 
     /// Interface...
-
-    pub enum Era(##java.time.chrono.Era)
+    
+    pub enum Era(JEra)
 
 
 }

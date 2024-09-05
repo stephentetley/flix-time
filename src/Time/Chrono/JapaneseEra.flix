@@ -63,10 +63,10 @@ mod Time.Chrono.JapaneseEra {
     import java.time.chrono.{Era => JEra}
     import java.lang.{Object}
 
-    pub def asEra(x: JapaneseEra): Era = 
-        let JapaneseEra(x1) = x;
-        let ans = (checked_cast(x1) : JEra);
-        Era(ans)
+    // pub def asEra(x: JapaneseEra): Era = 
+    //     let JapaneseEra(x1) = x;
+    //     let ans = (checked_cast(x1) : JEra);
+    //     Era(ans)
         
     pub def getJapaneseEra(x: JapaneseEra): JJapaneseEra = 
         let JapaneseEra(x1) = x;

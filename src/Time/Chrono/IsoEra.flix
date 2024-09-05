@@ -64,10 +64,10 @@ mod Time.Chrono.IsoEra {
         unsafe x1.getValue()
 
 
-    pub def asEra(x: IsoEra): Era = 
-        let x1 = marshalIsoEra(x);
-        let ans = (checked_cast(x1) : JEra);
-        Era(ans)
+    // pub def asEra(x: IsoEra): Era = 
+    //     let x1 = marshalIsoEra(x);
+    //     let ans = (checked_cast(x1) : JEra);
+    //     Era(ans)
 
     /// Era interface functions
 

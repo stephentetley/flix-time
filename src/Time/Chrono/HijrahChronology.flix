@@ -87,7 +87,7 @@ mod Time.Chrono.HijrahChronology {
                         x: HijrahChronology): HijrahDate =
         let HijrahChronology(x1) = x;
         let cx1 = (checked_cast(x1): JChronology);
-        let Era(era1) = Time.Chrono.HijrahEra.asEra(r#era);
+        let era1 = Time.Chrono.HijrahEra.marshalHijrahEra(r#era);
         let ans : JChronoLocalDate = unsafe cx1.date(era1, r#yearOfEra, r#month, r#dayOfMonth);
         let ans1 = unchecked_cast(ans as JHijrahDate);
         HijrahDate(ans1)
@@ -169,7 +169,7 @@ mod Time.Chrono.HijrahChronology {
     
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 = 
         let HijrahChronology(x1) = x;
-        let Era(era1) = Time.Chrono.HijrahEra.asEra(era);
+        let era1 = Time.Chrono.HijrahEra.marshalHijrahEra(era);
         unsafe x1.prolepticYear(era1, yearOfEra)
 
 

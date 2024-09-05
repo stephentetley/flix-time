@@ -72,10 +72,10 @@ mod Time.Chrono.HijrahEra {
     /// 
 
 
-    pub def asEra(x: HijrahEra): Era = 
-        let x1 = marshalHijrahEra(x);
-        let ans = (checked_cast(x1) : JEra);
-        Era(ans)
+    // pub def asEra(x: HijrahEra): Era = 
+    //     let x1 = marshalHijrahEra(x);
+    //     let ans = (checked_cast(x1) : JEra);
+    //     Era(ans)
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String = 
