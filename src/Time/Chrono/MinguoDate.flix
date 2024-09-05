@@ -53,31 +53,31 @@ mod Time.Chrono.MinguoDate {
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
+    import java.time.chrono.{MinguoDate => JMinguoDate}
+    import java.lang.{Object, CharSequence}
+
     ///
     /// Returns ___
     ///
-    pub def now(): MinguoDate \ IO =
-        import static java.time.chrono.MinguoDate.now(): ##java.time.chrono.MinguoDate \ IO;
-        MinguoDate(now())
+    pub def now(): MinguoDate \ IO = MinguoDate(JMinguoDate.now())
 
 
     pub def equals(x: MinguoDate, y: MinguoDate): Bool = 
-        import java.time.chrono.MinguoDate.equals(##java.lang.Object): Bool \ {};
         let MinguoDate(x1) = x;
         let MinguoDate(y1) = y;
-        equals(x1, checked_cast(y1))
+        let obj = (checked_cast(y1) : Object);
+        unsafe x1.equals(obj)
 
     pub def hashCode(x: MinguoDate): Int32 = 
-        import java.time.chrono.MinguoDate.hashCode(): Int32 \ {};
         let MinguoDate(x1) = x;
-        hashCode(x1)
+        unsafe x1.hashCode()
 
 
 
-    pub def toLocalDate(x: MinguoDate): LocalDate =
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
-        let MinguoDate(x1) = x;
-        LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    // pub def toLocalDate(x: MinguoDate): LocalDate =
+    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
+    //     let MinguoDate(x1) = x;
+    //     LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
     // pub def getDayOfWeek(x: MinguoDate): Int32 = 
     //     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfWeek)

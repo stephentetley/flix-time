@@ -25,9 +25,8 @@ mod Time.Chrono {
 
     instance ToString[MinguoChronology] {
         pub def toString(x: MinguoChronology): String =
-            import java.time.chrono.AbstractChronology.toString(): String \ {};
             let MinguoChronology(x1) = x;
-            toString(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
+            unsafe x1.toString()
     }
 
 }
@@ -44,39 +43,54 @@ mod Time.Chrono.MinguoChronology {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
+    import java.time.chrono.{MinguoChronology => JMinguoChronology}
+    import java.time.chrono.{Chronology => JChronology, 
+        ChronoLocalDate => JChronoLocalDate,
+        Era => JEra,
+        MinguoDate => JMinguoDate, 
+        MinguoEra => JMinguoEra}
+
     pub def getInstance(): MinguoChronology \ IO = 
-        import static java_get_field java.time.chrono.MinguoChronology.INSTANCE: ##java.time.chrono.MinguoChronology \ IO as getINSTANCE;
-        MinguoChronology(getINSTANCE())
+        MinguoChronology(JMinguoChronology.INSTANCE)
 
     pub def getCalendarType(x: MinguoChronology): String = 
-        import java.time.chrono.MinguoChronology.getCalendarType(): String \ {};
         let MinguoChronology(x1) = x;
-        getCalendarType(x1)
+        unsafe x1.getCalendarType()
 
 
     pub def dateNow(x: MinguoChronology): MinguoDate \ IO = 
-        import java.time.chrono.MinguoChronology.dateNow(): ##java.time.chrono.MinguoDate \ IO;
         let MinguoChronology(x1) = x;
-        MinguoDate(dateNow(x1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow();
+        let ans1 = unchecked_cast(ans as JMinguoDate);
+        MinguoDate(ans1)
 
     pub def dateNowWithClock(x: MinguoChronology, clock: Clock): MinguoDate \ IO =
-        import java.time.chrono.MinguoChronology.dateNow(##java.time.Clock): ##java.time.chrono.MinguoDate \ IO;
         let MinguoChronology(x1) = x;
         let Clock(clock1) = clock;
-        MinguoDate(dateNow(x1, clock1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow(clock1);
+        let ans1 = unchecked_cast(ans as JMinguoDate);
+        MinguoDate(ans1)
+
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: MinguoChronology, zone: ZoneId): MinguoDate \ IO =
-        import java.time.chrono.MinguoChronology.dateNow(##java.time.ZoneId): ##java.time.chrono.MinguoDate \ IO;
         let MinguoChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        MinguoDate(dateNow(x1, zone1))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JChronoLocalDate = cx1.dateNow(zone1);
+        let ans1 = unchecked_cast(ans as JMinguoDate);
+        MinguoDate(ans1)
+                
 
     pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
-        import java.time.chrono.MinguoChronology.eraOf(Int32): ##java.time.chrono.MinguoEra \ {};
         let MinguoChronology(x1) = x;
-        Time.Chrono.MinguoEra.unmarshalMinguoEra(eraOf(x1, i))
+        let cx1 = (checked_cast(x1): JChronology);
+        let ans : JEra = unsafe cx1.eraOf(i);
+        let ans1 = unchecked_cast(ans as JMinguoEra); 
+        Time.Chrono.MinguoEra.unmarshalMinguoEra(ans1)
 
 }

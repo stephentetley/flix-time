@@ -33,9 +33,8 @@ mod Time.Chrono {
     ///
     instance ToString[JapaneseDate] {
         pub def toString(x: JapaneseDate): String =
-            import java.time.chrono.JapaneseDate.toString(): String \ {};
             let JapaneseDate(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     instance Eq[JapaneseDate] {
@@ -65,82 +64,88 @@ mod Time.Chrono.JapaneseDate {
     use Time.Chrono.JapaneseEra.{JapaneseEra}
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
-
     
+    import java.time.chrono.{JapaneseDate => JJapaneseDate}
+    import java.time.chrono.{Chronology => JChronology, 
+        ChronoLocalDate => JChronoLocalDate, 
+        JapaneseEra => JJapaneseEra, 
+        JapaneseChronology => JJapaneseChronology}
+    import java.lang.{Object}
+
+
     ///
     /// Returns ___
     ///
     pub def japaneseDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): JapaneseDate  =
-        import static java.time.chrono.JapaneseDate.of(Int32, Int32, Int32): ##java.time.chrono.JapaneseDate \ {};
-        JapaneseDate(of(r#prolepticYear, r#month, r#dayOfMonth))
+        JapaneseDate(unsafe JJapaneseDate.of(r#prolepticYear, r#month, r#dayOfMonth))
 
     pub def japaneseDateWithJapaneseEra(r: {era = JapaneseEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}): JapaneseDate  =
-        import static java.time.chrono.JapaneseDate.of(##java.time.chrono.JapaneseEra, Int32, Int32, Int32): ##java.time.chrono.JapaneseDate \ {};
         let JapaneseEra(era1) = r#era;
-        JapaneseDate(of(era1, r#yearOfEra, r#month, r#dayOfMonth))
+        JapaneseDate(unsafe JJapaneseDate.of(era1, r#yearOfEra, r#month, r#dayOfMonth))
 
 
-    ///
-    /// Returns ___
-    ///
+    //
+    // Returns ___
+    //
     pub def now(): JapaneseDate \ IO =
-        import static java.time.chrono.JapaneseDate.now(): ##java.time.chrono.JapaneseDate \ IO;
-        JapaneseDate(now())
+        JapaneseDate(JJapaneseDate.now())
 
-    pub def fromLocalDate(x: LocalDate): JapaneseDate = 
-        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as from1;
-        let LocalDate(x1) = x;
-        JapaneseDate(from1(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
-
-
-    pub def toLocalDate(x: JapaneseDate): LocalDate =
-        import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
-        let JapaneseDate(x1) = x;
-        LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    // pub def fromLocalDate(x: LocalDate): JapaneseDate = 
+    //     import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as from1;
+    //     let LocalDate(x1) = x;
+    //     JapaneseDate(unsafe JJapaneseDate.from1(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
 
-    pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
-        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
-        let HijrahDate(x1) = x;
-        JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    // pub def toLocalDate(x: JapaneseDate): LocalDate =
+    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
+    //     let JapaneseDate(x1) = x;
+    //     LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
-    pub def fromMinguoDate(x: MinguoDate): JapaneseDate = 
-        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
-        let MinguoDate(x1) = x;
-        JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
-    pub def fromThaiBuddhistDate(x: ThaiBuddhistDate): JapaneseDate = 
-        import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
-        let ThaiBuddhistDate(x1) = x;
-        JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    // pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
+    //     import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
+    //     let HijrahDate(x1) = x;
+    //     JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+
+    // pub def fromMinguoDate(x: MinguoDate): JapaneseDate = 
+    //     import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
+    //     let MinguoDate(x1) = x;
+    //     JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+
+    // pub def fromThaiBuddhistDate(x: ThaiBuddhistDate): JapaneseDate = 
+    //     import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
+    //     let ThaiBuddhistDate(x1) = x;
+    //     JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
     pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
-        import java.time.chrono.JapaneseDate.equals(##java.lang.Object): Bool \ {};
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        equals(x1, checked_cast(y1))
+        let obj = (checked_cast(y1) : Object);
+        unsafe x1.equals(obj)
 
     pub def hashCode(x: JapaneseDate): Int32 = 
-        import java.time.chrono.JapaneseDate.hashCode(): Int32 \ {};
         let JapaneseDate(x1) = x;
-        hashCode(x1)
+        unsafe x1.hashCode()
 
 
     pub def getChronology(x: JapaneseDate): JapaneseChronology = 
-        import java.time.chrono.JapaneseDate.getChronology(): ##java.time.chrono.JapaneseChronology \ {};
         let JapaneseDate(x1) = x;
-        JapaneseChronology(getChronology(x1))
+        let cx1 = (checked_cast(x1) : JChronoLocalDate);
+        let ans = unsafe cx1.getChronology();
+        let ans1 = unchecked_cast(ans as JJapaneseChronology);
+        JapaneseChronology(ans1)
 
 
     pub def getEra(x: JapaneseDate): JapaneseEra = 
-        import java.time.chrono.JapaneseDate.getEra(): ##java.time.chrono.JapaneseEra \ {};
         let JapaneseDate(x1) = x;
-        JapaneseEra(getEra(x1))
+        let cx1 = (checked_cast(x1) : JChronoLocalDate);
+        let ans = unsafe cx1.getEra();
+        let ans1 = unchecked_cast(ans as JJapaneseEra);
+        JapaneseEra(ans1)
 
     pub def lengthOfMonth(x: JapaneseDate): Int32 = 
-        import java.time.chrono.JapaneseDate.lengthOfMonth(): Int32 \ {};
         let JapaneseDate(x1) = x;
-        lengthOfMonth(x1)
+        unsafe x1.lengthOfMonth()
     
     /// pub def getDayOfWeek(x: JapaneseDate): Int32 = 
     ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfWeek)
@@ -180,18 +185,20 @@ mod Time.Chrono.JapaneseDate {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: JapaneseDate, y: JapaneseDate): Bool =
-        import java.time.chrono.ChronoLocalDate.isBefore(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        isBefore(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate),  unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate))
+        let cx1 = (checked_cast(x1) : JChronoLocalDate);
+        let cy1 = (checked_cast(y1) : JChronoLocalDate);
+        unsafe cx1.isBefore(cy1)
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: JapaneseDate, y: JapaneseDate): Bool =
-        import java.time.chrono.ChronoLocalDate.isAfter(##java.time.chrono.ChronoLocalDate): Bool \ {};
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        isAfter(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate), unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDate))
+        let cx1 = (checked_cast(x1) : JChronoLocalDate);
+        let cy1 = (checked_cast(y1) : JChronoLocalDate);
+        unsafe cx1.isAfter(cy1)
 
 }

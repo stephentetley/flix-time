@@ -114,31 +114,31 @@ mod Time.DayOfWeek {
             case _                                      => bug!("unmarshalDayOfWeek")
         }
 
-    /// `from` functions
+    // `from` functions
 
-    /// `fromTemporalAccessor` specialized
-    def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
-        import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek \ {} as fromTA;
-        try {
-            let Time.Internal.Temporal.TemporalAccessor.TemporalAccessor(x1) = x;
-            unmarshalDayOfWeek(fromTA(x1))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
-        }
+    // `fromTemporalAccessor` specialized
+    // def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
+    //     import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek \ {} as fromTA;
+    //     try {
+    //         let Time.Internal.Temporal.TemporalAccessor.TemporalAccessor(x1) = x;
+    //         unmarshalDayOfWeek(fromTA(x1))
+    //     } catch {
+    //         case ex: ##java.lang.Exception => 
+    //             import java.lang.Throwable.getMessage(): String \ {};
+    //             bug!(getMessage(checked_cast(ex)))
+    //     }
     
-    pub def fromLocalDate(x: LocalDate): DayOfWeek = 
-        Time.LocalDate.asTemporalAccessor(x)
-            |> fromTemporalAccessor
+    // pub def fromLocalDate(x: LocalDate): DayOfWeek = 
+    //     Time.LocalDate.asTemporalAccessor(x)
+    //         |> fromTemporalAccessor
 
-    pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
-        Time.LocalDateTime.asTemporalAccessor(x)
-            |> fromTemporalAccessor
+    // pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
+    //     Time.LocalDateTime.asTemporalAccessor(x)
+    //         |> fromTemporalAccessor
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
-        Time.OffsetDateTime.asTemporalAccessor(x)
-            |> fromTemporalAccessor
+    // pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
+    //     Time.OffsetDateTime.asTemporalAccessor(x)
+    //         |> fromTemporalAccessor
 
     // pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
     //     Time.ZonedDateTime.asTemporalAccessor(x)

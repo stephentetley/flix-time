@@ -34,9 +34,8 @@ mod Time.Chrono {
     ///
     instance ToString[JapaneseEra] {
         pub def toString(x: JapaneseEra): String =
-            import java.time.chrono.JapaneseEra.toString(): String \ {};
             let JapaneseEra(x1) = x;
-            toString(x1) 
+            unsafe x1.toString() 
     }
     
     instance Eq[JapaneseEra] {
@@ -60,65 +59,56 @@ mod Time.Chrono.JapaneseEra {
     use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
 
+    import java.time.chrono.{JapaneseEra => JJapaneseEra}
+    import java.time.chrono.{Era => JEra}
+    import java.lang.{Object}
+
     pub def asEra(x: JapaneseEra): Era = 
         let JapaneseEra(x1) = x;
-        Era(unchecked_cast(x1 as ##java.time.chrono.Era))
+        let ans = (checked_cast(x1) : JEra);
+        Era(ans)
         
-    pub def getJapaneseEra(x: JapaneseEra): ##java.time.chrono.JapaneseEra = 
+    pub def getJapaneseEra(x: JapaneseEra): JJapaneseEra = 
         let JapaneseEra(x1) = x;
         x1
 
     pub def japaneseEra(japaneseEra: {japaneseEra = Int32}): Option[JapaneseEra] =
         Result.tryCatch(_ -> {
-            import static java.time.chrono.JapaneseEra.of(Int32): ##java.time.chrono.JapaneseEra \ {};
-            JapaneseEra(of(japaneseEra#japaneseEra))
+            JapaneseEra(unsafe JJapaneseEra.of(japaneseEra#japaneseEra))
         }) |> Result.toOption
 
-    pub def heisei(): JapaneseEra = 
-        import static java_get_field java.time.chrono.JapaneseEra.HEISEI: ##java.time.chrono.JapaneseEra \ {} as getHEISEI;
-        JapaneseEra(getHEISEI())
+    pub def heisei(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.HEISEI)
 
-    pub def meiji(): JapaneseEra = 
-        import static java_get_field java.time.chrono.JapaneseEra.MEIJI: ##java.time.chrono.JapaneseEra \ {} as getMEIJI;
-        JapaneseEra(getMEIJI())
+    pub def meiji(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.MEIJI)
 
-    /// Java 13
+    // Java 13
 
-    // pub def reiwa(): JapaneseEra = 
-    //     import static java_get_field java.time.chrono.JapaneseEra.REIWA: ##java.time.chrono.JapaneseEra \ {} as getREIWA;
-    //     JapaneseEra(getREIWA())
+    pub def reiwa(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.REIWA)
 
-    pub def showa(): JapaneseEra = 
-        import static java_get_field java.time.chrono.JapaneseEra.SHOWA: ##java.time.chrono.JapaneseEra \ {} as getSHOWA;
-        JapaneseEra(getSHOWA())
+    pub def showa(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.SHOWA)
 
-    pub def taisho(): JapaneseEra = 
-        import static java_get_field java.time.chrono.JapaneseEra.TAISHO: ##java.time.chrono.JapaneseEra \ {} as getTAISHO;
-        JapaneseEra(getTAISHO())
+    pub def taisho(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.TAISHO)
 
     pub def getValue(x: JapaneseEra): Int32 = 
-        import java.time.chrono.JapaneseEra.getValue(): Int32 \ {};
         let JapaneseEra(x1) = x;
-        getValue(x1)
+        unsafe x1.getValue()
 
     pub def equals(x: JapaneseEra, y: JapaneseEra): Bool = 
-        import java.lang.Object.equals(##java.lang.Object): Bool \ {};
         let JapaneseEra(x1) = x;
         let JapaneseEra(y1) = y;
-        equals(checked_cast(x1), checked_cast(y1))
+        let obj = (checked_cast(y1) : Object);
+        unsafe x1.equals(obj)
 
     pub def hashCode(x: JapaneseEra): Int32 = 
-        import java.lang.Object.hashCode(): Int32 \ {};
         let JapaneseEra(x1) = x;
-        hashCode(checked_cast(x1))
+        unsafe x1.hashCode()
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: JapaneseEra): String = 
-        import java.time.chrono.JapaneseEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = getJapaneseEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1, style1, locale1)
+        unsafe x1.getDisplayName(style1, locale1)
 
 
     // NOTE - maybe this should return Option [/ Result] ?

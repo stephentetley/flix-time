@@ -47,7 +47,7 @@ mod Time.Chrono.ThaiBuddhistEra {
         let y1 = (checked_cast(y) : JEnum);
         unsafe x1.equals(y1)
 
-    pub def unmarshalThaiBuddhistEra(x: ##java.time.chrono.ThaiBuddhistEra): ThaiBuddhistEra =
+    pub def unmarshalThaiBuddhistEra(x: JThaiBuddhistEra): ThaiBuddhistEra =
         match x {
             case x1 if primEquals(x1, unsafe JThaiBuddhistEra.BEFORE_BE)  => BEFORE_BE
             case x1 if primEquals(x1, unsafe JThaiBuddhistEra.BE)         => BE
@@ -55,9 +55,8 @@ mod Time.Chrono.ThaiBuddhistEra {
         }
 
     pub def getValue(x: ThaiBuddhistEra): Int32 = 
-        import java.time.chrono.ThaiBuddhistEra.getValue(): Int32 \ {};
         let x1 = marshalThaiBuddhistEra(x);
-        getValue(x1)
+        unsafe x1.getValue()
 
 
 

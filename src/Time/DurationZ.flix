@@ -184,23 +184,23 @@ mod Time.DurationZ {
     pub def ofDays(days: Int64): DurationZ =
         DurationZ(unsafe JDuration.ofDays(days))
 
-    /// # `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
+    // `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
 
-    def ofTemporalUnit(amount: Int64, tu: TemporalUnit): DurationZ =
-        import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
-        try {
-             let TemporalUnit(tu1) = tu;
-             DurationZ(of(amount, tu1))
-        } catch { 
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
-        }
+    // def ofTemporalUnit(amount: Int64, tu: TemporalUnit): DurationZ =
+    //     import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
+    //     try {
+    //          let TemporalUnit(tu1) = tu;
+    //          DurationZ(of(amount, tu1))
+    //     } catch { 
+    //         case ex: ##java.lang.Exception => 
+    //             import java.lang.Throwable.getMessage(): String \ {};
+    //             bug!(getMessage(checked_cast(ex)))
+    //     }
 
-    pub def ofHalfDays(i: Int64): DurationZ = 
-        Time.Temporal.ChronoUnit.HalfDays 
-            |> Time.Temporal.ChronoUnit.asTemporalUnit
-            |> ofTemporalUnit(i)
+    // pub def ofHalfDays(i: Int64): DurationZ = 
+    //     Time.Temporal.ChronoUnit.HalfDays 
+    //         |> Time.Temporal.ChronoUnit.asTemporalUnit
+    //         |> ofTemporalUnit(i)
 
 
     /// `to` functions
@@ -416,15 +416,15 @@ mod Time.DurationZ {
         DurationZ(unsafe x1.minusNanos(nanos))
 
 
-    pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        Time.Temporal.ChronoUnit.HalfDays
-            |> Time.Temporal.ChronoUnit.asTemporalUnit
-            |> plusHelper(x, i)
+    // pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
+    //     Time.Temporal.ChronoUnit.HalfDays
+    //         |> Time.Temporal.ChronoUnit.asTemporalUnit
+    //         |> plusHelper(x, i)
 
-    pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        Time.Temporal.ChronoUnit.HalfDays
-            |> Time.Temporal.ChronoUnit.asTemporalUnit
-            |> minusHelper(x, i)
+    // pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
+    //     Time.Temporal.ChronoUnit.HalfDays
+    //         |> Time.Temporal.ChronoUnit.asTemporalUnit
+    //         |> minusHelper(x, i)
 
     /// multiply / divide functions
 
@@ -436,36 +436,36 @@ mod Time.DurationZ {
         let DurationZ(x1) = x;
         DurationZ(unsafe x1.dividedBy(y))
 
-    /// ## generic helper functions
+    // generic helper functions
     
-    /// `plus` specialized - except for HalfDays we already have a `plus_` function for the other supported ChronoUnits
+    // `plus` specialized - except for HalfDays we already have a `plus_` function for the other supported ChronoUnits
 
-    def plusHelper(x: DurationZ, amount: Int64, tu: TemporalUnit): DurationZ =
-        import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
-        try {
-            let DurationZ(x1) = x;
-            let TemporalUnit(tu1) = tu;
-            plus(x1, amount, tu1) |> DurationZ
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
-        }
+    // def plusHelper(x: DurationZ, amount: Int64, tu: TemporalUnit): DurationZ =
+    //     import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
+    //     try {
+    //         let DurationZ(x1) = x;
+    //         let TemporalUnit(tu1) = tu;
+    //         plus(x1, amount, tu1) |> DurationZ
+    //     } catch {
+    //         case ex: ##java.lang.Exception => 
+    //             import java.lang.Throwable.getMessage(): String \ {};
+    //             bug!(getMessage(checked_cast(ex)))
+    //     }
     
 
-    /// `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
+    // `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
 
-    def minusHelper(x: DurationZ, amount: Int64, tu: TemporalUnit): DurationZ =
-        import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
-        try {
-            let DurationZ(x1) = x;
-            let TemporalUnit(tu1) = tu;
-            DurationZ(minus(x1, amount, tu1))
-        } catch {
-            case ex: ##java.lang.Exception => 
-                import java.lang.Throwable.getMessage(): String \ {};
-                bug!(getMessage(checked_cast(ex)))
-        }
+    // def minusHelper(x: DurationZ, amount: Int64, tu: TemporalUnit): DurationZ =
+    //     import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
+    //     try {
+    //         let DurationZ(x1) = x;
+    //         let TemporalUnit(tu1) = tu;
+    //         DurationZ(minus(x1, amount, tu1))
+    //     } catch {
+    //         case ex: ##java.lang.Exception => 
+    //             import java.lang.Throwable.getMessage(): String \ {};
+    //             bug!(getMessage(checked_cast(ex)))
+    //     }
     
 
 

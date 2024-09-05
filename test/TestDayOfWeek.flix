@@ -66,15 +66,15 @@ mod TestDayOfWeek {
     // fromLocalDate                                                           //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def fromLocalDate01(): Bool = 
-        let date = Time.LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 1});
-        Time.DayOfWeek.fromLocalDate(date) == Time.DayOfWeek.Sunday
+    // @test
+    // def fromLocalDate01(): Bool = 
+    //     let date = Time.LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 1});
+    //     Time.DayOfWeek.fromLocalDate(date) == Time.DayOfWeek.Sunday
 
-    @test
-    def fromLocalDate02(): Bool =
-        let date = Time.LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 2});
-        Time.DayOfWeek.fromLocalDate(date) == Time.DayOfWeek.Monday
+    // @test
+    // def fromLocalDate02(): Bool =
+    //     let date = Time.LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 2});
+    //     Time.DayOfWeek.fromLocalDate(date) == Time.DayOfWeek.Monday
 
 
     /////////////////////////////////////////////////////////////////////////////

@@ -33,43 +33,38 @@ mod Time.Chrono.MinguoEra {
     use Time.Chrono.MinguoEra.{BEFORE_ROC, ROC}
     use Time.Format.TextStyle
 
+    import java.time.chrono.{MinguoEra => JMinguoEra}
     import java.lang.{Enum => JEnum}
 
-    pub def marshalMinguoEra(x: MinguoEra): ##java.time.chrono.MinguoEra = 
-        import static java_get_field java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
-        import static java_get_field java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
+    pub def marshalMinguoEra(x: MinguoEra): JMinguoEra = 
         match x {
-            case BEFORE_ROC => getBEFORE_ROC()
-            case ROC        => getROC() 
+            case BEFORE_ROC => unsafe JMinguoEra.BEFORE_ROC
+            case ROC        => unsafe JMinguoEra.ROC
         }
 
-    def primEquals(x: ##java.time.chrono.MinguoEra, y: ##java.time.chrono.MinguoEra): Bool =
+    def primEquals(x: JMinguoEra, y: JMinguoEra): Bool =
         let x1 = (checked_cast(x) : JEnum);
         let y1 = (checked_cast(y) : JEnum);
         unsafe x1.equals(y1)
 
-    pub def unmarshalMinguoEra(x: ##java.time.chrono.MinguoEra): MinguoEra =
-        import static java_get_field java.time.chrono.MinguoEra.BEFORE_ROC: ##java.time.chrono.MinguoEra \ {} as getBEFORE_ROC;
-        import static java_get_field java.time.chrono.MinguoEra.ROC: ##java.time.chrono.MinguoEra \ {} as getROC;
+    pub def unmarshalMinguoEra(x: JMinguoEra): MinguoEra =
         match x {
-            case x1 if primEquals(x1, getBEFORE_ROC())  => BEFORE_ROC
-            case x1 if primEquals(x1, getROC())         => ROC
+            case x1 if primEquals(x1, unsafe JMinguoEra.BEFORE_ROC)  => BEFORE_ROC
+            case x1 if primEquals(x1, unsafe JMinguoEra.ROC)         => ROC
             case _                                      => bug!("unmarshalMinguoEra")
         }
 
     pub def getValue(x: MinguoEra): Int32 = 
-        import java.time.chrono.MinguoEra.getValue(): Int32 \ {};
         let x1 = marshalMinguoEra(x);
-        getValue(x1)
+        unsafe x1.getValue()
 
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: MinguoEra): String = 
-        import java.time.chrono.MinguoEra.getDisplayName(##java.time.format.TextStyle, ##java.util.Locale): String \ {};
         let x1 = marshalMinguoEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        getDisplayName(x1, style1, locale1)
+        unsafe x1.getDisplayName(style1, locale1)
 
 
 
