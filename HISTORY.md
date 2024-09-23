@@ -1,5 +1,5 @@
 ### v0.12.0
-   Reimplemented `DateTimeFormatterBuilder` to use a struct.
+   Reimplemented `DateTimeFormatterBuilder` as an effect.
 
 ### v0.11.0
    Updated to use new Java interop (module level import declarations).

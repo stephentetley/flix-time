@@ -18,9 +18,14 @@ mod Time.Format {
 
     import java.time.format.{DateTimeFormatterBuilder => JDateTimeFormatterBuilder}
 
-    pub struct DateTimeFormatterBuilder[r: Region]{
-        builder: JDateTimeFormatterBuilder
+
+    pub eff DateTimeFormatterBuilder {
+        pub def currentDateTimeFormatterBuilder(): JDateTimeFormatterBuilder
+        pub def fail(msg: String): Void
     }
+
+    // pub type alias DateTimeFormatterBuilder[a: Type, ef: Eff] = Unit -> a \ {DateTimeFormatterBuild, ef}
+
 }
 
 
@@ -35,193 +40,204 @@ mod Time.Format.DateTimeFormatterBuilder {
     use Time.Format.TextStyle
 
     import java.time.format.{DateTimeFormatterBuilder => JDateTimeFormatterBuilder}
+    import java.time.format.{DateTimeFormatter => JDateTimeFormatter}
+    import java.util.{Set => JSet}
 
-    pub def newDateTimeFormatterBuilder(rc: Region[r]): DateTimeFormatterBuilder[r] \ r =
-        let builder1 = unsafe new JDateTimeFormatterBuilder();
-        new DateTimeFormatterBuilder @ rc { builder = builder1 }
+    def runHelper(build: Unit -> a \ DateTimeFormatterBuilder + ef, 
+                    builderToFormatter: JDateTimeFormatterBuilder -> JDateTimeFormatter): Result[String, DateTimeFormatter[t]] \ ef =
+        let builder = unsafe new JDateTimeFormatterBuilder();
+        let ans = try {
+            Ok(build())
+        } with DateTimeFormatterBuilder {
+            def currentDateTimeFormatterBuilder(k) = {
+                k(builder)
+            }
+            def fail(msg, _k) = {
+                checked_ecast(Err(msg))
+            }
+        };
+        match ans {
+            case Ok(_)    => Ok(DateTimeFormatter(builderToFormatter(builder)))
+            case Err(msg) => Err(msg)
+        }
 
-    pub def toFormatter(builder: DateTimeFormatterBuilder[r]): DateTimeFormatter[t] \ r = 
-        let builder1 = builder->builder;
-        let ans = unsafe builder1.toFormatter();
-        DateTimeFormatter(ans)
+    pub def run(build: Unit -> a \ DateTimeFormatterBuilder + ef): Result[String, DateTimeFormatter[t]] \ ef =
+        runHelper(build, builder -> unsafe builder.toFormatter())
 
-    pub def toFormatterWithLocale(loc: Locale, builder: DateTimeFormatterBuilder[r]): DateTimeFormatter[t] \ r = 
-        let builder1 = builder->builder;
+    pub def toFormatterWithLocale(loc: Locale, build: Unit -> a \ DateTimeFormatterBuilder + ef): Result[String, DateTimeFormatter[t]] \ ef = 
         let Locale(loc1) = loc;
-        let ans = unsafe builder1.toFormatter(loc1);
-        DateTimeFormatter(ans)
+        runHelper(build, builder -> unsafe builder.toFormatter(loc1))
 
-    // TODO: some builder functions are probably locale sensitive if so they should be in IO...
+    // // TODO: some builder functions are probably locale sensitive if so they should be in IO...
 
-    pub def append(fmt: DateTimeFormatter[t], builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
+    pub def append(fmt: DateTimeFormatter[t]): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
         let DateTimeFormatter(fmt1) = fmt;
-        let _ = unsafe builder1.append(fmt1);
+        let _ = unsafe builder.append(fmt1);
         ()
 
 
 
-    pub def appendChronologyId(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendChronologyId();
+    pub def appendChronologyId(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendChronologyId();
         ()
 
 
-    pub def appendChronologyText(style: TextStyle, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
+    pub def appendChronologyText(style: TextStyle): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let _ = unsafe builder1.appendChronologyText(style1);
+        let _ = unsafe builder.appendChronologyText(style1);
         ()
 
     // Java 16
 
-    pub def appendDayPeriodText(style: TextStyle, builder: DateTimeFormatterBuilder[r]): Unit \ r  = 
-        let builder1 = builder->builder;
+    pub def appendDayPeriodText(style: TextStyle): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let _ = unsafe builder1.appendDayPeriodText(style1);
+        let _ = unsafe builder.appendDayPeriodText(style1);
         ()
 
 
-    pub def appendGenericZoneText(style: TextStyle, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
+    pub def appendGenericZoneText(style: TextStyle): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let _ = unsafe builder1.appendGenericZoneText(style1);
+        let _ = unsafe builder.appendGenericZoneText(style1);
         ()
 
-    // pub def appendGenericZoneTextWithZones(style: ##java.time.format.TextStyle, preferredZones: ##java.util.Set, builder: DateTimeFormatterBuilder[r]): Unit \ r \ r =
-    //     import java.time.format.DateTimeFormatterBuilder.appendGenericZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ r;
-    //     let DateTimeFormatterBuilder(b1) = b;
-    //     appendGenericZoneText(b1, style, preferredZones) |> DateTimeFormatterBuilder
-
-
-    pub def appendInstant(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendInstant();
+    // TODO use wrapped types
+    pub def appendGenericZoneTextWithZones(style:TextStyle, preferredZones: JSet): Unit \ DateTimeFormatterBuilder =
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
+        let _ = unsafe builder.appendGenericZoneText(style1, preferredZones);
         ()
 
-    pub def appendInstantWithFractionalDigits(fractionalDigits: Int32, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendInstant(fractionalDigits);
+    pub def appendInstant(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendInstant();
         ()
 
-    pub def appendLiteralChar(ch: Char, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendLiteral(ch);
+    pub def appendInstantWithFractionalDigits(fractionalDigits: Int32): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendInstant(fractionalDigits);
         ()
 
-    pub def appendLiteralString(s: String, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendLiteral(s);
+    pub def appendLiteralChar(ch: Char): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendLiteral(ch);
+        ()
+
+    pub def appendLiteralString(s: String): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendLiteral(s);
         ()
 
     pub def appendLocalized(timeStyle: {timeStyle = FormatStyle}, 
-                                dateStyle: {dateStyle = FormatStyle}, 
-                                builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
+                                dateStyle: {dateStyle = FormatStyle}): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
         let timeStyle1 = Time.Format.FormatStyle.marshalFormatStyle(timeStyle#timeStyle);
         let dateStyle1 = Time.Format.FormatStyle.marshalFormatStyle(dateStyle#dateStyle);
-        let _ = unsafe builder1.appendLocalized(timeStyle1, dateStyle1);
+        let _ = unsafe builder.appendLocalized(timeStyle1, dateStyle1);
         ()
 
-    pub def appendLocalizedOffset(style: TextStyle, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
+    pub def appendLocalizedOffset(style: TextStyle): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let _ = unsafe builder1.appendLocalizedOffset(style1);
+        let _ = unsafe builder.appendLocalizedOffset(style1);
         ()
 
 
     pub def appendOffset(pattern: {pattern = String}, 
-                            noOffsetText: {noOffsetText = String}, 
-                            builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendOffset(pattern#pattern, noOffsetText#noOffsetText);
+                            noOffsetText: {noOffsetText = String}): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText);
         ()
 
 
-    pub def appendOffsetId(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendOffsetId();
+    pub def appendOffsetId(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendOffsetId();
         ()
 
-    pub def appendOptional(fmt: DateTimeFormatter[t], builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder; 
+    pub def appendOptional(fmt: DateTimeFormatter[t]): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder(); 
         let DateTimeFormatter(fmt1) = fmt;
-        let _ = unsafe builder1.appendOptional(fmt1);
+        let _ = unsafe builder.appendOptional(fmt1);
         ()
 
-    pub def appendPattern(patt: String, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendPattern(patt);
+    pub def appendPattern(patt: String): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendPattern(patt);
         ()
 
-    pub def appendZoneId(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendZoneId();
+    pub def appendZoneId(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendZoneId();
         ()
 
 
-    pub def appendZoneOrOffsetId(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendZoneOrOffsetId();
+    pub def appendZoneOrOffsetId(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendZoneOrOffsetId();
         ()
 
-    pub def appendZoneRegionId(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.appendZoneRegionId();
+    pub def appendZoneRegionId(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.appendZoneRegionId();
         ()
 
-    pub def appendZoneText(style: TextStyle, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
+    pub def appendZoneText(style: TextStyle): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
-        let _ = unsafe builder1.appendZoneText(style1);
+        let _ = unsafe builder.appendZoneText(style1);
+        ()
+
+    // TODO use wrapped types
+    pub def appendZoneTextWithZones(style: TextStyle, preferredZones: JSet): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let style1 = Time.Format.TextStyle.marshalTextStyle(style);
+        let _ = unsafe builder.appendZoneText(style1, preferredZones);
+        ()
+
+    pub def optionalStart(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.optionalStart();
+        ()
+
+    pub def optionalEnd(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.optionalEnd();
         ()
 
 
-    // pub def appendZoneTextWithZones(style: ##java.time.format.TextStyle, preferredZones: ##java.util.Set, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-    //     import java.time.format.DateTimeFormatterBuilder.appendZoneText(##java.time.format.TextStyle, ##java.util.Set): ##java.time.format.DateTimeFormatterBuilder \ r;
-    //     let DateTimeFormatterBuilder(b1) = b;
-    //     appendZoneText(b1, style, preferredZones) |> DateTimeFormatterBuilder
-
-
-    pub def optionalStart(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.optionalStart();
+    pub def padNext(n: Int32): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.padNext(n);
         ()
 
-    pub def optionalEnd(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.optionalEnd();
+    pub def padNextWithChar(n: Int32, ch: Char): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.padNext(n, ch);
         ()
 
-
-    pub def padNext(n: Int32, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.padNext(n);
+    pub def parseCaseSensitive(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.parseCaseSensitive();
         ()
 
-    pub def padNextWithChar(n: Int32, ch: Char, builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.padNext(n, ch);
+    pub def parseCaseInsensitive(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.parseCaseInsensitive();
         ()
 
-    pub def parseCaseSensitive(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.parseCaseSensitive();
+    pub def parseStrict(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.parseStrict();
         ()
 
-    pub def parseCaseInsensitive(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.parseCaseInsensitive();
-        ()
-
-    pub def parseStrict(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.parseStrict();
-        ()
-
-    pub def parseLenient(builder: DateTimeFormatterBuilder[r]): Unit \ r = 
-        let builder1 = builder->builder;
-        let _ = unsafe builder1.parseLenient();
+    pub def parseLenient(): Unit \ DateTimeFormatterBuilder = 
+        let builder = do Time.Format.DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+        let _ = unsafe builder.parseLenient();
         ()
 
 }
