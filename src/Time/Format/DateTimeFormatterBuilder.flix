@@ -41,11 +41,12 @@ mod Time.Format.DateTimeFormatterBuilder {
     import java.time.format.{DateTimeFormatter => JDateTimeFormatter}
     import java.util.{Set => JSet}
 
-    def runHelper(build: Unit -> a \ DateTimeFormatterBuilder + ef, 
-                    builderToFormatter: JDateTimeFormatterBuilder -> JDateTimeFormatter): Result[String, DateTimeFormatter[t]] \ ef =
+    def handleHelper(build: a -> b \ ef, 
+                    builderToFormatter: JDateTimeFormatterBuilder -> JDateTimeFormatter): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) =
         let builder = unsafe new JDateTimeFormatterBuilder();
+        x -> 
         let ans = try {
-            Ok(build())
+            Ok(build(x))
         } with DateTimeFormatterBuilder {
             def currentDateTimeFormatterBuilder(k) = {
                 k(builder)
@@ -59,12 +60,19 @@ mod Time.Format.DateTimeFormatterBuilder {
             case Err(msg) => Err(msg)
         }
 
-    pub def run(build: Unit -> a \ DateTimeFormatterBuilder + ef): Result[String, DateTimeFormatter[t]] \ ef =
-        runHelper(build, builder -> unsafe builder.toFormatter())
+    pub def handler(build: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) =
+        handleHelper(build, builder -> unsafe builder.toFormatter())
 
-    pub def toFormatterWithLocale(loc: Locale, build: Unit -> a \ DateTimeFormatterBuilder + ef): Result[String, DateTimeFormatter[t]] \ ef = 
+    pub def run(build: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder)  =
+        handleHelper(build, builder -> unsafe builder.toFormatter())()
+
+    pub def handleWithLocale(loc: Locale, build: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) = 
         let Locale(loc1) = loc;
-        runHelper(build, builder -> unsafe builder.toFormatter(loc1))
+        handleHelper(build, builder -> unsafe builder.toFormatter(loc1))
+    
+    pub def runWithLocale(loc: Locale, build: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) = 
+        let Locale(loc1) = loc;
+        handleHelper(build, builder -> unsafe builder.toFormatter(loc1))()
 
     // // TODO: some builder functions are probably locale sensitive if so they should be in IO...
 
