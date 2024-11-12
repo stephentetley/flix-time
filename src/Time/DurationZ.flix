@@ -303,9 +303,8 @@ mod Time.DurationZ {
     /// Get the nanosecond part of the duration `x`.
     ///
     pub def getNano(x: DurationZ): Int32 =
-        import java.time.Duration.getNano(): Int32 \ {};
         let DurationZ(x1) = x;
-        getNano(x1)
+        unsafe x1.getNano()
 
     ///
     /// Set the nano part of the duration `x` to `seconds``.
@@ -318,9 +317,8 @@ mod Time.DurationZ {
     /// Get the second part of the duration `x`.
     ///
     pub def getSeconds(x: DurationZ): Int64 =
-        import java.time.Duration.getSeconds(): Int64 \ {};
         let DurationZ(x1) = x;
-        getSeconds(x1)
+        unsafe x1.getSeconds()
 
     ///
     /// Set the seconds part of the duration `x` to `seconds``.

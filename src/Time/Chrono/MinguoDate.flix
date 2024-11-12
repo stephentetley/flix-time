@@ -31,9 +31,8 @@ mod Time.Chrono {
     ///
     instance ToString[MinguoDate] {
         pub def toString(x: MinguoDate): String =
-            import java.time.chrono.MinguoDate.toString(): String \ {};
             let MinguoDate(x1) = x;
-            toString(x1)
+            unsafe x1.toString()
     }
 
     instance Eq[MinguoDate] {
