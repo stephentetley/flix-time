@@ -123,7 +123,7 @@ mod Time.LocalDateTime {
 
     pub def asTemporalAccessor(x: LocalDateTime): TemporalAccessor = 
         let LocalDateTime(x1) = x;
-        let cx1 = unchecked_cast(x1 as JTemporalAccessor);
+        let cx1 = checked_cast(x1);
         TemporalAccessor(cx1)
 
     /// Constructors

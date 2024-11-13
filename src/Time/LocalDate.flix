@@ -113,6 +113,7 @@ mod Time.LocalDate {
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.lang.{Object, CharSequence}
+    import java.lang.{Exception => JException}
 
     /// Unwrap
 
@@ -123,7 +124,7 @@ mod Time.LocalDate {
 
     pub def asTemporalAccessor(x: LocalDate): TemporalAccessor = 
         let LocalDate(x1) = x;
-        let cx1 = unchecked_cast(x1 as JTemporalAccessor);
+        let cx1: JTemporalAccessor = checked_cast(x1);
         TemporalAccessor(cx1)
 
 
@@ -169,10 +170,10 @@ mod Time.LocalDate {
         let ZoneId(z1) = zoneId;
         ZonedDateTime(unsafe x1.atStartOfDay(z1))
 
-    // pub def atTimeWithLocalTime(x: LocalDate, t: LocalTime): LocalDateTime =
-    //     let LocalDate(x1) = x;
-    //     let LocalTime(t1) = t;
-    //     LocalDateTime(unsafe x1.atTime(t1))
+    pub def atTimeWithLocalTime(x: LocalDate, t: LocalTime): LocalDateTime =
+        let LocalDate(x1) = x;
+        let LocalTime(t1) = t;
+        LocalDateTime(unsafe x1.atTime(t1))
 
     pub def atTimeWithOffsetTime(x: LocalDate, t: OffsetTime): OffsetDateTime =
         let LocalDate(x1) = x;
@@ -190,29 +191,28 @@ mod Time.LocalDate {
         LocalDate(unsafe JLocalDate.ofEpochDay(x))
 
 
-    // ///  `fromTemporalAccessor` specialized
-    // pub def fromTemporalAccessor(x: TemporalAccessor): LocalDate = 
-    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromTemporalAccessor;
-    //     try {
-    //         let TemporalAccessor(x1) = x;
-    //         fromTemporalAccessor(x1) |> LocalDate
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
+    ///  `fromTemporalAccessor` specialized
+    pub def fromTemporalAccessor(x: TemporalAccessor): LocalDate = 
+        try {
+            let TemporalAccessor(x1) = x;
+            let x2: JLocalDate = unsafe JLocalDate.from(x1);
+            LocalDate(x2)
+        } catch {
+            case ex: JException => 
+                bug!(unsafe ex.getMessage())
+        }
 
-    // /// TODO - idiomatic Flix is `toSomeDatatype` in the respective module rather than `fromSomeDatatype`
-    // pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
-    //     Time.LocalDateTime.asTemporalAccessor(x) 
-    //         |> fromTemporalAccessor
+    /// TODO - idiomatic Flix is `toSomeDatatype` in the respective module rather than `fromSomeDatatype`
+    pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
+        Time.LocalDateTime.asTemporalAccessor(x) 
+            |> fromTemporalAccessor
 
     /// `to` functions
 
-    // pub def toEpochDay(x: LocalDate): Int64 =
-    //     import java.time.chrono.ChronoLocalDate.toEpochDay(): Int64 \ {};
-    //     let LocalDate(x1) = x;
-    //     toEpochDay(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
+    pub def toEpochDay(x: LocalDate): Int64 =
+        let LocalDate(x1) = x;
+        let x2: JChronoLocalDate = checked_cast(x1);
+        unsafe x2.toEpochDay()
 
 
     /// `parse` / `format` functions
@@ -227,7 +227,7 @@ mod Time.LocalDate {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
+            let cs: CharSequence  = checked_cast(s1);
             LocalDate(unsafe JLocalDate.parse(cs, fmtr))
         })
 
