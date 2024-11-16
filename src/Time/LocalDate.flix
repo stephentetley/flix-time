@@ -112,7 +112,10 @@ mod Time.LocalDate {
     import java.time.{LocalDate => JLocalDate}
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
     import java.time.temporal.{ChronoField => JChronoField}
+    import java.time.temporal.{IsoFields => JIsoFields}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
+    import java.time.temporal.{TemporalField => JTemporalField}
+    import java.time.temporal.{WeekFields => JWeekFields}
     import java.lang.{Object, CharSequence}
     import java.lang.{Exception => JException}
 
@@ -355,17 +358,19 @@ mod Time.LocalDate {
 
     /// Get / Set Iso
 
-    // pub def getDayOfQuarter(x: LocalDate): Int64 = 
-    //     import static java_get_field java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;
-    //     getHelper(get_DAY_OF_QUARTER(), x)
+    pub def getDayOfQuarter(x: LocalDate): Int64 = 
+        let LocalDate(x1) = x;
+        let field = unsafe JIsoFields.DAY_OF_QUARTER;
+        unsafe x1.getLong(field)
 
     // pub def withDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
     //     import static java_get_field java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;
     //     withTemporalFieldHelper(get_DAY_OF_QUARTER(), Int32.toInt64(d), x)
 
-    // pub def getQuarterOfYear(x: LocalDate): Int64 = 
-    //     import static java_get_field java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField \ {} as get_QUARTER_OF_YEAR;
-    //     getHelper(get_QUARTER_OF_YEAR(), x)
+    pub def getQuarterOfYear(x: LocalDate): Int64 =  
+        let LocalDate(x1) = x;
+        let field = unsafe JIsoFields.QUARTER_OF_YEAR;
+        unsafe x1.getLong(field)
 
     // pub def withQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
     //     import static java_get_field java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField \ {} as get_QUARTER_OF_YEAR;
@@ -376,9 +381,12 @@ mod Time.LocalDate {
     //     import static java_get_field java.time.temporal.WeekFields.ISO: ##java.time.temporal.WeekFields \ {} as get_ISO;
     //     get_ISO()
 
-    // pub def getWeekOfYear(x: LocalDate): Int64 = 
-    //     import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField \ {};
-    //     getHelper(getISOWeekFields() |> weekBasedYear, x)
+    pub def getWeekOfYear(x: LocalDate): Int64 = 
+        let LocalDate(x1) = x;
+        let weekFields = unsafe JWeekFields.ISO;
+        let field: JTemporalField = unsafe weekFields.weekBasedYear();
+        unsafe x1.getLong(field)
+
 
     // pub def withWeekOfYear(d: Int32, x: LocalDate): LocalDate =
     //     import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField \ {};
@@ -386,28 +394,31 @@ mod Time.LocalDate {
         
 
     pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
-        // import static java_get_field java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
-        let field = unsafe JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH;
         let LocalDate(x1) = x;
+        let field = unsafe JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH;
         unsafe x1.getLong(field)
         
     
-    // pub def getAlignedDayOfWeekInYear(x: LocalDate): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_YEAR;
-    //     getHelper(unchecked_cast(get_ALIGNED_DAY_OF_WEEK_IN_YEAR() as ##java.time.temporal.TemporalField), x)
-
-    // pub def getAlignedWeekOfMonth(x: LocalDate): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.ALIGNED_WEEK_OF_MONTH: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_WEEK_OF_MONTH;
-    //     getHelper(unchecked_cast(get_ALIGNED_WEEK_OF_MONTH() as ##java.time.temporal.TemporalField), x)
-
-    // pub def getAlignedWeekOfYear(x: LocalDate): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_WEEK_OF_YEAR;
-    //     getHelper(unchecked_cast(get_ALIGNED_WEEK_OF_YEAR() as ##java.time.temporal.TemporalField), x)
+    pub def getAlignedDayOfWeekInYear(x: LocalDate): Int64 =
+        let LocalDate(x1) = x;
+        let field = unsafe JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR;
+        unsafe x1.getLong(field)
 
 
-    // pub def getEra(x: LocalDate): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.ERA: ##java.time.temporal.ChronoField \ {} as get_ERA;
-    //     getHelper(unchecked_cast(get_ERA() as ##java.time.temporal.TemporalField), x)
+    pub def getAlignedWeekOfMonth(x: LocalDate): Int64 =
+        let LocalDate(x1) = x;
+        let field = unsafe JChronoField.ALIGNED_WEEK_OF_MONTH;
+        unsafe x1.getLong(field)
+
+    pub def getAlignedWeekOfYear(x: LocalDate): Int64 =
+        let LocalDate(x1) = x;
+        let field = unsafe JChronoField.ALIGNED_WEEK_OF_YEAR;
+        unsafe x1.getLong(field)
+
+    pub def getEra(x: LocalDate): Int64 =
+        let LocalDate(x1) = x;
+        let field = unsafe JChronoField.ERA;
+        unsafe x1.getLong(field)
 
     // pub def adjustMonthDay(i: MonthDay, x: LocalDate): LocalDate =
     //     let i1 = unchecked_cast(Time.MonthDay.getMonthDay(i) as ##java.time.temporal.TemporalAdjuster);
