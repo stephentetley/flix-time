@@ -19,9 +19,9 @@ mod Time.Format {
     import java.time.format.{DateTimeFormatterBuilder => JDateTimeFormatterBuilder}
 
 
-    pub eff DateTimeFormatterBuilder {
-        pub def currentDateTimeFormatterBuilder(): JDateTimeFormatterBuilder
-        pub def fail(msg: String): Void
+    eff DateTimeFormatterBuilder {
+        def currentDateTimeFormatterBuilder(): JDateTimeFormatterBuilder
+        def fail(msg: String): Void
     }
 
 }
@@ -41,38 +41,38 @@ mod Time.Format.DateTimeFormatterBuilder {
     import java.time.format.{DateTimeFormatter => JDateTimeFormatter}
     import java.util.{Set => JSet}
 
-    def handleHelper(build: a -> b \ ef, 
+    def handleHelper(builder: a -> b \ ef, 
                     builderToFormatter: JDateTimeFormatterBuilder -> JDateTimeFormatter): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) =
-        let builder = unsafe new JDateTimeFormatterBuilder();
+        let bld = unsafe new JDateTimeFormatterBuilder();
         x -> 
-        let ans = try {
-            Ok(build(x))
+        let ans = run {
+            Ok(builder(x))
         } with DateTimeFormatterBuilder {
             def currentDateTimeFormatterBuilder(k) = {
-                k(builder)
+                k(bld)
             }
             def fail(msg, _k) = {
                 checked_ecast(Err(msg))
             }
         };
         match ans {
-            case Ok(_)    => Ok(DateTimeFormatter(builderToFormatter(builder)))
+            case Ok(_)    => Ok(DateTimeFormatter(builderToFormatter(bld)))
             case Err(msg) => Err(msg)
         }
 
-    pub def handler(build: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) =
-        handleHelper(build, builder -> unsafe builder.toFormatter())
+    pub def handler(builder: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) =
+        handleHelper(builder, bld -> unsafe bld.toFormatter())
 
-    pub def run(build: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder)  =
-        handleHelper(build, builder -> unsafe builder.toFormatter())()
+    pub def build(builder: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder)  =
+        handleHelper(builder, bld -> unsafe bld.toFormatter())()
 
-    pub def handleWithLocale(loc: Locale, build: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) = 
+    pub def handleWithLocale(loc: Locale, builder: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) = 
         let Locale(loc1) = loc;
-        handleHelper(build, builder -> unsafe builder.toFormatter(loc1))
+        handleHelper(builder, bld -> unsafe bld.toFormatter(loc1))
     
-    pub def runWithLocale(loc: Locale, build: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) = 
+    pub def buildWithLocale(loc: Locale, builder: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) = 
         let Locale(loc1) = loc;
-        handleHelper(build, builder -> unsafe builder.toFormatter(loc1))()
+        handleHelper(builder, bld -> unsafe bld.toFormatter(loc1))()
 
     // // TODO: some builder functions are probably locale sensitive if so they should be in IO...
 

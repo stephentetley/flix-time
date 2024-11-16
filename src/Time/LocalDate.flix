@@ -111,6 +111,7 @@ mod Time.LocalDate {
 
     import java.time.{LocalDate => JLocalDate}
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
+    import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.lang.{Object, CharSequence}
     import java.lang.{Exception => JException}
@@ -384,9 +385,12 @@ mod Time.LocalDate {
     //     withTemporalFieldHelper(getISOWeekFields() |> weekBasedYear, Int32.toInt64(d), x)
         
 
-    // pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
-    //     getHelper(unchecked_cast(get_ALIGNED_DAY_OF_WEEK_IN_MONTH() as ##java.time.temporal.TemporalField), x)
+    pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
+        // import static java_get_field java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_MONTH;
+        let field = unsafe JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH;
+        let LocalDate(x1) = x;
+        unsafe x1.getLong(field)
+        
     
     // pub def getAlignedDayOfWeekInYear(x: LocalDate): Int64 =
     //     import static java_get_field java.time.temporal.ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR: ##java.time.temporal.ChronoField \ {} as get_ALIGNED_DAY_OF_WEEK_IN_YEAR;
