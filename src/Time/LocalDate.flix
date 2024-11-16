@@ -48,7 +48,7 @@ mod Time {
         pub def fromString(s: String): Option[LocalDate] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
+                let cs: CharSequence = checked_cast(s1);
                 LocalDate(unsafe JLocalDate.parse(cs))
             }) |> Result.toOption
     }
@@ -99,6 +99,7 @@ mod Time.LocalDate {
     use Time.OffsetTime
     use Time.OffsetTime.{OffsetTime}
     use Time.Period
+    use Time.Period.{Period}
     use Time.YearMonth
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
@@ -112,7 +113,9 @@ mod Time.LocalDate {
     import java.time.{LocalDate => JLocalDate}
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
     import java.time.temporal.{ChronoField => JChronoField}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{IsoFields => JIsoFields}
+    import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.time.temporal.{TemporalField => JTemporalField}
     import java.time.temporal.{WeekFields => JWeekFields}
@@ -262,7 +265,7 @@ mod Time.LocalDate {
     pub def isAfter(x: LocalDate, y: LocalDate): Bool =
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        let cy1 = (checked_cast(y1) : JChronoLocalDate);
+        let cy1: JChronoLocalDate = checked_cast(y1);
         unsafe x1.isAfter(cy1)
 
 
@@ -498,45 +501,63 @@ mod Time.LocalDate {
         LocalDate(unsafe x1.minusDays(days))
 
 
-    // pub def plusDecades(x: LocalDate, i: Int64): LocalDate = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit \ {} as get_DECADES;
-    //     plusHelper(x, i, unchecked_cast(get_DECADES() as ##java.time.temporal.TemporalUnit))
+    pub def plusDecades(x: LocalDate, i: Int64): LocalDate =
+        let LocalDate(x1) = x;
+        let u = unsafe JChronoUnit.DECADES;
+        let x2 = unsafe x1.plus(i, u);
+        LocalDate(x2)
 
-    // pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DECADES:##java.time.temporal.ChronoUnit \ {} as get_DECADES;
-    //     minusHelper(x, i, unchecked_cast(get_DECADES() as ##java.time.temporal.TemporalUnit))
 
-    // pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
-    //     plusHelper(x, i, unchecked_cast(get_CENTURIES() as ##java.time.temporal.TemporalUnit))
+    pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
+        let LocalDate(x1) = x;
+        let u = unsafe JChronoUnit.DECADES;
+        let x2 = unsafe x1.minus(i, u);
+        LocalDate(x2)
 
-    // pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
-    //     minusHelper(x, i, unchecked_cast(get_CENTURIES() as ##java.time.temporal.TemporalUnit))
+    pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
+        let LocalDate(x1) = x;
+        let u = unsafe JChronoUnit.CENTURIES;
+        let x2 = unsafe x1.plus(i, u);
+        LocalDate(x2)
 
-    // pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit \ {} as get_MILLENNIA;
-    //     plusHelper(x, i, unchecked_cast(get_MILLENNIA() as ##java.time.temporal.TemporalUnit))
 
-    // pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MILLENNIA: ##java.time.temporal.ChronoUnit \ {} as get_MILLENNIA;
-    //     minusHelper(x, i, unchecked_cast(get_MILLENNIA() as ##java.time.temporal.TemporalUnit))
+    pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
+        let LocalDate(x1) = x;
+        let u = unsafe JChronoUnit.CENTURIES;
+        let x2 = unsafe x1.minus(i, u);
+        LocalDate(x2)
+
+
+    pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
+        let LocalDate(x1) = x;
+        let u = unsafe JChronoUnit.MILLENNIA;
+        let x2 = unsafe x1.plus(i, u);
+        LocalDate(x2)
+
+    pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
+        let LocalDate(x1) = x;
+        let u = unsafe JChronoUnit.MILLENNIA;
+        let x2 = unsafe x1.minus(i, u);
+        LocalDate(x2)
 
 
     // Period methods
 
-    // pub def plusPeriod(i: LocalDate, x: Period): LocalDate =
-    //     import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getLocalDate(i) as ##java.time.temporal.Temporal);
-    //     LocalDate(unchecked_cast(addTo(x1, i1) as ##java.time.LocalDate))
+    pub def plusPeriod(x: LocalDate, p: Period): LocalDate =
+        let LocalDate(x1) = x;
+        let Period(p1) = p;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe p1.addTo(t1);
+        let d1 = unchecked_cast(t2 as JLocalDate);
+        LocalDate(d1)
     
-    // pub def minusPeriod(i: LocalDate, x: Period): LocalDate =
-    //     import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getLocalDate(i) as ##java.time.temporal.Temporal);
-    //     LocalDate(unchecked_cast(subtractFrom(x1, i1) as ##java.time.LocalDate))
-
+    pub def minusPeriod(x: LocalDate, p: Period): LocalDate =
+        let LocalDate(x1) = x;
+        let Period(p1) = p;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe p1.subtractFrom(t1);
+        let d1 = unchecked_cast(t2 as JLocalDate);
+        LocalDate(d1)
 
     // between / until functions
 

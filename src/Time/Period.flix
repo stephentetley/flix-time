@@ -257,9 +257,9 @@ mod Time.Period {
 
     pub def multipliedBy(x: Period, y: Int32): Period =
         let Period(x1) = x;
-        let cx1 = (checked_cast(x1) : ChronoPeriod);
+        let cx1: ChronoPeriod = checked_cast(x1);
         let ans : ChronoPeriod = unsafe cx1.multipliedBy(y);
-        let ans1 = (unchecked_cast(ans as JPeriod));
+        let ans1 = unchecked_cast(ans as JPeriod);
         Period(ans1)
 
     // No `dividedBy` in java.time.Period
