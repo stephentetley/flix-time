@@ -94,6 +94,7 @@ mod Time.LocalDate {
     use Time.LocalTime.{LocalTime}
     use Time.Month
     use Time.MonthDay
+    use Time.MonthDay.{MonthDay}
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
     use Time.OffsetTime
@@ -101,6 +102,7 @@ mod Time.LocalDate {
     use Time.Period
     use Time.Period.{Period}
     use Time.YearMonth
+    use Time.YearMonth.{YearMonth}
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
     use Time.ZoneId
@@ -117,6 +119,8 @@ mod Time.LocalDate {
     import java.time.temporal.{IsoFields => JIsoFields}
     import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
+    import java.time.temporal.{TemporalAdjuster => JTemporalAdjuster}
+    import java.time.temporal.{TemporalAdjusters => JTemporalAdjusters}
     import java.time.temporal.{TemporalField => JTemporalField}
     import java.time.temporal.{WeekFields => JWeekFields}
     import java.lang.{Object, CharSequence}
@@ -366,23 +370,22 @@ mod Time.LocalDate {
         let field = unsafe JIsoFields.DAY_OF_QUARTER;
         unsafe x1.getLong(field)
 
-    // pub def withDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
-    //     import static java_get_field java.time.temporal.IsoFields.DAY_OF_QUARTER: ##java.time.temporal.TemporalField \ {} as get_DAY_OF_QUARTER;
-    //     withTemporalFieldHelper(get_DAY_OF_QUARTER(), Int32.toInt64(d), x)
+    pub def withDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
+        let LocalDate(x1) = x;
+        let tf1 = unsafe JIsoFields.DAY_OF_QUARTER;
+        let ans = unsafe x1.with(tf1, Int32.toInt64(d));
+        LocalDate(ans)
 
     pub def getQuarterOfYear(x: LocalDate): Int64 =  
         let LocalDate(x1) = x;
         let field = unsafe JIsoFields.QUARTER_OF_YEAR;
         unsafe x1.getLong(field)
 
-    // pub def withQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
-    //     import static java_get_field java.time.temporal.IsoFields.QUARTER_OF_YEAR: ##java.time.temporal.TemporalField \ {} as get_QUARTER_OF_YEAR;
-    //     withTemporalFieldHelper(get_QUARTER_OF_YEAR(), Int32.toInt64(d), x)
-
-
-    // def getISOWeekFields(): ##java.time.temporal.WeekFields = 
-    //     import static java_get_field java.time.temporal.WeekFields.ISO: ##java.time.temporal.WeekFields \ {} as get_ISO;
-    //     get_ISO()
+    pub def withQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
+        let LocalDate(x1) = x;
+        let tf1 = unsafe JIsoFields.QUARTER_OF_YEAR;
+        let ans = unsafe x1.with(tf1, Int32.toInt64(d));
+        LocalDate(ans)
 
     pub def getWeekOfYear(x: LocalDate): Int64 = 
         let LocalDate(x1) = x;
@@ -391,10 +394,13 @@ mod Time.LocalDate {
         unsafe x1.getLong(field)
 
 
-    // pub def withWeekOfYear(d: Int32, x: LocalDate): LocalDate =
-    //     import java.time.temporal.WeekFields.weekBasedYear(): ##java.time.temporal.TemporalField \ {};
-    //     withTemporalFieldHelper(getISOWeekFields() |> weekBasedYear, Int32.toInt64(d), x)
-        
+    pub def withWeekOfYear(d: Int32, x: LocalDate): LocalDate =
+        let LocalDate(x1) = x;
+        let wf1 = unsafe JWeekFields.ISO;
+        let tf1 = unsafe wf1.weekBasedYear();
+        let ans = unsafe x1.with(tf1, Int32.toInt64(d));
+        LocalDate(ans)
+
 
     pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
         let LocalDate(x1) = x;
@@ -423,47 +429,69 @@ mod Time.LocalDate {
         let field = unsafe JChronoField.ERA;
         unsafe x1.getLong(field)
 
-    // pub def adjustMonthDay(i: MonthDay, x: LocalDate): LocalDate =
-    //     let i1 = unchecked_cast(Time.MonthDay.getMonthDay(i) as ##java.time.temporal.TemporalAdjuster);
-    //     withTemporalAdjusterHelper(i1, x)
+    pub def adjustMonthDay(i: MonthDay, x: LocalDate): LocalDate =
+        let LocalDate(x1) = x;
+        let MonthDay(i1) = i;
+        let ta1: JTemporalAdjuster = checked_cast(i1);
+        let ans = unsafe x1.with(ta1);
+        LocalDate(ans)
 
-    // pub def adjustYearMonth(i: YearMonth, x: LocalDate): LocalDate =
-    //     let i1 = unchecked_cast(Time.YearMonth.getYearMonth(i) as ##java.time.temporal.TemporalAdjuster);
-    //     withTemporalAdjusterHelper(i1, x)
+
+    pub def adjustYearMonth(i: YearMonth, x: LocalDate): LocalDate =
+        let LocalDate(x1) = x;
+        let YearMonth(i1) = i;
+        let ta1: JTemporalAdjuster = checked_cast(i1);
+        let ans = unsafe x1.with(ta1);
+        LocalDate(ans)
 
 
-    // pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
-    //     import static java_get_field java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField \ {} as get_EPOCH_DAY;
-    //     withTemporalFieldHelper(unchecked_cast(get_EPOCH_DAY() as ##java.time.temporal.TemporalField), i, x)
+    pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
+        let LocalDate(x1) = x;
+        let cf1 = unsafe JChronoField.EPOCH_DAY;
+        let ans = unsafe x1.with(cf1, i);
+        LocalDate(ans)
 
     /// DayOfWeek methods
 
-    // pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
-    //     import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
-    //     let d1 = unchecked_cast(getLocalDate(d) as ##java.time.temporal.Temporal);
-    //     LocalDate(unchecked_cast(adjustInto(x1, d1) as ##java.time.LocalDate))
+    pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
+        let LocalDate(d1) = d;
+        let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
+        let t1: JTemporal = checked_cast(d1);
+        let t2 = unsafe x1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JLocalDate);
+        LocalDate(ans)
 
     
-    // pub def adjustToFirstDayOfMonth(x: LocalDate): LocalDate = 
-    //     import static java.time.temporal.TemporalAdjusters.firstDayOfMonth(): ##java.time.temporal.TemporalAdjuster \ {};
-    //     withTemporalAdjusterHelper(firstDayOfMonth(), x)
+    pub def adjustToFirstDayOfMonth(x: LocalDate): LocalDate = 
+        let LocalDate(x1) = x;
+        let a1 = unsafe JTemporalAdjusters.firstDayOfMonth();
+        let ans = unsafe x1.with(a1);
+        LocalDate(ans)
 
-    // pub def adjustToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
-    //     import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth(): ##java.time.temporal.TemporalAdjuster \ {};
-    //     withTemporalAdjusterHelper(firstDayOfNextMonth(), x)
+    pub def adjustToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
+        let LocalDate(x1) = x;
+        let a1 = unsafe JTemporalAdjusters.firstDayOfNextMonth();
+        let ans = unsafe x1.with(a1);
+        LocalDate(ans)
 
-    // pub def adjustToFirstDayOfNextYear(x: LocalDate): LocalDate = 
-    //     import static java.time.temporal.TemporalAdjusters.firstDayOfNextYear(): ##java.time.temporal.TemporalAdjuster \ {};
-    //     withTemporalAdjusterHelper(firstDayOfNextYear(), x)
+    pub def adjustToFirstDayOfNextYear(x: LocalDate): LocalDate = 
+        let LocalDate(x1) = x;
+        let a1 = unsafe JTemporalAdjusters.firstDayOfNextYear();
+        let ans = unsafe x1.with(a1);
+        LocalDate(ans)
 
-    // pub def adjustToLastDayOfMonth(x: LocalDate): LocalDate =  
-    //     import static java.time.temporal.TemporalAdjusters.lastDayOfMonth(): ##java.time.temporal.TemporalAdjuster \ {};
-    //     withTemporalAdjusterHelper(lastDayOfMonth(), x)
+    pub def adjustToLastDayOfMonth(x: LocalDate): LocalDate =  
+        let LocalDate(x1) = x;
+        let a1 = unsafe JTemporalAdjusters.lastDayOfMonth();
+        let ans = unsafe x1.with(a1);
+        LocalDate(ans)
 
-    // pub def adjustToLastDayOfYear(x: LocalDate): LocalDate =  
-    //     import static java.time.temporal.TemporalAdjusters.lastDayOfYear(): ##java.time.temporal.TemporalAdjuster \ {};
-    //     withTemporalAdjusterHelper(lastDayOfYear(), x)
+
+    pub def adjustToLastDayOfYear(x: LocalDate): LocalDate =  
+        let LocalDate(x1) = x;
+        let a1 = unsafe JTemporalAdjusters.lastDayOfYear();
+        let ans = unsafe x1.with(a1);
+        LocalDate(ans)
 
 
     /// plus / minus functions
@@ -561,28 +589,33 @@ mod Time.LocalDate {
 
     // between / until functions
 
-    // def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalDate, end = LocalDate}): Int64 = 
-    //     import java.time.LocalDate.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-    //     let b1 = getLocalDate(r#start);
-    //     let e1 = unchecked_cast(getLocalDate(r#end) as ##java.time.temporal.Temporal);
-    //     until(b1, e1, u)
+    pub def daysUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
+        let LocalDate(b1) = begin#begin;
+        let LocalDate(e1) = end#end;
+        let t1: JTemporal = checked_cast(e1);
+        let u1 = unsafe JChronoUnit.DAYS;
+        unsafe b1.until(t1, u1)
 
+    pub def monthsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
+        let LocalDate(b1) = begin#begin;
+        let LocalDate(e1) = end#end;
+        let t1: JTemporal = checked_cast(e1);
+        let u1 = unsafe JChronoUnit.MONTHS;
+        unsafe b1.until(t1, u1)
 
-    // pub def daysUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-    //     untilHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), r)
+    pub def yearsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
+        let LocalDate(b1) = begin#begin;
+        let LocalDate(e1) = end#end;
+        let t1: JTemporal = checked_cast(e1);
+        let u1 = unsafe JChronoUnit.YEARS;
+        unsafe b1.until(t1, u1)
 
-    // pub def monthsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
-    //     untilHelper(unchecked_cast(get_MONTHS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def yearsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-    //     untilHelper(unchecked_cast(get_YEARS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def quarterYearsUntil(r: {start = LocalDate, end = LocalDate}): Int64 = 
-    //     import static java_get_field java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
-    //     untilHelper(get_QUARTER_YEARS(), r)
+    pub def quarterYearsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
+        let LocalDate(b1) = begin#begin;
+        let LocalDate(e1) = end#end;
+        let t1: JTemporal = checked_cast(e1);
+        let u1 = unsafe JIsoFields.QUARTER_YEARS;
+        unsafe b1.until(t1, u1)
 
     // generic helper functions
 
