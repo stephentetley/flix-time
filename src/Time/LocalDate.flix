@@ -576,16 +576,16 @@ mod Time.LocalDate {
         let Period(p1) = p;
         let t1: JTemporal = checked_cast(x1);
         let t2 = unsafe p1.addTo(t1);
-        let d1 = unchecked_cast(t2 as JLocalDate);
-        LocalDate(d1)
+        let ans = unchecked_cast(t2 as JLocalDate);
+        LocalDate(ans)
     
     pub def minusPeriod(x: LocalDate, p: Period): LocalDate =
         let LocalDate(x1) = x;
         let Period(p1) = p;
         let t1: JTemporal = checked_cast(x1);
         let t2 = unsafe p1.subtractFrom(t1);
-        let d1 = unchecked_cast(t2 as JLocalDate);
-        LocalDate(d1)
+        let ans = unchecked_cast(t2 as JLocalDate);
+        LocalDate(ans)
 
     // between / until functions
 

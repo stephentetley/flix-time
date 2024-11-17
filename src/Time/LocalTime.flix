@@ -96,8 +96,11 @@ mod Time.LocalTime {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
-    import java.time.{LocalTime => JLocalTime}
     import java.lang.{Object, CharSequence}
+    import java.time.{LocalTime => JLocalTime}
+    import java.time.temporal.{ChronoField => JChronoField}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{Temporal => JTemporal}
 
     // Unwrap
 
@@ -228,13 +231,16 @@ mod Time.LocalTime {
         unsafe x1.isAfter(y1)
 
 
-    // pub def isAmOfDay(x: LocalTime): Bool = 
-    //     import static java_get_field java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField \ {} as get_AMPM_OF_DAY;        
-    //     getHelper(unchecked_cast(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField), x) == 0
+    pub def isAmOfDay(x: LocalTime): Bool = 
+        let LocalTime(x1) = x;
+        let tf1 = unsafe JChronoField.AMPM_OF_DAY;
+        unsafe x1.get(tf1) == 0
 
-    // pub def isPmOfDay(x: LocalTime): Bool = 
-    //     import static java_get_field java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField \ {} as get_AMPM_OF_DAY;        
-    //     getHelper(unchecked_cast(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField), x) == 1
+
+    pub def isPmOfDay(x: LocalTime): Bool = 
+        let LocalTime(x1) = x;
+        let tf1 = unsafe JChronoField.AMPM_OF_DAY;
+        unsafe x1.get(tf1) == 1
 
     // Getters and Setters
 
@@ -272,14 +278,12 @@ mod Time.LocalTime {
 
     // truncate functions
 
-    // def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: LocalTime): LocalTime = 
-    //     import java.time.LocalTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.LocalTime \ {};
-    //     let LocalTime(x1) = x;
-    //     LocalTime(truncatedTo(x1, u))
 
-    // pub def truncatedToHours(x: LocalTime): LocalTime = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-    //     truncatedToHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToHours(x: LocalTime): LocalTime = 
+        let LocalTime(x1) = x;
+        let u1 = unsafe JChronoUnit.HOURS;
+        let ans = unsafe x1.truncatedTo(u1);
+        LocalTime(ans)
 
     // plus / minus functions
 
@@ -317,17 +321,22 @@ mod Time.LocalTime {
 
 
     
-    // pub def plusDuration(i: LocalTime, x: DurationZ): LocalTime =
-    //     import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let i1 = unchecked_cast(getLocalTime(i) as ##java.time.temporal.Temporal);
-    //     let DurationZ(x1) = x;
-    //     LocalTime(unchecked_cast(addTo(x1, i1) as ##java.time.LocalTime))
+    pub def plusDuration(x: LocalTime, d: DurationZ): LocalTime =
+        let LocalTime(x1) = x;
+        let DurationZ(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.addTo(t1);
+        let ans = unchecked_cast(t2 as JLocalTime);
+        LocalTime(ans)
     
-    // pub def minusDuration(i: LocalTime, x: DurationZ): LocalTime =
-    //     import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let i1 = unchecked_cast(getLocalTime(i) as ##java.time.temporal.Temporal);
-    //     let DurationZ(x1) = x;
-    //     LocalTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.LocalTime))
+    pub def minusDuration(x: LocalTime, d: DurationZ): LocalTime =
+        let LocalTime(x1) = x;
+        let DurationZ(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.subtractFrom(t1);
+        let ans = unchecked_cast(t2 as JLocalTime);
+        LocalTime(ans)
+
 
     // between / until functions
 
