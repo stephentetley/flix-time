@@ -81,26 +81,32 @@ mod Time.LocalTime {
 
     use Time.LocalTime
     use Time.LocalTime.{LocalTime}
-    
+        
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
     use Time.Format.TimeFormat
     use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
     use Time.OffsetTime
+    use Time.OffsetTime.{OffsetTime}
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
     use Time.InstantZ
     use Time.InstantZ.{InstantZ}
     use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
     import java.lang.{Object, CharSequence}
+    import java.time.{Duration => JDuration}
     import java.time.{LocalTime => JLocalTime}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{Temporal => JTemporal}
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
 
     // Unwrap
 
@@ -165,18 +171,29 @@ mod Time.LocalTime {
     //             bug!(getMessage(checked_cast(ex)))
     //     }
 
-    // pub def fromLocalDateTime(x: LocalDateTime): LocalTime = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromLocalDateTime(x: LocalDateTime): LocalTime = 
+        let LocalDateTime(x1) = x;
+        let ta1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JLocalTime.from(ta1);
+        LocalTime(ans)
 
-    // pub def fromOffsetDateTime(x: OffsetDateTime): LocalTime = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromOffsetDateTime(x: OffsetDateTime): LocalTime = 
+        let OffsetDateTime(x1) = x;
+        let ta1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JLocalTime.from(ta1);
+        LocalTime(ans)
 
-    // pub def fromOffsetTime(x: OffsetTime): LocalTime = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromOffsetTime(x: OffsetTime): LocalTime = 
+        let OffsetTime(x1) = x;
+        let ta1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JLocalTime.from(ta1);
+        LocalTime(ans)
 
-    // pub def fromZonedDateTime(x: ZonedDateTime): LocalTime = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
-
+    pub def fromZonedDateTime(x: ZonedDateTime): LocalTime = 
+        let ZonedDateTime(x1) = x;
+        let ta1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JLocalTime.from(ta1);
+        LocalTime(ans)
 
     /// `to` functions
 
@@ -340,32 +357,37 @@ mod Time.LocalTime {
 
     // between / until functions
 
-    // pub def between(r: {start = LocalTime, end = LocalTime}): DurationZ =
-    //     import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-    //     let s1 = unchecked_cast(getLocalTime(r#start) as ##java.time.temporal.Temporal);
-    //     let e1 = unchecked_cast(getLocalTime(r#end) as ##java.time.temporal.Temporal);
-    //     DurationZ(between(s1, e1)) 
+    pub def between(begin: {begin = LocalTime}, end: {end = LocalTime}): DurationZ =
+        let LocalTime(b1) = begin#begin;
+        let LocalTime(e1) = end#end;
+        let tb1: JTemporal = checked_cast(b1);
+        let te1: JTemporal = checked_cast(e1);
+        let ans = unsafe JDuration.between(tb1, te1);
+        DurationZ(ans)
 
 
-    // def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalTime, end = LocalTime}): Int64 = 
-    //     import java.time.LocalTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-    //     let b1 = getLocalTime(r#start);
-    //     let e1 = unchecked_cast(getLocalTime(r#end) as ##java.time.temporal.Temporal);
-    //     until(b1, e1, u)
+
+    pub def secondsUntil(begin: {begin = LocalTime}, end: {end = LocalTime}): Int64 = 
+        let LocalTime(b1) = begin#begin;
+        let LocalTime(e1) = end#end;
+        let te1: JTemporal = checked_cast(e1);
+        let tu1 = unsafe JChronoUnit.SECONDS;
+        unsafe b1.until(te1, tu1)
 
 
-    // pub def secondsUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-    //     untilHelper(unchecked_cast(get_SECONDS() as ##java.time.temporal.TemporalUnit), r)
+    pub def minutesUntil(begin: {begin = LocalTime}, end: {end = LocalTime}): Int64 = 
+        let LocalTime(b1) = begin#begin;
+        let LocalTime(e1) = end#end;
+        let te1: JTemporal = checked_cast(e1);
+        let tu1 = unsafe JChronoUnit.MINUTES;
+        unsafe b1.until(te1, tu1)
 
-    // pub def minutesUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-    //     untilHelper(unchecked_cast(get_MINUTES() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def hoursUntil(r: {start = LocalTime, end = LocalTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-    //     untilHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), r)
-
+    pub def hoursUntil(begin: {begin = LocalTime}, end: {end = LocalTime}): Int64 = 
+        let LocalTime(b1) = begin#begin;
+        let LocalTime(e1) = end#end;
+        let te1: JTemporal = checked_cast(e1);
+        let tu1 = unsafe JChronoUnit.HOURS;
+        unsafe b1.until(te1, tu1)
     
     // // generic helper functions
 
