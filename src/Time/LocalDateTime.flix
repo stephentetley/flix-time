@@ -100,6 +100,7 @@ mod Time.LocalDateTime {
     use Time.Month
     use Time.MonthDay
     use Time.Period
+    use Time.Period.{Period}
     use Time.OffsetDateTime
     use Time.YearMonth
     use Time.ZonedDateTime
@@ -108,11 +109,16 @@ mod Time.LocalDateTime {
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
 
-    import java.time.{LocalDateTime => JLocalDateTime}
-    import java.time.{LocalDate => JLocalDate}
-    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
-    import java.time.chrono.{ChronoLocalDate, ChronoLocalDateTime}
     import java.lang.{Object, CharSequence}
+    import java.time.{Duration => JDuration}
+    import java.time.{LocalDate => JLocalDate}
+    import java.time.{LocalDateTime => JLocalDateTime}
+    import java.time.chrono.{ChronoLocalDate}
+    import java.time.chrono.{ChronoLocalDateTime}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{IsoFields => JIsoFields}
+    import java.time.temporal.{Temporal => JTemporal}
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
 
     /// Unwrap
 
@@ -236,23 +242,21 @@ mod Time.LocalDateTime {
 
     /// predicates / comparisons
 
-    // ///
-    // /// Returns `true` if `x` is before `y`.
-    // ///
-    // pub def isBefore(x: LocalDateTime, y: LocalDateTime): Bool =
-    //     import java.time.LocalDateTime.isBefore(##java.time.chrono.ChronoLocalDateTime): Bool \ {};
-    //     let LocalDateTime(x1) = x;
-    //     let LocalDateTime(y1) = y;
-    //     isBefore(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDateTime))
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def isBefore(x: LocalDateTime, y: LocalDateTime): Bool =
+        let LocalDateTime(x1) = x;
+        let LocalDateTime(y1) = y;
+        unsafe x1.isBefore(y1)
 
-    // ///
-    // /// Returns `true` if `x` is after `y`.
-    // ///
-    // pub def isAfter(x: LocalDateTime, y: LocalDateTime): Bool =
-    //     import java.time.LocalDateTime.isAfter(##java.time.chrono.ChronoLocalDateTime): Bool \ {};
-    //     let LocalDateTime(x1) = x;
-    //     let LocalDateTime(y1) = y;
-    //     isAfter(x1, unchecked_cast(y1 as ##java.time.chrono.ChronoLocalDateTime))
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def isAfter(x: LocalDateTime, y: LocalDateTime): Bool =
+        let LocalDateTime(x1) = x;
+        let LocalDateTime(y1) = y;
+        unsafe x1.isAfter(y1)
 
     /// LocalDateTime functions
 
@@ -450,80 +454,96 @@ mod Time.LocalDateTime {
         LocalDateTime(unsafe x1.minusNanos(nanos))
 
 
-    // pub def plusPeriod(i: LocalDateTime, x: Period): LocalDateTime =
-    //     import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getLocalDateTime(i) as ##java.time.temporal.Temporal);
-    //     LocalDateTime(unchecked_cast(addTo(x1, i1) as ##java.time.LocalDateTime))
+    pub def plusPeriod(x: LocalDateTime, p: Period): LocalDateTime =
+        let LocalDateTime(x1) = x;
+        let Period(p1) = p;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe p1.addTo(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
     
-    // pub def minusPeriod(i: LocalDateTime, x: Period): LocalDateTime =
-    //     import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getLocalDateTime(i) as ##java.time.temporal.Temporal);
-    //     LocalDateTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.LocalDateTime))
+    pub def minusPeriod(x: LocalDateTime, p: Period): LocalDateTime =
+        let LocalDateTime(x1) = x;
+        let Period(p1) = p;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe p1.subtractFrom(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
 
 
-
-    // pub def plusDuration(dt: LocalDateTime, x: DurationZ): LocalDateTime =
-    //     import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let DurationZ(x1) = x;
-    //     let dt1 = unchecked_cast(getLocalDateTime(dt) as ##java.time.temporal.Temporal);
-    //     LocalDateTime(unchecked_cast(addTo(x1, dt1) as ##java.time.LocalDateTime))
+    pub def plusDuration(x: LocalDateTime, d: DurationZ): LocalDateTime =
+        let LocalDateTime(x1) = x;
+        let DurationZ(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.addTo(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
     
-    // pub def minusDuration(dt: LocalDateTime, x: DurationZ): LocalDateTime =
-    //     import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let DurationZ(x1) = x;
-    //     let dt1 = unchecked_cast(getLocalDateTime(dt) as ##java.time.temporal.Temporal);
-    //     LocalDateTime(unchecked_cast(subtractFrom(x1, dt1) as ##java.time.LocalDateTime))
+    pub def minusDuration(x: LocalDateTime, d: DurationZ): LocalDateTime =
+        let LocalDateTime(x1) = x;
+        let DurationZ(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.subtractFrom(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
 
 
     // between / until functions
 
-    // pub def between(r: {start = LocalDateTime, end = LocalDateTime}): DurationZ =
-    //     import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-    //     let s1 = unchecked_cast(getLocalDateTime(r#start) as ##java.time.temporal.Temporal);
-    //     let e1 = unchecked_cast(getLocalDateTime(r#end) as ##java.time.temporal.Temporal);
-    //     DurationZ(between(s1, e1)) 
-                            
+    pub def between(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): DurationZ =
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let tb1: JTemporal = checked_cast(b1);
+        let te1: JTemporal = checked_cast(e1);
+        let ans = unsafe JDuration.between(tb1, te1);
+        DurationZ(ans)
 
+    pub def secondsUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.SECONDS;
+        unsafe b1.until(e1, cu1)
 
-    // def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import java.time.LocalDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-    //     let b1 = getLocalDateTime(r#start);
-    //     let e1 = unchecked_cast(getLocalDateTime(r#end) as ##java.time.temporal.Temporal);
-    //     until(b1, e1, u)
+    pub def minutesUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.MINUTES;
+        unsafe b1.until(e1, cu1)
 
+    pub def hoursUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.HOURS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def secondsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-    //     untilHelper(unchecked_cast(get_SECONDS() as ##java.time.temporal.TemporalUnit), r)
+    pub def halfDaysUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.HALF_DAYS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def minutesUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-    //     untilHelper(unchecked_cast(get_MINUTES() as ##java.time.temporal.TemporalUnit), r)
+    pub def daysUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.DAYS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def hoursUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-    //     untilHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), r)
+    pub def monthsUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.MONTHS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def halfDaysUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-    //     untilHelper(unchecked_cast(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit), r)
+    pub def yearsUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.YEARS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def daysUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-    //     untilHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def monthsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
-    //     untilHelper(unchecked_cast(get_MONTHS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def yearsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-    //     untilHelper(unchecked_cast(get_YEARS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def quarterYearsUntil(r: {start = LocalDateTime, end = LocalDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
-    //     untilHelper(get_QUARTER_YEARS(), r)
+    pub def quarterYearsUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 
+        let LocalDateTime(b1) = begin#begin;
+        let LocalDateTime(e1) = end#end;
+        let cu1 = unsafe JIsoFields.QUARTER_YEARS;
+        unsafe b1.until(e1, cu1)
 
 }

@@ -1,5 +1,6 @@
 ### v0.13.0 (in progress)
    Updated `DateTimeFormatterBuilder` to use `run-with`.
+   Reimplemented many functions that were commented out in the source.
 
 ### v0.12.0
    Reimplemented `DateTimeFormatterBuilder` as an effect.
