@@ -99,10 +99,12 @@ mod Time.LocalDateTime {
     use Time.LocalTime.{LocalTime}
     use Time.Month
     use Time.MonthDay
+    use Time.MonthDay.{MonthDay}
     use Time.Period
     use Time.Period.{Period}
     use Time.OffsetDateTime
     use Time.YearMonth
+    use Time.YearMonth.{YearMonth}
     use Time.ZonedDateTime
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
@@ -337,55 +339,63 @@ mod Time.LocalDateTime {
 
     /// YearMonth methods
 
-    // pub def adjustYearMonth(x: YearMonth, dt: LocalDateTime): LocalDateTime = 
-    //     import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.YearMonth.getYearMonth(x);
-    //     let dt1 = unchecked_cast(getLocalDateTime(dt) as ##java.time.temporal.Temporal);
-    //     LocalDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.LocalDateTime))
+    pub def adjustYearMonth(ym: YearMonth, x: LocalDateTime): LocalDateTime = 
+        let LocalDateTime(x1) = x;
+        let YearMonth(ym1) = ym;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe ym1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
 
     /// LocalDate methods
 
-    // pub def adjustLocalDate(x: LocalDate, dt: LocalDateTime): LocalDateTime = 
-    //     import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.LocalDate.getLocalDate(x);
-    //     let dt1 = unchecked_cast(getLocalDateTime(dt) as ##java.time.temporal.Temporal);
-    //     LocalDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.LocalDateTime))
+    pub def adjustLocalDate(d: LocalDate, x: LocalDateTime): LocalDateTime = 
+        let LocalDateTime(x1) = x;
+        let LocalDate(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
 
     /// LocalTime methods
 
-    // pub def adjustLocalTime(x: LocalTime, dt: LocalDateTime): LocalDateTime = 
-    //     import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.LocalTime.getLocalTime(x);
-    //     let dt1 = unchecked_cast(getLocalDateTime(dt) as ##java.time.temporal.Temporal);
-        // LocalDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.LocalDateTime))
+    pub def adjustLocalTime(lt: LocalTime, x: LocalDateTime): LocalDateTime = 
+        let LocalDateTime(x1) = x;
+        let LocalTime(lt1) = lt;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe lt1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
 
     /// DayOfWeek methods
 
-    // pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDateTime): LocalDateTime = 
-    //     import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
-    //     let d1 = unchecked_cast(getLocalDateTime(d) as ##java.time.temporal.Temporal);
-    //     LocalDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.LocalDateTime))
+    pub def adjustDayOfWeek(d: DayOfWeek, x: LocalDateTime): LocalDateTime = 
+        let LocalDateTime(x1) = x;
+        let d1 = Time.DayOfWeek.marshalDayOfWeek(d);
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
 
     /// MonthDay methods
 
-    // pub def adjustMonthDay(x: MonthDay, d: LocalDateTime): LocalDateTime = 
-    //     import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.MonthDay.getMonthDay(x);
-    //     let d1 = unchecked_cast(getLocalDateTime(d) as ##java.time.temporal.Temporal);
-    //     LocalDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.LocalDateTime))
+    pub def adjustMonthDay(md: MonthDay, x: LocalDateTime): LocalDateTime = 
+        let LocalDateTime(x1) = x;
+        let MonthDay(md1) = md;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe md1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JLocalDateTime);
+        LocalDateTime(ans)
+        
 
 
     // truncate functions
 
-    // def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: LocalDateTime): LocalDateTime = 
-    //     import java.time.LocalDateTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.LocalDateTime \ {};
-    //     let LocalDateTime(x1) = x;
-    //     LocalDateTime(truncatedTo(x1, u))
-
-    // pub def truncatedToDays(x: LocalDateTime): LocalDateTime = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-    //     truncatedToHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToDays(x: LocalDateTime): LocalDateTime = 
+        let LocalDateTime(x1) = x;
+        let u1 = unsafe JChronoUnit.DAYS;
+        let ans = unsafe x1.truncatedTo(u1);
+        LocalDateTime(ans)
 
     // plus / minus functions
 
