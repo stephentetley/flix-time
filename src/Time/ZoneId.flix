@@ -172,11 +172,11 @@ mod Time.ZoneId {
             ZoneRules(unsafe x1.getRules())
         }) |> Result.toOption
 
-    //
-    // pub def normalized(x: ZoneId): ZoneId =
-    //     let ZoneId(x1) = x;
-    //     let x2 = unsafe x1.normalized();
-    //     ZoneId(x2)
+    
+    pub def normalized(x: ZoneId): ZoneId =
+        let ZoneId(x1) = x;
+        let x2 = unsafe x1.normalized();
+        ZoneId(x2)
 
 
 }

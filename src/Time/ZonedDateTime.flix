@@ -105,10 +105,13 @@ mod Time.ZonedDateTime {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
     use Time.ZoneOffset
+
+    import java.lang.{CharSequence}
+    import java.time.{Duration => JDuration}
     import java.time.{ZonedDateTime => JZonedDateTime}
     import java.time.{LocalDateTime => JLocalDateTime, LocalDate => JLocalDate}
     import java.time.chrono.{ChronoZonedDateTime, ChronoLocalDate, ChronoLocalDateTime}
-    import java.lang.{CharSequence}
+    import java.time.temporal.{Temporal => JTemporal}
 
     /// Unwrap
 
@@ -519,11 +522,14 @@ mod Time.ZonedDateTime {
     // between / until functions 
 
 
-    // pub def between(r: {start = ZonedDateTime, end = ZonedDateTime}): DurationZ =
-    //     import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-    //     let s1 = unchecked_cast(getZonedDateTime(r#start) as ##java.time.temporal.Temporal);
-    //     let e1 = unchecked_cast(getZonedDateTime(r#end) as ##java.time.temporal.Temporal);
-    //     DurationZ(between(s1, e1))
+    pub def between(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): DurationZ =
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let tb1: JTemporal = checked_cast(b1);
+        let te1: JTemporal = checked_cast(e1);
+        let ans = unsafe JDuration.between(tb1, te1);
+        DurationZ(ans)
+
 
     // `until` specialized
 

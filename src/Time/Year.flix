@@ -83,18 +83,24 @@ mod Time.Year {
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
     use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     use Time.Month
     use Time.MonthDay
     use Time.MonthDay.{MonthDay}
     use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
     use Time.YearMonth
     use Time.YearMonth.{YearMonth}
     use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
-    import java.time.{Year => JYear}
+
     import java.lang.{Object, CharSequence}
+    import java.time.{Year => JYear}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
 
     /// Unwrap
 
@@ -148,31 +154,34 @@ mod Time.Year {
 
     // `from` functions
 
-    // def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): Year = 
-    //     import static java.time.Year.from(##java.time.temporal.TemporalAccessor): ##java.time.Year \ {} as fromTA;
-    //     try {
-    //         Year(fromTA(x))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
+    pub def fromLocalDate(x: LocalDate): Year = 
+        let LocalDate(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JYear.from(t1);
+        Year(ans)
 
-    // pub def fromLocalDate(x: LocalDate): Year = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromLocalDateTime(x: LocalDateTime): Year = 
+        let LocalDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JYear.from(t1);
+        Year(ans)
 
-    // pub def fromLocalDateTime(x: LocalDateTime): Year = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def OffsetDateTime(x: OffsetDateTime): Year = 
+        let OffsetDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JYear.from(t1);
+        Year(ans)
 
-    // pub def fromOffsetDateTime(x: OffsetDateTime): Year = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
-
-    // pub def fromYearMonth(x: YearMonth): Year = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor))
-
-    // pub def fromZonedDateTime(x: ZonedDateTime): Year = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
-
+    pub def fromYearMonth(x: YearMonth): Year = 
+        let YearMonth(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JYear.from(t1);
+        Year(ans)
+    pub def fromZonedDateTime(x: ZonedDateTime): Year = 
+        let ZonedDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JYear.from(t1);
+        Year(ans)
 
     /// `parse` / `format` functions  
 
@@ -255,36 +264,37 @@ mod Time.Year {
     ///
     pub def plusYears(x: Year, yearsToAdd: Int64): Year =
         let Year(x1) = x;
-        Year(unsafe x1.plusYears(yearsToAdd))
+        let ans = unsafe x1.plusYears(yearsToAdd);
+        Year(ans)
 
     ///
     /// _
     ///
     pub def minusYears(x: Year, yearsToSubtract: Int64): Year =
         let Year(x1) = x;
-        Year(unsafe x1.minusYears(yearsToSubtract))
+        let ans = unsafe x1.minusYears(yearsToSubtract);
+        Year(ans)
 
 
     // between / until functions
 
-    // def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = Year, end = Year}): Int64 = 
-    //     import java.time.Year.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-    //     let b1 = getYear(r#start);
-    //     let e1 = unchecked_cast(getYear(r#end) as ##java.time.temporal.Temporal);
-    //     until(b1, e1, u)
+    pub def yearsUntil(begin: {begin = Year}, end: {end = Year}): Int64 = 
+        let Year(b1) = begin#begin;
+        let Year(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.YEARS;
+        unsafe b1.until(e1, cu1)
 
+    pub def decadesUntil(begin: {begin = Year}, end: {end = Year}): Int64 = 
+        let Year(b1) = begin#begin;
+        let Year(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.DECADES;
+        unsafe b1.until(e1, cu1)
 
-    // pub def yearsUntil(r: {start = Year, end = Year}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-    //     untilHelper(unchecked_cast(get_YEARS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def decadesUntil(r: {start = Year, end = Year}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DECADES: ##java.time.temporal.ChronoUnit \ {} as get_DECADES;
-    //     untilHelper(unchecked_cast(get_DECADES() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def centuriesUntil(r: {start = Year, end = Year}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.CENTURIES: ##java.time.temporal.ChronoUnit \ {} as get_CENTURIES;
-    //     untilHelper(unchecked_cast(get_CENTURIES() as ##java.time.temporal.TemporalUnit), r)
+    pub def centuriesUntil(begin: {begin = Year}, end: {end = Year}): Int64 = 
+        let Year(b1) = begin#begin;
+        let Year(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.CENTURIES;
+        unsafe b1.until(e1, cu1)
 
 
 }

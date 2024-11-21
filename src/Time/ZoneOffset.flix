@@ -144,21 +144,10 @@ mod Time.ZoneOffset {
 
 
 
-    // pub def getOffsetSeconds(x: ZoneOffset): Int32 =
-    //     import static java_get_field java.time.temporal.ChronoField.OFFSET_SECONDS: JChronoField \ {} as get_OFFSET_SECONDS;
-    //     getHelper(unchecked_cast(get_OFFSET_SECONDS() as JTemporalField), x)
-
-
-    // generic helper functions
-
-    // def getHelper(field: JTemporalField, x: ZoneOffset): Int32 =
-    //     try {
-    //         let ZoneOffset(x1) = x;
-    //         unsafe x1.get(field)
-    //     } catch {
-    //         case ex: Exception => 
-    //             bug!(unsafe ex.getMessage())
-    //     }
+    pub def getOffsetSeconds(x: ZoneOffset): Int32 =
+        let ZoneOffset(x1) = x;
+        let f1 = unsafe JChronoField.OFFSET_SECONDS;
+        unsafe x1.get(f1)
 
 
 
