@@ -101,6 +101,7 @@ mod Time.OffsetDateTime {
     use Time.OffsetTime
     use Time.OffsetTime.{OffsetTime}
     use Time.Period
+    use Time.Period.{Period}
     use Time.YearMonth
     use Time.YearMonth.{YearMonth}
     use Time.ZonedDateTime
@@ -110,7 +111,12 @@ mod Time.OffsetDateTime {
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
 
+    import java.time.{Duration => JDuration}
     import java.time.{OffsetDateTime => JOffsetDateTime}
+    import java.time.temporal.{ChronoField => JChronoField}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{IsoFields => JIsoFields}
+    import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.lang.{Object, CharSequence}
 
@@ -470,35 +476,37 @@ mod Time.OffsetDateTime {
     //     LocalTime(fromTA(d1))
 
 
-    // pub def adjustLocalTime(x: LocalTime, dt: OffsetDateTime): OffsetDateTime = 
-    //     import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.LocalTime.getLocalTime(x);
-    //     let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetDateTime))
+    pub def adjustLocalTime(lt: LocalTime, x: OffsetDateTime): OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        let LocalTime(lt1) = lt;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe lt1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
+        
 
-    // pub def getEpochDay(x: OffsetDateTime): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoField.EPOCH_DAY: ##java.time.temporal.ChronoField \ {} as get_EPOCH_DAY;        
-    //     getLongHelper(unchecked_cast(get_EPOCH_DAY() as ##java.time.temporal.TemporalField), x)
+    pub def getEpochDay(x: OffsetDateTime): Int64 = 
+        let OffsetDateTime(x1) = x;
+        let f1 = unsafe JChronoField.EPOCH_DAY;
+        unsafe x1.getLong(f1)
 
     /// ZoneOffset methods
 
-    // pub def adjustZoneOffset(zo: ZoneOffset, dt: OffsetDateTime): OffsetDateTime = 
-    //     import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let zo1 = Time.ZoneOffset.getZoneOffset(zo);
-    //     let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(adjustInto(zo1, dt1) as ##java.time.OffsetDateTime))
-
+    pub def adjustZoneOffset(zo: ZoneOffset, x: OffsetDateTime): OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        let ZoneOffset(zo1) = zo;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe zo1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
 
     // truncate functions
 
-    // def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: OffsetDateTime): OffsetDateTime = 
-    //     import java.time.OffsetDateTime.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.OffsetDateTime \ {};
-    //     let OffsetDateTime(x1) = x;
-    //     OffsetDateTime(truncatedTo(x1, u))
-
-    // pub def truncatedToDays(x: OffsetDateTime): OffsetDateTime = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-    //     truncatedToHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToDays(x: OffsetDateTime): OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        let u1 = unsafe JChronoUnit.DAYS;
+        let ans = unsafe x1.truncatedTo(u1);
+        OffsetDateTime(ans)
 
     // plus / minus functions
 
@@ -567,93 +575,100 @@ mod Time.OffsetDateTime {
         OffsetDateTime(unsafe x1.minusNanos(nanos))
 
 
-    // pub def plusDuration(i: OffsetDateTime, x: DurationZ): OffsetDateTime =
-    //     import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let DurationZ(x1) = x;
-    //     let i1 = unchecked_cast(getOffsetDateTime(i) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(addTo(x1, i1) as ##java.time.OffsetDateTime))
+    pub def plusDuration(x: OffsetDateTime, d: DurationZ): OffsetDateTime =
+        let OffsetDateTime(x1) = x;
+        let DurationZ(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.addTo(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
     
-    // pub def minusDuration(i: OffsetDateTime, x: DurationZ): OffsetDateTime =
-    //     import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let DurationZ(x1) = x;
-    //     let i1 = unchecked_cast(getOffsetDateTime(i) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.OffsetDateTime))
+    pub def minusDuration(x: OffsetDateTime, d: DurationZ): OffsetDateTime =
+        let OffsetDateTime(x1) = x;
+        let DurationZ(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.subtractFrom(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
 
     // Period methods
 
-    // pub def plusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
-    //     import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getOffsetDateTime(i) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(addTo(x1, i1) as ##java.time.OffsetDateTime))
-    
-    // pub def minusPeriod(i: OffsetDateTime, x: Period): OffsetDateTime =
-    //     import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getOffsetDateTime(i) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.OffsetDateTime))
+    pub def plusPeriod(x: OffsetDateTime, p: Period): OffsetDateTime =
+        let OffsetDateTime(x1) = x;
+        let Period(p1) = p;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe p1.addTo(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
 
+    pub def minusPeriod(x: OffsetDateTime, p: Period): OffsetDateTime =
+        let OffsetDateTime(x1) = x;
+        let Period(p1) = p;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe p1.subtractFrom(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
 
 
     // between / until functions
 
-    // pub def between(r: {start = OffsetDateTime, end = OffsetDateTime}): DurationZ =
-    //     import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-    //     let s1 = unchecked_cast(getOffsetDateTime(r#start) as ##java.time.temporal.Temporal);
-    //     let e1 = unchecked_cast(getOffsetDateTime(r#end) as ##java.time.temporal.Temporal);
-    //     DurationZ(between(s1, e1))
+    pub def between(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): DurationZ =
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let tb1: JTemporal = checked_cast(b1);
+        let te1: JTemporal = checked_cast(e1);
+        let ans = unsafe JDuration.between(tb1, te1);
+        DurationZ(ans)
+        
 
+    pub def secondsUntil(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): Int64 = 
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.SECONDS;
+        unsafe b1.until(e1, cu1)
 
-    // def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import java.time.OffsetDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-    //     let b1 = getOffsetDateTime(r#start);
-    //     let e1 = unchecked_cast(getOffsetDateTime(r#end) as ##java.time.temporal.Temporal);
-    //     until(b1, e1, u)
+    pub def minutesUntil(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): Int64 = 
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.MINUTES;
+        unsafe b1.until(e1, cu1)
 
+    pub def hoursUntil(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): Int64 = 
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.HOURS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def secondsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-    //     untilHelper(unchecked_cast(get_SECONDS() as ##java.time.temporal.TemporalUnit), r)
+    pub def halfDaysUntil(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): Int64 = 
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.HALF_DAYS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def minutesUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-    //     untilHelper(unchecked_cast(get_MINUTES() as ##java.time.temporal.TemporalUnit), r)
+    pub def daysUntil(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): Int64 = 
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.DAYS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def hoursUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-    //     untilHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), r)
+    pub def monthsUntil(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): Int64 = 
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.MONTHS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def halfDaysUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-    //     untilHelper(unchecked_cast(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit), r)
+    pub def yearsUntil(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): Int64 = 
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.YEARS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def daysUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-    //     untilHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), r)
+    pub def quarterYearsUntil(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): Int64 = 
+        let OffsetDateTime(b1) = begin#begin;
+        let OffsetDateTime(e1) = end#end;
+        let cu1 = unsafe JIsoFields.QUARTER_YEARS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def monthsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
-    //     untilHelper(unchecked_cast(get_MONTHS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def yearsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-    //     untilHelper(unchecked_cast(get_YEARS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def quarterYearsUntil(r: {start = OffsetDateTime, end = OffsetDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
-    //     untilHelper(get_QUARTER_YEARS(), r)
-
-    // generic helper functions
-
-    // def getHelper(t: ##java.time.temporal.TemporalField, x: OffsetDateTime): Int32 = 
-    //     import java.time.OffsetDateTime.get(##java.time.temporal.TemporalField): Int32 \ {};
-    //     let x1 = getOffsetDateTime(x);
-    //     get(x1, t)
-
-    // def getLongHelper(t: ##java.time.temporal.TemporalField, x: OffsetDateTime): Int64 = 
-    //     import java.time.OffsetDateTime.getLong(##java.time.temporal.TemporalField): Int64 \ {};
-    //     let x1 = getOffsetDateTime(x);
-    //     getLong(x1, t)
 
 
  
