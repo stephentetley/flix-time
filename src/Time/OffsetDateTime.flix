@@ -111,14 +111,19 @@ mod Time.OffsetDateTime {
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
 
+    import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
+    import java.time.{LocalDate => JLocalDate}
+    import java.time.{LocalDateTime => JLocalDateTime}
+    import java.time.{LocalTime => JLocalTime}
+    import java.time.{MonthDay => JMonthDay}
     import java.time.{OffsetDateTime => JOffsetDateTime}
+    import java.time.{YearMonth => JYearMonth}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{IsoFields => JIsoFields}
     import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
-    import java.lang.{Object, CharSequence}
 
     /// Unwrap
 
@@ -182,19 +187,11 @@ mod Time.OffsetDateTime {
 
     /// `fromTemporalAccessor` specialized
 
-    // def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): OffsetDateTime = 
-    //     import static java.time.OffsetDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.OffsetDateTime \ {} as fromTA;
-    //     try {
-    //         OffsetDateTime(fromTA(x))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
-    // pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
-    //     let x1 = unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor);
-    //     fromTemporalAccessorHelper(x1)
+    pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
+        let ZonedDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JOffsetDateTime.from(t1);
+        OffsetDateTime(ans)
 
     /// `to` functions
 
@@ -294,13 +291,17 @@ mod Time.OffsetDateTime {
         unsafe x1.isEqual(y1)
 
 
-    // pub def isAmOfDay(x: OffsetDateTime): Bool = 
-    //     import static java_get_field java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField \ {} as get_AMPM_OF_DAY;        
-    //     getHelper(unchecked_cast(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField), x) == 0
+    pub def isAmOfDay(x: OffsetDateTime): Bool = 
+        let OffsetDateTime(x1) = x;
+        let tf1 = unsafe JChronoField.AMPM_OF_DAY;
+        unsafe x1.get(tf1) == 0
 
-    // pub def isPmOfDay(x: OffsetDateTime): Bool = 
-    //     import static java_get_field java.time.temporal.ChronoField.AMPM_OF_DAY: ##java.time.temporal.ChronoField \ {} as get_AMPM_OF_DAY;        
-    //     getHelper(unchecked_cast(get_AMPM_OF_DAY() as ##java.time.temporal.TemporalField), x) == 1
+
+    pub def isPmOfDay(x: OffsetDateTime): Bool = 
+        let OffsetDateTime(x1) = x;
+        let tf1 = unsafe JChronoField.AMPM_OF_DAY;
+        unsafe x1.get(tf1) == 1
+
 
     /// OffsetDateTime functions
 
@@ -370,11 +371,13 @@ mod Time.OffsetDateTime {
         Time.DayOfWeek.unmarshalDayOfWeek(unsafe x1.getDayOfWeek())
 
 
-    // pub def adjustDayOfWeek(x: DayOfWeek, d: OffsetDateTime): OffsetDateTime = 
-    //     import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
-    //     let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.OffsetDateTime))
+    pub def adjustDayOfWeek(d: DayOfWeek, x: OffsetDateTime): OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        let d1 = Time.DayOfWeek.marshalDayOfWeek(d);
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
 
 
     pub def getDayOfMonth(x: OffsetDateTime): Int32 =
@@ -417,63 +420,78 @@ mod Time.OffsetDateTime {
 
     // MonthDay methods
 
-    // pub def getMonthDay(d: OffsetDateTime): MonthDay = 
-    //     import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
-    //     let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor);
-    //     MonthDay(fromTA(d1))
+    pub def getMonthDay(x: OffsetDateTime): MonthDay = 
+        let OffsetDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JMonthDay.from(t1);
+        MonthDay(ans)
 
-    // pub def adjustMonthDay(x: MonthDay, d: OffsetDateTime): OffsetDateTime = 
-    //     import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.MonthDay.getMonthDay(x);
-    //     let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.OffsetDateTime))
+    pub def adjustMonthDay(md: MonthDay, x: OffsetDateTime): OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        let MonthDay(md1) = md;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe md1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
 
     // YearMonth methods
 
-    // pub def getYearMonth(d: OffsetDateTime): YearMonth = 
-    //     import static java.time.YearMonth.from(##java.time.temporal.TemporalAccessor): ##java.time.YearMonth \ {} as fromTA;
-    //     let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor);
-    //     YearMonth(fromTA(d1))
+    pub def getYearMonth(x: OffsetDateTime): YearMonth = 
+        let OffsetDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JYearMonth.from(t1);
+        YearMonth(ans)
 
-    // pub def adjustYearMonth(x: YearMonth, dt: OffsetDateTime): OffsetDateTime = 
-    //     import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.YearMonth.getYearMonth(x);
-    //     let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetDateTime))
+
+    pub def adjustYearMonth(ym: YearMonth, x: OffsetDateTime): OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        let YearMonth(ym1) = ym;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe ym1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
+
 
     // LocalDate methods
 
-    // pub def getLocalDate(d: OffsetDateTime): LocalDate = 
-    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromTA;
-    //     let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor);
-    //     LocalDate(fromTA(d1))
+    pub def getLocalDate(x: OffsetDateTime): LocalDate = 
+        let OffsetDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JLocalDate.from(t1);
+        LocalDate(ans)
 
-
-    // pub def adjustLocalDate(x: LocalDate, dt: OffsetDateTime): OffsetDateTime = 
-    //     import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.LocalDate.getLocalDate(x);
-    //     let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetDateTime))
+    pub def adjustLocalDate(d: LocalDate, x: OffsetDateTime): OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        let LocalDate(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
 
     // LocalDateTime methods
 
-    // pub def getLocalDateTime(d: OffsetDateTime): LocalDateTime = 
-    //     import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime \ {} as fromTA;
-    //     let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor);
-    //     LocalDateTime(fromTA(d1))
+    pub def getLocalDateTime(x: OffsetDateTime): LocalDateTime = 
+        let OffsetDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JLocalDateTime.from(t1);
+        LocalDateTime(ans)
 
-    // pub def adjustLocalDateTime(x: LocalDateTime, dt: OffsetDateTime): OffsetDateTime = 
-    //     import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.LocalDateTime.getLocalDateTime(x);
-    //     let dt1 = unchecked_cast(getOffsetDateTime(dt) as ##java.time.temporal.Temporal);
-    //     OffsetDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.OffsetDateTime))
+    pub def adjustLocalDateTime(dt: LocalDateTime, x: OffsetDateTime): OffsetDateTime = 
+        let OffsetDateTime(x1) = x;
+        let LocalDateTime(dt1) = dt;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe dt1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        OffsetDateTime(ans)
+
 
     /// LocalTime methods
 
-    // pub def getLocalTime(d: OffsetDateTime): LocalTime = 
-    //     import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime \ {} as fromTA;
-    //     let d1 = unchecked_cast(getOffsetDateTime(d) as ##java.time.temporal.TemporalAccessor);
-    //     LocalTime(fromTA(d1))
+    pub def getLocalTime(x: OffsetDateTime): LocalTime = 
+        let OffsetDateTime(x1) = x;
+        let t1: JTemporalAccessor = checked_cast(x1);
+        let ans = unsafe JLocalTime.from(t1);
+        LocalTime(ans)
 
 
     pub def adjustLocalTime(lt: LocalTime, x: OffsetDateTime): OffsetDateTime = 
