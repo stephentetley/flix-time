@@ -357,30 +357,21 @@ mod Time.LocalTime {
     pub def secondsUntil(begin: {begin = LocalTime}, end: {end = LocalTime}): Int64 = 
         let LocalTime(b1) = begin#begin;
         let LocalTime(e1) = end#end;
-        let te1: JTemporal = checked_cast(e1);
-        let tu1 = unsafe JChronoUnit.SECONDS;
-        unsafe b1.until(te1, tu1)
+        let u1 = unsafe JChronoUnit.SECONDS;
+        unsafe b1.until(e1, u1)
 
 
     pub def minutesUntil(begin: {begin = LocalTime}, end: {end = LocalTime}): Int64 = 
         let LocalTime(b1) = begin#begin;
         let LocalTime(e1) = end#end;
-        let te1: JTemporal = checked_cast(e1);
-        let tu1 = unsafe JChronoUnit.MINUTES;
-        unsafe b1.until(te1, tu1)
+        let u1 = unsafe JChronoUnit.MINUTES;
+        unsafe b1.until(e1, u1)
 
     pub def hoursUntil(begin: {begin = LocalTime}, end: {end = LocalTime}): Int64 = 
         let LocalTime(b1) = begin#begin;
         let LocalTime(e1) = end#end;
-        let te1: JTemporal = checked_cast(e1);
-        let tu1 = unsafe JChronoUnit.HOURS;
-        unsafe b1.until(te1, tu1)
-    
-    // // generic helper functions
+        let u1 = unsafe JChronoUnit.HOURS;
+        unsafe b1.until(e1, u1)
 
-    // def getHelper(t: ##java.time.temporal.TemporalField, x: LocalTime): Int32 = 
-    //     import java.time.LocalTime.get(##java.time.temporal.TemporalField): Int32 \ {};
-    //     let x1 = getLocalTime(x);
-    //     get(x1, t)
 
 }

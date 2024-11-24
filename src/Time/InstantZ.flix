@@ -98,8 +98,11 @@ mod Time.InstantZ {
     use Time.Internal.Temporal.TemporalAccessor
     use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
-    import java.time.{Instant => JInstant}
     import java.lang.{Object, CharSequence}
+    import java.time.{Duration => JDuration}
+    import java.time.{Instant => JInstant}
+    import java.time.temporal.{ChronoField => JChronoField}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
 
     /// Unwrap
 
@@ -150,26 +153,15 @@ mod Time.InstantZ {
         InstantZ(unsafe JInstant.ofEpochMilli(epochMilli))
 
 
-    // `fromTemporalAccessor` specialized
-    // def fromTemporalAccessor(x: TemporalAccessor): InstantZ = 
-    //     import static java.time.Instant.from(##java.time.temporal.TemporalAccessor): ##java.time.Instant \ {} as fromTA;
-    //     try {
-    //         let TemporalAccessor(x1) = x;
-    //         InstantZ(fromTA(x1))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
+    pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
+        let OffsetDateTime(x1) = x;
+        let ans = unsafe JInstant.from(x1);
+        InstantZ(ans)
 
-
-    // pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
-    //     Time.OffsetDateTime.asTemporalAccessor(x)
-    //         |> fromTemporalAccessor
-
-    // pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-    //     Time.ZonedDateTime.asTemporalAccessor(x)
-    //         |> fromTemporalAccessor
+    pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe JInstant.from(x1);
+        InstantZ(ans)
 
     /// `to` functions
 
@@ -221,78 +213,102 @@ mod Time.InstantZ {
         unsafe x1.getNano()
 
 
-    // pub def getNanoOfSecond(x: InstantZ): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_NANO_OF_SECOND;
-    //     getLongHelper(unchecked_cast(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField), x)
+    pub def getNanoOfSecond(x: InstantZ): Int64 =
+        let InstantZ(x1) = x;
+        let f1 = unsafe JChronoField.NANO_OF_SECOND;
+        unsafe x1.getLong(f1)
 
-    // pub def withNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
-    //     import static java_get_field java.time.temporal.ChronoField.NANO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_NANO_OF_SECOND;
-    //     withTemporalFieldHelper(unchecked_cast(get_NANO_OF_SECOND() as ##java.time.temporal.TemporalField), i, x)
 
-    // pub def getMicroOfSecond(x: InstantZ): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MICRO_OF_SECOND;
-    //     getLongHelper(unchecked_cast(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField), x)
+    pub def withNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
+        let InstantZ(x1) = x;
+        let f1 = unsafe JChronoField.NANO_OF_SECOND;
+        let ans = unsafe x1.with(f1, i);
+        InstantZ(ans)
 
-    // pub def withMicroOfSecond(i: Int64, x: InstantZ): InstantZ =
-    //     import static java_get_field java.time.temporal.ChronoField.MICRO_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MICRO_OF_SECOND;
-    //     withTemporalFieldHelper(unchecked_cast(get_MICRO_OF_SECOND() as ##java.time.temporal.TemporalField), i, x)
+    pub def getMicroOfSecond(x: InstantZ): Int64 =
+        let InstantZ(x1) = x;
+        let f1 = unsafe JChronoField.MICRO_OF_SECOND;
+        unsafe x1.getLong(f1)
 
-    // pub def getMilliOfSecond(x: InstantZ): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MILLI_OF_SECOND;
-    //     getLongHelper(unchecked_cast(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField), x)
+    pub def withMicroOfSecond(i: Int64, x: InstantZ): InstantZ =
+        let InstantZ(x1) = x;
+        let f1 = unsafe JChronoField.MICRO_OF_SECOND;
+        let ans = unsafe x1.with(f1, i);
+        InstantZ(ans)
 
-    // pub def withMilliOfSecond(i: Int64, x: InstantZ): InstantZ =
-    //     import static java_get_field java.time.temporal.ChronoField.MILLI_OF_SECOND: ##java.time.temporal.ChronoField \ {} as get_MILLI_OF_SECOND;
-    //     withTemporalFieldHelper(unchecked_cast(get_MILLI_OF_SECOND() as ##java.time.temporal.TemporalField), i, x)
+    pub def getMilliOfSecond(x: InstantZ): Int64 =
+        let InstantZ(x1) = x;
+        let f1 = unsafe JChronoField.MILLI_OF_SECOND;
+        unsafe x1.getLong(f1)
 
-    // pub def getInstantSeconds(x: InstantZ): Int64 =
-    //     import static java_get_field java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField \ {} as get_INSTANT_SECONDS;
-    //     getLongHelper(unchecked_cast(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField), x)
+    pub def withMilliOfSecond(i: Int64, x: InstantZ): InstantZ =
+        let InstantZ(x1) = x;
+        let f1 = unsafe JChronoField.MILLI_OF_SECOND;
+        let ans = unsafe x1.with(f1, i);
+        InstantZ(ans)
 
-    // pub def withInstantSeconds(i: Int64, x: InstantZ): InstantZ =
-    //     import static java_get_field java.time.temporal.ChronoField.INSTANT_SECONDS: ##java.time.temporal.ChronoField \ {} as get_INSTANT_SECONDS;
-    //     withTemporalFieldHelper(unchecked_cast(get_INSTANT_SECONDS() as ##java.time.temporal.TemporalField), i, x)
+    pub def getInstantSeconds(x: InstantZ): Int64 =
+        let InstantZ(x1) = x;
+        let f1 = unsafe JChronoField.INSTANT_SECONDS;
+        unsafe x1.getLong(f1)
 
+    pub def withInstantSeconds(i: Int64, x: InstantZ): InstantZ =
+        let InstantZ(x1) = x;
+        let f1 = unsafe JChronoField.INSTANT_SECONDS;
+        let ans = unsafe x1.with(f1, i);
+        InstantZ(ans)
 
     // `truncatedTo` specialized
 
-    // def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: InstantZ): InstantZ = 
-    //     import java.time.Instant.truncatedTo(##java.time.temporal.TemporalUnit): ##java.time.Instant \ {};
-    //     let InstantZ(x1) = x;
-    //     InstantZ(truncatedTo(x1, u))
-    
-    // pub def truncatedToNanos(x: InstantZ): InstantZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
-    //     truncatedToHelper(unchecked_cast(get_NANOS() as ##java.time.temporal.TemporalUnit), x)
-
-    // pub def truncatedToMicros(x: InstantZ): InstantZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
-    //     truncatedToHelper(unchecked_cast(get_MICROS() as ##java.time.temporal.TemporalUnit), x)
-
-    // pub def truncatedToMillis(x: InstantZ): InstantZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
-    //     truncatedToHelper(unchecked_cast(get_MILLIS() as ##java.time.temporal.TemporalUnit), x)
-
-    // pub def truncatedToSeconds(x: InstantZ): InstantZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-    //     truncatedToHelper(unchecked_cast(get_SECONDS() as ##java.time.temporal.TemporalUnit), x)
-
-    // pub def truncatedToMinutes(x: InstantZ): InstantZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-    //     truncatedToHelper(unchecked_cast(get_MINUTES() as ##java.time.temporal.TemporalUnit), x)
-
-    // pub def truncatedToHours(x: InstantZ): InstantZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-    //     truncatedToHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), x)
-
-    // pub def truncatedToHalfDays(x: InstantZ): InstantZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-    //     truncatedToHelper(unchecked_cast(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToNanos(x: InstantZ): InstantZ = 
+        let InstantZ(x1) = x;
+        let u1 = unsafe JChronoUnit.NANOS;
+        let ans = unsafe x1.truncatedTo(u1);
+        InstantZ(ans)
 
 
-    // pub def truncatedToDays(x: InstantZ): InstantZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-    //     truncatedToHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToMicros(x: InstantZ): InstantZ = 
+        let InstantZ(x1) = x;
+        let u1 = unsafe JChronoUnit.MICROS;
+        let ans = unsafe x1.truncatedTo(u1);
+        InstantZ(ans)
+
+    pub def truncatedToMillis(x: InstantZ): InstantZ = 
+        let InstantZ(x1) = x;
+        let u1 = unsafe JChronoUnit.MILLIS;
+        let ans = unsafe x1.truncatedTo(u1);
+        InstantZ(ans)
+
+    pub def truncatedToSeconds(x: InstantZ): InstantZ = 
+        let InstantZ(x1) = x;
+        let u1 = unsafe JChronoUnit.SECONDS;
+        let ans = unsafe x1.truncatedTo(u1);
+        InstantZ(ans)
+
+    pub def truncatedToMinutes(x: InstantZ): InstantZ = 
+        let InstantZ(x1) = x;
+        let u1 = unsafe JChronoUnit.MINUTES;
+        let ans = unsafe x1.truncatedTo(u1);
+        InstantZ(ans)
+
+    pub def truncatedToHours(x: InstantZ): InstantZ = 
+        let InstantZ(x1) = x;
+        let u1 = unsafe JChronoUnit.HOURS;
+        let ans = unsafe x1.truncatedTo(u1);
+        InstantZ(ans)
+
+    pub def truncatedToHalfDays(x: InstantZ): InstantZ = 
+        let InstantZ(x1) = x;
+        let u1 = unsafe JChronoUnit.HALF_DAYS;
+        let ans = unsafe x1.truncatedTo(u1);
+        InstantZ(ans)
+
+
+    pub def truncatedToDays(x: InstantZ): InstantZ = 
+        let InstantZ(x1) = x;
+        let u1 = unsafe JChronoUnit.DAYS;
+        let ans = unsafe x1.truncatedTo(u1);
+        InstantZ(ans)
 
     // plus / minus functions
 
@@ -317,107 +333,93 @@ mod Time.InstantZ {
         InstantZ(unsafe x1.plusNanos(nanos))
 
 
-    // pub def plusDuration(i: InstantZ, x: DurationZ): InstantZ =
-    //     import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let DurationZ(x1) = x;
-    //     let i1 = unchecked_cast(getInstant(i) as ##java.time.temporal.Temporal);
-    //     InstantZ(unchecked_cast(addTo(x1, i1) as ##java.time.Instant))
+    pub def plusDuration(x: InstantZ, d: DurationZ): InstantZ =
+        let InstantZ(x1) = x;
+        let DurationZ(d1) = d;
+        let t1 = unsafe d1.addTo(x1);
+        let ans = unchecked_cast(t1 as JInstant);
+        InstantZ(ans)
     
-    // pub def minusDuration(i: InstantZ, x: DurationZ): InstantZ =
-    //     import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let DurationZ(x1) = x;
-    //     let i1 = unchecked_cast(getInstant(i) as ##java.time.temporal.Temporal);
-    //     InstantZ(unchecked_cast(subtractFrom(x1, i1) as ##java.time.Instant))
+    pub def minusDuration(x: InstantZ, d: DurationZ): InstantZ =
+        let InstantZ(x1) = x;
+        let DurationZ(d1) = d;
+        let t1 = unsafe d1.subtractFrom(x1);
+        let ans = unchecked_cast(t1 as JInstant);
+        InstantZ(ans)
 
     // Period methods
 
-    // pub def plusPeriod(i: InstantZ, x: Period): InstantZ =
-    //     import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getInstant(i) as ##java.time.temporal.Temporal);
-    //     InstantZ(unchecked_cast(addTo(x1, i1) as ##java.time.Instant))
+    pub def plusPeriod(x: InstantZ, p: Period): InstantZ =
+        let InstantZ(x1) = x;
+        let Period(p1) = p;
+        let t1 = unsafe p1.addTo(x1);
+        let ans = unchecked_cast(t1 as JInstant);
+        InstantZ(ans)
     
-    // pub def minusPeriod(i: InstantZ, x: Period): InstantZ =
-    //     import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getInstant(i) as ##java.time.temporal.Temporal);
-    //     InstantZ(unchecked_cast(subtractFrom(x1, i1) as ##java.time.Instant))
+    pub def minusPeriod(x: InstantZ, p: Period): InstantZ =
+        let InstantZ(x1) = x;
+        let Period(p1) = p;
+        let t1 = unsafe p1.subtractFrom(x1);
+        let ans = unchecked_cast(t1 as JInstant);
+        InstantZ(ans)
 
 
     // between / until functions
 
-    // pub def between(r: {start = InstantZ, end = InstantZ}): DurationZ =
-    //     import static java.time.Duration.between(##java.time.temporal.Temporal, ##java.time.temporal.Temporal): ##java.time.Duration \ {};
-    //     let s1 = unchecked_cast(getInstant(r#start) as ##java.time.temporal.Temporal);
-    //     let e1 = unchecked_cast(getInstant(r#end) as ##java.time.temporal.Temporal);
-    //     DurationZ(between(s1, e1))
-
+    pub def between(begin: {begin = InstantZ}, end: {end = InstantZ}): DurationZ =
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let ans = unsafe JDuration.between(b1, e1);
+        DurationZ(ans)
 
     // `until` specialized
 
-    // def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import java.time.Instant.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-    //     let b1 = getInstant(r#start);
-    //     let e1 = unchecked_cast(getInstant(r#end) as ##java.time.temporal.Temporal);
-    //     until(b1, e1, u)
+    pub def nanosUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let u1 = unsafe JChronoUnit.NANOS;
+        unsafe b1.until(e1, u1)
 
+    pub def microsUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let u1 = unsafe JChronoUnit.MICROS;
+        unsafe b1.until(e1, u1)
 
-    // pub def nanosUntil(r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
-    //     untilHelper(unchecked_cast(get_NANOS() as ##java.time.temporal.TemporalUnit), r)
+    pub def millisUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let u1 = unsafe JChronoUnit.MILLIS;
+        unsafe b1.until(e1, u1) 
 
-    // pub def microsUntil(r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
-    //     untilHelper(unchecked_cast(get_MICROS() as ##java.time.temporal.TemporalUnit), r)
+    pub def secondsUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let u1 = unsafe JChronoUnit.SECONDS;
+        unsafe b1.until(e1, u1)
 
-    // pub def millisUntil(r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
-    //     untilHelper(unchecked_cast(get_MILLIS() as ##java.time.temporal.TemporalUnit), r)
+    pub def minutesUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let u1 = unsafe JChronoUnit.MINUTES;
+        unsafe b1.until(e1, u1)
 
-    // pub def secondsUntil(r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-    //     untilHelper(unchecked_cast(get_SECONDS() as ##java.time.temporal.TemporalUnit), r)
+    pub def hoursUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let u1 = unsafe JChronoUnit.HOURS;
+        unsafe b1.until(e1, u1)
 
-    // pub def minutesUntil(r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-    //     untilHelper(unchecked_cast(get_MINUTES() as ##java.time.temporal.TemporalUnit), r)
+    pub def halfDaysUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let u1 = unsafe JChronoUnit.HALF_DAYS;
+        unsafe b1.until(e1, u1)
 
-    // pub def hoursUntil(r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-    //     untilHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def halfDaysUntil(r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-    //     untilHelper(unchecked_cast(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def daysUntil(r: {start = InstantZ, end = InstantZ}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-    //     untilHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), r)
-
-    // generic helper functions
-
-    // def getLongHelper(field: ##java.time.temporal.TemporalField, x: InstantZ): Int64 =
-    //     import java.time.Instant.getLong(##java.time.temporal.TemporalField): Int64 \ {};
-    //     try {
-    //         let InstantZ(x1) = x;
-    //         getLong(x1, field)
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
-
-    // def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: InstantZ): InstantZ =
-    //     import java.time.Instant.with(##java.time.temporal.TemporalField, Int64): ##java.time.Instant \ {} as withTF;                   
-    //     try {
-    //         let InstantZ(x1) = x;
-    //         InstantZ(withTF(x1, field, i))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
+    pub def daysUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
+        let InstantZ(b1) = begin#begin;
+        let InstantZ(e1) = end#end;
+        let u1 = unsafe JChronoUnit.DAYS;
+        unsafe b1.until(e1, u1)
 
 }

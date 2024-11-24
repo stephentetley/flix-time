@@ -523,9 +523,7 @@ mod Time.ZonedDateTime {
     pub def between(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): DurationZ =
         let ZonedDateTime(b1) = begin#begin;
         let ZonedDateTime(e1) = end#end;
-        let tb1: JTemporal = checked_cast(b1);
-        let te1: JTemporal = checked_cast(e1);
-        let ans = unsafe JDuration.between(tb1, te1);
+        let ans = unsafe JDuration.between(b1, e1);
         DurationZ(ans)
 
 
