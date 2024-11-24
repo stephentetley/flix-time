@@ -118,8 +118,9 @@ mod Time.DurationZ {
     use Time.Temporal.TemporalUnit
     use Time.Temporal.TemporalUnit.{TemporalUnit}
 
-    import java.time.{Duration => JDuration}
     import java.lang.{Object, CharSequence}
+    import java.time.{Duration => JDuration}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
     
     /// Unwrap
 
@@ -186,21 +187,10 @@ mod Time.DurationZ {
 
     // `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
 
-    // def ofTemporalUnit(amount: Int64, tu: TemporalUnit): DurationZ =
-    //     import static java.time.Duration.of(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
-    //     try {
-    //          let TemporalUnit(tu1) = tu;
-    //          DurationZ(of(amount, tu1))
-    //     } catch { 
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
-    // pub def ofHalfDays(i: Int64): DurationZ = 
-    //     Time.Temporal.ChronoUnit.HalfDays 
-    //         |> Time.Temporal.ChronoUnit.asTemporalUnit
-    //         |> ofTemporalUnit(i)
+    pub def ofHalfDays(i: Int64): DurationZ = 
+        let u1 = unsafe JChronoUnit.HALF_DAYS;
+        let ans = unsafe  JDuration.of(i, u1);
+        DurationZ(ans)
 
 
     /// `to` functions
@@ -328,38 +318,48 @@ mod Time.DurationZ {
         DurationZ(unsafe x1.withSeconds(seconds))
 
     /// #truncate functions
-
-    // def truncatedToHelper(u: ##java.time.temporal.TemporalUnit, x: DurationZ): DurationZ = 
-    //     let DurationZ(x1) = x;
-    //     DurationZ(unsafe x1.truncatedTo(u))
     
-    // pub def truncatedToNanos(x: DurationZ): DurationZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.NANOS: ##java.time.temporal.ChronoUnit \ {} as get_NANOS;
-    //     truncatedToHelper(unchecked_cast(get_NANOS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToNanos(x: DurationZ): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.NANOS;
+        let ans = unsafe x1.truncatedTo(u1);
+        DurationZ(ans)
 
-    // pub def truncatedToMicros(x: DurationZ): DurationZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MICROS: ##java.time.temporal.ChronoUnit \ {} as get_MICROS;
-    //     truncatedToHelper(unchecked_cast(get_MICROS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToMicros(x: DurationZ): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.MICROS;
+        let ans = unsafe x1.truncatedTo(u1);
+        DurationZ(ans)
 
-    // pub def truncatedToMillis(x: DurationZ): DurationZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MILLIS: ##java.time.temporal.ChronoUnit \ {} as get_MILLIS;
-    //     truncatedToHelper(unchecked_cast(get_MILLIS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToMillis(x: DurationZ): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.MILLIS;
+        let ans = unsafe x1.truncatedTo(u1);
+        DurationZ(ans)
 
-    // pub def truncatedToSeconds(x: DurationZ): DurationZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-    //     truncatedToHelper(unchecked_cast(get_SECONDS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToSeconds(x: DurationZ): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.SECONDS;
+        let ans = unsafe x1.truncatedTo(u1);
+        DurationZ(ans)
 
-    // pub def truncatedToMinutes(x: DurationZ): DurationZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-    //     truncatedToHelper(unchecked_cast(get_MINUTES() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToMinutes(x: DurationZ): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.MINUTES;
+        let ans = unsafe x1.truncatedTo(u1);
+        DurationZ(ans)
 
-    // pub def truncatedToHours(x: DurationZ): DurationZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-    //     truncatedToHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToHours(x: DurationZ): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.HOURS;
+        let ans = unsafe x1.truncatedTo(u1);
+        DurationZ(ans)
 
-    // pub def truncatedToHalfDays(x: DurationZ): DurationZ = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-    //     truncatedToHelper(unchecked_cast(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit), x)
+    pub def truncatedToHalfDays(x: DurationZ): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.HALF_DAYS;
+        let ans = unsafe x1.truncatedTo(u1);
+        DurationZ(ans)
 
 
     /// ## plus / minus functions
@@ -414,15 +414,18 @@ mod Time.DurationZ {
         DurationZ(unsafe x1.minusNanos(nanos))
 
 
-    // pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-    //     Time.Temporal.ChronoUnit.HalfDays
-    //         |> Time.Temporal.ChronoUnit.asTemporalUnit
-    //         |> plusHelper(x, i)
+    pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.HALF_DAYS;
+        let ans = unsafe x1.plus(i, u1);
+        DurationZ(ans)
 
-    // pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-    //     Time.Temporal.ChronoUnit.HalfDays
-    //         |> Time.Temporal.ChronoUnit.asTemporalUnit
-    //         |> minusHelper(x, i)
+    pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
+        let DurationZ(x1) = x;
+        let u1 = unsafe JChronoUnit.HALF_DAYS;
+        let ans = unsafe x1.minus(i, u1);
+        DurationZ(ans)
+
 
     /// multiply / divide functions
 
@@ -433,38 +436,6 @@ mod Time.DurationZ {
     pub def dividedBy(x: DurationZ, y: Int64): DurationZ =
         let DurationZ(x1) = x;
         DurationZ(unsafe x1.dividedBy(y))
-
-    // generic helper functions
-    
-    // `plus` specialized - except for HalfDays we already have a `plus_` function for the other supported ChronoUnits
-
-    // def plusHelper(x: DurationZ, amount: Int64, tu: TemporalUnit): DurationZ =
-    //     import java.time.Duration.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
-    //     try {
-    //         let DurationZ(x1) = x;
-    //         let TemporalUnit(tu1) = tu;
-    //         plus(x1, amount, tu1) |> DurationZ
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-    
-
-    // `minus` specialized - except for HalfDays we already have a `minus_` function for the other supported ChronoUnits
-
-    // def minusHelper(x: DurationZ, amount: Int64, tu: TemporalUnit): DurationZ =
-    //     import java.time.Duration.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.Duration \ {};         
-    //     try {
-    //         let DurationZ(x1) = x;
-    //         let TemporalUnit(tu1) = tu;
-    //         DurationZ(minus(x1, amount, tu1))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-    
 
 
 }
