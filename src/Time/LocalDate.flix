@@ -48,8 +48,8 @@ mod Time {
         pub def fromString(s: String): Option[LocalDate] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs: CharSequence = checked_cast(s1);
-                LocalDate(unsafe JLocalDate.parse(cs))
+                let ans = unsafe JLocalDate.parse(s1);
+                LocalDate(ans)
             }) |> Result.toOption
     }
 
@@ -72,8 +72,7 @@ mod Time {
         pub def compare(x: LocalDate, y: LocalDate): Comparison =
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
-            let cy1 = (checked_cast(y1) : ChronoLocalDate);
-            unsafe x1.compareTo(cy1) |> Comparison.fromInt32
+            unsafe x1.compareTo(y1) |> Comparison.fromInt32
     }
 
 }
@@ -131,16 +130,6 @@ mod Time.LocalDate {
     pub def getLocalDate(x: LocalDate): JLocalDate = 
         let LocalDate(x1) = x;
         x1
-
-
-    pub def asTemporalAccessor(x: LocalDate): TemporalAccessor = 
-        let LocalDate(x1) = x;
-        let cx1: JTemporalAccessor = checked_cast(x1);
-        TemporalAccessor(cx1)
-
-
-    // pub def fromJavaObject(o: ##java.lang.Object): LocalDate = 
-    //     LocalDate(unchecked_cast(o as ##java.time.LocalDate))
 
     // Constructors
 
@@ -230,8 +219,8 @@ mod Time.LocalDate {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs: CharSequence  = checked_cast(s1);
-            LocalDate(unsafe JLocalDate.parse(cs, fmtr))
+            let ans = unsafe JLocalDate.parse(s1, fmtr);
+            LocalDate(ans)
         })
 
     ///
@@ -252,8 +241,7 @@ mod Time.LocalDate {
     pub def isBefore(x: LocalDate, y: LocalDate): Bool =
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        let cy1 = (checked_cast(y1) : JChronoLocalDate);
-        unsafe x1.isBefore(cy1)
+        unsafe x1.isBefore(y1)
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -261,8 +249,7 @@ mod Time.LocalDate {
     pub def isAfter(x: LocalDate, y: LocalDate): Bool =
         let LocalDate(x1) = x;
         let LocalDate(y1) = y;
-        let cy1: JChronoLocalDate = checked_cast(y1);
-        unsafe x1.isAfter(cy1)
+        unsafe x1.isAfter(y1)
 
 
     pub def isLeapYear(x: LocalDate): Bool =
@@ -340,12 +327,14 @@ mod Time.LocalDate {
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
         let LocalDate(x1) = x;
-        Time.DayOfWeek.unmarshalDayOfWeek(unsafe x1.getDayOfWeek())
+        let d1 = unsafe x1.getDayOfWeek();
+        Time.DayOfWeek.unmarshalDayOfWeek(d1)
 
 
     pub def getMonth(x: LocalDate): Month =
         let LocalDate(x1) = x;
-        Time.Month.unmarshalMonth(unsafe x1.getMonth())
+        let m1 = unsafe x1.getMonth();
+        Time.Month.unmarshalMonth(m1)
 
 
     pub def getMonthValue(x: LocalDate): Int32 =
@@ -524,41 +513,41 @@ mod Time.LocalDate {
     pub def plusDecades(x: LocalDate, i: Int64): LocalDate =
         let LocalDate(x1) = x;
         let u = unsafe JChronoUnit.DECADES;
-        let x2 = unsafe x1.plus(i, u);
-        LocalDate(x2)
+        let ans = unsafe x1.plus(i, u);
+        LocalDate(ans)
 
 
     pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
         let LocalDate(x1) = x;
         let u = unsafe JChronoUnit.DECADES;
-        let x2 = unsafe x1.minus(i, u);
-        LocalDate(x2)
+        let ans = unsafe x1.minus(i, u);
+        LocalDate(ans)
 
     pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
         let LocalDate(x1) = x;
         let u = unsafe JChronoUnit.CENTURIES;
-        let x2 = unsafe x1.plus(i, u);
-        LocalDate(x2)
+        let ans = unsafe x1.plus(i, u);
+        LocalDate(ans)
 
 
     pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
         let LocalDate(x1) = x;
         let u = unsafe JChronoUnit.CENTURIES;
-        let x2 = unsafe x1.minus(i, u);
-        LocalDate(x2)
+        let ans = unsafe x1.minus(i, u);
+        LocalDate(ans)
 
 
     pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
         let LocalDate(x1) = x;
         let u = unsafe JChronoUnit.MILLENNIA;
-        let x2 = unsafe x1.plus(i, u);
-        LocalDate(x2)
+        let ans = unsafe x1.plus(i, u);
+        LocalDate(ans)
 
     pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
         let LocalDate(x1) = x;
         let u = unsafe JChronoUnit.MILLENNIA;
-        let x2 = unsafe x1.minus(i, u);
-        LocalDate(x2)
+        let ans = unsafe x1.minus(i, u);
+        LocalDate(ans)
 
 
     // Period methods

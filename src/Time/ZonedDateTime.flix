@@ -127,9 +127,6 @@ mod Time.ZonedDateTime {
         let ZonedDateTime(x1) = x;
         x1
 
-    // pub def asTemporalAccessor(x: ZonedDateTime): TemporalAccessor =
-    //     let ZonedDateTime(x1) = x;
-    //     TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
 
     /// Constructors
 

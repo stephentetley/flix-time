@@ -131,10 +131,6 @@ mod Time.OffsetDateTime {
         let OffsetDateTime(x1) = x;
         x1
 
-    pub def asTemporalAccessor(x: OffsetDateTime): TemporalAccessor =
-        let OffsetDateTime(x1) = x;
-        let cx1 = unchecked_cast(x1 as JTemporalAccessor);
-        TemporalAccessor(cx1)
 
     /// Constructors
 
@@ -253,8 +249,8 @@ mod Time.OffsetDateTime {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            OffsetDateTime(unsafe JOffsetDateTime.parse(cs, fmtr))
+            let ans = unsafe JOffsetDateTime.parse(s1, fmtr);
+            OffsetDateTime(ans)
         })
 
 
@@ -438,8 +434,7 @@ mod Time.OffsetDateTime {
 
     pub def getYearMonth(x: OffsetDateTime): YearMonth = 
         let OffsetDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYearMonth.from(t1);
+        let ans = unsafe JYearMonth.from(x1);
         YearMonth(ans)
 
 
@@ -456,8 +451,7 @@ mod Time.OffsetDateTime {
 
     pub def getLocalDate(x: OffsetDateTime): LocalDate = 
         let OffsetDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JLocalDate.from(t1);
+        let ans = unsafe JLocalDate.from(x1);
         LocalDate(ans)
 
     pub def adjustLocalDate(d: LocalDate, x: OffsetDateTime): OffsetDateTime = 
@@ -472,8 +466,7 @@ mod Time.OffsetDateTime {
 
     pub def getLocalDateTime(x: OffsetDateTime): LocalDateTime = 
         let OffsetDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JLocalDateTime.from(t1);
+        let ans = unsafe JLocalDateTime.from(x1);
         LocalDateTime(ans)
 
     pub def adjustLocalDateTime(dt: LocalDateTime, x: OffsetDateTime): OffsetDateTime = 
@@ -489,8 +482,7 @@ mod Time.OffsetDateTime {
 
     pub def getLocalTime(x: OffsetDateTime): LocalTime = 
         let OffsetDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JLocalTime.from(t1);
+        let ans = unsafe JLocalTime.from(x1);
         LocalTime(ans)
 
 
@@ -633,9 +625,7 @@ mod Time.OffsetDateTime {
     pub def between(begin: {begin = OffsetDateTime}, end: {end = OffsetDateTime}): DurationZ =
         let OffsetDateTime(b1) = begin#begin;
         let OffsetDateTime(e1) = end#end;
-        let tb1: JTemporal = checked_cast(b1);
-        let te1: JTemporal = checked_cast(e1);
-        let ans = unsafe JDuration.between(tb1, te1);
+        let ans = unsafe JDuration.between(b1, e1);
         DurationZ(ans)
         
 
@@ -687,7 +677,4 @@ mod Time.OffsetDateTime {
         let cu1 = unsafe JIsoFields.QUARTER_YEARS;
         unsafe b1.until(e1, cu1)
 
-
-
- 
 }
