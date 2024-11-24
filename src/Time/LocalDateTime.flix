@@ -48,8 +48,8 @@ mod Time {
         pub def fromString(s: String): Option[LocalDateTime] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                LocalDateTime(unsafe JLocalDateTime.parse(cs))
+                let ans = unsafe JLocalDateTime.parse(s1);
+                LocalDateTime(ans)
             }) |> Result.toOption
     }
 
@@ -57,7 +57,7 @@ mod Time {
         pub def eq(x: LocalDateTime, y: LocalDateTime): Bool =
             let LocalDateTime(x1) = x;
             let LocalDateTime(y1) = y;
-            let obj = (checked_cast(y1) : Object);
+            let obj: Object = checked_cast(y1);
             unsafe x1.equals(obj)
 
     }
@@ -73,8 +73,7 @@ mod Time {
         pub def compare(x: LocalDateTime, y: LocalDateTime): Comparison =
             let LocalDateTime(x1) = x;
             let LocalDateTime(y1) = y;
-            let cy1 = (checked_cast(y1) : ChronoLocalDateTime);
-            unsafe x1.compareTo(cy1) |> Comparison.fromInt32
+            unsafe x1.compareTo(y1) |> Comparison.fromInt32
     }
 
 }
@@ -103,9 +102,11 @@ mod Time.LocalDateTime {
     use Time.Period
     use Time.Period.{Period}
     use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
     use Time.YearMonth
     use Time.YearMonth.{YearMonth}
     use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
     use Time.ZoneOffset
@@ -180,22 +181,18 @@ mod Time.LocalDateTime {
         let ZoneId(z1) = zone#zone;
         LocalDateTime(unsafe JLocalDateTime.ofInstant(x1, z1))
 
-    // // `fromTemporalAccessor` specialized
-    // def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): LocalDateTime = 
-    //     import static java.time.LocalDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDateTime \ {} as fromTA;
-    //     try {
-    //         LocalDateTime(fromTA(x))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
+    // `fromTemporalAccessor` specialized
 
-    // pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
+        let OffsetDateTime(x1) = x;
+        let ans = unsafe JLocalDateTime.from(x1);
+        LocalDateTime(ans)
 
-    // pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe JLocalDateTime.from(x1);
+        LocalDateTime(ans)
+
 
 
     /// `to` functions
@@ -229,8 +226,8 @@ mod Time.LocalDateTime {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            LocalDateTime(unsafe JLocalDateTime.parse(cs, fmtr))
+            let ans = unsafe JLocalDateTime.parse(s1, fmtr);
+            LocalDateTime(ans)
         })
 
     ///
@@ -342,9 +339,8 @@ mod Time.LocalDateTime {
     pub def adjustYearMonth(ym: YearMonth, x: LocalDateTime): LocalDateTime = 
         let LocalDateTime(x1) = x;
         let YearMonth(ym1) = ym;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe ym1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe ym1.adjustInto(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
 
     /// LocalDate methods
@@ -352,9 +348,8 @@ mod Time.LocalDateTime {
     pub def adjustLocalDate(d: LocalDate, x: LocalDateTime): LocalDateTime = 
         let LocalDateTime(x1) = x;
         let LocalDate(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe d1.adjustInto(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
 
     /// LocalTime methods
@@ -362,9 +357,8 @@ mod Time.LocalDateTime {
     pub def adjustLocalTime(lt: LocalTime, x: LocalDateTime): LocalDateTime = 
         let LocalDateTime(x1) = x;
         let LocalTime(lt1) = lt;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe lt1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe lt1.adjustInto(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
 
     /// DayOfWeek methods
@@ -372,9 +366,8 @@ mod Time.LocalDateTime {
     pub def adjustDayOfWeek(d: DayOfWeek, x: LocalDateTime): LocalDateTime = 
         let LocalDateTime(x1) = x;
         let d1 = Time.DayOfWeek.marshalDayOfWeek(d);
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe d1.adjustInto(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
 
     /// MonthDay methods
@@ -382,9 +375,8 @@ mod Time.LocalDateTime {
     pub def adjustMonthDay(md: MonthDay, x: LocalDateTime): LocalDateTime = 
         let LocalDateTime(x1) = x;
         let MonthDay(md1) = md;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe md1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe md1.adjustInto(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
         
 
@@ -401,100 +393,112 @@ mod Time.LocalDateTime {
 
     pub def plusYears(x: LocalDateTime, years: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.plusYears(years))
+        let ans = unsafe x1.plusYears(years);
+        LocalDateTime(ans)
 
     pub def minusYears(x: LocalDateTime, years: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.minusYears(years))
+        let ans = unsafe x1.minusYears(years);
+        LocalDateTime(ans)
 
     pub def plusMonths(x: LocalDateTime, months: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.plusMonths(months))
+        let ans = unsafe x1.plusMonths(months);
+        LocalDateTime(ans)
 
     pub def minusMonths(x: LocalDateTime, months: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.minusMonths(months))
+        let ans = unsafe x1.minusMonths(months);
+        LocalDateTime(ans)
 
     pub def plusWeeks(x: LocalDateTime, weeks: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.plusWeeks( weeks))
+        let ans = unsafe x1.plusWeeks( weeks);
+        LocalDateTime(ans)
 
     pub def minusWeeks(x: LocalDateTime, weeks: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.minusWeeks(weeks))
+        let ans = unsafe x1.minusWeeks(weeks);
+        LocalDateTime(ans)
 
     pub def plusDays(x: LocalDateTime, days: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.plusDays(days))
+        let ans = unsafe x1.plusDays(days);
+        LocalDateTime(ans)
 
     pub def minusDays(x: LocalDateTime, days: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.minusDays(days))
+        let ans = unsafe x1.minusDays(days);
+        LocalDateTime(ans)
 
     pub def plusHours(x: LocalDateTime, hours: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.plusHours(hours))
+        let ans = unsafe x1.plusHours(hours);
+        LocalDateTime(ans)
 
     pub def minusHours(x: LocalDateTime, hours: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.minusHours(hours))
+        let ans = unsafe x1.minusHours(hours);
+        LocalDateTime(ans)
 
     pub def plusMinutes(x: LocalDateTime, minutes: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.plusMinutes(minutes))
+        let ans = unsafe x1.plusMinutes(minutes);
+        LocalDateTime(ans)
 
     pub def minusMinutes(x: LocalDateTime, minutes: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.minusMinutes(minutes))
+        let ans = unsafe x1.minusMinutes(minutes);
+        LocalDateTime(ans)
 
     pub def plusSeconds(x: LocalDateTime, seconds: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.plusSeconds(seconds))
+        let ans = unsafe x1.plusSeconds(seconds);
+        LocalDateTime(ans)
 
     pub def minusSeconds(x: LocalDateTime, seconds: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.minusSeconds(seconds))
+        let ans = unsafe x1.minusSeconds(seconds);
+        LocalDateTime(ans)
 
     pub def plusNanos(x: LocalDateTime, nanos: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.plusNanos(nanos))
+        let ans = unsafe x1.plusNanos(nanos);
+        LocalDateTime(ans)
 
     pub def minusNanos(x: LocalDateTime, nanos: Int64): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.minusNanos(nanos))
+        let ans = unsafe x1.minusNanos(nanos);
+        LocalDateTime(ans)
 
 
     pub def plusPeriod(x: LocalDateTime, p: Period): LocalDateTime =
         let LocalDateTime(x1) = x;
         let Period(p1) = p;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe p1.addTo(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe p1.addTo(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
     
     pub def minusPeriod(x: LocalDateTime, p: Period): LocalDateTime =
         let LocalDateTime(x1) = x;
         let Period(p1) = p;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe p1.subtractFrom(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe p1.subtractFrom(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
 
 
     pub def plusDuration(x: LocalDateTime, d: DurationZ): LocalDateTime =
         let LocalDateTime(x1) = x;
         let DurationZ(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.addTo(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe d1.addTo(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
     
     pub def minusDuration(x: LocalDateTime, d: DurationZ): LocalDateTime =
         let LocalDateTime(x1) = x;
         let DurationZ(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.subtractFrom(t1);
-        let ans = unchecked_cast(t2 as JLocalDateTime);
+        let t1 = unsafe d1.subtractFrom(x1);
+        let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
 
 
@@ -503,9 +507,7 @@ mod Time.LocalDateTime {
     pub def between(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): DurationZ =
         let LocalDateTime(b1) = begin#begin;
         let LocalDateTime(e1) = end#end;
-        let tb1: JTemporal = checked_cast(b1);
-        let te1: JTemporal = checked_cast(e1);
-        let ans = unsafe JDuration.between(tb1, te1);
+        let ans = unsafe JDuration.between(b1, e1);
         DurationZ(ans)
 
     pub def secondsUntil(begin: {begin = LocalDateTime}, end: {end = LocalDateTime}): Int64 = 

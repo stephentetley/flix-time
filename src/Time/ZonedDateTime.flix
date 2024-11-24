@@ -100,6 +100,7 @@ mod Time.ZonedDateTime {
     use Time.Month
     use Time.MonthDay
     use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
     use Time.Period
     use Time.YearMonth
     use Time.ZoneId
@@ -112,6 +113,7 @@ mod Time.ZonedDateTime {
     import java.time.{LocalDateTime => JLocalDateTime, LocalDate => JLocalDate}
     import java.time.chrono.{ChronoZonedDateTime, ChronoLocalDate, ChronoLocalDateTime}
     import java.time.temporal.{Temporal => JTemporal}
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
 
     /// Unwrap
 
@@ -146,7 +148,7 @@ mod Time.ZonedDateTime {
 
     /// `from` functions
 
-    pub def fromLocalDateTime(zone: {zone = ZoneId},dateTime: LocalDateTime): ZonedDateTime =
+    pub def fromLocalDateTime(zone: {zone = ZoneId}, dateTime: LocalDateTime): ZonedDateTime =
         let LocalDateTime(dt1) = dateTime;
         let ZoneId(z1) = zone#zone;
         ZonedDateTime(unsafe JZonedDateTime.of(dt1, z1))
@@ -158,8 +160,10 @@ mod Time.ZonedDateTime {
         let ZoneId(z1) = zone#zone;
         ZonedDateTime(unsafe JZonedDateTime.of(d1, t1, z1))
 
-    // pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
+        let OffsetDateTime(x1) = x;
+        let ans = unsafe JZonedDateTime.from(x1);
+        ZonedDateTime(ans)
 
 
     /// `to` functions
@@ -169,10 +173,10 @@ mod Time.ZonedDateTime {
     ///
     pub def toLocalDateTime(x: ZonedDateTime): LocalDateTime =
         let ZonedDateTime(x1) = x;
-        let cx1 : ChronoZonedDateTime = (checked_cast(x1) : ChronoZonedDateTime);
-        let ans : ChronoLocalDateTime = unsafe cx1.toLocalDateTime();
-        let ans1 : JLocalDateTime = unchecked_cast(ans as JLocalDateTime);
-        LocalDateTime(ans1)
+        let cx1 : ChronoZonedDateTime = checked_cast(x1);
+        let t1: ChronoLocalDateTime = unsafe cx1.toLocalDateTime();
+        let ans = unchecked_cast(t1 as JLocalDateTime);
+        LocalDateTime(ans)
         
 
 
@@ -181,17 +185,18 @@ mod Time.ZonedDateTime {
     ///
     pub def toLocalDate(x: ZonedDateTime): LocalDate =
         let ZonedDateTime(x1) = x;
-        let cx1 : ChronoZonedDateTime = (checked_cast(x1) : ChronoZonedDateTime);
-        let ans : ChronoLocalDate = unsafe cx1.toLocalDate();
-        let ans1 : JLocalDate = unchecked_cast(ans as JLocalDate);
-        LocalDate(ans1)
+        let cx1: ChronoZonedDateTime = checked_cast(x1);
+        let t1: ChronoLocalDate = unsafe cx1.toLocalDate();
+        let ans = unchecked_cast(t1 as JLocalDate);
+        LocalDate(ans)
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalTime(x: ZonedDateTime): LocalTime =
         let ZonedDateTime(x1) = x;
-        LocalTime(unsafe x1.toLocalTime())
+        let ans = unsafe x1.toLocalTime();
+        LocalTime(ans)
 
     /// `parse` / `format` functions
 
@@ -225,9 +230,7 @@ mod Time.ZonedDateTime {
     pub def isBefore(x: ZonedDateTime, y: ZonedDateTime): Bool =
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
-        let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
-        let cy1 = (checked_cast(y1) : ChronoZonedDateTime);
-        unsafe cx1.isBefore(cy1)
+        unsafe x1.isBefore(y1)
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -235,9 +238,7 @@ mod Time.ZonedDateTime {
     pub def isAfter(x: ZonedDateTime, y: ZonedDateTime): Bool =
         let ZonedDateTime(x1) = x;
         let ZonedDateTime(y1) = y;
-        let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
-        let cy1 = (checked_cast(y1) : ChronoZonedDateTime);
-        unsafe cx1.isAfter(cy1)
+        unsafe x1.isAfter(y1)
 
     /// Getters and Setters
 
@@ -321,41 +322,38 @@ mod Time.ZonedDateTime {
     pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let ZoneId(zone1) = zone;
-        let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
-        let ans = unsafe cx1.withZoneSameInstant(zone1);
-        let ans1 : JZonedDateTime = unchecked_cast(ans as JZonedDateTime);
-        ZonedDateTime(ans1)
+        let t1 = unsafe x1.withZoneSameInstant(zone1);
+        let ans = unchecked_cast(t1 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let ZoneId(zone1) = zone;
-        let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
-        let ans = unsafe cx1.withZoneSameLocal(zone1);
-        let ans1 : JZonedDateTime = unchecked_cast(ans as JZonedDateTime);
-        ZonedDateTime(ans1)
+        let t1 = unsafe x1.withZoneSameLocal(zone1);
+        let ans = unchecked_cast(t1 as JZonedDateTime);
+        ZonedDateTime(ans)
 
 
-    pub def withFixedOffsetZone(t: ZonedDateTime): ZonedDateTime = 
-        let ZonedDateTime(t1) = t;
-        ZonedDateTime(unsafe t1.withFixedOffsetZone())
+    pub def withFixedOffsetZone(x: ZonedDateTime): ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.withFixedOffsetZone();
+        ZonedDateTime(ans)
 
-    pub def withEarlierOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
-        let ZonedDateTime(t1) = t;
-        let ct1 = (checked_cast(t1) : ChronoZonedDateTime);
-        let ans = unsafe ct1.withEarlierOffsetAtOverlap();
-        let ans1 : JZonedDateTime = unchecked_cast(ans as JZonedDateTime);
-        ZonedDateTime(ans1)
+    pub def withEarlierOffsetAtOverlap(x: ZonedDateTime): ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        let t1 = unsafe x1.withEarlierOffsetAtOverlap();
+        let ans = unchecked_cast(t1 as JZonedDateTime);
+        ZonedDateTime(ans)
 
-    pub def withLaterOffsetAtOverlap(t: ZonedDateTime): ZonedDateTime = 
-        let ZonedDateTime(t1) = t;
-        let ct1 = (checked_cast(t1) : ChronoZonedDateTime);
-        let ans = unsafe ct1.withLaterOffsetAtOverlap();
-        let ans1 : JZonedDateTime = unchecked_cast(ans as JZonedDateTime);
-        ZonedDateTime(ans1)
+    pub def withLaterOffsetAtOverlap(x: ZonedDateTime): ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        let t1 = unsafe x1.withLaterOffsetAtOverlap();
+        let ans = unchecked_cast(t1 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     // DayOfWeek methods
 
-    // pub def adjustDayOfWeek(x: DayOfWeek, d: ZonedDateTime): ZonedDateTime = 
+    // pub def adjustDayOfWeek(d: DayOfWeek, x: ZonedDateTime): ZonedDateTime = 
     //     import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
     //     let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
     //     let d1 = unchecked_cast(getZonedDateTime(d) as ##java.time.temporal.Temporal);

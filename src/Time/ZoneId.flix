@@ -63,10 +63,13 @@ mod Time.ZoneId {
     use Time.Zone.ZoneRules
     use Time.Zone.ZoneRules.{ZoneRules}
     use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
     use Time.OffsetTime
+    use Time.OffsetTime.{OffsetTime}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
     use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
     use Locale.{Locale}
     
     import java.time.{ZoneId => JZoneId}
@@ -119,26 +122,27 @@ mod Time.ZoneId {
         ZoneId(unsafe JZoneId.ofOffset(p1, o1))
 
     /// `fromTemporalAccessor` specialized
-    
-    def fromTemporalAccessorHelper(x: JTemporalAccessor): ZoneId = 
-        try {
-            ZoneId(unsafe JZoneId.from(x))
-        } catch {
-            case ex: Exception => 
-                bug!(unsafe ex.getMessage())
-        }
+
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as JTemporalAccessor))
+        let OffsetDateTime(x1) = x;
+        let ans = unsafe JZoneId.from(x1);
+        ZoneId(ans)
 
     pub def fromOffsetTime(x: OffsetTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.OffsetTime.getOffsetTime(x) as JTemporalAccessor))
+        let OffsetTime(x1) = x;
+        let ans = unsafe JZoneId.from(x1);
+        ZoneId(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as JTemporalAccessor))
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe JZoneId.from(x1);
+        ZoneId(ans)
 
     pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
-        fromTemporalAccessorHelper(unchecked_cast(Time.ZoneOffset.getZoneOffset(x) as JTemporalAccessor))
+        let ZoneOffset(x1) = x;
+        let ans = unsafe JZoneId.from(x1);
+        ZoneId(ans)
 
 
     /// ZoneId functions
