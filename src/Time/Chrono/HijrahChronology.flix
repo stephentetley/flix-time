@@ -39,7 +39,6 @@ mod Time.Chrono.HijrahChronology {
     use Time.Chrono.HijrahDate
     use Time.Chrono.HijrahDate.{HijrahDate}
     use Time.Chrono.HijrahEra
-    use Time.Chrono.Era.{Era}
     use Time.Format.ResolverStyle
     use Time.Format.TextStyle
     use Time.Clock

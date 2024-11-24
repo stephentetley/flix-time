@@ -55,19 +55,13 @@ mod Time.Chrono.JapaneseEra {
     
     use Time.Chrono.JapaneseEra
     use Time.Chrono.JapaneseEra.{JapaneseEra}
-    use Time.Chrono.Era
-    use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
 
     import java.time.chrono.{JapaneseEra => JJapaneseEra}
     import java.time.chrono.{Era => JEra}
     import java.lang.{Object}
 
-    // pub def asEra(x: JapaneseEra): Era = 
-    //     let JapaneseEra(x1) = x;
-    //     let ans = (checked_cast(x1) : JEra);
-    //     Era(ans)
-        
+
     pub def getJapaneseEra(x: JapaneseEra): JJapaneseEra = 
         let JapaneseEra(x1) = x;
         x1

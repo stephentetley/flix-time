@@ -31,8 +31,6 @@ mod Time.Chrono.IsoEra {
 
     use Time.Chrono.IsoEra
     use Time.Chrono.IsoEra.{BCE, CE}
-    use Time.Chrono.Era
-    use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
@@ -64,10 +62,6 @@ mod Time.Chrono.IsoEra {
         unsafe x1.getValue()
 
 
-    // pub def asEra(x: IsoEra): Era = 
-    //     let x1 = marshalIsoEra(x);
-    //     let ans = (checked_cast(x1) : JEra);
-    //     Era(ans)
 
     /// Era interface functions
 

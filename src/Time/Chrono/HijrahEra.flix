@@ -32,8 +32,6 @@ mod Time.Chrono.HijrahEra {
 
     use Time.Chrono.HijrahEra
     use Time.Chrono.HijrahEra.{AH}
-    use Time.Chrono.Era
-    use Time.Chrono.Era.{Era}
     use Time.Format.TextStyle
 
     import java.time.chrono.{HijrahEra => JHijrahEra}
