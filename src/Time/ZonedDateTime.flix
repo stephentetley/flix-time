@@ -83,8 +83,6 @@ mod Time.ZonedDateTime {
 
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
     use Time.Format.DateTimeFormat

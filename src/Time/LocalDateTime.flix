@@ -82,8 +82,6 @@ mod Time.LocalDateTime {
 
     use Time.LocalDateTime
     use Time.LocalDateTime.{LocalDateTime}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}    
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
     use Time.Format.DateTimeFormat

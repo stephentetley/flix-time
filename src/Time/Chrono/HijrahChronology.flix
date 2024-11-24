@@ -46,10 +46,6 @@ mod Time.Chrono.HijrahChronology {
     use Time.Clock.{Clock}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
-    use Time.Internal.Chrono.AbstractChronology
-    use Time.Internal.Chrono.AbstractChronology.{AbstractChronology}
-    use Time.Internal.Chrono.Chronology
-    use Time.Internal.Chrono.Chronology.{Chronology}
 
     import java.time.chrono.{HijrahChronology => JHijrahChronology}
     import java.time.chrono.{Chronology => JChronology, 

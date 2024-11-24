@@ -79,8 +79,6 @@ mod Time.OffsetDateTime {
 
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
     use Time.Format.DateTimeFormat
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}

@@ -20,8 +20,7 @@ mod Time {
 
     use Time.DayOfWeek
     use Time.DayOfWeek.{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.TemporalAccessor
+
 
     ///
     /// A day of the week.
@@ -71,7 +70,6 @@ mod Time.DayOfWeek {
     use Time.ZonedDateTime
     use Time.ZonedDateTime.{ZonedDateTime}
 
-    use Time.Internal.Temporal.TemporalAccessor
     import java.time.{DayOfWeek => JDayOfWeek}
     import java.lang.{Enum => JEnum}
 

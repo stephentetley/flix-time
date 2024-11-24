@@ -95,8 +95,6 @@ mod Time.InstantZ {
     use Time.ZoneId.{ZoneId}
     use Time.ZoneOffset
     use Time.ZoneOffset.{ZoneOffset}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}

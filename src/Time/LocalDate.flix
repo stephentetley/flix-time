@@ -81,8 +81,6 @@ mod Time.LocalDate {
 
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
     use Time.Format.DateFormat
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
@@ -108,8 +106,6 @@ mod Time.LocalDate {
     use Time.ZoneId.{ZoneId}
     use Time.InstantZ
     use Time.InstantZ.{InstantZ}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
 
     import java.time.{LocalDate => JLocalDate}
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}

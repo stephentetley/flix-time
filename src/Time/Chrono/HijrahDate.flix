@@ -55,10 +55,6 @@ mod Time.Chrono.HijrahDate {
 
     use Time.Chrono.HijrahDate
     use Time.Chrono.HijrahDate.{HijrahDate}
-    use Time.Internal.Chrono.ChronoLocalDate
-    use Time.Internal.Chrono.ChronoLocalDate.{ChronoLocalDate}
-    use Time.Internal.Temporal.TemporalAccessor
-    use Time.Internal.Temporal.TemporalAccessor.{TemporalAccessor}
     use Time.Chrono.HijrahChronology
     use Time.Chrono.HijrahChronology.{HijrahChronology}
     use Time.Chrono.HijrahEra
@@ -80,13 +76,6 @@ mod Time.Chrono.HijrahDate {
         let HijrahDate(x1) = x;
         x1
 
-    // pub def asTemporalAccessor(x: HijrahDate): TemporalAccessor = 
-    //     let HijrahDate(x1) = x;
-    //     TemporalAccessor(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor))
-
-    // pub def asChronoLocalDate(x: HijrahDate): ChronoLocalDate = 
-    //     let HijrahDate(x1) = x;
-    //     ChronoLocalDate(unchecked_cast(x1 as ##java.time.chrono.ChronoLocalDate))
 
     pub def hijrahDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
         HijrahDate(unsafe JHijrahDate.of(r#prolepticYear, r#month, r#dayOfMonth))
