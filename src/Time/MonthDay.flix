@@ -81,10 +81,14 @@ mod Time.MonthDay {
     use Time.Format.DateTimeFormatter
     use Time.Format.DateTimeFormatter.{DateTimeFormatter}
     use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
     use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     use Time.Month
     use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
     use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
     
@@ -117,44 +121,25 @@ mod Time.MonthDay {
 
 
     // `fromTemporalAccessor` specialized
-
-    // def fromTemporalAccessorHelper(t: ##java.time.temporal.TemporalAccessor): MonthDay = 
-    //     import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
-    //     try {
-    //         MonthDay(fromTA(t))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
-    // pub def fromLocalDate(x: LocalDate): MonthDay = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromLocalDate(x: LocalDate): MonthDay = 
+        let LocalDate(x1) = x;
+        let ans = unsafe JMonthDay.from(x1);
+        MonthDay(ans)
         
-    // pub def fromLocalDateTime(x: LocalDateTime): MonthDay = 
-    //     fromTemporalAccessorHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
-        
-    // pub def fromOffsetDateTime(x: OffsetDateTime): MonthDay = 
-    //     import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
-    //     try {
-    //         let x1 = unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor);
-    //         MonthDay(fromTA(x1))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
+    pub def fromLocalDateTime(x: LocalDateTime): MonthDay =  
+        let LocalDateTime(x1) = x;
+        let ans = unsafe JMonthDay.from(x1);
+        MonthDay(ans)
 
-    // pub def fromZonedDateTime(x: ZonedDateTime): MonthDay = 
-    //     import static java.time.MonthDay.from(##java.time.temporal.TemporalAccessor): ##java.time.MonthDay \ {} as fromTA;
-    //     try {
-    //         let x1 = unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor);
-    //         MonthDay(fromTA(x1))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
+    pub def fromOffsetDateTime(x: OffsetDateTime): MonthDay =  
+        let OffsetDateTime(x1) = x;
+        let ans = unsafe JMonthDay.from(x1);
+        MonthDay(ans)
+
+    pub def fromZonedDateTime(x: ZonedDateTime): MonthDay =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe JMonthDay.from(x1);
+        MonthDay(ans)
 
     // `parse` / `format` functions
 

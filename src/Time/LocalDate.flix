@@ -203,20 +203,12 @@ mod Time.LocalDate {
 
 
     ///  `fromTemporalAccessor` specialized
-    pub def fromTemporalAccessor(x: TemporalAccessor): LocalDate = 
-        try {
-            let TemporalAccessor(x1) = x;
-            let x2: JLocalDate = unsafe JLocalDate.from(x1);
-            LocalDate(x2)
-        } catch {
-            case ex: JException => 
-                bug!(unsafe ex.getMessage())
-        }
 
     /// TODO - idiomatic Flix is `toSomeDatatype` in the respective module rather than `fromSomeDatatype`
     pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
-        Time.LocalDateTime.asTemporalAccessor(x) 
-            |> fromTemporalAccessor
+        let LocalDateTime(x1) = x;
+        let ans = unsafe JLocalDate.from(x1);
+        LocalDate(ans)
 
     /// `to` functions
 
@@ -615,69 +607,5 @@ mod Time.LocalDate {
         let u1 = unsafe JIsoFields.QUARTER_YEARS;
         unsafe b1.until(t1, u1)
 
-    // generic helper functions
-
-    // def getHelper(field: ##java.time.temporal.TemporalField, x: LocalDate): Int64 = 
-    //     import java.time.LocalDate.getLong(##java.time.temporal.TemporalField): Int64 \ {};
-    //     try {
-    //         let LocalDate(x1) = x;
-    //         getLong(x1, field)
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
-
-    // def plusHelper(x: LocalDate, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalDate =
-    //     import java.time.LocalDate.plus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDate \ {};         
-    //     try {
-    //         let LocalDate(x1) = x;
-    //         LocalDate(plus(x1, amount, temporalUnit))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
-
-
-    // def minusHelper(x: LocalDate, amount: Int64, temporalUnit: ##java.time.temporal.TemporalUnit): LocalDate =
-    //     import java.time.LocalDate.minus(Int64, ##java.time.temporal.TemporalUnit): ##java.time.LocalDate \ {};         
-    //     try {
-    //         let LocalDate(x1) = x;
-    //         LocalDate(minus(x1, amount, temporalUnit))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
-
-
-    // def withTemporalAdjusterHelper(adj: ##java.time.temporal.TemporalAdjuster, x: LocalDate): LocalDate =
-    //     import java.time.LocalDate.with(##java.time.temporal.TemporalAdjuster): ##java.time.LocalDate \ {} as withTA;         
-    //     try {
-    //         let LocalDate(x1) = x;
-    //         LocalDate(withTA(x1, adj))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
-
-    // def withTemporalFieldHelper(field: ##java.time.temporal.TemporalField, i: Int64, x: LocalDate): LocalDate =
-    //     import java.time.LocalDate.with(##java.time.temporal.TemporalField, Int64): ##java.time.LocalDate \ {} as with1;
-    //     try {
-    //         let LocalDate(x1) = x;
-    //         LocalDate(with1(x1, field, i))
-    //     } catch {
-    //         // case _: ##java.time.temporal.UnsupportedTemporalTypeException => bug!("invalid temporalUnit")
-    //         case ex: ##java.lang.Exception => {
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //         }
-    //     }
 
 }

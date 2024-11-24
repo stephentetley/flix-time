@@ -99,19 +99,25 @@ mod Time.ZonedDateTime {
     use Time.LocalTime.{LocalTime}
     use Time.Month
     use Time.MonthDay
+    use Time.MonthDay.{MonthDay}
     use Time.OffsetDateTime
     use Time.OffsetDateTime.{OffsetDateTime}
     use Time.Period
+    use Time.Period.{Period}
     use Time.YearMonth
+    use Time.YearMonth.{YearMonth}
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
     use Time.ZoneOffset
+    use Time.ZoneOffset.{ZoneOffset}
 
     import java.lang.{CharSequence}
     import java.time.{Duration => JDuration}
     import java.time.{ZonedDateTime => JZonedDateTime}
     import java.time.{LocalDateTime => JLocalDateTime, LocalDate => JLocalDate}
     import java.time.chrono.{ChronoZonedDateTime, ChronoLocalDate, ChronoLocalDateTime}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{IsoFields => JIsoFields} 
     import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
 
@@ -353,167 +359,188 @@ mod Time.ZonedDateTime {
 
     // DayOfWeek methods
 
-    // pub def adjustDayOfWeek(d: DayOfWeek, x: ZonedDateTime): ZonedDateTime = 
-    //     import java.time.DayOfWeek.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
-    //     let d1 = unchecked_cast(getZonedDateTime(d) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.ZonedDateTime))
+    pub def adjustDayOfWeek(d: DayOfWeek, x: ZonedDateTime): ZonedDateTime =  
+        let ZonedDateTime(x1) = x;
+        let d1 = Time.DayOfWeek.marshalDayOfWeek(d);
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     // MonthDay methods
 
-    // pub def adjustMonthDay(x: MonthDay, d: ZonedDateTime): ZonedDateTime = 
-    //     import java.time.MonthDay.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.MonthDay.getMonthDay(x);
-    //     let d1 = unchecked_cast(getZonedDateTime(d) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(adjustInto(x1, d1) as ##java.time.ZonedDateTime))
+    pub def adjustMonthDay(md: MonthDay, x: ZonedDateTime): ZonedDateTime =  
+        let ZonedDateTime(x1) = x;
+        let MonthDay(md1) = md;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe md1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     // ZoneOffset methods
 
-    // pub def adjustZoneOffset(zo: ZoneOffset, dt: ZonedDateTime): ZonedDateTime = 
-    //     import java.time.ZoneOffset.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let zo1 = Time.ZoneOffset.getZoneOffset(zo);
-    //     let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(adjustInto(zo1, dt1) as ##java.time.ZonedDateTime))
+    pub def adjustZoneOffset(zo: ZoneOffset, x: ZonedDateTime): ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        let ZoneOffset(zo1) = zo;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe zo1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
+
 
     // YearMonth methods
 
-    // pub def adjustYearMonth(x: YearMonth, dt: ZonedDateTime): ZonedDateTime = 
-    //     import java.time.YearMonth.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.YearMonth.getYearMonth(x);
-    //     let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.ZonedDateTime))
+    pub def adjustYearMonth(ym: YearMonth, x: ZonedDateTime): ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        let YearMonth(ym1) = ym;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe ym1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     // LocalDate methods
 
-    // pub def adjustLocalDate(x: LocalDate, dt: ZonedDateTime): ZonedDateTime = 
-    //     import java.time.LocalDate.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.LocalDate.getLocalDate(x);
-    //     let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.ZonedDateTime))
+    pub def adjustLocalDate(d: LocalDate, x: ZonedDateTime): ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        let LocalDate(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     // LocalDateTime methods
 
-    // pub def adjustLocalDateTime(x: LocalDateTime, dt: ZonedDateTime): ZonedDateTime = 
-    //     import java.time.LocalDateTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.LocalDateTime.getLocalDateTime(x);
-    //     let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.ZonedDateTime))
+    pub def adjustLocalDateTime(dt: LocalDateTime, x: ZonedDateTime): ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        let LocalDateTime(dt1) = dt;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe dt1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     // LocalTime methods
 
-    // pub def adjustLocalTime(x: LocalTime, dt: ZonedDateTime): ZonedDateTime = 
-    //     import java.time.LocalTime.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.LocalTime.getLocalTime(x);
-    //     let dt1 = unchecked_cast(getZonedDateTime(dt) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(adjustInto(x1, dt1) as ##java.time.ZonedDateTime))
+    pub def adjustLocalTime(lt: LocalTime, x: ZonedDateTime): ZonedDateTime = 
+        let ZonedDateTime(x1) = x;
+        let LocalTime(lt1) = lt;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe lt1.adjustInto(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     // plus / minus functions
 
-    // pub def plusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.plusYears(Int64): ##java.time.ZonedDateTime \ {} as plus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(plus(x1, years))
+    pub def plusYears(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.plusYears(i);
+        ZonedDateTime(ans)
 
-    // pub def minusYears(x: ZonedDateTime, years: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.minusYears(Int64): ##java.time.ZonedDateTime \ {} as minus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(minus(x1, years))
+    pub def minusYears(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.minusYears(i);
+        ZonedDateTime(ans)
 
-    // pub def plusMonths(x: ZonedDateTime, months: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.plusMonths(Int64): ##java.time.ZonedDateTime \ {} as plus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(plus(x1, months))
+    pub def plusMonths(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.plusMonths(i);
+        ZonedDateTime(ans)
 
-    // pub def minusMonths(x: ZonedDateTime, months: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.minusMonths(Int64): ##java.time.ZonedDateTime \ {} as minus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(minus(x1, months))
+    pub def minusMonths(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.minusMonths(i);
+        ZonedDateTime(ans)
 
-    // pub def plusWeeks(x: ZonedDateTime, weeks: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.plusWeeks(Int64): ##java.time.ZonedDateTime \ {} as plus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(plus(x1, weeks))
+    pub def plusWeeks(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.plusWeeks(i);
+        ZonedDateTime(ans)
 
-    // pub def minusWeeks(x: ZonedDateTime, weeks: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.minusWeeks(Int64): ##java.time.ZonedDateTime \ {} as minus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(minus(x1, weeks))
+    pub def minusWeeks(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.minusWeeks(i);
+        ZonedDateTime(ans)
 
-    // pub def plusDays(x: ZonedDateTime, days: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.plusDays(Int64): ##java.time.ZonedDateTime \ {} as plus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(plus(x1, days))
+    pub def plusDays(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.plusDays(i);
+        ZonedDateTime(ans)
 
-    // pub def minusDays(x: ZonedDateTime, days: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.minusDays(Int64): ##java.time.ZonedDateTime \ {} as minus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(minus(x1, days))
+    pub def minusDays(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.minusDays(i);
+        ZonedDateTime(ans)
 
-    // pub def plusHours(x: ZonedDateTime, hours: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.plusHours(Int64): ##java.time.ZonedDateTime \ {} as plus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(plus(x1, hours))
+    pub def plusHours(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.plusHours(i);
+        ZonedDateTime(ans)
 
-    // pub def minusHours(x: ZonedDateTime, hours: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.minusHours(Int64): ##java.time.ZonedDateTime \ {} as minus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(minus(x1, hours))
+    pub def minusHours(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.minusHours(i);
+        ZonedDateTime(ans)
 
-    // pub def plusMinutes(x: ZonedDateTime, minutes: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.plusMinutes(Int64): ##java.time.ZonedDateTime \ {} as plus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(plus(x1, minutes))
+    pub def plusMinutes(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.plusMinutes(i);
+        ZonedDateTime(ans)
 
-    // pub def minusMinutes(x: ZonedDateTime, minutes: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.minusMinutes(Int64): ##java.time.ZonedDateTime \ {} as minus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(minus(x1, minutes))
+    pub def minusMinutes(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.minusMinutes(i);
+        ZonedDateTime(ans)
 
-    // pub def plusSeconds(x: ZonedDateTime, seconds: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.plusSeconds(Int64): ##java.time.ZonedDateTime \ {} as plus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(plus(x1, seconds))
+    pub def plusSeconds(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.plusSeconds(i);
+        ZonedDateTime(ans)
 
-    // pub def minusSeconds(x: ZonedDateTime, seconds: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.minusSeconds(Int64): ##java.time.ZonedDateTime \ {} as minus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(minus(x1, seconds))
+    pub def minusSeconds(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.minusSeconds(i);
+        ZonedDateTime(ans)
 
-    // pub def plusNanos(x: ZonedDateTime, nanos: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.plusNanos(Int64): ##java.time.ZonedDateTime \ {} as plus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(plus(x1, nanos))
+    pub def plusNanos(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.plusNanos(i);
+        ZonedDateTime(ans)
 
-    // pub def minusNanos(x: ZonedDateTime, nanos: Int64): ZonedDateTime =
-    //     import java.time.ZonedDateTime.minusNanos(Int64): ##java.time.ZonedDateTime \ {} as minus;
-    //     let ZonedDateTime(x1) = x;
-    //     ZonedDateTime(minus(x1, nanos))
+    pub def minusNanos(x: ZonedDateTime, i: Int64): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe x1.minusNanos(i);
+        ZonedDateTime(ans)
 
-    // pub def plusDuration(i: ZonedDateTime, x: DurationZ): ZonedDateTime =
-    //     import java.time.Duration.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let i1 = unchecked_cast(getZonedDateTime(i) as ##java.time.temporal.Temporal);
-    //     let DurationZ(x1) = x;
-    //     ZonedDateTime(unchecked_cast(addTo(x1, i1) as ##java.time.ZonedDateTime))
+    pub def plusDuration(x: ZonedDateTime, d: DurationZ): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let DurationZ(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.addTo(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
     
-    // pub def minusDuration(i: ZonedDateTime, x: DurationZ): ZonedDateTime =
-    //     import java.time.Duration.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let i1 = unchecked_cast(getZonedDateTime(i) as ##java.time.temporal.Temporal);
-    //     let DurationZ(x1) = x;
-    //     ZonedDateTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.ZonedDateTime))
+    pub def minusDuration(x: ZonedDateTime, d: DurationZ): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let DurationZ(d1) = d;
+        let t1: JTemporal = checked_cast(x1);
+        let t2 = unsafe d1.subtractFrom(t1);
+        let ans = unchecked_cast(t2 as JZonedDateTime);
+        ZonedDateTime(ans)
 
     // Period methods
 
-    // pub def plusPeriod(i: ZonedDateTime, x: Period): ZonedDateTime =
-    //     import java.time.Period.addTo(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getZonedDateTime(i) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(addTo(x1, i1) as ##java.time.ZonedDateTime))
+    pub def plusPeriod(x: ZonedDateTime, p: Period): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let Period(p1) = p;
+        let t1 = unsafe p1.addTo(x1);
+        let ans = unchecked_cast(t1 as JZonedDateTime);
+        ZonedDateTime(ans)
     
-    // pub def minusPeriod(i: ZonedDateTime, x: Period): ZonedDateTime =
-    //     import java.time.Period.subtractFrom(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = Time.Period.getPeriod(x);
-    //     let i1 = unchecked_cast(getZonedDateTime(i) as ##java.time.temporal.Temporal);
-    //     ZonedDateTime(unchecked_cast(subtractFrom(x1, i1) as ##java.time.ZonedDateTime))
+    pub def minusPeriod(x: ZonedDateTime, p: Period): ZonedDateTime =
+        let ZonedDateTime(x1) = x;
+        let Period(p1) = p;
+        let t1 = unsafe p1.subtractFrom(x1);
+        let ans = unchecked_cast(t1 as JZonedDateTime);
+        ZonedDateTime(ans)
 
 
 
@@ -529,56 +556,52 @@ mod Time.ZonedDateTime {
 
     // `until` specialized
 
-    // def untilHelper(u: ##java.time.temporal.TemporalUnit, r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import java.time.ZonedDateTime.until(##java.time.temporal.Temporal, ##java.time.temporal.TemporalUnit): Int64 \ {};
-    //     let b1 = getZonedDateTime(r#start);
-    //     let e1 = unchecked_cast(getZonedDateTime(r#end) as ##java.time.temporal.Temporal);
-    //     until(b1, e1, u)
+    pub def secondsUntil(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): Int64 = 
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.SECONDS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def secondsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.SECONDS: ##java.time.temporal.ChronoUnit \ {} as get_SECONDS;
-    //     untilHelper(unchecked_cast(get_SECONDS() as ##java.time.temporal.TemporalUnit), r)
+    pub def minutesUntil(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): Int64 = 
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.MINUTES;
+        unsafe b1.until(e1, cu1)
 
-    // pub def minutesUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MINUTES: ##java.time.temporal.ChronoUnit \ {} as get_MINUTES;
-    //     untilHelper(unchecked_cast(get_MINUTES() as ##java.time.temporal.TemporalUnit), r)
+    pub def hoursUntil(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): Int64 = 
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.HOURS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def hoursUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HOURS: ##java.time.temporal.ChronoUnit \ {} as get_HOURS;
-    //     untilHelper(unchecked_cast(get_HOURS() as ##java.time.temporal.TemporalUnit), r)
+    pub def halfDaysUntil(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): Int64 = 
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.HALF_DAYS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def halfDaysUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.HALF_DAYS: ##java.time.temporal.ChronoUnit \ {} as get_HALF_DAYS;
-    //     untilHelper(unchecked_cast(get_HALF_DAYS() as ##java.time.temporal.TemporalUnit), r)
+    pub def daysUntil(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): Int64 = 
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.DAYS;
+        unsafe b1.until(e1, cu1) 
 
-    // pub def daysUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.DAYS: ##java.time.temporal.ChronoUnit \ {} as get_DAYS;
-    //     untilHelper(unchecked_cast(get_DAYS() as ##java.time.temporal.TemporalUnit), r)
+    pub def monthsUntil(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): Int64 = 
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.MONTHS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def monthsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.MONTHS: ##java.time.temporal.ChronoUnit \ {} as get_MONTHS;
-    //     untilHelper(unchecked_cast(get_MONTHS() as ##java.time.temporal.TemporalUnit), r)
+    pub def yearsUntil(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): Int64 = 
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let cu1 = unsafe JChronoUnit.YEARS;
+        unsafe b1.until(e1, cu1)
 
-    // pub def yearsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.ChronoUnit.YEARS: ##java.time.temporal.ChronoUnit \ {} as get_YEARS;
-    //     untilHelper(unchecked_cast(get_YEARS() as ##java.time.temporal.TemporalUnit), r)
-
-    // pub def quarterYearsUntil(r: {start = ZonedDateTime, end = ZonedDateTime}): Int64 = 
-    //     import static java_get_field java.time.temporal.IsoFields.QUARTER_YEARS: ##java.time.temporal.TemporalUnit \ {} as get_QUARTER_YEARS;
-    //     untilHelper(get_QUARTER_YEARS(), r)
-
-
-    // generic helper functions
-
-    // def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): ZonedDateTime = 
-    //     import static java.time.ZonedDateTime.from(##java.time.temporal.TemporalAccessor): ##java.time.ZonedDateTime \ {} as fromTA;
-    //     try {
-    //         ZonedDateTime(fromTA(x))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
-
+    pub def quarterYearsUntil(begin: {begin = ZonedDateTime}, end: {end = ZonedDateTime}): Int64 = 
+        let ZonedDateTime(b1) = begin#begin;
+        let ZonedDateTime(e1) = end#end;
+        let cu1 = unsafe JIsoFields.QUARTER_YEARS;
+        unsafe b1.until(e1, cu1)
 
 }

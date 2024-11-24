@@ -370,6 +370,4 @@ mod Time.OffsetTime {
         let tu1 = unsafe JChronoUnit.HOURS;
         unsafe b1.until(te1, tu1)
 
-
-
 }
