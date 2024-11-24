@@ -114,9 +114,6 @@ mod Time.DurationZ {
 
     use Time.DurationZ
     use Time.DurationZ.{DurationZ}
-    
-    use Time.Temporal.TemporalUnit
-    use Time.Temporal.TemporalUnit.{TemporalUnit}
 
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}

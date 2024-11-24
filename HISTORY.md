@@ -1,6 +1,7 @@
 ### v0.14.0 (In Progress)
    Removed `InternalChrono` and `Internal.Temporal`.
    Removed `Chrono.Era`.
+   Removed `Temporal` modules except `ValueRange`.
 
 ### v0.13.0
    Updated `DateTimeFormatterBuilder` to use `run-with`.
