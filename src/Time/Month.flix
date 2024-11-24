@@ -76,11 +76,17 @@ mod Time.Month {
 
     use Time.Format.TextStyle
     use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
     use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     use Time.MonthDay
+    use Time.MonthDay.{MonthDay}
     use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
     use Time.YearMonth
+    use Time.YearMonth.{YearMonth}
     use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
 
     use Locale.{Locale}
     import java.time.{Month => JMonth}
@@ -128,34 +134,37 @@ mod Time.Month {
 
     // `from` functions
 
-    // /// `fromTemporalAccessor` specialized
-    // def fromHelper(x: ##java.time.temporal.TemporalAccessor): Month = 
-    //     import static java.time.Month.from(##java.time.temporal.TemporalAccessor): ##java.time.Month \ {} as fromTA;
-    //     try {
-    //         unmarshalMonth(fromTA(x))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
+    /// `fromTemporalAccessor` specialized
 
-    // pub def fromLocalDate(x: LocalDate): Month = 
-    //     fromHelper(unchecked_cast(Time.LocalDate.getLocalDate(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromLocalDate(x: LocalDate): Month =  
+        let LocalDate(x1) = x;
+        let ans = unsafe JMonth.from(x1);
+        unmarshalMonth(ans)
 
-    // pub def fromLocalDateTime(x: LocalDateTime): Month = 
-    //     fromHelper(unchecked_cast(Time.LocalDateTime.getLocalDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromLocalDateTime(x: LocalDateTime): Month = 
+        let LocalDateTime(x1) = x;
+        let ans = unsafe JMonth.from(x1);
+        unmarshalMonth(ans)
 
-    // pub def fromMonthDay(x: MonthDay): Month = 
-    //     fromHelper(unchecked_cast(Time.MonthDay.getMonthDay(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromMonthDay(x: MonthDay): Month = 
+        let MonthDay(x1) = x;
+        let ans = unsafe JMonth.from(x1);
+        unmarshalMonth(ans)
 
-    // pub def fromOffsetDateTime(x: OffsetDateTime): Month = 
-    //     fromHelper(unchecked_cast(Time.OffsetDateTime.getOffsetDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromOffsetDateTime(x: OffsetDateTime): Month =
+        let OffsetDateTime(x1) = x;
+        let ans = unsafe JMonth.from(x1);
+        unmarshalMonth(ans)
 
-    // pub def fromYearMonth(x: YearMonth): Month = 
-    //     fromHelper(unchecked_cast(Time.YearMonth.getYearMonth(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromYearMonth(x: YearMonth): Month = 
+        let YearMonth(x1) = x;
+        let ans = unsafe JMonth.from(x1);
+        unmarshalMonth(ans)
 
-    // pub def fromZonedDateTime(x: ZonedDateTime): Month = 
-    //     fromHelper(unchecked_cast(Time.ZonedDateTime.getZonedDateTime(x) as ##java.time.temporal.TemporalAccessor))
+    pub def fromZonedDateTime(x: ZonedDateTime): Month = 
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe JMonth.from(x1);
+        unmarshalMonth(ans)
 
     /// Month functions
     

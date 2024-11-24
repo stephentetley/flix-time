@@ -63,9 +63,13 @@ mod Time.DayOfWeek {
 
     use Time.Format.TextStyle
     use Time.LocalDate
+    use Time.LocalDate.{LocalDate}
     use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     use Time.OffsetDateTime
+    use Time.OffsetDateTime.{OffsetDateTime}
     use Time.ZonedDateTime
+    use Time.ZonedDateTime.{ZonedDateTime}
 
     use Time.Internal.Temporal.TemporalAccessor
     import java.time.{DayOfWeek => JDayOfWeek}
@@ -117,33 +121,27 @@ mod Time.DayOfWeek {
     // `from` functions
 
     // `fromTemporalAccessor` specialized
-    // def fromTemporalAccessor(x: TemporalAccessor): DayOfWeek = 
-    //     import static java.time.DayOfWeek.from(##java.time.temporal.TemporalAccessor): ##java.time.DayOfWeek \ {} as fromTA;
-    //     try {
-    //         let Time.Internal.Temporal.TemporalAccessor.TemporalAccessor(x1) = x;
-    //         unmarshalDayOfWeek(fromTA(x1))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
+
+    pub def fromLocalDate(x: LocalDate): DayOfWeek = 
+        let LocalDate(x1) = x;
+        let ans = unsafe JDayOfWeek.from(x1);
+        unmarshalDayOfWeek(ans)
+
+    pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
+        let LocalDateTime(x1) = x;
+        let ans = unsafe JDayOfWeek.from(x1);
+        unmarshalDayOfWeek(ans)
     
-    // pub def fromLocalDate(x: LocalDate): DayOfWeek = 
-    //     Time.LocalDate.asTemporalAccessor(x)
-    //         |> fromTemporalAccessor
-
-    // pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
-    //     Time.LocalDateTime.asTemporalAccessor(x)
-    //         |> fromTemporalAccessor
-
-    // pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
-    //     Time.OffsetDateTime.asTemporalAccessor(x)
-    //         |> fromTemporalAccessor
-
-    // pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
-    //     Time.ZonedDateTime.asTemporalAccessor(x)
-    //         |> fromTemporalAccessor
-
+    pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
+        let OffsetDateTime(x1) = x;
+        let ans = unsafe JDayOfWeek.from(x1);
+        unmarshalDayOfWeek(ans)
+    
+    pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe JDayOfWeek.from(x1);
+        unmarshalDayOfWeek(ans)
+    
 
     /// DayOfWeek functions
 

@@ -161,38 +161,25 @@ mod Time.LocalTime {
         LocalTime(unsafe JLocalTime.ofSecondOfDay(secondOfDay))
 
     /// `fromTemporalAccessor` specialized
-    // def fromTemporalAccessorHelper(x: ##java.time.temporal.TemporalAccessor): LocalTime = 
-    //     import static java.time.LocalTime.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalTime \ {} as fromTA;
-    //     try {
-    //         LocalTime(fromTA(x))
-    //     } catch {
-    //         case ex: ##java.lang.Exception => 
-    //             import java.lang.Throwable.getMessage(): String \ {};
-    //             bug!(getMessage(checked_cast(ex)))
-    //     }
 
     pub def fromLocalDateTime(x: LocalDateTime): LocalTime = 
         let LocalDateTime(x1) = x;
-        let ta1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JLocalTime.from(ta1);
+        let ans = unsafe JLocalTime.from(x1);
         LocalTime(ans)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): LocalTime = 
         let OffsetDateTime(x1) = x;
-        let ta1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JLocalTime.from(ta1);
+        let ans = unsafe JLocalTime.from(x1);
         LocalTime(ans)
 
     pub def fromOffsetTime(x: OffsetTime): LocalTime = 
         let OffsetTime(x1) = x;
-        let ta1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JLocalTime.from(ta1);
+        let ans = unsafe JLocalTime.from(x1);
         LocalTime(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): LocalTime = 
         let ZonedDateTime(x1) = x;
-        let ta1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JLocalTime.from(ta1);
+        let ans = unsafe JLocalTime.from(x1);
         LocalTime(ans)
 
     /// `to` functions
