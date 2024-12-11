@@ -83,6 +83,7 @@ mod Time.ZoneOffset {
         let ZoneOffset(x1) = x;
         x1
 
+    // TODO - do we need this for interring into Java collections?
     pub def fromJavaObject(o: Object): ZoneOffset = 
         ZoneOffset(unchecked_cast(o as JZoneOffset))
 

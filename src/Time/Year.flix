@@ -166,7 +166,7 @@ mod Time.Year {
         let ans = unsafe JYear.from(t1);
         Year(ans)
 
-    pub def OffsetDateTime(x: OffsetDateTime): Year = 
+    pub def fromOffsetDateTime(x: OffsetDateTime): Year = 
         let OffsetDateTime(x1) = x;
         let t1: JTemporalAccessor = checked_cast(x1);
         let ans = unsafe JYear.from(t1);

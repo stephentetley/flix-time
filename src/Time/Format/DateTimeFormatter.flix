@@ -154,10 +154,10 @@ mod Time.Format.DateTimeFormatter {
 
     /// ## Getters and Setters
 
-    // pub def getZone(x: DateTimeFormatter[t]): ZoneId =
-    //     let DateTimeFormatter(x1) = x;
-    //     let ans : JZoneId = unsafe x1.getZone();
-    //     ZoneId(ans)
+    pub def getZone(x: DateTimeFormatter[t]): ZoneId =
+        let DateTimeFormatter(x1) = x;
+        let ans = unsafe x1.getZone();
+        ZoneId(ans)
 
     pub def withZone(zone: ZoneId, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         let DateTimeFormatter(x1) = x;

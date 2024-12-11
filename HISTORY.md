@@ -1,7 +1,8 @@
-### v0.14.0 (In Progress)
+### v0.14.0
    Removed `InternalChrono` and `Internal.Temporal`.
    Removed `Chrono.Era`.
    Removed `Temporal` modules except `ValueRange`.
+   Fixed `Year.fromOffsetDateTime` name error (from prefix missing)
 
 ### v0.13.0
    Updated `DateTimeFormatterBuilder` to use `run-with`.
