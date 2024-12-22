@@ -67,9 +67,11 @@ mod Time.Chrono.HijrahDate {
     use Time.ZoneId
     use Time.ZoneId.{ZoneId}
 
+    import java.time.{LocalDate => JLocalDate}
     import java.time.chrono.{HijrahDate => JHijrahDate}
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate,
         HijrahEra => JHijrahEra}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.lang.{Object}
 
     pub def getHijrahDate(x: HijrahDate): JHijrahDate = 
@@ -110,52 +112,42 @@ mod Time.Chrono.HijrahDate {
     pub def isEqual(x: HijrahDate, y: HijrahDate): Bool = 
         let HijrahDate(x1) = x;
         let HijrahDate(y1) = y;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let cy1 = (checked_cast(y1) : JChronoLocalDate);
-        unsafe cx1.isEqual(cy1)
+        unsafe x1.isEqual(y1)
 
     pub def compareTo(x: HijrahDate, y: HijrahDate): Int32 = 
         let HijrahDate(x1) = x;
         let HijrahDate(y1) = y;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let cy1 = (checked_cast(y1) : JChronoLocalDate);
-        unsafe cx1.compareTo(cy1)
+        unsafe x1.compareTo(y1)
 
     pub def isAfter(x: HijrahDate, y: HijrahDate): Bool = 
         let HijrahDate(x1) = x;
         let HijrahDate(y1) = y;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let cy1 = (checked_cast(y1) : JChronoLocalDate);
-        unsafe cx1.isAfter(cy1)
+        unsafe x1.isAfter(y1)
 
     pub def isBefore(x: HijrahDate, y: HijrahDate): Bool = 
         let HijrahDate(x1) = x;
         let HijrahDate(y1) = y;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let cy1 = (checked_cast(y1) : JChronoLocalDate);
-        unsafe cx1.isBefore(cy1)
+        unsafe x1.isBefore(y1)
 
 
     pub def toEpochDay(x: HijrahDate): Int64 = 
         let HijrahDate(x1) = x;
         unsafe x1.toEpochDay()
 
-    // pub def toLocalDate(x: HijrahDate): LocalDate =
-    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
-    //     let HijrahDate(x1) = x;
-    //     LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    pub def toLocalDate(x: HijrahDate): LocalDate =
+        let HijrahDate(x1) = x;
+        let ans = unsafe JLocalDate.from(x1);
+        LocalDate(ans)
 
-    // pub def getChronology(x: HijrahDate): HijrahChronology = 
-    //     import java.time.chrono.HijrahDate.getChronology(): ##java.time.chrono.HijrahChronology \ {};
-    //     let HijrahDate(x1) = x;
-    //     HijrahChronology(getChronology(x1))
+    pub def getChronology(x: HijrahDate): HijrahChronology = 
+        let HijrahDate(x1) = x;
+        HijrahChronology(unsafe x1.getChronology())
 
     pub def getEra(x: HijrahDate): HijrahEra = 
         let HijrahDate(x1) = x;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let ans = unsafe cx1.getEra();
-        let ans1 = unchecked_cast(ans as JHijrahEra);
-        Time.Chrono.HijrahEra.unmarshalHijrahEra(ans1)
+        let e1 = unsafe x1.getEra();
+        let ans = unchecked_cast(e1 as JHijrahEra);
+        Time.Chrono.HijrahEra.unmarshalHijrahEra(ans)
 
 
     pub def isLeapYear(x: HijrahDate): Bool = 
@@ -171,27 +163,39 @@ mod Time.Chrono.HijrahDate {
         unsafe x1.lengthOfYear()
 
 
-    // pub def plusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
-    //     import java.time.chrono.HijrahDate.plus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate \ {};
-    //     let HijrahDate(x1) = x;
-    //     let Period(amount1) = amount;
-    //     let tamount1 = unchecked_cast(amount1 as ##java.time.temporal.TemporalAmount);
-    //     HijrahDate(plus(x1, tamount1))
+    pub def plusPeriod(x: HijrahDate, p: Period): HijrahDate = 
+        let HijrahDate(x1) = x;
+        let Period(p1) = p;
+        let t1 = unsafe p1.addTo(x1);
+        let ans = unchecked_cast(t1 as JHijrahDate);
+        HijrahDate(ans)
 
-    // pub def minusPeriod(x: HijrahDate, amount: Period): HijrahDate = 
-    //     import java.time.chrono.HijrahDate.minus(##java.time.temporal.TemporalAmount): ##java.time.chrono.HijrahDate \ {};
-    //     let HijrahDate(x1) = x;
-    //     let Period(amount1) = amount;
-    //     let tamount1 = unchecked_cast(amount1 as ##java.time.temporal.TemporalAmount);
-    //     HijrahDate(minus(x1, tamount1))
+    pub def minusPeriod(x: HijrahDate, p: Period): HijrahDate = 
+        let HijrahDate(x1) = x;
+        let Period(p1) = p;
+        let t1 = unsafe p1.subtractFrom(x1);
+        let ans = unchecked_cast(t1 as JHijrahDate);
+        HijrahDate(ans)
+
+    pub def plusYears(x: HijrahDate, i: Int64): HijrahDate =
+        let p1 = Time.Period.plusYears(Time.Period.zero(), i);
+        plusPeriod(x, p1)
+
+    pub def minusYears(x: HijrahDate, i: Int64): HijrahDate =
+        let p1 = Time.Period.plusYears(Time.Period.zero(), i);
+        minusPeriod(x, p1)
 
 
+    pub def plusMillenia(x: HijrahDate, i: Int64): HijrahDate = 
+        let HijrahDate(x1) = x;
+        let u = unsafe JChronoUnit.MILLENNIA;
+        let ans = unsafe x1.plus(i, u);
+        HijrahDate(ans)
 
-    // pub def withVariant(x: HijrahDate, chronology: HijrahChronology): HijrahDate = 
-    //     import java.time.chrono.HijrahDate.withVariant(##java.time.chrono.HijrahChronology): ##java.time.chrono.HijrahDate \ {};
-    //     let HijrahDate(x1) = x;
-    //     let HijrahChronology(chronology1) = chronology;
-    //     HijrahDate(withVariant(x1, chronology1))
-
+    pub def minusMillenia(x: HijrahDate, i: Int64): HijrahDate = 
+        let HijrahDate(x1) = x;
+        let u = unsafe JChronoUnit.MILLENNIA;
+        let ans = unsafe x1.minus(i, u);
+        HijrahDate(ans)
 
 }

@@ -57,8 +57,7 @@ mod Time {
         pub def eq(x: LocalDate, y: LocalDate): Bool =
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[LocalDate] {
@@ -199,8 +198,7 @@ mod Time.LocalDate {
 
     pub def toEpochDay(x: LocalDate): Int64 =
         let LocalDate(x1) = x;
-        let x2: JChronoLocalDate = checked_cast(x1);
-        unsafe x2.toEpochDay()
+        unsafe x1.toEpochDay()
 
 
     /// `parse` / `format` functions
@@ -296,7 +294,8 @@ mod Time.LocalDate {
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: LocalDate): LocalDate =
         let LocalDate(x1) = x;
-        LocalDate(unsafe x1.withDayOfMonth(dayOfMonth))
+        let ans = unsafe x1.withDayOfMonth(dayOfMonth);
+        LocalDate(ans)
 
 
     pub def getDayOfYear(x: LocalDate): Int32 =
@@ -305,12 +304,14 @@ mod Time.LocalDate {
 
     pub def withDayOfYear(dayOfYear: Int32, x: LocalDate): LocalDate =
         let LocalDate(x1) = x;
-        LocalDate(unsafe x1.withDayOfYear(dayOfYear))
+        let ans = unsafe x1.withDayOfYear(dayOfYear);
+        LocalDate(ans)
 
 
     pub def withMonth(month: Int32, x: LocalDate): LocalDate =
         let LocalDate(x1) = x;
-        LocalDate(unsafe x1.withMonth(month))
+        let ans = unsafe x1.withMonth(month);
+        LocalDate(ans)
 
     pub def getYear(x: LocalDate): Int32 =
         let LocalDate(x1) = x;
@@ -318,7 +319,8 @@ mod Time.LocalDate {
 
     pub def withYear(year: Int32, x: LocalDate): LocalDate =
         let LocalDate(x1) = x;
-        LocalDate(unsafe x1.withYear(year))
+        let ans = unsafe x1.withYear(year);
+        LocalDate(ans)
 
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
@@ -409,16 +411,14 @@ mod Time.LocalDate {
     pub def adjustMonthDay(i: MonthDay, x: LocalDate): LocalDate =
         let LocalDate(x1) = x;
         let MonthDay(i1) = i;
-        let ta1: JTemporalAdjuster = checked_cast(i1);
-        let ans = unsafe x1.with(ta1);
+        let ans = unsafe x1.with(i1);
         LocalDate(ans)
 
 
     pub def adjustYearMonth(i: YearMonth, x: LocalDate): LocalDate =
         let LocalDate(x1) = x;
         let YearMonth(i1) = i;
-        let ta1: JTemporalAdjuster = checked_cast(i1);
-        let ans = unsafe x1.with(ta1);
+        let ans = unsafe x1.with(i1);
         LocalDate(ans)
 
 
@@ -433,8 +433,7 @@ mod Time.LocalDate {
     pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
         let LocalDate(d1) = d;
         let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
-        let t1: JTemporal = checked_cast(d1);
-        let t2 = unsafe x1.adjustInto(t1);
+        let t2 = unsafe x1.adjustInto(d1);
         let ans = unchecked_cast(t2 as JLocalDate);
         LocalDate(ans)
 
@@ -567,30 +566,26 @@ mod Time.LocalDate {
     pub def daysUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
         let LocalDate(b1) = begin#begin;
         let LocalDate(e1) = end#end;
-        let t1: JTemporal = checked_cast(e1);
         let u1 = unsafe JChronoUnit.DAYS;
-        unsafe b1.until(t1, u1)
+        unsafe b1.until(e1, u1)
 
     pub def monthsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
         let LocalDate(b1) = begin#begin;
         let LocalDate(e1) = end#end;
-        let t1: JTemporal = checked_cast(e1);
         let u1 = unsafe JChronoUnit.MONTHS;
-        unsafe b1.until(t1, u1)
+        unsafe b1.until(e1, u1)
 
     pub def yearsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
         let LocalDate(b1) = begin#begin;
         let LocalDate(e1) = end#end;
-        let t1: JTemporal = checked_cast(e1);
         let u1 = unsafe JChronoUnit.YEARS;
-        unsafe b1.until(t1, u1)
+        unsafe b1.until(e1, u1)
 
     pub def quarterYearsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
         let LocalDate(b1) = begin#begin;
         let LocalDate(e1) = end#end;
-        let t1: JTemporal = checked_cast(e1);
         let u1 = unsafe JIsoFields.QUARTER_YEARS;
-        unsafe b1.until(t1, u1)
+        unsafe b1.until(e1, u1)
 
 
 }
