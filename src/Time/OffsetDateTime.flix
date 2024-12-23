@@ -46,8 +46,8 @@ mod Time {
         pub def fromString(s: String): Option[OffsetDateTime] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                OffsetDateTime(unsafe JOffsetDateTime.parse(cs))
+                let ans = unsafe JOffsetDateTime.parse(s1);
+                OffsetDateTime(ans)
             }) |> Result.toOption
     }
 
@@ -55,8 +55,7 @@ mod Time {
         pub def eq(x: OffsetDateTime, y: OffsetDateTime): Bool =
             let OffsetDateTime(x1) = x;
             let OffsetDateTime(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
 
     }
 
@@ -135,7 +134,8 @@ mod Time.OffsetDateTime {
     pub def offsetDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32,
                     second = Int32, nanoSecond = Int32, offset = ZoneOffset}): OffsetDateTime =
         let ZoneOffset(o1) = r#offset;
-        OffsetDateTime(unsafe JOffsetDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, o1))
+        let ans = unsafe JOffsetDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, o1);
+        OffsetDateTime(ans)
 
 
     /// `now` functions
@@ -150,25 +150,29 @@ mod Time.OffsetDateTime {
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetDateTime \ IO =
         let ZoneId(z1) = zone;
-        OffsetDateTime(JOffsetDateTime.now(z1))
+        let ans = JOffsetDateTime.now(z1);
+        OffsetDateTime(ans)
 
     /// `at` functions
 
     pub def atZoneSameInstant(zone: {zone = ZoneId}, x: OffsetDateTime): ZonedDateTime =
         let OffsetDateTime(x1) = x;
         let ZoneId(z1) = zone#zone;
-        ZonedDateTime(unsafe x1.atZoneSameInstant(z1))
+        let ans = unsafe x1.atZoneSameInstant(z1);
+        ZonedDateTime(ans)
 
     pub def atZoneSimilarLocal(zone: {zone = ZoneId}, x: OffsetDateTime): ZonedDateTime =
         let OffsetDateTime(x1) = x;
         let ZoneId(z1) = zone#zone;
-        ZonedDateTime(unsafe x1.atZoneSimilarLocal(z1))
+        let ans = unsafe x1.atZoneSimilarLocal(z1);
+        ZonedDateTime(ans)
 
 
     pub def fromLocalDateTime(offset: {offset = ZoneOffset}, dateTime: LocalDateTime): OffsetDateTime =
         let LocalDateTime(dt1) = dateTime;
         let ZoneOffset(o1) = offset#offset;
-        OffsetDateTime(unsafe JOffsetDateTime.of(dt1, o1))
+        let ans = unsafe JOffsetDateTime.of(dt1, o1);
+        OffsetDateTime(ans)
 
 
     /// `from` functions
@@ -195,21 +199,24 @@ mod Time.OffsetDateTime {
     ///
     pub def toLocalDate(x: OffsetDateTime): LocalDate =
         let OffsetDateTime(x1) = x;
-        LocalDate(unsafe x1.toLocalDate())
+        let ans = unsafe x1.toLocalDate();
+        LocalDate(ans)
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalTime(x: OffsetDateTime): LocalTime =
         let OffsetDateTime(x1) = x;
-        LocalTime(unsafe x1.toLocalTime())
+        let ans = unsafe x1.toLocalTime();
+        LocalTime(ans)
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
         let OffsetDateTime(x1) = x;
-        LocalDateTime(unsafe x1.toLocalDateTime())
+        let ans = unsafe x1.toLocalDateTime();
+        LocalDateTime(ans)
 
 
     ///
@@ -217,19 +224,22 @@ mod Time.OffsetDateTime {
     ///
     pub def toOffsetTime(x: OffsetDateTime): OffsetTime =
         let OffsetDateTime(x1) = x;
-        OffsetTime(unsafe x1.toOffsetTime())
+        let ans = unsafe x1.toOffsetTime();
+        OffsetTime(ans)
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toZonedDateTime(x: OffsetDateTime): ZonedDateTime =
         let OffsetDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.toZonedDateTime())
+        let ans = unsafe x1.toZonedDateTime();
+        ZonedDateTime(ans)
 
 
     pub def toInstant(x: OffsetDateTime): InstantZ =
         let OffsetDateTime(x1) = x;
-        InstantZ(unsafe x1.toInstant())
+        let ans = unsafe x1.toInstant();
+        InstantZ(ans)
 
     pub def toEpochSecond(x: OffsetDateTime): Int64 =
         let OffsetDateTime(x1) = x;
@@ -312,17 +322,20 @@ mod Time.OffsetDateTime {
 
     pub def getOffset(x: OffsetDateTime): ZoneOffset =
         let OffsetDateTime(x1) = x;
-        ZoneOffset(unsafe x1.getOffset())
+        let ans = unsafe x1.getOffset();
+        ZoneOffset(ans)
 
     pub def withOffsetSameInstant(offset: ZoneOffset, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
         let ZoneOffset(o1) = offset;
-        OffsetDateTime(unsafe x1.withOffsetSameInstant(o1))
+        let ans = unsafe x1.withOffsetSameInstant(o1);
+        OffsetDateTime(ans)
 
     pub def withOffsetSameLocal(offset: ZoneOffset, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
         let ZoneOffset(o1) = offset;
-        OffsetDateTime(unsafe x1.withOffsetSameLocal(o1))
+        let ans = unsafe x1.withOffsetSameLocal(o1);
+        OffsetDateTime(ans)
 
 
     pub def getNano(x: OffsetDateTime): Int32 =
@@ -331,7 +344,8 @@ mod Time.OffsetDateTime {
 
     pub def withNano(nano: Int32, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.withNano(nano))
+        let ans = unsafe x1.withNano(nano);
+        OffsetDateTime(ans)
 
     pub def getSecond(x: OffsetDateTime): Int32 =
         let OffsetDateTime(x1) = x;
@@ -339,7 +353,8 @@ mod Time.OffsetDateTime {
 
     pub def withSecond(second: Int32, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.withSecond(second))
+        let ans = unsafe x1.withSecond(second);
+        OffsetDateTime(ans)
 
 
     pub def getMinute(x: OffsetDateTime): Int32 =
@@ -348,7 +363,8 @@ mod Time.OffsetDateTime {
 
     pub def withMinute(minute: Int32, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.withMinute(minute))
+        let ans = unsafe x1.withMinute(minute);
+        OffsetDateTime(ans)
 
 
     pub def getHour(x: OffsetDateTime): Int32 =
@@ -357,20 +373,21 @@ mod Time.OffsetDateTime {
 
     pub def withHour(hour: Int32, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.withHour(hour))
+        let ans = unsafe x1.withHour(hour);
+        OffsetDateTime(ans)
 
 
     pub def getDayOfWeek(x: OffsetDateTime): DayOfWeek =
         let OffsetDateTime(x1) = x;
-        Time.DayOfWeek.unmarshalDayOfWeek(unsafe x1.getDayOfWeek())
+        let d1 = unsafe x1.getDayOfWeek();
+        Time.DayOfWeek.unmarshalDayOfWeek(d1)
 
 
     pub def adjustDayOfWeek(d: DayOfWeek, x: OffsetDateTime): OffsetDateTime = 
         let OffsetDateTime(x1) = x;
         let d1 = Time.DayOfWeek.marshalDayOfWeek(d);
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let t1 = unsafe d1.adjustInto(x1);
+        let ans = unchecked_cast(t1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
 
@@ -380,7 +397,8 @@ mod Time.OffsetDateTime {
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.withDayOfMonth(dayOfMonth))
+        let ans = unsafe x1.withDayOfMonth(dayOfMonth);
+        OffsetDateTime(ans)
 
 
     pub def getDayOfYear(x: OffsetDateTime): Int32 =
@@ -389,11 +407,13 @@ mod Time.OffsetDateTime {
 
     pub def withDayOfYear(dayOfYear: Int32, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.withDayOfYear(dayOfYear))
+        let ans = unsafe x1.withDayOfYear(dayOfYear);
+        OffsetDateTime(ans)
 
     pub def getMonth(x: OffsetDateTime): Month =
         let OffsetDateTime(x1) = x;
-        Time.Month.unmarshalMonth(unsafe x1.getMonth())
+        let m1 = unsafe x1.getMonth();
+        Time.Month.unmarshalMonth(m1)
 
     pub def getMonthValue(x: OffsetDateTime): Int32 =
         let OffsetDateTime(x1) = x;
@@ -402,7 +422,8 @@ mod Time.OffsetDateTime {
 
     pub def withMonth(month: Int32, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.withMonth(month))
+        let ans = unsafe x1.withMonth(month);
+        OffsetDateTime(ans)
 
     pub def getYear(x: OffsetDateTime): Int32 =
         let OffsetDateTime(x1) = x;
@@ -410,22 +431,21 @@ mod Time.OffsetDateTime {
 
     pub def withYear(year: Int32, x: OffsetDateTime): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.withYear(year))
+        let ans = unsafe x1.withYear(year);
+        OffsetDateTime(ans)
 
     // MonthDay methods
 
     pub def getMonthDay(x: OffsetDateTime): MonthDay = 
         let OffsetDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JMonthDay.from(t1);
+        let ans = unsafe JMonthDay.from(x1);
         MonthDay(ans)
 
     pub def adjustMonthDay(md: MonthDay, x: OffsetDateTime): OffsetDateTime = 
         let OffsetDateTime(x1) = x;
         let MonthDay(md1) = md;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe md1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe md1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
     // YearMonth methods
@@ -439,9 +459,8 @@ mod Time.OffsetDateTime {
     pub def adjustYearMonth(ym: YearMonth, x: OffsetDateTime): OffsetDateTime = 
         let OffsetDateTime(x1) = x;
         let YearMonth(ym1) = ym;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe ym1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe ym1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
 
@@ -455,9 +474,8 @@ mod Time.OffsetDateTime {
     pub def adjustLocalDate(d: LocalDate, x: OffsetDateTime): OffsetDateTime = 
         let OffsetDateTime(x1) = x;
         let LocalDate(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe d1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
     // LocalDateTime methods
@@ -467,12 +485,11 @@ mod Time.OffsetDateTime {
         let ans = unsafe JLocalDateTime.from(x1);
         LocalDateTime(ans)
 
-    pub def adjustLocalDateTime(dt: LocalDateTime, x: OffsetDateTime): OffsetDateTime = 
+    pub def adjustLocalDateTime(ldt: LocalDateTime, x: OffsetDateTime): OffsetDateTime = 
         let OffsetDateTime(x1) = x;
-        let LocalDateTime(dt1) = dt;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe dt1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let LocalDateTime(ldt1) = ldt;
+        let dt1 = unsafe ldt1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
 
@@ -487,9 +504,8 @@ mod Time.OffsetDateTime {
     pub def adjustLocalTime(lt: LocalTime, x: OffsetDateTime): OffsetDateTime = 
         let OffsetDateTime(x1) = x;
         let LocalTime(lt1) = lt;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe lt1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe lt1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
         
 
@@ -503,9 +519,8 @@ mod Time.OffsetDateTime {
     pub def adjustZoneOffset(zo: ZoneOffset, x: OffsetDateTime): OffsetDateTime = 
         let OffsetDateTime(x1) = x;
         let ZoneOffset(zo1) = zo;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe zo1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe zo1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
     // truncate functions
@@ -520,83 +535,97 @@ mod Time.OffsetDateTime {
 
     pub def plusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.plusYears(years))
+        let ans = unsafe x1.plusYears(years);
+        OffsetDateTime(ans)
 
     pub def minusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.minusYears(years))
+        let ans = unsafe x1.minusYears(years);
+        OffsetDateTime(ans)
 
     pub def plusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.plusMonths(months))
+        let ans = unsafe x1.plusMonths(months);
+        OffsetDateTime(ans)
 
     pub def minusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.minusMonths(months))
+        let ans = unsafe x1.minusMonths(months);
+        OffsetDateTime(ans)
 
     pub def plusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.plusWeeks(weeks))
+        let ans = unsafe x1.plusWeeks(weeks);
+        OffsetDateTime(ans)
 
     pub def minusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.minusWeeks(weeks))
+        let ans = unsafe x1.minusWeeks(weeks);
+        OffsetDateTime(ans)
 
     pub def plusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.plusDays(days))
+        let ans = unsafe x1.plusDays(days);
+        OffsetDateTime(ans)
 
     pub def minusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.minusDays(days))
+        let ans = unsafe x1.minusDays(days);
+        OffsetDateTime(ans)
 
     pub def plusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.plusHours(hours))
+        let ans = unsafe x1.plusHours(hours);
+        OffsetDateTime(ans)
 
     pub def minusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.minusHours(hours))
+        let ans = unsafe x1.minusHours(hours);
+        OffsetDateTime(ans)
 
     pub def plusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.plusMinutes(minutes))
+        let ans = unsafe x1.plusMinutes(minutes);
+        OffsetDateTime(ans)
 
     pub def minusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.minusMinutes(minutes))
+        let ans = unsafe x1.minusMinutes(minutes);
+        OffsetDateTime(ans)
 
     pub def plusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.plusSeconds(seconds))
+        let ans = unsafe x1.plusSeconds(seconds);
+        OffsetDateTime(ans)
 
     pub def minusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.minusSeconds(seconds))
+        let ans = unsafe x1.minusSeconds(seconds);
+        OffsetDateTime(ans)
 
     pub def plusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.plusNanos(nanos))
+        let ans = unsafe x1.plusNanos(nanos);
+        OffsetDateTime(ans)
 
     pub def minusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
         let OffsetDateTime(x1) = x;
-        OffsetDateTime(unsafe x1.minusNanos(nanos))
+        let ans = unsafe x1.minusNanos(nanos);
+        OffsetDateTime(ans)
 
 
     pub def plusDuration(x: OffsetDateTime, d: DurationZ): OffsetDateTime =
         let OffsetDateTime(x1) = x;
         let DurationZ(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.addTo(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe d1.addTo(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
     
     pub def minusDuration(x: OffsetDateTime, d: DurationZ): OffsetDateTime =
         let OffsetDateTime(x1) = x;
         let DurationZ(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.subtractFrom(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe d1.subtractFrom(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
     // Period methods
@@ -604,17 +633,15 @@ mod Time.OffsetDateTime {
     pub def plusPeriod(x: OffsetDateTime, p: Period): OffsetDateTime =
         let OffsetDateTime(x1) = x;
         let Period(p1) = p;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe p1.addTo(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe p1.addTo(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
     pub def minusPeriod(x: OffsetDateTime, p: Period): OffsetDateTime =
         let OffsetDateTime(x1) = x;
         let Period(p1) = p;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe p1.subtractFrom(t1);
-        let ans = unchecked_cast(t2 as JOffsetDateTime);
+        let dt1 = unsafe p1.subtractFrom(x1);
+        let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
 

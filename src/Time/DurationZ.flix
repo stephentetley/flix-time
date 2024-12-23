@@ -51,8 +51,8 @@ mod Time {
         pub def fromString(s: String): Option[DurationZ] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                DurationZ(unsafe JDuration.parse(cs))
+                let ans = unsafe JDuration.parse(s1);
+                DurationZ(ans)
             }) |> Result.toOption
     }
 
@@ -60,8 +60,7 @@ mod Time {
         pub def eq(x: DurationZ, y: DurationZ): Bool =
             let DurationZ(x1) = x;
             let DurationZ(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[DurationZ] {
@@ -81,20 +80,23 @@ mod Time {
         pub def add(x: DurationZ, y: DurationZ): DurationZ =
             let DurationZ(x1) = x;
             let DurationZ(y1) = y;
-            DurationZ(unsafe x1.plus(y1))
+            let ans = unsafe x1.plus(y1);
+            DurationZ(ans)
     }
 
     instance Sub[DurationZ] {
         pub def sub(x: DurationZ, y: DurationZ): DurationZ =
             let DurationZ(x1) = x;
             let DurationZ(y1) = y;
-            DurationZ(unsafe x1.minus(y1))
+            let ans = unsafe x1.minus(y1);
+            DurationZ(ans)
     }
 
     instance Neg[DurationZ] {
         pub def neg(x: DurationZ): DurationZ =
             let DurationZ(x1) = x;
-            DurationZ(unsafe x1.negated())
+            let ans = unsafe x1.negated();
+            DurationZ(ans)
     }
 
     /// `combine` is addition
@@ -132,7 +134,8 @@ mod Time.DurationZ {
     /// Return a new duration.
     ///
     pub def duration(r: {seconds = Int64, nanos = Int64}): DurationZ =
-        DurationZ(unsafe JDuration.ofSeconds(r#seconds, r#nanos))
+        let ans = unsafe JDuration.ofSeconds(r#seconds, r#nanos);
+        DurationZ(ans)
 
     /// "abstract constructors" (e.g. `zero`)
 
@@ -148,39 +151,45 @@ mod Time.DurationZ {
     /// Construct a Duration from the supplied number of nanoseconds.
     ///
     pub def ofNanos(nanos: Int64): DurationZ =
-        DurationZ(unsafe JDuration.ofNanos(nanos))
+        let ans = unsafe JDuration.ofNanos(nanos);
+        DurationZ(ans)
 
 
     ///
     /// Construct a Duration from the supplied number of milliseconds.
     ///
     pub def ofMillis(millis: Int64): DurationZ =
-        DurationZ(unsafe JDuration.ofMillis(millis))
+        let ans = unsafe JDuration.ofMillis(millis);
+        DurationZ(ans)
 
 
     ///
     /// Construct a Duration from the supplied number of seconds.
     ///
     pub def ofSeconds(seconds: Int64): DurationZ =
-        DurationZ(unsafe JDuration.ofSeconds(seconds))
+        let ans = unsafe JDuration.ofSeconds(seconds);
+        DurationZ(ans)
 
     ///
     /// Construct a Duration from the supplied number of minutes.
     ///
     pub def ofMinutes(minutes: Int64): DurationZ =
-        DurationZ(unsafe JDuration.ofMinutes(minutes))
+        let ans = unsafe JDuration.ofMinutes(minutes);
+        DurationZ(ans)
 
     ///
     /// Construct a Duration from the supplied number of hours.
     ///
     pub def ofHours(hours: Int64): DurationZ =
-        DurationZ(unsafe JDuration.ofHours(hours))
+        let ans = unsafe JDuration.ofHours(hours);
+        DurationZ(ans)
 
     ///
     /// Construct a Duration from the supplied number of days.
     ///
     pub def ofDays(days: Int64): DurationZ =
-        DurationZ(unsafe JDuration.ofDays(days))
+        let ans = unsafe JDuration.ofDays(days);
+        DurationZ(ans)
 
     // `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
 
@@ -251,8 +260,8 @@ mod Time.DurationZ {
     pub def parse(s: String): Result[String, DurationZ] =
         Result.tryCatch(_ -> {
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            DurationZ(unsafe JDuration.parse(cs))
+            let ans = unsafe JDuration.parse(s1);
+            DurationZ(ans)
         })
 
     /// Note - alias of `toString`
@@ -281,7 +290,8 @@ mod Time.DurationZ {
     ///
     pub def abs(x: DurationZ): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.abs())
+        let ans = unsafe x1.abs();
+        DurationZ(ans)
 
 
     /// Getters and Setters
@@ -298,7 +308,8 @@ mod Time.DurationZ {
     ///
     pub def withNanos(nanos: Int32, x: DurationZ): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.withNanos(nanos))
+        let ans = unsafe x1.withNanos(nanos);
+        DurationZ(ans)
 
     ///
     /// Get the second part of the duration `x`.
@@ -312,7 +323,8 @@ mod Time.DurationZ {
     ///
     pub def withSeconds(seconds: Int64, x: DurationZ): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.withSeconds(seconds))
+        let ans = unsafe x1.withSeconds(seconds);
+        DurationZ(ans)
 
     /// #truncate functions
     
@@ -364,51 +376,63 @@ mod Time.DurationZ {
 
     pub def plusDays(x: DurationZ, days: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.plusDays(days))
+        let ans = unsafe x1.plusDays(days);
+        DurationZ(ans)
 
     pub def minusDays(x: DurationZ, days: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.minusDays(days))
+        let ans = unsafe x1.minusDays(days);
+        DurationZ(ans)
 
     pub def plusHours(x: DurationZ, hours: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.plusHours(hours))
+        let ans = unsafe x1.plusHours(hours);
+        DurationZ(ans)
 
     pub def minusHours(x: DurationZ, hours: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.minusHours(hours))
+        let ans = unsafe x1.minusHours(hours);
+        DurationZ(ans)
 
     pub def plusMinutes(x: DurationZ, minutes: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.plusMinutes(minutes))
+        let ans = unsafe x1.plusMinutes(minutes);
+        DurationZ(ans)
 
     pub def minusMinutes(x: DurationZ, minutes: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.minusMinutes(minutes))
+        let ans = unsafe x1.minusMinutes(minutes);
+        DurationZ(ans)
 
     pub def plusSeconds(x: DurationZ, seconds: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.plusSeconds(seconds))
+        let ans = unsafe x1.plusSeconds(seconds);
+        DurationZ(ans)
 
     pub def minusSeconds(x: DurationZ, seconds: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.minusSeconds(seconds))
+        let ans = unsafe x1.minusSeconds(seconds);
+        DurationZ(ans)
 
     pub def plusMillis(x: DurationZ, millis: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.plusMillis(millis))
+        let ans = unsafe x1.plusMillis(millis);
+        DurationZ(ans)
 
     pub def minusMillis(x: DurationZ, millis: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.minusMillis(millis))
+        let ans = unsafe x1.minusMillis(millis);
+        DurationZ(ans)
 
     pub def plusNanos(x: DurationZ, nanos: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.plusNanos(nanos))
+        let ans = unsafe x1.plusNanos(nanos);
+        DurationZ(ans)
 
     pub def minusNanos(x: DurationZ, nanos: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.minusNanos(nanos))
+        let ans = unsafe x1.minusNanos(nanos);
+        DurationZ(ans)
 
 
     pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
@@ -428,11 +452,13 @@ mod Time.DurationZ {
 
     pub def multipliedBy(x: DurationZ, y: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.multipliedBy(y))
+        let ans = unsafe x1.multipliedBy(y);
+        DurationZ(ans)
 
     pub def dividedBy(x: DurationZ, y: Int64): DurationZ =
         let DurationZ(x1) = x;
-        DurationZ(unsafe x1.dividedBy(y))
+        let ans = unsafe x1.dividedBy(y);
+        DurationZ(ans)
 
 
 }

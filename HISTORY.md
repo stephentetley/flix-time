@@ -1,5 +1,6 @@
 ### v0.15.0
-   Internal - removed a lot of `checked_cast` use.
+   Internal - removed a lot of `checked_cast` calls.
+   Internal - avoiding Java FFI calls in constructor calls.
 
 ### v0.14.0
    Removed `InternalChrono` and `Internal.Temporal`.

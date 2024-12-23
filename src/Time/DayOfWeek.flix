@@ -159,13 +159,13 @@ mod Time.DayOfWeek {
 
     pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
         let x1 = marshalDayOfWeek(x);
-        let x2 = unsafe x1.plus(days);
-        unmarshalDayOfWeek(x2)
+        let ans = unsafe x1.plus(days);
+        unmarshalDayOfWeek(ans)
 
     pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
         let x1 = marshalDayOfWeek(x);
-        let x2 = unsafe x1.minus(days);
-        unmarshalDayOfWeek(x2)
+        let ans = unsafe x1.minus(days);
+        unmarshalDayOfWeek(ans)
 
 
 }

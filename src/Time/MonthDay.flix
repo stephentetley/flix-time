@@ -43,8 +43,8 @@ mod Time {
         pub def fromString(s: String): Option[MonthDay] = 
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                MonthDay(unsafe JMonthDay.parse(cs))
+                let ans = unsafe JMonthDay.parse(s1);
+                MonthDay(ans)
         }) |> Result.toOption
     }
 
@@ -52,8 +52,7 @@ mod Time {
         pub def eq(x: MonthDay, y: MonthDay): Bool =
             let MonthDay(x1) = x;
             let MonthDay(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[MonthDay] {
@@ -105,11 +104,13 @@ mod Time.MonthDay {
     // Constructors
 
     pub def monthDay(r: {month = Int32, dayOfMonth = Int32}): MonthDay =
-        MonthDay(unsafe JMonthDay.of(r#month, r#dayOfMonth))
+        let ans = unsafe JMonthDay.of(r#month, r#dayOfMonth);
+        MonthDay(ans)
 
     pub def monthDayWithMonth(r: {month = Month, dayOfMonth = Int32}): MonthDay =
         let m1 = Time.Month.marshalMonth(r#month);
-        MonthDay(unsafe JMonthDay.of(m1, r#dayOfMonth))
+        let ans = unsafe JMonthDay.of(m1, r#dayOfMonth);
+        MonthDay(ans)
 
     /// `now` and "abstract constructors" if any
 
@@ -153,8 +154,8 @@ mod Time.MonthDay {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            MonthDay(unsafe JMonthDay.parse(cs, fmtr))
+            let ans = unsafe JMonthDay.parse(s1, fmtr);
+            MonthDay(ans)
         })
 
 
@@ -200,7 +201,8 @@ mod Time.MonthDay {
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: MonthDay): MonthDay =
         let MonthDay(x1) = x;
-        MonthDay(unsafe x1.withDayOfMonth(dayOfMonth))
+        let ans = unsafe x1.withDayOfMonth(dayOfMonth);
+        MonthDay(ans)
 
     pub def getMonth(x: MonthDay): Month =
         let MonthDay(x1) = x;
@@ -209,7 +211,8 @@ mod Time.MonthDay {
     pub def withMonth(month: Month, x: MonthDay): MonthDay =
         let MonthDay(x1) = x;
         let m1 = Time.Month.marshalMonth(month);
-        MonthDay(unsafe x1.with(m1))
+        let ans = unsafe x1.with(m1);
+        MonthDay(ans)
 
     pub def getMonthValue(x: MonthDay): Int32 =
         let MonthDay(x1) = x;
@@ -217,6 +220,7 @@ mod Time.MonthDay {
 
     pub def withMonthValue(month: Int32, x: MonthDay): MonthDay =
         let MonthDay(x1) = x;
-        MonthDay(unsafe x1.withMonth(month))
+        let ans = unsafe x1.withMonth(month);
+        MonthDay(ans)
 
 }

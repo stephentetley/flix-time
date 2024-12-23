@@ -61,11 +61,13 @@ mod Time.Clock {
     pub def fixedClock(inst: InstantZ, zone: ZoneId): Clock \ IO =
         let InstantZ(inst1) = inst;
         let ZoneId(zone1) = zone;
-        Clock(JClock.fixed(inst1, zone1))
+        let ans = JClock.fixed(inst1, zone1);
+        Clock(ans)
 
     pub def systemClock(zone: ZoneId): Clock \ IO =
         let ZoneId(zone1) = zone;
-        Clock(JClock.system(zone1))
+        let ans = JClock.system(zone1);
+        Clock(ans)
 
     pub def systemClockDefaultZone(): Clock \ IO = Clock(JClock.systemDefaultZone())
 
@@ -74,25 +76,30 @@ mod Time.Clock {
     pub def offset(d: DurationZ, c: Clock): Clock \ IO =
         let DurationZ(d1) = d;
         let Clock(c1) = c;
-        Clock(JClock.offset(c1, d1))
+        let ans = JClock.offset(c1, d1);
+        Clock(ans)
 
     pub def tick(d: DurationZ, c: Clock): Clock \ IO =
         let DurationZ(d1) = d;
         let Clock(c1) = c;
-        Clock(JClock.tick(c1, d1))
+        let ans = JClock.tick(c1, d1);
+        Clock(ans)
 
 
     pub def tickMillis(zoneId: ZoneId): Clock \ IO =
         let ZoneId(zoneId1) = zoneId;
-        Clock(JClock.tickMillis(zoneId1))
+        let ans = JClock.tickMillis(zoneId1);
+        Clock(ans)
 
     pub def tickSeconds(zoneId: ZoneId): Clock \ IO =
         let ZoneId(zoneId1) = zoneId;
-        Clock(JClock.tickSeconds(zoneId1))
+        let ans = JClock.tickSeconds(zoneId1);
+        Clock(ans)
 
     pub def tickMinutes(zoneId: ZoneId): Clock \ IO =
         let ZoneId(zoneId1) = zoneId;
-        Clock(JClock.tickMinutes(zoneId1))
+        let ans = JClock.tickMinutes(zoneId1);
+        Clock(ans)
 
     /// Clock functions
 
@@ -110,7 +117,8 @@ mod Time.Clock {
 
     pub def instant(x: Clock): InstantZ \ IO =
         let Clock(x1) = x;
-        InstantZ(x1.instant())
+        let ans = x1.instant();
+        InstantZ(ans)
 
 
     // Getters and Setters (getZone and withZone are abstract in Java)

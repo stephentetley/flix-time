@@ -111,9 +111,7 @@ mod Time.Month {
         }
 
     def primEquals(x: JMonth, y: JMonth): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
     pub def unmarshalMonth(x: JMonth): Month =
         match x {
@@ -184,7 +182,8 @@ mod Time.Month {
 
     pub def firstMonthOfQuarter(x: Month): Month =
         let x1 = marshalMonth(x);
-        unmarshalMonth(unsafe x1.firstMonthOfQuarter())
+        let ans = unsafe x1.firstMonthOfQuarter();
+        unmarshalMonth(ans)
 
     pub def maxLength(x: Month): Int32 =
         let x1 = marshalMonth(x);
