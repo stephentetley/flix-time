@@ -63,8 +63,7 @@ mod Time.Chrono.ThaiBuddhistDate {
     pub def equals(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = 
         let ThaiBuddhistDate(x1) = x;
         let ThaiBuddhistDate(y1) = y;
-        let obj = (checked_cast(y1) : Object);
-        unsafe x1.equals(obj)
+        unsafe x1.equals(y1)
 
     pub def hashCode(x: ThaiBuddhistDate): Int32 = 
         let ThaiBuddhistDate(x1) = x;

@@ -56,19 +56,17 @@ mod Time.Chrono.IsoChronology {
 
     pub def dateNow(x: IsoChronology): LocalDate \ IO = 
         let IsoChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow();
-        let ans1 = unchecked_cast(ans as JLocalDate);
-        LocalDate(ans1)
+        let d1 = x1.dateNow();
+        let ans = unchecked_cast(d1 as JLocalDate);
+        LocalDate(ans)
 
 
 
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
         let IsoChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JEra = unsafe cx1.eraOf(i);
-        let ans1 = unchecked_cast(ans as JIsoEra); 
-        Time.Chrono.IsoEra.unmarshalIsoEra(ans1)
+        let e1 = unsafe x1.eraOf(i);
+        let ans = unchecked_cast(e1 as JIsoEra); 
+        Time.Chrono.IsoEra.unmarshalIsoEra(ans)
 
 
     /// pub def eras(x: IsoChronology): List[IsoEra] = 

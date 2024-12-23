@@ -90,8 +90,7 @@ mod Time.Chrono.JapaneseEra {
     pub def equals(x: JapaneseEra, y: JapaneseEra): Bool = 
         let JapaneseEra(x1) = x;
         let JapaneseEra(y1) = y;
-        let obj = (checked_cast(y1) : Object);
-        unsafe x1.equals(obj)
+        unsafe x1.equals(y1)
 
     pub def hashCode(x: JapaneseEra): Int32 = 
         let JapaneseEra(x1) = x;

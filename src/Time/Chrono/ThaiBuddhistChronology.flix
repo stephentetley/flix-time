@@ -58,18 +58,16 @@ mod Time.Chrono.ThaiBuddhistChronology {
 
     pub def dateNow(x: ThaiBuddhistChronology): ThaiBuddhistDate \ IO = 
         let ThaiBuddhistChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow();
-        let ans1 = unchecked_cast(ans as JThaiBuddhistDate);
-        ThaiBuddhistDate(ans1)
+        let d1 = x1.dateNow();
+        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans)
 
     pub def dateNowWithClock(x: ThaiBuddhistChronology, clock: Clock): ThaiBuddhistDate \ IO =
         let ThaiBuddhistChronology(x1) = x;
         let Clock(clock1) = clock;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow(clock1);
-        let ans1 = unchecked_cast(ans as JThaiBuddhistDate);
-        ThaiBuddhistDate(ans1)
+        let d1 = x1.dateNow(clock1);
+        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans)
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
@@ -77,17 +75,15 @@ mod Time.Chrono.ThaiBuddhistChronology {
     pub def dateNowWithZoneId(x: ThaiBuddhistChronology, zone: ZoneId): ThaiBuddhistDate \ IO =
         let ThaiBuddhistChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow(zone1);
-        let ans1 = unchecked_cast(ans as JThaiBuddhistDate);
-        ThaiBuddhistDate(ans1)
+        let d1 = x1.dateNow(zone1);
+        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans)
 
     // Todo Result[]
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): ThaiBuddhistEra = 
         let ThaiBuddhistChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JEra = unsafe cx1.eraOf(i);
-        let ans1 = unchecked_cast(ans as JThaiBuddhistEra); 
-        Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans1)
+        let e1 = unsafe x1.eraOf(i);
+        let ans = unchecked_cast(e1 as JThaiBuddhistEra); 
+        Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
 
 }

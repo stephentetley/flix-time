@@ -43,9 +43,7 @@ mod Time.Chrono.ThaiBuddhistEra {
         }
 
     def primEquals(x: JThaiBuddhistEra, y: JThaiBuddhistEra): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
     pub def unmarshalThaiBuddhistEra(x: JThaiBuddhistEra): ThaiBuddhistEra =
         match x {

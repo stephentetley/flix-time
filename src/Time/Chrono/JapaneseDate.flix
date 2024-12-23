@@ -120,8 +120,7 @@ mod Time.Chrono.JapaneseDate {
     pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        let obj = (checked_cast(y1) : Object);
-        unsafe x1.equals(obj)
+        unsafe x1.equals(y1)
 
     pub def hashCode(x: JapaneseDate): Int32 = 
         let JapaneseDate(x1) = x;
@@ -130,18 +129,16 @@ mod Time.Chrono.JapaneseDate {
 
     pub def getChronology(x: JapaneseDate): JapaneseChronology = 
         let JapaneseDate(x1) = x;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let ans = unsafe cx1.getChronology();
-        let ans1 = unchecked_cast(ans as JJapaneseChronology);
-        JapaneseChronology(ans1)
+        let c1 = unsafe x1.getChronology();
+        let ans = unchecked_cast(c1 as JJapaneseChronology);
+        JapaneseChronology(ans)
 
 
     pub def getEra(x: JapaneseDate): JapaneseEra = 
         let JapaneseDate(x1) = x;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let ans = unsafe cx1.getEra();
-        let ans1 = unchecked_cast(ans as JJapaneseEra);
-        JapaneseEra(ans1)
+        let e1 = unsafe x1.getEra();
+        let ans = unchecked_cast(e1 as JJapaneseEra);
+        JapaneseEra(ans)
 
     pub def lengthOfMonth(x: JapaneseDate): Int32 = 
         let JapaneseDate(x1) = x;
@@ -187,9 +184,7 @@ mod Time.Chrono.JapaneseDate {
     pub def isBefore(x: JapaneseDate, y: JapaneseDate): Bool =
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let cy1 = (checked_cast(y1) : JChronoLocalDate);
-        unsafe cx1.isBefore(cy1)
+        unsafe x1.isBefore(y1)
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -197,8 +192,6 @@ mod Time.Chrono.JapaneseDate {
     pub def isAfter(x: JapaneseDate, y: JapaneseDate): Bool =
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        let cx1 = (checked_cast(x1) : JChronoLocalDate);
-        let cy1 = (checked_cast(y1) : JChronoLocalDate);
-        unsafe cx1.isAfter(cy1)
+        unsafe x1.isAfter(y1)
 
 }

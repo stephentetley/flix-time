@@ -101,8 +101,7 @@ mod Time.Chrono.HijrahDate {
     pub def equals(x: HijrahDate, y: HijrahDate): Bool = 
         let HijrahDate(x1) = x;
         let HijrahDate(y1) = y;
-        let obj = (checked_cast(y1) : Object);
-        unsafe x1.equals(obj)
+        unsafe x1.equals(y1)
 
     pub def hashCode(x: HijrahDate): Int32 = 
         let HijrahDate(x1) = x;

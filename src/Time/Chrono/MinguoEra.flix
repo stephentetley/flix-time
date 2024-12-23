@@ -43,9 +43,7 @@ mod Time.Chrono.MinguoEra {
         }
 
     def primEquals(x: JMinguoEra, y: JMinguoEra): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
     pub def unmarshalMinguoEra(x: JMinguoEra): MinguoEra =
         match x {

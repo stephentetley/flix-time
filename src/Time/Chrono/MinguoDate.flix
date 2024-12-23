@@ -64,8 +64,7 @@ mod Time.Chrono.MinguoDate {
     pub def equals(x: MinguoDate, y: MinguoDate): Bool = 
         let MinguoDate(x1) = x;
         let MinguoDate(y1) = y;
-        let obj = (checked_cast(y1) : Object);
-        unsafe x1.equals(obj)
+        unsafe x1.equals(y1)
 
     pub def hashCode(x: MinguoDate): Int32 = 
         let MinguoDate(x1) = x;

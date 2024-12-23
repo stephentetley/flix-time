@@ -51,9 +51,7 @@ mod Time.Chrono.HijrahEra {
 
 
     def primEquals(x: JHijrahEra, y: JHijrahEra): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
     pub def unmarshalHijrahEra(x: JHijrahEra): HijrahEra = 
         match x {

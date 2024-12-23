@@ -80,27 +80,24 @@ mod Time.Chrono.HijrahChronology {
     pub def dateWithEra(r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}, 
                         x: HijrahChronology): HijrahDate =
         let HijrahChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
         let era1 = Time.Chrono.HijrahEra.marshalHijrahEra(r#era);
-        let ans : JChronoLocalDate = unsafe cx1.date(era1, r#yearOfEra, r#month, r#dayOfMonth);
-        let ans1 = unchecked_cast(ans as JHijrahDate);
-        HijrahDate(ans1)
+        let d1 = unsafe x1.date(era1, r#yearOfEra, r#month, r#dayOfMonth);
+        let ans = unchecked_cast(d1 as JHijrahDate);
+        HijrahDate(ans)
 
 
     pub def dateNow(x: HijrahChronology): HijrahDate \ IO = 
         let HijrahChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow();
-        let ans1 = unchecked_cast(ans as JHijrahDate);
-        HijrahDate(ans1)
+        let d1 = x1.dateNow();
+        let ans = unchecked_cast(d1 as JHijrahDate);
+        HijrahDate(ans)
 
     pub def dateNowWithClock(x: HijrahChronology, clock: Clock): HijrahDate \ IO =
         let HijrahChronology(x1) = x;
         let Clock(clock1) = clock;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow(clock1);
-        let ans1 = unchecked_cast(ans as JHijrahDate);
-        HijrahDate(ans1)
+        let d1 = x1.dateNow(clock1);
+        let ans = unchecked_cast(d1 as JHijrahDate);
+        HijrahDate(ans)
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
@@ -108,18 +105,16 @@ mod Time.Chrono.HijrahChronology {
     pub def dateNowWithZoneId(x: HijrahChronology, zone: ZoneId): HijrahDate \ IO =
         let HijrahChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow(zone1);
-        let ans1 = unchecked_cast(ans as JHijrahDate);
-        HijrahDate(ans1)
+        let d1 = x1.dateNow(zone1);
+        let ans = unchecked_cast(d1 as JHijrahDate);
+        HijrahDate(ans)
 
     pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] = 
         Result.tryCatch(_ -> {
             let HijrahChronology(x1) = x;
-            let cx1 = (checked_cast(x1): JChronology);
-            let ans : JChronoLocalDate = unsafe cx1.dateEpochDay(epochDay);
-            let ans1 = unchecked_cast(ans as JHijrahDate);
-            HijrahDate(ans1)
+            let d1 = unsafe x1.dateEpochDay(epochDay);
+            let ans = unchecked_cast(d1 as JHijrahDate);
+            HijrahDate(ans)
         })
 
     pub def toString(x: HijrahChronology): String =
@@ -140,10 +135,9 @@ mod Time.Chrono.HijrahChronology {
 
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra = 
         let HijrahChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JEra = unsafe cx1.eraOf(i);
-        let ans1 = unchecked_cast(ans as JHijrahEra); 
-        Time.Chrono.HijrahEra.unmarshalHijrahEra(ans1)
+        let e1 = unsafe x1.eraOf(i);
+        let ans = unchecked_cast(e1 as JHijrahEra); 
+        Time.Chrono.HijrahEra.unmarshalHijrahEra(ans)
 
     // pub def eras(hc: HijrahChronology): List[HijrahEra] =
     //     import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};

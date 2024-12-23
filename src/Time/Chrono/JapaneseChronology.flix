@@ -64,19 +64,17 @@ mod Time.Chrono.JapaneseChronology {
 
     pub def dateNow(x: JapaneseChronology): JapaneseDate \ IO = 
         let JapaneseChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow();
-        let ans1 = unchecked_cast(ans as JJapaneseDate);
-        JapaneseDate(ans1)
+        let d1 = x1.dateNow();
+        let ans = unchecked_cast(d1 as JJapaneseDate);
+        JapaneseDate(ans)
 
 
     pub def dateNowWithClock(x: JapaneseChronology, clock: Clock): JapaneseDate \ IO =
         let JapaneseChronology(x1) = x;
         let Clock(clock1) = clock;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow(clock1);
-        let ans1 = unchecked_cast(ans as JJapaneseDate);
-        JapaneseDate(ans1)
+        let d1 = x1.dateNow(clock1);
+        let ans = unchecked_cast(d1 as JJapaneseDate);
+        JapaneseDate(ans)
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
@@ -84,17 +82,15 @@ mod Time.Chrono.JapaneseChronology {
     pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate \ IO =
         let JapaneseChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JChronoLocalDate = cx1.dateNow(zone1);
-        let ans1 = unchecked_cast(ans as JJapaneseDate);
-        JapaneseDate(ans1)
+        let d1 = x1.dateNow(zone1);
+        let ans = unchecked_cast(d1 as JJapaneseDate);
+        JapaneseDate(ans)
 
     pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
         let JapaneseChronology(x1) = x;
-        let cx1 = (checked_cast(x1): JChronology);
-        let ans : JEra = unsafe cx1.eraOf(i);
-        let ans1 = unchecked_cast(ans as JJapaneseEra);         
-        JapaneseEra(ans1)
+        let e1 = unsafe x1.eraOf(i);
+        let ans = unchecked_cast(e1 as JJapaneseEra);
+        JapaneseEra(ans)
 
 
 }

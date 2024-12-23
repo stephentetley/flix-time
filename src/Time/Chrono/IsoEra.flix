@@ -46,9 +46,7 @@ mod Time.Chrono.IsoEra {
         }
 
     def primEquals(x: JIsoEra, y: JIsoEra): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
     pub def unmarshalIsoEra(x: JIsoEra): IsoEra = 
         match x {
