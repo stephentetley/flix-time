@@ -181,14 +181,14 @@ mod Time.OffsetDateTime {
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
         let ZoneOffset(o1) = offset#offset;
-        OffsetDateTime(unsafe JOffsetDateTime.of(d1, t1, o1))
+        let ans = unsafe JOffsetDateTime.of(d1, t1, o1);
+        OffsetDateTime(ans)
 
     /// `fromTemporalAccessor` specialized
 
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
         let ZonedDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JOffsetDateTime.from(t1);
+        let ans = unsafe JOffsetDateTime.from(x1);
         OffsetDateTime(ans)
 
     /// `to` functions

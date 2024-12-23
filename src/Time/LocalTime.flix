@@ -47,8 +47,8 @@ mod Time {
         pub def fromString(s: String): Option[LocalTime] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                LocalTime(unsafe JLocalTime.parse(cs))
+                let ans = unsafe JLocalTime.parse(s1);
+                LocalTime(ans)
             }) |> Result.toOption
     }
 
@@ -57,8 +57,7 @@ mod Time {
         pub def eq(x: LocalTime, y: LocalTime): Bool =
             let LocalTime(x1) = x;
             let LocalTime(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
     
     instance Hash[LocalTime] {
@@ -118,13 +117,16 @@ mod Time.LocalTime {
     // Constructors
 
     pub def localTime(r: {hour = Int32, minute = Int32}): LocalTime =
-        LocalTime(unsafe JLocalTime.of(r#hour, r#minute))
+        let ans = unsafe JLocalTime.of(r#hour, r#minute);
+        LocalTime(ans)
 
     pub def localTimeWithSecond(r: {hour = Int32, minute = Int32, second = Int32}): LocalTime =
-        LocalTime(unsafe JLocalTime.of(r#hour, r#minute, r#second))
+        let ans = unsafe JLocalTime.of(r#hour, r#minute, r#second);
+        LocalTime(ans)
 
     pub def localTimeWithSecondAndNano(r: {hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32}): LocalTime =
-        LocalTime(unsafe JLocalTime.of(r#hour, r#minute, r#second, r#nanoSecond))
+        let ans = unsafe JLocalTime.of(r#hour, r#minute, r#second, r#nanoSecond);
+        LocalTime(ans)
 
 
     /// `now` and "abstract constructors" (e.g. `midnight`)
@@ -151,14 +153,17 @@ mod Time.LocalTime {
     pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalTime =
         let InstantZ(x1) = x;
         let ZoneId(z1) = zone#zone;
-        LocalTime(unsafe JLocalTime.ofInstant(x1, z1))
+        let ans = unsafe JLocalTime.ofInstant(x1, z1);
+        LocalTime(ans)
 
 
     pub def ofNanoOfDay(nanoOfDay: Int64): LocalTime =
-        LocalTime(unsafe JLocalTime.ofNanoOfDay(nanoOfDay))
+        let ans = unsafe JLocalTime.ofNanoOfDay(nanoOfDay);
+        LocalTime(ans)
 
     pub def ofSecondOfDay(secondOfDay: Int64): LocalTime =
-        LocalTime(unsafe JLocalTime.ofSecondOfDay(secondOfDay))
+        let ans = unsafe JLocalTime.ofSecondOfDay(secondOfDay);
+        LocalTime(ans)
 
     /// `fromTemporalAccessor` specialized
 
@@ -203,8 +208,8 @@ mod Time.LocalTime {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            LocalTime(unsafe JLocalTime.parse(cs, fmtr))
+            let ans = unsafe JLocalTime.parse(s1, fmtr);
+            LocalTime(ans)
         })
 
     ///
@@ -254,7 +259,8 @@ mod Time.LocalTime {
 
     pub def withHour(hour: Int32, x: LocalTime): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.withHour(hour))
+        let ans = unsafe x1.withHour(hour);
+        LocalTime(ans)
 
     pub def getMinute(x: LocalTime): Int32 =
         let LocalTime(x1) = x;
@@ -262,7 +268,8 @@ mod Time.LocalTime {
 
     pub def withMinute(minute: Int32, x: LocalTime): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.withMinute(minute))
+        let ans = unsafe x1.withMinute(minute);
+        LocalTime(ans)
 
     pub def getSecond(x: LocalTime): Int32 =
         let LocalTime(x1) = x;
@@ -270,7 +277,8 @@ mod Time.LocalTime {
 
     pub def withSecond(second: Int32, x: LocalTime): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.withSecond(second))
+        let ans = unsafe x1.withSecond(second);
+        LocalTime(ans)
 
     pub def getNano(x: LocalTime): Int32 =
         let LocalTime(x1) = x;
@@ -278,7 +286,8 @@ mod Time.LocalTime {
 
     pub def withNano(nano: Int32, x: LocalTime): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.withNano(nano))
+        let ans = unsafe x1.withNano(nano);
+        LocalTime(ans)
 
     // truncate functions
 
@@ -293,52 +302,58 @@ mod Time.LocalTime {
 
     pub def plusHours(x: LocalTime, hours: Int64): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.plusHours(hours))
+        let ans = unsafe x1.plusHours(hours);
+        LocalTime(ans)
 
     pub def minusHours(x: LocalTime, hours: Int64): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.minusHours(hours))
+        let ans = unsafe x1.minusHours(hours);
+        LocalTime(ans)
 
     pub def plusMinutes(x: LocalTime, minutes: Int64): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.plusMinutes(minutes))
+        let ans = unsafe x1.plusMinutes(minutes);
+        LocalTime(ans)
 
     pub def minusMinutes(x: LocalTime, minutes: Int64): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.minusMinutes(minutes))
+        let ans = unsafe x1.minusMinutes(minutes);
+        LocalTime(ans)
 
     pub def plusSeconds(x: LocalTime, seconds: Int64): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.plusSeconds(seconds))
+        let ans = unsafe x1.plusSeconds(seconds);
+        LocalTime(ans)
 
     pub def minusSeconds(x: LocalTime, seconds: Int64): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.minusSeconds(seconds))
+        let ans = unsafe x1.minusSeconds(seconds);
+        LocalTime(ans)
 
     pub def plusNanos(x: LocalTime, nanos: Int64): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.plusNanos(nanos))
+        let ans = unsafe x1.plusNanos(nanos);
+        LocalTime(ans)
 
     pub def minusNanos(x: LocalTime, nanos: Int64): LocalTime =
         let LocalTime(x1) = x;
-        LocalTime(unsafe x1.minusNanos(nanos))
+        let ans = unsafe x1.minusNanos(nanos);
+        LocalTime(ans)
 
 
     
     pub def plusDuration(x: LocalTime, d: DurationZ): LocalTime =
         let LocalTime(x1) = x;
         let DurationZ(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.addTo(t1);
-        let ans = unchecked_cast(t2 as JLocalTime);
+        let t1 = unsafe d1.addTo(x1);
+        let ans = unchecked_cast(t1 as JLocalTime);
         LocalTime(ans)
     
     pub def minusDuration(x: LocalTime, d: DurationZ): LocalTime =
         let LocalTime(x1) = x;
         let DurationZ(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.subtractFrom(t1);
-        let ans = unchecked_cast(t2 as JLocalTime);
+        let t1 = unsafe d1.subtractFrom(x1);
+        let ans = unchecked_cast(t1 as JLocalTime);
         LocalTime(ans)
 
 
@@ -347,9 +362,7 @@ mod Time.LocalTime {
     pub def between(begin: {begin = LocalTime}, end: {end = LocalTime}): DurationZ =
         let LocalTime(b1) = begin#begin;
         let LocalTime(e1) = end#end;
-        let tb1: JTemporal = checked_cast(b1);
-        let te1: JTemporal = checked_cast(e1);
-        let ans = unsafe JDuration.between(tb1, te1);
+        let ans = unsafe JDuration.between(b1, e1);
         DurationZ(ans)
 
 

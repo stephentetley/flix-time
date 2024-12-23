@@ -129,11 +129,13 @@ mod Time.LocalDate {
     // Constructors
 
     pub def localDate(r: {year = Int32, month = Int32, dayOfMonth = Int32}): LocalDate =
-        LocalDate(unsafe JLocalDate.of(r#year, r#month, r#dayOfMonth))
+        let ans = unsafe JLocalDate.of(r#year, r#month, r#dayOfMonth);
+        LocalDate(ans)
 
     pub def localDateWithMonth(r: {year = Int32, month = Month, dayOfMonth = Int32}): LocalDate =
         let m1 = Time.Month.marshalMonth(r#month);
-        LocalDate(unsafe JLocalDate.of(r#year, m1, r#dayOfMonth))
+        let ans = unsafe JLocalDate.of(r#year, m1, r#dayOfMonth);
+        LocalDate(ans)
 
     // `now` and "abstract constructors" (e.g. `epoch`)
 
@@ -147,7 +149,8 @@ mod Time.LocalDate {
     ///
     pub def nowWithZoneId(zoneId: ZoneId): LocalDate \ IO =
         let ZoneId(z1) = zoneId;
-        LocalDate(JLocalDate.now(z1))
+        let ans = JLocalDate.now(z1);
+        LocalDate(ans)
 
     ///
     /// ___
@@ -158,32 +161,38 @@ mod Time.LocalDate {
 
     pub def atStartOfDay(x: LocalDate): LocalDateTime =
         let LocalDate(x1) = x;
-        LocalDateTime(unsafe x1.atStartOfDay())
+        let ans = unsafe x1.atStartOfDay();
+        LocalDateTime(ans)
 
     pub def atStartOfDayWithZoneId(x: LocalDate, zoneId: ZoneId): ZonedDateTime =
         let LocalDate(x1) = x;
         let ZoneId(z1) = zoneId;
-        ZonedDateTime(unsafe x1.atStartOfDay(z1))
+        let ans = unsafe x1.atStartOfDay(z1);
+        ZonedDateTime(ans)
 
     pub def atTimeWithLocalTime(x: LocalDate, t: LocalTime): LocalDateTime =
         let LocalDate(x1) = x;
         let LocalTime(t1) = t;
-        LocalDateTime(unsafe x1.atTime(t1))
+        let ans = unsafe x1.atTime(t1);
+        LocalDateTime(ans)
 
     pub def atTimeWithOffsetTime(x: LocalDate, t: OffsetTime): OffsetDateTime =
         let LocalDate(x1) = x;
         let OffsetTime(t1) = t;
-        OffsetDateTime(unsafe x1.atTime(t1))
+        let ans = unsafe x1.atTime(t1);
+        OffsetDateTime(ans)
 
     /// ## `from` functions
 
     pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDate =
         let InstantZ(x1) = x;
         let ZoneId(z1) = zone#zone;
-        LocalDate(unsafe JLocalDate.ofInstant(x1, z1))
+        let ans = unsafe JLocalDate.ofInstant(x1, z1);
+        LocalDate(ans)
 
     pub def ofEpochDay(x: Int64): LocalDate =
-        LocalDate(unsafe JLocalDate.ofEpochDay(x))
+        let ans = unsafe JLocalDate.ofEpochDay(x);
+        LocalDate(ans)
 
 
     ///  `fromTemporalAccessor` specialized
@@ -337,8 +346,8 @@ mod Time.LocalDate {
 
     pub def getMonthValue(x: LocalDate): Int32 =
         let LocalDate(x1) = x;
-        let ans = unsafe x1.getMonth();
-        unsafe ans.getValue()
+        let m1 = unsafe x1.getMonth();
+        unsafe m1.getValue()
 
 
 
@@ -430,43 +439,43 @@ mod Time.LocalDate {
 
     /// DayOfWeek methods
 
-    pub def adjustDayOfWeek(x: DayOfWeek, d: LocalDate): LocalDate = 
-        let LocalDate(d1) = d;
+    pub def adjustDayOfWeek(x: DayOfWeek, ld: LocalDate): LocalDate = 
+        let LocalDate(ld1) = ld;
         let x1 = Time.DayOfWeek.marshalDayOfWeek(x);
-        let t2 = unsafe x1.adjustInto(d1);
-        let ans = unchecked_cast(t2 as JLocalDate);
+        let d1 = unsafe x1.adjustInto(ld1);
+        let ans = unchecked_cast(d1 as JLocalDate);
         LocalDate(ans)
 
     
     pub def adjustToFirstDayOfMonth(x: LocalDate): LocalDate = 
         let LocalDate(x1) = x;
-        let a1 = unsafe JTemporalAdjusters.firstDayOfMonth();
-        let ans = unsafe x1.with(a1);
+        let d1 = unsafe JTemporalAdjusters.firstDayOfMonth();
+        let ans = unsafe x1.with(d1);
         LocalDate(ans)
 
     pub def adjustToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
         let LocalDate(x1) = x;
-        let a1 = unsafe JTemporalAdjusters.firstDayOfNextMonth();
-        let ans = unsafe x1.with(a1);
+        let d1 = unsafe JTemporalAdjusters.firstDayOfNextMonth();
+        let ans = unsafe x1.with(d1);
         LocalDate(ans)
 
     pub def adjustToFirstDayOfNextYear(x: LocalDate): LocalDate = 
         let LocalDate(x1) = x;
-        let a1 = unsafe JTemporalAdjusters.firstDayOfNextYear();
-        let ans = unsafe x1.with(a1);
+        let d1 = unsafe JTemporalAdjusters.firstDayOfNextYear();
+        let ans = unsafe x1.with(d1);
         LocalDate(ans)
 
     pub def adjustToLastDayOfMonth(x: LocalDate): LocalDate =  
         let LocalDate(x1) = x;
-        let a1 = unsafe JTemporalAdjusters.lastDayOfMonth();
-        let ans = unsafe x1.with(a1);
+        let d1 = unsafe JTemporalAdjusters.lastDayOfMonth();
+        let ans = unsafe x1.with(d1);
         LocalDate(ans)
 
 
     pub def adjustToLastDayOfYear(x: LocalDate): LocalDate =  
         let LocalDate(x1) = x;
-        let a1 = unsafe JTemporalAdjusters.lastDayOfYear();
-        let ans = unsafe x1.with(a1);
+        let d1 = unsafe JTemporalAdjusters.lastDayOfYear();
+        let ans = unsafe x1.with(d1);
         LocalDate(ans)
 
 

@@ -50,8 +50,8 @@ mod Time {
         pub def fromString(s: String): Option[InstantZ] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                InstantZ(unsafe JInstant.parse(cs))
+                let ans = unsafe JInstant.parse(s1);
+                InstantZ(ans)
             }) |> Result.toOption
     }
 
@@ -59,8 +59,7 @@ mod Time {
         pub def eq(x: InstantZ, y: InstantZ): Bool =
             let InstantZ(x1) = x;
             let InstantZ(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[InstantZ] {
@@ -111,7 +110,8 @@ mod Time.InstantZ {
     /// Constructors
 
     pub def instant(r: {epochSecond = Int64, nano = Int64}): InstantZ =
-        InstantZ(unsafe JInstant.ofEpochSecond(r#epochSecond, r#nano))
+        let ans = unsafe JInstant.ofEpochSecond(r#epochSecond, r#nano);
+        InstantZ(ans)
 
     /// `now` and "abstract constructors" (e.g. `epoch`)
 
@@ -134,21 +134,25 @@ mod Time.InstantZ {
     pub def atOffset(x: InstantZ, offset: ZoneOffset): OffsetDateTime =
         let InstantZ(x1) = x;
         let ZoneOffset(offset1) = offset;
-        OffsetDateTime(unsafe x1.atOffset(offset1))
+        let ans = unsafe x1.atOffset(offset1);
+        OffsetDateTime(ans)
 
     pub def atZone(x: InstantZ, zone: ZoneId): ZonedDateTime =
         let InstantZ(x1) = x;
         let ZoneId(zone1) = zone;
-        ZonedDateTime(unsafe x1.atZone(zone1))
+        let ans = unsafe x1.atZone(zone1);
+        ZonedDateTime(ans)
 
     /// `of` functions
 
     pub def ofEpochSecond(epochSecond: Int64): InstantZ =
-        InstantZ(unsafe JInstant.ofEpochSecond(epochSecond))
+        let ans = unsafe JInstant.ofEpochSecond(epochSecond);
+        InstantZ(ans)
 
 
     pub def ofEpochMilli(epochMilli: Int64): InstantZ =
-        InstantZ(unsafe JInstant.ofEpochMilli(epochMilli))
+        let ans = unsafe JInstant.ofEpochMilli(epochMilli);
+        InstantZ(ans)
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
@@ -172,8 +176,8 @@ mod Time.InstantZ {
     pub def parse(s: String): Result[String, InstantZ] =
         Result.tryCatch(_ -> {
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            InstantZ(unsafe JInstant.parse(cs))
+            let ans = unsafe JInstant.parse(s1);
+            InstantZ(ans)
         })
 
     pub def format(x: InstantZ): String =
@@ -312,23 +316,28 @@ mod Time.InstantZ {
 
     pub def plusSeconds(x: InstantZ, seconds: Int64): InstantZ =
         let InstantZ(x1) = x;
-        InstantZ(unsafe x1.plusSeconds(seconds))
+        let ans = unsafe x1.plusSeconds(seconds);
+        InstantZ(ans)
 
     pub def minusSeconds(x: InstantZ, seconds: Int64): InstantZ =
         let InstantZ(x1) = x;
-        InstantZ(unsafe x1.minusSeconds(seconds))
+        let ans = unsafe x1.minusSeconds(seconds);
+        InstantZ(ans)
 
     pub def plusMillis(x: InstantZ, millis: Int64): InstantZ =
         let InstantZ(x1) = x;
-        InstantZ(unsafe x1.plusMillis(millis))
+        let ans = unsafe x1.plusMillis(millis);
+        InstantZ(ans)
 
     pub def minusMillis(x: InstantZ, millis: Int64): InstantZ =
         let InstantZ(x1) = x;
-        InstantZ(unsafe x1.minusMillis(millis))
+        let ans = unsafe x1.minusMillis(millis);
+        InstantZ(ans)
 
     pub def plusNanos(x: InstantZ, nanos: Int64): InstantZ =
         let InstantZ(x1) = x;
-        InstantZ(unsafe x1.plusNanos(nanos))
+        let ans = unsafe x1.plusNanos(nanos);
+        InstantZ(ans)
 
 
     pub def plusDuration(x: InstantZ, d: DurationZ): InstantZ =

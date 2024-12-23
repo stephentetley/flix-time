@@ -99,9 +99,7 @@ mod Time.DayOfWeek {
         }
 
     def primEquals(x: JDayOfWeek, y: JDayOfWeek): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
 
     pub def unmarshalDayOfWeek(x: JDayOfWeek): Time.DayOfWeek =
