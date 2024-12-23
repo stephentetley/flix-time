@@ -44,8 +44,8 @@ mod Time {
         pub def fromString(s: String): Option[YearMonth] = 
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                YearMonth(unsafe JYearMonth.parse(cs))
+                let ans = unsafe JYearMonth.parse(s1);
+                YearMonth(ans)
             }) |> Result.toOption
     }
 
@@ -54,8 +54,7 @@ mod Time {
         pub def eq(x: YearMonth, y: YearMonth): Bool =
             let YearMonth(x1) = x;
             let YearMonth(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[YearMonth] {
@@ -107,11 +106,13 @@ mod Time.YearMonth {
     /// Constructors
 
     pub def yearMonth(r: {year = Int32, month = Int32}): YearMonth =
-        YearMonth(unsafe JYearMonth.of(r#year, r#month))
+        let ans = unsafe JYearMonth.of(r#year, r#month);
+        YearMonth(ans)
 
     pub def yearMonthWithMonth(r: {year = Int32, month = Month}): YearMonth =
         let m1 = Time.Month.marshalMonth(r#month);
-        YearMonth(unsafe JYearMonth.of(r#year, m1))
+        let ans = unsafe JYearMonth.of(r#year, m1);
+        YearMonth(ans)
 
 
     /// `now` and "abstract constructors" if any
@@ -124,26 +125,22 @@ mod Time.YearMonth {
 
     pub def fromLocalDate(x: LocalDate): YearMonth = 
         let LocalDate(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYearMonth.from(t1);
+        let ans = unsafe JYearMonth.from(x1);
         YearMonth(ans)
 
     pub def fromLocalDateTime(x: LocalDateTime): YearMonth = 
         let LocalDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYearMonth.from(t1);
+        let ans = unsafe JYearMonth.from(x1);
         YearMonth(ans)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): YearMonth = 
         let OffsetDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYearMonth.from(t1);
+        let ans = unsafe JYearMonth.from(x1);
         YearMonth(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): YearMonth = 
         let ZonedDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYearMonth.from(t1);
+        let ans = unsafe JYearMonth.from(x1);
         YearMonth(ans)
 
     /// `parse` / `format` functions  
@@ -158,8 +155,8 @@ mod Time.YearMonth {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            YearMonth(unsafe JYearMonth.parse(cs, fmtr))
+            let ans = unsafe JYearMonth.parse(s1, fmtr);
+            YearMonth(ans)
         })
     
     ///
@@ -223,7 +220,8 @@ mod Time.YearMonth {
 
     pub def getMonth(x: YearMonth): Month =
         let YearMonth(x1) = x;
-        unsafe x1.getMonth() |> Time.Month.unmarshalMonth
+        let m1 = unsafe x1.getMonth();
+        Time.Month.unmarshalMonth(m1)
 
     pub def withMonth(month: Month, x: YearMonth): YearMonth =
         yearMonthWithMonth({year = getYear(x), month = month})
@@ -234,7 +232,8 @@ mod Time.YearMonth {
 
     pub def withMonthValue(month: Int32, x: YearMonth): YearMonth =
         let YearMonth(x1) = x;
-        YearMonth(unsafe x1.withMonth(month))
+        let ans = unsafe x1.withMonth(month);
+        YearMonth(ans)
 
     pub def getYear(x: YearMonth): Int32 =
         let YearMonth(x1) = x;
@@ -242,25 +241,30 @@ mod Time.YearMonth {
 
     pub def withYear(year: Int32, x: YearMonth): YearMonth =
         let YearMonth(x1) = x;
-        YearMonth(unsafe x1.withYear(year))
+        let ans = unsafe x1.withYear(year);
+        YearMonth(ans)
 
     /// plus / minus functions
 
     pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
         let YearMonth(x1) = x;
-        YearMonth(unsafe x1.plusMonths(months))
+        let ans = unsafe x1.plusMonths(months);
+        YearMonth(ans)
 
     pub def minusMonths(x: YearMonth, months: Int64): YearMonth =
         let YearMonth(x1) = x;
-        YearMonth(unsafe x1.minusMonths(months))
+        let ans = unsafe x1.minusMonths(months);
+        YearMonth(ans)
 
     pub def plusYears(x: YearMonth, years: Int64): YearMonth =
         let YearMonth(x1) = x;
-        YearMonth(unsafe x1.plusYears(years))
+        let ans = unsafe x1.plusYears(years);
+        YearMonth(ans)
 
     pub def minusYears(x: YearMonth, years: Int64): YearMonth =
         let YearMonth(x1) = x;
-        YearMonth(unsafe x1.minusYears(years))
+        let ans = unsafe x1.minusYears(years);
+        YearMonth(ans)
 
 
 

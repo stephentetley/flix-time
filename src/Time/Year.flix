@@ -41,8 +41,8 @@ mod Time {
         pub def fromString(s: String): Option[Year] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                Year(unsafe JYear.parse(cs))
+                let ans = unsafe JYear.parse(s1);
+                Year(ans)
             }) |> Result.toOption
     }
 
@@ -50,8 +50,7 @@ mod Time {
         pub def eq(x: Year, y: Year): Bool = 
             let Year(x1) = x;
             let Year(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
 
     }
 
@@ -110,7 +109,9 @@ mod Time.Year {
 
     /// Constructors
 
-    pub def year(isoYear: {isoYear = Int32}): Year = Year(unsafe JYear.of(isoYear#isoYear))
+    pub def year(isoYear: {isoYear = Int32}): Year = 
+        let ans = unsafe JYear.of(isoYear#isoYear);
+        Year(ans)
 
 
     /// `now` and "abstract constructors" if any
@@ -119,68 +120,70 @@ mod Time.Year {
 
     pub def nowWithClock(x: Clock): Year \ IO =
         let Clock(x1) = x;
-        Year(JYear.now(x1))
+        let ans = JYear.now(x1);
+        Year(ans)
 
     pub def nowWithZoneId(x: ZoneId): Year \ IO =
         let ZoneId(x1) = x;
-        Year(JYear.now(x1))
+        let ans = JYear.now(x1);
+        Year(ans)
 
     /// `at` functions
 
     pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
         Result.tryCatch(_ -> {
             let Year(x1) = x;
-            LocalDate(unsafe x1.atDay(dayOfYear))
+            let ans = unsafe x1.atDay(dayOfYear);
+            LocalDate(ans)
         }) |> Result.toOption
 
     pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
         Result.tryCatch(_ -> {
             let Year(x1) = x;
-            YearMonth(unsafe x1.atMonth(month))
+            let ans = unsafe x1.atMonth(month);
+            YearMonth(ans)
         }) |> Result.toOption
 
     pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
         Result.tryCatch(_ -> {
             let Year(x1) = x;
             let m1 = Time.Month.marshalMonth(month);
-            YearMonth(unsafe x1.atMonth(m1))
+            let ans = unsafe x1.atMonth(m1);
+            YearMonth(ans)
         }) |> Result.toOption
 
     pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
         let Year(x1) = x;
         let MonthDay(m1) = monthDay;
-        LocalDate(unsafe x1.atMonthDay(m1))
+        let ans = unsafe x1.atMonthDay(m1);
+        LocalDate(ans)
 
 
     // `from` functions
 
     pub def fromLocalDate(x: LocalDate): Year = 
         let LocalDate(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYear.from(t1);
+        let ans = unsafe JYear.from(x1);
         Year(ans)
 
     pub def fromLocalDateTime(x: LocalDateTime): Year = 
         let LocalDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYear.from(t1);
+        let ans = unsafe JYear.from(x1);
         Year(ans)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Year = 
         let OffsetDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYear.from(t1);
+        let ans = unsafe JYear.from(x1);
         Year(ans)
 
     pub def fromYearMonth(x: YearMonth): Year = 
         let YearMonth(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYear.from(t1);
+        let ans = unsafe JYear.from(x1);
         Year(ans)
+    
     pub def fromZonedDateTime(x: ZonedDateTime): Year = 
         let ZonedDateTime(x1) = x;
-        let t1: JTemporalAccessor = checked_cast(x1);
-        let ans = unsafe JYear.from(t1);
+        let ans = unsafe JYear.from(x1);
         Year(ans)
 
     /// `parse` / `format` functions  
@@ -195,8 +198,8 @@ mod Time.Year {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            Year(unsafe JYear.parse(cs, fmtr))
+            let ans = unsafe JYear.parse(s1, fmtr);
+            Year(ans)
         })
 
     ///

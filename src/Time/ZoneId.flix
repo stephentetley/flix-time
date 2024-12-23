@@ -41,8 +41,7 @@ mod Time {
         pub def eq(x: ZoneId, y: ZoneId): Bool =
             let ZoneId(x1) = x;
             let ZoneId(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[ZoneId] {
@@ -96,7 +95,8 @@ mod Time.ZoneId {
     pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] \ IO =
         Result.tryCatch(_ -> {
             let jmap = Adaptor.toMap(aliases);
-            ZoneId(unsafe JZoneId.of(zoneId#zoneId, jmap))
+            let ans = unsafe JZoneId.of(zoneId#zoneId, jmap);
+            ZoneId(ans)
         })
 
 
@@ -173,7 +173,8 @@ mod Time.ZoneId {
     pub def getRules(x: ZoneId): Option[ZoneRules] =
         Result.tryCatch(_ -> {
             let ZoneId(x1) = x;
-            ZoneRules(unsafe x1.getRules())
+            let ans = unsafe x1.getRules();
+            ZoneRules(ans)
         }) |> Result.toOption
 
     

@@ -211,8 +211,8 @@ mod Time.ZonedDateTime {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let cs  = (checked_cast(s1) : CharSequence);
-            ZonedDateTime(unsafe JZonedDateTime.parse(cs, fmtr))
+            let ans = unsafe JZonedDateTime.parse(s1, fmtr);
+            ZonedDateTime(ans)
         })
 
     ///
@@ -249,15 +249,18 @@ mod Time.ZonedDateTime {
 
     pub def withYear(year: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.withYear(year))
+        let ans = unsafe x1.withYear(year);
+        ZonedDateTime(ans)
 
     pub def getMonth(x: ZonedDateTime): Month =
         let ZonedDateTime(x1) = x;
-        Time.Month.unmarshalMonth(unsafe x1.getMonth())
+        let m1 = unsafe x1.getMonth();
+        Time.Month.unmarshalMonth(m1)
 
     pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.withMonth(month))
+        let ans = unsafe x1.withMonth(month);
+        ZonedDateTime(ans)
 
 
     pub def getMonthValue(x: ZonedDateTime): Int32 =
@@ -272,7 +275,8 @@ mod Time.ZonedDateTime {
 
     pub def withDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.withDayOfYear(dayOfYear))
+        let d1 = unsafe x1.withDayOfYear(dayOfYear);
+        ZonedDateTime(d1)
 
     pub def getDayOfMonth(x: ZonedDateTime): Int32 =
         let ZonedDateTime(x1) = x;
@@ -280,11 +284,13 @@ mod Time.ZonedDateTime {
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.withDayOfMonth(dayOfMonth))
+        let d1 = unsafe x1.withDayOfMonth(dayOfMonth);
+        ZonedDateTime(d1)
 
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
         let ZonedDateTime(x1) = x;
-        Time.DayOfWeek.unmarshalDayOfWeek(unsafe x1.getDayOfWeek())
+        let d1 = unsafe x1.getDayOfWeek();
+        Time.DayOfWeek.unmarshalDayOfWeek(d1)
 
     // no setDayOfWeek
 
@@ -294,7 +300,8 @@ mod Time.ZonedDateTime {
 
     pub def withHour(hour: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.withHour(hour))
+        let ans = unsafe x1.withHour(hour);
+        ZonedDateTime(ans)
 
     pub def getMinute(x: ZonedDateTime): Int32 =
         let ZonedDateTime(x1) = x;
@@ -302,7 +309,8 @@ mod Time.ZonedDateTime {
 
     pub def withMinute(minute: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.withMinute(minute))
+        let ans = unsafe x1.withMinute(minute);
+        ZonedDateTime(ans)
 
     pub def getSecond(x: ZonedDateTime): Int32 =
         let ZonedDateTime(x1) = x;
@@ -310,7 +318,8 @@ mod Time.ZonedDateTime {
 
     pub def withSecond(second: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.withSecond(second))
+        let ans = unsafe x1.withSecond(second);
+        ZonedDateTime(ans)
 
     pub def getNano(x: ZonedDateTime): Int32 =
         let ZonedDateTime(x1) = x;
@@ -323,15 +332,15 @@ mod Time.ZonedDateTime {
     pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let ZoneId(zone1) = zone;
-        let t1 = unsafe x1.withZoneSameInstant(zone1);
-        let ans = unchecked_cast(t1 as JZonedDateTime);
+        let dt1 = unsafe x1.withZoneSameInstant(zone1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let ZoneId(zone1) = zone;
-        let t1 = unsafe x1.withZoneSameLocal(zone1);
-        let ans = unchecked_cast(t1 as JZonedDateTime);
+        let dt1 = unsafe x1.withZoneSameLocal(zone1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
 
@@ -342,14 +351,14 @@ mod Time.ZonedDateTime {
 
     pub def withEarlierOffsetAtOverlap(x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
-        let t1 = unsafe x1.withEarlierOffsetAtOverlap();
-        let ans = unchecked_cast(t1 as JZonedDateTime);
+        let dt1 = unsafe x1.withEarlierOffsetAtOverlap();
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     pub def withLaterOffsetAtOverlap(x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
-        let t1 = unsafe x1.withLaterOffsetAtOverlap();
-        let ans = unchecked_cast(t1 as JZonedDateTime);
+        let dt1 = unsafe x1.withLaterOffsetAtOverlap();
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     // DayOfWeek methods
@@ -357,9 +366,8 @@ mod Time.ZonedDateTime {
     pub def adjustDayOfWeek(d: DayOfWeek, x: ZonedDateTime): ZonedDateTime =  
         let ZonedDateTime(x1) = x;
         let d1 = Time.DayOfWeek.marshalDayOfWeek(d);
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let dt1 = unsafe d1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     // MonthDay methods
@@ -367,9 +375,8 @@ mod Time.ZonedDateTime {
     pub def adjustMonthDay(md: MonthDay, x: ZonedDateTime): ZonedDateTime =  
         let ZonedDateTime(x1) = x;
         let MonthDay(md1) = md;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe md1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let dt1 = unsafe md1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     // ZoneOffset methods
@@ -377,9 +384,8 @@ mod Time.ZonedDateTime {
     pub def adjustZoneOffset(zo: ZoneOffset, x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
         let ZoneOffset(zo1) = zo;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe zo1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let dt1 = unsafe zo1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
 

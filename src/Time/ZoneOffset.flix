@@ -40,8 +40,7 @@ mod Time {
         pub def eq(x: ZoneOffset, y: ZoneOffset): Bool =
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[ZoneOffset] {
@@ -85,7 +84,8 @@ mod Time.ZoneOffset {
 
     // TODO - do we need this for interring into Java collections?
     pub def fromJavaObject(o: Object): ZoneOffset = 
-        ZoneOffset(unchecked_cast(o as JZoneOffset))
+        let ans = unchecked_cast(o as JZoneOffset);
+        ZoneOffset(ans)
 
 
     /// "abstract constructors" (e.g. `utc`)
@@ -102,31 +102,38 @@ mod Time.ZoneOffset {
     /// `of` functions
 
     pub def ofHours(hours: Int32): ZoneOffset =
-        ZoneOffset(unsafe JZoneOffset.ofHours(hours))
+        let ans = unsafe JZoneOffset.ofHours(hours);
+        ZoneOffset(ans)
 
     pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset = 
-        ZoneOffset(unsafe JZoneOffset.ofHoursMinutes(r#hours, r#minutes))
+        let ans = unsafe JZoneOffset.ofHoursMinutes(r#hours, r#minutes);
+        ZoneOffset(ans)
 
     pub def ofHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
-        ZoneOffset(unsafe JZoneOffset.ofHoursMinutesSeconds(r#hours, r#minutes, r#seconds))
+        let ans = unsafe JZoneOffset.ofHoursMinutesSeconds(r#hours, r#minutes, r#seconds);
+        ZoneOffset(ans)
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
-        ZoneOffset(unsafe JZoneOffset.ofTotalSeconds(seconds))
+        let ans = unsafe JZoneOffset.ofTotalSeconds(seconds);
+        ZoneOffset(ans)
 
     // `from(TemporalAccessor x)` has problems - instead we can write the functions 
     // we want by calling the respective object
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
         let Time.OffsetDateTime.OffsetDateTime(x1) = x;
-        ZoneOffset(unsafe x1.getOffset())
+        let ans = unsafe x1.getOffset();
+        ZoneOffset(ans)
 
     pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
         let Time.OffsetTime.OffsetTime(x1) = x;
-        ZoneOffset(unsafe x1.getOffset())
+        let ans = unsafe x1.getOffset();
+        ZoneOffset(ans)
             
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
         let Time.ZonedDateTime.ZonedDateTime(x1) = x;
-        ZoneOffset(unsafe x1.getOffset())
+        let ans = unsafe x1.getOffset();
+        ZoneOffset(ans)
     
     /// ZoneOffset functions
 
@@ -136,7 +143,8 @@ mod Time.ZoneOffset {
 
     pub def getRules(x: ZoneOffset): ZoneRules =
         let ZoneOffset(x1) = x;
-        ZoneRules(unsafe x1.getRules())
+        let ans = unsafe x1.getRules();
+        ZoneRules(ans)
 
     pub def getTotalSeconds(x: ZoneOffset): Int32 =
         let ZoneOffset(x1) = x;
