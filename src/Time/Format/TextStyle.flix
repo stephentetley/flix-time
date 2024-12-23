@@ -49,9 +49,7 @@ mod Time.Format.TextStyle {
         }
 
     def primEquals(x: JTextStyle, y: JTextStyle): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
     pub def unmarshalTextStyle(x: JTextStyle): TextStyle = 
         match x {
@@ -75,10 +73,12 @@ mod Time.Format.TextStyle {
     
     pub def asStandalone(x: TextStyle): TextStyle =
         let x1 = marshalTextStyle(x);
-        unsafe x1.asStandalone() |> unmarshalTextStyle
+        let ans = unsafe x1.asStandalone();
+        unmarshalTextStyle(ans)
     
     pub def asNormal(x: TextStyle): TextStyle =
         let x1 = marshalTextStyle(x);
-        unsafe x1.asNormal() |> unmarshalTextStyle
+        let ans = unsafe x1.asNormal();
+        unmarshalTextStyle(ans)
 
 }

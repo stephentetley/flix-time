@@ -38,8 +38,7 @@ mod Time.Zone {
         pub def eq(x: ZoneOffsetTransitionRule, y: ZoneOffsetTransitionRule): Bool = 
             let ZoneOffsetTransitionRule(x1) = x;
             let ZoneOffsetTransitionRule(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
 
     }
 
@@ -89,9 +88,7 @@ mod Time.Zone.ZoneOffsetTransitionRule {
         }
 
     def primEqualsTimeDefinition(x: JTimeDefinition, y: JTimeDefinition): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
     pub def unmarshalTimeDefinition(x: JTimeDefinition): TimeDefinition = 
         match x {
@@ -137,12 +134,14 @@ mod Time.Zone.ZoneOffsetTransitionRule {
 
     pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffsetTransition(unsafe x1.createTransition(year))
+        let ans = unsafe x1.createTransition(year);
+        ZoneOffsetTransition(ans)
 
 
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
         let ZoneOffsetTransitionRule(x1) = x;
-        unsafe x1.getTimeDefinition() |> unmarshalTimeDefinition
+        let ans = unsafe x1.getTimeDefinition();
+        unmarshalTimeDefinition(ans)
 
     pub def getDayOfMonthIndicator(x: ZoneOffsetTransitionRule): Int32  = 
         let ZoneOffsetTransitionRule(x1) = x;
@@ -150,26 +149,31 @@ mod Time.Zone.ZoneOffsetTransitionRule {
 
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        unsafe x1.getDayOfWeek() |> Time.DayOfWeek.unmarshalDayOfWeek
+        let ans = unsafe x1.getDayOfWeek();
+        Time.DayOfWeek.unmarshalDayOfWeek(ans)
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        LocalTime(unsafe x1.getLocalTime())
+        let ans = unsafe x1.getLocalTime();
+        LocalTime(ans)
 
 
     pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffset(unsafe x1.getStandardOffset())
+        let ans = unsafe x1.getStandardOffset();
+        ZoneOffset(ans)
 
     pub def getOffsetBefore(x: ZoneOffsetTransitionRule): ZoneOffset  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffset(unsafe x1.getOffsetBefore())
+        let ans = unsafe x1.getOffsetBefore();
+        ZoneOffset(ans)
 
 
     pub def getOffsetAfter(x: ZoneOffsetTransitionRule): ZoneOffset  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        ZoneOffset(unsafe x1.getOffsetAfter())
+        let ans = unsafe x1.getOffsetAfter();
+        ZoneOffset(ans)
 
 
 }

@@ -45,9 +45,7 @@ mod Time.Format.SignStyle {
         }
 
     def primEquals(x: JSignStyle, y: JSignStyle): Bool =
-        let x1 = (checked_cast(x) : JEnum);
-        let y1 = (checked_cast(y) : JEnum);
-        unsafe x1.equals(y1)
+        unsafe x.equals(y)
 
     pub def unmarshalSignStyle(x: JSignStyle): SignStyle = 
         match x {

@@ -47,8 +47,8 @@ mod Time {
         pub def fromString(s: String): Option[ZonedDateTime] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let cs  = (checked_cast(s1) : CharSequence);
-                ZonedDateTime(unsafe JZonedDateTime.parse(cs))
+                let ans = unsafe JZonedDateTime.parse(s1);
+                ZonedDateTime(ans)
             }) |> Result.toOption
     }
 
@@ -56,8 +56,7 @@ mod Time {
         pub def eq(x: ZonedDateTime, y: ZonedDateTime): Bool =
             let ZonedDateTime(x1) = x;
             let ZonedDateTime(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[ZonedDateTime] {
@@ -68,12 +67,9 @@ mod Time {
 
     instance Order[ZonedDateTime] {
         pub def compare(x: ZonedDateTime, y: ZonedDateTime): Comparison =
-            // Have to use ChronoZonedDateTime...
             let ZonedDateTime(x1) = x;
             let ZonedDateTime(y1) = y;
-            let cx1 = (checked_cast(x1) : ChronoZonedDateTime);
-            let cy1 = (checked_cast(y1) : ChronoZonedDateTime);
-            unsafe cx1.compareTo(cy1) |> Comparison.fromInt32
+            unsafe x1.compareTo(y1) |> Comparison.fromInt32
     }
 
 
@@ -145,21 +141,24 @@ mod Time.ZonedDateTime {
     ///
     pub def nowWithZoneId(zone: ZoneId): ZonedDateTime \ IO =
         let ZoneId(z1) = zone;
-        ZonedDateTime(JZonedDateTime.now(z1))
+        let ans = JZonedDateTime.now(z1);
+        ZonedDateTime(ans)
 
     /// `from` functions
 
     pub def fromLocalDateTime(zone: {zone = ZoneId}, dateTime: LocalDateTime): ZonedDateTime =
         let LocalDateTime(dt1) = dateTime;
         let ZoneId(z1) = zone#zone;
-        ZonedDateTime(unsafe JZonedDateTime.of(dt1, z1))
+        let ans = unsafe JZonedDateTime.of(dt1, z1);
+        ZonedDateTime(ans)
 
 
     pub def fromLocalDateLocalTime(zone: {zone = ZoneId}, date: LocalDate, time: LocalTime): ZonedDateTime =
         let LocalDate(d1) = date;
         let LocalTime(t1) = time;
         let ZoneId(z1) = zone#zone;
-        ZonedDateTime(unsafe JZonedDateTime.of(d1, t1, z1))
+        let ans = unsafe JZonedDateTime.of(d1, t1, z1);
+        ZonedDateTime(ans)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
         let OffsetDateTime(x1) = x;
@@ -174,9 +173,7 @@ mod Time.ZonedDateTime {
     ///
     pub def toLocalDateTime(x: ZonedDateTime): LocalDateTime =
         let ZonedDateTime(x1) = x;
-        let cx1 : ChronoZonedDateTime = checked_cast(x1);
-        let t1: ChronoLocalDateTime = unsafe cx1.toLocalDateTime();
-        let ans = unchecked_cast(t1 as JLocalDateTime);
+        let ans = unsafe x1.toLocalDateTime();
         LocalDateTime(ans)
         
 
@@ -186,9 +183,7 @@ mod Time.ZonedDateTime {
     ///
     pub def toLocalDate(x: ZonedDateTime): LocalDate =
         let ZonedDateTime(x1) = x;
-        let cx1: ChronoZonedDateTime = checked_cast(x1);
-        let t1: ChronoLocalDate = unsafe cx1.toLocalDate();
-        let ans = unchecked_cast(t1 as JLocalDate);
+        let ans = unsafe x1.toLocalDate();
         LocalDate(ans)
 
     ///
@@ -265,8 +260,8 @@ mod Time.ZonedDateTime {
 
     pub def getMonthValue(x: ZonedDateTime): Int32 =
         let ZonedDateTime(x1) = x;
-        let mon = unsafe x1.getMonth();
-        unsafe mon.getValue()
+        let m1 = unsafe x1.getMonth();
+        unsafe m1.getValue()
 
 
     pub def getDayOfYear(x: ZonedDateTime): Int32 =
@@ -275,8 +270,8 @@ mod Time.ZonedDateTime {
 
     pub def withDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        let d1 = unsafe x1.withDayOfYear(dayOfYear);
-        ZonedDateTime(d1)
+        let ans = unsafe x1.withDayOfYear(dayOfYear);
+        ZonedDateTime(ans)
 
     pub def getDayOfMonth(x: ZonedDateTime): Int32 =
         let ZonedDateTime(x1) = x;
@@ -284,8 +279,8 @@ mod Time.ZonedDateTime {
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        let d1 = unsafe x1.withDayOfMonth(dayOfMonth);
-        ZonedDateTime(d1)
+        let ans = unsafe x1.withDayOfMonth(dayOfMonth);
+        ZonedDateTime(ans)
 
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
         let ZonedDateTime(x1) = x;
@@ -327,7 +322,8 @@ mod Time.ZonedDateTime {
 
     pub def withNano(nano: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
-        ZonedDateTime(unsafe x1.withNano(nano))
+        let ans = unsafe x1.withNano(nano);
+        ZonedDateTime(ans)
 
     pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
@@ -394,29 +390,26 @@ mod Time.ZonedDateTime {
     pub def adjustYearMonth(ym: YearMonth, x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
         let YearMonth(ym1) = ym;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe ym1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let dt1 = unsafe ym1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     // LocalDate methods
 
-    pub def adjustLocalDate(d: LocalDate, x: ZonedDateTime): ZonedDateTime = 
+    pub def adjustLocalDate(ld: LocalDate, x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
-        let LocalDate(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let LocalDate(ld1) = ld;
+        let dt1 = unsafe ld1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     // LocalDateTime methods
 
-    pub def adjustLocalDateTime(dt: LocalDateTime, x: ZonedDateTime): ZonedDateTime = 
+    pub def adjustLocalDateTime(ldt: LocalDateTime, x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
-        let LocalDateTime(dt1) = dt;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe dt1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let LocalDateTime(ldt1) = ldt;
+        let dt1 = unsafe ldt1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     // LocalTime methods
@@ -424,9 +417,8 @@ mod Time.ZonedDateTime {
     pub def adjustLocalTime(lt: LocalTime, x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
         let LocalTime(lt1) = lt;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe lt1.adjustInto(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let dt1 = unsafe lt1.adjustInto(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     // plus / minus functions
@@ -514,17 +506,15 @@ mod Time.ZonedDateTime {
     pub def plusDuration(x: ZonedDateTime, d: DurationZ): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let DurationZ(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.addTo(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let dt1 = unsafe d1.addTo(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
     
     pub def minusDuration(x: ZonedDateTime, d: DurationZ): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let DurationZ(d1) = d;
-        let t1: JTemporal = checked_cast(x1);
-        let t2 = unsafe d1.subtractFrom(t1);
-        let ans = unchecked_cast(t2 as JZonedDateTime);
+        let dt1 = unsafe d1.subtractFrom(x1);
+        let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)
 
     // Period methods

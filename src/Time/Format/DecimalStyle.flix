@@ -37,8 +37,7 @@ mod Time.Format {
         pub def eq(x: DecimalStyle, y: DecimalStyle): Bool =
             let DecimalStyle(x1) = x;
             let DecimalStyle(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[DecimalStyle] {
@@ -72,10 +71,12 @@ mod Time.Format.DecimalStyle {
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
         let Locale(loc1) = loc;
-        DecimalStyle(JDecimalStyle.of(loc1))
+        let ans = JDecimalStyle.of(loc1);
+        DecimalStyle(ans)
 
     pub def decimalStyleWithDefaultLocale(): DecimalStyle \ IO = 
-        DecimalStyle(JDecimalStyle.ofDefaultLocale())
+        let ans = JDecimalStyle.ofDefaultLocale();
+        DecimalStyle(ans)
 
 
     /// ## DecimalStyle functions
@@ -105,7 +106,8 @@ mod Time.Format.DecimalStyle {
 
     pub def withDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
         let DecimalStyle(x1) = x;
-        DecimalStyle(unsafe x1.withDecimalSeparator(sep))
+        let ans = unsafe x1.withDecimalSeparator(sep);
+        DecimalStyle(ans)
 
     pub def getNegativeSign(x: DecimalStyle): Char = 
         let DecimalStyle(x1) = x;
@@ -113,7 +115,8 @@ mod Time.Format.DecimalStyle {
 
     pub def withNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
         let DecimalStyle(x1) = x;
-        DecimalStyle(unsafe x1.withNegativeSign(sign))
+        let ans = unsafe x1.withNegativeSign(sign);
+        DecimalStyle(ans)
 
     pub def getPositiveSign(x: DecimalStyle): Char = 
         let DecimalStyle(x1) = x;
@@ -121,7 +124,8 @@ mod Time.Format.DecimalStyle {
 
     pub def withPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
         let DecimalStyle(x1) = x;
-        DecimalStyle(unsafe x1.withPositiveSign(sign))
+        let ans = unsafe x1.withPositiveSign(sign);
+        DecimalStyle(ans)
 
     pub def getZeroDigit(x: DecimalStyle): Char = 
         let DecimalStyle(x1) = x;
@@ -129,6 +133,7 @@ mod Time.Format.DecimalStyle {
 
     pub def withZeroDigit(digit: Char, x: DecimalStyle): DecimalStyle = 
         let DecimalStyle(x1) = x;
-        DecimalStyle(unsafe x1.withZeroDigit(digit))
+        let ans = unsafe x1.withZeroDigit(digit);
+        DecimalStyle(ans)
 
 }

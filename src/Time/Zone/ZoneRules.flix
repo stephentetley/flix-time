@@ -38,8 +38,7 @@ mod Time.Zone {
         pub def eq(x: ZoneRules, y: ZoneRules): Bool = 
             let ZoneRules(x1) = x;
             let ZoneRules(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[ZoneRules] {
@@ -80,26 +79,30 @@ mod Time.Zone.ZoneRules {
 
     pub def zoneRules(offset: ZoneOffset): ZoneRules =
         let ZoneOffset(x1) = offset;
-        ZoneRules(unsafe JZoneRules.of(x1))
+        let ans = unsafe JZoneRules.of(x1);
+        ZoneRules(ans)
 
     /// ZoneRules functions
 
     pub def getOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
         let ZoneRules(x1) = x;
         let InstantZ(inst1) = inst;
-        ZoneOffset(unsafe x1.getOffset(inst1))
+        let ans = unsafe x1.getOffset(inst1);
+        ZoneOffset(ans)
 
 
     pub def getOffsetWithLocalDateTime(ldt: LocalDateTime, x: ZoneRules): ZoneOffset =
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
-        ZoneOffset(unsafe x1.getOffset(ldt1))
+        let ans = unsafe x1.getOffset(ldt1);
+        ZoneOffset(ans)
 
 
     pub def getStandardOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
         let ZoneRules(x1) = x;
         let InstantZ(inst1) = inst;
-        ZoneOffset(unsafe x1.getStandardOffset(inst1))
+        let ans = unsafe x1.getStandardOffset(inst1);
+        ZoneOffset(ans)
 
 
     pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] =
@@ -113,7 +116,8 @@ mod Time.Zone.ZoneRules {
     pub def getDaylightSavings(instant: InstantZ, x: ZoneRules): DurationZ =
         let ZoneRules(x1) = x;
         let InstantZ(instant1) = instant;
-        DurationZ(unsafe x1.getDaylightSavings(instant1))
+        let ans = unsafe x1.getDaylightSavings(instant1);
+        DurationZ(ans)
 
     pub def isDaylightSavings(instant: InstantZ, x: ZoneRules): Bool =
         let ZoneRules(x1) = x;
@@ -131,7 +135,8 @@ mod Time.Zone.ZoneRules {
     pub def previousTransition(instant: InstantZ, x: ZoneRules): ZoneOffsetTransition =
         let ZoneRules(x1) = x;
         let InstantZ(instant1) = instant;
-        ZoneOffsetTransition(unsafe x1.previousTransition(instant1))
+        let ans = unsafe x1.previousTransition(instant1);
+        ZoneOffsetTransition(ans)
 
     pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = 
         let ZoneRules(x1) = x;

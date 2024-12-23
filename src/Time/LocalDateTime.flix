@@ -57,8 +57,7 @@ mod Time {
         pub def eq(x: LocalDateTime, y: LocalDateTime): Bool =
             let LocalDateTime(x1) = x;
             let LocalDateTime(y1) = y;
-            let obj: Object = checked_cast(y1);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
 
     }
 
@@ -156,7 +155,8 @@ mod Time.LocalDateTime {
     ///
     pub def nowWithZoneId(zone: ZoneId): LocalDateTime \ IO =
         let ZoneId(z) = zone;
-        LocalDateTime(JLocalDateTime.now(z))
+        let ans = JLocalDateTime.now(z);
+        LocalDateTime(ans)
 
 
     /// `from` functions
@@ -164,16 +164,19 @@ mod Time.LocalDateTime {
     pub def fromLocalDateLocalTime(d: LocalDate, t: LocalTime): LocalDateTime =
         let LocalDate(d1) = d;
         let LocalTime(t1) = t;
-        LocalDateTime(unsafe JLocalDateTime.of(d1, t1))
+        let ans = unsafe JLocalDateTime.of(d1, t1);
+        LocalDateTime(ans)
 
     pub def ofEpochSecond(offset: {offset = ZoneOffset}, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
         let ZoneOffset(o1) = offset#offset;
-        LocalDateTime(unsafe JLocalDateTime.ofEpochSecond(epochSecond, nanoOfSecond, o1))
+        let ans = unsafe JLocalDateTime.ofEpochSecond(epochSecond, nanoOfSecond, o1);
+        LocalDateTime(ans)
 
     pub def ofInstant(zone: {zone = ZoneId}, x: InstantZ): LocalDateTime =
         let InstantZ(x1) = x;
         let ZoneId(z1) = zone#zone;
-        LocalDateTime(unsafe JLocalDateTime.ofInstant(x1, z1))
+        let ans = unsafe JLocalDateTime.ofInstant(x1, z1);
+        LocalDateTime(ans)
 
     // `fromTemporalAccessor` specialized
 
@@ -196,17 +199,16 @@ mod Time.LocalDateTime {
     ///
     pub def toLocalDate(x: LocalDateTime): LocalDate =
         let LocalDateTime(x1) = x;
-        let cx1 : ChronoLocalDateTime = (checked_cast(x1) : ChronoLocalDateTime);
-        let ans : ChronoLocalDate = unsafe cx1.toLocalDate();
-        let ans1 : JLocalDate = unchecked_cast(ans as JLocalDate);
-        LocalDate(ans1)
+        let ans = unsafe x1.toLocalDate();
+        LocalDate(ans)
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalTime(x: LocalDateTime): LocalTime =
         let LocalDateTime(x1) = x;
-        LocalTime(unsafe x1.toLocalTime())
+        let ans = unsafe x1.toLocalTime();
+        LocalTime(ans)
 
     /// `parse` / `format` functions
 
@@ -255,8 +257,8 @@ mod Time.LocalDateTime {
 
     pub def getMonthValue(x: LocalDateTime): Int32 =
         let LocalDateTime(x1) = x;
-        let ans = unsafe x1.getMonth();
-        unsafe ans.getValue()
+        let m1 = unsafe x1.getMonth();
+        unsafe m1.getValue()
 
     /// Getters and Setters
 
@@ -266,7 +268,8 @@ mod Time.LocalDateTime {
 
     pub def withYear(year: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.withYear(year))
+        let ans = unsafe x1.withYear(year);
+        LocalDateTime(ans)
 
     pub def getMonth(x: LocalDateTime): Month =
         let LocalDateTime(x1) = x;
@@ -274,7 +277,8 @@ mod Time.LocalDateTime {
 
     pub def withMonth(month: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.withMonth(month))
+        let ans = unsafe x1.withMonth(month);
+        LocalDateTime(ans)
 
     pub def getDayOfYear(x: LocalDateTime): Int32 =
         let LocalDateTime(x1) = x;
@@ -282,7 +286,8 @@ mod Time.LocalDateTime {
 
     pub def withDayOfYear(dayOfYear: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.withDayOfYear(dayOfYear))
+        let ans = unsafe x1.withDayOfYear(dayOfYear);
+        LocalDateTime(ans)
 
     pub def getDayOfMonth(x: LocalDateTime): Int32 =
         let LocalDateTime(x1) = x;
@@ -290,7 +295,8 @@ mod Time.LocalDateTime {
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.withDayOfMonth(dayOfMonth))
+        let ans = unsafe x1.withDayOfMonth(dayOfMonth);
+        LocalDateTime(ans)
 
     pub def getDayOfWeek(x: LocalDateTime): DayOfWeek =
         let LocalDateTime(x1) = x;
@@ -302,7 +308,8 @@ mod Time.LocalDateTime {
 
     pub def withHour(hour: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.withHour(hour))
+        let ans = unsafe x1.withHour(hour);
+        LocalDateTime(ans)
 
     pub def getMinute(x: LocalDateTime): Int32 =
         let LocalDateTime(x1) = x;
@@ -310,7 +317,8 @@ mod Time.LocalDateTime {
 
     pub def withMinute(minute: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.withMinute(minute))
+        let ans = unsafe x1.withMinute(minute);
+        LocalDateTime(ans)
 
     pub def getSecond(x: LocalDateTime): Int32 =
         let LocalDateTime(x1) = x;
@@ -318,7 +326,8 @@ mod Time.LocalDateTime {
 
     pub def withSecond(second: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.withSecond(second))
+        let ans = unsafe x1.withSecond(second);
+        LocalDateTime(ans)
 
     pub def getNano(x: LocalDateTime): Int32 =
         let LocalDateTime(x1) = x;
@@ -326,7 +335,8 @@ mod Time.LocalDateTime {
 
     pub def withNano(nano: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
-        LocalDateTime(unsafe x1.withNano(nano))
+        let ans = unsafe x1.withNano(nano);
+        LocalDateTime(ans)
 
     /// YearMonth methods
 

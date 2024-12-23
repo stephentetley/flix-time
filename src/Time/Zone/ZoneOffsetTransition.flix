@@ -38,8 +38,7 @@ mod Time.Zone {
         pub def eq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool =
             let ZoneOffsetTransition(x1) = x;
             let ZoneOffsetTransition(y1) = y;
-            let obj = (checked_cast(y1) : Object);
-            unsafe x1.equals(obj)
+            unsafe x1.equals(y1)
     }
 
     instance Hash[ZoneOffsetTransition] {
@@ -106,27 +105,33 @@ mod Time.Zone.ZoneOffsetTransition {
 
     pub def getDateTimeBefore(x: ZoneOffsetTransition): LocalDateTime =
         let ZoneOffsetTransition(x1) = x;
-        LocalDateTime(unsafe x1.getDateTimeBefore())
+        let ans = unsafe x1.getDateTimeBefore();
+        LocalDateTime(ans)
 
     pub def getDateTimeAfter(x: ZoneOffsetTransition): LocalDateTime =
         let ZoneOffsetTransition(x1) = x;
-        LocalDateTime(unsafe x1.getDateTimeAfter())
+        let ans = unsafe x1.getDateTimeAfter();
+        LocalDateTime(ans)
 
 
     pub def getOffsetBefore(x: ZoneOffsetTransition): ZoneOffset =
         let ZoneOffsetTransition(x1) = x;
-        ZoneOffset(unsafe x1.getOffsetBefore())
+        let ans = unsafe x1.getOffsetBefore();
+        ZoneOffset(ans)
 
     pub def getOffsetAfter(x: ZoneOffsetTransition): ZoneOffset =
         let ZoneOffsetTransition(x1) = x;
-        ZoneOffset(unsafe x1.getOffsetAfter())
+        let ans = unsafe x1.getOffsetAfter();
+        ZoneOffset(ans)
 
     pub def getDuration(x: ZoneOffsetTransition): DurationZ =
         let ZoneOffsetTransition(x1) = x;
-        DurationZ(unsafe x1.getDuration())
+        let ans = unsafe x1.getDuration();
+        DurationZ(ans)
 
     pub def getInstant(x: ZoneOffsetTransition): InstantZ =
         let ZoneOffsetTransition(x1) = x;
-        InstantZ(unsafe x1.getInstant())
+        let ans = unsafe x1.getInstant();
+        InstantZ(ans)
 
 }
