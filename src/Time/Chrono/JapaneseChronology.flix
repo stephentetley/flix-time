@@ -92,5 +92,10 @@ mod Time.Chrono.JapaneseChronology {
         let ans = unchecked_cast(e1 as JJapaneseEra);
         JapaneseEra(ans)
 
+    pub def eras(x: JapaneseChronology): List[JapaneseEra] = 
+        let JapaneseChronology(x1) = x;
+        let jlist = unsafe x1.eras();
+        let xs: List[JJapaneseEra] = Adaptor.fromList(jlist);
+        List.map(z -> JapaneseEra(z), xs)
 
 }

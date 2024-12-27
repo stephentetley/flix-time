@@ -69,12 +69,11 @@ mod Time.Chrono.IsoChronology {
         Time.Chrono.IsoEra.unmarshalIsoEra(ans)
 
 
-    /// pub def eras(x: IsoChronology): List[IsoEra] = 
-    ///     import java.time.chrono.IsoChronology.eras(): ##java.util.List \ {};
-    ///     let IsoChronology(x1) = x;
-    ///     let jxs = eras(x1);
-    ///     Interop.Collections/... .unmarshalList(o -> Time.Chrono.IsoEra.unmarshal(o as ##java.time.chrono.IsoEra), jxs)
-
+    pub def eras(x: IsoChronology): List[IsoEra] = 
+        let IsoChronology(x1) = x;
+        let jlist = unsafe x1.eras();
+        let xs: List[JIsoEra] = Adaptor.fromList(jlist);
+        List.map(Time.Chrono.IsoEra.unmarshalIsoEra, xs)
 
     pub def getId(x: IsoChronology): String = 
         let IsoChronology(x1) = x;

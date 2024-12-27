@@ -58,6 +58,8 @@ mod Time.Chrono.HijrahDate {
     use Time.Chrono.HijrahChronology
     use Time.Chrono.HijrahChronology.{HijrahChronology}
     use Time.Chrono.HijrahEra
+    use Time.Temporal.ChronoUnit
+    use Time.Temporal.ChronoUnit.{Days, Months}
     use Time.Clock
     use Time.Clock.{Clock}
     use Time.LocalDate
@@ -72,6 +74,8 @@ mod Time.Chrono.HijrahDate {
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate,
         HijrahEra => JHijrahEra}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{Temporal => JTemporal}
+    import java.time.temporal.{TemporalUnit => JTemporalUnit}
     import java.lang.{Object}
 
     pub def getHijrahDate(x: HijrahDate): JHijrahDate = 
@@ -196,5 +200,31 @@ mod Time.Chrono.HijrahDate {
         let u = unsafe JChronoUnit.MILLENNIA;
         let ans = unsafe x1.minus(i, u);
         HijrahDate(ans)
+
+    pub def until(begin: {begin = HijrahDate}, end: {end = HijrahDate}, cu: ChronoUnit[<Days, Months>]): Int64 = 
+        let HijrahDate(b1) = begin#begin;
+        let HijrahDate(e1) = end#end;
+        let te1: JTemporal = unchecked_cast(e1 as JTemporal);
+        let cu1 = Time.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let tu1: JTemporalUnit = unchecked_cast(cu1 as JTemporalUnit);
+        unsafe b1.until(te1, tu1)
+
+
+    def untilHelper(begin: {begin = HijrahDate}, end: {end = HijrahDate}, tu: JTemporalUnit): Int64 = 
+        let HijrahDate(b1) = begin#begin;
+        let HijrahDate(e1) = end#end;
+        let te1: JTemporal = unchecked_cast(e1 as JTemporal);
+        unsafe b1.until(te1, tu)
+
+
+    pub def daysUntil(begin: {begin = HijrahDate}, end: {end = HijrahDate}): Int64 = 
+        let cu1 = unsafe JChronoUnit.DAYS;
+        let tu1: JTemporalUnit = unchecked_cast(cu1 as JTemporalUnit);
+        untilHelper(begin, end, tu1)
+
+    pub def monthsUntil(begin: {begin = HijrahDate}, end: {end = HijrahDate}): Int64 = 
+        let cu1 = unsafe JChronoUnit.MONTHS;
+        let tu1: JTemporalUnit = unchecked_cast(cu1 as JTemporalUnit);
+        untilHelper(begin, end, tu1)
 
 }

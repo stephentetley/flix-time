@@ -108,9 +108,9 @@ mod Time.Zone.ZoneRules {
     pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] =
         let LocalDateTime(ldt1) = ldt;
         let ZoneRules(x1) = x;
-        let xs = unsafe x1.getValidOffsets(ldt1);
-        let xs1: List[JZoneOffset] = Adaptor.fromList(xs);
-        List.map(z -> ZoneOffset(z), xs1)
+        let jlist = unsafe x1.getValidOffsets(ldt1);
+        let xs: List[JZoneOffset] = Adaptor.fromList(jlist);
+        List.map(z -> ZoneOffset(z), xs)
 
 
     pub def getDaylightSavings(instant: InstantZ, x: ZoneRules): DurationZ =

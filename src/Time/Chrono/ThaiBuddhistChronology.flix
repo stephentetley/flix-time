@@ -86,4 +86,10 @@ mod Time.Chrono.ThaiBuddhistChronology {
         let ans = unchecked_cast(e1 as JThaiBuddhistEra); 
         Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
 
+    pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
+        let ThaiBuddhistChronology(x1) = x;
+        let jlist = unsafe x1.eras();
+        let xs: List[JThaiBuddhistEra] = Adaptor.fromList(jlist);
+        List.map(Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra, xs)
+
 }

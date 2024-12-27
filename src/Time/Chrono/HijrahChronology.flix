@@ -41,6 +41,8 @@ mod Time.Chrono.HijrahChronology {
     use Time.Chrono.HijrahEra
     use Time.Format.ResolverStyle
     use Time.Format.TextStyle
+    use Time.Temporal.ValueRange
+    use Time.Temporal.ValueRange.{ValueRange}
     use Time.Clock
     use Time.Clock.{Clock}
     use Time.ZoneId
@@ -52,6 +54,7 @@ mod Time.Chrono.HijrahChronology {
         HijrahDate => JHijrahDate,
         Era => JEra, 
         HijrahEra => JHijrahEra}
+    import java.time.temporal.{ChronoField => JChronoField}
 
     pub def getHijrahChronology(x: HijrahChronology): JHijrahChronology = 
         let HijrahChronology(x1) = x;
@@ -139,11 +142,11 @@ mod Time.Chrono.HijrahChronology {
         let ans = unchecked_cast(e1 as JHijrahEra); 
         Time.Chrono.HijrahEra.unmarshalHijrahEra(ans)
 
-    // pub def eras(hc: HijrahChronology): List[HijrahEra] =
-    //     import java.time.chrono.HijrahChronology.eras(): ##java.util.List \ {};
-    //     let HijrahChronology(hc1) = hc;
-    //     let eras1: List[##java.time.chrono.HijrahEra] = eras(hc1) |> Adaptor.fromList;
-    //     List.map(Time.Chrono.HijrahEra.unmarshalHijrahEra, eras1)
+    pub def eras(x: HijrahChronology): List[HijrahEra] \ IO =
+        let HijrahChronology(x1) = x;
+        let xs = x1.eras();
+        let xs1: List[JHijrahEra] = Adaptor.fromList(xs);
+        List.map(Time.Chrono.HijrahEra.unmarshalHijrahEra, xs1)
 
 
     pub def getId(x: HijrahChronology): String = 
@@ -159,6 +162,12 @@ mod Time.Chrono.HijrahChronology {
         let HijrahChronology(x1) = x;
         let era1 = Time.Chrono.HijrahEra.marshalHijrahEra(era);
         unsafe x1.prolepticYear(era1, yearOfEra)
+
+    pub def rangeYear(x: HijrahChronology): ValueRange = 
+        let HijrahChronology(x1) = x;
+        let f1 = unsafe JChronoField.YEAR;
+        let vr1 = unsafe x1.range(f1);
+        ValueRange(vr1)
 
 
     // pub def resolveDate(fieldValues: List[(a, Int64)], resolverStyle: ResolverStyle, x: HijrahChronology): HijrahDate with TemporalField[a] =

@@ -90,7 +90,9 @@ mod Time.Format.DecimalStyle {
     /// Candidate for Adaptor...
     def fromSetAsList(l: JSet): List[a] = region rc {
         let proxy: Proxy[a] = Proxy.Proxy;
-        unsafe l.iterator() |> Adaptor.fromIterator(rc, proxy) |> Iterator.toList
+        let jiter = unsafe l.iterator();
+        let iter = Adaptor.fromIterator(rc, proxy, jiter);
+        Iterator.toList(iter)
     }
 
 

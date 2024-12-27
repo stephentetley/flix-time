@@ -104,6 +104,7 @@ mod Time.Chrono.JapaneseEra {
         unsafe x1.getDisplayName(style1, locale1)
 
 
+
     // NOTE - maybe this should return Option [/ Result] ?
 
     // pub def adjustInto(t: a, x: JapaneseEra): a with Temporal[a] = 

@@ -89,4 +89,10 @@ mod Time.Chrono.MinguoChronology {
         let ans1 = unchecked_cast(e1 as JMinguoEra); 
         Time.Chrono.MinguoEra.unmarshalMinguoEra(ans1)
 
+    pub def eras(x: MinguoChronology): List[MinguoEra] = 
+        let MinguoChronology(x1) = x;
+        let jlist = unsafe x1.eras();
+        let xs: List[JMinguoEra] = Adaptor.fromList(jlist);
+        List.map(Time.Chrono.MinguoEra.unmarshalMinguoEra, xs)
+
 }

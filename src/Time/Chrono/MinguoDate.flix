@@ -49,10 +49,16 @@ mod Time.Chrono.MinguoDate {
 
     use Time.Chrono.MinguoDate
     use Time.Chrono.MinguoDate.{MinguoDate}
+    use Time.Chrono.MinguoChronology
+    use Time.Chrono.MinguoChronology.{MinguoChronology}
+    use Time.Chrono.MinguoEra
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
 
     import java.time.chrono.{MinguoDate => JMinguoDate}
+    import java.time.chrono.{MinguoEra => JMinguoEra}
+    import java.time.chrono.{MinguoChronology => JMinguoChronology}
+    import java.time.{LocalDate => JLocalDate}
     import java.lang.{Object}
 
     ///
@@ -72,10 +78,23 @@ mod Time.Chrono.MinguoDate {
 
 
 
-    // pub def toLocalDate(x: MinguoDate): LocalDate =
-    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
-    //     let MinguoDate(x1) = x;
-    //     LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    pub def toLocalDate(x: MinguoDate): LocalDate =
+        let MinguoDate(x1) = x;
+        let ans = unsafe JLocalDate.from(x1);
+        LocalDate(ans)
+        
+    pub def getChronology(x: MinguoDate): MinguoChronology = 
+        let MinguoDate(x1) = x;
+        let c1 = unsafe x1.getChronology();
+        let ans = unchecked_cast(c1 as JMinguoChronology);
+        MinguoChronology(ans)
+
+    pub def getEra(x: MinguoDate): MinguoEra = 
+        let MinguoDate(x1) = x;
+        let e1 = unsafe x1.getEra();
+        let ans = unchecked_cast(e1 as JMinguoEra);
+        Time.Chrono.MinguoEra.unmarshalMinguoEra(ans)
+
 
     // pub def getDayOfWeek(x: MinguoDate): Int32 = 
     //     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfWeek)
