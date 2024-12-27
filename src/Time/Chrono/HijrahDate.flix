@@ -59,7 +59,7 @@ mod Time.Chrono.HijrahDate {
     use Time.Chrono.HijrahChronology.{HijrahChronology}
     use Time.Chrono.HijrahEra
     use Time.Temporal.ChronoUnit
-    use Time.Temporal.ChronoUnit.{Days, Months}
+    use Time.Temporal.ChronoUnit.{Days, Months, Years, Centuries, Millennia, Eras}
     use Time.Clock
     use Time.Clock.{Clock}
     use Time.LocalDate
@@ -180,28 +180,21 @@ mod Time.Chrono.HijrahDate {
         let ans = unchecked_cast(t1 as JHijrahDate);
         HijrahDate(ans)
 
-    pub def plusYears(x: HijrahDate, i: Int64): HijrahDate =
-        let p1 = Time.Period.plusYears(Time.Period.zero(), i);
-        plusPeriod(x, p1)
-
-    pub def minusYears(x: HijrahDate, i: Int64): HijrahDate =
-        let p1 = Time.Period.plusYears(Time.Period.zero(), i);
-        minusPeriod(x, p1)
-
-
-    pub def plusMillenia(x: HijrahDate, i: Int64): HijrahDate = 
+    pub def plusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia>]): HijrahDate = 
         let HijrahDate(x1) = x;
-        let u = unsafe JChronoUnit.MILLENNIA;
-        let ans = unsafe x1.plus(i, u);
+        let cu1 = Time.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let ans = unsafe x1.plus(i, cu1);
         HijrahDate(ans)
 
-    pub def minusMillenia(x: HijrahDate, i: Int64): HijrahDate = 
+    pub def minusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia>]): HijrahDate = 
         let HijrahDate(x1) = x;
-        let u = unsafe JChronoUnit.MILLENNIA;
-        let ans = unsafe x1.minus(i, u);
+        let cu1 = Time.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let ans = unsafe x1.minus(i, cu1);
         HijrahDate(ans)
 
-    pub def until(begin: {begin = HijrahDate}, end: {end = HijrahDate}, cu: ChronoUnit[<Days, Months>]): Int64 = 
+
+
+    pub def until(begin: {begin = HijrahDate}, end: {end = HijrahDate}, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia, Eras>]): Int64 = 
         let HijrahDate(b1) = begin#begin;
         let HijrahDate(e1) = end#end;
         let te1: JTemporal = unchecked_cast(e1 as JTemporal);
@@ -210,21 +203,5 @@ mod Time.Chrono.HijrahDate {
         unsafe b1.until(te1, tu1)
 
 
-    def untilHelper(begin: {begin = HijrahDate}, end: {end = HijrahDate}, tu: JTemporalUnit): Int64 = 
-        let HijrahDate(b1) = begin#begin;
-        let HijrahDate(e1) = end#end;
-        let te1: JTemporal = unchecked_cast(e1 as JTemporal);
-        unsafe b1.until(te1, tu)
-
-
-    pub def daysUntil(begin: {begin = HijrahDate}, end: {end = HijrahDate}): Int64 = 
-        let cu1 = unsafe JChronoUnit.DAYS;
-        let tu1: JTemporalUnit = unchecked_cast(cu1 as JTemporalUnit);
-        untilHelper(begin, end, tu1)
-
-    pub def monthsUntil(begin: {begin = HijrahDate}, end: {end = HijrahDate}): Int64 = 
-        let cu1 = unsafe JChronoUnit.MONTHS;
-        let tu1: JTemporalUnit = unchecked_cast(cu1 as JTemporalUnit);
-        untilHelper(begin, end, tu1)
 
 }

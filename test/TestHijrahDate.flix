@@ -33,24 +33,57 @@ mod TestHirjahDate {
         let d2 = Time.Chrono.HijrahDate.now();
         Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Months) == 0i64
 
+    @test
+    def until03(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        let d2 = Time.Chrono.HijrahDate.now();
+        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Years) == 0i64
+
+    @test
+    def until04(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        let d2 = Time.Chrono.HijrahDate.now();
+        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Centuries) == 0i64
+
+    @test
+    def until05(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        let d2 = Time.Chrono.HijrahDate.now();
+        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Millennia) == 0i64
+
+    @test
+    def until06(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        let d2 = Time.Chrono.HijrahDate.now();
+        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Eras) == 0i64
+
+
     /////////////////////////////////////////////////////////////////////////////
-    // daysUntil                                                               //
+    // plusChrono                                                              //
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def daysUntil01(): Bool \ IO = 
+    def plusChrono01(): Bool \ IO = 
         let d1 = Time.Chrono.HijrahDate.now();
-        let d2 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.daysUntil(begin = d1, end = d2) == 0i64
-
-    /////////////////////////////////////////////////////////////////////////////
-    // monthsUntil                                                             //
-    /////////////////////////////////////////////////////////////////////////////
+        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Days) == d1
 
     @test
-    def monthsUntil01(): Bool \ IO = 
+    def plusChrono02(): Bool \ IO = 
         let d1 = Time.Chrono.HijrahDate.now();
-        let d2 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.monthsUntil(begin = d1, end = d2) == 0i64
+        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Months) == d1
 
+    @test
+    def plusChrono03(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Years) == d1
+    
+    @test
+    def plusChrono04(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Centuries) == d1
+    
+    @test
+    def plusChrono05(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Millennia) == d1
 }
