@@ -86,4 +86,16 @@ mod TestHirjahDate {
     def plusChrono05(): Bool \ IO = 
         let d1 = Time.Chrono.HijrahDate.now();
         Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Millennia) == d1
+
+
+    /////////////////////////////////////////////////////////////////////////////
+    // withChrono                                                              //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @test
+    def withChrono(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        let y1 = Time.Chrono.HijrahDate.getYear(d1) |> Int32.toInt64;
+        Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.Year, y1) == d1
+
 }

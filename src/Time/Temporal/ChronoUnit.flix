@@ -16,7 +16,7 @@
 
  mod Time.Temporal {
 
-    pub restrictable enum ChronoUnit [i] with Eq, Order, ToString, Hash {
+    pub restrictable enum ChronoUnit[i] with Eq, Order, ToString, Hash {
         case Nanos
         case Micros
         case Millis
