@@ -32,6 +32,10 @@ mod Time.Chrono.ThaiBuddhistEra {
     use Time.Chrono.ThaiBuddhistEra
     use Time.Chrono.ThaiBuddhistEra.{BEFORE_BE, BE}
     use Time.Format.TextStyle
+    use Time.Temporal.ChronoField
+    use Time.Temporal.ChronoField.{Era}
+    use Time.Temporal.ValueRange
+    use Time.Temporal.ValueRange.{ValueRange}
 
     import java.time.chrono.{ThaiBuddhistEra => JThaiBuddhistEra}
     import java.lang.{Enum => JEnum}
@@ -65,27 +69,13 @@ mod Time.Chrono.ThaiBuddhistEra {
         let Locale(locale1) = locale;
         unsafe x1.getDisplayName(style1, locale1)
         
-
+    // Note only ERA is a valid field, suggests we should provide `rangeEra` instead...
+    pub def rangeEra(x: ThaiBuddhistEra): ValueRange = 
+        let x1 = marshalThaiBuddhistEra(x);
+        let cf1 = Time.Temporal.ChronoField.marshalChronoField(Time.Temporal.ChronoField.Era);
+        let ans = unsafe x1.range(cf1);
+        ValueRange(ans)
         
-    // NOTE - maybe this should return Option [/ Result] ?
 
-    // pub def adjustInto(t: a, x: ThaiBuddhistEra): a with Temporal[a] = 
-    //     import java.time.chrono.Era.adjustInto(##java.time.temporal.Temporal): ##java.time.temporal.Temporal \ {};
-    //     let x1 = marshal(x) as ##java.time.chrono.Era;
-    //     let t1 = Time.Temporal.Temporal.marshalToNativeTemporal(t);
-    //     Time.Temporal.Temporal.unmarshalFromNativeTemporal(adjustInto(x1, t1))
-
- 
-    // pub def get(t: a, x: ThaiBuddhistEra): Int32 with TemporalField[a] = 
-    //     import java.time.chrono.Era.get(##java.time.temporal.TemporalField): Int32 \ {};
-    //     let x1 = marshal(x) as ##java.time.chrono.Era;
-    //     let t1 = Time.Temporal.TemporalField.marshalToNativeTemporalField(t);
-    //     get(x1, t1)
-
-    // pub def getLong(t: a, x: ThaiBuddhistEra): Int64 with TemporalField[a] = 
-    //     import java.time.chrono.Era.getLong(##java.time.temporal.TemporalField): Int64 \ {};
-    //     let x1 = marshal(x) as ##java.time.chrono.Era;
-    //     let t1 = Time.Temporal.TemporalField.marshalToNativeTemporalField(t);
-    //     getLong(x1, t1)
 
 }

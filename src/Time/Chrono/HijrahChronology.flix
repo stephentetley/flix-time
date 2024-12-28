@@ -60,17 +60,7 @@ mod Time.Chrono.HijrahChronology {
         let HijrahChronology(x1) = x;
         x1
 
-    // pub def fromJavaObject(o: ##java.lang.Object): HijrahChronology = 
-    //     HijrahChronology(unchecked_cast(o as ##java.time.chrono.HijrahChronology))
 
-
-    // pub def asAbstractChronology(x: HijrahChronology): AbstractChronology = 
-    //     let HijrahChronology(x1) = x;
-    //     AbstractChronology(unchecked_cast(x1 as ##java.time.chrono.AbstractChronology))
-
-    // pub def asChronology(x: HijrahChronology): Chronology = 
-    //     let HijrahChronology(x1) = x;
-    //     Chronology(unchecked_cast(x1 as ##java.time.chrono.Chronology))
 
     pub def getInstance(): HijrahChronology \ IO =
         HijrahChronology(JHijrahChronology.INSTANCE)

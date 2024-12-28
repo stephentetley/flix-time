@@ -94,6 +94,15 @@ mod Time.Chrono.JapaneseDate {
     pub def now(): JapaneseDate \ IO =
         JapaneseDate(JJapaneseDate.now())
 
+    pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
+        let JapaneseDate(x1) = x;
+        let JapaneseDate(y1) = y;
+        unsafe x1.equals(y1)
+
+    pub def hashCode(x: JapaneseDate): Int32 = 
+        let JapaneseDate(x1) = x;
+        unsafe x1.hashCode()
+        
     pub def toLocalDate(x: JapaneseDate): LocalDate =
         let JapaneseDate(x1) = x;
         let ans = unsafe JLocalDate.from(x1);
@@ -108,7 +117,6 @@ mod Time.Chrono.JapaneseDate {
         let LocalDateTime(x1) = x;
         let ans = unsafe JJapaneseDate.from(x1);
         JapaneseDate(ans)
-
 
 
     // pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
@@ -126,14 +134,6 @@ mod Time.Chrono.JapaneseDate {
     //     let ThaiBuddhistDate(x1) = x;
     //     JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
-    pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
-        let JapaneseDate(x1) = x;
-        let JapaneseDate(y1) = y;
-        unsafe x1.equals(y1)
-
-    pub def hashCode(x: JapaneseDate): Int32 = 
-        let JapaneseDate(x1) = x;
-        unsafe x1.hashCode()
 
 
     pub def getChronology(x: JapaneseDate): JapaneseChronology = 

@@ -79,12 +79,25 @@ mod Time.Chrono.ThaiBuddhistChronology {
         let ans = unchecked_cast(d1 as JThaiBuddhistDate);
         ThaiBuddhistDate(ans)
 
-    // Todo Result[]
-    pub def eraOf(x: ThaiBuddhistChronology, i: Int32): ThaiBuddhistEra = 
+    pub def dateYearDay(x: ThaiBuddhistChronology, year: Int32, day: Int32): ThaiBuddhistDate =
         let ThaiBuddhistChronology(x1) = x;
-        let e1 = unsafe x1.eraOf(i);
-        let ans = unchecked_cast(e1 as JThaiBuddhistEra); 
-        Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
+        let ans = unsafe x1.dateYearDay(year, day);
+        ThaiBuddhistDate(ans)
+        
+    pub def dateYearDayWithEra(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32, day: Int32): ThaiBuddhistDate =
+        let ThaiBuddhistChronology(x1) = x;
+        let era1 = Time.Chrono.ThaiBuddhistEra.marshalThaiBuddhistEra(era);
+        let ans = unsafe x1.dateYearDay(era1, year, day);
+        ThaiBuddhistDate(ans)
+
+    // Todo Result[]
+    pub def eraOf(x: ThaiBuddhistChronology, i: Int32): Result[String, ThaiBuddhistEra] = 
+        Result.tryCatch(_ -> {
+            let ThaiBuddhistChronology(x1) = x;
+            let e1 = unsafe x1.eraOf(i);
+            let ans = unchecked_cast(e1 as JThaiBuddhistEra); 
+            Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
+        })
 
     pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
         let ThaiBuddhistChronology(x1) = x;
@@ -92,4 +105,16 @@ mod Time.Chrono.ThaiBuddhistChronology {
         let xs: List[JThaiBuddhistEra] = Adaptor.fromList(jlist);
         List.map(Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra, xs)
 
+    pub def isIsoBased(x: ThaiBuddhistChronology): Bool =
+        let ThaiBuddhistChronology(x1) = x;
+        unsafe x1.isIsoBased()
+
+    pub def isLeapYear(x: ThaiBuddhistChronology, year: Int64): Bool =
+        let ThaiBuddhistChronology(x1) = x;
+        unsafe x1.isLeapYear(year)
+
+    pub def prolepticYear(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32): Int32 =
+        let ThaiBuddhistChronology(x1) = x;
+        let era1 = Time.Chrono.ThaiBuddhistEra.marshalThaiBuddhistEra(era);
+        unsafe x1.prolepticYear(era1, year)
 }

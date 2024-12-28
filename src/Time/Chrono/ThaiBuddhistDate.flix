@@ -49,12 +49,17 @@ mod Time.Chrono.ThaiBuddhistDate {
 
     use Time.Chrono.ThaiBuddhistDate
     use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time.Chrono.ThaiBuddhistChronology
+    use Time.Chrono.ThaiBuddhistChronology.{ThaiBuddhistChronology}
+    use Time.Chrono.ThaiBuddhistEra
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
     use Time.LocalDateTime
     use Time.LocalDateTime.{LocalDateTime}
 
     import java.time.chrono.{ThaiBuddhistDate => JThaiBuddhistDate}
+    import java.time.chrono.{ThaiBuddhistChronology => JThaiBuddhistChronology}
+    import java.time.chrono.{ThaiBuddhistEra => JThaiBuddhistEra}
     import java.time.{LocalDate => JLocalDate}
     import java.lang.{Object}
 
@@ -88,6 +93,18 @@ mod Time.Chrono.ThaiBuddhistDate {
         let LocalDateTime(x1) = x;
         let ans = unsafe JThaiBuddhistDate.from(x1);
         ThaiBuddhistDate(ans)
+
+    pub def getChronology(x: ThaiBuddhistDate): ThaiBuddhistChronology = 
+        let ThaiBuddhistDate(x1) = x;
+        let c1 = unsafe x1.getChronology();
+        let ans = unchecked_cast(c1 as JThaiBuddhistChronology);
+        ThaiBuddhistChronology(ans)
+
+    pub def getEra(x: ThaiBuddhistDate): ThaiBuddhistEra = 
+        let ThaiBuddhistDate(x1) = x;
+        let e1 = unsafe x1.getEra();
+        let ans = unchecked_cast(e1 as JThaiBuddhistEra);
+        Time.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
 
     // pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
     //     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfWeek)
