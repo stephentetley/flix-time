@@ -54,6 +54,8 @@ mod Time.Chrono.MinguoDate {
     use Time.Chrono.MinguoEra
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
 
     import java.time.chrono.{MinguoDate => JMinguoDate}
     import java.time.chrono.{MinguoEra => JMinguoEra}
@@ -77,12 +79,21 @@ mod Time.Chrono.MinguoDate {
         unsafe x1.hashCode()
 
 
-
     pub def toLocalDate(x: MinguoDate): LocalDate =
         let MinguoDate(x1) = x;
         let ans = unsafe JLocalDate.from(x1);
         LocalDate(ans)
-        
+
+    pub def fromLocalDate(x: LocalDate): MinguoDate = 
+        let LocalDate(x1) = x;
+        let ans = unsafe JMinguoDate.from(x1);
+        MinguoDate(ans)
+
+    pub def fromLocalDateTime(x: LocalDateTime): MinguoDate =
+        let LocalDateTime(x1) = x;
+        let ans = unsafe JMinguoDate.from(x1);
+        MinguoDate(ans)
+
     pub def getChronology(x: MinguoDate): MinguoChronology = 
         let MinguoDate(x1) = x;
         let c1 = unsafe x1.getChronology();

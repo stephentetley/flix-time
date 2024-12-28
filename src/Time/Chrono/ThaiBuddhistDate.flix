@@ -51,9 +51,13 @@ mod Time.Chrono.ThaiBuddhistDate {
     use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
 
     import java.time.chrono.{ThaiBuddhistDate => JThaiBuddhistDate}
+    import java.time.{LocalDate => JLocalDate}
     import java.lang.{Object}
+
     ///
     /// Returns ___
     ///
@@ -70,11 +74,20 @@ mod Time.Chrono.ThaiBuddhistDate {
         unsafe x1.hashCode()
 
 
-    // pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
-    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
-    //     let ThaiBuddhistDate(x1) = x;
-    //     LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
+        let ThaiBuddhistDate(x1) = x;
+        let ans = unsafe JLocalDate.from(x1);
+        LocalDate(ans)
 
+    pub def fromLocalDate(x: LocalDate): ThaiBuddhistDate = 
+        let LocalDate(x1) = x;
+        let ans = unsafe JThaiBuddhistDate.from(x1);
+        ThaiBuddhistDate(ans)
+
+    pub def fromLocalDateTime(x: LocalDateTime): ThaiBuddhistDate =
+        let LocalDateTime(x1) = x;
+        let ans = unsafe JThaiBuddhistDate.from(x1);
+        ThaiBuddhistDate(ans)
 
     // pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
     //     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfWeek)

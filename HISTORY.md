@@ -1,7 +1,8 @@
 ### v0.15.0
    Internal - removed a lot of `checked_cast` calls.
    Internal - avoiding Java FFI calls in constructor calls.
-
+   Experiments with restricted variants - `ChoronoUnit` and `ChronoField`.
+   
 ### v0.14.0
    Removed `InternalChrono` and `Internal.Temporal`.
    Removed `Chrono.Era`.

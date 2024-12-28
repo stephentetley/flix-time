@@ -93,9 +93,14 @@ mod TestHirjahDate {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def withChrono(): Bool \ IO = 
+    def withChrono01(): Bool \ IO = 
         let d1 = Time.Chrono.HijrahDate.now();
         let y1 = Time.Chrono.HijrahDate.getYear(d1) |> Int32.toInt64;
         Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.Year, y1) == d1
 
+    @test
+    def withChrono02(): Bool \ IO = 
+        let d1 = Time.Chrono.HijrahDate.now();
+        let m1 = Time.Chrono.HijrahDate.getMonth(d1) |> Int32.toInt64;
+        Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.MonthOfYear, m1) == d1
 }

@@ -22,6 +22,7 @@ mod Time.Chrono {
     use Time.Chrono.JapaneseDate.{JapaneseDate}
 
     import java.time.chrono.{JapaneseDate => JJapaneseDate}
+    import java.time.{LocalDate => JLocalDate}
 
     ///
     /// A wrapper around java.time.chrono.JapaneseDate.
@@ -64,12 +65,15 @@ mod Time.Chrono.JapaneseDate {
     use Time.Chrono.JapaneseEra.{JapaneseEra}
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     
     import java.time.chrono.{JapaneseDate => JJapaneseDate}
     import java.time.chrono.{Chronology => JChronology, 
         ChronoLocalDate => JChronoLocalDate, 
         JapaneseEra => JJapaneseEra, 
         JapaneseChronology => JJapaneseChronology}
+    import java.time.{LocalDate => JLocalDate}
     import java.lang.{Object}
 
 
@@ -90,16 +94,21 @@ mod Time.Chrono.JapaneseDate {
     pub def now(): JapaneseDate \ IO =
         JapaneseDate(JJapaneseDate.now())
 
-    // pub def fromLocalDate(x: LocalDate): JapaneseDate = 
-    //     import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as from1;
-    //     let LocalDate(x1) = x;
-    //     JapaneseDate(unsafe JJapaneseDate.from1(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    pub def toLocalDate(x: JapaneseDate): LocalDate =
+        let JapaneseDate(x1) = x;
+        let ans = unsafe JLocalDate.from(x1);
+        LocalDate(ans)
 
+    pub def fromLocalDate(x: LocalDate): JapaneseDate = 
+        let LocalDate(x1) = x;
+        let ans = unsafe JJapaneseDate.from(x1);
+        JapaneseDate(ans)
 
-    // pub def toLocalDate(x: JapaneseDate): LocalDate =
-    //     import static java.time.LocalDate.from(##java.time.temporal.TemporalAccessor): ##java.time.LocalDate \ {} as fromDate;
-    //     let JapaneseDate(x1) = x;
-    //     LocalDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
+    pub def fromLocalDateTime(x: LocalDateTime): JapaneseDate =
+        let LocalDateTime(x1) = x;
+        let ans = unsafe JJapaneseDate.from(x1);
+        JapaneseDate(ans)
+
 
 
     // pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 

@@ -61,11 +61,13 @@ mod Time.Chrono.HijrahDate {
     use Time.Temporal.ChronoUnit
     use Time.Temporal.ChronoUnit.{Days, Months, Years, Centuries, Millennia, Eras}
     use Time.Temporal.ChronoField
-    use Time.Temporal.ChronoField.{Year}
+    use Time.Temporal.ChronoField.{MonthOfYear, Year}
     use Time.Clock
     use Time.Clock.{Clock}
     use Time.LocalDate
     use Time.LocalDate.{LocalDate}
+    use Time.LocalDateTime
+    use Time.LocalDateTime.{LocalDateTime}
     use Time.Period
     use Time.Period.{Period}
     use Time.ZoneId
@@ -73,8 +75,8 @@ mod Time.Chrono.HijrahDate {
 
     import java.time.{LocalDate => JLocalDate}
     import java.time.chrono.{HijrahDate => JHijrahDate}
-    import java.time.chrono.{ChronoLocalDate => JChronoLocalDate,
-        HijrahEra => JHijrahEra}
+    import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
+    import java.time.chrono.{HijrahEra => JHijrahEra}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalUnit => JTemporalUnit}
@@ -144,6 +146,17 @@ mod Time.Chrono.HijrahDate {
         let ans = unsafe JLocalDate.from(x1);
         LocalDate(ans)
 
+    pub def fromLocalDate(x: LocalDate): HijrahDate =
+        let LocalDate(x1) = x;
+        let ans = unsafe JHijrahDate.from(x1);
+        HijrahDate(ans)
+
+    pub def fromLocalDateTime(x: LocalDateTime): HijrahDate =
+        let LocalDateTime(x1) = x;
+        let ans = unsafe JHijrahDate.from(x1);
+        HijrahDate(ans)
+
+
     pub def getChronology(x: HijrahDate): HijrahChronology = 
         let HijrahDate(x1) = x;
         HijrahChronology(unsafe x1.getChronology())
@@ -204,7 +217,7 @@ mod Time.Chrono.HijrahDate {
         let tu1: JTemporalUnit = unchecked_cast(cu1 as JTemporalUnit);
         unsafe b1.until(te1, tu1)
 
-    pub def getChrono(x: HijrahDate, cf: ChronoField[<Year>]): Int64 = 
+    pub def getChrono(x: HijrahDate, cf: ChronoField[<MonthOfYear, Year>]): Int64 = 
         let HijrahDate(x1) = x;
         let cf1 = Time.Temporal.ChronoField.marshalChronoField(cf);
         unsafe x1.getLong(cf1)
@@ -215,9 +228,14 @@ mod Time.Chrono.HijrahDate {
             case None => bug!("HijrahDate.getYear()")
         }
 
+    pub def getMonth(x: HijrahDate): Int32 =
+        match getChrono(x, open_variant Time.Temporal.ChronoField.MonthOfYear) |> Int64.tryToInt32 {
+            case Some(i) => i
+            case None => bug!("HijrahDate.getMonth()")
+        }
 
 
-    pub def withChrono(x: HijrahDate, cf: ChronoField[<Year>], i: Int64): HijrahDate = 
+    pub def withChrono(x: HijrahDate, cf: ChronoField[<MonthOfYear, Year>], i: Int64): HijrahDate = 
         let HijrahDate(x1) = x;
         let cf1 = Time.Temporal.ChronoField.marshalChronoField(cf);
         let ans = unsafe x1.with(cf1, i);
