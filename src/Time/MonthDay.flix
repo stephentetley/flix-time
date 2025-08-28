@@ -114,9 +114,9 @@ mod Time.MonthDay {
 
     /// `now` and "abstract constructors" if any
 
-    pub def now(): MonthDay \ IO = MonthDay(JMonthDay.now())
+    pub def now(): MonthDay \ IO + NonDet = MonthDay(JMonthDay.now())
 
-    pub def nowWithZoneId(x: ZoneId): MonthDay \ IO =
+    pub def nowWithZoneId(x: ZoneId): MonthDay \ IO + NonDet =
         let ZoneId(x1) = x;
         MonthDay(JMonthDay.now(x1))
 

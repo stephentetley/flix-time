@@ -117,7 +117,7 @@ mod Time.YearMonth {
 
     /// `now` and "abstract constructors" if any
 
-    pub def now(): YearMonth \ IO = YearMonth(JYearMonth.now())
+    pub def now(): YearMonth \ IO + NonDet = YearMonth(JYearMonth.now())
 
     // `from` functions
 

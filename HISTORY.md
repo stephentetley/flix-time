@@ -1,4 +1,5 @@
 ### v0.15.0
+   Updated to work with Flix version 0.61.0 (NonDet effect)
    Internal - removed a lot of `checked_cast` calls.
    Internal - avoiding Java FFI calls in constructor calls.
    Experiments with restricted variants - `ChoronoUnit` and `ChronoField`.

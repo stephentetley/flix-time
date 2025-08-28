@@ -116,14 +116,14 @@ mod Time.Year {
 
     /// `now` and "abstract constructors" if any
 
-    pub def now(): Year \ IO = Year(JYear.now())
+    pub def now(): Year \ IO + NonDet = Year(JYear.now())
 
-    pub def nowWithClock(x: Clock): Year \ IO =
+    pub def nowWithClock(x: Clock): Year \ IO + NonDet =
         let Clock(x1) = x;
         let ans = JYear.now(x1);
         Year(ans)
 
-    pub def nowWithZoneId(x: ZoneId): Year \ IO =
+    pub def nowWithZoneId(x: ZoneId): Year \ IO + NonDet =
         let ZoneId(x1) = x;
         let ans = JYear.now(x1);
         Year(ans)

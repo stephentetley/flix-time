@@ -134,12 +134,12 @@ mod Time.ZonedDateTime {
     ///
     /// Returns the current date-time from the system clock using the system zone id.
     ///
-    pub def now(): ZonedDateTime \ IO = ZonedDateTime(JZonedDateTime.now())
+    pub def now(): ZonedDateTime \ IO + NonDet = ZonedDateTime(JZonedDateTime.now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
-    pub def nowWithZoneId(zone: ZoneId): ZonedDateTime \ IO =
+    pub def nowWithZoneId(zone: ZoneId): ZonedDateTime \ IO + NonDet =
         let ZoneId(z1) = zone;
         let ans = JZonedDateTime.now(z1);
         ZonedDateTime(ans)

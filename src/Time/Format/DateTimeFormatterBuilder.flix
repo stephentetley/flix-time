@@ -47,7 +47,7 @@ mod Time.Format.DateTimeFormatterBuilder {
         x -> 
         let ans = run {
             Ok(builder(x))
-        } with DateTimeFormatterBuilder {
+        } with handler DateTimeFormatterBuilder {
             def currentDateTimeFormatterBuilder(k) = {
                 k(bld)
             }
@@ -60,7 +60,7 @@ mod Time.Format.DateTimeFormatterBuilder {
             case Err(msg) => Err(msg)
         }
 
-    pub def handler(builder: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) =
+    pub def handle(builder: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) =
         handleHelper(builder, bld -> unsafe bld.toFormatter())
 
     pub def build(builder: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder)  =

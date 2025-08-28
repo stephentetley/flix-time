@@ -107,7 +107,7 @@ mod Time.ZoneId {
         case Err(_) => bug!("ZoneId.utc() - failed")
     }
 
-    pub def systemDefault(): Result[String, ZoneId] \ IO =
+    pub def systemDefault(): Result[String, ZoneId] \ IO + NonDet =
         Result.tryCatch(_ -> ZoneId(JZoneId.systemDefault()))
 
 
@@ -160,7 +160,7 @@ mod Time.ZoneId {
         let ZoneId(x1) = x;
         unsafe x1.getId()
 
-    pub def getAvailableZoneIds(): Set[String] \ IO =
+    pub def getAvailableZoneIds(): Set[String] \ IO + NonDet =
         try {
             let s = JZoneId.getAvailableZoneIds();
             Adaptor.fromSet(s)
