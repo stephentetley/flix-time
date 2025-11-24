@@ -34,23 +34,23 @@ mod Time.Format.FormatStyle {
     import java.time.format.{FormatStyle => JFormatStyle}
     import java.lang.{Enum => JEnum}
 
-    pub def marshalFormatStyle(x: FormatStyle): JFormatStyle = 
+    pub def marshalFormatStyle(x: FormatStyle): JFormatStyle =
         match x {
-            case Full               => unsafe JFormatStyle.FULL
-            case Long               => unsafe JFormatStyle.LONG
-            case Medium             => unsafe JFormatStyle.MEDIUM
-            case Short              => unsafe JFormatStyle.SHORT
+            case Full               => unsafe IO { JFormatStyle.FULL }
+            case Long               => unsafe IO { JFormatStyle.LONG }
+            case Medium             => unsafe IO { JFormatStyle.MEDIUM }
+            case Short              => unsafe IO { JFormatStyle.SHORT }
         }
 
     def primEquals(x: JFormatStyle, y: JFormatStyle): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
-    pub def unmarshalFormatStyle(x: JFormatStyle): FormatStyle = 
+    pub def unmarshalFormatStyle(x: JFormatStyle): FormatStyle =
         match x {
-            case x1 if primEquals(x1, unsafe JFormatStyle.FULL)     => Full
-            case x1 if primEquals(x1, unsafe JFormatStyle.LONG)     => Long
-            case x1 if primEquals(x1, unsafe JFormatStyle.MEDIUM)   => Medium
-            case x1 if primEquals(x1, unsafe JFormatStyle.SHORT)    => Short
+            case x1 if primEquals(x1, unsafe IO { JFormatStyle.FULL })     => Full
+            case x1 if primEquals(x1, unsafe IO { JFormatStyle.LONG })     => Long
+            case x1 if primEquals(x1, unsafe IO { JFormatStyle.MEDIUM })   => Medium
+            case x1 if primEquals(x1, unsafe IO { JFormatStyle.SHORT })    => Short
             case _                                                  => bug!("unmarshalFormatStyle")
         }
 }

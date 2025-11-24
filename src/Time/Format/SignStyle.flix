@@ -35,25 +35,25 @@ mod Time.Format.SignStyle {
     import java.lang.{Enum => JEnum}
 
 
-    pub def marshalSignStyle(x: SignStyle): JSignStyle = 
+    pub def marshalSignStyle(x: SignStyle): JSignStyle =
         match x {
-            case Always             => unsafe JSignStyle.ALWAYS
-            case ExceedsPad         => unsafe JSignStyle.EXCEEDS_PAD
-            case Never              => unsafe JSignStyle.NEVER
-            case Normal             => unsafe JSignStyle.NORMAL
-            case NonNegative        => unsafe JSignStyle.NOT_NEGATIVE
+            case Always             => unsafe IO { JSignStyle.ALWAYS }
+            case ExceedsPad         => unsafe IO { JSignStyle.EXCEEDS_PAD }
+            case Never              => unsafe IO { JSignStyle.NEVER }
+            case Normal             => unsafe IO { JSignStyle.NORMAL }
+            case NonNegative        => unsafe IO { JSignStyle.NOT_NEGATIVE }
         }
 
     def primEquals(x: JSignStyle, y: JSignStyle): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
-    pub def unmarshalSignStyle(x: JSignStyle): SignStyle = 
+    pub def unmarshalSignStyle(x: JSignStyle): SignStyle =
         match x {
-            case x1 if primEquals(x1, unsafe JSignStyle.ALWAYS)         => Always
-            case x1 if primEquals(x1, unsafe JSignStyle.EXCEEDS_PAD)    => ExceedsPad
-            case x1 if primEquals(x1, unsafe JSignStyle.NEVER)          => Never
-            case x1 if primEquals(x1, unsafe JSignStyle.NORMAL)         => Normal
-            case x1 if primEquals(x1, unsafe JSignStyle.NOT_NEGATIVE)   => NonNegative
+            case x1 if primEquals(x1, unsafe IO { JSignStyle.ALWAYS })         => Always
+            case x1 if primEquals(x1, unsafe IO { JSignStyle.EXCEEDS_PAD })    => ExceedsPad
+            case x1 if primEquals(x1, unsafe IO { JSignStyle.NEVER })          => Never
+            case x1 if primEquals(x1, unsafe IO { JSignStyle.NORMAL })         => Normal
+            case x1 if primEquals(x1, unsafe IO { JSignStyle.NOT_NEGATIVE })   => NonNegative
             case _                                                      => bug!("unmarshalSignStyle")
         }
 

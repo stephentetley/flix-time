@@ -33,21 +33,21 @@ mod Time.Format.ResolverStyle {
     import java.lang.{Enum => JEnum}
 
 
-    pub def marshalResolverStyle(x: ResolverStyle): JResolverStyle= 
+    pub def marshalResolverStyle(x: ResolverStyle): JResolverStyle=
         match x {
-            case Lenient            => unsafe JResolverStyle.LENIENT
-            case Smart              => unsafe JResolverStyle.SMART
-            case Strict             => unsafe JResolverStyle.STRICT
+            case Lenient            => unsafe IO { JResolverStyle.LENIENT }
+            case Smart              => unsafe IO { JResolverStyle.SMART }
+            case Strict             => unsafe IO { JResolverStyle.STRICT }
         }
 
     def primEquals(x: JResolverStyle, y: JResolverStyle): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
-    pub def unmarshalResolverStyle(x: JResolverStyle): ResolverStyle = 
+    pub def unmarshalResolverStyle(x: JResolverStyle): ResolverStyle =
         match x {
-            case x1 if primEquals(x1, unsafe JResolverStyle.LENIENT)    => Lenient
-            case x1 if primEquals(x1, unsafe JResolverStyle.SMART)      => Smart
-            case x1 if primEquals(x1, unsafe JResolverStyle.STRICT)     => Strict
+            case x1 if primEquals(x1, unsafe IO { JResolverStyle.LENIENT })    => Lenient
+            case x1 if primEquals(x1, unsafe IO { JResolverStyle.SMART })      => Smart
+            case x1 if primEquals(x1, unsafe IO { JResolverStyle.STRICT })     => Strict
             case _                                                      => bug!("unmarshalResolverStyle")
         }
 

@@ -31,7 +31,7 @@ mod Time {
     instance ToString[Year] {
         pub def toString(x: Year): String =
             let Year(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
     ///
@@ -41,30 +41,30 @@ mod Time {
         pub def fromString(s: String): Option[Year] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let ans = unsafe JYear.parse(s1);
+                let ans = unsafe IO { JYear.parse(s1) };
                 Year(ans)
             }) |> Result.toOption
     }
 
     instance Eq[Year] {
-        pub def eq(x: Year, y: Year): Bool = 
+        pub def eq(x: Year, y: Year): Bool =
             let Year(x1) = x;
             let Year(y1) = y;
-            unsafe x1.equals(y1)
+            unsafe IO { x1.equals(y1) }
 
     }
 
     instance Hash[Year] {
         pub def hash(x: Year): Int32 =
             let Year(x1) = x;
-            unsafe x1.hashCode()
+            unsafe IO { x1.hashCode() }
     }
 
     instance Order[Year] {
         pub def compare(x: Year, y: Year): Comparison =
             let Year(x1) = x;
             let Year(y1) = y;
-            unsafe x1.compareTo(y1) |> Comparison.fromInt32
+            unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
 }
@@ -109,8 +109,8 @@ mod Time.Year {
 
     /// Constructors
 
-    pub def year(isoYear: {isoYear = Int32}): Year = 
-        let ans = unsafe JYear.of(isoYear#isoYear);
+    pub def year(isoYear: {isoYear = Int32}): Year =
+        let ans = unsafe IO { JYear.of(isoYear#isoYear) };
         Year(ans)
 
 
@@ -133,14 +133,14 @@ mod Time.Year {
     pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
         Result.tryCatch(_ -> {
             let Year(x1) = x;
-            let ans = unsafe x1.atDay(dayOfYear);
+            let ans = unsafe IO { x1.atDay(dayOfYear) };
             LocalDate(ans)
         }) |> Result.toOption
 
     pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
         Result.tryCatch(_ -> {
             let Year(x1) = x;
-            let ans = unsafe x1.atMonth(month);
+            let ans = unsafe IO { x1.atMonth(month) };
             YearMonth(ans)
         }) |> Result.toOption
 
@@ -148,42 +148,42 @@ mod Time.Year {
         Result.tryCatch(_ -> {
             let Year(x1) = x;
             let m1 = Time.Month.marshalMonth(month);
-            let ans = unsafe x1.atMonth(m1);
+            let ans = unsafe IO { x1.atMonth(m1) };
             YearMonth(ans)
         }) |> Result.toOption
 
     pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
         let Year(x1) = x;
         let MonthDay(m1) = monthDay;
-        let ans = unsafe x1.atMonthDay(m1);
+        let ans = unsafe IO { x1.atMonthDay(m1) };
         LocalDate(ans)
 
 
     // `from` functions
 
-    pub def fromLocalDate(x: LocalDate): Year = 
+    pub def fromLocalDate(x: LocalDate): Year =
         let LocalDate(x1) = x;
-        let ans = unsafe JYear.from(x1);
+        let ans = unsafe IO { JYear.$from(x1) };
         Year(ans)
 
-    pub def fromLocalDateTime(x: LocalDateTime): Year = 
+    pub def fromLocalDateTime(x: LocalDateTime): Year =
         let LocalDateTime(x1) = x;
-        let ans = unsafe JYear.from(x1);
+        let ans = unsafe IO { JYear.$from(x1) };
         Year(ans)
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): Year = 
+    pub def fromOffsetDateTime(x: OffsetDateTime): Year =
         let OffsetDateTime(x1) = x;
-        let ans = unsafe JYear.from(x1);
+        let ans = unsafe IO { JYear.$from(x1) };
         Year(ans)
 
-    pub def fromYearMonth(x: YearMonth): Year = 
+    pub def fromYearMonth(x: YearMonth): Year =
         let YearMonth(x1) = x;
-        let ans = unsafe JYear.from(x1);
+        let ans = unsafe IO { JYear.$from(x1) };
         Year(ans)
     
-    pub def fromZonedDateTime(x: ZonedDateTime): Year = 
+    pub def fromZonedDateTime(x: ZonedDateTime): Year =
         let ZonedDateTime(x1) = x;
-        let ans = unsafe JYear.from(x1);
+        let ans = unsafe IO { JYear.$from(x1) };
         Year(ans)
 
     /// `parse` / `format` functions  
@@ -198,7 +198,7 @@ mod Time.Year {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let ans = unsafe JYear.parse(s1, fmtr);
+            let ans = unsafe IO { JYear.parse(s1, fmtr) };
             Year(ans)
         })
 
@@ -208,7 +208,7 @@ mod Time.Year {
     pub def format(formatter: DateTimeFormatter[DateFormat], x: Year): String =
         let Year(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
-        unsafe x1.format(fmtr)
+        unsafe IO { x1.format(fmtr) }
 
 
     /// predicates / comparisons
@@ -219,7 +219,7 @@ mod Time.Year {
     pub def isBefore(x: Year, y: Year): Bool =
         let Year(x1) = x;
         let Year(y1) = y;
-        unsafe x1.isBefore(y1)
+        unsafe IO { x1.isBefore(y1) }
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -227,20 +227,20 @@ mod Time.Year {
     pub def isAfter(x: Year, y: Year): Bool =
         let Year(x1) = x;
         let Year(y1) = y;
-        unsafe x1.isAfter(y1)
+        unsafe IO { x1.isAfter(y1) }
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeap(x: Year): Bool =
         let Year(x1) = x;
-        unsafe x1.isLeap()
+        unsafe IO { x1.isLeap() }
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeapYear(x: Int64): Bool =
-        unsafe JYear.isLeap(x)
+        unsafe IO { JYear.isLeap(x) }
 
     ///
     /// Returns `true` if _.
@@ -248,7 +248,7 @@ mod Time.Year {
     pub def isValidMonthDay(md: MonthDay, x: Year): Bool =
         let md1 = Time.MonthDay.getMonthDay(md);
         let Year(x1) = x;
-        unsafe x1.isValidMonthDay(md1)
+        unsafe IO { x1.isValidMonthDay(md1) }
 
 
     /// Year functions
@@ -258,7 +258,7 @@ mod Time.Year {
     ///
     pub def length(x: Year): Int32 =
         let Year(x1) = x;
-        unsafe x1.length()
+        unsafe IO { x1.length() }
 
     /// plus / minus functions
 
@@ -267,7 +267,7 @@ mod Time.Year {
     ///
     pub def plusYears(x: Year, yearsToAdd: Int64): Year =
         let Year(x1) = x;
-        let ans = unsafe x1.plusYears(yearsToAdd);
+        let ans = unsafe IO { x1.plusYears(yearsToAdd) };
         Year(ans)
 
     ///
@@ -275,29 +275,29 @@ mod Time.Year {
     ///
     pub def minusYears(x: Year, yearsToSubtract: Int64): Year =
         let Year(x1) = x;
-        let ans = unsafe x1.minusYears(yearsToSubtract);
+        let ans = unsafe IO { x1.minusYears(yearsToSubtract) };
         Year(ans)
 
 
     // between / until functions
 
-    pub def yearsUntil(begin: {begin = Year}, end: {end = Year}): Int64 = 
+    pub def yearsUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
         let Year(b1) = begin#begin;
         let Year(e1) = end#end;
-        let cu1 = unsafe JChronoUnit.YEARS;
-        unsafe b1.until(e1, cu1)
+        let cu1 = unsafe IO { JChronoUnit.YEARS };
+        unsafe IO { b1.until(e1, cu1) }
 
-    pub def decadesUntil(begin: {begin = Year}, end: {end = Year}): Int64 = 
+    pub def decadesUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
         let Year(b1) = begin#begin;
         let Year(e1) = end#end;
-        let cu1 = unsafe JChronoUnit.DECADES;
-        unsafe b1.until(e1, cu1)
+        let cu1 = unsafe IO { JChronoUnit.DECADES };
+        unsafe IO { b1.until(e1, cu1) }
 
-    pub def centuriesUntil(begin: {begin = Year}, end: {end = Year}): Int64 = 
+    pub def centuriesUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
         let Year(b1) = begin#begin;
         let Year(e1) = end#end;
-        let cu1 = unsafe JChronoUnit.CENTURIES;
-        unsafe b1.until(e1, cu1)
+        let cu1 = unsafe IO { JChronoUnit.CENTURIES };
+        unsafe IO { b1.until(e1, cu1) }
 
 
 }

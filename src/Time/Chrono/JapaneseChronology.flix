@@ -18,16 +18,16 @@
 mod Time.Chrono {
 
     use Time.Chrono.JapaneseChronology
-    use Time.Chrono.JapaneseChronology.{JapaneseChronology}
+    use Time.Chrono.JapaneseChronology.{JapaneseChronology }
 
-    import java.time.chrono.{JapaneseChronology => JJapaneseChronology}
+    import java.time.chrono.{JapaneseChronology => JJapaneseChronology }
 
     pub enum JapaneseChronology(JJapaneseChronology)
 
     instance ToString[JapaneseChronology] {
         pub def toString(x: JapaneseChronology): String =
             let JapaneseChronology(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
 }
@@ -37,30 +37,30 @@ mod Time.Chrono {
 mod Time.Chrono.JapaneseChronology {
 
     use Time.Chrono.JapaneseChronology
-    use Time.Chrono.JapaneseChronology.{JapaneseChronology}
+    use Time.Chrono.JapaneseChronology.{JapaneseChronology }
     use Time.Chrono.JapaneseDate
-    use Time.Chrono.JapaneseDate.{JapaneseDate}
+    use Time.Chrono.JapaneseDate.{JapaneseDate }
     use Time.Chrono.JapaneseEra
-    use Time.Chrono.JapaneseEra.{JapaneseEra}
+    use Time.Chrono.JapaneseEra.{JapaneseEra }
     use Time.Clock
-    use Time.Clock.{Clock}
+    use Time.Clock.{Clock }
     use Time.ZoneId
-    use Time.ZoneId.{ZoneId}
+    use Time.ZoneId.{ZoneId }
 
 
-    import java.time.chrono.{JapaneseChronology => JJapaneseChronology}
+    import java.time.chrono.{JapaneseChronology => JJapaneseChronology }
     import java.time.chrono.{Chronology => JChronology, 
         ChronoLocalDate => JChronoLocalDate,
         Era => JEra,
         JapaneseDate => JJapaneseDate, 
-        JapaneseEra => JJapaneseEra}
+        JapaneseEra => JJapaneseEra }
 
     pub def getInstance(): JapaneseChronology \ IO = 
         JapaneseChronology(JJapaneseChronology.INSTANCE)
 
     pub def getCalendarType(x: JapaneseChronology): String = 
         let JapaneseChronology(x1) = x;
-        unsafe x1.getCalendarType()
+        unsafe IO { x1.getCalendarType() }
 
     pub def dateNow(x: JapaneseChronology): JapaneseDate \ IO = 
         let JapaneseChronology(x1) = x;
@@ -88,13 +88,13 @@ mod Time.Chrono.JapaneseChronology {
 
     pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
         let JapaneseChronology(x1) = x;
-        let e1 = unsafe x1.eraOf(i);
+        let e1 = unsafe IO { x1.eraOf(i) };
         let ans = unchecked_cast(e1 as JJapaneseEra);
         JapaneseEra(ans)
 
     pub def eras(x: JapaneseChronology): List[JapaneseEra] = 
         let JapaneseChronology(x1) = x;
-        let jlist = unsafe x1.eras();
+        let jlist = unsafe IO { x1.eras() };
         let xs: List[JJapaneseEra] = Adaptor.fromList(jlist);
         List.map(z -> JapaneseEra(z), xs)
 

@@ -34,17 +34,17 @@ mod Time {
     instance ToString[YearMonth] {
         pub def toString(x: YearMonth): String =
             let YearMonth(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
     ///
     /// Returns the year ...
     ///
     instance FromString[YearMonth] {
-        pub def fromString(s: String): Option[YearMonth] = 
+        pub def fromString(s: String): Option[YearMonth] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let ans = unsafe JYearMonth.parse(s1);
+                let ans = unsafe IO { JYearMonth.parse(s1) };
                 YearMonth(ans)
             }) |> Result.toOption
     }
@@ -54,20 +54,20 @@ mod Time {
         pub def eq(x: YearMonth, y: YearMonth): Bool =
             let YearMonth(x1) = x;
             let YearMonth(y1) = y;
-            unsafe x1.equals(y1)
+            unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[YearMonth] {
         pub def hash(x: YearMonth): Int32 =
             let YearMonth(x1) = x;
-            unsafe x1.hashCode()
+            unsafe IO { x1.hashCode() }
     }
 
     instance Order[YearMonth] {
         pub def compare(x: YearMonth, y: YearMonth): Comparison =
             let YearMonth(x1) = x;
             let YearMonth(y1) = y;
-            unsafe x1.compareTo(y1) |> Comparison.fromInt32
+            unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
 
@@ -106,12 +106,12 @@ mod Time.YearMonth {
     /// Constructors
 
     pub def yearMonth(r: {year = Int32, month = Int32}): YearMonth =
-        let ans = unsafe JYearMonth.of(r#year, r#month);
+        let ans = unsafe IO { JYearMonth.of(r#year, r#month) };
         YearMonth(ans)
 
     pub def yearMonthWithMonth(r: {year = Int32, month = Month}): YearMonth =
         let m1 = Time.Month.marshalMonth(r#month);
-        let ans = unsafe JYearMonth.of(r#year, m1);
+        let ans = unsafe IO { JYearMonth.of(r#year, m1) };
         YearMonth(ans)
 
 
@@ -123,24 +123,24 @@ mod Time.YearMonth {
 
     // `fromTemporalAccessor` specialized
 
-    pub def fromLocalDate(x: LocalDate): YearMonth = 
+    pub def fromLocalDate(x: LocalDate): YearMonth =
         let LocalDate(x1) = x;
-        let ans = unsafe JYearMonth.from(x1);
+        let ans = unsafe IO { JYearMonth.$from(x1) };
         YearMonth(ans)
 
-    pub def fromLocalDateTime(x: LocalDateTime): YearMonth = 
+    pub def fromLocalDateTime(x: LocalDateTime): YearMonth =
         let LocalDateTime(x1) = x;
-        let ans = unsafe JYearMonth.from(x1);
+        let ans = unsafe IO { JYearMonth.$from(x1) };
         YearMonth(ans)
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): YearMonth = 
+    pub def fromOffsetDateTime(x: OffsetDateTime): YearMonth =
         let OffsetDateTime(x1) = x;
-        let ans = unsafe JYearMonth.from(x1);
+        let ans = unsafe IO { JYearMonth.$from(x1) };
         YearMonth(ans)
 
-    pub def fromZonedDateTime(x: ZonedDateTime): YearMonth = 
+    pub def fromZonedDateTime(x: ZonedDateTime): YearMonth =
         let ZonedDateTime(x1) = x;
-        let ans = unsafe JYearMonth.from(x1);
+        let ans = unsafe IO { JYearMonth.$from(x1) };
         YearMonth(ans)
 
     /// `parse` / `format` functions  
@@ -155,7 +155,7 @@ mod Time.YearMonth {
         Result.tryCatch(_ -> {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
-            let ans = unsafe JYearMonth.parse(s1, fmtr);
+            let ans = unsafe IO { JYearMonth.parse(s1, fmtr) };
             YearMonth(ans)
         })
     
@@ -165,7 +165,7 @@ mod Time.YearMonth {
     pub def format(formatter: DateTimeFormatter[DateFormat], x: YearMonth): String =
         let YearMonth(x1) = x;
         let DateTimeFormatter(fmtr) = formatter;
-        unsafe x1.format(fmtr)
+        unsafe IO { x1.format(fmtr) }
 
 
     /// predicates / comparisons
@@ -176,7 +176,7 @@ mod Time.YearMonth {
     pub def isBefore(x: YearMonth, y: YearMonth): Bool =
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        unsafe x1.isBefore(y1)
+        unsafe IO { x1.isBefore(y1) }
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -184,21 +184,21 @@ mod Time.YearMonth {
     pub def isAfter(x: YearMonth, y: YearMonth): Bool =
         let YearMonth(x1) = x;
         let YearMonth(y1) = y;
-        unsafe x1.isAfter(y1)
+        unsafe IO { x1.isAfter(y1) }
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeapYear(x: YearMonth): Bool =
         let YearMonth(x1) = x;
-        unsafe x1.isLeapYear()
+        unsafe IO { x1.isLeapYear() }
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isValidDay(x: YearMonth, dayOfMonth: Int32): Bool =
         let YearMonth(x1) = x;
-        unsafe x1.isValidDay(dayOfMonth)
+        unsafe IO { x1.isValidDay(dayOfMonth) }
 
     /// YearMonth functions
 
@@ -207,20 +207,20 @@ mod Time.YearMonth {
     ///
     pub def lengthOfMonth(x: YearMonth): Int32 =
         let YearMonth(x1) = x;
-        unsafe x1.lengthOfMonth()
+        unsafe IO { x1.lengthOfMonth() }
 
     ///
     /// Returns the length of the year.
     ///
     pub def lengthOfYear(x: YearMonth): Int32 =
         let YearMonth(x1) = x;
-        unsafe x1.lengthOfYear()
+        unsafe IO { x1.lengthOfYear() }
 
     /// Getters and Setters
 
     pub def getMonth(x: YearMonth): Month =
         let YearMonth(x1) = x;
-        let m1 = unsafe x1.getMonth();
+        let m1 = unsafe IO { x1.getMonth() };
         Time.Month.unmarshalMonth(m1)
 
     pub def withMonth(month: Month, x: YearMonth): YearMonth =
@@ -228,59 +228,59 @@ mod Time.YearMonth {
 
     pub def getMonthValue(x: YearMonth): Int32 =
         let YearMonth(x1) = x;
-        unsafe x1.getMonthValue()
+        unsafe IO { x1.getMonthValue() }
 
     pub def withMonthValue(month: Int32, x: YearMonth): YearMonth =
         let YearMonth(x1) = x;
-        let ans = unsafe x1.withMonth(month);
+        let ans = unsafe IO { x1.$withMonth(month) };
         YearMonth(ans)
 
     pub def getYear(x: YearMonth): Int32 =
         let YearMonth(x1) = x;
-        unsafe x1.getYear()
+        unsafe IO { x1.getYear() }
 
     pub def withYear(year: Int32, x: YearMonth): YearMonth =
         let YearMonth(x1) = x;
-        let ans = unsafe x1.withYear(year);
+        let ans = unsafe IO { x1.$withYear(year) };
         YearMonth(ans)
 
     /// plus / minus functions
 
     pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
         let YearMonth(x1) = x;
-        let ans = unsafe x1.plusMonths(months);
+        let ans = unsafe IO { x1.plusMonths(months) };
         YearMonth(ans)
 
     pub def minusMonths(x: YearMonth, months: Int64): YearMonth =
         let YearMonth(x1) = x;
-        let ans = unsafe x1.minusMonths(months);
+        let ans = unsafe IO { x1.minusMonths(months) };
         YearMonth(ans)
 
     pub def plusYears(x: YearMonth, years: Int64): YearMonth =
         let YearMonth(x1) = x;
-        let ans = unsafe x1.plusYears(years);
+        let ans = unsafe IO { x1.plusYears(years) };
         YearMonth(ans)
 
     pub def minusYears(x: YearMonth, years: Int64): YearMonth =
         let YearMonth(x1) = x;
-        let ans = unsafe x1.minusYears(years);
+        let ans = unsafe IO { x1.minusYears(years) };
         YearMonth(ans)
 
 
 
     // between / until functions
 
-    pub def monthsUntil(begin: {begin = YearMonth}, end: {end = YearMonth}): Int64 = 
+    pub def monthsUntil(begin: {begin = YearMonth}, end: {end = YearMonth}): Int64 =
         let YearMonth(b1) = begin#begin;
         let YearMonth(e1) = end#end;
-        let cu1 = unsafe JChronoUnit.MONTHS;
-        unsafe b1.until(e1, cu1)
+        let cu1 = unsafe IO { JChronoUnit.MONTHS };
+        unsafe IO { b1.until(e1, cu1) }
 
 
-    pub def yearsUntil(begin: {begin = YearMonth}, end: {end = YearMonth}): Int64 = 
+    pub def yearsUntil(begin: {begin = YearMonth}, end: {end = YearMonth}): Int64 =
         let YearMonth(b1) = begin#begin;
         let YearMonth(e1) = end#end;
-        let cu1 = unsafe JChronoUnit.YEARS;
-        unsafe b1.until(e1, cu1)
+        let cu1 = unsafe IO { JChronoUnit.YEARS };
+        unsafe IO { b1.until(e1, cu1) }
 
 }

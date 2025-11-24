@@ -65,16 +65,16 @@ mod Time.Chrono.HijrahChronology {
     pub def getInstance(): HijrahChronology \ IO =
         HijrahChronology(JHijrahChronology.INSTANCE)
 
-    pub def date(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}, 
+    pub def date(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32},
                  x: HijrahChronology): HijrahDate =
         let HijrahChronology(x1) = x;
-        HijrahDate(unsafe x1.date(r#prolepticYear, r#month, r#dayOfMonth))
+        HijrahDate(unsafe IO { x1.date(r#prolepticYear, r#month, r#dayOfMonth) })
 
-    pub def dateWithEra(r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}, 
+    pub def dateWithEra(r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32},
                         x: HijrahChronology): HijrahDate =
         let HijrahChronology(x1) = x;
         let era1 = Time.Chrono.HijrahEra.marshalHijrahEra(r#era);
-        let d1 = unsafe x1.date(era1, r#yearOfEra, r#month, r#dayOfMonth);
+        let d1 = unsafe IO { x1.date(era1, r#yearOfEra, r#month, r#dayOfMonth) };
         let ans = unchecked_cast(d1 as JHijrahDate);
         HijrahDate(ans)
 
@@ -102,34 +102,34 @@ mod Time.Chrono.HijrahChronology {
         let ans = unchecked_cast(d1 as JHijrahDate);
         HijrahDate(ans)
 
-    pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] = 
+    pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] =
         Result.tryCatch(_ -> {
             let HijrahChronology(x1) = x;
-            let d1 = unsafe x1.dateEpochDay(epochDay);
+            let d1 = unsafe IO { x1.dateEpochDay(epochDay) };
             let ans = unchecked_cast(d1 as JHijrahDate);
             HijrahDate(ans)
         })
 
     pub def toString(x: HijrahChronology): String =
         let HijrahChronology(x1) = x;
-        unsafe x1.toString()
+        unsafe IO { x1.toString() }
             
 
-    pub def getDisplayName(style: TextStyle, loc: Locale, x: HijrahChronology): String = 
+    pub def getDisplayName(style: TextStyle, loc: Locale, x: HijrahChronology): String =
         let HijrahChronology(x1) = x;
         let s1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale.Locale(loc1) = loc;
-        unsafe x1.getDisplayName(s1, loc1)
+        unsafe IO { x1.getDisplayName(s1, loc1) }
 
 
-    pub def getCalendarType(x: HijrahChronology): String = 
+    pub def getCalendarType(x: HijrahChronology): String =
         let HijrahChronology(x1) = x;
-        unsafe x1.getCalendarType()
+        unsafe IO { x1.getCalendarType() }
 
-    pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra = 
+    pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra =
         let HijrahChronology(x1) = x;
-        let e1 = unsafe x1.eraOf(i);
-        let ans = unchecked_cast(e1 as JHijrahEra); 
+        let e1 = unsafe IO { x1.eraOf(i) };
+        let ans = unchecked_cast(e1 as JHijrahEra);
         Time.Chrono.HijrahEra.unmarshalHijrahEra(ans)
 
     pub def eras(x: HijrahChronology): List[HijrahEra] \ IO =
@@ -139,24 +139,24 @@ mod Time.Chrono.HijrahChronology {
         List.map(Time.Chrono.HijrahEra.unmarshalHijrahEra, xs1)
 
 
-    pub def getId(x: HijrahChronology): String = 
+    pub def getId(x: HijrahChronology): String =
         let HijrahChronology(x1) = x;
-        unsafe x1.getId()
+        unsafe IO { x1.getId() }
         
-    pub def isLeapYear(prolepticYear: Int64, x: HijrahChronology): Bool = 
+    pub def isLeapYear(prolepticYear: Int64, x: HijrahChronology): Bool =
         let HijrahChronology(x1) = x;
-        unsafe x1.isLeapYear(prolepticYear)
+        unsafe IO { x1.isLeapYear(prolepticYear) }
 
     
-    pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 = 
+    pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 =
         let HijrahChronology(x1) = x;
         let era1 = Time.Chrono.HijrahEra.marshalHijrahEra(era);
-        unsafe x1.prolepticYear(era1, yearOfEra)
+        unsafe IO { x1.prolepticYear(era1, yearOfEra) }
 
-    pub def rangeYear(x: HijrahChronology): ValueRange = 
+    pub def rangeYear(x: HijrahChronology): ValueRange =
         let HijrahChronology(x1) = x;
-        let f1 = unsafe JChronoField.YEAR;
-        let vr1 = unsafe x1.range(f1);
+        let f1 = unsafe IO { JChronoField.YEAR };
+        let vr1 = unsafe IO { x1.range(f1) };
         ValueRange(vr1)
 
 

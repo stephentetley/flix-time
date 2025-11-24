@@ -17,16 +17,16 @@
 mod Time.Chrono {
 
     use Time.Chrono.MinguoChronology
-    use Time.Chrono.MinguoChronology.{MinguoChronology}
+    use Time.Chrono.MinguoChronology.{MinguoChronology }
 
-    import java.time.chrono.{MinguoChronology => JMinguoChronology}
+    import java.time.chrono.{MinguoChronology => JMinguoChronology }
 
     pub enum MinguoChronology(JMinguoChronology)
 
     instance ToString[MinguoChronology] {
         pub def toString(x: MinguoChronology): String =
             let MinguoChronology(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
 }
@@ -34,28 +34,28 @@ mod Time.Chrono {
 mod Time.Chrono.MinguoChronology {
 
     use Time.Chrono.MinguoChronology
-    use Time.Chrono.MinguoChronology.{MinguoChronology}
+    use Time.Chrono.MinguoChronology.{MinguoChronology }
     use Time.Chrono.MinguoDate
-    use Time.Chrono.MinguoDate.{MinguoDate}
+    use Time.Chrono.MinguoDate.{MinguoDate }
     use Time.Chrono.MinguoEra
     use Time.Clock
-    use Time.Clock.{Clock}
+    use Time.Clock.{Clock }
     use Time.ZoneId
-    use Time.ZoneId.{ZoneId}
+    use Time.ZoneId.{ZoneId }
 
-    import java.time.chrono.{MinguoChronology => JMinguoChronology}
+    import java.time.chrono.{MinguoChronology => JMinguoChronology }
     import java.time.chrono.{Chronology => JChronology, 
         ChronoLocalDate => JChronoLocalDate,
         Era => JEra,
         MinguoDate => JMinguoDate, 
-        MinguoEra => JMinguoEra}
+        MinguoEra => JMinguoEra }
 
     pub def getInstance(): MinguoChronology \ IO = 
         MinguoChronology(JMinguoChronology.INSTANCE)
 
     pub def getCalendarType(x: MinguoChronology): String = 
         let MinguoChronology(x1) = x;
-        unsafe x1.getCalendarType()
+        unsafe IO { x1.getCalendarType() }
 
 
     pub def dateNow(x: MinguoChronology): MinguoDate \ IO = 
@@ -85,13 +85,13 @@ mod Time.Chrono.MinguoChronology {
 
     pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
         let MinguoChronology(x1) = x;
-        let e1 = unsafe x1.eraOf(i);
+        let e1 = unsafe IO { x1.eraOf(i) };
         let ans1 = unchecked_cast(e1 as JMinguoEra); 
         Time.Chrono.MinguoEra.unmarshalMinguoEra(ans1)
 
     pub def eras(x: MinguoChronology): List[MinguoEra] = 
         let MinguoChronology(x1) = x;
-        let jlist = unsafe x1.eras();
+        let jlist = unsafe IO { x1.eras() };
         let xs: List[JMinguoEra] = Adaptor.fromList(jlist);
         List.map(Time.Chrono.MinguoEra.unmarshalMinguoEra, xs)
 

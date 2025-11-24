@@ -17,10 +17,10 @@
 mod Time.Format {
 
     use Time.Format.DecimalStyle
-    use Time.Format.DecimalStyle.{DecimalStyle}
+    use Time.Format.DecimalStyle.{DecimalStyle }
 
-    import java.time.format.{DecimalStyle => JDecimalStyle}
-    import java.lang.{Object}
+    import java.time.format.{DecimalStyle => JDecimalStyle }
+    import java.lang.{Object }
 
     /// Immutable
     ///
@@ -30,33 +30,33 @@ mod Time.Format {
     instance ToString[DecimalStyle] {
         pub def toString(x: DecimalStyle): String =
             let DecimalStyle(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
     
     instance Eq[DecimalStyle] {
         pub def eq(x: DecimalStyle, y: DecimalStyle): Bool =
             let DecimalStyle(x1) = x;
             let DecimalStyle(y1) = y;
-            unsafe x1.equals(y1)
+            unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[DecimalStyle] {
         pub def hash(x: DecimalStyle): Int32 = 
             let DecimalStyle(x1) = x;
-            unsafe x1.hashCode()
+            unsafe IO { x1.hashCode() }
     } 
     
 }
 
 mod Time.Format.DecimalStyle {
 
-    use Locale.{Locale}
+    use Locale.{Locale }
 
     use Time.Format.DecimalStyle
-    use Time.Format.DecimalStyle.{DecimalStyle}
+    use Time.Format.DecimalStyle.{DecimalStyle }
     
-    import java.time.format.{DecimalStyle => JDecimalStyle}
-    import java.util.{Locale => JLocale, Set => JSet}
+    import java.time.format.{DecimalStyle => JDecimalStyle }
+    import java.util.{Locale => JLocale, Set => JSet }
 
     /// ## Unwrap
 
@@ -67,7 +67,7 @@ mod Time.Format.DecimalStyle {
 
     /// ## "abstract constructors" (e.g. `standard`)
 
-    pub def standard(): DecimalStyle = DecimalStyle(unsafe JDecimalStyle.STANDARD)
+    pub def standard(): DecimalStyle = DecimalStyle(unsafe IO { JDecimalStyle.STANDARD }) 
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
         let Locale(loc1) = loc;
@@ -90,7 +90,7 @@ mod Time.Format.DecimalStyle {
     /// Candidate for Adaptor...
     def fromSetAsList(l: JSet): List[a] = region rc {
         let proxy: Proxy[a] = Proxy.Proxy;
-        let jiter = unsafe l.iterator();
+        let jiter = unsafe IO { l.iterator() };
         let iter = Adaptor.fromIterator(rc, proxy, jiter);
         Iterator.toList(iter)
     }
@@ -103,39 +103,39 @@ mod Time.Format.DecimalStyle {
 
     pub def getDecimalSeparator(x: DecimalStyle): Char = 
         let DecimalStyle(x1) = x;
-        unsafe x1.getDecimalSeparator()
+        unsafe IO { x1.getDecimalSeparator() }
 
 
     pub def withDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
         let DecimalStyle(x1) = x;
-        let ans = unsafe x1.withDecimalSeparator(sep);
+        let ans = unsafe IO { x1.$withDecimalSeparator(sep) };
         DecimalStyle(ans)
 
     pub def getNegativeSign(x: DecimalStyle): Char = 
         let DecimalStyle(x1) = x;
-        unsafe x1.getNegativeSign()
+        unsafe IO { x1.getNegativeSign() }
 
     pub def withNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
         let DecimalStyle(x1) = x;
-        let ans = unsafe x1.withNegativeSign(sign);
+        let ans = unsafe IO { x1.$withNegativeSign(sign) };
         DecimalStyle(ans)
 
     pub def getPositiveSign(x: DecimalStyle): Char = 
         let DecimalStyle(x1) = x;
-        unsafe x1.getPositiveSign()
+        unsafe IO { x1.getPositiveSign() }
 
     pub def withPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
         let DecimalStyle(x1) = x;
-        let ans = unsafe x1.withPositiveSign(sign);
+        let ans = unsafe IO { x1.$withPositiveSign(sign) };
         DecimalStyle(ans)
 
     pub def getZeroDigit(x: DecimalStyle): Char = 
         let DecimalStyle(x1) = x;
-        unsafe x1.getZeroDigit()
+        unsafe IO { x1.getZeroDigit() }
 
     pub def withZeroDigit(digit: Char, x: DecimalStyle): DecimalStyle = 
         let DecimalStyle(x1) = x;
-        let ans = unsafe x1.withZeroDigit(digit);
+        let ans = unsafe IO { x1.$withZeroDigit(digit) };
         DecimalStyle(ans)
 
 }

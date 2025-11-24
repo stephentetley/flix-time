@@ -38,27 +38,27 @@ mod Time.Format.TextStyle {
     import java.lang.{Enum => JEnum}
 
 
-    pub def marshalTextStyle(x: TextStyle): JTextStyle = 
+    pub def marshalTextStyle(x: TextStyle): JTextStyle =
         match x {
-            case Full               => unsafe JTextStyle.FULL
-            case FullStandalone     => unsafe JTextStyle.FULL_STANDALONE
-            case Narrow             => unsafe JTextStyle.NARROW
-            case NarrowStandalone   => unsafe JTextStyle.NARROW_STANDALONE
-            case Short              => unsafe JTextStyle.SHORT
-            case ShortStandalone    => unsafe JTextStyle.SHORT_STANDALONE
+            case Full               => unsafe IO { JTextStyle.FULL }
+            case FullStandalone     => unsafe IO { JTextStyle.FULL_STANDALONE }
+            case Narrow             => unsafe IO { JTextStyle.NARROW }
+            case NarrowStandalone   => unsafe IO { JTextStyle.NARROW_STANDALONE }
+            case Short              => unsafe IO { JTextStyle.SHORT }
+            case ShortStandalone    => unsafe IO { JTextStyle.SHORT_STANDALONE }
         }
 
     def primEquals(x: JTextStyle, y: JTextStyle): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
-    pub def unmarshalTextStyle(x: JTextStyle): TextStyle = 
+    pub def unmarshalTextStyle(x: JTextStyle): TextStyle =
         match x {
-            case x1 if primEquals(x1, unsafe JTextStyle.FULL)               => Full
-            case x1 if primEquals(x1, unsafe JTextStyle.FULL_STANDALONE)    => FullStandalone
-            case x1 if primEquals(x1, unsafe JTextStyle.NARROW)             => Narrow
-            case x1 if primEquals(x1, unsafe JTextStyle.NARROW_STANDALONE)  => NarrowStandalone
-            case x1 if primEquals(x1, unsafe JTextStyle.SHORT)              => Short
-            case x1 if primEquals(x1, unsafe JTextStyle.SHORT_STANDALONE)   => ShortStandalone
+            case x1 if primEquals(x1, unsafe IO { JTextStyle.FULL })               => Full
+            case x1 if primEquals(x1, unsafe IO { JTextStyle.FULL_STANDALONE })    => FullStandalone
+            case x1 if primEquals(x1, unsafe IO { JTextStyle.NARROW })             => Narrow
+            case x1 if primEquals(x1, unsafe IO { JTextStyle.NARROW_STANDALONE })  => NarrowStandalone
+            case x1 if primEquals(x1, unsafe IO { JTextStyle.SHORT })              => Short
+            case x1 if primEquals(x1, unsafe IO { JTextStyle.SHORT_STANDALONE })   => ShortStandalone
             case _                                                          => bug!("unmarshalTextStyle")
         }
 
@@ -67,18 +67,18 @@ mod Time.Format.TextStyle {
 
     pub def isStandalone(x: TextStyle): Bool =
         let x1 = marshalTextStyle(x);
-        unsafe x1.isStandalone()
+        unsafe IO { x1.isStandalone() }
 
     /// Getters and Setters
     
     pub def asStandalone(x: TextStyle): TextStyle =
         let x1 = marshalTextStyle(x);
-        let ans = unsafe x1.asStandalone();
+        let ans = unsafe IO { x1.asStandalone() };
         unmarshalTextStyle(ans)
-    
+
     pub def asNormal(x: TextStyle): TextStyle =
         let x1 = marshalTextStyle(x);
-        let ans = unsafe x1.asNormal();
+        let ans = unsafe IO { x1.asNormal() };
         unmarshalTextStyle(ans)
 
 }
