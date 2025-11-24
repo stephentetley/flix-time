@@ -63,7 +63,7 @@ mod Time.Chrono.HijrahChronology {
 
 
     pub def getInstance(): HijrahChronology \ IO =
-        HijrahChronology(JHijrahChronology.INSTANCE)
+        HijrahChronology(checked_ecast(JHijrahChronology.INSTANCE))
 
     pub def date(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32},
                  x: HijrahChronology): HijrahDate =

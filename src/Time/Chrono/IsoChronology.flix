@@ -48,7 +48,7 @@ mod Time.Chrono.IsoChronology {
 
 
     pub def getInstance(): IsoChronology \ IO = 
-        IsoChronology(JIsoChronology.INSTANCE)
+        IsoChronology(checked_ecast(JIsoChronology.INSTANCE))
 
     pub def getCalendarType(x: IsoChronology): String =
         let IsoChronology(x1) = x;

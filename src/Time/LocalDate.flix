@@ -142,12 +142,12 @@ mod Time.LocalDate {
     ///
     /// Returns the current date from the system clock.
     ///
-    pub def now(): LocalDate \ IO + NonDet = LocalDate(JLocalDate.now())
+    pub def now(): LocalDate \ IO = LocalDate(JLocalDate.now())
 
     ///
     /// Returns the current date from the system clock using zoneId.
     ///
-    pub def nowWithZoneId(zoneId: ZoneId): LocalDate \ IO + NonDet =
+    pub def nowWithZoneId(zoneId: ZoneId): LocalDate \ IO =
         let ZoneId(z1) = zoneId;
         let ans = JLocalDate.now(z1);
         LocalDate(ans)

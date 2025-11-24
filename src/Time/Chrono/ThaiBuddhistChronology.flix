@@ -50,7 +50,7 @@ mod Time.Chrono.ThaiBuddhistChronology {
         ThaiBuddhistEra => JThaiBuddhistEra }
 
     pub def getInstance(): ThaiBuddhistChronology \ IO = 
-        ThaiBuddhistChronology(JThaiBuddhistChronology.INSTANCE)
+        ThaiBuddhistChronology(checked_ecast(JThaiBuddhistChronology.INSTANCE))
 
     pub def getCalendarType(x: ThaiBuddhistChronology): String  = 
         let ThaiBuddhistChronology(x1) = x;

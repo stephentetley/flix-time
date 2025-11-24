@@ -51,7 +51,7 @@ mod Time.Chrono.MinguoChronology {
         MinguoEra => JMinguoEra }
 
     pub def getInstance(): MinguoChronology \ IO = 
-        MinguoChronology(JMinguoChronology.INSTANCE)
+        MinguoChronology(checked_ecast(JMinguoChronology.INSTANCE))
 
     pub def getCalendarType(x: MinguoChronology): String = 
         let MinguoChronology(x1) = x;

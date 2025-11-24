@@ -118,7 +118,7 @@ mod Time.InstantZ {
     ///
     /// Returns the current time from the system clock.
     ///
-    pub def now(): InstantZ \ IO + NonDet = InstantZ(JInstant.now())
+    pub def now(): InstantZ \ IO = InstantZ(JInstant.now())
 
     ///
     /// Returns the start of epoch instant - 1970-01-01T00:00:00Z

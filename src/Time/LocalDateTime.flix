@@ -147,13 +147,13 @@ mod Time.LocalDateTime {
     ///
     /// Returns the current date-time from the system clock.
     ///
-    pub def now(): LocalDateTime \ IO + NonDet =
+    pub def now(): LocalDateTime \ IO =
         LocalDateTime(JLocalDateTime.now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
-    pub def nowWithZoneId(zone: ZoneId): LocalDateTime \ IO + NonDet =
+    pub def nowWithZoneId(zone: ZoneId): LocalDateTime \ IO =
         let ZoneId(z) = zone;
         let ans = JLocalDateTime.now(z);
         LocalDateTime(ans)

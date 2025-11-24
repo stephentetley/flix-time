@@ -56,7 +56,7 @@ mod Time.Chrono.JapaneseChronology {
         JapaneseEra => JJapaneseEra }
 
     pub def getInstance(): JapaneseChronology \ IO = 
-        JapaneseChronology(JJapaneseChronology.INSTANCE)
+        JapaneseChronology(checked_ecast(JJapaneseChronology.INSTANCE))
 
     pub def getCalendarType(x: JapaneseChronology): String = 
         let JapaneseChronology(x1) = x;

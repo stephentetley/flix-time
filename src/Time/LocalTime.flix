@@ -134,7 +134,7 @@ mod Time.LocalTime {
     ///
     /// Returns the current time from the system clock.
     ///
-    pub def now(): LocalTime \ IO + NonDet = LocalTime(JLocalTime.now())
+    pub def now(): LocalTime \ IO = LocalTime(JLocalTime.now())
 
 
     ///

@@ -143,12 +143,12 @@ mod Time.OffsetDateTime {
     ///
     /// Returns the current date-time from the system clock using the system zone id.
     ///
-    pub def now(): OffsetDateTime \ IO + NonDet = OffsetDateTime(JOffsetDateTime.now())
+    pub def now(): OffsetDateTime \ IO = OffsetDateTime(JOffsetDateTime.now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
-    pub def nowWithZoneId(zone: ZoneId): OffsetDateTime \ IO + NonDet =
+    pub def nowWithZoneId(zone: ZoneId): OffsetDateTime \ IO =
         let ZoneId(z1) = zone;
         let ans = JOffsetDateTime.now(z1);
         OffsetDateTime(ans)

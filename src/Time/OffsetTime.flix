@@ -123,12 +123,12 @@ mod Time.OffsetTime {
     ///
     /// Returns the current time from the system clock.
     ///
-    pub def now(): OffsetTime \ IO + NonDet = OffsetTime(JOffsetTime.now())
+    pub def now(): OffsetTime \ IO = OffsetTime(JOffsetTime.now())
 
     ///
     /// Returns the current time from the system clock.
     ///
-    pub def nowWithZoneId(zone: ZoneId): OffsetTime \ IO + NonDet =
+    pub def nowWithZoneId(zone: ZoneId): OffsetTime \ IO =
         let ZoneId(zone1) = zone;
         let ans = JOffsetTime.now(zone1);
         OffsetTime(ans)

@@ -58,45 +58,45 @@ mod Time.Clock {
     /// "factory methods" (e.g. `fixedClock`)
 
     /// Pure or Impure? 
-    pub def fixedClock(inst: InstantZ, zone: ZoneId): Clock \ IO + NonDet =
+    pub def fixedClock(inst: InstantZ, zone: ZoneId): Clock \ IO =
         let InstantZ(inst1) = inst;
         let ZoneId(zone1) = zone;
         let ans = JClock.fixed(inst1, zone1);
         Clock(ans)
 
-    pub def systemClock(zone: ZoneId): Clock \ IO + NonDet =
+    pub def systemClock(zone: ZoneId): Clock \ IO =
         let ZoneId(zone1) = zone;
         let ans = JClock.system(zone1);
         Clock(ans)
 
-    pub def systemClockDefaultZone(): Clock \ IO + NonDet = Clock(JClock.systemDefaultZone())
+    pub def systemClockDefaultZone(): Clock \ IO = Clock(JClock.systemDefaultZone())
 
-    pub def systemClockUTC(): Clock \ IO + NonDet = Clock(JClock.systemUTC())
+    pub def systemClockUTC(): Clock \ IO = Clock(JClock.systemUTC())
 
-    pub def offset(d: DurationZ, c: Clock): Clock \ IO + NonDet =
+    pub def offset(d: DurationZ, c: Clock): Clock \ IO =
         let DurationZ(d1) = d;
         let Clock(c1) = c;
         let ans = JClock.offset(c1, d1);
         Clock(ans)
 
-    pub def tick(d: DurationZ, c: Clock): Clock \ IO + NonDet =
+    pub def tick(d: DurationZ, c: Clock): Clock \ IO =
         let DurationZ(d1) = d;
         let Clock(c1) = c;
         let ans = JClock.tick(c1, d1);
         Clock(ans)
 
 
-    pub def tickMillis(zoneId: ZoneId): Clock \ IO + NonDet =
+    pub def tickMillis(zoneId: ZoneId): Clock \ IO =
         let ZoneId(zoneId1) = zoneId;
         let ans = JClock.tickMillis(zoneId1);
         Clock(ans)
 
-    pub def tickSeconds(zoneId: ZoneId): Clock \ IO + NonDet =
+    pub def tickSeconds(zoneId: ZoneId): Clock \ IO =
         let ZoneId(zoneId1) = zoneId;
         let ans = JClock.tickSeconds(zoneId1);
         Clock(ans)
 
-    pub def tickMinutes(zoneId: ZoneId): Clock \ IO + NonDet =
+    pub def tickMinutes(zoneId: ZoneId): Clock \ IO =
         let ZoneId(zoneId1) = zoneId;
         let ans = JClock.tickMinutes(zoneId1);
         Clock(ans)
@@ -111,11 +111,11 @@ mod Time.Clock {
         let Clock(x1) = x;
         x1.toString()
 
-    pub def millis(x: Clock): Int64 \ IO + NonDet =
+    pub def millis(x: Clock): Int64 \ IO =
         let Clock(x1) = x;
         x1.millis()
 
-    pub def instant(x: Clock): InstantZ \ IO + NonDet =
+    pub def instant(x: Clock): InstantZ \ IO =
         let Clock(x1) = x;
         let ans = x1.instant();
         InstantZ(ans)
