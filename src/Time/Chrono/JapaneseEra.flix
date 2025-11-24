@@ -18,9 +18,9 @@ mod Time.Chrono {
 
 
     use Time.Chrono.JapaneseEra
-    use Time.Chrono.JapaneseEra.{JapaneseEra}
+    use Time.Chrono.JapaneseEra.{JapaneseEra }
 
-    import java.time.chrono.{JapaneseEra => JJapaneseEra}
+    import java.time.chrono.{JapaneseEra => JJapaneseEra }
 
     ///
     /// A wrapper around java.time.chrono.JapaneseEra.
@@ -35,7 +35,7 @@ mod Time.Chrono {
     instance ToString[JapaneseEra] {
         pub def toString(x: JapaneseEra): String =
             let JapaneseEra(x1) = x;
-            unsafe x1.toString() 
+            unsafe IO { x1.toString()  }
     }
     
     instance Eq[JapaneseEra] {
@@ -51,57 +51,57 @@ mod Time.Chrono {
 
 mod Time.Chrono.JapaneseEra {
 
-    use Locale.{Locale}
+    use Locale.{Locale }
     
     use Time.Chrono.JapaneseEra
-    use Time.Chrono.JapaneseEra.{JapaneseEra}
+    use Time.Chrono.JapaneseEra.{JapaneseEra }
     use Time.Format.TextStyle
 
-    import java.time.chrono.{JapaneseEra => JJapaneseEra}
-    import java.time.chrono.{Era => JEra}
-    import java.lang.{Object}
+    import java.time.chrono.{JapaneseEra => JJapaneseEra }
+    import java.time.chrono.{Era => JEra }
+    import java.lang.{Object }
 
 
     pub def getJapaneseEra(x: JapaneseEra): JJapaneseEra = 
         let JapaneseEra(x1) = x;
         x1
 
-    pub def japaneseEra(japaneseEra: {japaneseEra = Int32}): Option[JapaneseEra] =
+    pub def japaneseEra(japaneseEra: {japaneseEra = Int32 }): Option[JapaneseEra] =
         Result.tryCatch(_ -> {
-            JapaneseEra(unsafe JJapaneseEra.of(japaneseEra#japaneseEra))
+            JapaneseEra(unsafe IO { JJapaneseEra.of(japaneseEra#japaneseEra)}) 
         }) |> Result.toOption
 
-    pub def heisei(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.HEISEI)
+    pub def heisei(): JapaneseEra = JapaneseEra(unsafe IO { JJapaneseEra.HEISEI}) 
 
-    pub def meiji(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.MEIJI)
+    pub def meiji(): JapaneseEra = JapaneseEra(unsafe IO { JJapaneseEra.MEIJI}) 
 
     // Java 13
 
-    pub def reiwa(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.REIWA)
+    pub def reiwa(): JapaneseEra = JapaneseEra(unsafe IO { JJapaneseEra.REIWA })
 
-    pub def showa(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.SHOWA)
+    pub def showa(): JapaneseEra = JapaneseEra(unsafe IO { JJapaneseEra.SHOWA })
 
-    pub def taisho(): JapaneseEra = JapaneseEra(unsafe JJapaneseEra.TAISHO)
+    pub def taisho(): JapaneseEra = JapaneseEra(unsafe IO { JJapaneseEra.TAISHO })
 
     pub def getValue(x: JapaneseEra): Int32 = 
         let JapaneseEra(x1) = x;
-        unsafe x1.getValue()
+        unsafe IO { x1.getValue() }
 
     pub def equals(x: JapaneseEra, y: JapaneseEra): Bool = 
         let JapaneseEra(x1) = x;
         let JapaneseEra(y1) = y;
-        unsafe x1.equals(y1)
+        unsafe IO { x1.equals(y1) }
 
     pub def hashCode(x: JapaneseEra): Int32 = 
         let JapaneseEra(x1) = x;
-        unsafe x1.hashCode()
+        unsafe IO { x1.hashCode() }
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: JapaneseEra): String = 
         let x1 = getJapaneseEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        unsafe x1.getDisplayName(style1, locale1)
+        unsafe IO { x1.getDisplayName(style1, locale1) }
 
 
 

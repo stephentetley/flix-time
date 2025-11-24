@@ -26,7 +26,7 @@ mod Time.Chrono {
     instance ToString[IsoChronology] {
         pub def toString(x: IsoChronology): String =
             let IsoChronology(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
 }
@@ -50,9 +50,9 @@ mod Time.Chrono.IsoChronology {
     pub def getInstance(): IsoChronology \ IO = 
         IsoChronology(JIsoChronology.INSTANCE)
 
-    pub def getCalendarType(x: IsoChronology): String = 
+    pub def getCalendarType(x: IsoChronology): String =
         let IsoChronology(x1) = x;
-        unsafe x1.getCalendarType()
+        unsafe IO { x1.getCalendarType() }
 
     pub def dateNow(x: IsoChronology): LocalDate \ IO = 
         let IsoChronology(x1) = x;
@@ -62,21 +62,21 @@ mod Time.Chrono.IsoChronology {
 
 
 
-    pub def eraOf(x: IsoChronology, i: Int32): IsoEra = 
+    pub def eraOf(x: IsoChronology, i: Int32): IsoEra =
         let IsoChronology(x1) = x;
-        let e1 = unsafe x1.eraOf(i);
-        let ans = unchecked_cast(e1 as JIsoEra); 
+        let e1 = unsafe IO { x1.eraOf(i) };
+        let ans = unchecked_cast(e1 as JIsoEra);
         Time.Chrono.IsoEra.unmarshalIsoEra(ans)
 
 
-    pub def eras(x: IsoChronology): List[IsoEra] = 
+    pub def eras(x: IsoChronology): List[IsoEra] =
         let IsoChronology(x1) = x;
-        let jlist = unsafe x1.eras();
+        let jlist = unsafe IO { x1.eras() };
         let xs: List[JIsoEra] = Adaptor.fromList(jlist);
         List.map(Time.Chrono.IsoEra.unmarshalIsoEra, xs)
 
-    pub def getId(x: IsoChronology): String = 
+    pub def getId(x: IsoChronology): String =
         let IsoChronology(x1) = x;
-        unsafe x1.getId()
+        unsafe IO { x1.getId() }
 
 }

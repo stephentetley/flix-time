@@ -33,20 +33,20 @@ mod Time {
     instance ToString[ZoneOffset] {
         pub def toString(x: ZoneOffset): String =
             let ZoneOffset(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
     instance Eq[ZoneOffset] {
         pub def eq(x: ZoneOffset, y: ZoneOffset): Bool =
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
-            unsafe x1.equals(y1)
+            unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[ZoneOffset] {
         pub def hash(x: ZoneOffset): Int32 = 
             let ZoneOffset(x1) = x;
-            unsafe x1.hashCode()
+            unsafe IO { x1.hashCode() }
 
     }
 
@@ -54,7 +54,7 @@ mod Time {
         pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison =
             let ZoneOffset(x1) = x;
             let ZoneOffset(y1) = y;
-            unsafe x1.compareTo(y1) |> Comparison.fromInt32
+            unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
 }
@@ -93,70 +93,70 @@ mod Time.ZoneOffset {
     ///
     /// ___
     ///
-    pub def utc(): ZoneOffset = ZoneOffset(unsafe JZoneOffset.UTC)
+    pub def utc(): ZoneOffset = ZoneOffset(unsafe IO { JZoneOffset.UTC })
 
-    pub def min(): ZoneOffset = ZoneOffset(unsafe JZoneOffset.MIN)
+    pub def min(): ZoneOffset = ZoneOffset(unsafe IO { JZoneOffset.MIN })
 
-    pub def max(): ZoneOffset = ZoneOffset(unsafe JZoneOffset.MAX)
+    pub def max(): ZoneOffset = ZoneOffset(unsafe IO { JZoneOffset.MAX })
 
     /// `of` functions
 
     pub def ofHours(hours: Int32): ZoneOffset =
-        let ans = unsafe JZoneOffset.ofHours(hours);
+        let ans = unsafe IO { JZoneOffset.ofHours(hours) };
         ZoneOffset(ans)
 
-    pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset = 
-        let ans = unsafe JZoneOffset.ofHoursMinutes(r#hours, r#minutes);
+    pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset =
+        let ans = unsafe IO { JZoneOffset.ofHoursMinutes(r#hours, r#minutes) };
         ZoneOffset(ans)
 
     pub def ofHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
-        let ans = unsafe JZoneOffset.ofHoursMinutesSeconds(r#hours, r#minutes, r#seconds);
+        let ans = unsafe IO { JZoneOffset.ofHoursMinutesSeconds(r#hours, r#minutes, r#seconds) };
         ZoneOffset(ans)
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
-        let ans = unsafe JZoneOffset.ofTotalSeconds(seconds);
+        let ans = unsafe IO { JZoneOffset.ofTotalSeconds(seconds) };
         ZoneOffset(ans)
 
     // `from(TemporalAccessor x)` has problems - instead we can write the functions 
     // we want by calling the respective object
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset = 
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset =
         let Time.OffsetDateTime.OffsetDateTime(x1) = x;
-        let ans = unsafe x1.getOffset();
+        let ans = unsafe IO { x1.getOffset() };
         ZoneOffset(ans)
 
-    pub def fromOffsetTime(x: OffsetTime): ZoneOffset = 
+    pub def fromOffsetTime(x: OffsetTime): ZoneOffset =
         let Time.OffsetTime.OffsetTime(x1) = x;
-        let ans = unsafe x1.getOffset();
+        let ans = unsafe IO { x1.getOffset() };
         ZoneOffset(ans)
             
-    pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset = 
+    pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset =
         let Time.ZonedDateTime.ZonedDateTime(x1) = x;
-        let ans = unsafe x1.getOffset();
+        let ans = unsafe IO { x1.getOffset() };
         ZoneOffset(ans)
     
     /// ZoneOffset functions
 
     pub def getId(x: ZoneOffset): String =
         let ZoneOffset(x1) = x;
-        unsafe x1.getId()
+        unsafe IO { x1.getId() }
 
     pub def getRules(x: ZoneOffset): ZoneRules =
         let ZoneOffset(x1) = x;
-        let ans = unsafe x1.getRules();
+        let ans = unsafe IO { x1.getRules() };
         ZoneRules(ans)
 
     pub def getTotalSeconds(x: ZoneOffset): Int32 =
         let ZoneOffset(x1) = x;
-        unsafe x1.getTotalSeconds()
+        unsafe IO { x1.getTotalSeconds() }
 
 
 
 
     pub def getOffsetSeconds(x: ZoneOffset): Int32 =
         let ZoneOffset(x1) = x;
-        let f1 = unsafe JChronoField.OFFSET_SECONDS;
-        unsafe x1.get(f1)
+        let f1 = unsafe IO { JChronoField.OFFSET_SECONDS };
+        unsafe IO { x1.get(f1) }
 
 
 

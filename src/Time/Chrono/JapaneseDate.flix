@@ -19,10 +19,10 @@
 mod Time.Chrono {
 
     use Time.Chrono.JapaneseDate
-    use Time.Chrono.JapaneseDate.{JapaneseDate}
+    use Time.Chrono.JapaneseDate.{JapaneseDate }
 
-    import java.time.chrono.{JapaneseDate => JJapaneseDate}
-    import java.time.{LocalDate => JLocalDate}
+    import java.time.chrono.{JapaneseDate => JJapaneseDate }
+    import java.time.{LocalDate => JLocalDate }
 
     ///
     /// A wrapper around java.time.chrono.JapaneseDate.
@@ -35,7 +35,7 @@ mod Time.Chrono {
     instance ToString[JapaneseDate] {
         pub def toString(x: JapaneseDate): String =
             let JapaneseDate(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
     instance Eq[JapaneseDate] {
@@ -52,40 +52,40 @@ mod Time.Chrono.JapaneseDate {
 
 
     use Time.Chrono.JapaneseDate
-    use Time.Chrono.JapaneseDate.{JapaneseDate}
+    use Time.Chrono.JapaneseDate.{JapaneseDate }
     use Time.Chrono.HijrahDate
-    use Time.Chrono.HijrahDate.{HijrahDate}
+    use Time.Chrono.HijrahDate.{HijrahDate }
     use Time.Chrono.MinguoDate
-    use Time.Chrono.MinguoDate.{MinguoDate}
+    use Time.Chrono.MinguoDate.{MinguoDate }
     use Time.Chrono.ThaiBuddhistDate
-    use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use Time.Chrono.ThaiBuddhistDate.{ThaiBuddhistDate }
     use Time.Chrono.JapaneseChronology
-    use Time.Chrono.JapaneseChronology.{JapaneseChronology}
+    use Time.Chrono.JapaneseChronology.{JapaneseChronology }
     use Time.Chrono.JapaneseEra
-    use Time.Chrono.JapaneseEra.{JapaneseEra}
+    use Time.Chrono.JapaneseEra.{JapaneseEra }
     use Time.LocalDate
-    use Time.LocalDate.{LocalDate}
+    use Time.LocalDate.{LocalDate }
     use Time.LocalDateTime
-    use Time.LocalDateTime.{LocalDateTime}
+    use Time.LocalDateTime.{LocalDateTime }
     
-    import java.time.chrono.{JapaneseDate => JJapaneseDate}
+    import java.time.chrono.{JapaneseDate => JJapaneseDate }
     import java.time.chrono.{Chronology => JChronology, 
         ChronoLocalDate => JChronoLocalDate, 
         JapaneseEra => JJapaneseEra, 
-        JapaneseChronology => JJapaneseChronology}
-    import java.time.{LocalDate => JLocalDate}
-    import java.lang.{Object}
+        JapaneseChronology => JJapaneseChronology }
+    import java.time.{LocalDate => JLocalDate }
+    import java.lang.{Object }
 
 
     ///
     /// Returns ___
     ///
-    pub def japaneseDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): JapaneseDate  =
-        JapaneseDate(unsafe JJapaneseDate.of(r#prolepticYear, r#month, r#dayOfMonth))
+    pub def japaneseDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32 }): JapaneseDate  =
+        JapaneseDate(unsafe IO { JJapaneseDate.of(r#prolepticYear, r#month, r#dayOfMonth) })
 
-    pub def japaneseDateWithJapaneseEra(r: {era = JapaneseEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32}): JapaneseDate  =
+    pub def japaneseDateWithJapaneseEra(r: {era = JapaneseEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32 }): JapaneseDate  =
         let JapaneseEra(era1) = r#era;
-        JapaneseDate(unsafe JJapaneseDate.of(era1, r#yearOfEra, r#month, r#dayOfMonth))
+        JapaneseDate(unsafe IO { JJapaneseDate.of(era1, r#yearOfEra, r#month, r#dayOfMonth) })
 
 
     //
@@ -97,40 +97,40 @@ mod Time.Chrono.JapaneseDate {
     pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        unsafe x1.equals(y1)
+        unsafe IO { x1.equals(y1) }
 
     pub def hashCode(x: JapaneseDate): Int32 = 
         let JapaneseDate(x1) = x;
-        unsafe x1.hashCode()
+        unsafe IO { x1.hashCode() }
         
     pub def toLocalDate(x: JapaneseDate): LocalDate =
         let JapaneseDate(x1) = x;
-        let ans = unsafe JLocalDate.from(x1);
+        let ans = unsafe IO { JLocalDate.$from(x1) };
         LocalDate(ans)
 
     pub def fromLocalDate(x: LocalDate): JapaneseDate = 
         let LocalDate(x1) = x;
-        let ans = unsafe JJapaneseDate.from(x1);
+        let ans = unsafe IO { JJapaneseDate.$from(x1) };
         JapaneseDate(ans)
 
     pub def fromLocalDateTime(x: LocalDateTime): JapaneseDate =
         let LocalDateTime(x1) = x;
-        let ans = unsafe JJapaneseDate.from(x1);
+        let ans = unsafe IO { JJapaneseDate.$from(x1) };
         JapaneseDate(ans)
 
 
     // pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
-    //     import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
+    //     import static java.time.chrono.JapaneseDate.$from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
     //     let HijrahDate(x1) = x;
     //     JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
     // pub def fromMinguoDate(x: MinguoDate): JapaneseDate = 
-    //     import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
+    //     import static java.time.chrono.JapaneseDate.$from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
     //     let MinguoDate(x1) = x;
     //     JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
     // pub def fromThaiBuddhistDate(x: ThaiBuddhistDate): JapaneseDate = 
-    //     import static java.time.chrono.JapaneseDate.from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
+    //     import static java.time.chrono.JapaneseDate.$from(##java.time.temporal.TemporalAccessor): ##java.time.chrono.JapaneseDate \ {} as fromDate;
     //     let ThaiBuddhistDate(x1) = x;
     //     JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
@@ -138,20 +138,20 @@ mod Time.Chrono.JapaneseDate {
 
     pub def getChronology(x: JapaneseDate): JapaneseChronology = 
         let JapaneseDate(x1) = x;
-        let c1 = unsafe x1.getChronology();
+        let c1 = unsafe IO { x1.getChronology() };
         let ans = unchecked_cast(c1 as JJapaneseChronology);
         JapaneseChronology(ans)
 
 
     pub def getEra(x: JapaneseDate): JapaneseEra = 
         let JapaneseDate(x1) = x;
-        let e1 = unsafe x1.getEra();
+        let e1 = unsafe IO { x1.getEra() };
         let ans = unchecked_cast(e1 as JJapaneseEra);
         JapaneseEra(ans)
 
     pub def lengthOfMonth(x: JapaneseDate): Int32 = 
         let JapaneseDate(x1) = x;
-        unsafe x1.lengthOfMonth()
+        unsafe IO { x1.lengthOfMonth() }
     
     /// pub def getDayOfWeek(x: JapaneseDate): Int32 = 
     ///     getChronoFieldHelper(x, Time.Temporal.ChronoField.DayOfWeek)
@@ -193,7 +193,7 @@ mod Time.Chrono.JapaneseDate {
     pub def isBefore(x: JapaneseDate, y: JapaneseDate): Bool =
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        unsafe x1.isBefore(y1)
+        unsafe IO { x1.isBefore(y1) }
 
     ///
     /// Returns `true` if `x` is after `y`.
@@ -201,6 +201,6 @@ mod Time.Chrono.JapaneseDate {
     pub def isAfter(x: JapaneseDate, y: JapaneseDate): Bool =
         let JapaneseDate(x1) = x;
         let JapaneseDate(y1) = y;
-        unsafe x1.isAfter(y1)
+        unsafe IO { x1.isAfter(y1) }
 
 }

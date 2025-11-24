@@ -89,28 +89,28 @@ mod Time.DayOfWeek {
 
     pub def marshalDayOfWeek(x: DayOfWeek): JDayOfWeek =
         match x {
-            case Monday     => unsafe JDayOfWeek.MONDAY
-            case Tuesday    => unsafe JDayOfWeek.TUESDAY
-            case Wednesday  => unsafe JDayOfWeek.WEDNESDAY
-            case Thursday   => unsafe JDayOfWeek.THURSDAY
-            case Friday     => unsafe JDayOfWeek.FRIDAY
-            case Saturday   => unsafe JDayOfWeek.SATURDAY
-            case Sunday     => unsafe JDayOfWeek.SUNDAY 
+            case Monday     => unsafe IO { JDayOfWeek.MONDAY }
+            case Tuesday    => unsafe IO { JDayOfWeek.TUESDAY }
+            case Wednesday  => unsafe IO { JDayOfWeek.WEDNESDAY }
+            case Thursday   => unsafe IO { JDayOfWeek.THURSDAY }
+            case Friday     => unsafe IO { JDayOfWeek.FRIDAY }
+            case Saturday   => unsafe IO { JDayOfWeek.SATURDAY }
+            case Sunday     => unsafe IO { JDayOfWeek.SUNDAY } 
         }
 
     def primEquals(x: JDayOfWeek, y: JDayOfWeek): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
 
     pub def unmarshalDayOfWeek(x: JDayOfWeek): Time.DayOfWeek =
         match x {
-            case x1 if primEquals(x1, unsafe JDayOfWeek.MONDAY)     => Monday
-            case x1 if primEquals(x1, unsafe JDayOfWeek.TUESDAY)    => Tuesday
-            case x1 if primEquals(x1, unsafe JDayOfWeek.WEDNESDAY)  => Wednesday
-            case x1 if primEquals(x1, unsafe JDayOfWeek.THURSDAY)   => Thursday
-            case x1 if primEquals(x1, unsafe JDayOfWeek.FRIDAY)     => Friday
-            case x1 if primEquals(x1, unsafe JDayOfWeek.SATURDAY)   => Saturday
-            case x1 if primEquals(x1, unsafe JDayOfWeek.SUNDAY)     => Sunday
+            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.MONDAY })     => Monday
+            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.TUESDAY })    => Tuesday
+            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.WEDNESDAY })  => Wednesday
+            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.THURSDAY })   => Thursday
+            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.FRIDAY })     => Friday
+            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.SATURDAY })   => Saturday
+            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.SUNDAY })     => Sunday
             case _                                      => bug!("unmarshalDayOfWeek")
         }
 
@@ -118,24 +118,24 @@ mod Time.DayOfWeek {
 
     // `fromTemporalAccessor` specialized
 
-    pub def fromLocalDate(x: LocalDate): DayOfWeek = 
+    pub def fromLocalDate(x: LocalDate): DayOfWeek =
         let LocalDate(x1) = x;
-        let ans = unsafe JDayOfWeek.from(x1);
+        let ans = unsafe IO { JDayOfWeek.$from(x1) };
         unmarshalDayOfWeek(ans)
 
-    pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek = 
+    pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek =
         let LocalDateTime(x1) = x;
-        let ans = unsafe JDayOfWeek.from(x1);
+        let ans = unsafe IO { JDayOfWeek.$from(x1) };
         unmarshalDayOfWeek(ans)
-    
-    pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek = 
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek =
         let OffsetDateTime(x1) = x;
-        let ans = unsafe JDayOfWeek.from(x1);
+        let ans = unsafe IO { JDayOfWeek.$from(x1) };
         unmarshalDayOfWeek(ans)
-    
-    pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek = 
+
+    pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek =
         let ZonedDateTime(x1) = x;
-        let ans = unsafe JDayOfWeek.from(x1);
+        let ans = unsafe IO { JDayOfWeek.$from(x1) };
         unmarshalDayOfWeek(ans)
     
 
@@ -145,24 +145,24 @@ mod Time.DayOfWeek {
         let x1 = marshalDayOfWeek(x);
         let s1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        unsafe x1.getDisplayName(s1, locale1)
+        unsafe IO { x1.getDisplayName(s1, locale1) }
 
 
     pub def getValue(x: DayOfWeek): Int32 =
         let x1 = marshalDayOfWeek(x);
-        unsafe x1.getValue()
+        unsafe IO { x1.getValue() }
 
 
     /// plus / minus functions
 
     pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
         let x1 = marshalDayOfWeek(x);
-        let ans = unsafe x1.plus(days);
+        let ans = unsafe IO { x1.plus(days) };
         unmarshalDayOfWeek(ans)
 
     pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
         let x1 = marshalDayOfWeek(x);
-        let ans = unsafe x1.minus(days);
+        let ans = unsafe IO { x1.minus(days) };
         unmarshalDayOfWeek(ans)
 
 

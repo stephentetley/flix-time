@@ -17,9 +17,9 @@
 mod Time.Chrono {
 
     use Time.Chrono.MinguoDate
-    use Time.Chrono.MinguoDate.{MinguoDate}
+    use Time.Chrono.MinguoDate.{MinguoDate }
 
-    import java.time.chrono.{MinguoDate => JMinguoDate}
+    import java.time.chrono.{MinguoDate => JMinguoDate }
 
     ///
     /// A wrapper around java.time.chrono.MinguoDate.
@@ -32,7 +32,7 @@ mod Time.Chrono {
     instance ToString[MinguoDate] {
         pub def toString(x: MinguoDate): String =
             let MinguoDate(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
     instance Eq[MinguoDate] {
@@ -48,20 +48,20 @@ mod Time.Chrono.MinguoDate {
 
 
     use Time.Chrono.MinguoDate
-    use Time.Chrono.MinguoDate.{MinguoDate}
+    use Time.Chrono.MinguoDate.{MinguoDate }
     use Time.Chrono.MinguoChronology
-    use Time.Chrono.MinguoChronology.{MinguoChronology}
+    use Time.Chrono.MinguoChronology.{MinguoChronology }
     use Time.Chrono.MinguoEra
     use Time.LocalDate
-    use Time.LocalDate.{LocalDate}
+    use Time.LocalDate.{LocalDate }
     use Time.LocalDateTime
-    use Time.LocalDateTime.{LocalDateTime}
+    use Time.LocalDateTime.{LocalDateTime }
 
-    import java.time.chrono.{MinguoDate => JMinguoDate}
-    import java.time.chrono.{MinguoEra => JMinguoEra}
-    import java.time.chrono.{MinguoChronology => JMinguoChronology}
-    import java.time.{LocalDate => JLocalDate}
-    import java.lang.{Object}
+    import java.time.chrono.{MinguoDate => JMinguoDate }
+    import java.time.chrono.{MinguoEra => JMinguoEra }
+    import java.time.chrono.{MinguoChronology => JMinguoChronology }
+    import java.time.{LocalDate => JLocalDate }
+    import java.lang.{Object }
 
     ///
     /// Returns ___
@@ -72,37 +72,37 @@ mod Time.Chrono.MinguoDate {
     pub def equals(x: MinguoDate, y: MinguoDate): Bool = 
         let MinguoDate(x1) = x;
         let MinguoDate(y1) = y;
-        unsafe x1.equals(y1)
+        unsafe IO { x1.equals(y1) }
 
     pub def hashCode(x: MinguoDate): Int32 = 
         let MinguoDate(x1) = x;
-        unsafe x1.hashCode()
+        unsafe IO { x1.hashCode() }
 
 
     pub def toLocalDate(x: MinguoDate): LocalDate =
         let MinguoDate(x1) = x;
-        let ans = unsafe JLocalDate.from(x1);
+        let ans = unsafe IO { JLocalDate.$from(x1) };
         LocalDate(ans)
 
     pub def fromLocalDate(x: LocalDate): MinguoDate = 
         let LocalDate(x1) = x;
-        let ans = unsafe JMinguoDate.from(x1);
+        let ans = unsafe IO { JMinguoDate.$from(x1) };
         MinguoDate(ans)
 
     pub def fromLocalDateTime(x: LocalDateTime): MinguoDate =
         let LocalDateTime(x1) = x;
-        let ans = unsafe JMinguoDate.from(x1);
+        let ans = unsafe IO { JMinguoDate.$from(x1) };
         MinguoDate(ans)
 
     pub def getChronology(x: MinguoDate): MinguoChronology = 
         let MinguoDate(x1) = x;
-        let c1 = unsafe x1.getChronology();
+        let c1 = unsafe IO { x1.getChronology() };
         let ans = unchecked_cast(c1 as JMinguoChronology);
         MinguoChronology(ans)
 
     pub def getEra(x: MinguoDate): MinguoEra = 
         let MinguoDate(x1) = x;
-        let e1 = unsafe x1.getEra();
+        let e1 = unsafe IO { x1.getEra() };
         let ans = unchecked_cast(e1 as JMinguoEra);
         Time.Chrono.MinguoEra.unmarshalMinguoEra(ans)
 
@@ -139,7 +139,7 @@ mod Time.Chrono.MinguoDate {
     //         let field1 = Time.Temporal.ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
     //         Ok(get(x1 as ##java.time.temporal.TemporalAccessor, field1))
     //     } catch {
-    //         case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field}')")
+    //         case _: ##java.lang.Exception => Err("getTemporalFieldHelper('${field }')")
     //     }
 
 }

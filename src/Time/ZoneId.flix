@@ -34,20 +34,20 @@ mod Time {
     instance ToString[ZoneId] {
         pub def toString(x: ZoneId): String =
             let ZoneId(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
     instance Eq[ZoneId] {
         pub def eq(x: ZoneId, y: ZoneId): Bool =
             let ZoneId(x1) = x;
             let ZoneId(y1) = y;
-            unsafe x1.equals(y1)
+            unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[ZoneId] {
         pub def hash(x: ZoneId): Int32 =
             let ZoneId(x1) = x;
-            unsafe x1.hashCode()
+            unsafe IO { x1.hashCode() }
     }
 
 }
@@ -89,13 +89,13 @@ mod Time.ZoneId {
     /// Constructors
 
     pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
-        Result.tryCatch(_ -> ZoneId(unsafe JZoneId.of(zoneId#zoneId)))
-        
+        Result.tryCatch(_ -> ZoneId(unsafe IO { JZoneId.of(zoneId#zoneId) }))
+
     /// Ideally not in IO...
     pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] \ IO =
         Result.tryCatch(_ -> {
             let jmap = Adaptor.toMap(aliases);
-            let ans = unsafe JZoneId.of(zoneId#zoneId, jmap);
+            let ans = unsafe IO { JZoneId.of(zoneId#zoneId, jmap) };
             ZoneId(ans)
         })
 
@@ -119,29 +119,29 @@ mod Time.ZoneId {
             case _       => ""
         };
         let ZoneOffset(o1) = r#offset;
-        ZoneId(unsafe JZoneId.ofOffset(p1, o1))
+        ZoneId(unsafe IO { JZoneId.ofOffset(p1, o1) })
 
     /// `fromTemporalAccessor` specialized
 
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId = 
+    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId =
         let OffsetDateTime(x1) = x;
-        let ans = unsafe JZoneId.from(x1);
+        let ans = unsafe IO { JZoneId.$from(x1) };
         ZoneId(ans)
 
-    pub def fromOffsetTime(x: OffsetTime): ZoneId = 
+    pub def fromOffsetTime(x: OffsetTime): ZoneId =
         let OffsetTime(x1) = x;
-        let ans = unsafe JZoneId.from(x1);
+        let ans = unsafe IO { JZoneId.$from(x1) };
         ZoneId(ans)
 
-    pub def fromZonedDateTime(x: ZonedDateTime): ZoneId = 
+    pub def fromZonedDateTime(x: ZonedDateTime): ZoneId =
         let ZonedDateTime(x1) = x;
-        let ans = unsafe JZoneId.from(x1);
+        let ans = unsafe IO { JZoneId.$from(x1) };
         ZoneId(ans)
 
-    pub def fromZoneOffset(x: ZoneOffset): ZoneId = 
+    pub def fromZoneOffset(x: ZoneOffset): ZoneId =
         let ZoneOffset(x1) = x;
-        let ans = unsafe JZoneId.from(x1);
+        let ans = unsafe IO { JZoneId.$from(x1) };
         ZoneId(ans)
 
 
@@ -151,14 +151,14 @@ mod Time.ZoneId {
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
         let ZoneId(z1) = z;
-        unsafe z1.getDisplayName(style1, locale1)
+        unsafe IO { z1.getDisplayName(style1, locale1) }
 
     ///
     /// Returns the unique ID of the time zone.
     ///
     pub def getTimeZoneId(x: ZoneId): String =
         let ZoneId(x1) = x;
-        unsafe x1.getId()
+        unsafe IO { x1.getId() }
 
     pub def getAvailableZoneIds(): Set[String] \ IO + NonDet =
         try {
@@ -173,14 +173,14 @@ mod Time.ZoneId {
     pub def getRules(x: ZoneId): Option[ZoneRules] =
         Result.tryCatch(_ -> {
             let ZoneId(x1) = x;
-            let ans = unsafe x1.getRules();
+            let ans = unsafe IO { x1.getRules() };
             ZoneRules(ans)
         }) |> Result.toOption
 
-    
+
     pub def normalized(x: ZoneId): ZoneId =
         let ZoneId(x1) = x;
-        let x2 = unsafe x1.normalized();
+        let x2 = unsafe IO { x1.normalized() };
         ZoneId(x2)
 
 

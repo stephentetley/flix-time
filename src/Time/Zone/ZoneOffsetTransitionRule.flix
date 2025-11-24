@@ -18,10 +18,10 @@
 mod Time.Zone {
 
     use Time.Zone.ZoneOffsetTransitionRule
-    use Time.Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule}
+    use Time.Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule }
 
-    import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule}
-    import java.lang.{Object}
+    import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule }
+    import java.lang.{Object }
 
     ///
     /// A wrapper around a Java ZoneOffsetTransitionRule.
@@ -31,21 +31,21 @@ mod Time.Zone {
     instance ToString[ZoneOffsetTransitionRule] {
         pub def toString(x: ZoneOffsetTransitionRule): String =
             let ZoneOffsetTransitionRule(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
     instance Eq[ZoneOffsetTransitionRule] {
         pub def eq(x: ZoneOffsetTransitionRule, y: ZoneOffsetTransitionRule): Bool = 
             let ZoneOffsetTransitionRule(x1) = x;
             let ZoneOffsetTransitionRule(y1) = y;
-            unsafe x1.equals(y1)
+            unsafe IO { x1.equals(y1) }
 
     }
 
     instance Hash[ZoneOffsetTransitionRule] {
         pub def hash(x: ZoneOffsetTransitionRule): Int32 = 
             let ZoneOffsetTransitionRule(x1) = x;
-            unsafe x1.hashCode()
+            unsafe IO { x1.hashCode() }
     }
 
 }
@@ -53,20 +53,20 @@ mod Time.Zone {
 mod Time.Zone.ZoneOffsetTransitionRule {
 
     use Time.Zone.ZoneOffsetTransitionRule
-    use Time.Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule}
-    use Time.Zone.ZoneOffsetTransitionRule.TimeDefinition.{Standard, UTC, Wall}
+    use Time.Zone.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule }
+    use Time.Zone.ZoneOffsetTransitionRule.TimeDefinition.{Standard, UTC, Wall }
     use Time.Zone.ZoneOffsetTransition
-    use Time.Zone.ZoneOffsetTransition.{ZoneOffsetTransition}
+    use Time.Zone.ZoneOffsetTransition.{ZoneOffsetTransition }
     use Time.DayOfWeek
     use Time.Month
     use Time.LocalTime
-    use Time.LocalTime.{LocalTime}
+    use Time.LocalTime.{LocalTime }
     use Time.ZoneOffset
-    use Time.ZoneOffset.{ZoneOffset}
+    use Time.ZoneOffset.{ZoneOffset }
 
-    import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule}
-    import java.time.zone.{ZoneOffsetTransitionRule$TimeDefinition => JTimeDefinition}
-    import java.lang.{Enum => JEnum}
+    import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule }
+    import java.time.zone.{ZoneOffsetTransitionRule$TimeDefinition => JTimeDefinition }
+    import java.lang.{Enum => JEnum }
     
     /// Unwrap
 
@@ -82,19 +82,19 @@ mod Time.Zone.ZoneOffsetTransitionRule {
 
     pub def marshalTimeDefinition(x: TimeDefinition): JTimeDefinition = 
         match x {
-            case Standard           => unsafe JTimeDefinition.STANDARD
-            case UTC                => unsafe JTimeDefinition.UTC
-            case Wall               => unsafe JTimeDefinition.WALL
+            case Standard           => unsafe IO { JTimeDefinition.STANDARD }
+            case UTC                => unsafe IO { JTimeDefinition.UTC }
+            case Wall               => unsafe IO { JTimeDefinition.WALL }
         }
 
     def primEqualsTimeDefinition(x: JTimeDefinition, y: JTimeDefinition): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
     pub def unmarshalTimeDefinition(x: JTimeDefinition): TimeDefinition = 
         match x {
-            case x1 if primEqualsTimeDefinition(x1, unsafe JTimeDefinition.STANDARD)     => Standard
-            case x1 if primEqualsTimeDefinition(x1, unsafe JTimeDefinition.UTC)          => UTC
-            case x1 if primEqualsTimeDefinition(x1, unsafe JTimeDefinition.WALL)         => Wall
+            case x1 if primEqualsTimeDefinition(x1, unsafe IO { JTimeDefinition.STANDARD} )     => Standard 
+            case x1 if primEqualsTimeDefinition(x1, unsafe IO { JTimeDefinition.UTC } )          => UTC 
+            case x1 if primEqualsTimeDefinition(x1, unsafe IO { JTimeDefinition.WALL } )         => Wall 
             case _                                                      => bug!("unmarshalTimeDefinition")
         }
 
@@ -109,9 +109,9 @@ mod Time.Zone.ZoneOffsetTransitionRule {
                                         timeDefinition = TimeDefinition,
                                         standardOffset = ZoneOffset, 
                                         offsetBefore = ZoneOffset,
-                                        offsetAfter = ZoneOffset}): Result[String, ZoneOffsetTransitionRule] =
+                                        offsetAfter = ZoneOffset }): Result[String, ZoneOffsetTransitionRule] =
         Result.tryCatch(_ -> {
-            ZoneOffsetTransitionRule(unsafe JZoneOffsetTransitionRule.of(Time.Month.marshalMonth(r#month), 
+            ZoneOffsetTransitionRule(unsafe IO { JZoneOffsetTransitionRule.of(Time.Month.marshalMonth(r#month),  
                                         r#dayOfMonthIndicator,
                                         Time.DayOfWeek.marshalDayOfWeek(r#dayOfWeek),
                                         Time.LocalTime.getLocalTime(r#time),
@@ -120,59 +120,59 @@ mod Time.Zone.ZoneOffsetTransitionRule {
                                         Time.ZoneOffset.getZoneOffset(r#standardOffset),
                                         Time.ZoneOffset.getZoneOffset(r#offsetBefore),
                                         Time.ZoneOffset.getZoneOffset(r#offsetAfter)
-                                        ))
+                                        )})
         })
 
     /// predicates / comparisons
     
     pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        unsafe x1.isMidnightEndOfDay()
+        unsafe IO { x1.isMidnightEndOfDay() }
 
 
     /// ZoneOffsetTransitionRule functions
 
     pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe x1.createTransition(year);
+        let ans = unsafe IO { x1.createTransition(year) };
         ZoneOffsetTransition(ans)
 
 
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
         let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe x1.getTimeDefinition();
+        let ans = unsafe IO { x1.getTimeDefinition() };
         unmarshalTimeDefinition(ans)
 
     pub def getDayOfMonthIndicator(x: ZoneOffsetTransitionRule): Int32  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        unsafe x1.getDayOfMonthIndicator()
+        unsafe IO { x1.getDayOfMonthIndicator() }
 
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe x1.getDayOfWeek();
+        let ans = unsafe IO { x1.getDayOfWeek() };
         Time.DayOfWeek.unmarshalDayOfWeek(ans)
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe x1.getLocalTime();
+        let ans = unsafe IO { x1.getLocalTime() };
         LocalTime(ans)
 
 
     pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe x1.getStandardOffset();
+        let ans = unsafe IO { x1.getStandardOffset() };
         ZoneOffset(ans)
 
     pub def getOffsetBefore(x: ZoneOffsetTransitionRule): ZoneOffset  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe x1.getOffsetBefore();
+        let ans = unsafe IO { x1.getOffsetBefore() };
         ZoneOffset(ans)
 
 
     pub def getOffsetAfter(x: ZoneOffsetTransitionRule): ZoneOffset  = 
         let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe x1.getOffsetAfter();
+        let ans = unsafe IO { x1.getOffsetAfter() };
         ZoneOffset(ans)
 
 

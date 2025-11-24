@@ -19,12 +19,12 @@ mod Time {
 
 
     use Time.Period
-    use Time.Period.{Period}
+    use Time.Period.{Period }
 
-    import java.time.{Period => JPeriod}
-    import java.time.chrono.{ChronoPeriod}
-    import java.time.temporal.{TemporalAmount}
-    import java.lang.{Object, CharSequence}
+    import java.time.{Period => JPeriod }
+    import java.time.chrono.{ChronoPeriod }
+    import java.time.temporal.{TemporalAmount }
+    import java.lang.{Object, CharSequence }
 
     ///
     /// A wrapper around a Java Period.
@@ -34,7 +34,7 @@ mod Time {
     instance ToString[Period] {
         pub def toString(x: Period): String =
             let Period(x1) = x;
-            unsafe x1.toString()
+            unsafe IO { x1.toString() }
     }
 
     ///
@@ -46,7 +46,7 @@ mod Time {
         pub def fromString(s: String): Option[Period] =
             Result.tryCatch(_ -> {
                 let s1 = String.trim(s);
-                let ans = unsafe JPeriod.parse(s1);
+                let ans = unsafe IO { JPeriod.parse(s1) };
                 Period(ans)
             }) |> Result.toOption
     }
@@ -55,14 +55,14 @@ mod Time {
         pub def eq(x: Period, y: Period): Bool =
             let Period(x1) = x;
             let Period(y1) = y;
-            unsafe x1.equals(y1)
+            unsafe IO { x1.equals(y1) }
     }
 
 
     instance Hash[Period] {
         pub def hash(x: Period): Int32 =
             let Period(x1) = x;
-            unsafe x1.hashCode()
+            unsafe IO { x1.hashCode() }
     }
 
 
@@ -70,7 +70,7 @@ mod Time {
         pub def add(x: Period, y: Period): Period =
             let Period(x1) = x;
             let Period(y1) = y;
-            let ans = unsafe x1.plus(y1);
+            let ans = unsafe IO { x1.plus(y1) };
             Period(ans)
     }
 
@@ -78,7 +78,7 @@ mod Time {
         pub def sub(x: Period, y: Period): Period =
             let Period(x1) = x;
             let Period(y1) = y;
-            let ans = unsafe x1.minus(y1);
+            let ans = unsafe IO { x1.minus(y1) };
             Period(ans)
     }
 
@@ -86,7 +86,7 @@ mod Time {
     instance Neg[Period] {
         pub def neg(x: Period): Period =
             let Period(x1) = x;
-            let ans = unsafe x1.negated();
+            let ans = unsafe IO { x1.negated() };
             Period(ans)
     }
 
@@ -106,14 +106,14 @@ mod Time {
 mod Time.Period {
 
     use Time.Period
-    use Time.Period.{Period}
+    use Time.Period.{Period }
 
     use Time.LocalDate
-    use Time.LocalDate.{LocalDate}
+    use Time.LocalDate.{LocalDate }
     
-    import java.time.{Period => JPeriod}
-    import java.time.chrono.{ChronoPeriod}
-    import java.lang.{Object, CharSequence}
+    import java.time.{Period => JPeriod }
+    import java.time.chrono.{ChronoPeriod }
+    import java.lang.{Object, CharSequence }
 
     /// Unwrap
 
@@ -124,8 +124,8 @@ mod Time.Period {
     
     /// Constructors
 
-    pub def period(r: {years = Int32, months = Int32, days = Int32}): Period =
-        let ans = unsafe JPeriod.of(r#years, r#months, r#days);
+    pub def period(r: {years = Int32, months = Int32, days = Int32 }): Period =
+        let ans = unsafe IO { JPeriod.of(r#years, r#months, r#days) };
         Period(ans)
 
     /// "abstract constructors" (e.g. `zero`)
@@ -134,20 +134,20 @@ mod Time.Period {
     /// The period of zero.
     ///
     pub def zero(): Period = 
-        let ans = unsafe JPeriod.ZERO;
+        let ans = unsafe IO { JPeriod.ZERO };
         Period(ans)
 
 
     /// `of` functions
 
 
-    pub def ofDays(days: Int32): Period = Period(unsafe JPeriod.ofDays(days))
+    pub def ofDays(days: Int32): Period = Period(unsafe IO { JPeriod.ofDays(days) })
 
-    pub def ofWeeks(weeks: Int32): Period = Period(unsafe JPeriod.ofWeeks(weeks))
+    pub def ofWeeks(weeks: Int32): Period = Period(unsafe IO { JPeriod.ofWeeks(weeks) })
 
-    pub def ofMonths(months: Int32): Period = Period(unsafe JPeriod.ofMonths(months))
+    pub def ofMonths(months: Int32): Period = Period(unsafe IO { JPeriod.ofMonths(months) })
 
-    pub def ofYears(years: Int32): Period = Period(unsafe JPeriod.ofYears(years))
+    pub def ofYears(years: Int32): Period = Period(unsafe IO { JPeriod.ofYears(years) })
 
 
 
@@ -156,69 +156,69 @@ mod Time.Period {
 
     pub def toTotalMonths(x: Period): Int64 =
         let Period(x1) = x;
-        unsafe x1.toTotalMonths()
+        unsafe IO { x1.toTotalMonths() }
 
     /// `parse` / `format` functions        
 
     pub def parse(s: String): Result[String, Period] =
         Result.tryCatch(_ -> {
             let s1 = String.trim(s);
-            let ans = unsafe JPeriod.parse(s1);
+            let ans = unsafe IO { JPeriod.parse(s1) };
             Period(ans)
         })
 
     /// Note - alias of `toString`
     pub def format(x: Period): String =
         let Period(x1) = x;
-        unsafe x1.toString()
+        unsafe IO { x1.toString() }
 
     /// predicates / comparisons
 
     pub def isZero(x: Period): Bool =
         let Period(x1) = x;
-        unsafe x1.isZero()
+        unsafe IO { x1.isZero() }
 
     pub def isPositive(x: Period): Bool =
         not isNegative(x)
 
     pub def isNegative(x: Period): Bool =
         let Period(x1) = x;
-        unsafe x1.isNegative()
+        unsafe IO { x1.isNegative() }
 
     /// Period functions
     
     pub def normalized(x: Period): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.normalized();
+        let ans = unsafe IO { x1.normalized() };
         Period(ans)
 
     /// Getters and Setters
 
     pub def getYears(x: Period): Int32 =
         let Period(x1) = x;
-        unsafe x1.getYears()
+        unsafe IO { x1.getYears() }
 
     pub def withYears(years: Int32, x: Period): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.withYears(years);
+        let ans = unsafe IO { x1.$withYears(years) };
         Period(ans)
 
     pub def getMonths(x: Period): Int32 =
         let Period(x1) = x;
-        unsafe x1.getMonths()
+        unsafe IO { x1.getMonths() }
 
     pub def withMonths(months: Int32, x: Period): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.withMonths(months);
+        let ans = unsafe IO { x1.$withMonths(months) };
         Period(ans)
 
     pub def getDays(x: Period): Int32 =
         let Period(x1) = x;
-        unsafe x1.getDays()
+        unsafe IO { x1.getDays() }
 
     pub def withDays(days: Int32, x: Period): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.withDays(days);
+        let ans = unsafe IO { x1.$withDays(days) };
         Period(ans)
 
 
@@ -226,39 +226,39 @@ mod Time.Period {
 
     pub def plusYears(x: Period, years: Int64): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.plusYears(years);
+        let ans = unsafe IO { x1.plusYears(years) };
         Period(ans)
 
     pub def minusYears(x: Period, years: Int64): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.minusYears(years);
+        let ans = unsafe IO { x1.minusYears(years) };
         Period(ans)
 
     pub def plusMonths(x: Period, months: Int64): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.plusMonths(months);
+        let ans = unsafe IO { x1.plusMonths(months) };
         Period(ans)
 
     pub def minusMonths(x: Period, months: Int64): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.minusMonths(months);
+        let ans = unsafe IO { x1.minusMonths(months) };
         Period(ans)
 
     pub def plusDays(x: Period, days: Int64): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.plusDays(days);
+        let ans = unsafe IO { x1.plusDays(days) };
         Period(ans)
 
     pub def minusDays(x: Period, days: Int64): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.minusDays(days);
+        let ans = unsafe IO { x1.minusDays(days) };
         Period(ans)
 
    /// multiply / divide functions
 
     pub def multipliedBy(x: Period, y: Int32): Period =
         let Period(x1) = x;
-        let ans = unsafe x1.multipliedBy(y);
+        let ans = unsafe IO { x1.multipliedBy(y) };
         Period(ans)
 
     // No `dividedBy` in java.time.Period
@@ -266,10 +266,10 @@ mod Time.Period {
     /// between / until functions
 
     /// Note returns Period as LocalDate has no time component
-    pub def between(begin: {begin = LocalDate}, end: {end = LocalDate}): Period =
+    pub def between(begin: {begin = LocalDate }, end: {end = LocalDate }): Period =
         let LocalDate(b1) = begin#begin;
         let LocalDate(e1) = end#end;
-        let ans = unsafe JPeriod.between(b1, e1);
+        let ans = unsafe IO { JPeriod.between(b1, e1) };
         Period(ans)
 
 

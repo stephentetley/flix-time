@@ -27,34 +27,34 @@ mod Time.Chrono {
 
 mod Time.Chrono.MinguoEra {
     
-    use Locale.{Locale}
+    use Locale.{Locale }
 
     use Time.Chrono.MinguoEra
-    use Time.Chrono.MinguoEra.{BEFORE_ROC, ROC}
+    use Time.Chrono.MinguoEra.{BEFORE_ROC, ROC }
     use Time.Format.TextStyle
 
-    import java.time.chrono.{MinguoEra => JMinguoEra}
-    import java.lang.{Enum => JEnum}
+    import java.time.chrono.{MinguoEra => JMinguoEra }
+    import java.lang.{Enum => JEnum }
 
     pub def marshalMinguoEra(x: MinguoEra): JMinguoEra = 
         match x {
-            case BEFORE_ROC => unsafe JMinguoEra.BEFORE_ROC
-            case ROC        => unsafe JMinguoEra.ROC
+            case BEFORE_ROC => unsafe IO { JMinguoEra.BEFORE_ROC }
+            case ROC        => unsafe IO { JMinguoEra.ROC }
         }
 
     def primEquals(x: JMinguoEra, y: JMinguoEra): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
     pub def unmarshalMinguoEra(x: JMinguoEra): MinguoEra =
         match x {
-            case x1 if primEquals(x1, unsafe JMinguoEra.BEFORE_ROC)  => BEFORE_ROC
-            case x1 if primEquals(x1, unsafe JMinguoEra.ROC)         => ROC
+            case x1 if primEquals(x1, unsafe IO { JMinguoEra.BEFORE_ROC })  => BEFORE_ROC 
+            case x1 if primEquals(x1, unsafe IO { JMinguoEra.ROC })         => ROC 
             case _                                      => bug!("unmarshalMinguoEra")
         }
 
     pub def getValue(x: MinguoEra): Int32 = 
         let x1 = marshalMinguoEra(x);
-        unsafe x1.getValue()
+        unsafe IO { x1.getValue() }
 
 
 
@@ -62,7 +62,7 @@ mod Time.Chrono.MinguoEra {
         let x1 = marshalMinguoEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        unsafe x1.getDisplayName(style1, locale1)
+        unsafe IO { x1.getDisplayName(style1, locale1) }
 
 
 

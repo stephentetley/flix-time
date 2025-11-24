@@ -27,37 +27,37 @@ mod Time.Chrono {
 
 mod Time.Chrono.IsoEra {
     
-    use Locale.{Locale}
+    use Locale.{Locale }
 
     use Time.Chrono.IsoEra
-    use Time.Chrono.IsoEra.{BCE, CE}
+    use Time.Chrono.IsoEra.{BCE, CE }
     use Time.Format.TextStyle
     use Time.LocalDate
-    use Time.LocalDate.{LocalDate}
+    use Time.LocalDate.{LocalDate }
 
-    import java.time.chrono.{IsoEra => JIsoEra}
-    import java.time.chrono.{Era => JEra}
-    import java.lang.{Enum => JEnum}
+    import java.time.chrono.{IsoEra => JIsoEra }
+    import java.time.chrono.{Era => JEra }
+    import java.lang.{Enum => JEnum }
     
     pub def marshalIsoEra(x: IsoEra): JIsoEra = 
         match x {
-            case BCE        => unsafe JIsoEra.BCE
-            case CE         => unsafe JIsoEra.CE
+            case BCE        => unsafe IO { JIsoEra.BCE }
+            case CE         => unsafe IO { JIsoEra.CE }
         }
 
     def primEquals(x: JIsoEra, y: JIsoEra): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
     pub def unmarshalIsoEra(x: JIsoEra): IsoEra = 
         match x {
-            case x1 if primEquals(x1, unsafe JIsoEra.BCE)    => BCE
-            case x1 if primEquals(x1, unsafe JIsoEra.CE)     => CE
+            case x1 if primEquals(x1, unsafe IO { JIsoEra.BCE})    => BCE 
+            case x1 if primEquals(x1, unsafe IO { JIsoEra.CE })    => CE 
             case _                                  => bug!("unmarshalIsoEra")
         }
 
     pub def getValue(x: IsoEra): Int32 = 
         let x1 = marshalIsoEra(x);
-        unsafe x1.getValue()
+        unsafe IO { x1.getValue() }
 
 
 
@@ -68,7 +68,7 @@ mod Time.Chrono.IsoEra {
         let x1 = marshalIsoEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        unsafe x1.getDisplayName(style1, locale1)
+        unsafe IO { x1.getDisplayName(style1, locale1) }
         
 
 

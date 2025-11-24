@@ -43,25 +43,25 @@ mod Time.Chrono.HijrahEra {
     //     unmarshalHijrahEra(unchecked_cast(o as ##java.time.chrono.HijrahEra))
 
 
-    pub def marshalHijrahEra(x: HijrahEra): JHijrahEra = 
+    pub def marshalHijrahEra(x: HijrahEra): JHijrahEra =
         match x {
-            case AH         => unsafe JHijrahEra.AH
+            case AH         => unsafe IO { JHijrahEra.AH }
         }
 
 
 
     def primEquals(x: JHijrahEra, y: JHijrahEra): Bool =
-        unsafe x.equals(y)
+        unsafe IO { x.equals(y) }
 
-    pub def unmarshalHijrahEra(x: JHijrahEra): HijrahEra = 
+    pub def unmarshalHijrahEra(x: JHijrahEra): HijrahEra =
         match x {
-            case x1 if primEquals(x1, unsafe JHijrahEra.AH)      => AH
+            case x1 if primEquals(x1, unsafe IO { JHijrahEra.AH })      => AH
             case _                                  => bug!("unmarshalHijrahEra")
         }
 
-    pub def getValue(x: HijrahEra): Int32 = 
+    pub def getValue(x: HijrahEra): Int32 =
         let x1 = marshalHijrahEra(x);
-        unsafe x1.getValue()
+        unsafe IO { x1.getValue() }
 
 
 
@@ -74,11 +74,11 @@ mod Time.Chrono.HijrahEra {
     //     Era(ans)
 
 
-    pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String = 
+    pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String =
         let x1 = marshalHijrahEra(x);
         let style1 = Time.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
-        unsafe x1.getDisplayName(style1, locale1)
+        unsafe IO { x1.getDisplayName(style1, locale1) }
         
  
 }
