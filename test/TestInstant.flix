@@ -18,14 +18,17 @@
 
 mod TestInstant {
 
+    use Assert.{assertEq, assertTrue, assertFalse, fail};
     use ToString.toString;
 
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def toString01(): String = toString(Time.InstantZ.epoch())
+    @Test
+    def toString01(): Unit \ {Assert, IO} = 
+        toString(Time.InstantZ.epoch()) |> println;
+        assertTrue(true)
 
 
 

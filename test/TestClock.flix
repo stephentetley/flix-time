@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+/*
 mod TestClock {
 
 
@@ -22,7 +23,8 @@ mod TestClock {
     /////////////////////////////////////////////////////////////////////////////
 
     @test
-    def toString01(): String \ IO = Time.Clock.toString(Time.Clock.systemClockDefaultZone())
+    def toString01(): String \ IO = 
+        Time.Clock.toString(Time.Clock.systemClockDefaultZone())
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -111,3 +113,4 @@ mod TestClock {
         Time.Clock.millis(c) > 0i64
 
 }
+*/

@@ -15,22 +15,24 @@
  */
 
 mod TestMonthDay {
-
+    
+    use Assert.{assertEq, assertTrue, assertFalse, fail};
     use ToString.toString;
 
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def toString01(): String = 
-        Time.MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString
+    @Test
+    def toString01(): Unit \ {Assert, IO} = 
+        Time.MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString |> println;
+        assertTrue(true)
 
     /////////////////////////////////////////////////////////////////////////////
     // fromLocalDate                                                           //
     /////////////////////////////////////////////////////////////////////////////
 
-    // @test
+    // @Test
     // def fromLocalDate01(): Time.MonthDay \ IO = 
     //     let date = Time.LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
     //     let md = Time.MonthDay.fromLocalDate(date);
@@ -41,14 +43,14 @@ mod TestMonthDay {
     // get                                                                     //
     /////////////////////////////////////////////////////////////////////////////
 
-    // @test
+    // @Test
     // def get01(): Int32 \ IO =         
     //     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
     //     let i = Time.MonthDay.get(Time.Temporal.ChronoField.monthOfYear(), md);
     //     println("MonthDay.get01(): ${i}");
     //     i
 
-    // @test
+    // @Test
     // def get02(): Int32 \ IO =         
     //     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
     //     let i = Time.MonthDay.get(Time.Temporal.ChronoField.dayOfMonth(), md);

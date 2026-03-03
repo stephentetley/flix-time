@@ -16,6 +16,8 @@
 
 mod TestPeriod {
 
+    use Assert.{assertEq, assertTrue, assertFalse, fail};
+    
     use ToString.toString
     use LowerBound.minValue
     use UpperBound.maxValue
@@ -25,27 +27,27 @@ mod TestPeriod {
     // add                                                                     //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def add01(): Bool = 
+    @Test
+    def add01(): Unit \ Assert = 
         let p1 = Time.Period.ofYears(1);
         let ans = p1 + p1;
-        ans == Time.Period.ofYears(2)
+        assertTrue(ans == Time.Period.ofYears(2))
 
-    @test
-    def add02(): Bool = 
+    @Test
+    def add02(): Unit \ Assert = 
         let p1 = Time.Period.ofYears(10);
         let ans = p1 + Time.Period.ofMonths(10);
-        ans == Time.Period.period({years = 10, months = 10, days = 0})
+        assertTrue(ans == Time.Period.period({years = 10, months = 10, days = 0}))
 
 
     /////////////////////////////////////////////////////////////////////////////
     // negate                                                                  //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def negate01(): Bool = 
+    @Test
+    def negate01(): Unit \ Assert = 
         let p1 = Time.Period.ofYears(1);
         let ans = -p1;
-        ans == Time.Period.ofYears(-1)
+        assertTrue(ans == Time.Period.ofYears(-1))
 
 }

@@ -16,25 +16,28 @@
 
 mod TestThaiBuddhistChronology {
 
+    use Assert.{assertEq, assertTrue, assertFalse, fail};
 
     /////////////////////////////////////////////////////////////////////////////
     // dateNow                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def dateNow01(): Unit \ IO = 
+    @Test
+    def dateNow01(): Unit \ {Assert, IO} = 
         let inst = Time.Chrono.ThaiBuddhistChronology.getInstance();
         let dt1 = Time.Chrono.ThaiBuddhistChronology.dateNow(inst);
-        println(dt1)
+        println(dt1);
+        assertTrue(true)
         
     /////////////////////////////////////////////////////////////////////////////
     // eraOf                                                                   //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def eraOf01(): Unit \ IO = 
+    @Test
+    def eraOf01(): Unit \ {Assert, IO} = 
         let inst = Time.Chrono.ThaiBuddhistChronology.getInstance();
         let e1 = Time.Chrono.ThaiBuddhistChronology.eraOf(inst, 1);
-        println(e1)
+        println(e1);
+        assertTrue(true)
 
 }

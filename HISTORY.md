@@ -1,3 +1,6 @@
+### v0.16.0
+   Updated tests to use `Assert`
+   
 ### v0.15.1
    Updated to work with Flix version 0.67.0 (unsafe IO). Thanks Magnus.
    Updated `charset-locale` dependency.

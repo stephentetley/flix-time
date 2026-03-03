@@ -16,62 +16,68 @@
 
 mod TestDayOfWeek {
 
-
+    use Assert.{assertEq, assertTrue, assertFalse, fail};
+    
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def toString01(): Bool = ToString.toString(Time.DayOfWeek.Monday) == "Monday"
+    @Test
+    def toString01(): Unit \ Assert = 
+        assertTrue(ToString.toString(Time.DayOfWeek.Monday) == "Monday")
 
     /////////////////////////////////////////////////////////////////////////////
     // fromString                                                              //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def fromString01(): Bool = FromString.fromString("Monday") == Some(Time.DayOfWeek.Monday)
+    @Test
+    def fromString01(): Unit \ Assert = 
+        assertTrue(FromString.fromString("Monday") == Some(Time.DayOfWeek.Monday))
 
 
-    @test
-    def fromString02(): Bool = (FromString.fromString("MONDAY") : Option[Time.DayOfWeek]) == None
+    @Test
+    def fromString02(): Unit \ Assert = 
+        assertTrue((FromString.fromString("MONDAY") : Option[Time.DayOfWeek]) == None)
 
     /////////////////////////////////////////////////////////////////////////////
     // eq                                                                      //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def eq01(): Bool = Time.DayOfWeek.Monday == Time.DayOfWeek.Monday
+    @Test
+    def eq01(): Unit \ Assert = 
+        assertTrue(Time.DayOfWeek.Monday == Time.DayOfWeek.Monday)
 
     /////////////////////////////////////////////////////////////////////////////
     // neq                                                                      //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def neq01(): Bool = Time.DayOfWeek.Monday != Time.DayOfWeek.Tuesday
+    @Test
+    def neq01(): Unit \ Assert = 
+        assertTrue(Time.DayOfWeek.Monday != Time.DayOfWeek.Tuesday)
 
 
     /////////////////////////////////////////////////////////////////////////////
     // dayOfWeek                                                               //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def dayOfWeek01(): Bool = 
-        Time.DayOfWeek.dayOfWeek(1) == Some(Time.DayOfWeek.Monday)
+    @Test
+    def dayOfWeek01(): Unit \ Assert = 
+        assertTrue(Time.DayOfWeek.dayOfWeek(1) == Some(Time.DayOfWeek.Monday))
 
-    @test
-    def dayOfWeek02(): Bool = 
-        Time.DayOfWeek.dayOfWeek(0) == None
+    @Test
+    def dayOfWeek02(): Unit \ Assert = 
+        assertTrue(Time.DayOfWeek.dayOfWeek(0) == None)
 
     /////////////////////////////////////////////////////////////////////////////
     // fromLocalDate                                                           //
     /////////////////////////////////////////////////////////////////////////////
 
-    // @test
+    // @Test
     // def fromLocalDate01(): Bool = 
     //     let date = Time.LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 1});
     //     Time.DayOfWeek.$fromLocalDate(date) == Time.DayOfWeek.Sunday
 
-    // @test
+    // @Test
     // def fromLocalDate02(): Bool =
     //     let date = Time.LocalDate.localDate({year = 2022, month = 5, dayOfMonth = 2});
     //     Time.DayOfWeek.$fromLocalDate(date) == Time.DayOfWeek.Monday
@@ -81,19 +87,20 @@ mod TestDayOfWeek {
     // getValue                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def getValue01(): Int32 \ IO =         
+    @Test
+    def getValue01(): Unit \ {Assert, IO} =         
         let dow = Time.DayOfWeek.Monday;
         let i = Time.DayOfWeek.getValue(dow);
         println("DayOfWeek.dayOfWeek(): ${i}");
-        i
+        assertTrue(i == 1)
 
     /////////////////////////////////////////////////////////////////////////////
     // getValue                                                                //
     /////////////////////////////////////////////////////////////////////////////
     
-    pub def getDisplayName01(): Bool \ IO =         
-        Time.DayOfWeek.getDisplayName(Time.Format.TextStyle.Full, Locale.getDefault(), Time.DayOfWeek.Monday) != ""
+    @Test
+    pub def getDisplayName01(): Unit \ {Assert, IO} =
+        assertTrue(Time.DayOfWeek.getDisplayName(Time.Format.TextStyle.Full, Locale.getDefault(), Time.DayOfWeek.Monday) != "")
 
 
 }

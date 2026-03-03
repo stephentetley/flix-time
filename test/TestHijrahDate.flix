@@ -16,91 +16,93 @@
 
 mod TestHirjahDate {
 
+    use Assert.{assertEq, assertTrue, assertFalse, fail};
     
     /////////////////////////////////////////////////////////////////////////////
     // until                                                                   //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def until01(): Bool \ IO = 
+    @Test
+    def until01(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
         let d2 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Days) == 0i64
+        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Days) == 0i64)
     
-    @test
-    def until02(): Bool \ IO = 
+    @Test
+    def until02(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
         let d2 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Months) == 0i64
+        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Months) == 0i64)
 
-    @test
-    def until03(): Bool \ IO = 
+    @Test
+    def until03(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
         let d2 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Years) == 0i64
+        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Years) == 0i64)
 
-    @test
-    def until04(): Bool \ IO = 
+    @Test
+    def until04(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
         let d2 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Centuries) == 0i64
+        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Centuries) == 0i64)
 
-    @test
-    def until05(): Bool \ IO = 
+    @Test
+    def until05(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
         let d2 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Millennia) == 0i64
+        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Millennia) == 0i64)
 
-    @test
-    def until06(): Bool \ IO = 
+    @Test
+    def until06(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
         let d2 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Eras) == 0i64
+        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Eras) == 0i64)
 
 
     /////////////////////////////////////////////////////////////////////////////
     // plusChrono                                                              //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def plusChrono01(): Bool \ IO = 
+    @Test
+    def plusChrono01(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Days) == d1
+        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Days) == d1)
 
-    @test
-    def plusChrono02(): Bool \ IO = 
+    @Test
+    def plusChrono02(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Months) == d1
+        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Months) == d1)
 
-    @test
-    def plusChrono03(): Bool \ IO = 
+    @Test
+    def plusChrono03(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Years) == d1
+        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Years) == d1)
     
-    @test
-    def plusChrono04(): Bool \ IO = 
+    @Test
+    def plusChrono04(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Centuries) == d1
+        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Centuries) == d1)
     
-    @test
-    def plusChrono05(): Bool \ IO = 
+    @Test
+    def plusChrono05(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
-        Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Millennia) == d1
+        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Millennia) == d1)
 
 
     /////////////////////////////////////////////////////////////////////////////
     // withChrono                                                              //
     /////////////////////////////////////////////////////////////////////////////
 
-    @test
-    def withChrono01(): Bool \ IO = 
+    @Test
+    def withChrono01(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
         let y1 = Time.Chrono.HijrahDate.getYear(d1) |> Int32.toInt64;
-        Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.Year, y1) == d1
+        assertTrue(Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.Year, y1) == d1)
 
-    @test
-    def withChrono02(): Bool \ IO = 
+    @Test
+    def withChrono02(): Unit \ {Assert, IO} = 
         let d1 = Time.Chrono.HijrahDate.now();
         let m1 = Time.Chrono.HijrahDate.getMonth(d1) |> Int32.toInt64;
-        Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.MonthOfYear, m1) == d1
+        assertTrue(Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.MonthOfYear, m1) == d1)
+        
 }
