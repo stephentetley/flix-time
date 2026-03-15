@@ -24,7 +24,7 @@ mod TestClock {
 
     @test
     def toString01(): String \ IO = 
-        Time.Clock.toString(Time.Clock.systemClockDefaultZone())
+        InteropTime.Clock.toString(InteropTime.Clock.systemClockDefaultZone())
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -33,11 +33,11 @@ mod TestClock {
 
     @test
     def fixedClock01(): Bool \ IO = 
-        let i = Time.InstantZ.now();
-        let z = Time.ZoneId.utc();
-        let c = Time.Clock.fixedClock(i, z);
-        let ci1 = Time.Clock.instant(c);
-        let ci2 = Time.Clock.instant(c);
+        let i = InteropTime.InstantZ.now();
+        let z = InteropTime.ZoneId.utc();
+        let c = InteropTime.Clock.fixedClock(i, z);
+        let ci1 = InteropTime.Clock.instant(c);
+        let ci2 = InteropTime.Clock.instant(c);
         ci1 == ci2
         
     /////////////////////////////////////////////////////////////////////////////
@@ -46,8 +46,8 @@ mod TestClock {
 
     @test
     def systemClock01(): Bool \ IO = 
-        let c = Time.Clock.systemClock(Time.ZoneId.utc());
-        Time.Clock.millis(c) > 0i64
+        let c = InteropTime.Clock.systemClock(InteropTime.ZoneId.utc());
+        InteropTime.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // systemClockDefaultZone                                                  //
@@ -55,8 +55,8 @@ mod TestClock {
 
     @test
     def systemClockDefaultZone01(): Bool \ IO = 
-        let c = Time.Clock.systemClockDefaultZone();
-        Time.Clock.millis(c) > 0i64
+        let c = InteropTime.Clock.systemClockDefaultZone();
+        InteropTime.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // systemClockUTC                                                          //
@@ -64,8 +64,8 @@ mod TestClock {
 
     @test
     def systemClockUTC01(): Bool \ IO = 
-        let c = Time.Clock.systemClockUTC();
-        Time.Clock.millis(c) > 0i64
+        let c = InteropTime.Clock.systemClockUTC();
+        InteropTime.Clock.millis(c) > 0i64
        
     /////////////////////////////////////////////////////////////////////////////
     // offset                                                                  //
@@ -73,8 +73,8 @@ mod TestClock {
 
     @test
     def offset01(): Bool \ IO = 
-        let c = Time.Clock.offset(Time.DurationZ.zero(), Time.Clock.systemClockUTC());
-        Time.Clock.millis(c) > 0i64
+        let c = InteropTime.Clock.offset(InteropTime.DurationZ.zero(), InteropTime.Clock.systemClockUTC());
+        InteropTime.Clock.millis(c) > 0i64
        
     /////////////////////////////////////////////////////////////////////////////
     // tick                                                                    //
@@ -82,8 +82,8 @@ mod TestClock {
 
     @test
     def tick01(): Bool \ IO = 
-        let c = Time.Clock.tick(Time.DurationZ.zero(), Time.Clock.systemClockUTC());
-        Time.Clock.millis(c) > 0i64
+        let c = InteropTime.Clock.tick(InteropTime.DurationZ.zero(), InteropTime.Clock.systemClockUTC());
+        InteropTime.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // tickMillis                                                              //
@@ -91,8 +91,8 @@ mod TestClock {
 
     @test
     def tickMillis01(): Bool \ IO = 
-        let c = Time.Clock.tickMillis(Time.ZoneId.utc());
-        Time.Clock.millis(c) > 0i64
+        let c = InteropTime.Clock.tickMillis(InteropTime.ZoneId.utc());
+        InteropTime.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // tickSeconds                                                             //
@@ -100,8 +100,8 @@ mod TestClock {
 
     @test
     def tickSeconds01(): Bool \ IO = 
-        let c = Time.Clock.tickSeconds(Time.ZoneId.utc());
-        Time.Clock.millis(c) > 0i64
+        let c = InteropTime.Clock.tickSeconds(InteropTime.ZoneId.utc());
+        InteropTime.Clock.millis(c) > 0i64
 
     /////////////////////////////////////////////////////////////////////////////
     // tickMinutes                                                             //
@@ -109,8 +109,8 @@ mod TestClock {
 
     @test
     def tickMinutes01(): Bool \ IO = 
-        let c = Time.Clock.tickMinutes(Time.ZoneId.utc());
-        Time.Clock.millis(c) > 0i64
+        let c = InteropTime.Clock.tickMinutes(InteropTime.ZoneId.utc());
+        InteropTime.Clock.millis(c) > 0i64
 
 }
 */

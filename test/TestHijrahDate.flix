@@ -16,6 +16,9 @@
 
 mod TestHirjahDate {
 
+    use InteropTime.Temporal.ChronoUnit.ChronoUnit
+    use InteropTime.Temporal.ChronoField.ChronoField
+
     use Assert.{assertEq, assertTrue, assertFalse, fail};
     
     /////////////////////////////////////////////////////////////////////////////
@@ -24,39 +27,39 @@ mod TestHirjahDate {
 
     @Test
     def until01(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        let d2 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Days) == 0i64)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        let d2 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Days) == 0i64)
     
     @Test
     def until02(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        let d2 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Months) == 0i64)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        let d2 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Months) == 0i64)
 
     @Test
     def until03(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        let d2 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Years) == 0i64)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        let d2 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Years) == 0i64)
 
     @Test
     def until04(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        let d2 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Centuries) == 0i64)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        let d2 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Centuries) == 0i64)
 
     @Test
     def until05(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        let d2 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Millennia) == 0i64)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        let d2 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Millennia) == 0i64)
 
     @Test
     def until06(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        let d2 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant Time.Temporal.ChronoUnit.Eras) == 0i64)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        let d2 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Eras) == 0i64)
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -65,28 +68,28 @@ mod TestHirjahDate {
 
     @Test
     def plusChrono01(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Days) == d1)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant ChronoUnit.Days) == d1)
 
     @Test
     def plusChrono02(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Months) == d1)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant ChronoUnit.Months) == d1)
 
     @Test
     def plusChrono03(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Years) == d1)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant ChronoUnit.Years) == d1)
     
     @Test
     def plusChrono04(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Centuries) == d1)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant ChronoUnit.Centuries) == d1)
     
     @Test
     def plusChrono05(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        assertTrue(Time.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant Time.Temporal.ChronoUnit.Millennia) == d1)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        assertTrue(InteropTime.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant ChronoUnit.Millennia) == d1)
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -95,14 +98,14 @@ mod TestHirjahDate {
 
     @Test
     def withChrono01(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        let y1 = Time.Chrono.HijrahDate.getYear(d1) |> Int32.toInt64;
-        assertTrue(Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.Year, y1) == d1)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        let y1 = InteropTime.Chrono.HijrahDate.getYear(d1) |> Int32.toInt64;
+        assertTrue(InteropTime.Chrono.HijrahDate.withChrono(d1, open_variant ChronoField.Year, y1) == d1)
 
     @Test
     def withChrono02(): Unit \ {Assert, IO} = 
-        let d1 = Time.Chrono.HijrahDate.now();
-        let m1 = Time.Chrono.HijrahDate.getMonth(d1) |> Int32.toInt64;
-        assertTrue(Time.Chrono.HijrahDate.withChrono(d1, open_variant Time.Temporal.ChronoField.MonthOfYear, m1) == d1)
+        let d1 = InteropTime.Chrono.HijrahDate.now();
+        let m1 = InteropTime.Chrono.HijrahDate.getMonth(d1) |> Int32.toInt64;
+        assertTrue(InteropTime.Chrono.HijrahDate.withChrono(d1, open_variant ChronoField.MonthOfYear, m1) == d1)
         
 }

@@ -1,0 +1,293 @@
+/*
+ * Copyright 2020 Stephen Tetley
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+pub mod InteropTime.Year {
+
+    use InteropTime.Year.Year
+    use InteropTime.Year.Year.{Year}
+
+    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
+    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
+    use InteropTime.Format.DateTimeFormatter.DateFormat
+    use InteropTime.ClockZ.ClockZ
+    use InteropTime.ClockZ.ClockZ.{ClockZ}
+    use InteropTime.LocalDate.LocalDate
+    use InteropTime.LocalDate.LocalDate.{LocalDate}
+    use InteropTime.LocalDateTime.LocalDateTime
+    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
+    use InteropTime.Month.Month
+    use InteropTime.MonthDay.MonthDay
+    use InteropTime.MonthDay.MonthDay.{MonthDay}
+    use InteropTime.OffsetDateTime.OffsetDateTime
+    use InteropTime.OffsetDateTime.OffsetDateTime.{OffsetDateTime}
+    use InteropTime.YearMonth.YearMonth
+    use InteropTime.YearMonth.YearMonth.{YearMonth}
+    use InteropTime.ZonedDateTime.ZonedDateTime
+    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime}
+    use InteropTime.ZoneId.ZoneId
+    use InteropTime.ZoneId.ZoneId.{ZoneId}
+
+
+    import java.lang.{Object, CharSequence}
+    import java.time.{Year => JYear}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
+
+    ///
+    /// A wrapper around java.time.Year
+    ///
+    pub enum Year(JYear)
+
+    instance ToString[Year] {
+        pub def toString(x: Year): String =
+            let Year(x1) = x;
+            unsafe IO { x1.toString() }
+    }
+
+    ///
+    /// Returns the year ...
+    ///
+    instance FromString[Year] {
+        pub def fromString(s: String): Option[Year] =
+            Result.tryCatch(_ -> {
+                let s1 = String.trim(s);
+                let ans = unsafe IO { JYear.parse(s1) };
+                Year(ans)
+            }) |> Result.toOption
+    }
+
+    instance Eq[Year] {
+        pub def eq(x: Year, y: Year): Bool =
+            let Year(x1) = x;
+            let Year(y1) = y;
+            unsafe IO { x1.equals(y1) }
+
+    }
+
+    instance Hash[Year] {
+        pub def hash(x: Year): Int32 =
+            let Year(x1) = x;
+            unsafe IO { x1.hashCode() }
+    }
+
+    instance Order[Year] {
+        pub def compare(x: Year, y: Year): Comparison =
+            let Year(x1) = x;
+            let Year(y1) = y;
+            unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
+    }
+
+    /// Unwrap
+
+    pub def getYear(x: Year): JYear = 
+        let Year(x1) = x;
+        x1
+
+    /// Constructors
+
+    pub def year(isoYear: {isoYear = Int32}): Year =
+        let ans = unsafe IO { JYear.of(isoYear#isoYear) };
+        Year(ans)
+
+
+    /// `now` and "abstract constructors" if any
+
+    pub def now(): Year \ IO = Year(JYear.now())
+
+    pub def nowWithClock(x: ClockZ): Year \ IO =
+        let ClockZ(x1) = x;
+        let ans = JYear.now(x1);
+        Year(ans)
+
+    pub def nowWithZoneId(x: ZoneId): Year \ IO =
+        let ZoneId(x1) = x;
+        let ans = JYear.now(x1);
+        Year(ans)
+
+    /// `at` functions
+
+    pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
+        Result.tryCatch(_ -> {
+            let Year(x1) = x;
+            let ans = unsafe IO { x1.atDay(dayOfYear) };
+            LocalDate(ans)
+        }) |> Result.toOption
+
+    pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
+        Result.tryCatch(_ -> {
+            let Year(x1) = x;
+            let ans = unsafe IO { x1.atMonth(month) };
+            YearMonth(ans)
+        }) |> Result.toOption
+
+    pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
+        Result.tryCatch(_ -> {
+            let Year(x1) = x;
+            let m1 = InteropTime.Month.marshalMonth(month);
+            let ans = unsafe IO { x1.atMonth(m1) };
+            YearMonth(ans)
+        }) |> Result.toOption
+
+    pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
+        let Year(x1) = x;
+        let MonthDay(m1) = monthDay;
+        let ans = unsafe IO { x1.atMonthDay(m1) };
+        LocalDate(ans)
+
+
+    // `from` functions
+
+    pub def fromLocalDate(x: LocalDate): Year =
+        let LocalDate(x1) = x;
+        let ans = unsafe IO { JYear.$from(x1) };
+        Year(ans)
+
+    pub def fromLocalDateTime(x: LocalDateTime): Year =
+        let LocalDateTime(x1) = x;
+        let ans = unsafe IO { JYear.$from(x1) };
+        Year(ans)
+
+    pub def fromOffsetDateTime(x: OffsetDateTime): Year =
+        let OffsetDateTime(x1) = x;
+        let ans = unsafe IO { JYear.$from(x1) };
+        Year(ans)
+
+    pub def fromYearMonth(x: YearMonth): Year =
+        let YearMonth(x1) = x;
+        let ans = unsafe IO { JYear.$from(x1) };
+        Year(ans)
+    
+    pub def fromZonedDateTime(x: ZonedDateTime): Year =
+        let ZonedDateTime(x1) = x;
+        let ans = unsafe IO { JYear.$from(x1) };
+        Year(ans)
+
+    /// `parse` / `format` functions  
+
+    ///
+    /// Parse the string `s` as a Year, leading or trailing whitespace is trimmed.
+    /// The format of the input string should in the format mandated by `formatter`.
+    ///
+    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
+    ///
+    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, Year] =
+        Result.tryCatch(_ -> {
+            let DateTimeFormatter(fmtr) = formatter;
+            let s1 = String.trim(s);
+            let ans = unsafe IO { JYear.parse(s1, fmtr) };
+            Year(ans)
+        })
+
+    ///
+    /// Returns the Year `x` as a String using `formatter`.
+    ///
+    pub def format(formatter: DateTimeFormatter[DateFormat], x: Year): String =
+        let Year(x1) = x;
+        let DateTimeFormatter(fmtr) = formatter;
+        unsafe IO { x1.format(fmtr) }
+
+
+    /// predicates / comparisons
+
+    ///
+    /// Returns `true` if `x` is before `y`.
+    ///
+    pub def isBefore(x: Year, y: Year): Bool =
+        let Year(x1) = x;
+        let Year(y1) = y;
+        unsafe IO { x1.isBefore(y1) }
+
+    ///
+    /// Returns `true` if `x` is after `y`.
+    ///
+    pub def isAfter(x: Year, y: Year): Bool =
+        let Year(x1) = x;
+        let Year(y1) = y;
+        unsafe IO { x1.isAfter(y1) }
+
+    ///
+    /// Returns `true` if `x` is a leap year.
+    ///
+    pub def isLeap(x: Year): Bool =
+        let Year(x1) = x;
+        unsafe IO { x1.isLeap() }
+
+    ///
+    /// Returns `true` if `x` is a leap year.
+    ///
+    pub def isLeapYear(x: Int64): Bool =
+        unsafe IO { JYear.isLeap(x) }
+
+    ///
+    /// Returns `true` if _.
+    ///
+    pub def isValidMonthDay(md: MonthDay, x: Year): Bool =
+        let md1 = InteropTime.MonthDay.getMonthDay(md);
+        let Year(x1) = x;
+        unsafe IO { x1.isValidMonthDay(md1) }
+
+
+    /// Year functions
+
+    ///
+    /// Returns _
+    ///
+    pub def length(x: Year): Int32 =
+        let Year(x1) = x;
+        unsafe IO { x1.length() }
+
+    /// plus / minus functions
+
+    ///
+    /// _
+    ///
+    pub def plusYears(x: Year, yearsToAdd: Int64): Year =
+        let Year(x1) = x;
+        let ans = unsafe IO { x1.plusYears(yearsToAdd) };
+        Year(ans)
+
+    ///
+    /// _
+    ///
+    pub def minusYears(x: Year, yearsToSubtract: Int64): Year =
+        let Year(x1) = x;
+        let ans = unsafe IO { x1.minusYears(yearsToSubtract) };
+        Year(ans)
+
+
+    // between / until functions
+
+    pub def yearsUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
+        let Year(b1) = begin#begin;
+        let Year(e1) = end#end;
+        let cu1 = unsafe IO { JChronoUnit.YEARS };
+        unsafe IO { b1.until(e1, cu1) }
+
+    pub def decadesUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
+        let Year(b1) = begin#begin;
+        let Year(e1) = end#end;
+        let cu1 = unsafe IO { JChronoUnit.DECADES };
+        unsafe IO { b1.until(e1, cu1) }
+
+    pub def centuriesUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
+        let Year(b1) = begin#begin;
+        let Year(e1) = end#end;
+        let cu1 = unsafe IO { JChronoUnit.CENTURIES };
+        unsafe IO { b1.until(e1, cu1) }
+
+
+}

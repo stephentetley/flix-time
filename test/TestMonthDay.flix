@@ -25,7 +25,7 @@ mod TestMonthDay {
 
     @Test
     def toString01(): Unit \ {Assert, IO} = 
-        Time.MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString |> println;
+        InteropTime.MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString |> println;
         assertTrue(true)
 
     /////////////////////////////////////////////////////////////////////////////
@@ -33,9 +33,9 @@ mod TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     // @Test
-    // def fromLocalDate01(): Time.MonthDay \ IO = 
-    //     let date = Time.LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
-    //     let md = Time.MonthDay.fromLocalDate(date);
+    // def fromLocalDate01(): InteropTime.MonthDay \ IO = 
+    //     let date = InteropTime.LocalDate.localDate({year =2022, month = 4, dayOfMonth = 18});
+    //     let md = InteropTime.MonthDay.fromLocalDate(date);
     //     println("MonthDay.fromLocalDate01(): ${md}");
     //     md
 
@@ -45,15 +45,15 @@ mod TestMonthDay {
 
     // @Test
     // def get01(): Int32 \ IO =         
-    //     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
-    //     let i = Time.MonthDay.get(Time.Temporal.ChronoField.monthOfYear(), md);
+    //     let md = InteropTime.MonthDay.monthDay({month = 1, dayOfMonth = 1});
+    //     let i = InteropTime.MonthDay.get(InteropTime.Temporal.ChronoField.monthOfYear(), md);
     //     println("MonthDay.get01(): ${i}");
     //     i
 
     // @Test
     // def get02(): Int32 \ IO =         
-    //     let md = Time.MonthDay.monthDay({month = 1, dayOfMonth = 1});
-    //     let i = Time.MonthDay.get(Time.Temporal.ChronoField.dayOfMonth(), md);
+    //     let md = InteropTime.MonthDay.monthDay({month = 1, dayOfMonth = 1});
+    //     let i = InteropTime.MonthDay.get(InteropTime.Temporal.ChronoField.dayOfMonth(), md);
     //     println("MonthDay.get02(): ${i}");
     //     i  
 

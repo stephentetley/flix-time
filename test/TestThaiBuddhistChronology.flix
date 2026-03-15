@@ -24,8 +24,8 @@ mod TestThaiBuddhistChronology {
 
     @Test
     def dateNow01(): Unit \ {Assert, IO} = 
-        let inst = Time.Chrono.ThaiBuddhistChronology.getInstance();
-        let dt1 = Time.Chrono.ThaiBuddhistChronology.dateNow(inst);
+        let inst = InteropTime.Chrono.ThaiBuddhistChronology.getInstance();
+        let dt1 = InteropTime.Chrono.ThaiBuddhistChronology.dateNow(inst);
         println(dt1);
         assertTrue(true)
         
@@ -35,8 +35,8 @@ mod TestThaiBuddhistChronology {
 
     @Test
     def eraOf01(): Unit \ {Assert, IO} = 
-        let inst = Time.Chrono.ThaiBuddhistChronology.getInstance();
-        let e1 = Time.Chrono.ThaiBuddhistChronology.eraOf(inst, 1);
+        let inst = InteropTime.Chrono.ThaiBuddhistChronology.getInstance();
+        let e1 = InteropTime.Chrono.ThaiBuddhistChronology.eraOf(inst, 1);
         println(e1);
         assertTrue(true)
 

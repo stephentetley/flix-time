@@ -1,0 +1,238 @@
+/*
+ * Copyright 2020 Stephen Tetley
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+pub mod InteropTime.Chrono.HijrahDate {
+
+
+    use InteropTime.Chrono.HijrahDate.HijrahDate
+    use InteropTime.Chrono.HijrahDate.HijrahDate.{HijrahDate}
+
+    use InteropTime.Chrono.HijrahChronology.HijrahChronology
+    use InteropTime.Chrono.HijrahChronology.HijrahChronology.{HijrahChronology}
+    use InteropTime.Chrono.HijrahEra.HijrahEra
+    use InteropTime.Temporal.ChronoUnit.ChronoUnit
+    use InteropTime.Temporal.ChronoUnit.ChronoUnit.{Days, Months, Years, Centuries, Millennia, Eras}
+    use InteropTime.Temporal.ChronoField.ChronoField
+    use InteropTime.Temporal.ChronoField.ChronoField.{MonthOfYear, Year}
+    use InteropTime.ClockZ.ClockZ
+    use InteropTime.ClockZ.ClockZ.{ClockZ}
+    use InteropTime.LocalDate.LocalDate
+    use InteropTime.LocalDate.LocalDate.{LocalDate}
+    use InteropTime.LocalDateTime.LocalDateTime
+    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
+    use InteropTime.Period.Period
+    use InteropTime.Period.Period.{Period}
+    use InteropTime.ZoneId.ZoneId
+    use InteropTime.ZoneId.ZoneId.{ZoneId}
+
+    import java.time.{LocalDate => JLocalDate}
+    import java.time.chrono.{HijrahDate => JHijrahDate}
+    import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
+    import java.time.chrono.{HijrahEra => JHijrahEra}
+    import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.time.temporal.{Temporal => JTemporal}
+    import java.time.temporal.{TemporalUnit => JTemporalUnit}
+    import java.lang.{Object}
+
+    ///
+    /// A wrapper around java.time.chrono.HijrahDate.
+    ///
+    pub enum HijrahDate(JHijrahDate)
+
+    ///
+    /// Returns the given HijrahDate `x` as a String.
+    ///
+    instance ToString[HijrahDate] {
+        pub def toString(x: HijrahDate): String =
+            let HijrahDate(x1) = x;
+            unsafe IO { x1.toString() }
+    }
+
+    instance Eq[HijrahDate] {
+        pub def eq(x: HijrahDate, y: HijrahDate): Bool = InteropTime.Chrono.HijrahDate.equals(x, y)
+    }
+
+    instance Order[HijrahDate] {
+        pub def compare(x: HijrahDate, y: HijrahDate): Comparison =
+            InteropTime.Chrono.HijrahDate.compareTo(x, y) |> Comparison.fromInt32
+    }
+
+    instance Hash[HijrahDate] {
+        pub def hash(x: HijrahDate): Int32 = InteropTime.Chrono.HijrahDate.hashCode(x)
+    }
+
+
+    pub def getHijrahDate(x: HijrahDate): JHijrahDate = 
+        let HijrahDate(x1) = x;
+        x1
+
+
+    pub def hijrahDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
+        HijrahDate(unsafe IO { JHijrahDate.of(r#prolepticYear, r#month, r#dayOfMonth) })
+
+
+    ///
+    /// Returns ___
+    ///
+    pub def now(): HijrahDate \ IO =
+        HijrahDate(JHijrahDate.now())
+
+    pub def nowWithClock(x: ClockZ): HijrahDate \ IO =
+        let ClockZ(x1) = x;
+        HijrahDate(JHijrahDate.now(x1))
+
+    pub def nowWithZoneId(x: ZoneId): HijrahDate \ IO =
+        let ZoneId(x1) = x;
+        HijrahDate(JHijrahDate.now(x1))
+
+
+    pub def equals(x: HijrahDate, y: HijrahDate): Bool =
+        let HijrahDate(x1) = x;
+        let HijrahDate(y1) = y;
+        unsafe IO { x1.equals(y1) }
+
+    pub def hashCode(x: HijrahDate): Int32 =
+        let HijrahDate(x1) = x;
+        unsafe IO { x1.hashCode() }
+
+
+    pub def isEqual(x: HijrahDate, y: HijrahDate): Bool =
+        let HijrahDate(x1) = x;
+        let HijrahDate(y1) = y;
+        unsafe IO { x1.isEqual(y1) }
+
+    pub def compareTo(x: HijrahDate, y: HijrahDate): Int32 =
+        let HijrahDate(x1) = x;
+        let HijrahDate(y1) = y;
+        unsafe IO { x1.compareTo(y1) }
+
+    pub def isAfter(x: HijrahDate, y: HijrahDate): Bool =
+        let HijrahDate(x1) = x;
+        let HijrahDate(y1) = y;
+        unsafe IO { x1.isAfter(y1) }
+
+    pub def isBefore(x: HijrahDate, y: HijrahDate): Bool =
+        let HijrahDate(x1) = x;
+        let HijrahDate(y1) = y;
+        unsafe IO { x1.isBefore(y1) }
+
+
+    pub def toEpochDay(x: HijrahDate): Int64 =
+        let HijrahDate(x1) = x;
+        unsafe IO { x1.toEpochDay() }
+
+    pub def toLocalDate(x: HijrahDate): LocalDate =
+        let HijrahDate(x1) = x;
+        let ans = unsafe IO { JLocalDate.$from(x1) };
+        LocalDate(ans)
+
+    pub def fromLocalDate(x: LocalDate): HijrahDate =
+        let LocalDate(x1) = x;
+        let ans = unsafe IO { JHijrahDate.$from(x1) };
+        HijrahDate(ans)
+
+    pub def fromLocalDateTime(x: LocalDateTime): HijrahDate =
+        let LocalDateTime(x1) = x;
+        let ans = unsafe IO { JHijrahDate.$from(x1) };
+        HijrahDate(ans)
+
+
+    pub def getChronology(x: HijrahDate): HijrahChronology =
+        let HijrahDate(x1) = x;
+        HijrahChronology(unsafe IO { x1.getChronology() })
+
+    pub def getEra(x: HijrahDate): HijrahEra =
+        let HijrahDate(x1) = x;
+        let e1 = unsafe IO { x1.getEra() };
+        let ans = unchecked_cast(e1 as JHijrahEra);
+        InteropTime.Chrono.HijrahEra.unmarshalHijrahEra(ans)
+
+
+    pub def isLeapYear(x: HijrahDate): Bool =
+        let HijrahDate(x1) = x;
+        unsafe IO { x1.isLeapYear() }
+
+    pub def lengthOfMonth(x: HijrahDate): Int32 =
+        let HijrahDate(x1) = x;
+        unsafe IO { x1.lengthOfMonth() }
+
+    pub def lengthOfYear(x: HijrahDate): Int32 =
+        let HijrahDate(x1) = x;
+        unsafe IO { x1.lengthOfYear() }
+
+
+    pub def plusPeriod(x: HijrahDate, p: Period): HijrahDate =
+        let HijrahDate(x1) = x;
+        let Period(p1) = p;
+        let t1 = unsafe IO { p1.addTo(x1) };
+        let ans = unchecked_cast(t1 as JHijrahDate);
+        HijrahDate(ans)
+
+    pub def minusPeriod(x: HijrahDate, p: Period): HijrahDate =
+        let HijrahDate(x1) = x;
+        let Period(p1) = p;
+        let t1 = unsafe IO { p1.subtractFrom(x1) };
+        let ans = unchecked_cast(t1 as JHijrahDate);
+        HijrahDate(ans)
+
+    pub def plusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia>]): HijrahDate =
+        let HijrahDate(x1) = x;
+        let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let ans = unsafe IO { x1.plus(i, cu1) };
+        HijrahDate(ans)
+
+    pub def minusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia>]): HijrahDate =
+        let HijrahDate(x1) = x;
+        let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let ans = unsafe IO { x1.minus(i, cu1) };
+        HijrahDate(ans)
+
+
+
+    pub def until(begin: {begin = HijrahDate}, end: {end = HijrahDate}, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia, Eras>]): Int64 =
+        let HijrahDate(b1) = begin#begin;
+        let HijrahDate(e1) = end#end;
+        let te1: JTemporal = unchecked_cast(e1 as JTemporal);
+        let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let tu1: JTemporalUnit = unchecked_cast(cu1 as JTemporalUnit);
+        unsafe IO { b1.until(te1, tu1) }
+
+    pub def getChrono(x: HijrahDate, cf: ChronoField[<MonthOfYear, Year>]): Int64 =
+        let HijrahDate(x1) = x;
+        let cf1 = InteropTime.Temporal.ChronoField.marshalChronoField(cf);
+        unsafe IO { x1.getLong(cf1) }
+
+    pub def getYear(x: HijrahDate): Int32 =
+        match getChrono(x, open_variant ChronoField.Year) |> Int64.tryToInt32 {
+            case Some(i) => i
+            case None => bug!("HijrahDate.getYear()")
+        }
+
+    pub def getMonth(x: HijrahDate): Int32 =
+        match getChrono(x, open_variant ChronoField.MonthOfYear) |> Int64.tryToInt32 {
+            case Some(i) => i
+            case None => bug!("HijrahDate.getMonth()")
+        }
+
+
+    pub def withChrono(x: HijrahDate, cf: ChronoField[<MonthOfYear, Year>], i: Int64): HijrahDate =
+        let HijrahDate(x1) = x;
+        let cf1 = InteropTime.Temporal.ChronoField.marshalChronoField(cf);
+        let ans = unsafe IO { x1.$with(cf1, i) };
+        HijrahDate(ans)
+
+}

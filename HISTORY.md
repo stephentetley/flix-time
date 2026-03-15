@@ -1,5 +1,8 @@
 ### v0.16.0
-   Updated tests to use `Assert`
+   Put modules in a top level namespace `InteropTime`.
+   Exposed modules as `pub` and pushed datatypes down one layer into their
+   respective modules.
+   Updated tests to use `Assert` effect.
    
 ### v0.15.1
    Updated to work with Flix version 0.67.0 (unsafe IO). Thanks Magnus.

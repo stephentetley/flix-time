@@ -1,0 +1,114 @@
+/*
+ * Copyright 2020 Stephen Tetley
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+pub mod InteropTime.Chrono.ThaiBuddhistChronology {
+
+    use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology
+    use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology.{ThaiBuddhistChronology}
+
+    use InteropTime.Chrono.ThaiBuddhistDate.ThaiBuddhistDate
+    use InteropTime.Chrono.ThaiBuddhistDate.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra
+    use InteropTime.ClockZ.ClockZ
+    use InteropTime.ClockZ.ClockZ.{ClockZ}
+    use InteropTime.ZoneId.ZoneId
+    use InteropTime.ZoneId.ZoneId.{ZoneId}
+
+    import java.time.chrono.{ThaiBuddhistChronology => JThaiBuddhistChronology}
+    import java.time.chrono.{Chronology => JChronology, 
+        ChronoLocalDate => JChronoLocalDate,
+        Era => JEra,
+        ThaiBuddhistDate => JThaiBuddhistDate, 
+        ThaiBuddhistEra => JThaiBuddhistEra}
+
+    pub enum ThaiBuddhistChronology(JThaiBuddhistChronology)
+
+    instance ToString[ThaiBuddhistChronology] {
+        pub def toString(x: ThaiBuddhistChronology): String =
+            let ThaiBuddhistChronology.ThaiBuddhistChronology(x1) = x;
+            unsafe IO { x1.toString() }
+    }
+
+
+    pub def getInstance(): ThaiBuddhistChronology \ IO = 
+        ThaiBuddhistChronology.ThaiBuddhistChronology(checked_ecast(JThaiBuddhistChronology.INSTANCE))
+
+    pub def getCalendarType(x: ThaiBuddhistChronology): String  = 
+        let ThaiBuddhistChronology(x1) = x;
+        unsafe IO { x1.getCalendarType() }
+
+    pub def dateNow(x: ThaiBuddhistChronology): ThaiBuddhistDate \ IO = 
+        let ThaiBuddhistChronology(x1) = x;
+        let d1 = x1.dateNow();
+        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans)
+
+    pub def dateNowWithClock(x: ThaiBuddhistChronology, clock: ClockZ): ThaiBuddhistDate \ IO =
+        let ThaiBuddhistChronology(x1) = x;
+        let ClockZ(clock1) = clock;
+        let d1 = x1.dateNow(clock1);
+        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans)
+
+    ///
+    /// Returns the current date from the system clock in the specified time zone.
+    ///
+    pub def dateNowWithZoneId(x: ThaiBuddhistChronology, zone: ZoneId): ThaiBuddhistDate \ IO =
+        let ThaiBuddhistChronology(x1) = x;
+        let ZoneId(zone1) = zone;
+        let d1 = x1.dateNow(zone1);
+        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans)
+
+    pub def dateYearDay(x: ThaiBuddhistChronology, year: Int32, day: Int32): ThaiBuddhistDate =
+        let ThaiBuddhistChronology(x1) = x;
+        let ans = unsafe IO { x1.dateYearDay(year, day) };
+        ThaiBuddhistDate(ans)
+        
+    pub def dateYearDayWithEra(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32, day: Int32): ThaiBuddhistDate =
+        let ThaiBuddhistChronology(x1) = x;
+        let era1 = InteropTime.Chrono.ThaiBuddhistEra.marshalThaiBuddhistEra(era);
+        let ans = unsafe IO { x1.dateYearDay(era1, year, day) };
+        ThaiBuddhistDate(ans)
+
+    // Todo Result[]
+    pub def eraOf(x: ThaiBuddhistChronology, i: Int32): Result[String, ThaiBuddhistEra] = 
+        Result.tryCatch(_ -> {
+            let ThaiBuddhistChronology(x1) = x;
+            let e1 = unsafe IO { x1.eraOf(i) };
+            let ans = unchecked_cast(e1 as JThaiBuddhistEra); 
+            InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
+        })
+
+    pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
+        let ThaiBuddhistChronology(x1) = x;
+        let jlist = unsafe IO { x1.eras() };
+        let xs: List[JThaiBuddhistEra] = Adaptor.fromList(jlist);
+        List.map(InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra, xs)
+
+    pub def isIsoBased(x: ThaiBuddhistChronology): Bool =
+        let ThaiBuddhistChronology(x1) = x;
+        unsafe IO { x1.isIsoBased() }
+
+    pub def isLeapYear(x: ThaiBuddhistChronology, year: Int64): Bool =
+        let ThaiBuddhistChronology(x1) = x;
+        unsafe IO { x1.isLeapYear(year) }
+
+    pub def prolepticYear(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32): Int32 =
+        let ThaiBuddhistChronology(x1) = x;
+        let era1 = InteropTime.Chrono.ThaiBuddhistEra.marshalThaiBuddhistEra(era);
+        unsafe IO { x1.prolepticYear(era1, year) }
+}

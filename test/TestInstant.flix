@@ -27,7 +27,7 @@ mod TestInstant {
 
     @Test
     def toString01(): Unit \ {Assert, IO} = 
-        toString(Time.InstantZ.epoch()) |> println;
+        toString(InteropTime.InstantZ.epoch()) |> println;
         assertTrue(true)
 
 
