@@ -85,12 +85,6 @@ pub mod InteropTime.MonthDay {
 
 
 
-    // Unwrap
-
-    pub def getMonthDay(x: MonthDay): JMonthDay = 
-        let MonthDay(x1) = x;
-        x1
-
     // Constructors
 
     pub def monthDay(r: {month = Int32, dayOfMonth = Int32}): MonthDay =

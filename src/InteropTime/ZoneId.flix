@@ -69,11 +69,6 @@ pub mod InteropTime.ZoneId {
             unsafe IO { x1.hashCode() }
     }
 
-    /// Unwrap
-
-    pub def getZoneId(x: ZoneId): JZoneId = 
-        let ZoneId(x1) = x;
-        x1
 
     pub def fromJavaObject(o: Object): ZoneId = 
         ZoneId(unchecked_cast(o as JZoneId))

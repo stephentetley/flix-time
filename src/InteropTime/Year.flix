@@ -236,7 +236,7 @@ pub mod InteropTime.Year {
     /// Returns `true` if _.
     ///
     pub def isValidMonthDay(md: MonthDay, x: Year): Bool =
-        let md1 = InteropTime.MonthDay.getMonthDay(md);
+        let MonthDay(md1) = md;
         let Year(x1) = x;
         unsafe IO { x1.isValidMonthDay(md1) }
 

@@ -59,12 +59,6 @@ pub mod InteropTime.Zone.ZoneRules {
             unsafe IO { x1.hashCode() }
     }
 
-
-    /// Unwrap
-
-    pub def getZoneRules(x: ZoneRules): JZoneRules = 
-        let ZoneRules(x1) = x;
-        x1
     
 
     /// Constructors

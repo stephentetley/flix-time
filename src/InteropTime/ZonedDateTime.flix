@@ -116,7 +116,8 @@ pub mod InteropTime.ZonedDateTime {
 
     pub def zonedDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, 
                             minute = Int32, second = Int32, nanoSecond = Int32, zoneId = ZoneId }): ZonedDateTime =
-        ZonedDateTime(unsafe IO { JZonedDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, InteropTime.ZoneId.getZoneId(r#zoneId)) }) 
+        let ZoneId(zoneId1) = r#zoneId;
+        ZonedDateTime(unsafe IO { JZonedDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, zoneId1) }) 
 
 
     /// `now` and "abstract constructors" (e.g. `epoch`)

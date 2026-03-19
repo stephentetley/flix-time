@@ -74,9 +74,11 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
 
     /// Constructors
 
-    pub def zoneOffsetTransition(r: {transition = LocalDateTime, before = ZoneOffset, after = ZoneOffset }): ZoneOffsetTransition =
-        use InteropTime.ZoneOffset.{getZoneOffset };
-        ZoneOffsetTransition(unsafe IO { JZoneOffsetTransition.of(InteropTime.LocalDateTime.getLocalDateTime(r#transition), getZoneOffset(r#before), getZoneOffset(r#after))})
+    pub def zoneOffsetTransition(transition: {transition = LocalDateTime}, before: {before = ZoneOffset}, after: {after = ZoneOffset}): ZoneOffsetTransition =
+        let ZoneOffset(before1) = before#before;
+        let ZoneOffset(after1) = after#after;
+        let LocalDateTime(transition1) =  transition#transition;
+        ZoneOffsetTransition(unsafe IO { JZoneOffsetTransition.of(transition1, before1, after1)})
     
     /// `to` functions
 

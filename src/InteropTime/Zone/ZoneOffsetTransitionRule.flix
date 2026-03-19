@@ -102,15 +102,18 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
                                         offsetBefore = ZoneOffset,
                                         offsetAfter = ZoneOffset }): Result[String, ZoneOffsetTransitionRule] =
         Result.tryCatch(_ -> {
+            let ZoneOffset(standardOffset1) = r#standardOffset;
+            let ZoneOffset(offsetBefore1) = r#offsetBefore;
+            let ZoneOffset(offsetAfter1) = r#offsetAfter;
             ZoneOffsetTransitionRule(unsafe IO { JZoneOffsetTransitionRule.of(InteropTime.Month.marshalMonth(r#month),
                                         r#dayOfMonthIndicator,
                                         InteropTime.DayOfWeek.marshalDayOfWeek(r#dayOfWeek),
                                         InteropTime.LocalTime.getLocalTime(r#time),
                                         r#timeEndOfDay,
                                         marshalTimeDefinition(r#timeDefinition),
-                                        InteropTime.ZoneOffset.getZoneOffset(r#standardOffset),
-                                        InteropTime.ZoneOffset.getZoneOffset(r#offsetBefore),
-                                        InteropTime.ZoneOffset.getZoneOffset(r#offsetAfter)
+                                        standardOffset1,
+                                        offsetBefore1,
+                                        offsetAfter1
                                         )})
         })
 

@@ -40,15 +40,13 @@ mod TestMonthDay {
     //     md
 
     /////////////////////////////////////////////////////////////////////////////
-    // get                                                                     //
+    // getDayOfMonth                                                           //
     /////////////////////////////////////////////////////////////////////////////
 
-    // @Test
-    // def get01(): Int32 \ IO =         
-    //     let md = InteropTime.MonthDay.monthDay({month = 1, dayOfMonth = 1});
-    //     let i = InteropTime.MonthDay.get(InteropTime.Temporal.ChronoField.monthOfYear(), md);
-    //     println("MonthDay.get01(): ${i}");
-    //     i
+    @Test
+    def getDayOfMonth01(): Unit \ Assert =         
+        let md = InteropTime.MonthDay.monthDay({month = 1, dayOfMonth = 1});
+        assertEq(expected = 1, InteropTime.MonthDay.getDayOfMonth(md))
 
     // @Test
     // def get02(): Int32 \ IO =         

@@ -51,12 +51,6 @@ pub mod InteropTime.Format.DecimalStyle {
     }
 
 
-    /// ## Unwrap
-
-    pub def getDecimalStyle(x: DecimalStyle): JDecimalStyle = 
-        let DecimalStyle(x1) = x;
-        x1
-
 
     /// ## "abstract constructors" (e.g. `standard`)
 
