@@ -119,10 +119,16 @@ pub mod InteropTime.OffsetDateTime {
 
     /// Constructors
 
-    pub def offsetDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32,
-                    second = Int32, nanoSecond = Int32, offset = ZoneOffset }): OffsetDateTime =
-        let ZoneOffset(o1) = r#offset;
-        let ans = unsafe IO { JOffsetDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond, o1) };
+    pub def offsetDateTime(year: {year = Int32}, 
+                            month: {month = Int32}, 
+                            dayOfMonth: {dayOfMonth = Int32}, 
+                            hour: {hour = Int32}, 
+                            minute: {minute = Int32},
+                            second: {second = Int32}, 
+                            nanoSecond: {nanoSecond = Int32}, 
+                            offset: {offset = ZoneOffset}): OffsetDateTime =
+        let ZoneOffset(o1) = offset#offset;
+        let ans = unsafe IO { JOffsetDateTime.of(year#year, month#month, dayOfMonth#dayOfMonth, hour#hour, minute#minute, second#second, nanoSecond#nanoSecond, o1) };
         OffsetDateTime(ans)
 
 

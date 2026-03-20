@@ -95,8 +95,9 @@ pub mod InteropTime.InstantZ {
 
     /// Constructors
 
-    pub def instant(r: {epochSecond = Int64, nano = Int64 }): InstantZ =
-        let ans = unsafe IO { JInstant.ofEpochSecond(r#epochSecond, r#nano) };
+    pub def instant(epochSecond: {epochSecond = Int64}, 
+                    nano: {nano = Int64 }): InstantZ =
+        let ans = unsafe IO { JInstant.ofEpochSecond(epochSecond#epochSecond, nano#nano) };
         InstantZ(ans)
 
     /// `now` and "abstract constructors" (e.g. `epoch`)

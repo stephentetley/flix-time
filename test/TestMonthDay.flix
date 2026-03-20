@@ -25,7 +25,7 @@ mod TestMonthDay {
 
     @Test
     def toString01(): Unit \ {Assert, IO} = 
-        InteropTime.MonthDay.monthDay({month = 1, dayOfMonth = 1}) |> toString |> println;
+        InteropTime.MonthDay.monthDay(month = 1, dayOfMonth = 1) |> toString |> println;
         assertTrue(true)
 
     /////////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ mod TestMonthDay {
 
     @Test
     def getDayOfMonth01(): Unit \ Assert =         
-        let md = InteropTime.MonthDay.monthDay({month = 1, dayOfMonth = 1});
+        let md = InteropTime.MonthDay.monthDay(month = 1, dayOfMonth = 1);
         assertEq(expected = 1, InteropTime.MonthDay.getDayOfMonth(md))
 
     // @Test

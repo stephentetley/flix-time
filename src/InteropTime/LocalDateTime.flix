@@ -115,16 +115,29 @@ pub mod InteropTime.LocalDateTime {
 
     /// Constructors
 
-    pub def localDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32 }): LocalDateTime =
-        LocalDateTime(unsafe IO { JLocalDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute)}) 
+    pub def localDateTime(year: {year = Int32}, 
+                            month: {month = Int32}, 
+                            dayOfMonth: {dayOfMonth = Int32}, 
+                            hour: {hour = Int32}, 
+                            minute: {minute = Int32}): LocalDateTime =
+        LocalDateTime(unsafe IO { JLocalDateTime.of(year#year, month#month, dayOfMonth#dayOfMonth, hour#hour, minute#minute)}) 
 
-    pub def localDateTimeWithSecond(r: {year = Int32, month = Int32, dayOfMonth = Int32,
-                                hour = Int32, minute = Int32, second = Int32 }): LocalDateTime =
-        LocalDateTime(unsafe IO { JLocalDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second) })
+    pub def localDateTimeWithSecond(year: {year = Int32}, 
+                                    month: {month = Int32}, 
+                                    dayOfMonth: {dayOfMonth = Int32},
+                                    hour: {hour = Int32}, 
+                                    minute: {minute = Int32}, 
+                                    second: {second = Int32}): LocalDateTime =
+        LocalDateTime(unsafe IO { JLocalDateTime.of(year#year, month#month, dayOfMonth#dayOfMonth, hour#hour, minute#minute, second#second) })
 
-    pub def localDateTimeWithSecondAndNano(r: {year = Int32, month = Int32, dayOfMonth = Int32,
-                                        hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32 }): LocalDateTime =
-        LocalDateTime(unsafe IO { JLocalDateTime.of(r#year, r#month, r#dayOfMonth, r#hour, r#minute, r#second, r#nanoSecond)}) 
+    pub def localDateTimeWithSecondAndNano(year: {year = Int32}, 
+                                            month: {month = Int32}, 
+                                            dayOfMonth: {dayOfMonth = Int32},
+                                            hour: {hour = Int32}, 
+                                            minute: {minute = Int32}, 
+                                            second: {second = Int32}, 
+                                            nanoSecond: {nanoSecond = Int32 }): LocalDateTime =
+        LocalDateTime(unsafe IO { JLocalDateTime.of(year#year, month#month, dayOfMonth#dayOfMonth, hour#hour, minute#minute, second#second, nanoSecond#nanoSecond)}) 
 
 
     /// `now` and "abstract constructors" if any

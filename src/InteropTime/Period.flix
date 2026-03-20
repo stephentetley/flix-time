@@ -105,8 +105,10 @@ pub mod InteropTime.Period {
     
     /// Constructors
 
-    pub def period(r: {years = Int32, months = Int32, days = Int32 }): Period =
-        let ans = unsafe IO { JPeriod.of(r#years, r#months, r#days) };
+    pub def period(years: {years = Int32}, 
+                    months: {months = Int32}, 
+                    days: {days = Int32}): Period =
+        let ans = unsafe IO { JPeriod.of(years#years, months#months, days#days) };
         Period(ans)
 
     /// "abstract constructors" (e.g. `zero`)

@@ -87,13 +87,14 @@ pub mod InteropTime.MonthDay {
 
     // Constructors
 
-    pub def monthDay(r: {month = Int32, dayOfMonth = Int32}): MonthDay =
-        let ans = unsafe IO { JMonthDay.of(r#month, r#dayOfMonth) };
+    pub def monthDay(month: {month = Int32}, dayOfMonth: {dayOfMonth = Int32}): MonthDay =
+        let ans = unsafe IO { JMonthDay.of(month#month, dayOfMonth#dayOfMonth) };
         MonthDay(ans)
 
-    pub def monthDayWithMonth(r: {month = Month, dayOfMonth = Int32}): MonthDay =
-        let m1 = InteropTime.Month.marshalMonth(r#month);
-        let ans = unsafe IO { JMonthDay.of(m1, r#dayOfMonth) };
+    pub def monthDayWithMonth(month: {month = Month}, 
+                                dayOfMonth: {dayOfMonth = Int32}): MonthDay =
+        let m1 = InteropTime.Month.marshalMonth(month#month);
+        let ans = unsafe IO { JMonthDay.of(m1, dayOfMonth#dayOfMonth) };
         MonthDay(ans)
 
     /// `now` and "abstract constructors" if any

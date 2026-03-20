@@ -117,8 +117,9 @@ pub mod InteropTime.DurationZ {
     ///
     /// Return a new duration.
     ///
-    pub def duration(r: {seconds = Int64, nanos = Int64 }): DurationZ =
-        let ans = unsafe IO { JDuration.ofSeconds(r#seconds, r#nanos) };
+    pub def duration(seconds: {seconds = Int64}, 
+                        nanos: {nanos = Int64}): DurationZ =
+        let ans = unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) };
         DurationZ(ans)
 
     /// "abstract constructors" (e.g. `zero`)

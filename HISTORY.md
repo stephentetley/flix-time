@@ -3,7 +3,9 @@
    Exposed modules as `pub` and pushed datatypes down one layer into their
    respective modules.
    Updated tests to use `Assert` effect.
-   REmoved the "unwrap" functions like `getMonthDay`
+   Removed the "unwrap" functions like `getMonthDay`.
+   Changed functions taking records to simulate named paramaters to
+   use Flix-style one field records for named parameters.
    
 ### v0.15.1
    Updated to work with Flix version 0.67.0 (unsafe IO). Thanks Magnus.

@@ -37,7 +37,7 @@ mod TestPeriod {
     def add02(): Unit \ Assert = 
         let p1 = InteropTime.Period.ofYears(10);
         let ans = p1 + InteropTime.Period.ofMonths(10);
-        assertTrue(ans == InteropTime.Period.period({years = 10, months = 10, days = 0}))
+        assertTrue(ans == InteropTime.Period.period(years = 10, months = 10, days = 0))
 
 
     /////////////////////////////////////////////////////////////////////////////

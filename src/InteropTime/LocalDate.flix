@@ -115,13 +115,17 @@ pub mod InteropTime.LocalDate {
 
     // Constructors
 
-    pub def localDate(r: {year = Int32, month = Int32, dayOfMonth = Int32 }): LocalDate =
-        let ans = unsafe IO { JLocalDate.of(r#year, r#month, r#dayOfMonth) };
+    pub def localDate(year: {year = Int32}, 
+                        month: {month = Int32}, 
+                        dayOfMonth: {dayOfMonth = Int32}): LocalDate =
+        let ans = unsafe IO { JLocalDate.of(year#year, month#month, dayOfMonth#dayOfMonth) };
         LocalDate(ans)
 
-    pub def localDateWithMonth(r: {year = Int32, month = Month, dayOfMonth = Int32 }): LocalDate =
-        let m1 = InteropTime.Month.marshalMonth(r#month);
-        let ans = unsafe IO { JLocalDate.of(r#year, m1, r#dayOfMonth) };
+    pub def localDateWithMonth(year: {year = Int32}, 
+                                month: {month = Month}, 
+                                dayOfMonth: {dayOfMonth = Int32}): LocalDate =
+        let m1 = InteropTime.Month.marshalMonth(month#month);
+        let ans = unsafe IO { JLocalDate.of(year#year, m1, dayOfMonth#dayOfMonth) };
         LocalDate(ans)
 
     // `now` and "abstract constructors" (e.g. `epoch`)

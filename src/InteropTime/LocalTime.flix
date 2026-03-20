@@ -101,16 +101,21 @@ pub mod InteropTime.LocalTime {
 
     // Constructors
 
-    pub def localTime(r: {hour = Int32, minute = Int32}): LocalTime =
-        let ans = unsafe IO { JLocalTime.of(r#hour, r#minute) };
+    pub def localTime(hour: {hour = Int32}, minute: {minute = Int32}): LocalTime =
+        let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute) };
         LocalTime(ans)
 
-    pub def localTimeWithSecond(r: {hour = Int32, minute = Int32, second = Int32}): LocalTime =
-        let ans = unsafe IO { JLocalTime.of(r#hour, r#minute, r#second) };
+    pub def localTimeWithSecond(hour: {hour = Int32}, 
+                                minute: {minute = Int32}, 
+                                second: {second = Int32}): LocalTime =
+        let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute, second#second) };
         LocalTime(ans)
 
-    pub def localTimeWithSecondAndNano(r: {hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32}): LocalTime =
-        let ans = unsafe IO { JLocalTime.of(r#hour, r#minute, r#second, r#nanoSecond) };
+    pub def localTimeWithSecondAndNano(hour: {hour = Int32}, 
+                                        minute: {minute = Int32}, 
+                                        second: {second = Int32}, 
+                                        nanoSecond: {nanoSecond = Int32}): LocalTime =
+        let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute, second#second, nanoSecond#nanoSecond) };
         LocalTime(ans)
 
 

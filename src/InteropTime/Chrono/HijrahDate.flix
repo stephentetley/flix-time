@@ -76,8 +76,10 @@ pub mod InteropTime.Chrono.HijrahDate {
     }
 
 
-    pub def hijrahDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
-        HijrahDate(unsafe IO { JHijrahDate.of(r#prolepticYear, r#month, r#dayOfMonth) })
+    pub def hijrahDate(prolepticYear: {prolepticYear = Int32}, 
+                        month: {month = Int32}, 
+                        dayOfMonth: {dayOfMonth = Int32}): HijrahDate =
+        HijrahDate(unsafe IO { JHijrahDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
 
     ///

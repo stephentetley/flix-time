@@ -92,13 +92,13 @@ pub mod InteropTime.YearMonth {
 
     /// Constructors
 
-    pub def yearMonth(r: {year = Int32, month = Int32}): YearMonth =
-        let ans = unsafe IO { JYearMonth.of(r#year, r#month) };
+    pub def yearMonth(year: {year = Int32}, month: {month = Int32}): YearMonth =
+        let ans = unsafe IO { JYearMonth.of(year#year, month#month) };
         YearMonth(ans)
 
-    pub def yearMonthWithMonth(r: {year = Int32, month = Month}): YearMonth =
-        let m1 = InteropTime.Month.marshalMonth(r#month);
-        let ans = unsafe IO { JYearMonth.of(r#year, m1) };
+    pub def yearMonthWithMonth(year: {year = Int32}, month: {month = Month}): YearMonth =
+        let m1 = InteropTime.Month.marshalMonth(month#month);
+        let ans = unsafe IO { JYearMonth.of(year#year, m1) };
         YearMonth(ans)
 
 
@@ -211,7 +211,7 @@ pub mod InteropTime.YearMonth {
         InteropTime.Month.unmarshalMonth(m1)
 
     pub def withMonth(month: Month, x: YearMonth): YearMonth =
-        yearMonthWithMonth({year = getYear(x), month = month})
+        yearMonthWithMonth(year = getYear(x), month = month)
 
     pub def getMonthValue(x: YearMonth): Int32 =
         let YearMonth(x1) = x;

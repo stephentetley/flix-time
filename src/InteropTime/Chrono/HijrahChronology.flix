@@ -55,16 +55,21 @@ pub mod InteropTime.Chrono.HijrahChronology {
     pub def getInstance(): HijrahChronology \ IO =
         HijrahChronology(checked_ecast(JHijrahChronology.INSTANCE))
 
-    pub def date(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32},
-                 x: HijrahChronology): HijrahDate =
-        let HijrahChronology(x1) = x;
-        HijrahDate(unsafe IO { x1.date(r#prolepticYear, r#month, r#dayOfMonth) })
+    pub def date(prolepticYear: {prolepticYear = Int32}, 
+                    month: {month = Int32}, 
+                    dayOfMonth: {dayOfMonth = Int32},
+                    chrono: {chrono = HijrahChronology}): HijrahDate =
+        let HijrahChronology(chrono1) = chrono#chrono;
+        HijrahDate(unsafe IO { chrono1.date(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
-    pub def dateWithEra(r: {era = HijrahEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32},
+    pub def dateWithEra(era: {era = HijrahEra}, 
+                        yearOfEra: {yearOfEra = Int32}, 
+                        month: {month = Int32}, 
+                        dayOfMonth: {dayOfMonth = Int32},
                         x: HijrahChronology): HijrahDate =
         let HijrahChronology(x1) = x;
-        let era1 = InteropTime.Chrono.HijrahEra.marshalHijrahEra(r#era);
-        let d1 = unsafe IO { x1.date(era1, r#yearOfEra, r#month, r#dayOfMonth) };
+        let era1 = InteropTime.Chrono.HijrahEra.marshalHijrahEra(era#era);
+        let d1 = unsafe IO { x1.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) };
         let ans = unchecked_cast(d1 as JHijrahDate);
         HijrahDate(ans)
 

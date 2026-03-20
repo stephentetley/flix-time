@@ -79,7 +79,8 @@ pub mod InteropTime.ZoneId {
         Result.tryCatch(_ -> ZoneId(unsafe IO { JZoneId.of(zoneId#zoneId) }))
 
     /// Ideally not in IO...
-    pub def zoneIdWithAliases(zoneId: {zoneId = String}, aliases: Map[String, String]): Result[String, ZoneId] \ IO =
+    pub def zoneIdWithAliases(zoneId: {zoneId = String}, 
+                                aliases: Map[String, String]): Result[String, ZoneId] \ IO =
         Result.tryCatch(_ -> {
             let jmap = Adaptor.toMap(aliases);
             let ans = unsafe IO { JZoneId.of(zoneId#zoneId, jmap) };
@@ -100,12 +101,13 @@ pub mod InteropTime.ZoneId {
 
     /// `from` functions
 
-    pub def fromOffset(r: {prefix = Option[String], offset = ZoneOffset}): ZoneId =
-        let p1 = match r#prefix {
+    pub def fromOffset(prefix: {prefix = Option[String]}, 
+                        offset: {offset = ZoneOffset}): ZoneId =
+        let p1 = match prefix#prefix {
             case Some(s) => s
             case _       => ""
         };
-        let ZoneOffset(o1) = r#offset;
+        let ZoneOffset(o1) = offset#offset;
         ZoneId(unsafe IO { JZoneId.ofOffset(p1, o1) })
 
     /// `fromTemporalAccessor` specialized

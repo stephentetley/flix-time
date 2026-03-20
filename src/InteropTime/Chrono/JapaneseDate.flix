@@ -72,12 +72,17 @@ pub mod InteropTime.Chrono.JapaneseDate {
     ///
     /// Returns ___
     ///
-    pub def japaneseDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32 }): JapaneseDate  =
-        JapaneseDate(unsafe IO { JJapaneseDate.of(r#prolepticYear, r#month, r#dayOfMonth) })
+    pub def japaneseDate(prolepticYear: {prolepticYear = Int32}, 
+                            month: {month = Int32}, 
+                            dayOfMonth: {dayOfMonth = Int32}): JapaneseDate  =
+        JapaneseDate(unsafe IO { JJapaneseDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
-    pub def japaneseDateWithJapaneseEra(r: {era = JapaneseEra, yearOfEra = Int32, month = Int32, dayOfMonth = Int32 }): JapaneseDate  =
-        let JapaneseEra(era1) = r#era;
-        JapaneseDate(unsafe IO { JJapaneseDate.of(era1, r#yearOfEra, r#month, r#dayOfMonth) })
+    pub def japaneseDateWithJapaneseEra(era: JapaneseEra, 
+                                        yearOfEra: {yearOfEra = Int32}, 
+                                        month: {month = Int32}, 
+                                        dayOfMonth: {dayOfMonth = Int32}): JapaneseDate  =
+        let JapaneseEra(era1) = era;
+        JapaneseDate(unsafe IO { JJapaneseDate.of(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) })
 
 
     //

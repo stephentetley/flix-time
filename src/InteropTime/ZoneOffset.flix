@@ -96,12 +96,15 @@ pub mod InteropTime.ZoneOffset {
         let ans = unsafe IO { JZoneOffset.ofHours(hours) };
         ZoneOffset(ans)
 
-    pub def ofHoursMinutes(r: {hours = Int32, minutes = Int32}): ZoneOffset =
-        let ans = unsafe IO { JZoneOffset.ofHoursMinutes(r#hours, r#minutes) };
+    pub def ofHoursMinutes(hours: {hours = Int32}, 
+                            minutes: {minutes = Int32}): ZoneOffset =
+        let ans = unsafe IO { JZoneOffset.ofHoursMinutes(hours#hours, minutes#minutes) };
         ZoneOffset(ans)
 
-    pub def ofHoursMinutesSeconds(r: {hours = Int32, minutes = Int32, seconds = Int32}): ZoneOffset =
-        let ans = unsafe IO { JZoneOffset.ofHoursMinutesSeconds(r#hours, r#minutes, r#seconds) };
+    pub def ofHoursMinutesSeconds(hours: {hours = Int32}, 
+                                    minutes: {minutes = Int32}, 
+                                    seconds: {seconds = Int32}): ZoneOffset =
+        let ans = unsafe IO { JZoneOffset.ofHoursMinutesSeconds(hours#hours, minutes#minutes, seconds#seconds) };
         ZoneOffset(ans)
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =

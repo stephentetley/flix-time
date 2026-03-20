@@ -87,30 +87,32 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
 
     /// Constructors
 
-    pub def zoneOffsetTransitionRule(r: {month = Month, 
-                                        dayOfMonthIndicator = Int32, 
-                                        dayOfWeek = DayOfWeek, 
-                                        time = LocalTime,
-                                        timeEndOfDay = Bool, 
-                                        timeDefinition = TimeDefinition,
-                                        standardOffset = ZoneOffset, 
-                                        offsetBefore = ZoneOffset,
-                                        offsetAfter = ZoneOffset }): Result[String, ZoneOffsetTransitionRule] =
+    pub def zoneOffsetTransitionRule(month: {month = Month}, 
+                                        dayOfMonthIndicator: {dayOfMonthIndicator = Int32}, 
+                                        dayOfWeek: {dayOfWeek = DayOfWeek}, 
+                                        time: {time = LocalTime},
+                                        timeEndOfDay: {timeEndOfDay = Bool}, 
+                                        timeDefinition: {timeDefinition = TimeDefinition},
+                                        standardOffset: {standardOffset = ZoneOffset}, 
+                                        offsetBefore: {offsetBefore = ZoneOffset},
+                                        offsetAfter: {offsetAfter = ZoneOffset}): Result[String, ZoneOffsetTransitionRule] =
         Result.tryCatch(_ -> {
-            let LocalTime(time1) = r#time;
-            let ZoneOffset(standardOffset1) = r#standardOffset;
-            let ZoneOffset(offsetBefore1) = r#offsetBefore;
-            let ZoneOffset(offsetAfter1) = r#offsetAfter;
-            ZoneOffsetTransitionRule(unsafe IO { JZoneOffsetTransitionRule.of(InteropTime.Month.marshalMonth(r#month),
-                                        r#dayOfMonthIndicator,
-                                        InteropTime.DayOfWeek.marshalDayOfWeek(r#dayOfWeek),
-                                        time1,
-                                        r#timeEndOfDay,
-                                        marshalTimeDefinition(r#timeDefinition),
-                                        standardOffset1,
-                                        offsetBefore1,
-                                        offsetAfter1
-                                        )})
+            let month1 = InteropTime.Month.marshalMonth(month#month);
+            let dayOfWeek1 = InteropTime.DayOfWeek.marshalDayOfWeek(dayOfWeek#dayOfWeek);
+            let LocalTime(time1) = time#time;
+            let ZoneOffset(standardOffset1) = standardOffset#standardOffset;
+            let ZoneOffset(offsetBefore1) = offsetBefore#offsetBefore;
+            let ZoneOffset(offsetAfter1) = offsetAfter#offsetAfter;
+            ZoneOffsetTransitionRule(unsafe IO { JZoneOffsetTransitionRule.of(month1,
+                                                    dayOfMonthIndicator#dayOfMonthIndicator,
+                                                    dayOfWeek1,
+                                                    time1,
+                                                    timeEndOfDay#timeEndOfDay,
+                                                    marshalTimeDefinition(timeDefinition#timeDefinition),
+                                                    standardOffset1,
+                                                    offsetBefore1,
+                                                    offsetAfter1
+                                                )})
         })
 
     /// predicates / comparisons
