@@ -99,8 +99,8 @@ mod TestHirjahDate {
     @Test
     def withChrono01(): Unit \ {Assert, IO} = 
         let d1 = InteropTime.Chrono.HijrahDate.now();
-        let y1 = InteropTime.Chrono.HijrahDate.getYear(d1) |> Int32.toInt64;
-        assertTrue(InteropTime.Chrono.HijrahDate.withChrono(d1, open_variant ChronoField.Year, y1) == d1)
+        let y1 = InteropTime.Chrono.HijrahDate.getYear(d1);
+        assertTrue(InteropTime.Chrono.HijrahDate.withChrono(d1, open_variant ChronoField.Year, Int32.toInt64(y1)) == d1)
 
     @Test
     def withChrono02(): Unit \ {Assert, IO} = 

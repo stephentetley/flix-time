@@ -55,10 +55,6 @@ pub mod InteropTime.Chrono.JapaneseEra {
 
 
 
-    pub def getJapaneseEra(x: JapaneseEra): JJapaneseEra = 
-        let JapaneseEra(x1) = x;
-        x1
-
     pub def japaneseEra(japaneseEra: {japaneseEra = Int32 }): Option[JapaneseEra] =
         Result.tryCatch(_ -> {
             JapaneseEra(unsafe IO { JJapaneseEra.of(japaneseEra#japaneseEra)}) 
@@ -91,7 +87,7 @@ pub mod InteropTime.Chrono.JapaneseEra {
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: JapaneseEra): String = 
-        let x1 = getJapaneseEra(x);
+        let JapaneseEra(x1) = x;
         let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
         let Locale.Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(style1, locale1) }

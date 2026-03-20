@@ -50,10 +50,6 @@ pub mod InteropTime.Chrono.HijrahChronology {
             InteropTime.Chrono.HijrahChronology.toString(x)
     }
 
-    pub def getHijrahChronology(x: HijrahChronology): JHijrahChronology = 
-        let HijrahChronology(x1) = x;
-        x1
-
 
 
     pub def getInstance(): HijrahChronology \ IO =

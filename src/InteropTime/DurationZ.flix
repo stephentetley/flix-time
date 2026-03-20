@@ -112,13 +112,6 @@ pub mod InteropTime.DurationZ {
    }
 
 
-    /// Unwrap
-
-    pub def getDuration(x: DurationZ): JDuration = 
-        let DurationZ(x1) = x;
-        x1
-
-
     /// Constructors
 
     ///

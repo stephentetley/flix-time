@@ -102,13 +102,6 @@ pub mod InteropTime.Period {
         pub def empty(): Period = InteropTime.Period.zero()
     }
 
-
-    /// Unwrap
-
-    pub def getPeriod(x: Period): JPeriod = 
-        let Period(x1) = x;
-        x1
-
     
     /// Constructors
 

@@ -59,11 +59,6 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
             unsafe IO { x1.hashCode() }
     }
 
-    /// Unwrap
-
-    pub def getZoneOffsetTransitionRule(x: ZoneOffsetTransitionRule): JZoneOffsetTransitionRule = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        x1
 
     pub enum TimeDefinition with Eq, Order, ToString, Hash {
         case Standard
@@ -102,13 +97,14 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
                                         offsetBefore = ZoneOffset,
                                         offsetAfter = ZoneOffset }): Result[String, ZoneOffsetTransitionRule] =
         Result.tryCatch(_ -> {
+            let LocalTime(time1) = r#time;
             let ZoneOffset(standardOffset1) = r#standardOffset;
             let ZoneOffset(offsetBefore1) = r#offsetBefore;
             let ZoneOffset(offsetAfter1) = r#offsetAfter;
             ZoneOffsetTransitionRule(unsafe IO { JZoneOffsetTransitionRule.of(InteropTime.Month.marshalMonth(r#month),
                                         r#dayOfMonthIndicator,
                                         InteropTime.DayOfWeek.marshalDayOfWeek(r#dayOfWeek),
-                                        InteropTime.LocalTime.getLocalTime(r#time),
+                                        time1,
                                         r#timeEndOfDay,
                                         marshalTimeDefinition(r#timeDefinition),
                                         standardOffset1,

@@ -88,11 +88,7 @@ pub mod InteropTime.YearMonth {
     }
 
 
-    /// Unwrap
 
-    pub def getYearMonth(x: YearMonth): JYearMonth = 
-        let YearMonth(x1) = x;
-        x1
 
     /// Constructors
 

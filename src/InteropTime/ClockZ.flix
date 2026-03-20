@@ -39,11 +39,6 @@ pub mod InteropTime.ClockZ {
     ///
     pub enum ClockZ(JClock)
 
-    /// Unwrap
-
-    pub def getClock(x: ClockZ): JClock =
-        let ClockZ(x1) = x;
-        x1
 
     /// "factory methods" (e.g. `fixedClock`)
 

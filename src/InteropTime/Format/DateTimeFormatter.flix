@@ -60,11 +60,6 @@ pub mod InteropTime.Format.DateTimeFormatter {
     pub enum DateTimeFormat {}
 
 
-    /// ## Unwrap
-
-    pub def getDateTimeFormatter(x: DateTimeFormatter[t]): JDateTimeFormatter = 
-        let DateTimeFormatter(x1) = x;
-        x1
 
     /// ## "abstract constructors"
 

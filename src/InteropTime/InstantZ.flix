@@ -92,11 +92,6 @@ pub mod InteropTime.InstantZ {
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
    }
 
-    /// Unwrap
-
-    pub def getInstant(x: InstantZ): JInstant = 
-        let InstantZ(x1) = x;
-        x1
 
     /// Constructors
 

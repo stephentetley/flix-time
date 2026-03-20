@@ -65,13 +65,6 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
 
 
 
-    /// Unwrap
-
-    pub def getZoneOffsetTransition(x: ZoneOffsetTransition): JZoneOffsetTransition = 
-        let ZoneOffsetTransition(x1) = x;
-        x1
-
-
     /// Constructors
 
     pub def zoneOffsetTransition(transition: {transition = LocalDateTime}, before: {before = ZoneOffset}, after: {after = ZoneOffset}): ZoneOffsetTransition =

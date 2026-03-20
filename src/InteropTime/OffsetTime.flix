@@ -98,16 +98,12 @@ pub mod InteropTime.OffsetTime {
    }
 
 
-    /// Unwrap
-
-    pub def getOffsetTime(x: OffsetTime): JOffsetTime = 
-        let OffsetTime(x1) = x;
-        x1
 
     /// Constructors
 
     pub def offsetTime(r: { hour = Int32, minute = Int32, second = Int32, nanoSecond = Int32, offset = ZoneOffset }): OffsetTime =
-        let ans = unsafe IO { JOffsetTime.of(r#hour, r#minute, r#second, r#nanoSecond, InteropTime.ZoneOffset.getZoneOffset(r#offset)) };
+        let ZoneOffset(offset1) = r#offset;
+        let ans = unsafe IO { JOffsetTime.of(r#hour, r#minute, r#second, r#nanoSecond, offset1) };
         OffsetTime(ans)
 
     /// `now` and "abstract constructors" if any

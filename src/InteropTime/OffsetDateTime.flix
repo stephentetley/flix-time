@@ -117,13 +117,6 @@ pub mod InteropTime.OffsetDateTime {
    }
 
 
-    /// Unwrap
-
-    pub def getOffsetDateTime(x: OffsetDateTime): JOffsetDateTime = 
-        let OffsetDateTime(x1) = x;
-        x1
-
-
     /// Constructors
 
     pub def offsetDateTime(r: {year = Int32, month = Int32, dayOfMonth = Int32, hour = Int32, minute = Int32,

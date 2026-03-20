@@ -72,9 +72,6 @@ pub mod InteropTime.ZoneOffset {
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
-    pub def getZoneOffset(x: ZoneOffset): JZoneOffset = 
-        let ZoneOffset(x1) = x;
-        x1
 
     // TODO - do we need this for interring into Java collections?
     pub def fromJavaObject(o: Object): ZoneOffset = 

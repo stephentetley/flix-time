@@ -98,12 +98,6 @@ pub mod InteropTime.LocalTime {
     }
 
 
-    // Unwrap
-
-    pub def getLocalTime(x: LocalTime): JLocalTime = 
-        let LocalTime(x1) = x;
-        x1
-
 
     // Constructors
 

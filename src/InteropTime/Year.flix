@@ -91,12 +91,6 @@ pub mod InteropTime.Year {
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
-    /// Unwrap
-
-    pub def getYear(x: Year): JYear = 
-        let Year(x1) = x;
-        x1
-
     /// Constructors
 
     pub def year(isoYear: {isoYear = Int32}): Year =

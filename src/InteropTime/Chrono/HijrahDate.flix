@@ -76,11 +76,6 @@ pub mod InteropTime.Chrono.HijrahDate {
     }
 
 
-    pub def getHijrahDate(x: HijrahDate): JHijrahDate = 
-        let HijrahDate(x1) = x;
-        x1
-
-
     pub def hijrahDate(r: {prolepticYear = Int32, month = Int32, dayOfMonth = Int32}): HijrahDate =
         HijrahDate(unsafe IO { JHijrahDate.of(r#prolepticYear, r#month, r#dayOfMonth) })
 
