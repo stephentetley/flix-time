@@ -69,22 +69,19 @@ pub mod InteropTime.Chrono.HijrahChronology {
                         x: HijrahChronology): HijrahDate =
         let HijrahChronology(x1) = x;
         let era1 = InteropTime.Chrono.HijrahEra.marshalHijrahEra(era#era);
-        let d1 = unsafe IO { x1.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) };
-        let ans = unchecked_cast(d1 as JHijrahDate);
+        let ans = unsafe IO { x1.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) };
         HijrahDate(ans)
 
 
     pub def dateNow(x: HijrahChronology): HijrahDate \ IO = 
         let HijrahChronology(x1) = x;
-        let d1 = x1.dateNow();
-        let ans = unchecked_cast(d1 as JHijrahDate);
+        let ans = x1.dateNow();
         HijrahDate(ans)
 
     pub def dateNowWithClock(x: HijrahChronology, clock: ClockZ): HijrahDate \ IO =
         let HijrahChronology(x1) = x;
         let ClockZ(clock1) = clock;
-        let d1 = x1.dateNow(clock1);
-        let ans = unchecked_cast(d1 as JHijrahDate);
+        let ans = x1.dateNow(clock1);
         HijrahDate(ans)
 
     ///
@@ -93,15 +90,13 @@ pub mod InteropTime.Chrono.HijrahChronology {
     pub def dateNowWithZoneId(x: HijrahChronology, zone: ZoneId): HijrahDate \ IO =
         let HijrahChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        let d1 = x1.dateNow(zone1);
-        let ans = unchecked_cast(d1 as JHijrahDate);
+        let ans = x1.dateNow(zone1);
         HijrahDate(ans)
 
     pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] =
         Result.tryCatch(_ -> {
             let HijrahChronology(x1) = x;
-            let d1 = unsafe IO { x1.dateEpochDay(epochDay) };
-            let ans = unchecked_cast(d1 as JHijrahDate);
+            let ans = unsafe IO { x1.dateEpochDay(epochDay) };
             HijrahDate(ans)
         })
 
@@ -123,8 +118,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
 
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra =
         let HijrahChronology(x1) = x;
-        let e1 = unsafe IO { x1.eraOf(i) };
-        let ans = unchecked_cast(e1 as JHijrahEra);
+        let ans = unsafe IO { x1.eraOf(i) };
         InteropTime.Chrono.HijrahEra.unmarshalHijrahEra(ans)
 
     pub def eras(x: HijrahChronology): List[HijrahEra] \ IO =

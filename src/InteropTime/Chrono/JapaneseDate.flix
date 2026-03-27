@@ -135,15 +135,13 @@ pub mod InteropTime.Chrono.JapaneseDate {
 
     pub def getChronology(x: JapaneseDate): JapaneseChronology = 
         let JapaneseDate(x1) = x;
-        let c1 = unsafe IO { x1.getChronology() };
-        let ans = unchecked_cast(c1 as JJapaneseChronology);
+        let ans = unsafe IO { x1.getChronology() };
         JapaneseChronology(ans)
 
 
     pub def getEra(x: JapaneseDate): JapaneseEra = 
         let JapaneseDate(x1) = x;
-        let e1 = unsafe IO { x1.getEra() };
-        let ans = unchecked_cast(e1 as JJapaneseEra);
+        let ans = unsafe IO { x1.getEra() };
         JapaneseEra(ans)
 
     pub def lengthOfMonth(x: JapaneseDate): Int32 = 

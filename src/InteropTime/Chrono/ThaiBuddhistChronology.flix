@@ -52,15 +52,13 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
 
     pub def dateNow(x: ThaiBuddhistChronology): ThaiBuddhistDate \ IO = 
         let ThaiBuddhistChronology(x1) = x;
-        let d1 = x1.dateNow();
-        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        let ans = x1.dateNow();
         ThaiBuddhistDate(ans)
 
     pub def dateNowWithClock(x: ThaiBuddhistChronology, clock: ClockZ): ThaiBuddhistDate \ IO =
         let ThaiBuddhistChronology(x1) = x;
         let ClockZ(clock1) = clock;
-        let d1 = x1.dateNow(clock1);
-        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        let ans = x1.dateNow(clock1);
         ThaiBuddhistDate(ans)
 
     ///
@@ -69,8 +67,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
     pub def dateNowWithZoneId(x: ThaiBuddhistChronology, zone: ZoneId): ThaiBuddhistDate \ IO =
         let ThaiBuddhistChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        let d1 = x1.dateNow(zone1);
-        let ans = unchecked_cast(d1 as JThaiBuddhistDate);
+        let ans = x1.dateNow(zone1);
         ThaiBuddhistDate(ans)
 
     pub def dateYearDay(x: ThaiBuddhistChronology, year: Int32, day: Int32): ThaiBuddhistDate =
@@ -88,8 +85,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): Result[String, ThaiBuddhistEra] = 
         Result.tryCatch(_ -> {
             let ThaiBuddhistChronology(x1) = x;
-            let e1 = unsafe IO { x1.eraOf(i) };
-            let ans = unchecked_cast(e1 as JThaiBuddhistEra); 
+            let ans = unsafe IO { x1.eraOf(i) };
             InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
         })
 

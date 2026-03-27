@@ -31,7 +31,7 @@ pub mod InteropTime.Chrono.JapaneseChronology {
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneId.ZoneId.{ZoneId}
 
-
+    import java.util.{List => JList}
     import java.time.chrono.{JapaneseChronology => JJapaneseChronology}
     import java.time.chrono.{Chronology => JChronology, 
         ChronoLocalDate => JChronoLocalDate,
@@ -57,16 +57,14 @@ pub mod InteropTime.Chrono.JapaneseChronology {
 
     pub def dateNow(x: JapaneseChronology): JapaneseDate \ IO = 
         let JapaneseChronology(x1) = x;
-        let d1 = x1.dateNow();
-        let ans = unchecked_cast(d1 as JJapaneseDate);
+        let ans = x1.dateNow();
         JapaneseDate(ans)
 
 
     pub def dateNowWithClock(x: JapaneseChronology, clock: ClockZ): JapaneseDate \ IO =
         let JapaneseChronology(x1) = x;
         let ClockZ(clock1) = clock;
-        let d1 = x1.dateNow(clock1);
-        let ans = unchecked_cast(d1 as JJapaneseDate);
+        let ans = x1.dateNow(clock1);
         JapaneseDate(ans)
 
     ///
@@ -75,19 +73,17 @@ pub mod InteropTime.Chrono.JapaneseChronology {
     pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate \ IO =
         let JapaneseChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        let d1 = x1.dateNow(zone1);
-        let ans = unchecked_cast(d1 as JJapaneseDate);
+        let ans = x1.dateNow(zone1);
         JapaneseDate(ans)
 
     pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
         let JapaneseChronology(x1) = x;
-        let e1 = unsafe IO { x1.eraOf(i) };
-        let ans = unchecked_cast(e1 as JJapaneseEra);
+        let ans = unsafe IO { x1.eraOf(i) };
         JapaneseEra(ans)
 
     pub def eras(x: JapaneseChronology): List[JapaneseEra] = 
         let JapaneseChronology(x1) = x;
-        let jlist = unsafe IO { x1.eras() };
+        let jlist: JList[JJapaneseEra] = unsafe IO { x1.eras() };
         let xs: List[JJapaneseEra] = Adaptor.fromList(jlist);
         List.map(z -> JapaneseEra(z), xs)
 

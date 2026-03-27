@@ -47,16 +47,14 @@ pub mod InteropTime.Chrono.IsoChronology {
 
     pub def dateNow(x: IsoChronology): LocalDate \ IO = 
         let IsoChronology(x1) = x;
-        let d1 = x1.dateNow();
-        let ans = unchecked_cast(d1 as JLocalDate);
+        let ans = x1.dateNow();
         LocalDate(ans)
 
 
 
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra =
         let IsoChronology(x1) = x;
-        let e1 = unsafe IO { x1.eraOf(i) };
-        let ans = unchecked_cast(e1 as JIsoEra);
+        let ans = unsafe IO { x1.eraOf(i) };
         InteropTime.Chrono.IsoEra.unmarshalIsoEra(ans)
 
 

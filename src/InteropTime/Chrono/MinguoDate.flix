@@ -91,14 +91,12 @@ pub mod InteropTime.Chrono.MinguoDate {
 
     pub def getChronology(x: MinguoDate): MinguoChronology = 
         let MinguoDate(x1) = x;
-        let c1 = unsafe IO { x1.getChronology() };
-        let ans = unchecked_cast(c1 as JMinguoChronology);
+        let ans = unsafe IO { x1.getChronology() };
         MinguoChronology(ans)
 
     pub def getEra(x: MinguoDate): MinguoEra = 
         let MinguoDate(x1) = x;
-        let e1 = unsafe IO { x1.getEra() };
-        let ans = unchecked_cast(e1 as JMinguoEra);
+        let ans = unsafe IO { x1.getEra() };
         InteropTime.Chrono.MinguoEra.unmarshalMinguoEra(ans)
 
 

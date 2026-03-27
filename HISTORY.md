@@ -1,11 +1,15 @@
+### v0.17.0
+   Updated to work with Flix version 0.70.0 (typed Java generics).
+
 ### v0.16.0
    Put modules in a top level namespace `InteropTime`.
    Exposed modules as `pub` and pushed datatypes down one layer into their
    respective modules.
    Updated tests to use `Assert` effect.
-   Removed the "unwrap" functions like `getMonthDay`.
-   Changed functions taking records to simulate named paramaters to
-   use Flix-style one field records for named parameters.
+   Removed the "unwrap" functions like `getMonthDay` that exposed the 
+   wrapped Java object.
+   Changed functions taking records to simulate named paramaters to use 
+   Flix-style one field records for named parameters.
    
 ### v0.15.1
    Updated to work with Flix version 0.67.0 (unsafe IO). Thanks Magnus.

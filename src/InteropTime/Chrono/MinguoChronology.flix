@@ -54,15 +54,13 @@ pub mod InteropTime.Chrono.MinguoChronology {
 
     pub def dateNow(x: MinguoChronology): MinguoDate \ IO = 
         let MinguoChronology(x1) = x;
-        let d1 = x1.dateNow();
-        let ans = unchecked_cast(d1 as JMinguoDate);
+        let ans = x1.dateNow();
         MinguoDate(ans)
 
     pub def dateNowWithClock(x: MinguoChronology, clock: ClockZ): MinguoDate \ IO =
         let MinguoChronology(x1) = x;
         let ClockZ(clock1) = clock;
-        let d1 = x1.dateNow(clock1);
-        let ans = unchecked_cast(d1 as JMinguoDate);
+        let ans = x1.dateNow(clock1);
         MinguoDate(ans)
 
 
@@ -72,16 +70,14 @@ pub mod InteropTime.Chrono.MinguoChronology {
     pub def dateNowWithZoneId(x: MinguoChronology, zone: ZoneId): MinguoDate \ IO =
         let MinguoChronology(x1) = x;
         let ZoneId(zone1) = zone;
-        let d1 = x1.dateNow(zone1);
-        let ans = unchecked_cast(d1 as JMinguoDate);
+        let ans = x1.dateNow(zone1);        
         MinguoDate(ans)
                 
 
     pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
         let MinguoChronology(x1) = x;
-        let e1 = unsafe IO { x1.eraOf(i) };
-        let ans1 = unchecked_cast(e1 as JMinguoEra); 
-        InteropTime.Chrono.MinguoEra.unmarshalMinguoEra(ans1)
+        let ans = unsafe IO { x1.eraOf(i) };
+        InteropTime.Chrono.MinguoEra.unmarshalMinguoEra(ans)
 
     pub def eras(x: MinguoChronology): List[MinguoEra] = 
         let MinguoChronology(x1) = x;

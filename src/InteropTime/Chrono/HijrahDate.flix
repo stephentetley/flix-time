@@ -154,8 +154,7 @@ pub mod InteropTime.Chrono.HijrahDate {
 
     pub def getEra(x: HijrahDate): HijrahEra =
         let HijrahDate(x1) = x;
-        let e1 = unsafe IO { x1.getEra() };
-        let ans = unchecked_cast(e1 as JHijrahEra);
+        let ans = unsafe IO { x1.getEra() };
         InteropTime.Chrono.HijrahEra.unmarshalHijrahEra(ans)
 
 

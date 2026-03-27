@@ -329,15 +329,13 @@ pub mod InteropTime.ZonedDateTime {
     pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let ZoneId(zone1) = zone;
-        let dt1 = unsafe IO { x1.$withZoneSameInstant(zone1) };
-        let ans = unchecked_cast(dt1 as JZonedDateTime);
+        let ans = unsafe IO { x1.$withZoneSameInstant(zone1) };
         ZonedDateTime(ans)
 
     pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
         let ZoneId(zone1) = zone;
-        let dt1 = unsafe IO { x1.$withZoneSameLocal(zone1) };
-        let ans = unchecked_cast(dt1 as JZonedDateTime);
+        let ans = unsafe IO { x1.$withZoneSameLocal(zone1) };
         ZonedDateTime(ans)
 
 
@@ -348,14 +346,12 @@ pub mod InteropTime.ZonedDateTime {
 
     pub def withEarlierOffsetAtOverlap(x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
-        let dt1 = unsafe IO { x1.$withEarlierOffsetAtOverlap() };
-        let ans = unchecked_cast(dt1 as JZonedDateTime);
+        let ans = unsafe IO { x1.$withEarlierOffsetAtOverlap() };
         ZonedDateTime(ans)
 
     pub def withLaterOffsetAtOverlap(x: ZonedDateTime): ZonedDateTime = 
         let ZonedDateTime(x1) = x;
-        let dt1 = unsafe IO { x1.$withLaterOffsetAtOverlap() };
-        let ans = unchecked_cast(dt1 as JZonedDateTime);
+        let ans = unsafe IO { x1.$withLaterOffsetAtOverlap() };
         ZonedDateTime(ans)
 
     // DayOfWeek methods
