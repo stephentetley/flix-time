@@ -1,6 +1,8 @@
 ### v0.18.0
    Updated to work with Flix 0.71.0 (Java generics).
    Reworked `DateTimeFormatterBuilder`.
+   Changed `ChronoField` and `ChronoUnit` back to regular 
+   (non-restrictable) enums.
    
 ### v0.17.0
    Updated to work with Flix version 0.70.0 (typed Java generics).

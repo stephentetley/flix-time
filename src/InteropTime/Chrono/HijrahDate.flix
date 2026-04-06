@@ -25,7 +25,7 @@ pub mod InteropTime.Chrono.HijrahDate {
     use InteropTime.Chrono.HijrahChronology.HijrahChronology.{HijrahChronology}
     use InteropTime.Chrono.HijrahEra.HijrahEra
     use InteropTime.Temporal.ChronoUnit.ChronoUnit
-    use InteropTime.Temporal.ChronoUnit.ChronoUnit.{Days, Months, Years, Centuries, Millennia, Eras}
+    // use InteropTime.Temporal.ChronoUnit.DateChronoUnits
     use InteropTime.Temporal.ChronoField.ChronoField
     use InteropTime.Temporal.ChronoField.ChronoField.{MonthOfYear, Year}
     use InteropTime.ClockZ.ClockZ
@@ -185,14 +185,18 @@ pub mod InteropTime.Chrono.HijrahDate {
         let ans = unchecked_cast(t1 as JHijrahDate);
         HijrahDate(ans)
 
-    pub def plusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia>]): HijrahDate =
+
+
+    pub def plusChrono(x: HijrahDate, 
+                        i: Int64, 
+                        cu: ChronoUnit): HijrahDate =
         let HijrahDate(x1) = x;
         let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
         let ans: JChronoLocalDate = unsafe IO { x1.plus(i, cu1) };
         let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
         HijrahDate(ans1)
 
-    pub def minusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia>]): HijrahDate =
+    pub def minusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit): HijrahDate =
         let HijrahDate(x1) = x;
         let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
         let ans: JChronoLocalDate = unsafe IO { x1.minus(i, cu1) };
@@ -201,15 +205,16 @@ pub mod InteropTime.Chrono.HijrahDate {
 
 
 
-    pub def until(begin: {begin = HijrahDate}, end: {end = HijrahDate}, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia, Eras>]): Int64 =
+    pub def until(begin: {begin = HijrahDate}, end: {end = HijrahDate}, cu: ChronoUnit): Int64 =
         let HijrahDate(b1) = begin#begin;
         let HijrahDate(e1) = end#end;
-        let te1: JTemporal = unchecked_cast(e1 as JTemporal);
+        let te1: JTemporal = checked_cast(e1);
         let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
-        let tu1: JTemporalUnit = unchecked_cast(cu1 as JTemporalUnit);
+        let tu1: JTemporalUnit = checked_cast(cu1);
         unsafe IO { b1.until(te1, tu1) }
 
-    pub def getChrono(x: HijrahDate, cf: ChronoField[<MonthOfYear, Year>]): Int64 =
+    // just MonthOfYear / Year...
+    pub def getChrono(x: HijrahDate, cf: ChronoField): Int64 =
         let HijrahDate(x1) = x;
         let cf1 = InteropTime.Temporal.ChronoField.marshalChronoField(cf);
         unsafe IO { x1.getLong(cf1) }
@@ -226,8 +231,8 @@ pub mod InteropTime.Chrono.HijrahDate {
             case None => bug!("HijrahDate.getMonth()")
         }
 
-
-    pub def withChrono(x: HijrahDate, cf: ChronoField[<MonthOfYear, Year>], i: Int64): HijrahDate =
+    // <MonthOfYear, Year>
+    pub def withChrono(x: HijrahDate, cf: ChronoField, i: Int64): HijrahDate =
         let HijrahDate(x1) = x;
         let cf1 = InteropTime.Temporal.ChronoField.marshalChronoField(cf);
         let ans: JChronoLocalDate = unsafe IO { x1.$with(cf1, i) };

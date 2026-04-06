@@ -33,7 +33,7 @@ pub mod InteropTime.Temporal.ChronoField {
     ///
     /// ChronoField
     ///
-    pub restrictable enum ChronoField[i] with Eq, Order, ToString, Hash {
+    pub enum ChronoField with Eq, Order, ToString, Hash {
         case NanoOfSecond
         case NanoOfDay
         case MicroOfSecond
@@ -68,81 +68,76 @@ pub mod InteropTime.Temporal.ChronoField {
 
     /// Marshal enums
 
-    pub def marshalChronoField(x: ChronoField[s]): JChronoField =
-        choose x {
-            case NanoOfSecond               => unsafe IO { JChronoField.NANO_OF_SECOND }
-            case NanoOfDay                  => unsafe IO { JChronoField.NANO_OF_DAY }
-            case MicroOfSecond              => unsafe IO { JChronoField.MICRO_OF_SECOND }
-            case MicroOfDay                 => unsafe IO { JChronoField.MICRO_OF_DAY }
-            case MilliOfSecond              => unsafe IO { JChronoField.MILLI_OF_SECOND }
-            case MilliOfDay                 => unsafe IO { JChronoField.MILLI_OF_DAY }
-            case SecondOfMinute             => unsafe IO { JChronoField.SECOND_OF_MINUTE }
-            case SecondOfDay                => unsafe IO { JChronoField.SECOND_OF_DAY }
-            case MinuteOfHour               => unsafe IO { JChronoField.MINUTE_OF_HOUR }
-            case MinuteOfDay                => unsafe IO { JChronoField.MINUTE_OF_DAY }
-            case HourOfAmPm                 => unsafe IO { JChronoField.HOUR_OF_AMPM }
-            case ClockHourOfAmPm            => unsafe IO { JChronoField.CLOCK_HOUR_OF_AMPM }
-            case HourOfDay                  => unsafe IO { JChronoField.HOUR_OF_DAY }
-            case ClockHourOfDay             => unsafe IO { JChronoField.CLOCK_HOUR_OF_DAY }
-            case AmPmOfDay                  => unsafe IO { JChronoField.AMPM_OF_DAY }
-            case DayOfWeek                  => unsafe IO { JChronoField.DAY_OF_WEEK }
-            case AlignedDayOfWeekInMonth    => unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH }
-            case AlignedDayOfWeekInYear     => unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR }
-            case DayOfMonth                 => unsafe IO { JChronoField.DAY_OF_MONTH }
-            case DayOfYear                  => unsafe IO { JChronoField.DAY_OF_YEAR }
-            case EpochDay                   => unsafe IO { JChronoField.EPOCH_DAY }
-            case AlignedWeekOfMonth         => unsafe IO { JChronoField.ALIGNED_WEEK_OF_MONTH }
-            case AlignedWeekOfYear          => unsafe IO { JChronoField.ALIGNED_WEEK_OF_YEAR }
-            case MonthOfYear                => unsafe IO { JChronoField.MONTH_OF_YEAR }
-            case ProlepticMonth             => unsafe IO { JChronoField.PROLEPTIC_MONTH }
-            case YearOfEra                  => unsafe IO { JChronoField.YEAR_OF_ERA }
-            case Year                       => unsafe IO { JChronoField.YEAR }
-            case Era                        => unsafe IO { JChronoField.ERA }
-            case InstantSeconds             => unsafe IO { JChronoField.INSTANT_SECONDS }
-            case OffsetSeconds              => unsafe IO { JChronoField.OFFSET_SECONDS }
+    pub def marshalChronoField(x: ChronoField): JChronoField =
+        match x {
+            case NanoOfSecond               => JChronoField.NANO_OF_SECOND
+            case NanoOfDay                  => JChronoField.NANO_OF_DAY
+            case MicroOfSecond              => JChronoField.MICRO_OF_SECOND
+            case MicroOfDay                 => JChronoField.MICRO_OF_DAY
+            case MilliOfSecond              => JChronoField.MILLI_OF_SECOND
+            case MilliOfDay                 => JChronoField.MILLI_OF_DAY
+            case SecondOfMinute             => JChronoField.SECOND_OF_MINUTE
+            case SecondOfDay                => JChronoField.SECOND_OF_DAY
+            case MinuteOfHour               => JChronoField.MINUTE_OF_HOUR
+            case MinuteOfDay                => JChronoField.MINUTE_OF_DAY
+            case HourOfAmPm                 => JChronoField.HOUR_OF_AMPM
+            case ClockHourOfAmPm            => JChronoField.CLOCK_HOUR_OF_AMPM
+            case HourOfDay                  => JChronoField.HOUR_OF_DAY
+            case ClockHourOfDay             => JChronoField.CLOCK_HOUR_OF_DAY
+            case AmPmOfDay                  => JChronoField.AMPM_OF_DAY
+            case DayOfWeek                  => JChronoField.DAY_OF_WEEK
+            case AlignedDayOfWeekInMonth    => JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH
+            case AlignedDayOfWeekInYear     => JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR
+            case DayOfMonth                 => JChronoField.DAY_OF_MONTH
+            case DayOfYear                  => JChronoField.DAY_OF_YEAR
+            case EpochDay                   => JChronoField.EPOCH_DAY
+            case AlignedWeekOfMonth         => JChronoField.ALIGNED_WEEK_OF_MONTH
+            case AlignedWeekOfYear          => JChronoField.ALIGNED_WEEK_OF_YEAR
+            case MonthOfYear                => JChronoField.MONTH_OF_YEAR
+            case ProlepticMonth             => JChronoField.PROLEPTIC_MONTH
+            case YearOfEra                  => JChronoField.YEAR_OF_ERA
+            case Year                       => JChronoField.YEAR
+            case Era                        => JChronoField.ERA
+            case InstantSeconds             => JChronoField.INSTANT_SECONDS
+            case OffsetSeconds              => JChronoField.OFFSET_SECONDS
         }
 
     def primEquals(x: JChronoField, y: JChronoField): Bool =
         unsafe IO { x.equals(y) }
 
 
-    pub def unmarshalChronoField(x: JChronoField): ChronoField[<NanoOfSecond, NanoOfDay, MicroOfSecond, MicroOfDay, 
-                                        MilliOfSecond, MilliOfDay, SecondOfMinute, SecondOfDay, MinuteOfHour, MinuteOfDay, 
-                                        HourOfAmPm, ClockHourOfAmPm, HourOfDay, ClockHourOfDay, AmPmOfDay, DayOfWeek, 
-                                        AlignedDayOfWeekInMonth, AlignedDayOfWeekInYear, DayOfMonth, DayOfYear, EpochDay, 
-                                        AlignedWeekOfMonth, AlignedWeekOfYear, MonthOfYear, ProlepticMonth, YearOfEra, 
-                                        Year, Era, InstantSeconds, OffsetSeconds>] =
+    pub def unmarshalChronoField(x: JChronoField): ChronoField =
         match x {
-            case x1 if primEquals(x1, unsafe IO { JChronoField.NANO_OF_SECOND })               => open_variant NanoOfSecond
-            case x1 if primEquals(x1, unsafe IO { JChronoField.NANO_OF_DAY })                  => open_variant NanoOfDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.MICRO_OF_SECOND })              => open_variant MicroOfSecond
-            case x1 if primEquals(x1, unsafe IO { JChronoField.MICRO_OF_DAY })                 => open_variant MicroOfDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.MILLI_OF_SECOND })              => open_variant MilliOfSecond
-            case x1 if primEquals(x1, unsafe IO { JChronoField.MILLI_OF_DAY })                 => open_variant MilliOfDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.SECOND_OF_MINUTE })             => open_variant SecondOfMinute
-            case x1 if primEquals(x1, unsafe IO { JChronoField.SECOND_OF_DAY })                => open_variant SecondOfDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.MINUTE_OF_HOUR })               => open_variant MinuteOfHour
-            case x1 if primEquals(x1, unsafe IO { JChronoField.MINUTE_OF_DAY })                => open_variant MinuteOfDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.HOUR_OF_AMPM })                 => open_variant HourOfAmPm
-            case x1 if primEquals(x1, unsafe IO { JChronoField.CLOCK_HOUR_OF_AMPM })           => open_variant ClockHourOfAmPm
-            case x1 if primEquals(x1, unsafe IO { JChronoField.HOUR_OF_DAY })                  => open_variant HourOfDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.CLOCK_HOUR_OF_DAY })            => open_variant ClockHourOfDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.AMPM_OF_DAY })                  => open_variant AmPmOfDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.DAY_OF_WEEK })                  => open_variant DayOfWeek
-            case x1 if primEquals(x1, unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH }) => open_variant AlignedDayOfWeekInMonth
-            case x1 if primEquals(x1, unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR })  => open_variant AlignedDayOfWeekInYear
-            case x1 if primEquals(x1, unsafe IO { JChronoField.DAY_OF_MONTH })                 => open_variant DayOfMonth
-            case x1 if primEquals(x1, unsafe IO { JChronoField.DAY_OF_YEAR })                  => open_variant DayOfYear
-            case x1 if primEquals(x1, unsafe IO { JChronoField.EPOCH_DAY })                    => open_variant EpochDay
-            case x1 if primEquals(x1, unsafe IO { JChronoField.ALIGNED_WEEK_OF_MONTH })        => open_variant AlignedWeekOfMonth
-            case x1 if primEquals(x1, unsafe IO { JChronoField.ALIGNED_WEEK_OF_YEAR })         => open_variant AlignedWeekOfYear
-            case x1 if primEquals(x1, unsafe IO { JChronoField.MONTH_OF_YEAR })                => open_variant MonthOfYear
-            case x1 if primEquals(x1, unsafe IO { JChronoField.PROLEPTIC_MONTH })              => open_variant ProlepticMonth
-            case x1 if primEquals(x1, unsafe IO { JChronoField.YEAR_OF_ERA })                  => open_variant YearOfEra
-            case x1 if primEquals(x1, unsafe IO { JChronoField.YEAR })                         => open_variant Year
-            case x1 if primEquals(x1, unsafe IO { JChronoField.ERA })                          => open_variant Era
-            case x1 if primEquals(x1, unsafe IO { JChronoField.INSTANT_SECONDS })              => open_variant InstantSeconds
-            case x1 if primEquals(x1, unsafe IO { JChronoField.OFFSET_SECONDS })               => open_variant OffsetSeconds
+            case x1 if primEquals(x1, JChronoField.NANO_OF_SECOND)               => NanoOfSecond
+            case x1 if primEquals(x1, JChronoField.NANO_OF_DAY)                  => NanoOfDay
+            case x1 if primEquals(x1, JChronoField.MICRO_OF_SECOND)              => MicroOfSecond
+            case x1 if primEquals(x1, JChronoField.MICRO_OF_DAY)                 => MicroOfDay
+            case x1 if primEquals(x1, JChronoField.MILLI_OF_SECOND)              => MilliOfSecond
+            case x1 if primEquals(x1, JChronoField.MILLI_OF_DAY)                 => MilliOfDay
+            case x1 if primEquals(x1, JChronoField.SECOND_OF_MINUTE)             => SecondOfMinute
+            case x1 if primEquals(x1, JChronoField.SECOND_OF_DAY)                => SecondOfDay
+            case x1 if primEquals(x1, JChronoField.MINUTE_OF_HOUR)               => MinuteOfHour
+            case x1 if primEquals(x1, JChronoField.MINUTE_OF_DAY)                => MinuteOfDay
+            case x1 if primEquals(x1, JChronoField.HOUR_OF_AMPM)                 => HourOfAmPm
+            case x1 if primEquals(x1, JChronoField.CLOCK_HOUR_OF_AMPM)           => ClockHourOfAmPm
+            case x1 if primEquals(x1, JChronoField.HOUR_OF_DAY)                  => HourOfDay
+            case x1 if primEquals(x1, JChronoField.CLOCK_HOUR_OF_DAY)            => ClockHourOfDay
+            case x1 if primEquals(x1, JChronoField.AMPM_OF_DAY)                  => AmPmOfDay
+            case x1 if primEquals(x1, JChronoField.DAY_OF_WEEK)                  => DayOfWeek
+            case x1 if primEquals(x1, JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH) => AlignedDayOfWeekInMonth
+            case x1 if primEquals(x1, JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR)  => AlignedDayOfWeekInYear
+            case x1 if primEquals(x1, JChronoField.DAY_OF_MONTH)                 => DayOfMonth
+            case x1 if primEquals(x1, JChronoField.DAY_OF_YEAR)                  => DayOfYear
+            case x1 if primEquals(x1, JChronoField.EPOCH_DAY)                    => EpochDay
+            case x1 if primEquals(x1, JChronoField.ALIGNED_WEEK_OF_MONTH)        => AlignedWeekOfMonth
+            case x1 if primEquals(x1, JChronoField.ALIGNED_WEEK_OF_YEAR)         => AlignedWeekOfYear
+            case x1 if primEquals(x1, JChronoField.MONTH_OF_YEAR)                => MonthOfYear
+            case x1 if primEquals(x1, JChronoField.PROLEPTIC_MONTH)              => ProlepticMonth
+            case x1 if primEquals(x1, JChronoField.YEAR_OF_ERA)                  => YearOfEra
+            case x1 if primEquals(x1, JChronoField.YEAR)                         => Year
+            case x1 if primEquals(x1, JChronoField.ERA)                          => Era
+            case x1 if primEquals(x1, JChronoField.INSTANT_SECONDS)              => InstantSeconds
+            case x1 if primEquals(x1, JChronoField.OFFSET_SECONDS)               => OffsetSeconds
             case _                                                          => bug!("unmarshalChronoField")
 
         }

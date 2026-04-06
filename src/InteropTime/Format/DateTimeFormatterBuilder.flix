@@ -64,7 +64,11 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
         def parseLenient(): Unit
     }
 
-    pub def handle(_: Region[r], f: a -> b \ ef): a -> Result[String, (DateTimeFormatter[t], b)] \ (ef - DateTimeFormatterBuilder + r) =
+    pub def handle(f: a -> b \ ef): a -> Result[String, (DateTimeFormatter[t], b)] \ (ef - DateTimeFormatterBuilder) = x -> region rc {
+        handleHelper(rc, f, x)
+    }
+
+    def handleHelper(_: Region[r], f: a -> b \ ef): a -> Result[String, (DateTimeFormatter[t], b)] \ (ef - DateTimeFormatterBuilder + r) =
         x -> {
             let builder = unchecked_cast(new JDateTimeFormatterBuilder() as _ \ r);
             let ans = run {
@@ -243,9 +247,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
 
 
     pub def runDefault(buildfun: Unit -> a \ ef): Result[String, (DateTimeFormatter[t], a)] \ (ef - DateTimeFormatterBuilder) = 
-        region rc { 
-            handle(rc, buildfun)()
-        }
+        handle(buildfun)()
 
 
 

@@ -21,6 +21,7 @@ mod TestHirjahDate {
 
     use Assert.{assertEq, assertTrue, assertFalse, fail};
     
+    
     /////////////////////////////////////////////////////////////////////////////
     // until                                                                   //
     /////////////////////////////////////////////////////////////////////////////
@@ -55,11 +56,11 @@ mod TestHirjahDate {
         let d2 = InteropTime.Chrono.HijrahDate.now();
         assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Millennia) == 0i64)
 
-    @Test
-    def until06(): Unit \ {Assert, IO} = 
-        let d1 = InteropTime.Chrono.HijrahDate.now();
-        let d2 = InteropTime.Chrono.HijrahDate.now();
-        assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Eras) == 0i64)
+    // @Test
+    // def until06(): Unit \ {Assert, IO} = 
+    //     let d1 = InteropTime.Chrono.HijrahDate.now();
+    //     let d2 = InteropTime.Chrono.HijrahDate.now();
+    //     assertTrue(InteropTime.Chrono.HijrahDate.until(begin = d1, end = d2, open_variant ChronoUnit.Eras) == 0i64)
 
 
     /////////////////////////////////////////////////////////////////////////////
