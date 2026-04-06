@@ -42,6 +42,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
         Era => JEra, 
         HijrahEra => JHijrahEra}
     import java.time.temporal.{ChronoField => JChronoField}
+    import java.util.{List => JList}
 
     pub enum HijrahChronology(JHijrahChronology)
 
@@ -69,8 +70,9 @@ pub mod InteropTime.Chrono.HijrahChronology {
                         x: HijrahChronology): HijrahDate =
         let HijrahChronology(x1) = x;
         let era1 = InteropTime.Chrono.HijrahEra.marshalHijrahEra(era#era);
-        let ans = unsafe IO { x1.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) };
-        HijrahDate(ans)
+        let ans: JChronoLocalDate = unsafe IO { x1.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) };
+        let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
+        HijrahDate(ans1)
 
 
     pub def dateNow(x: HijrahChronology): HijrahDate \ IO = 
@@ -121,11 +123,15 @@ pub mod InteropTime.Chrono.HijrahChronology {
         let ans = unsafe IO { x1.eraOf(i) };
         InteropTime.Chrono.HijrahEra.unmarshalHijrahEra(ans)
 
-    pub def eras(x: HijrahChronology): List[HijrahEra] \ IO =
+    pub def eras(x: HijrahChronology): List[HijrahEra]  =
+        def convert(e) = {
+            let e1: JHijrahEra = unchecked_cast(e as JHijrahEra);
+            InteropTime.Chrono.HijrahEra.unmarshalHijrahEra(e1)
+        };
         let HijrahChronology(x1) = x;
-        let xs = x1.eras();
-        let xs1: List[JHijrahEra] = Adaptor.fromList(xs);
-        List.map(InteropTime.Chrono.HijrahEra.unmarshalHijrahEra, xs1)
+        let jlist: JList[JEra] = unsafe IO { x1.eras() };
+        let xs: List[JEra] = Adaptor.fromList(jlist);
+        List.map(convert, xs)
 
 
     pub def getId(x: HijrahChronology): String =

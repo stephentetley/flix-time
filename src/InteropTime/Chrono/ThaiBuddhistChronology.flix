@@ -33,6 +33,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
         Era => JEra,
         ThaiBuddhistDate => JThaiBuddhistDate, 
         ThaiBuddhistEra => JThaiBuddhistEra}
+    import java.util.{List => JList}
 
     pub enum ThaiBuddhistChronology(JThaiBuddhistChronology)
 
@@ -77,9 +78,10 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
         
     pub def dateYearDayWithEra(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32, day: Int32): ThaiBuddhistDate =
         let ThaiBuddhistChronology(x1) = x;
-        let era1 = InteropTime.Chrono.ThaiBuddhistEra.marshalThaiBuddhistEra(era);
-        let ans = unsafe IO { x1.dateYearDay(era1, year, day) };
-        ThaiBuddhistDate(ans)
+        let era1: JThaiBuddhistEra = InteropTime.Chrono.ThaiBuddhistEra.marshalThaiBuddhistEra(era);
+        let ans: JChronoLocalDate = unsafe IO { x1.dateYearDay(era1, year, day) };
+        let ans1: JThaiBuddhistDate = unchecked_cast(ans as JThaiBuddhistDate);
+        ThaiBuddhistDate(ans1)
 
     // Todo Result[]
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): Result[String, ThaiBuddhistEra] = 
@@ -90,10 +92,14 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
         })
 
     pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
+        def convert(e) = {
+            let e1: JThaiBuddhistEra = unchecked_cast(e as JThaiBuddhistEra);
+            InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(e1)
+        };
         let ThaiBuddhistChronology(x1) = x;
-        let jlist = unsafe IO { x1.eras() };
-        let xs: List[JThaiBuddhistEra] = Adaptor.fromList(jlist);
-        List.map(InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra, xs)
+        let jlist: JList[JEra] = unsafe IO { x1.eras() };
+        let xs: List[JEra] = Adaptor.fromList(jlist);
+        List.map(convert, xs)
 
     pub def isIsoBased(x: ThaiBuddhistChronology): Bool =
         let ThaiBuddhistChronology(x1) = x;

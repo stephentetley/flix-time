@@ -188,14 +188,16 @@ pub mod InteropTime.Chrono.HijrahDate {
     pub def plusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia>]): HijrahDate =
         let HijrahDate(x1) = x;
         let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
-        let ans = unsafe IO { x1.plus(i, cu1) };
-        HijrahDate(ans)
+        let ans: JChronoLocalDate = unsafe IO { x1.plus(i, cu1) };
+        let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
+        HijrahDate(ans1)
 
     pub def minusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit[<Days, Months, Years, Centuries, Millennia>]): HijrahDate =
         let HijrahDate(x1) = x;
         let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
-        let ans = unsafe IO { x1.minus(i, cu1) };
-        HijrahDate(ans)
+        let ans: JChronoLocalDate = unsafe IO { x1.minus(i, cu1) };
+        let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
+        HijrahDate(ans1)
 
 
 
@@ -228,7 +230,8 @@ pub mod InteropTime.Chrono.HijrahDate {
     pub def withChrono(x: HijrahDate, cf: ChronoField[<MonthOfYear, Year>], i: Int64): HijrahDate =
         let HijrahDate(x1) = x;
         let cf1 = InteropTime.Temporal.ChronoField.marshalChronoField(cf);
-        let ans = unsafe IO { x1.$with(cf1, i) };
-        HijrahDate(ans)
+        let ans: JChronoLocalDate = unsafe IO { x1.$with(cf1, i) };
+        let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
+        HijrahDate(ans1)
 
 }

@@ -34,6 +34,7 @@ pub mod InteropTime.Chrono.MinguoChronology {
         Era => JEra,
         MinguoDate => JMinguoDate, 
         MinguoEra => JMinguoEra}
+    import java.util.{List => JList}
 
     pub enum MinguoChronology(JMinguoChronology)
 
@@ -80,9 +81,13 @@ pub mod InteropTime.Chrono.MinguoChronology {
         InteropTime.Chrono.MinguoEra.unmarshalMinguoEra(ans)
 
     pub def eras(x: MinguoChronology): List[MinguoEra] = 
+        def convert(e) = {
+            let e1: JMinguoEra = unchecked_cast(e as JMinguoEra);
+            InteropTime.Chrono.MinguoEra.unmarshalMinguoEra(e1)
+        };
         let MinguoChronology(x1) = x;
-        let jlist = unsafe IO { x1.eras() };
-        let xs: List[JMinguoEra] = Adaptor.fromList(jlist);
-        List.map(InteropTime.Chrono.MinguoEra.unmarshalMinguoEra, xs)
+        let jlist: JList[JEra] = unsafe IO { x1.eras() };
+        let xs: List[JEra] = Adaptor.fromList(jlist);
+        List.map(convert, xs)
 
 }

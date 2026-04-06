@@ -28,6 +28,7 @@ pub mod InteropTime.Chrono.IsoChronology {
         Era => JEra, 
         IsoEra => JIsoEra}
     import java.time.{LocalDate => JLocalDate}
+    import java.util.{List => JList}
 
 
     pub enum IsoChronology(JIsoChronology)
@@ -59,10 +60,14 @@ pub mod InteropTime.Chrono.IsoChronology {
 
 
     pub def eras(x: IsoChronology): List[IsoEra] =
+        def convert(e) = {
+            let e1: JIsoEra = unchecked_cast(e as JIsoEra);
+            InteropTime.Chrono.IsoEra.unmarshalIsoEra(e1)
+        };
         let IsoChronology(x1) = x;
-        let jlist = unsafe IO { x1.eras() };
-        let xs: List[JIsoEra] = Adaptor.fromList(jlist);
-        List.map(InteropTime.Chrono.IsoEra.unmarshalIsoEra, xs)
+        let jlist: JList[JEra] = unsafe IO { x1.eras() };
+        let xs: List[JEra] = Adaptor.fromList(jlist);
+        List.map(convert, xs)
 
     pub def getId(x: IsoChronology): String =
         let IsoChronology(x1) = x;

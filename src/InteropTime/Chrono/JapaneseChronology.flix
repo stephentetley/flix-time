@@ -38,6 +38,7 @@ pub mod InteropTime.Chrono.JapaneseChronology {
         Era => JEra,
         JapaneseDate => JJapaneseDate, 
         JapaneseEra => JJapaneseEra}
+    import java.util.{List => JList}
 
     pub enum JapaneseChronology(JJapaneseChronology)
 
@@ -82,9 +83,13 @@ pub mod InteropTime.Chrono.JapaneseChronology {
         JapaneseEra(ans)
 
     pub def eras(x: JapaneseChronology): List[JapaneseEra] = 
+        def convert(e) = {
+            let e1: JJapaneseEra = unchecked_cast(e as JJapaneseEra);
+            JapaneseEra.JapaneseEra(e1)
+        };
         let JapaneseChronology(x1) = x;
-        let jlist: JList[JJapaneseEra] = unsafe IO { x1.eras() };
-        let xs: List[JJapaneseEra] = Adaptor.fromList(jlist);
-        List.map(z -> JapaneseEra(z), xs)
+        let jlist: JList[JEra] = unsafe IO { x1.eras() };
+        let xs: List[JEra] = Adaptor.fromList(jlist);
+        List.map(convert, xs)
 
 }

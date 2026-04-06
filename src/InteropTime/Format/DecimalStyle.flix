@@ -24,7 +24,9 @@ pub mod InteropTime.Format.DecimalStyle {
 
     
     import java.time.format.{DecimalStyle => JDecimalStyle}
-    import java.util.{Locale => JLocale, Set => JSet}
+    import java.util.{Locale => JLocale, 
+                        Set => JSet,
+                        Iterator => JIterator}
 
     /// Immutable
     ///
@@ -75,9 +77,9 @@ pub mod InteropTime.Format.DecimalStyle {
 
 
     /// Candidate for Adaptor...
-    def fromSetAsList(l: JSet): List[a] = region rc {
+    def fromSetAsList(s: JSet[a]): List[a] = region rc {
         let proxy: Proxy[a] = Proxy.Proxy;
-        let jiter = unsafe IO { l.iterator() };
+        let jiter: JIterator[a] = unsafe IO { s.iterator() };
         let iter = Adaptor.fromIterator(rc, proxy, jiter);
         Iterator.toList(iter)
     }
