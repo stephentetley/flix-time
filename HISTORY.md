@@ -1,3 +1,6 @@
+### v0.19.0
+   Updated to use "unsafe IO as r" syntax.
+
 ### v0.18.0
    Updated to work with Flix 0.71.0 (Java generics).
    Reworked `DateTimeFormatterBuilder`.

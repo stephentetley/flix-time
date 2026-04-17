@@ -70,120 +70,120 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
 
     def handleHelper(_: Region[r], f: a -> b \ ef): a -> Result[String, (DateTimeFormatter[t], b)] \ (ef - DateTimeFormatterBuilder + r) =
         x -> {
-            let builder = unchecked_cast(new JDateTimeFormatterBuilder() as _ \ r);
+            let builder = unsafe IO as r { new JDateTimeFormatterBuilder() };
             let ans = run {
                 Ok(f(x))
             } with handler DateTimeFormatterBuilder {
                 
                 def appendFormatter(fmt, k) = {
                     let DateTimeFormatter(fmt1) = fmt;
-                    unchecked_cast(discard builder.append(fmt1) as _ \ r);
+                    unsafe IO as r { discard builder.append(fmt1) };
                     k()
                 }
 
                 def appendChronologyId(k) = {
-                    unchecked_cast(discard builder.appendChronologyId() as _ \ r);
+                    unsafe IO as r { discard builder.appendChronologyId() };
                     k()
                 }
 
                 def appendChronologyText(style, k) = {
                     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unchecked_cast(discard builder.appendChronologyText(style1) as _ \ r);
+                    unsafe IO as r { discard builder.appendChronologyText(style1) };
                     k()
                 }
 
                 def appendDayPeriodText(style, k) = {
                     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unchecked_cast(discard builder.appendDayPeriodText(style1) as _ \ r);
+                    unsafe IO as r { discard builder.appendDayPeriodText(style1) };
                     k()
                 }
 
                 def appendGenericZoneText(style, k) = {
                     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unchecked_cast(discard builder.appendGenericZoneText(style1) as _ \ r);
+                    unsafe IO as r { discard builder.appendGenericZoneText(style1) };
                     k()
                 }
 
                 def appendInstant(k) = try {
-                    unchecked_cast(discard builder.appendInstant() as _ \ r);
+                    unsafe IO as r { discard builder.appendInstant() };
                     k()
                 } catch { 
                     case ex: Exception => Err(ex.getMessage())
                 }
 
                 def appendInstantWithFractionalDigits(i, k) = {
-                    unchecked_cast(discard builder.appendInstant(i) as _ \ r);
+                    unsafe IO as r { discard builder.appendInstant(i) };
                     k()
                 }
 
                 def appendStringLiteral(s, k) = {
-                    unchecked_cast(discard builder.appendLiteral(s) as _ \ r);
+                    unsafe IO as r { discard builder.appendLiteral(s) };
                     k()
                 }
 
                 def appendCharLiteral(c, k) = {
-                    unchecked_cast(discard builder.appendLiteral(c) as _ \ r);
+                    unsafe IO as r { discard builder.appendLiteral(c) };
                     k()
                 }
 
                 def appendLocalized(timeStyle, dateStyle, k) = {
                     let timeStyle1 = InteropTime.Format.FormatStyle.marshalFormatStyle(timeStyle#timeStyle);
                     let dateStyle1 = InteropTime.Format.FormatStyle.marshalFormatStyle(dateStyle#dateStyle);
-                    unchecked_cast(discard builder.appendLocalized(timeStyle1, dateStyle1) as _ \ r);
+                    unsafe IO as r { discard builder.appendLocalized(timeStyle1, dateStyle1) };
                     k()
                 }
 
                 def appendLocalizedWithTemplateString(s, k) = {
-                    unchecked_cast(discard builder.appendLocalized(s) as _  \ r);
+                    unsafe IO as r { discard builder.appendLocalized(s) };
                     k()
                 }
 
                 def appendLocalizedOffset(style, k) = {
                     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unchecked_cast(discard builder.appendLocalizedOffset(style1) as _ \ r);
+                    unsafe IO as r { discard builder.appendLocalizedOffset(style1) };
                     k()
                 }
 
                 def appendOffset(pattern, noOffsetText, k) = {
-                    unchecked_cast(discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) as _ \ r);
+                    unsafe IO as r { discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) };
                     k()
                 }
 
                 def appendOffsetId(k) = {
-                    unchecked_cast(discard builder.appendOffsetId() as _ \ r);
+                    unsafe IO as r { discard builder.appendOffsetId() };
                     k()
                 }
 
                 def appendOptional(fmt, k) = {
                     let DateTimeFormatter(fmt1) = fmt;
-                    unchecked_cast(discard builder.appendOptional(fmt1) as _ \ r);
+                    unsafe IO as r { discard builder.appendOptional(fmt1) };
                     k()
                 }
 
                 def appendPattern(patt, k) = {
-                    unchecked_cast(discard builder.appendPattern(patt) as _ \ r);
+                    unsafe IO as r { discard builder.appendPattern(patt) };
                     k()
                 }
 
                 def appendZoneId(k) = {
-                    unchecked_cast(discard builder.appendZoneId() as _ \ r);
+                    unsafe IO as r { discard builder.appendZoneId() };
                     k()
                 }
 
 
                 def appendZoneOrOffsetId(k) = {
-                    unchecked_cast(discard builder.appendZoneOrOffsetId() as _ \ r);
+                    unsafe IO as r { discard builder.appendZoneOrOffsetId() };
                     k()
                 }
 
                 def appendZoneRegionId(k) = {
-                    unchecked_cast(discard builder.appendZoneRegionId() as _ \ r);
+                    unsafe IO as r { discard builder.appendZoneRegionId() };
                     k()
                 }
 
                 def appendZoneText(style, k) = {
                     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unchecked_cast(discard builder.appendZoneText(style1) as _ \ r);
+                    unsafe IO as r { discard builder.appendZoneText(style1) };
                     k()
                 }
 
@@ -195,43 +195,43 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
                 //     ()
 
                 def optionalStart(k) = {
-                    unchecked_cast(discard builder.optionalStart() as _  \ r);
+                    unsafe IO as r { discard builder.optionalStart() };
                     k()
                 }
 
                 def optionalEnd(k) = {
-                    unchecked_cast(discard builder.optionalEnd() as _ \ r);
+                    unsafe IO as r { discard builder.optionalEnd() };
                     k()
                 }
 
 
                 def padNext(n, k) = {
-                    unchecked_cast(discard builder.padNext(n) as _ \ r);
+                    unsafe IO as r { discard builder.padNext(n) };
                     k()
                 }
 
                 def padNextWithChar(n, ch, k) = {
-                    unchecked_cast(discard builder.padNext(n, ch) as _ \ r);
+                    unsafe IO as r { discard builder.padNext(n, ch) };
                     k()
                 }
 
                 def parseCaseSensitive(k) = {
-                    unchecked_cast(discard builder.parseCaseSensitive() as _ \ r);
+                    unsafe IO as r { discard builder.parseCaseSensitive() };
                     k()
                 }
 
                 def parseCaseInsensitive(k) = {
-                    unchecked_cast(discard builder.parseCaseInsensitive() as _ \ r);
+                    unsafe IO as r { discard builder.parseCaseInsensitive() };
                     k()
                 }
 
                 def parseStrict(k) = {
-                    unchecked_cast(discard builder.parseStrict() as _ \ r);
+                    unsafe IO as r { discard builder.parseStrict() };
                     k()
                 }
 
                 def parseLenient(k) = {
-                    unchecked_cast(discard builder.parseLenient() as _ \ r);
+                    unsafe IO as r { discard builder.parseLenient() };
                     k()
                 }
                 
