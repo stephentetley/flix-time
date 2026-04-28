@@ -64,186 +64,181 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
         def parseLenient(): Unit
     }
 
-    pub def handle(f: a -> b \ ef): a -> Result[String, (DateTimeFormatter[t], b)] \ (ef - DateTimeFormatterBuilder) = x -> region rc {
-        handleHelper(rc, f, x)
+    pub def handle(f: a -> b \ ef): a -> Result[String, (DateTimeFormatter[t], b)] \ (ef - DateTimeFormatterBuilder) = x -> {
+        let builder = unsafe IO as {ef - DateTimeFormatterBuilder} { new JDateTimeFormatterBuilder() };
+        let ans = run {
+            Ok(f(x))
+        } with handler DateTimeFormatterBuilder {
+            
+            def appendFormatter(fmt, k) = {
+                let DateTimeFormatter(fmt1) = fmt;
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.append(fmt1) };
+                k()
+            }
+
+            def appendChronologyId(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendChronologyId() };
+                k()
+            }
+
+            def appendChronologyText(style, k) = {
+                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendChronologyText(style1) };
+                k()
+            }
+
+            def appendDayPeriodText(style, k) = {
+                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendDayPeriodText(style1) };
+                k()
+            }
+
+            def appendGenericZoneText(style, k) = {
+                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendGenericZoneText(style1) };
+                k()
+            }
+
+            def appendInstant(k) = try {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendInstant() };
+                k()
+            } catch { 
+                case ex: Exception => Err(ex.getMessage())
+            }
+
+            def appendInstantWithFractionalDigits(i, k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendInstant(i) };
+                k()
+            }
+
+            def appendStringLiteral(s, k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLiteral(s) };
+                k()
+            }
+
+            def appendCharLiteral(c, k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLiteral(c) };
+                k()
+            }
+
+            def appendLocalized(timeStyle, dateStyle, k) = {
+                let timeStyle1 = InteropTime.Format.FormatStyle.marshalFormatStyle(timeStyle#timeStyle);
+                let dateStyle1 = InteropTime.Format.FormatStyle.marshalFormatStyle(dateStyle#dateStyle);
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLocalized(timeStyle1, dateStyle1) };
+                k()
+            }
+
+            def appendLocalizedWithTemplateString(s, k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLocalized(s) };
+                k()
+            }
+
+            def appendLocalizedOffset(style, k) = {
+                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLocalizedOffset(style1) };
+                k()
+            }
+
+            def appendOffset(pattern, noOffsetText, k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) };
+                k()
+            }
+
+            def appendOffsetId(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendOffsetId() };
+                k()
+            }
+
+            def appendOptional(fmt, k) = {
+                let DateTimeFormatter(fmt1) = fmt;
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendOptional(fmt1) };
+                k()
+            }
+
+            def appendPattern(patt, k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendPattern(patt) };
+                k()
+            }
+
+            def appendZoneId(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneId() };
+                k()
+            }
+
+
+            def appendZoneOrOffsetId(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneOrOffsetId() };
+                k()
+            }
+
+            def appendZoneRegionId(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneRegionId() };
+                k()
+            }
+
+            def appendZoneText(style, k) = {
+                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1) };
+                k()
+            }
+
+            // TODO use wrapped types
+            // def appendZoneTextWithZones(style: TextStyle, preferredZones: JSet): Unit
+            //     let builder = DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
+            //     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+            //     discard builder.appendZoneText(style1, preferredZones);
+            //     ()
+
+            def optionalStart(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.optionalStart() };
+                k()
+            }
+
+            def optionalEnd(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.optionalEnd() };
+                k()
+            }
+
+
+            def padNext(n, k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.padNext(n) };
+                k()
+            }
+
+            def padNextWithChar(n, ch, k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.padNext(n, ch) };
+                k()
+            }
+
+            def parseCaseSensitive(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.parseCaseSensitive() };
+                k()
+            }
+
+            def parseCaseInsensitive(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.parseCaseInsensitive() };
+                k()
+            }
+
+            def parseStrict(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.parseStrict() };
+                k()
+            }
+
+            def parseLenient(k) = {
+                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.parseLenient() };
+                k()
+            }
+            
+        };
+        match ans {
+            case Ok(ans1)    => { 
+                let jfmt: JDateTimeFormatter = unsafe IO { builder.toFormatter() };
+                Ok((DateTimeFormatter.DateTimeFormatter(jfmt), ans1))
+            }
+            case Err(msg) => Err(msg)
+        }  
     }
-
-    def handleHelper(_: Region[r], f: a -> b \ ef): a -> Result[String, (DateTimeFormatter[t], b)] \ (ef - DateTimeFormatterBuilder + r) =
-        x -> {
-            let builder = unsafe IO as r { new JDateTimeFormatterBuilder() };
-            let ans = run {
-                Ok(f(x))
-            } with handler DateTimeFormatterBuilder {
-                
-                def appendFormatter(fmt, k) = {
-                    let DateTimeFormatter(fmt1) = fmt;
-                    unsafe IO as r { discard builder.append(fmt1) };
-                    k()
-                }
-
-                def appendChronologyId(k) = {
-                    unsafe IO as r { discard builder.appendChronologyId() };
-                    k()
-                }
-
-                def appendChronologyText(style, k) = {
-                    let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unsafe IO as r { discard builder.appendChronologyText(style1) };
-                    k()
-                }
-
-                def appendDayPeriodText(style, k) = {
-                    let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unsafe IO as r { discard builder.appendDayPeriodText(style1) };
-                    k()
-                }
-
-                def appendGenericZoneText(style, k) = {
-                    let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unsafe IO as r { discard builder.appendGenericZoneText(style1) };
-                    k()
-                }
-
-                def appendInstant(k) = try {
-                    unsafe IO as r { discard builder.appendInstant() };
-                    k()
-                } catch { 
-                    case ex: Exception => Err(ex.getMessage())
-                }
-
-                def appendInstantWithFractionalDigits(i, k) = {
-                    unsafe IO as r { discard builder.appendInstant(i) };
-                    k()
-                }
-
-                def appendStringLiteral(s, k) = {
-                    unsafe IO as r { discard builder.appendLiteral(s) };
-                    k()
-                }
-
-                def appendCharLiteral(c, k) = {
-                    unsafe IO as r { discard builder.appendLiteral(c) };
-                    k()
-                }
-
-                def appendLocalized(timeStyle, dateStyle, k) = {
-                    let timeStyle1 = InteropTime.Format.FormatStyle.marshalFormatStyle(timeStyle#timeStyle);
-                    let dateStyle1 = InteropTime.Format.FormatStyle.marshalFormatStyle(dateStyle#dateStyle);
-                    unsafe IO as r { discard builder.appendLocalized(timeStyle1, dateStyle1) };
-                    k()
-                }
-
-                def appendLocalizedWithTemplateString(s, k) = {
-                    unsafe IO as r { discard builder.appendLocalized(s) };
-                    k()
-                }
-
-                def appendLocalizedOffset(style, k) = {
-                    let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unsafe IO as r { discard builder.appendLocalizedOffset(style1) };
-                    k()
-                }
-
-                def appendOffset(pattern, noOffsetText, k) = {
-                    unsafe IO as r { discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) };
-                    k()
-                }
-
-                def appendOffsetId(k) = {
-                    unsafe IO as r { discard builder.appendOffsetId() };
-                    k()
-                }
-
-                def appendOptional(fmt, k) = {
-                    let DateTimeFormatter(fmt1) = fmt;
-                    unsafe IO as r { discard builder.appendOptional(fmt1) };
-                    k()
-                }
-
-                def appendPattern(patt, k) = {
-                    unsafe IO as r { discard builder.appendPattern(patt) };
-                    k()
-                }
-
-                def appendZoneId(k) = {
-                    unsafe IO as r { discard builder.appendZoneId() };
-                    k()
-                }
-
-
-                def appendZoneOrOffsetId(k) = {
-                    unsafe IO as r { discard builder.appendZoneOrOffsetId() };
-                    k()
-                }
-
-                def appendZoneRegionId(k) = {
-                    unsafe IO as r { discard builder.appendZoneRegionId() };
-                    k()
-                }
-
-                def appendZoneText(style, k) = {
-                    let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                    unsafe IO as r { discard builder.appendZoneText(style1) };
-                    k()
-                }
-
-                // TODO use wrapped types
-                // def appendZoneTextWithZones(style: TextStyle, preferredZones: JSet): Unit
-                //     let builder = DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
-                //     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
-                //     discard builder.appendZoneText(style1, preferredZones);
-                //     ()
-
-                def optionalStart(k) = {
-                    unsafe IO as r { discard builder.optionalStart() };
-                    k()
-                }
-
-                def optionalEnd(k) = {
-                    unsafe IO as r { discard builder.optionalEnd() };
-                    k()
-                }
-
-
-                def padNext(n, k) = {
-                    unsafe IO as r { discard builder.padNext(n) };
-                    k()
-                }
-
-                def padNextWithChar(n, ch, k) = {
-                    unsafe IO as r { discard builder.padNext(n, ch) };
-                    k()
-                }
-
-                def parseCaseSensitive(k) = {
-                    unsafe IO as r { discard builder.parseCaseSensitive() };
-                    k()
-                }
-
-                def parseCaseInsensitive(k) = {
-                    unsafe IO as r { discard builder.parseCaseInsensitive() };
-                    k()
-                }
-
-                def parseStrict(k) = {
-                    unsafe IO as r { discard builder.parseStrict() };
-                    k()
-                }
-
-                def parseLenient(k) = {
-                    unsafe IO as r { discard builder.parseLenient() };
-                    k()
-                }
-                
-            };
-            match ans {
-                case Ok(ans1)    => { 
-                    let jfmt: JDateTimeFormatter = unsafe IO { builder.toFormatter() };
-                    Ok((DateTimeFormatter.DateTimeFormatter(jfmt), ans1))
-                }
-                case Err(msg) => Err(msg)
-            }  
-        }
 
 
     pub def runDefault(buildfun: Unit -> a \ ef): Result[String, (DateTimeFormatter[t], a)] \ (ef - DateTimeFormatterBuilder) = 
