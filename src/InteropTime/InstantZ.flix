@@ -42,6 +42,7 @@ pub mod InteropTime.InstantZ {
     import java.time.{Instant => JInstant}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around a Java instant.
@@ -55,7 +56,7 @@ pub mod InteropTime.InstantZ {
         pub def toString(x: InstantZ): String =
             let InstantZ(x1) = x;
             unsafe IO { x1.toString() }
-   }
+    }
 
     ///
     /// Parse the string `s` as an Instant, leading or trailing whitespace is trimmed.
@@ -64,12 +65,14 @@ pub mod InteropTime.InstantZ {
     ///
     instance FromString[InstantZ] {
         pub def fromString(s: String): Option[InstantZ] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JInstant.parse(s1) };
-                InstantZ(ans)
-           }) |> Result.toOption
-   }
+                Some(InstantZ(ans))
+            } catch {
+                case _: JException => None
+            }
+    }
 
     instance Eq[InstantZ] {
         pub def eq(x: InstantZ, y: InstantZ): Bool =
@@ -161,11 +164,13 @@ pub mod InteropTime.InstantZ {
     /// `parse` / `format` functions
 
     pub def parse(s: String): Result[String, InstantZ] =
-        Result.tryCatch(_ -> {
+        try {
             let s1 = String.trim(s);
             let ans = unsafe IO { JInstant.parse(s1) };
-            InstantZ(ans)
-       })
+            Ok(InstantZ(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     pub def format(x: InstantZ): String =
         let InstantZ(x1) = x;

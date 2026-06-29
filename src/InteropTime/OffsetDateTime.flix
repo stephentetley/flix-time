@@ -65,7 +65,7 @@ pub mod InteropTime.OffsetDateTime {
     import java.time.temporal.{IsoFields => JIsoFields}
     import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
-
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around a Java OffsetDateTime.
@@ -88,11 +88,13 @@ pub mod InteropTime.OffsetDateTime {
     ///
     instance FromString[OffsetDateTime] {
         pub def fromString(s: String): Option[OffsetDateTime] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JOffsetDateTime.parse(s1) };
-                OffsetDateTime(ans)
-           }) |> Result.toOption
+                Some(OffsetDateTime(ans))
+            } catch {
+                case _: JException => None
+            }
    }
 
     instance Eq[OffsetDateTime] {
@@ -248,12 +250,14 @@ pub mod InteropTime.OffsetDateTime {
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, OffsetDateTime] =
-        Result.tryCatch(_ -> {
+        try {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
             let ans = unsafe IO { JOffsetDateTime.parse(s1, fmtr) };
-            OffsetDateTime(ans)
-       })
+            Ok(OffsetDateTime(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
 
     ///

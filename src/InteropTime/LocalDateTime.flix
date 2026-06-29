@@ -60,6 +60,7 @@ pub mod InteropTime.LocalDateTime {
     import java.time.temporal.{IsoFields => JIsoFields}
     import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around a Java LocalDateTime.
@@ -82,11 +83,13 @@ pub mod InteropTime.LocalDateTime {
     ///
     instance FromString[LocalDateTime] {
         pub def fromString(s: String): Option[LocalDateTime] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JLocalDateTime.parse(s1) };
-                LocalDateTime(ans)
-           }) |> Result.toOption
+                Some(LocalDateTime(ans))
+            } catch {
+                case _: JException => None
+            }
    }
 
     instance Eq[LocalDateTime] {
@@ -217,12 +220,14 @@ pub mod InteropTime.LocalDateTime {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, LocalDateTime] =
-        Result.tryCatch(_ -> {
+        try {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
             let ans = unsafe IO { JLocalDateTime.parse(s1, fmtr) };
-            LocalDateTime(ans)
-       })
+            Ok(LocalDateTime(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     ///
     /// Returns LocalDateTime `x` as a String using `formatter`.

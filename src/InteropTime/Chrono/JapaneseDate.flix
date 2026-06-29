@@ -173,12 +173,14 @@ pub mod InteropTime.Chrono.JapaneseDate {
     ///         |> Result.getWithDefault(-1)
 
     /// def getChronoFieldHelper(x: JapaneseDate, field: ChronoField): Result[String, Int32] =
-    ///     Result.tryCatch(_ -> {
+    ///     try {
     ///         import java.time.temporal.TemporalAccessor.get(##java.time.temporal.TemporalField): Int32 \ {};
     ///         let JapaneseDate(x1) = x;
     ///         let field1 = InteropTime.Temporal.ChronoField.marshal(field) as ##java.time.temporal.TemporalField;
-    ///         get(x1 as ##java.time.temporal.TemporalAccessor, field1)
-    ///     })
+    ///         get(x1 as ##java.time.temporal.TemporalAccessor, field1) |> Ok
+    ///     } catch {
+    ///          case e: JException => Err(e.getMessage())
+    ///     }
         
 
 

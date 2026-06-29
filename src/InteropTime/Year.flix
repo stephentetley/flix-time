@@ -46,6 +46,7 @@ pub mod InteropTime.Year {
     import java.time.{Year => JYear}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around java.time.Year
@@ -63,11 +64,13 @@ pub mod InteropTime.Year {
     ///
     instance FromString[Year] {
         pub def fromString(s: String): Option[Year] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JYear.parse(s1) };
-                Year(ans)
-            }) |> Result.toOption
+                Some(Year(ans))
+            } catch {
+                case _: JException => None
+            }
     }
 
     instance Eq[Year] {
@@ -115,26 +118,32 @@ pub mod InteropTime.Year {
     /// `at` functions
 
     pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
-        Result.tryCatch(_ -> {
+        try {
             let Year(x1) = x;
             let ans = unsafe IO { x1.atDay(dayOfYear) };
-            LocalDate(ans)
-        }) |> Result.toOption
+            Some(LocalDate(ans))
+        } catch {
+            case _: JException => None
+        }
 
     pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
-        Result.tryCatch(_ -> {
+        try {
             let Year(x1) = x;
             let ans = unsafe IO { x1.atMonth(month) };
-            YearMonth(ans)
-        }) |> Result.toOption
+            Some(YearMonth(ans))
+        }catch {
+            case _: JException => None
+        }
 
     pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
-        Result.tryCatch(_ -> {
+        try {
             let Year(x1) = x;
             let m1 = InteropTime.Month.marshalMonth(month);
             let ans = unsafe IO { x1.atMonth(m1) };
-            YearMonth(ans)
-        }) |> Result.toOption
+            Some(YearMonth(ans))
+        } catch {
+            case _: JException => None
+        }
 
     pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
         let Year(x1) = x;
@@ -179,12 +188,14 @@ pub mod InteropTime.Year {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, Year] =
-        Result.tryCatch(_ -> {
+        try {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
             let ans = unsafe IO { JYear.parse(s1, fmtr) };
-            Year(ans)
-        })
+            Ok(Year(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     ///
     /// Returns the Year `x` as a String using `formatter`.

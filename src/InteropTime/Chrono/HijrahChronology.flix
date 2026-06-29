@@ -43,6 +43,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
         HijrahEra => JHijrahEra}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.util.{List => JList}
+    import java.lang.{Exception => JException}
 
     pub enum HijrahChronology(JHijrahChronology)
 
@@ -96,11 +97,13 @@ pub mod InteropTime.Chrono.HijrahChronology {
         HijrahDate(ans)
 
     pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] =
-        Result.tryCatch(_ -> {
+        try {
             let HijrahChronology(x1) = x;
             let ans = unsafe IO { x1.dateEpochDay(epochDay) };
-            HijrahDate(ans)
-        })
+            Ok(HijrahDate(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     pub def toString(x: HijrahChronology): String =
         let HijrahChronology(x1) = x;

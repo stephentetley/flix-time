@@ -55,7 +55,7 @@ pub mod InteropTime.ZonedDateTime {
     import java.time.temporal.{IsoFields => JIsoFields}
     import java.time.temporal.{Temporal => JTemporal}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
-
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around a Java ZonedDateTime.
@@ -78,11 +78,13 @@ pub mod InteropTime.ZonedDateTime {
     ///
     instance FromString[ZonedDateTime] {
         pub def fromString(s: String): Option[ZonedDateTime] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JZonedDateTime.parse(s1) };
-                ZonedDateTime(ans)
-           }) |> Result.toOption
+                Some(ZonedDateTime(ans))
+            } catch {
+                case _: JException => None
+            }
     }
 
     instance Eq[ZonedDateTime] {
@@ -204,12 +206,14 @@ pub mod InteropTime.ZonedDateTime {
     /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, ZonedDateTime] =
-        Result.tryCatch(_ -> {
+        try {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
             let ans = unsafe IO { JZonedDateTime.parse(s1, fmtr) };
-            ZonedDateTime(ans)
-       })
+            Ok(ZonedDateTime(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     ///
     /// Returns ZonedDateTime `x` as a String using `formatter`.

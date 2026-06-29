@@ -33,6 +33,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
     import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule}
     import java.time.zone.{ZoneOffsetTransitionRule$TimeDefinition => JTimeDefinition}
     import java.lang.{Enum => JEnum}
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around a Java ZoneOffsetTransitionRule.
@@ -96,7 +97,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
                                         standardOffset: {standardOffset = ZoneOffset}, 
                                         offsetBefore: {offsetBefore = ZoneOffset},
                                         offsetAfter: {offsetAfter = ZoneOffset}): Result[String, ZoneOffsetTransitionRule] =
-        Result.tryCatch(_ -> {
+        try {
             let month1 = InteropTime.Month.marshalMonth(month#month);
             let dayOfWeek1 = InteropTime.DayOfWeek.marshalDayOfWeek(dayOfWeek#dayOfWeek);
             let LocalTime(time1) = time#time;
@@ -112,8 +113,10 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
                                                     standardOffset1,
                                                     offsetBefore1,
                                                     offsetAfter1
-                                                )})
-        })
+                                                )}) |> Ok
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     /// predicates / comparisons
     

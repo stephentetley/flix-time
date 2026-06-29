@@ -40,7 +40,8 @@ pub mod InteropTime.ZoneId {
     import java.time.{ZoneOffset => JZoneOffset}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.time.zone.{ZoneRules => JZoneRules}
-    import java.lang.{Object, Exception, Throwable}
+    import java.lang.{Object, Throwable}
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around a Java ZoneId.
@@ -76,16 +77,22 @@ pub mod InteropTime.ZoneId {
     /// Constructors
 
     pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
-        Result.tryCatch(_ -> ZoneId(unsafe IO { JZoneId.of(zoneId#zoneId) }))
+        try {
+            ZoneId(unsafe IO { JZoneId.of(zoneId#zoneId) }) |> Ok
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     /// Ideally not in IO...
     pub def zoneIdWithAliases(zoneId: {zoneId = String}, 
                                 aliases: Map[String, String]): Result[String, ZoneId] \ IO =
-        Result.tryCatch(_ -> {
+        try {
             let jmap = Adaptor.toMap(aliases);
             let ans = unsafe IO { JZoneId.of(zoneId#zoneId, jmap) };
-            ZoneId(ans)
-        })
+            Ok(ZoneId(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
 
     /// "abstract constructors" (e.g. `utc`)
@@ -96,7 +103,12 @@ pub mod InteropTime.ZoneId {
     }
 
     pub def systemDefault(): Result[String, ZoneId] \ IO =
-        Result.tryCatch(_ -> ZoneId(JZoneId.systemDefault()))
+        try {
+            ZoneId(JZoneId.systemDefault()) |> Ok
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
+
 
 
     /// `from` functions
@@ -154,18 +166,19 @@ pub mod InteropTime.ZoneId {
             let s = JZoneId.getAvailableZoneIds();
             Adaptor.fromSet(s)
         } catch {
-            case _: Exception => Set.empty()
+            case _: JException => Set.empty()
         }
 
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =
-        Result.tryCatch(_ -> {
+        try {
             let ZoneId(x1) = x;
             let ans = unsafe IO { x1.getRules() };
-            ZoneRules(ans)
-        }) |> Result.toOption
-
+            Some(ZoneRules(ans))
+        } catch {
+            case _: JException => None
+        }
 
     pub def normalized(x: ZoneId): ZoneId =
         let ZoneId(x1) = x;

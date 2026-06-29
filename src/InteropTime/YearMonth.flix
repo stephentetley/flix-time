@@ -39,6 +39,7 @@ pub mod InteropTime.YearMonth {
     import java.time.{YearMonth => JYearMonth}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around java.time.YearMonth.
@@ -59,11 +60,13 @@ pub mod InteropTime.YearMonth {
     ///
     instance FromString[YearMonth] {
         pub def fromString(s: String): Option[YearMonth] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JYearMonth.parse(s1) };
-                YearMonth(ans)
-            }) |> Result.toOption
+                Some(YearMonth(ans))
+            } catch {
+                case _: JException => None
+            }
     }
 
 
@@ -139,12 +142,14 @@ pub mod InteropTime.YearMonth {
     /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, YearMonth] =
-        Result.tryCatch(_ -> {
+        try {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
             let ans = unsafe IO { JYearMonth.parse(s1, fmtr) };
-            YearMonth(ans)
-        })
+            Ok(YearMonth(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
     
     ///
     /// Returns YearMonth `x` as a String using `formatter`.

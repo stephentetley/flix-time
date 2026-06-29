@@ -43,17 +43,17 @@ pub mod InteropTime.Month {
     import java.lang.{Enum => JEnum}
 
     pub enum Month with Eq, Order, ToString, Hash {
-        case January,
-        case February,
-        case March,
-        case April,
-        case May,
-        case June,
-        case July,
-        case August,
-        case September,
-        case October,
-        case November,
+        case January
+        case February
+        case March
+        case April
+        case May
+        case June
+        case July
+        case August
+        case September
+        case October
+        case November
         case December
     }
 

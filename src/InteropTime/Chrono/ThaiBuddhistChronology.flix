@@ -34,6 +34,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
         ThaiBuddhistDate => JThaiBuddhistDate, 
         ThaiBuddhistEra => JThaiBuddhistEra}
     import java.util.{List => JList}
+    import java.lang.{Exception => JException}
 
     pub enum ThaiBuddhistChronology(JThaiBuddhistChronology)
 
@@ -85,11 +86,13 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
 
     // Todo Result[]
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): Result[String, ThaiBuddhistEra] = 
-        Result.tryCatch(_ -> {
+        try {
             let ThaiBuddhistChronology(x1) = x;
             let ans = unsafe IO { x1.eraOf(i) };
-            InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
-        })
+            InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans) |> Ok
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
         def convert(e) = {

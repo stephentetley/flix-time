@@ -83,11 +83,13 @@ pub mod InteropTime.LocalDate {
     ///
     instance FromString[LocalDate] {
         pub def fromString(s: String): Option[LocalDate] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JLocalDate.parse(s1) };
-                LocalDate(ans)
-           }) |> Result.toOption
+                Some(LocalDate(ans))
+            } catch {
+                case _: JException => None
+            }
    }
 
     instance Eq[LocalDate] {
@@ -210,12 +212,14 @@ pub mod InteropTime.LocalDate {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, LocalDate] = 
-        Result.tryCatch(_ -> {
+        try {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
             let ans = unsafe IO { JLocalDate.parse(s1, fmtr) };
-            LocalDate(ans)
-       })
+            Ok(LocalDate(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     ///
     /// Returns LocalDate `x` as a String using `formatter`.

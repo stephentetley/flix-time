@@ -38,6 +38,7 @@ pub mod InteropTime.MonthDay {
     
     import java.time.{MonthDay => JMonthDay}
     import java.lang.{Object, CharSequence}
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around java.time.MonthDay.
@@ -56,11 +57,13 @@ pub mod InteropTime.MonthDay {
     ///
     instance FromString[MonthDay] {
         pub def fromString(s: String): Option[MonthDay] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JMonthDay.parse(s1) };
-                MonthDay(ans)
-        }) |> Result.toOption
+                Some(MonthDay(ans))
+            } catch {
+                case _: JException => None
+            }
     }
 
     instance Eq[MonthDay] {
@@ -136,12 +139,14 @@ pub mod InteropTime.MonthDay {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, MonthDay] =
-        Result.tryCatch(_ -> {
+        try {
             let DateTimeFormatter(fmtr) = formatter;
             let s1 = String.trim(s);
             let ans = unsafe IO { JMonthDay.parse(s1, fmtr) };
-            MonthDay(ans)
-        })
+            Ok(MonthDay(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
 
     ///

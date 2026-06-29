@@ -26,7 +26,7 @@ pub mod InteropTime.DurationZ {
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
-
+    import java.lang.{Exception => JException}
 
     ///
     /// A measure of time represented internally as seconds and a nanoseconds adjustment.
@@ -51,11 +51,13 @@ pub mod InteropTime.DurationZ {
     ///
     instance FromString[DurationZ] {
         pub def fromString(s: String): Option[DurationZ] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JDuration.parse(s1) };
-                DurationZ(ans)
-           }) |> Result.toOption
+                DurationZ(ans) |> Some
+            } catch {
+                case _: JException => None
+            }
    }
 
     instance Eq[DurationZ] {
@@ -243,11 +245,13 @@ pub mod InteropTime.DurationZ {
     /// `parse` / `format` functions
 
     pub def parse(s: String): Result[String, DurationZ] =
-        Result.tryCatch(_ -> {
+        try {
             let s1 = String.trim(s);
             let ans = unsafe IO { JDuration.parse(s1) };
-            DurationZ(ans)
-       })
+            Ok(DurationZ(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     /// Note - alias of `toString`
     pub def format(x: DurationZ): String =

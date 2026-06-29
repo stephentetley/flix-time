@@ -28,6 +28,7 @@ pub mod InteropTime.Chrono.JapaneseEra {
     import java.time.chrono.{JapaneseEra => JJapaneseEra}
     import java.time.chrono.{Era => JEra}
     import java.lang.{Object }
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around java.time.chrono.JapaneseEra.
@@ -56,9 +57,11 @@ pub mod InteropTime.Chrono.JapaneseEra {
 
 
     pub def japaneseEra(japaneseEra: {japaneseEra = Int32 }): Option[JapaneseEra] =
-        Result.tryCatch(_ -> {
-            JapaneseEra(unsafe IO { JJapaneseEra.of(japaneseEra#japaneseEra)}) 
-        }) |> Result.toOption
+        try {
+            JapaneseEra(unsafe IO { JJapaneseEra.of(japaneseEra#japaneseEra)}) |> Some 
+        } catch {
+            case _: JException => None
+        }
 
     pub def heisei(): JapaneseEra = JapaneseEra(unsafe IO { JJapaneseEra.HEISEI}) 
 

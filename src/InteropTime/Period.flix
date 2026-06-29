@@ -26,7 +26,7 @@ pub mod InteropTime.Period {
     import java.time.{Period => JPeriod }
     import java.time.chrono.{ChronoPeriod }
     import java.lang.{Object, CharSequence }
-
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around a Java Period.
@@ -46,11 +46,13 @@ pub mod InteropTime.Period {
     ///
     instance FromString[Period] {
         pub def fromString(s: String): Option[Period] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JPeriod.parse(s1) };
-                Period(ans)
-            }) |> Result.toOption
+                Some(Period(ans))
+            } catch {
+                case _: JException => None
+            }
     }
 
     instance Eq[Period] {
@@ -144,11 +146,13 @@ pub mod InteropTime.Period {
     /// `parse` / `format` functions        
 
     pub def parse(s: String): Result[String, Period] =
-        Result.tryCatch(_ -> {
+        try {
             let s1 = String.trim(s);
             let ans = unsafe IO { JPeriod.parse(s1) };
-            Period(ans)
-        })
+            Ok(Period(ans))
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
     /// Note - alias of `toString`
     pub def format(x: Period): String =
