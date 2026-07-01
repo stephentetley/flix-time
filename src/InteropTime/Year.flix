@@ -138,7 +138,7 @@ pub mod InteropTime.Year {
     pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
         try {
             let Year(x1) = x;
-            let m1 = InteropTime.Month.marshalMonth(month);
+            let m1 = ToJava.toJava(month);
             let ans = unsafe IO { x1.atMonth(m1) };
             Some(YearMonth(ans))
         } catch {

@@ -77,9 +77,9 @@ pub mod InteropTime.Month {
     }
 
     /// # Marshal enums
-
-    pub def marshalMonth(x: Month): JMonth =
-        match x {
+    instance ToJava[Month] {
+        type Out = JMonth
+        pub def toJava(x: Month): JMonth = match x {
             case Month.January      => unsafe IO { JMonth.JANUARY }
             case Month.February     => unsafe IO { JMonth.FEBRUARY }
             case Month.March        => unsafe IO { JMonth.MARCH }
@@ -93,27 +93,27 @@ pub mod InteropTime.Month {
             case Month.November     => unsafe IO { JMonth.NOVEMBER }
             case Month.December     => unsafe IO { JMonth.DECEMBER }
         }
+    }
 
-    def primEquals(x: JMonth, y: JMonth): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalMonth(x: JMonth): Month =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JMonth.JANUARY })    => January
-            case x1 if primEquals(x1, unsafe IO { JMonth.FEBRUARY })   => February
-            case x1 if primEquals(x1, unsafe IO { JMonth.MARCH })      => March
-            case x1 if primEquals(x1, unsafe IO { JMonth.APRIL })      => April
-            case x1 if primEquals(x1, unsafe IO { JMonth.MAY })        => May
-            case x1 if primEquals(x1, unsafe IO { JMonth.JUNE })       => June
-            case x1 if primEquals(x1, unsafe IO { JMonth.JULY })       => July
-            case x1 if primEquals(x1, unsafe IO { JMonth.AUGUST })     => August
-            case x1 if primEquals(x1, unsafe IO { JMonth.SEPTEMBER })  => September
-            case x1 if primEquals(x1, unsafe IO { JMonth.OCTOBER })    => October
-            case x1 if primEquals(x1, unsafe IO { JMonth.NOVEMBER })   => November
-            case x1 if primEquals(x1, unsafe IO { JMonth.DECEMBER })   => December
-            case _                                      => bug!("unmarshalMonth")
+    
+    instance ToFlix[Month] {
+        type In = JMonth
+        pub def toFlix(x: JMonth): Month = unsafe IO {
+            if (x.equals(JMonth.JANUARY))           Month.January
+            else if (x.equals(JMonth.FEBRUARY))     Month.February
+            else if (x.equals(JMonth.MARCH))        Month.March
+            else if (x.equals(JMonth.APRIL))        Month.April
+            else if (x.equals(JMonth.MAY))          Month.May
+            else if (x.equals(JMonth.JUNE))         Month.June
+            else if (x.equals(JMonth.JULY))         Month.July
+            else if (x.equals(JMonth.AUGUST))       Month.August
+            else if (x.equals(JMonth.SEPTEMBER))    Month.September
+            else if (x.equals(JMonth.OCTOBER))      Month.October
+            else if (x.equals(JMonth.NOVEMBER))     Month.November
+            else if (x.equals(JMonth.DECEMBER))     Month.December
+            else bug!("toFlix[Month]")
         }
-
+    }
     // `from` functions
 
     /// `fromTemporalAccessor` specialized
@@ -121,77 +121,77 @@ pub mod InteropTime.Month {
     pub def fromLocalDate(x: LocalDate): Month =
         let LocalDate(x1) = x;
         let ans = unsafe IO { JMonth.$from(x1) };
-        unmarshalMonth(ans)
+        ToFlix.toFlix(ans)
 
     pub def fromLocalDateTime(x: LocalDateTime): Month =
         let LocalDateTime(x1) = x;
         let ans = unsafe IO { JMonth.$from(x1) };
-        unmarshalMonth(ans)
+        ToFlix.toFlix(ans)
 
     pub def fromMonthDay(x: MonthDay): Month =
         let MonthDay(x1) = x;
         let ans = unsafe IO { JMonth.$from(x1) };
-        unmarshalMonth(ans)
+        ToFlix.toFlix(ans)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Month =
         let OffsetDateTime(x1) = x;
         let ans = unsafe IO { JMonth.$from(x1) };
-        unmarshalMonth(ans)
+        ToFlix.toFlix(ans)
 
     pub def fromYearMonth(x: YearMonth): Month =
         let YearMonth(x1) = x;
         let ans = unsafe IO { JMonth.$from(x1) };
-        unmarshalMonth(ans)
+        ToFlix.toFlix(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): Month =
         let ZonedDateTime(x1) = x;
         let ans = unsafe IO { JMonth.$from(x1) };
-        unmarshalMonth(ans)
+        ToFlix.toFlix(ans)
 
     /// Month functions
     
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         let s1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
         let Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(s1, locale1) }
 
     pub def getValue(x: Month): Int32 =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getValue() }
 
     pub def firstDayOfYear(leap: Bool, x: Month): Int32 =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.firstDayOfYear(leap) }
 
     pub def firstMonthOfQuarter(x: Month): Month =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.firstMonthOfQuarter() };
-        unmarshalMonth(ans)
+        ToFlix.toFlix(ans)
 
     pub def maxLength(x: Month): Int32 =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.maxLength() }
 
     pub def minLength(x: Month): Int32 =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.minLength() }
 
     pub def length(leap: Bool, x: Month): Int32 =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.length(leap) }
 
     // plus / minus functions
 
     pub def plus(x:Month, y: Int64): Month =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         let x2 = unsafe IO { x1.plus(y) };
-        unmarshalMonth(x2)
+        ToFlix.toFlix(x2)
 
     pub def minus(x:Month, y: Int64): Month =
-        let x1 = marshalMonth(x);
+        let x1 = ToJava.toJava(x);
         let x2 = unsafe IO { x1.minus(y) };
-        unmarshalMonth(x2)
+        ToFlix.toFlix(x2)
 
 
 

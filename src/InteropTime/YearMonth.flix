@@ -100,7 +100,7 @@ pub mod InteropTime.YearMonth {
         YearMonth(ans)
 
     pub def yearMonthWithMonth(year: {year = Int32}, month: {month = Month}): YearMonth =
-        let m1 = InteropTime.Month.marshalMonth(month#month);
+        let m1 = ToJava.toJava(month#month);
         let ans = unsafe IO { JYearMonth.of(year#year, m1) };
         YearMonth(ans)
 
@@ -213,7 +213,7 @@ pub mod InteropTime.YearMonth {
     pub def getMonth(x: YearMonth): Month =
         let YearMonth(x1) = x;
         let m1 = unsafe IO { x1.getMonth() };
-        InteropTime.Month.unmarshalMonth(m1)
+        ToFlix.toFlix(m1)
 
     pub def withMonth(month: Month, x: YearMonth): YearMonth =
         yearMonthWithMonth(year = getYear(x), month = month)

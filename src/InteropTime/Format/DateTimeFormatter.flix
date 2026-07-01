@@ -31,6 +31,7 @@ pub mod InteropTime.Format.DateTimeFormatter {
 
     import java.time.format.{DateTimeFormatter => JDateTimeFormatter}
     import java.time.{ZoneId => JZoneId}
+    import java.lang.{Exception => JException}
 
     ///
     /// A wrapper around a Java DateTimeFormatter for date-time formats.
@@ -48,10 +49,12 @@ pub mod InteropTime.Format.DateTimeFormatter {
 
     instance FromString[DateTimeFormatter[t]] {
         pub def fromString(s: String): Option[DateTimeFormatter[t]] =
-            Result.tryCatch(_ -> {
+            try {
                 let s1 = String.trim(s);
-                DateTimeFormatter.DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofPattern(s1) })
-            }) |> Result.toOption
+                DateTimeFormatter.DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofPattern(s1) }) |> Some
+            } catch {
+                case _: JException => None
+            }
     }
 
     /// Phantom arguments to restrict the type of DateTimeFormatter
@@ -114,10 +117,12 @@ pub mod InteropTime.Format.DateTimeFormatter {
     /// ## `from` functions
 
     pub def fromPattern(pattern: String): Result[String, DateTimeFormatter[t]] =
-        Result.tryCatch(_ -> {
+        try {
             let s1 = String.trim(pattern);
-            DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofPattern(s1) })
-        })
+            DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofPattern(s1) }) |> Ok
+        } catch {
+            case e: JException => Err(e.getMessage())
+        }
 
 
     pub def fromLocalizedTime(style: FormatStyle): DateTimeFormatter[TimeFormat] =

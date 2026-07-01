@@ -255,7 +255,7 @@ pub mod InteropTime.ZonedDateTime {
     pub def getMonth(x: ZonedDateTime): Month =
         let ZonedDateTime(x1) = x;
         let m1 = unsafe IO { x1.getMonth() };
-        InteropTime.Month.unmarshalMonth(m1)
+        ToFlix.toFlix(m1)
 
     pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
         let ZonedDateTime(x1) = x;
@@ -290,7 +290,7 @@ pub mod InteropTime.ZonedDateTime {
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
         let ZonedDateTime(x1) = x;
         let d1 = unsafe IO { x1.getDayOfWeek() };
-        InteropTime.DayOfWeek.unmarshalDayOfWeek(d1)
+        ToFlix.toFlix(d1)
 
     // no setDayOfWeek
 
@@ -362,7 +362,7 @@ pub mod InteropTime.ZonedDateTime {
 
     pub def adjustDayOfWeek(d: DayOfWeek, x: ZonedDateTime): ZonedDateTime =  
         let ZonedDateTime(x1) = x;
-        let d1 = InteropTime.DayOfWeek.marshalDayOfWeek(d);
+        let d1 = ToJava.toJava(d);
         let dt1 = unsafe IO { d1.adjustInto(x1) };
         let ans = unchecked_cast(dt1 as JZonedDateTime);
         ZonedDateTime(ans)

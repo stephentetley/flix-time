@@ -8,3 +8,4 @@ authors     = ["Stephen Tetley <stephen.tetley@gmail.com>"]
 
 [dependencies]
 "github:stephentetley/charset-locale" = { version = "0.14.0", security = "unrestricted" }
+

@@ -114,6 +114,19 @@ pub mod InteropTime.DurationZ {
    }
 
 
+    instance ToJava[DurationZ] {
+        type Out = JDuration
+        pub def toJava(x: DurationZ): JDuration = 
+            let DurationZ.DurationZ(x1) = x;
+            x1
+    }
+
+    instance ToFlix[DurationZ] {
+        type In = JDuration
+        pub def toFlix(x: JDuration): DurationZ = DurationZ.DurationZ(x)
+    }
+    
+
     /// Constructors
 
     ///

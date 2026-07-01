@@ -74,7 +74,7 @@ pub mod InteropTime.LocalDate {
         pub def toString(x: LocalDate): String =
             let LocalDate(x1) = x;
             unsafe IO { x1.toString() }
-   }
+    }
 
     ///
     /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
@@ -90,20 +90,20 @@ pub mod InteropTime.LocalDate {
             } catch {
                 case _: JException => None
             }
-   }
+    }
 
     instance Eq[LocalDate] {
         pub def eq(x: LocalDate, y: LocalDate): Bool =
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
             unsafe IO { x1.equals(y1) }
-   }
+    }
 
     instance Hash[LocalDate] {
         pub def hash(x: LocalDate): Int32 =
             let LocalDate(x1) = x;
             unsafe IO { x1.hashCode() }
-   }
+    }
 
 
     instance Order[LocalDate] {
@@ -111,7 +111,7 @@ pub mod InteropTime.LocalDate {
             let LocalDate(x1) = x;
             let LocalDate(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
-   }
+    }
 
 
 
@@ -126,7 +126,7 @@ pub mod InteropTime.LocalDate {
     pub def localDateWithMonth(year: {year = Int32}, 
                                 month: {month = Month}, 
                                 dayOfMonth: {dayOfMonth = Int32}): LocalDate =
-        let m1 = InteropTime.Month.marshalMonth(month#month);
+        let m1 = ToJava.toJava(month#month);
         let ans = unsafe IO { JLocalDate.of(year#year, m1, dayOfMonth#dayOfMonth) };
         LocalDate(ans)
 
@@ -330,13 +330,13 @@ pub mod InteropTime.LocalDate {
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
         let LocalDate(x1) = x;
         let d1 = unsafe IO { x1.getDayOfWeek() };
-        InteropTime.DayOfWeek.unmarshalDayOfWeek(d1)
+        ToFlix.toFlix(d1)
 
 
     pub def getMonth(x: LocalDate): Month =
         let LocalDate(x1) = x;
         let m1 = unsafe IO { x1.getMonth() };
-        InteropTime.Month.unmarshalMonth(m1)
+        ToFlix.toFlix(m1)
 
 
     pub def getMonthValue(x: LocalDate): Int32 =
@@ -436,7 +436,7 @@ pub mod InteropTime.LocalDate {
 
     pub def adjustDayOfWeek(x: DayOfWeek, ld: LocalDate): LocalDate = 
         let LocalDate(ld1) = ld;
-        let x1 = InteropTime.DayOfWeek.marshalDayOfWeek(x);
+        let x1 = ToJava.toJava(x);
         let d1 = unsafe IO { x1.adjustInto(ld1) };
         let ans = unchecked_cast(d1 as JLocalDate);
         LocalDate(ans)

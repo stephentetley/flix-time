@@ -276,7 +276,7 @@ pub mod InteropTime.LocalDateTime {
 
     pub def getMonth(x: LocalDateTime): Month =
         let LocalDateTime(x1) = x;
-        InteropTime.Month.unmarshalMonth(unsafe IO { x1.getMonth() })
+        ToFlix.toFlix(unsafe IO { x1.getMonth() })
 
     pub def withMonth(month: Int32, x: LocalDateTime): LocalDateTime =
         let LocalDateTime(x1) = x;
@@ -303,7 +303,7 @@ pub mod InteropTime.LocalDateTime {
 
     pub def getDayOfWeek(x: LocalDateTime): DayOfWeek =
         let LocalDateTime(x1) = x;
-        InteropTime.DayOfWeek.unmarshalDayOfWeek(unsafe IO { x1.getDayOfWeek() })
+        ToFlix.toFlix(unsafe IO { x1.getDayOfWeek() })
 
     pub def getHour(x: LocalDateTime): Int32 =
         let LocalDateTime(x1) = x;
@@ -372,7 +372,7 @@ pub mod InteropTime.LocalDateTime {
 
     pub def adjustDayOfWeek(d: DayOfWeek, x: LocalDateTime): LocalDateTime = 
         let LocalDateTime(x1) = x;
-        let d1 = InteropTime.DayOfWeek.marshalDayOfWeek(d);
+        let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.adjustInto(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)

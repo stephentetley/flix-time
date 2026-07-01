@@ -98,8 +98,8 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
                                         offsetBefore: {offsetBefore = ZoneOffset},
                                         offsetAfter: {offsetAfter = ZoneOffset}): Result[String, ZoneOffsetTransitionRule] =
         try {
-            let month1 = InteropTime.Month.marshalMonth(month#month);
-            let dayOfWeek1 = InteropTime.DayOfWeek.marshalDayOfWeek(dayOfWeek#dayOfWeek);
+            let month1 = ToJava.toJava(month#month);
+            let dayOfWeek1 = ToJava.toJava(dayOfWeek#dayOfWeek);
             let LocalTime(time1) = time#time;
             let ZoneOffset(standardOffset1) = standardOffset#standardOffset;
             let ZoneOffset(offsetBefore1) = offsetBefore#offsetBefore;
@@ -145,7 +145,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
         let ZoneOffsetTransitionRule(x1) = x;
         let ans = unsafe IO { x1.getDayOfWeek() };
-        InteropTime.DayOfWeek.unmarshalDayOfWeek(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 

@@ -96,7 +96,7 @@ pub mod InteropTime.MonthDay {
 
     pub def monthDayWithMonth(month: {month = Month}, 
                                 dayOfMonth: {dayOfMonth = Int32}): MonthDay =
-        let m1 = InteropTime.Month.marshalMonth(month#month);
+        let m1 = ToJava.toJava(month#month);
         let ans = unsafe IO { JMonthDay.of(m1, dayOfMonth#dayOfMonth) };
         MonthDay(ans)
 
@@ -196,11 +196,11 @@ pub mod InteropTime.MonthDay {
 
     pub def getMonth(x: MonthDay): Month =
         let MonthDay(x1) = x;
-        InteropTime.Month.unmarshalMonth(unsafe IO { x1.getMonth() })
+        ToFlix.toFlix(unsafe IO { x1.getMonth() })
 
     pub def withMonth(month: Month, x: MonthDay): MonthDay =
         let MonthDay(x1) = x;
-        let m1 = InteropTime.Month.marshalMonth(month);
+        let m1 = ToJava.toJava(month);
         let ans = unsafe IO { x1.$with(m1) };
         MonthDay(ans)
 

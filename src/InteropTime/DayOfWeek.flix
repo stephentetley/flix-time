@@ -80,9 +80,9 @@ pub mod InteropTime.DayOfWeek {
     }
 
     /// Marshal enums
-
-    pub def marshalDayOfWeek(x: DayOfWeek): JDayOfWeek =
-        match x {
+    instance ToJava[DayOfWeek] {
+        type Out = JDayOfWeek
+        pub def toJava(x: DayOfWeek): JDayOfWeek = match x {
             case Monday       => unsafe IO { JDayOfWeek.MONDAY }
             case Tuesday      => unsafe IO { JDayOfWeek.TUESDAY }
             case Wednesday    => unsafe IO { JDayOfWeek.WEDNESDAY }
@@ -91,23 +91,22 @@ pub mod InteropTime.DayOfWeek {
             case Saturday     => unsafe IO { JDayOfWeek.SATURDAY }
             case Sunday       => unsafe IO { JDayOfWeek.SUNDAY }
         }
+    }
 
-    def primEquals(x: JDayOfWeek, y: JDayOfWeek): Bool =
-        unsafe IO { x.equals(y) }
-
-
-    pub def unmarshalDayOfWeek(x: JDayOfWeek): DayOfWeek =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.MONDAY })     => Monday
-            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.TUESDAY })    => Tuesday
-            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.WEDNESDAY })  => Wednesday
-            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.THURSDAY })   => Thursday
-            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.FRIDAY })     => Friday
-            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.SATURDAY })   => Saturday
-            case x1 if primEquals(x1, unsafe IO { JDayOfWeek.SUNDAY })     => Sunday
-            case _                                      => bug!("unmarshalDayOfWeek")
+    instance ToFlix[DayOfWeek] {
+        type In = JDayOfWeek
+        pub def toFlix(x: JDayOfWeek): DayOfWeek = unsafe IO {
+            if (x.equals(JDayOfWeek.MONDAY))            DayOfWeek.Monday
+            else if (x.equals(JDayOfWeek.TUESDAY))      DayOfWeek.Tuesday
+            else if (x.equals(JDayOfWeek.WEDNESDAY))    DayOfWeek.Wednesday
+            else if (x.equals(JDayOfWeek.THURSDAY))     DayOfWeek.Thursday
+            else if (x.equals(JDayOfWeek.FRIDAY))       DayOfWeek.Friday
+            else if (x.equals(JDayOfWeek.SATURDAY))     DayOfWeek.Saturday
+            else if (x.equals(JDayOfWeek.SUNDAY))       DayOfWeek.Sunday
+            else bug!("toFlix[DayOfWeek]")
         }
-
+    }
+      
     // `from` functions
 
     // `fromTemporalAccessor` specialized
@@ -115,49 +114,49 @@ pub mod InteropTime.DayOfWeek {
     pub def fromLocalDate(x: LocalDate): DayOfWeek =
         let LocalDate(x1) = x;
         let ans = unsafe IO { JDayOfWeek.$from(x1) };
-        unmarshalDayOfWeek(ans)
+        ToFlix.toFlix(ans)
 
     pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek =
         let LocalDateTime(x1) = x;
         let ans = unsafe IO { JDayOfWeek.$from(x1) };
-        unmarshalDayOfWeek(ans)
+        ToFlix.toFlix(ans)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek =
         let OffsetDateTime(x1) = x;
         let ans = unsafe IO { JDayOfWeek.$from(x1) };
-        unmarshalDayOfWeek(ans)
+        ToFlix.toFlix(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek =
         let ZonedDateTime(x1) = x;
         let ans = unsafe IO { JDayOfWeek.$from(x1) };
-        unmarshalDayOfWeek(ans)
+        ToFlix.toFlix(ans)
     
 
     /// DayOfWeek functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
-        let x1 = marshalDayOfWeek(x);
+        let x1 = ToJava.toJava(x);
         let s1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
         let Locale.Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(s1, locale1) }
 
 
     pub def getValue(x: DayOfWeek): Int32 =
-        let x1 = marshalDayOfWeek(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getValue() }
 
 
     /// plus / minus functions
 
     pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
-        let x1 = marshalDayOfWeek(x);
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plus(days) };
-        unmarshalDayOfWeek(ans)
+        ToFlix.toFlix(ans)
 
     pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
-        let x1 = marshalDayOfWeek(x);
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minus(days) };
-        unmarshalDayOfWeek(ans)
+        ToFlix.toFlix(ans)
 
 
 }

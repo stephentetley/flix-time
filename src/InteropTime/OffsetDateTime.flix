@@ -378,12 +378,12 @@ pub mod InteropTime.OffsetDateTime {
     pub def getDayOfWeek(x: OffsetDateTime): DayOfWeek =
         let OffsetDateTime(x1) = x;
         let d1 = unsafe IO { x1.getDayOfWeek() };
-        InteropTime.DayOfWeek.unmarshalDayOfWeek(d1)
+        ToFlix.toFlix(d1)
 
 
     pub def adjustDayOfWeek(d: DayOfWeek, x: OffsetDateTime): OffsetDateTime = 
         let OffsetDateTime(x1) = x;
-        let d1 = InteropTime.DayOfWeek.marshalDayOfWeek(d);
+        let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.adjustInto(x1) };
         let ans = unchecked_cast(t1 as JOffsetDateTime);
         OffsetDateTime(ans)
@@ -411,7 +411,7 @@ pub mod InteropTime.OffsetDateTime {
     pub def getMonth(x: OffsetDateTime): Month =
         let OffsetDateTime(x1) = x;
         let m1 = unsafe IO { x1.getMonth() };
-        InteropTime.Month.unmarshalMonth(m1)
+        ToFlix.toFlix(m1)
 
     pub def getMonthValue(x: OffsetDateTime): Int32 =
         let OffsetDateTime(x1) = x;
