@@ -119,6 +119,19 @@ pub mod InteropTime.OffsetDateTime {
    }
 
 
+    instance ToJava[OffsetDateTime] {
+        type Out = JOffsetDateTime
+        pub def toJava(x: OffsetDateTime): JOffsetDateTime = 
+            let OffsetDateTime.OffsetDateTime(x1) = x;
+            x1
+    }
+
+    instance ToFlix[OffsetDateTime] {
+        type In = JOffsetDateTime
+        pub def toFlix(x: JOffsetDateTime): OffsetDateTime = OffsetDateTime.OffsetDateTime(x)
+    }
+
+
     /// Constructors
 
     pub def offsetDateTime(year: {year = Int32}, 

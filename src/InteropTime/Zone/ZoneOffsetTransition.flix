@@ -63,6 +63,17 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
+    instance ToJava[ZoneOffsetTransition] {
+        type Out = JZoneOffsetTransition
+        pub def toJava(x: ZoneOffsetTransition): JZoneOffsetTransition = 
+            let ZoneOffsetTransition.ZoneOffsetTransition(x1) = x;
+            x1
+    }
+
+    instance ToFlix[ZoneOffsetTransition] {
+        type In = JZoneOffsetTransition
+        pub def toFlix(x: JZoneOffsetTransition): ZoneOffsetTransition = ZoneOffsetTransition.ZoneOffsetTransition(x)
+    }
 
 
     /// Constructors

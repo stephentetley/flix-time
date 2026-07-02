@@ -87,6 +87,17 @@ pub mod InteropTime.MonthDay {
     }
 
 
+    instance ToJava[MonthDay] {
+        type Out = JMonthDay
+        pub def toJava(x: MonthDay): JMonthDay = 
+            let MonthDay.MonthDay(x1) = x;
+            x1
+    }
+
+    instance ToFlix[MonthDay] {
+        type In = JMonthDay
+        pub def toFlix(x: JMonthDay): MonthDay = MonthDay.MonthDay(x)
+    }
 
     // Constructors
 

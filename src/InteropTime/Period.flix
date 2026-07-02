@@ -104,7 +104,21 @@ pub mod InteropTime.Period {
         pub def empty(): Period = InteropTime.Period.zero()
     }
 
-    
+
+
+    instance ToJava[Period] {
+        type Out = JPeriod
+        pub def toJava(x: Period): JPeriod = 
+            let Period.Period(x1) = x;
+            x1
+    }
+
+    instance ToFlix[Period] {
+        type In = JPeriod
+        pub def toFlix(x: JPeriod): Period = Period.Period(x)
+    }
+
+
     /// Constructors
 
     pub def period(years: {years = Int32}, 

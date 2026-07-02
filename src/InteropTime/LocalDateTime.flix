@@ -74,7 +74,7 @@ pub mod InteropTime.LocalDateTime {
         pub def toString(x: LocalDateTime): String =
             let LocalDateTime(x1) = x;
             unsafe IO { x1.toString() }
-   }
+    }
 
     ///
     /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
@@ -90,7 +90,7 @@ pub mod InteropTime.LocalDateTime {
             } catch {
                 case _: JException => None
             }
-   }
+    }
 
     instance Eq[LocalDateTime] {
         pub def eq(x: LocalDateTime, y: LocalDateTime): Bool =
@@ -98,23 +98,33 @@ pub mod InteropTime.LocalDateTime {
             let LocalDateTime(y1) = y;
             unsafe IO { x1.equals(y1) }
 
-   }
+    }
 
     instance Hash[LocalDateTime] {
         pub def hash(x: LocalDateTime): Int32 =
             let LocalDateTime(x1) = x;
             unsafe IO { x1.hashCode() }
 
-   }
+    }
 
     instance Order[LocalDateTime] {
         pub def compare(x: LocalDateTime, y: LocalDateTime): Comparison =
             let LocalDateTime(x1) = x;
             let LocalDateTime(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
-   }
+    }
 
+    instance ToJava[LocalDateTime] {
+        type Out = JLocalDateTime
+        pub def toJava(x: LocalDateTime): JLocalDateTime = 
+            let LocalDateTime.LocalDateTime(x1) = x;
+            x1
+    }
 
+    instance ToFlix[LocalDateTime] {
+        type In = JLocalDateTime
+        pub def toFlix(x: JLocalDateTime): LocalDateTime = LocalDateTime.LocalDateTime(x)
+    }
 
     /// Constructors
 

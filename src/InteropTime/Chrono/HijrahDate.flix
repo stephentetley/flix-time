@@ -191,14 +191,14 @@ pub mod InteropTime.Chrono.HijrahDate {
                         i: Int64, 
                         cu: ChronoUnit): HijrahDate =
         let HijrahDate(x1) = x;
-        let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let cu1 = ToJava.toJava(cu);
         let ans: JChronoLocalDate = unsafe IO { x1.plus(i, cu1) };
         let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
         HijrahDate(ans1)
 
     pub def minusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit): HijrahDate =
         let HijrahDate(x1) = x;
-        let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let cu1 = ToJava.toJava(cu);
         let ans: JChronoLocalDate = unsafe IO { x1.minus(i, cu1) };
         let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
         HijrahDate(ans1)
@@ -209,7 +209,7 @@ pub mod InteropTime.Chrono.HijrahDate {
         let HijrahDate(b1) = begin#begin;
         let HijrahDate(e1) = end#end;
         let te1: JTemporal = checked_cast(e1);
-        let cu1 = InteropTime.Temporal.ChronoUnit.marshalChronoUnit(cu);
+        let cu1 = ToJava.toJava(cu);
         let tu1: JTemporalUnit = checked_cast(cu1);
         unsafe IO { b1.until(te1, tu1) }
 

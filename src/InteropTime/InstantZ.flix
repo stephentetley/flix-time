@@ -96,6 +96,19 @@ pub mod InteropTime.InstantZ {
    }
 
 
+    instance ToJava[InstantZ] {
+        type Out = JInstant
+        pub def toJava(x: InstantZ): JInstant = 
+            let InstantZ.InstantZ(x1) = x;
+            x1
+    }
+
+    instance ToFlix[InstantZ] {
+        type In = JInstant
+        pub def toFlix(x: JInstant): InstantZ = InstantZ.InstantZ(x)
+    }
+    
+
     /// Constructors
 
     pub def instant(epochSecond: {epochSecond = Int64}, 

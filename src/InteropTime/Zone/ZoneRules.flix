@@ -60,6 +60,18 @@ pub mod InteropTime.Zone.ZoneRules {
     }
 
     
+    instance ToJava[ZoneRules] {
+        type Out = JZoneRules
+        pub def toJava(x: ZoneRules): JZoneRules = 
+            let ZoneRules.ZoneRules(x1) = x;
+            x1
+    }
+
+    instance ToFlix[ZoneRules] {
+        type In = JZoneRules
+        pub def toFlix(x: JZoneRules): ZoneRules = ZoneRules.ZoneRules(x)
+    }
+
 
     /// Constructors
 

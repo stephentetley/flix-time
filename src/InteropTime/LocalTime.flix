@@ -100,6 +100,18 @@ pub mod InteropTime.LocalTime {
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
+    instance ToJava[LocalTime] {
+        type Out = JLocalTime
+        pub def toJava(x: LocalTime): JLocalTime = 
+            let LocalTime.LocalTime(x1) = x;
+            x1
+    }
+
+    instance ToFlix[LocalTime] {
+        type In = JLocalTime
+        pub def toFlix(x: JLocalTime): LocalTime = LocalTime.LocalTime(x)
+    }    
+
 
 
     // Constructors

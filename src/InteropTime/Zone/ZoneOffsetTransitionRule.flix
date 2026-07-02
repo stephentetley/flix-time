@@ -61,30 +61,44 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
     }
 
 
+    instance ToJava[ZoneOffsetTransitionRule] {
+        type Out = JZoneOffsetTransitionRule
+        pub def toJava(x: ZoneOffsetTransitionRule): JZoneOffsetTransitionRule = 
+            let ZoneOffsetTransitionRule.ZoneOffsetTransitionRule(x1) = x;
+            x1
+    }
+
+    instance ToFlix[ZoneOffsetTransitionRule] {
+        type In = JZoneOffsetTransitionRule
+        pub def toFlix(x: JZoneOffsetTransitionRule): ZoneOffsetTransitionRule = ZoneOffsetTransitionRule.ZoneOffsetTransitionRule(x)
+    }
+
+
     pub enum TimeDefinition with Eq, Order, ToString, Hash {
         case Standard
         case UTC
         case Wall
     }
 
-    pub def marshalTimeDefinition(x: TimeDefinition): JTimeDefinition = 
-        match x {
-            case Standard           => unsafe IO { JTimeDefinition.STANDARD }
-            case UTC                => unsafe IO { JTimeDefinition.UTC }
-            case Wall               => unsafe IO { JTimeDefinition.WALL }
+
+    instance ToJava[TimeDefinition] {
+        type Out = JTimeDefinition
+        pub def toJava(x: TimeDefinition): JTimeDefinition = match x {
+            case TimeDefinition.Standard    => unsafe IO { JTimeDefinition.STANDARD }
+            case TimeDefinition.UTC         => unsafe IO { JTimeDefinition.UTC }
+            case TimeDefinition.Wall        => unsafe IO { JTimeDefinition.WALL }
         }
+    }
 
-    def primEqualsTimeDefinition(x: JTimeDefinition, y: JTimeDefinition): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalTimeDefinition(x: JTimeDefinition): TimeDefinition = 
-        match x {
-            case x1 if primEqualsTimeDefinition(x1, unsafe IO { JTimeDefinition.STANDARD} )     => Standard 
-            case x1 if primEqualsTimeDefinition(x1, unsafe IO { JTimeDefinition.UTC } )          => UTC 
-            case x1 if primEqualsTimeDefinition(x1, unsafe IO { JTimeDefinition.WALL } )         => Wall 
-            case _                                                      => bug!("unmarshalTimeDefinition")
+    instance ToFlix[TimeDefinition] {
+        type In = JTimeDefinition
+        pub def toFlix(x: JTimeDefinition): TimeDefinition = unsafe IO {
+            if (x.equals(JTimeDefinition.STANDARD))         TimeDefinition.Standard
+            else if (x.equals(JTimeDefinition.UTC))         TimeDefinition.UTC
+            else if (x.equals(JTimeDefinition.WALL))        TimeDefinition.Wall
+            else bug!("toFlix[TimeDefinition]")
         }
-
+    }
 
     /// Constructors
 
@@ -109,7 +123,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
                                                     dayOfWeek1,
                                                     time1,
                                                     timeEndOfDay#timeEndOfDay,
-                                                    marshalTimeDefinition(timeDefinition#timeDefinition),
+                                                    ToJava.toJava(timeDefinition#timeDefinition),
                                                     standardOffset1,
                                                     offsetBefore1,
                                                     offsetAfter1
@@ -136,7 +150,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
         let ZoneOffsetTransitionRule(x1) = x;
         let ans = unsafe IO { x1.getTimeDefinition() };
-        unmarshalTimeDefinition(ans)
+        ToFlix.toFlix(ans)
 
     pub def getDayOfMonthIndicator(x: ZoneOffsetTransitionRule): Int32  = 
         let ZoneOffsetTransitionRule(x1) = x;

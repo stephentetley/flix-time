@@ -114,6 +114,18 @@ pub mod InteropTime.LocalDate {
     }
 
 
+    instance ToJava[LocalDate] {
+        type Out = JLocalDate
+        pub def toJava(x: LocalDate): JLocalDate = 
+            let LocalDate.LocalDate(x1) = x;
+            x1
+    }
+
+    instance ToFlix[LocalDate] {
+        type In = JLocalDate
+        pub def toFlix(x: JLocalDate): LocalDate = LocalDate.LocalDate(x)
+    }
+
 
     // Constructors
 

@@ -94,6 +94,18 @@ pub mod InteropTime.Year {
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
+    instance ToJava[Year] {
+        type Out = JYear
+        pub def toJava(x: Year): JYear = 
+            let Year.Year(x1) = x;
+            x1
+    }
+
+    instance ToFlix[Year] {
+        type In = JYear
+        pub def toFlix(x: JYear): Year = Year.Year(x)
+    }
+
     /// Constructors
 
     pub def year(isoYear: {isoYear = Int32}): Year =

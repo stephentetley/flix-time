@@ -28,8 +28,18 @@ pub mod InteropTime.Temporal.ValueRange {
 
     pub enum ValueRange(JValueRange)
 
-    /// Unwrap
+    instance ToJava[ValueRange] {
+        type Out = JValueRange
+        pub def toJava(x: ValueRange): JValueRange = 
+            let ValueRange.ValueRange(x1) = x;
+            x1
+    }
 
+    instance ToFlix[ValueRange] {
+        type In = JValueRange
+        pub def toFlix(x: JValueRange): ValueRange = ValueRange.ValueRange(x)
+    }
+    
     pub def isFixed(x: ValueRange): Bool = 
         let ValueRange(x1) = x;
         unsafe IO { x1.isFixed() }

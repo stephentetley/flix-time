@@ -91,6 +91,18 @@ pub mod InteropTime.YearMonth {
     }
 
 
+    instance ToJava[YearMonth] {
+        type Out = JYearMonth
+        pub def toJava(x: YearMonth): JYearMonth = 
+            let YearMonth.YearMonth(x1) = x;
+            x1
+    }
+
+    instance ToFlix[YearMonth] {
+        type In = JYearMonth
+        pub def toFlix(x: JYearMonth): YearMonth = YearMonth.YearMonth(x)
+    }
+
 
 
     /// Constructors

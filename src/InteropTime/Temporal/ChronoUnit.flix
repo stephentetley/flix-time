@@ -47,52 +47,51 @@ pub mod InteropTime.Temporal.ChronoUnit {
     // DateChronoUnits = {Days, Months, Years, Centuries, Millennia, Eras}
 
 
-    
-    pub def marshalChronoUnit(x: ChronoUnit): JChronoUnit \ {} =
-        match x {
-            case ChronoUnit.Nanos       => JChronoUnit.NANOS
-            case ChronoUnit.Micros      => JChronoUnit.MICROS
-            case ChronoUnit.Millis      => JChronoUnit.MILLIS
-            case ChronoUnit.Seconds     => JChronoUnit.SECONDS
-            case ChronoUnit.Minutes     => JChronoUnit.MINUTES
-            case ChronoUnit.Hours       => JChronoUnit.HOURS
-            case ChronoUnit.HalfDays    => JChronoUnit.HALF_DAYS
-            case ChronoUnit.Days        => JChronoUnit.DAYS
-            case ChronoUnit.Weeks       => JChronoUnit.WEEKS
-            case ChronoUnit.Months      => JChronoUnit.MONTHS
-            case ChronoUnit.Years       => JChronoUnit.YEARS
-            case ChronoUnit.Decades     => JChronoUnit.DECADES
-            case ChronoUnit.Centuries   => JChronoUnit.CENTURIES
-            case ChronoUnit.Millennia   => JChronoUnit.MILLENNIA
-            case ChronoUnit.Eras        => JChronoUnit.ERAS
-            case ChronoUnit.Forever     => JChronoUnit.FOREVER
+
+    instance ToJava[ChronoUnit] {
+        type Out = JChronoUnit
+        pub def toJava(x: ChronoUnit): JChronoUnit = match x {
+            case ChronoUnit.Nanos       => unsafe IO { JChronoUnit.NANOS }
+            case ChronoUnit.Micros      => unsafe IO { JChronoUnit.MICROS }
+            case ChronoUnit.Millis      => unsafe IO { JChronoUnit.MILLIS }
+            case ChronoUnit.Seconds     => unsafe IO { JChronoUnit.SECONDS }
+            case ChronoUnit.Minutes     => unsafe IO { JChronoUnit.MINUTES }
+            case ChronoUnit.Hours       => unsafe IO { JChronoUnit.HOURS }
+            case ChronoUnit.HalfDays    => unsafe IO { JChronoUnit.HALF_DAYS }
+            case ChronoUnit.Days        => unsafe IO { JChronoUnit.DAYS }
+            case ChronoUnit.Weeks       => unsafe IO { JChronoUnit.WEEKS }
+            case ChronoUnit.Months      => unsafe IO { JChronoUnit.MONTHS }
+            case ChronoUnit.Years       => unsafe IO { JChronoUnit.YEARS }
+            case ChronoUnit.Decades     => unsafe IO { JChronoUnit.DECADES }
+            case ChronoUnit.Centuries   => unsafe IO { JChronoUnit.CENTURIES }
+            case ChronoUnit.Millennia   => unsafe IO { JChronoUnit.MILLENNIA }
+            case ChronoUnit.Eras        => unsafe IO { JChronoUnit.ERAS }
+            case ChronoUnit.Forever     => unsafe IO { JChronoUnit.FOREVER }
         }
+    }
 
 
-    def primEquals(x: JChronoUnit, y: JChronoUnit): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalChronoUnit(x: JChronoUnit): ChronoUnit =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.NANOS })         => Nanos
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.MICROS })        => Micros
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.MILLIS })        => Millis
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.SECONDS })       => Seconds
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.MINUTES })       => Minutes
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.HOURS })         => Hours
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.HALF_DAYS })     => HalfDays
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.DAYS })          => Days
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.WEEKS })         => Weeks
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.MONTHS })        => Months
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.YEARS })         => Years
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.DECADES })       => Decades
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.CENTURIES })     => Centuries
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.MILLENNIA })     => Millennia
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.ERAS })          => Eras
-            case x1 if primEquals(x1, unsafe IO { JChronoUnit.FOREVER })       => Forever
-            case _                                                      => bug!("unmarshalChronoUnit")
+    instance ToFlix[ChronoUnit] {
+        type In = JChronoUnit
+        pub def toFlix(x: JChronoUnit): ChronoUnit = unsafe IO {
+            if (x.equals(JChronoUnit.NANOS))            ChronoUnit.Nanos
+            else if (x.equals(JChronoUnit.MICROS))      ChronoUnit.Micros
+            else if (x.equals(JChronoUnit.MILLIS))      ChronoUnit.Millis
+            else if (x.equals(JChronoUnit.SECONDS))     ChronoUnit.Seconds
+            else if (x.equals(JChronoUnit.MINUTES))     ChronoUnit.Minutes
+            else if (x.equals(JChronoUnit.HOURS))       ChronoUnit.Hours
+            else if (x.equals(JChronoUnit.HALF_DAYS))   ChronoUnit.HalfDays
+            else if (x.equals(JChronoUnit.DAYS))        ChronoUnit.Days
+            else if (x.equals(JChronoUnit.WEEKS))       ChronoUnit.Weeks
+            else if (x.equals(JChronoUnit.MONTHS))      ChronoUnit.Months
+            else if (x.equals(JChronoUnit.YEARS))       ChronoUnit.Years
+            else if (x.equals(JChronoUnit.DECADES))     ChronoUnit.Decades
+            else if (x.equals(JChronoUnit.CENTURIES))   ChronoUnit.Centuries
+            else if (x.equals(JChronoUnit.MILLENNIA))   ChronoUnit.Millennia
+            else if (x.equals(JChronoUnit.ERAS))        ChronoUnit.Eras
+            else if (x.equals(JChronoUnit.FOREVER))     ChronoUnit.Forever
+            else bug!("toFlix[ChronoUnit]")
         }
-
-
+    }
 
 }
