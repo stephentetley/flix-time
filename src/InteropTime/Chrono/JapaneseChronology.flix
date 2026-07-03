@@ -48,6 +48,19 @@ pub mod InteropTime.Chrono.JapaneseChronology {
             unsafe IO { x1.toString() }
     }
 
+    instance ToJava[JapaneseChronology] {
+        type Out = JJapaneseChronology
+        pub def toJava(x: JapaneseChronology): JJapaneseChronology = 
+            let JapaneseChronology.JapaneseChronology(x1) = x;
+            x1
+    }
+
+    instance ToFlix[JapaneseChronology] {
+        type In = JJapaneseChronology
+        pub def toFlix(x: JJapaneseChronology): JapaneseChronology = JapaneseChronology.JapaneseChronology(x)
+    }
+
+
 
     pub def getInstance(): JapaneseChronology \ IO = 
         JapaneseChronology(checked_ecast(JJapaneseChronology.INSTANCE))

@@ -61,7 +61,7 @@ pub mod InteropTime.OffsetTime {
         pub def toString(x: OffsetTime): String =
             let OffsetTime(x1) = x;
             unsafe IO { x1.toString() }
-   }
+    }
 
     ///
     /// Parse the string `s` as a OffsetTime, leading or trailing whitespace is trimmed.
@@ -77,30 +77,39 @@ pub mod InteropTime.OffsetTime {
             } catch {
                 case _: JException => None
             }
-   }
+    }
 
     instance Eq[OffsetTime] {
         pub def eq(x: OffsetTime, y: OffsetTime): Bool =
             let OffsetTime(x1) = x;
             let OffsetTime(y1) = y;
             unsafe IO { x1.equals(y1) }
-
-   }
+    }
 
     instance Hash[OffsetTime] {
         pub def hash(x: OffsetTime): Int32 =
             let OffsetTime(x1) = x;
             unsafe IO { x1.hashCode() }
-   }
+    }
 
     instance Order[OffsetTime] {
         pub def compare(x: OffsetTime, y: OffsetTime): Comparison =
             let OffsetTime(x1) = x;
             let OffsetTime(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
-   }
+    }
 
+    instance ToJava[OffsetTime] {
+        type Out = JOffsetTime
+        pub def toJava(x: OffsetTime): JOffsetTime = 
+            let OffsetTime.OffsetTime(x1) = x;
+            x1
+    }
 
+    instance ToFlix[OffsetTime] {
+        type In = JOffsetTime
+        pub def toFlix(x: JOffsetTime): OffsetTime = OffsetTime.OffsetTime(x)
+    }
 
     /// Constructors
 

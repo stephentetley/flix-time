@@ -36,24 +36,26 @@ pub mod InteropTime.Chrono.IsoEra {
         case CE
     }
 
-    pub def marshalIsoEra(x: IsoEra): JIsoEra = 
-        match x {
-            case BCE => unsafe IO { JIsoEra.BCE }
-            case CE  => unsafe IO { JIsoEra.CE }
+    
+    instance ToJava[IsoEra] {
+        type Out = JIsoEra
+        pub def toJava(x: IsoEra): JIsoEra = match x {
+            case IsoEra.BCE => unsafe IO { JIsoEra.BCE }
+            case IsoEra.CE  => unsafe IO { JIsoEra.CE }
         }
+    }
 
-    def primEquals(x: JIsoEra, y: JIsoEra): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalIsoEra(x: JIsoEra): IsoEra = 
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JIsoEra.BCE})    => BCE
-            case x1 if primEquals(x1, unsafe IO { JIsoEra.CE })    => CE
-            case _                                  => bug!("unmarshalIsoEra")
+    instance ToFlix[IsoEra] {
+        type In = JIsoEra
+        pub def toFlix(x: JIsoEra): IsoEra = unsafe IO {
+            if (x.equals(JIsoEra.BCE))          IsoEra.BCE
+            else if (x.equals(JIsoEra.CE))      IsoEra.CE
+            else bug!("toFlix[IsoEra]")
         }
+    }
 
     pub def getValue(x: IsoEra): Int32 = 
-        let x1 = marshalIsoEra(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getValue() }
 
 
@@ -62,8 +64,8 @@ pub mod InteropTime.Chrono.IsoEra {
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: IsoEra): String =
-        let x1 = marshalIsoEra(x);
-        let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+        let x1 = ToJava.toJava(x);
+        let style1 = ToJava.toJava(style);
         let Locale.Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(style1, locale1) }
         

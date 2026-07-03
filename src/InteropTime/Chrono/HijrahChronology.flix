@@ -52,7 +52,17 @@ pub mod InteropTime.Chrono.HijrahChronology {
             InteropTime.Chrono.HijrahChronology.toString(x)
     }
 
+    instance ToJava[HijrahChronology] {
+        type Out = JHijrahChronology
+        pub def toJava(x: HijrahChronology): JHijrahChronology = 
+            let HijrahChronology.HijrahChronology(x1) = x;
+            x1
+    }
 
+    instance ToFlix[HijrahChronology] {
+        type In = JHijrahChronology
+        pub def toFlix(x: JHijrahChronology): HijrahChronology = HijrahChronology.HijrahChronology(x)
+    }
 
     pub def getInstance(): HijrahChronology \ IO =
         HijrahChronology(checked_ecast(JHijrahChronology.INSTANCE))
@@ -70,7 +80,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
                         dayOfMonth: {dayOfMonth = Int32},
                         x: HijrahChronology): HijrahDate =
         let HijrahChronology(x1) = x;
-        let era1 = InteropTime.Chrono.HijrahEra.marshalHijrahEra(era#era);
+        let era1 = ToJava.toJava(era#era);
         let ans: JChronoLocalDate = unsafe IO { x1.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) };
         let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
         HijrahDate(ans1)
@@ -112,7 +122,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
 
     pub def getDisplayName(style: TextStyle, loc: Locale, x: HijrahChronology): String =
         let HijrahChronology(x1) = x;
-        let s1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+        let s1 = ToJava.toJava(style);
         let Locale.Locale(loc1) = loc;
         unsafe IO { x1.getDisplayName(s1, loc1) }
 
@@ -124,12 +134,12 @@ pub mod InteropTime.Chrono.HijrahChronology {
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra =
         let HijrahChronology(x1) = x;
         let ans = unsafe IO { x1.eraOf(i) };
-        InteropTime.Chrono.HijrahEra.unmarshalHijrahEra(ans)
+        ToFlix.toFlix(ans)
 
     pub def eras(x: HijrahChronology): List[HijrahEra]  =
         def convert(e) = {
             let e1: JHijrahEra = unchecked_cast(e as JHijrahEra);
-            InteropTime.Chrono.HijrahEra.unmarshalHijrahEra(e1)
+            ToFlix.toFlix(e1)
         };
         let HijrahChronology(x1) = x;
         let jlist: JList[JEra] = unsafe IO { x1.eras() };
@@ -148,7 +158,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
     
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 =
         let HijrahChronology(x1) = x;
-        let era1 = InteropTime.Chrono.HijrahEra.marshalHijrahEra(era);
+        let era1 = ToJava.toJava(era);
         unsafe IO { x1.prolepticYear(era1, yearOfEra) }
 
     pub def rangeYear(x: HijrahChronology): ValueRange =
@@ -158,13 +168,5 @@ pub mod InteropTime.Chrono.HijrahChronology {
         ValueRange(vr1)
 
 
-    // pub def resolveDate(fieldValues: List[(a, Int64)], resolverStyle: ResolverStyle, x: HijrahChronology): HijrahDate with TemporalField[a] =
-    //     import java.time.chrono.HijrahChronology.resolveDate(##java.util.Map, ##java.time.format.ResolverStyle): ##java.time.chrono.HijrahDate \ {};
-    //     let x1 = getHijrahChronology(x);
-    //     let resolverStyle1 = InteropTime.Format.ResolverStyle.marshal(resolverStyle);
-    //     let upcastKey = field -> InteropTime.Temporal.TemporalField.marshalToNativeTemporalField(field) as ##java.lang.Object;
-    //     let upcastVal = i -> Interop.Collections/... /Marshal.marshalInt64(i) as ##java.lang.Object;
-    //     let fieldValues1 = Interop.Collections/... /Marshal.marshalAssocListToMap(upcastKey, upcastVal, fieldValues);
-    //     HijrahDate(resolveDate(x1, fieldValues1, resolverStyle1))
 
 }

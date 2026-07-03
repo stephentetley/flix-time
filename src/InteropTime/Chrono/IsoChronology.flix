@@ -39,6 +39,19 @@ pub mod InteropTime.Chrono.IsoChronology {
             unsafe IO { x1.toString() }
     }
 
+
+    instance ToJava[IsoChronology] {
+        type Out = JIsoChronology
+        pub def toJava(x: IsoChronology): JIsoChronology = 
+            let IsoChronology.IsoChronology(x1) = x;
+            x1
+    }
+
+    instance ToFlix[IsoChronology] {
+        type In = JIsoChronology
+        pub def toFlix(x: JIsoChronology): IsoChronology = IsoChronology.IsoChronology(x)
+    }
+    
     pub def getInstance(): IsoChronology \ IO = 
         IsoChronology(checked_ecast(JIsoChronology.INSTANCE))
 
@@ -56,13 +69,13 @@ pub mod InteropTime.Chrono.IsoChronology {
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra =
         let IsoChronology(x1) = x;
         let ans = unsafe IO { x1.eraOf(i) };
-        InteropTime.Chrono.IsoEra.unmarshalIsoEra(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def eras(x: IsoChronology): List[IsoEra] =
         def convert(e) = {
             let e1: JIsoEra = unchecked_cast(e as JIsoEra);
-            InteropTime.Chrono.IsoEra.unmarshalIsoEra(e1)
+            ToFlix.toFlix(e1)
         };
         let IsoChronology(x1) = x;
         let jlist: JList[JEra] = unsafe IO { x1.eras() };

@@ -106,6 +106,19 @@ pub mod InteropTime.ZonedDateTime {
             let ZonedDateTime(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
+    
+    instance ToJava[ZonedDateTime] {
+        type Out = JZonedDateTime
+        pub def toJava(x: ZonedDateTime): JZonedDateTime = 
+            let ZonedDateTime.ZonedDateTime(x1) = x;
+            x1
+    }
+
+    instance ToFlix[ZonedDateTime] {
+        type In = JZonedDateTime
+        pub def toFlix(x: JZonedDateTime): ZonedDateTime = ZonedDateTime.ZonedDateTime(x)
+    }
+
 
     /// Unwrap
 

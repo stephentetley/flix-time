@@ -27,22 +27,23 @@ pub mod InteropTime.Format.ResolverStyle {
         case Strict
     }
 
-    pub def marshalResolverStyle(x: ResolverStyle): JResolverStyle=
-        match x {
+    instance ToJava[ResolverStyle] {
+        type Out = JResolverStyle
+        pub def toJava(x: ResolverStyle): JResolverStyle = match x {
             case ResolverStyle.Lenient  => unsafe IO { JResolverStyle.LENIENT }
             case ResolverStyle.Smart    => unsafe IO { JResolverStyle.SMART }
             case ResolverStyle.Strict   => unsafe IO { JResolverStyle.STRICT }
         }
+    }
 
-    def primEquals(x: JResolverStyle, y: JResolverStyle): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalResolverStyle(x: JResolverStyle): ResolverStyle =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JResolverStyle.LENIENT })    => ResolverStyle.Lenient
-            case x1 if primEquals(x1, unsafe IO { JResolverStyle.SMART })      => ResolverStyle.Smart
-            case x1 if primEquals(x1, unsafe IO { JResolverStyle.STRICT })     => ResolverStyle.Strict
-            case _                                                      => bug!("unmarshalResolverStyle")
+    instance ToFlix[ResolverStyle] {
+        type In = JResolverStyle
+        pub def toFlix(x: JResolverStyle): ResolverStyle = unsafe IO {
+            if (x.equals(JResolverStyle.LENIENT))       ResolverStyle.Lenient
+            else if (x.equals(JResolverStyle.SMART))    ResolverStyle.Smart
+            else if (x.equals(JResolverStyle.STRICT))   ResolverStyle.Strict
+            else bug!("toFlix[ResolverStyle]")
         }
+    }
 
 }

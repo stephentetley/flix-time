@@ -30,23 +30,25 @@ pub mod InteropTime.Format.FormatStyle {
     }
 
 
-    pub def marshalFormatStyle(x: FormatStyle): JFormatStyle =
-        match x {
+    instance ToJava[FormatStyle] {
+        type Out = JFormatStyle
+        pub def toJava(x: FormatStyle): JFormatStyle = match x {
             case FormatStyle.Full   => unsafe IO { JFormatStyle.FULL }
             case FormatStyle.Long   => unsafe IO { JFormatStyle.LONG }
             case FormatStyle.Medium => unsafe IO { JFormatStyle.MEDIUM }
             case FormatStyle.Short  => unsafe IO { JFormatStyle.SHORT }
         }
+    }
 
-    def primEquals(x: JFormatStyle, y: JFormatStyle): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalFormatStyle(x: JFormatStyle): FormatStyle =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JFormatStyle.FULL })     => FormatStyle.Full
-            case x1 if primEquals(x1, unsafe IO { JFormatStyle.LONG })     => FormatStyle.Long
-            case x1 if primEquals(x1, unsafe IO { JFormatStyle.MEDIUM })   => FormatStyle.Medium
-            case x1 if primEquals(x1, unsafe IO { JFormatStyle.SHORT })    => FormatStyle.Short
-            case _                                                  => bug!("unmarshalFormatStyle")
+    instance ToFlix[FormatStyle] {
+        type In = JFormatStyle
+        pub def toFlix(x: JFormatStyle): FormatStyle = unsafe IO {
+            if (x.equals(JFormatStyle.FULL))            FormatStyle.Full
+            else if (x.equals(JFormatStyle.LONG))       FormatStyle.Long
+            else if (x.equals(JFormatStyle.MEDIUM))     FormatStyle.Medium
+            else if (x.equals(JFormatStyle.SHORT))      FormatStyle.Short
+            else bug!("toFlix[FormatStyle]")
         }
+    }
+
 }

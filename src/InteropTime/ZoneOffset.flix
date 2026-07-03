@@ -72,7 +72,19 @@ pub mod InteropTime.ZoneOffset {
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
+    instance ToJava[ZoneOffset] {
+        type Out = JZoneOffset
+        pub def toJava(x: ZoneOffset): JZoneOffset = 
+            let ZoneOffset.ZoneOffset(x1) = x;
+            x1
+    }
 
+    instance ToFlix[ZoneOffset] {
+        type In = JZoneOffset
+        pub def toFlix(x: JZoneOffset): ZoneOffset = ZoneOffset.ZoneOffset(x)
+    }
+
+    
     // TODO - do we need this for interring into Java collections?
     pub def fromJavaObject(o: Object): ZoneOffset = 
         let ans = unchecked_cast(o as JZoneOffset);

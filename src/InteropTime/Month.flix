@@ -76,7 +76,6 @@ pub mod InteropTime.Month {
         }
     }
 
-    /// # Marshal enums
     instance ToJava[Month] {
         type Out = JMonth
         pub def toJava(x: Month): JMonth = match x {
@@ -152,7 +151,7 @@ pub mod InteropTime.Month {
     
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
         let x1 = ToJava.toJava(x);
-        let s1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+        let s1 = ToJava.toJava(style);
         let Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(s1, locale1) }
 

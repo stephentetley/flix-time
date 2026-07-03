@@ -36,39 +36,40 @@ pub mod InteropTime.Chrono.ThaiBuddhistEra {
         case BE
     }
 
-    pub def marshalThaiBuddhistEra(x: ThaiBuddhistEra): JThaiBuddhistEra = 
-        match x {
-            case BEFORE_BE  => unsafe IO { JThaiBuddhistEra.BEFORE_BE }
-            case BE         => unsafe IO { JThaiBuddhistEra.BE }
+    instance ToJava[ThaiBuddhistEra] {
+        type Out = JThaiBuddhistEra
+        pub def toJava(x: ThaiBuddhistEra): JThaiBuddhistEra = match x {
+            case ThaiBuddhistEra.BEFORE_BE  => unsafe IO { JThaiBuddhistEra.BEFORE_BE }
+            case ThaiBuddhistEra.BE         => unsafe IO { JThaiBuddhistEra.BE }
         }
+    }
 
-    def primEquals(x: JThaiBuddhistEra, y: JThaiBuddhistEra): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalThaiBuddhistEra(x: JThaiBuddhistEra): ThaiBuddhistEra =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JThaiBuddhistEra.BEFORE_BE}) => BEFORE_BE
-            case x1 if primEquals(x1, unsafe IO { JThaiBuddhistEra.BE})        => BE
-            case _                                      => bug!("unmarshalThaiBuddhistEra")
+    instance ToFlix[ThaiBuddhistEra] {
+        type In = JThaiBuddhistEra
+        pub def toFlix(x: JThaiBuddhistEra): ThaiBuddhistEra = unsafe IO {
+            if (x.equals(JThaiBuddhistEra.BEFORE_BE))   ThaiBuddhistEra.BEFORE_BE
+            else if (x.equals(JThaiBuddhistEra.BE))     ThaiBuddhistEra.BE
+            else bug!("toFlix[ThaiBuddhistEra]")
         }
+    }
 
     pub def getValue(x: ThaiBuddhistEra): Int32 = 
-        let x1 = marshalThaiBuddhistEra(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getValue() }
 
 
 
     //
     pub def getDisplayName(style: TextStyle, locale: Locale, x: ThaiBuddhistEra): String = 
-        let x1 = marshalThaiBuddhistEra(x);
-        let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+        let x1 = ToJava.toJava(x);
+        let style1 = ToJava.toJava(style);
         let Locale.Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(style1, locale1) }
         
     // Note only ERA is a valid field, suggests we should provide `rangeEra` instead...
     pub def rangeEra(x: ThaiBuddhistEra): ValueRange = 
-        let x1 = marshalThaiBuddhistEra(x);
-        let cf1 = InteropTime.Temporal.ChronoField.marshalChronoField(ChronoField.Era);
+        let x1 = ToJava.toJava(x);
+        let cf1 = ToJava.toJava(ChronoField.Era);
         let ans = unsafe IO { x1.range(cf1) };
         ValueRange(ans)
         

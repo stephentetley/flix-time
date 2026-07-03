@@ -79,17 +79,17 @@ pub mod InteropTime.DayOfWeek {
         case _ => None
     }
 
-    /// Marshal enums
+    
     instance ToJava[DayOfWeek] {
         type Out = JDayOfWeek
         pub def toJava(x: DayOfWeek): JDayOfWeek = match x {
-            case Monday       => unsafe IO { JDayOfWeek.MONDAY }
-            case Tuesday      => unsafe IO { JDayOfWeek.TUESDAY }
-            case Wednesday    => unsafe IO { JDayOfWeek.WEDNESDAY }
-            case Thursday     => unsafe IO { JDayOfWeek.THURSDAY }
-            case Friday       => unsafe IO { JDayOfWeek.FRIDAY }
-            case Saturday     => unsafe IO { JDayOfWeek.SATURDAY }
-            case Sunday       => unsafe IO { JDayOfWeek.SUNDAY }
+            case DayOfWeek.Monday       => unsafe IO { JDayOfWeek.MONDAY }
+            case DayOfWeek.Tuesday      => unsafe IO { JDayOfWeek.TUESDAY }
+            case DayOfWeek.Wednesday    => unsafe IO { JDayOfWeek.WEDNESDAY }
+            case DayOfWeek.Thursday     => unsafe IO { JDayOfWeek.THURSDAY }
+            case DayOfWeek.Friday       => unsafe IO { JDayOfWeek.FRIDAY }
+            case DayOfWeek.Saturday     => unsafe IO { JDayOfWeek.SATURDAY }
+            case DayOfWeek.Sunday       => unsafe IO { JDayOfWeek.SUNDAY }
         }
     }
 
@@ -136,7 +136,7 @@ pub mod InteropTime.DayOfWeek {
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
         let x1 = ToJava.toJava(x);
-        let s1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+        let s1 = ToJava.toJava(style);
         let Locale.Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(s1, locale1) }
 

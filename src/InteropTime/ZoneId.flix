@@ -70,7 +70,18 @@ pub mod InteropTime.ZoneId {
             unsafe IO { x1.hashCode() }
     }
 
+    instance ToJava[ZoneId] {
+        type Out = JZoneId
+        pub def toJava(x: ZoneId): JZoneId = 
+            let ZoneId.ZoneId(x1) = x;
+            x1
+    }
 
+    instance ToFlix[ZoneId] {
+        type In = JZoneId
+        pub def toFlix(x: JZoneId): ZoneId = ZoneId.ZoneId(x)
+    }
+    
     pub def fromJavaObject(o: Object): ZoneId = 
         ZoneId(unchecked_cast(o as JZoneId))
 
@@ -149,7 +160,7 @@ pub mod InteropTime.ZoneId {
     /// ZoneId functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
-        let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+        let style1 = ToJava.toJava(style);
         let Locale(locale1) = locale;
         let ZoneId(z1) = z;
         unsafe IO { z1.getDisplayName(style1, locale1) }

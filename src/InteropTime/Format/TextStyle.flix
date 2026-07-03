@@ -35,47 +35,49 @@ pub mod InteropTime.Format.TextStyle {
 
 
 
-    pub def marshalTextStyle(x: TextStyle): JTextStyle =
-        match x {
-            case Full             => unsafe IO { JTextStyle.FULL }
-            case FullStandalone   => unsafe IO { JTextStyle.FULL_STANDALONE }
-            case Narrow           => unsafe IO { JTextStyle.NARROW }
-            case NarrowStandalone => unsafe IO { JTextStyle.NARROW_STANDALONE }
-            case Short            => unsafe IO { JTextStyle.SHORT }
-            case ShortStandalone  => unsafe IO { JTextStyle.SHORT_STANDALONE }
+    instance ToJava[TextStyle] {
+        type Out = JTextStyle
+        pub def toJava(x: TextStyle): JTextStyle = match x {
+            case TextStyle.Full             => unsafe IO { JTextStyle.FULL }
+            case TextStyle.FullStandalone   => unsafe IO { JTextStyle.FULL_STANDALONE }
+            case TextStyle.Narrow           => unsafe IO { JTextStyle.NARROW }
+            case TextStyle.NarrowStandalone => unsafe IO { JTextStyle.NARROW_STANDALONE }
+            case TextStyle.Short            => unsafe IO { JTextStyle.SHORT }
+            case TextStyle.ShortStandalone  => unsafe IO { JTextStyle.SHORT_STANDALONE }
         }
+    }
 
-    def primEquals(x: JTextStyle, y: JTextStyle): Bool =
-        unsafe IO { x.equals(y) }
 
-    pub def unmarshalTextStyle(x: JTextStyle): TextStyle =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JTextStyle.FULL })               => Full
-            case x1 if primEquals(x1, unsafe IO { JTextStyle.FULL_STANDALONE })    => FullStandalone
-            case x1 if primEquals(x1, unsafe IO { JTextStyle.NARROW })             => Narrow
-            case x1 if primEquals(x1, unsafe IO { JTextStyle.NARROW_STANDALONE })  => NarrowStandalone
-            case x1 if primEquals(x1, unsafe IO { JTextStyle.SHORT })              => Short
-            case x1 if primEquals(x1, unsafe IO { JTextStyle.SHORT_STANDALONE })   => ShortStandalone
-            case _                                                          => bug!("unmarshalTextStyle")
+    instance ToFlix[TextStyle] {
+        type In = JTextStyle
+        pub def toFlix(x: JTextStyle): TextStyle = unsafe IO {
+            if (x.equals(JTextStyle.FULL))                      TextStyle.Full
+            else if (x.equals(JTextStyle.FULL_STANDALONE))      TextStyle.FullStandalone
+            else if (x.equals(JTextStyle.NARROW))               TextStyle.Narrow
+            else if (x.equals(JTextStyle.NARROW_STANDALONE))    TextStyle.NarrowStandalone
+            else if (x.equals(JTextStyle.SHORT))                TextStyle.Short
+            else if (x.equals(JTextStyle.SHORT_STANDALONE))     TextStyle.ShortStandalone
+            else bug!("toFlix[TextStyle]")
         }
+    }
 
     
     /// predicates / comparisons
 
     pub def isStandalone(x: TextStyle): Bool =
-        let x1 = marshalTextStyle(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.isStandalone() }
 
     /// Getters and Setters
     
     pub def asStandalone(x: TextStyle): TextStyle =
-        let x1 = marshalTextStyle(x);
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.asStandalone() };
-        unmarshalTextStyle(ans)
+        ToFlix.toFlix(ans)
 
     pub def asNormal(x: TextStyle): TextStyle =
-        let x1 = marshalTextStyle(x);
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.asNormal() };
-        unmarshalTextStyle(ans)
+        ToFlix.toFlix(ans)
 
 }

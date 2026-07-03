@@ -57,6 +57,19 @@ pub mod InteropTime.Format.DateTimeFormatter {
             }
     }
 
+    instance ToJava[DateTimeFormatter[t]] {
+        type Out = JDateTimeFormatter
+        pub def toJava(x: DateTimeFormatter[t]): JDateTimeFormatter = 
+            let DateTimeFormatter.DateTimeFormatter(x1) = x;
+            x1
+    }
+
+    instance ToFlix[DateTimeFormatter[t]] {
+        type In = JDateTimeFormatter
+        pub def toFlix(x: JDateTimeFormatter): DateTimeFormatter[t] = DateTimeFormatter.DateTimeFormatter(x)
+    }
+
+
     /// Phantom arguments to restrict the type of DateTimeFormatter
     pub enum DateFormat {}
     pub enum TimeFormat {}
@@ -126,20 +139,20 @@ pub mod InteropTime.Format.DateTimeFormatter {
 
 
     pub def fromLocalizedTime(style: FormatStyle): DateTimeFormatter[TimeFormat] =
-        let style1 = InteropTime.Format.FormatStyle.marshalFormatStyle(style);
+        let style1 = ToJava.toJava(style);
         DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofLocalizedTime(style1) })
 
     pub def fromLocalizedDateTime(style: FormatStyle): DateTimeFormatter[DateTimeFormat] =
-        let style1 = InteropTime.Format.FormatStyle.marshalFormatStyle(style);
+        let style1 = ToJava.toJava(style);
         DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofLocalizedDateTime(style1) })
 
     pub def fromLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter[DateTimeFormat] =
-        let d1 = InteropTime.Format.FormatStyle.marshalFormatStyle(dateStyle);
-        let t1 = InteropTime.Format.FormatStyle.marshalFormatStyle(timeStyle);
+        let d1 = ToJava.toJava(dateStyle);
+        let t1 = ToJava.toJava(timeStyle);
         DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofLocalizedDateTime(d1, t1) })
 
     pub def fromLocalizedDate(style: FormatStyle): DateTimeFormatter[DateFormat] =
-        let style1 = InteropTime.Format.FormatStyle.marshalFormatStyle(style);
+        let style1 = ToJava.toJava(style);
         DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofLocalizedDate(style1) })
 
     /// ## Getters and Setters
@@ -175,11 +188,11 @@ pub mod InteropTime.Format.DateTimeFormatter {
 
     pub def getResolverStyle(x: DateTimeFormatter[t]): ResolverStyle =
         let DateTimeFormatter(x1) = x;
-        InteropTime.Format.ResolverStyle.unmarshalResolverStyle(unsafe IO { x1.getResolverStyle() })
+        ToFlix.toFlix(unsafe IO { x1.getResolverStyle() })
 
     pub def withResolverStyle(style: ResolverStyle, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         let DateTimeFormatter(x1) = x;
-        let style1 = InteropTime.Format.ResolverStyle.marshalResolverStyle(style);
+        let style1 = ToJava.toJava(style);
         DateTimeFormatter(unsafe IO { x1.$withResolverStyle(style1) })
 
 }

@@ -28,26 +28,28 @@ pub mod InteropTime.Format.SignStyle {
         case NonNegative
     }
 
-    pub def marshalSignStyle(x: SignStyle): JSignStyle =
-        match x {
+    instance ToJava[SignStyle] {
+        type Out = JSignStyle
+        pub def toJava(x: SignStyle): JSignStyle = match x {
             case SignStyle.Always       => unsafe IO { JSignStyle.ALWAYS }
             case SignStyle.ExceedsPad   => unsafe IO { JSignStyle.EXCEEDS_PAD }
             case SignStyle.Never        => unsafe IO { JSignStyle.NEVER }
             case SignStyle.Normal       => unsafe IO { JSignStyle.NORMAL }
             case SignStyle.NonNegative  => unsafe IO { JSignStyle.NOT_NEGATIVE }
         }
+    }
 
-    def primEquals(x: JSignStyle, y: JSignStyle): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalSignStyle(x: JSignStyle): SignStyle =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JSignStyle.ALWAYS })         => SignStyle.Always
-            case x1 if primEquals(x1, unsafe IO { JSignStyle.EXCEEDS_PAD })    => SignStyle.ExceedsPad
-            case x1 if primEquals(x1, unsafe IO { JSignStyle.NEVER })          => SignStyle.Never
-            case x1 if primEquals(x1, unsafe IO { JSignStyle.NORMAL })         => SignStyle.Normal
-            case x1 if primEquals(x1, unsafe IO { JSignStyle.NOT_NEGATIVE })   => SignStyle.NonNegative
-            case _                                                      => bug!("unmarshalSignStyle")
+    
+    instance ToFlix[SignStyle] {
+        type In = JSignStyle
+        pub def toFlix(x: JSignStyle): SignStyle = unsafe IO {
+            if (x.equals(JSignStyle.ALWAYS))                SignStyle.Always
+            else if (x.equals(JSignStyle.EXCEEDS_PAD))      SignStyle.ExceedsPad
+            else if (x.equals(JSignStyle.NEVER))            SignStyle.Never
+            else if (x.equals(JSignStyle.NORMAL))           SignStyle.Normal
+            else if (x.equals(JSignStyle.NOT_NEGATIVE))     SignStyle.NonNegative
+            else bug!("toFlix[SignStyle]")
         }
+    }
 
 }

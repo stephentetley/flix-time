@@ -82,19 +82,19 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             }
 
             def appendChronologyText(style, k) = {
-                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                let style1 = ToJava.toJava(style);
                 unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendChronologyText(style1) };
                 k()
             }
 
             def appendDayPeriodText(style, k) = {
-                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                let style1 = ToJava.toJava(style);
                 unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendDayPeriodText(style1) };
                 k()
             }
 
             def appendGenericZoneText(style, k) = {
-                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                let style1 = ToJava.toJava(style);
                 unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendGenericZoneText(style1) };
                 k()
             }
@@ -122,8 +122,8 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             }
 
             def appendLocalized(timeStyle, dateStyle, k) = {
-                let timeStyle1 = InteropTime.Format.FormatStyle.marshalFormatStyle(timeStyle#timeStyle);
-                let dateStyle1 = InteropTime.Format.FormatStyle.marshalFormatStyle(dateStyle#dateStyle);
+                let timeStyle1 = ToJava.toJava(timeStyle#timeStyle);
+                let dateStyle1 = ToJava.toJava(dateStyle#dateStyle);
                 unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLocalized(timeStyle1, dateStyle1) };
                 k()
             }
@@ -134,7 +134,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             }
 
             def appendLocalizedOffset(style, k) = {
-                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                let style1 = ToJava.toJava(style);
                 unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLocalizedOffset(style1) };
                 k()
             }
@@ -177,7 +177,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             }
 
             def appendZoneText(style, k) = {
-                let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+                let style1 = ToJava.toJava(style);
                 unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1) };
                 k()
             }
@@ -185,7 +185,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             // TODO use wrapped types
             // def appendZoneTextWithZones(style: TextStyle, preferredZones: JSet): Unit
             //     let builder = DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
-            //     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+            //     let style1 = ToJava.toJava(style);
             //     discard builder.appendZoneText(style1, preferredZones);
             //     ()
 
@@ -263,11 +263,10 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
     // // TODO use wrapped types
     // def appendGenericZoneTextWithZones(style:TextStyle, preferredZones: JSet): Unit \ DateTimeFormatterBuilder =
     //     let builder = DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
-    //     let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+    //     let style1 = ToJava.toJava(style);
     //     discard builder.appendGenericZoneText(style1, preferredZones);
     //     ()
 
-  
 
 
 }

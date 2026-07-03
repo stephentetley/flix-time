@@ -32,10 +32,7 @@ pub mod InteropTime.ClockZ {
     ///
     /// A wrapper around a Java Clock.
     ///
-    /// We currently consider Clock "immutable" as the factory methods like `fixed`
-    /// always return an immutable clock.
-    ///
-    /// TODO - add region?
+    /// Should be an effect?
     ///
     pub enum ClockZ(JClock)
 

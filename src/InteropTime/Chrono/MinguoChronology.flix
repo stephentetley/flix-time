@@ -44,6 +44,18 @@ pub mod InteropTime.Chrono.MinguoChronology {
             unsafe IO { x1.toString() }
     }
 
+    instance ToJava[MinguoChronology] {
+        type Out = JMinguoChronology
+        pub def toJava(x: MinguoChronology): JMinguoChronology = 
+            let MinguoChronology.MinguoChronology(x1) = x;
+            x1
+    }
+
+    instance ToFlix[MinguoChronology] {
+        type In = JMinguoChronology
+        pub def toFlix(x: JMinguoChronology): MinguoChronology = MinguoChronology.MinguoChronology(x)
+    }
+
 
     pub def getInstance(): MinguoChronology \ IO = 
         MinguoChronology(checked_ecast(JMinguoChronology.INSTANCE))
@@ -78,12 +90,12 @@ pub mod InteropTime.Chrono.MinguoChronology {
     pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
         let MinguoChronology(x1) = x;
         let ans = unsafe IO { x1.eraOf(i) };
-        InteropTime.Chrono.MinguoEra.unmarshalMinguoEra(ans)
+        ToFlix.toFlix(ans)
 
     pub def eras(x: MinguoChronology): List[MinguoEra] = 
         def convert(e) = {
             let e1: JMinguoEra = unchecked_cast(e as JMinguoEra);
-            InteropTime.Chrono.MinguoEra.unmarshalMinguoEra(e1)
+            ToFlix.toFlix(e1)
         };
         let MinguoChronology(x1) = x;
         let jlist: JList[JEra] = unsafe IO { x1.eras() };

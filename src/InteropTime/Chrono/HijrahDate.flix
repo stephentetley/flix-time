@@ -75,11 +75,23 @@ pub mod InteropTime.Chrono.HijrahDate {
         pub def hash(x: HijrahDate): Int32 = InteropTime.Chrono.HijrahDate.hashCode(x)
     }
 
+    instance ToJava[HijrahDate] {
+        type Out = JHijrahDate
+        pub def toJava(x: HijrahDate): JHijrahDate = 
+            let HijrahDate.HijrahDate(x1) = x;
+            x1
+    }
 
+    instance ToFlix[HijrahDate] {
+        type In = JHijrahDate
+        pub def toFlix(x: JHijrahDate): HijrahDate = HijrahDate.HijrahDate(x)
+    }
+    
     pub def hijrahDate(prolepticYear: {prolepticYear = Int32}, 
                         month: {month = Int32}, 
                         dayOfMonth: {dayOfMonth = Int32}): HijrahDate =
         HijrahDate(unsafe IO { JHijrahDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+
 
 
     ///
@@ -155,7 +167,7 @@ pub mod InteropTime.Chrono.HijrahDate {
     pub def getEra(x: HijrahDate): HijrahEra =
         let HijrahDate(x1) = x;
         let ans = unsafe IO { x1.getEra() };
-        InteropTime.Chrono.HijrahEra.unmarshalHijrahEra(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def isLeapYear(x: HijrahDate): Bool =
@@ -216,7 +228,7 @@ pub mod InteropTime.Chrono.HijrahDate {
     // just MonthOfYear / Year...
     pub def getChrono(x: HijrahDate, cf: ChronoField): Int64 =
         let HijrahDate(x1) = x;
-        let cf1 = InteropTime.Temporal.ChronoField.marshalChronoField(cf);
+        let cf1 = ToJava.toJava(cf);
         unsafe IO { x1.getLong(cf1) }
 
     pub def getYear(x: HijrahDate): Int32 =
@@ -234,7 +246,7 @@ pub mod InteropTime.Chrono.HijrahDate {
     // <MonthOfYear, Year>
     pub def withChrono(x: HijrahDate, cf: ChronoField, i: Int64): HijrahDate =
         let HijrahDate(x1) = x;
-        let cf1 = InteropTime.Temporal.ChronoField.marshalChronoField(cf);
+        let cf1 = ToJava.toJava(cf);
         let ans: JChronoLocalDate = unsafe IO { x1.$with(cf1, i) };
         let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
         HijrahDate(ans1)

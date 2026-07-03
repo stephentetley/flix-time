@@ -53,6 +53,18 @@ pub mod InteropTime.Format.DecimalStyle {
     }
 
 
+    instance ToJava[DecimalStyle] {
+        type Out = JDecimalStyle
+        pub def toJava(x: DecimalStyle): JDecimalStyle = 
+            let DecimalStyle.DecimalStyle(x1) = x;
+            x1
+    }
+
+    instance ToFlix[DecimalStyle] {
+        type In = JDecimalStyle
+        pub def toFlix(x: JDecimalStyle): DecimalStyle = DecimalStyle.DecimalStyle(x)
+    }
+
 
     /// ## "abstract constructors" (e.g. `standard`)
 
@@ -127,4 +139,5 @@ pub mod InteropTime.Format.DecimalStyle {
         let ans = unsafe IO { x1.$withZeroDigit(digit) };
         DecimalStyle(ans)
 
+    
 }

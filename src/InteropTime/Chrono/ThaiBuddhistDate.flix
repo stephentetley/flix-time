@@ -57,6 +57,18 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
         pub def hash(x: ThaiBuddhistDate): Int32 = InteropTime.Chrono.ThaiBuddhistDate.hashCode(x)
     }
 
+    instance ToJava[ThaiBuddhistDate] {
+        type Out = JThaiBuddhistDate
+        pub def toJava(x: ThaiBuddhistDate): JThaiBuddhistDate = 
+            let ThaiBuddhistDate.ThaiBuddhistDate(x1) = x;
+            x1
+    }
+
+    instance ToFlix[ThaiBuddhistDate] {
+        type In = JThaiBuddhistDate
+        pub def toFlix(x: JThaiBuddhistDate): ThaiBuddhistDate = ThaiBuddhistDate.ThaiBuddhistDate(x)
+    }
+
     ///
     /// Returns ___
     ///
@@ -96,7 +108,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
     pub def getEra(x: ThaiBuddhistDate): ThaiBuddhistEra = 
         let ThaiBuddhistDate(x1) = x;
         let ans = unsafe IO { x1.getEra() };
-        InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans)
+        ToFlix.toFlix(ans)
 
     // pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
     //     getChronoFieldHelper(x, InteropTime.Temporal.ChronoField.DayOfWeek)

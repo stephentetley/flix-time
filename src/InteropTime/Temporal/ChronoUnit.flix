@@ -18,9 +18,6 @@
 pub mod InteropTime.Temporal.ChronoUnit {
 
     use InteropTime.Temporal.ChronoUnit.ChronoUnit
-    use InteropTime.Temporal.ChronoUnit.ChronoUnit.{Nanos, Micros,
-        Millis, Seconds, Minutes, Hours, HalfDays, Days, Weeks,
-        Months, Years, Decades, Centuries, Millennia, Eras, Forever}
 
     import java.time.temporal.{ChronoUnit => JChronoUnit}
 
@@ -93,5 +90,4 @@ pub mod InteropTime.Temporal.ChronoUnit {
             else bug!("toFlix[ChronoUnit]")
         }
     }
-
 }

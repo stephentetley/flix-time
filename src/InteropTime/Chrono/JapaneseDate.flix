@@ -68,6 +68,18 @@ pub mod InteropTime.Chrono.JapaneseDate {
         pub def hash(x: JapaneseDate): Int32 = InteropTime.Chrono.JapaneseDate.hashCode(x)
     }
 
+    instance ToJava[JapaneseDate] {
+        type Out = JJapaneseDate
+        pub def toJava(x: JapaneseDate): JJapaneseDate = 
+            let JapaneseDate.JapaneseDate(x1) = x;
+            x1
+    }
+
+    instance ToFlix[JapaneseDate] {
+        type In = JJapaneseDate
+        pub def toFlix(x: JJapaneseDate): JapaneseDate = JapaneseDate.JapaneseDate(x)
+    }
+
 
     ///
     /// Returns ___

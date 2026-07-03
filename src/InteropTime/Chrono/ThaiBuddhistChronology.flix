@@ -44,6 +44,17 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
             unsafe IO { x1.toString() }
     }
 
+    instance ToJava[ThaiBuddhistChronology] {
+        type Out = JThaiBuddhistChronology
+        pub def toJava(x: ThaiBuddhistChronology): JThaiBuddhistChronology = 
+            let ThaiBuddhistChronology.ThaiBuddhistChronology(x1) = x;
+            x1
+    }
+
+    instance ToFlix[ThaiBuddhistChronology] {
+        type In = JThaiBuddhistChronology
+        pub def toFlix(x: JThaiBuddhistChronology): ThaiBuddhistChronology = ThaiBuddhistChronology.ThaiBuddhistChronology(x)
+    }
 
     pub def getInstance(): ThaiBuddhistChronology \ IO = 
         ThaiBuddhistChronology.ThaiBuddhistChronology(checked_ecast(JThaiBuddhistChronology.INSTANCE))
@@ -79,7 +90,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
         
     pub def dateYearDayWithEra(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32, day: Int32): ThaiBuddhistDate =
         let ThaiBuddhistChronology(x1) = x;
-        let era1: JThaiBuddhistEra = InteropTime.Chrono.ThaiBuddhistEra.marshalThaiBuddhistEra(era);
+        let era1 = ToJava.toJava(era);
         let ans: JChronoLocalDate = unsafe IO { x1.dateYearDay(era1, year, day) };
         let ans1: JThaiBuddhistDate = unchecked_cast(ans as JThaiBuddhistDate);
         ThaiBuddhistDate(ans1)
@@ -89,7 +100,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
         try {
             let ThaiBuddhistChronology(x1) = x;
             let ans = unsafe IO { x1.eraOf(i) };
-            InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(ans) |> Ok
+            ToFlix.toFlix(ans) |> Ok
         } catch {
             case e: JException => Err(e.getMessage())
         }
@@ -97,7 +108,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
     pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
         def convert(e) = {
             let e1: JThaiBuddhistEra = unchecked_cast(e as JThaiBuddhistEra);
-            InteropTime.Chrono.ThaiBuddhistEra.unmarshalThaiBuddhistEra(e1)
+            ToFlix.toFlix(e1)
         };
         let ThaiBuddhistChronology(x1) = x;
         let jlist: JList[JEra] = unsafe IO { x1.eras() };
@@ -114,6 +125,6 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
 
     pub def prolepticYear(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32): Int32 =
         let ThaiBuddhistChronology(x1) = x;
-        let era1 = InteropTime.Chrono.ThaiBuddhistEra.marshalThaiBuddhistEra(era);
+        let era1 = ToJava.toJava(era);
         unsafe IO { x1.prolepticYear(era1, year) }
 }

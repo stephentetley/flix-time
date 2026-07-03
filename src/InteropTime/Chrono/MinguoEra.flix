@@ -34,31 +34,33 @@ pub mod InteropTime.Chrono.MinguoEra {
         case ROC
     }
 
-    pub def marshalMinguoEra(x: MinguoEra): JMinguoEra = 
-        match x {
-            case BEFORE_ROC => unsafe IO { JMinguoEra.BEFORE_ROC }
-            case ROC        => unsafe IO { JMinguoEra.ROC }
+    instance ToJava[MinguoEra] {
+        type Out = JMinguoEra
+        pub def toJava(x: MinguoEra): JMinguoEra = match x {
+            case MinguoEra.BEFORE_ROC => unsafe IO { JMinguoEra.BEFORE_ROC }
+            case MinguoEra.ROC        => unsafe IO { JMinguoEra.ROC }
         }
+    }
 
-    def primEquals(x: JMinguoEra, y: JMinguoEra): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalMinguoEra(x: JMinguoEra): MinguoEra =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JMinguoEra.BEFORE_ROC })  => BEFORE_ROC
-            case x1 if primEquals(x1, unsafe IO { JMinguoEra.ROC })         => ROC
-            case _                                      => bug!("unmarshalMinguoEra")
+    instance ToFlix[MinguoEra] {
+        type In = JMinguoEra
+        pub def toFlix(x: JMinguoEra): MinguoEra = unsafe IO {
+            if (x.equals(JMinguoEra.BEFORE_ROC))    MinguoEra.BEFORE_ROC
+            else if (x.equals(JMinguoEra.ROC))      MinguoEra.ROC
+            else bug!("toFlix[MinguoEra]")
         }
+    }
+
 
     pub def getValue(x: MinguoEra): Int32 = 
-        let x1 = marshalMinguoEra(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getValue() }
 
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: MinguoEra): String = 
-        let x1 = marshalMinguoEra(x);
-        let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+        let x1 = ToJava.toJava(x);
+        let style1 = ToJava.toJava(style);
         let Locale.Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(style1, locale1) }
 

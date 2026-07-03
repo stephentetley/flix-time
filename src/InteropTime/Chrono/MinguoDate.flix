@@ -57,6 +57,17 @@ pub mod InteropTime.Chrono.MinguoDate {
         pub def hash(x: MinguoDate): Int32 = InteropTime.Chrono.MinguoDate.hashCode(x)
     }
 
+    instance ToJava[MinguoDate] {
+        type Out = JMinguoDate
+        pub def toJava(x: MinguoDate): JMinguoDate = 
+            let MinguoDate.MinguoDate(x1) = x;
+            x1
+    }
+
+    instance ToFlix[MinguoDate] {
+        type In = JMinguoDate
+        pub def toFlix(x: JMinguoDate): MinguoDate = MinguoDate.MinguoDate(x)
+    }
 
     ///
     /// Returns ___
@@ -97,7 +108,7 @@ pub mod InteropTime.Chrono.MinguoDate {
     pub def getEra(x: MinguoDate): MinguoEra = 
         let MinguoDate(x1) = x;
         let ans = unsafe IO { x1.getEra() };
-        InteropTime.Chrono.MinguoEra.unmarshalMinguoEra(ans)
+        ToFlix.toFlix(ans)
 
 
     // pub def getDayOfWeek(x: MinguoDate): Int32 = 

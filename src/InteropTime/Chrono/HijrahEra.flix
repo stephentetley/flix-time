@@ -37,28 +37,23 @@ pub mod InteropTime.Chrono.HijrahEra {
     }
 
 
-    // pub def fromJavaObject(o: ##java.lang.Object): HijrahEra = 
-    //     unmarshalHijrahEra(unchecked_cast(o as ##java.time.chrono.HijrahEra))
-
-
-    pub def marshalHijrahEra(x: HijrahEra): JHijrahEra =
-        match x {
-            case AH   => unsafe IO { JHijrahEra.AH }
+    instance ToJava[HijrahEra] {
+        type Out = JHijrahEra
+        pub def toJava(x: HijrahEra): JHijrahEra = match x {
+            case HijrahEra.AH   => unsafe IO { JHijrahEra.AH }
         }
+    }
 
-
-
-    def primEquals(x: JHijrahEra, y: JHijrahEra): Bool =
-        unsafe IO { x.equals(y) }
-
-    pub def unmarshalHijrahEra(x: JHijrahEra): HijrahEra =
-        match x {
-            case x1 if primEquals(x1, unsafe IO { JHijrahEra.AH })      => AH
-            case _                                  => bug!("unmarshalHijrahEra")
+    instance ToFlix[HijrahEra] {
+        type In = JHijrahEra
+        pub def toFlix(x: JHijrahEra): HijrahEra = unsafe IO {
+            if (x.equals(JHijrahEra.AH))            HijrahEra.AH
+            else bug!("toFlix[HijrahEra]")
         }
+    }
 
     pub def getValue(x: HijrahEra): Int32 =
-        let x1 = marshalHijrahEra(x);
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getValue() }
 
 
@@ -67,14 +62,14 @@ pub mod InteropTime.Chrono.HijrahEra {
 
 
     // pub def asEra(x: HijrahEra): Era = 
-    //     let x1 = marshalHijrahEra(x);
+    //     let x1 = ToJava.toJava(x);
     //     let ans = (checked_cast(x1) : JEra);
     //     Era(ans)
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String =
-        let x1 = marshalHijrahEra(x);
-        let style1 = InteropTime.Format.TextStyle.marshalTextStyle(style);
+        let x1 = ToJava.toJava(x);
+        let style1 = ToJava.toJava(style);
         let Locale.Locale(locale1) = locale;
         unsafe IO { x1.getDisplayName(style1, locale1) }
         
