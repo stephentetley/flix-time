@@ -66,19 +66,6 @@ pub mod InteropTime.DayOfWeek {
         }
     }
 
-
-    /// 1 (Monday) to 7 (Sunday)
-    pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
-        case 1 => Some(Monday)
-        case 2 => Some(Tuesday)
-        case 3 => Some(Wednesday)
-        case 4 => Some(Thursday)
-        case 5 => Some(Friday)
-        case 6 => Some(Saturday)
-        case 7 => Some(Sunday)
-        case _ => None
-    }
-
     
     instance ToJava[DayOfWeek] {
         type Out = JDayOfWeek
@@ -106,28 +93,41 @@ pub mod InteropTime.DayOfWeek {
             else bug!("toFlix[DayOfWeek]")
         }
     }
-      
+
+
+    /// 1 (Monday) to 7 (Sunday)
+    pub def dayOfWeek(i: Int32): Option[DayOfWeek] = match i {
+        case 1 => Some(Monday)
+        case 2 => Some(Tuesday)
+        case 3 => Some(Wednesday)
+        case 4 => Some(Thursday)
+        case 5 => Some(Friday)
+        case 6 => Some(Saturday)
+        case 7 => Some(Sunday)
+        case _ => None
+    }
+
     // `from` functions
 
     // `fromTemporalAccessor` specialized
 
     pub def fromLocalDate(x: LocalDate): DayOfWeek =
-        let LocalDate(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JDayOfWeek.$from(x1) };
         ToFlix.toFlix(ans)
 
     pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JDayOfWeek.$from(x1) };
         ToFlix.toFlix(ans)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JDayOfWeek.$from(x1) };
         ToFlix.toFlix(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek =
-        let ZonedDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JDayOfWeek.$from(x1) };
         ToFlix.toFlix(ans)
     

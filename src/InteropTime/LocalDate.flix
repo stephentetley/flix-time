@@ -153,7 +153,7 @@ pub mod InteropTime.LocalDate {
     /// Returns the current date from the system clock using zoneId.
     ///
     pub def nowWithZoneId(zoneId: ZoneId): LocalDate \ IO =
-        let ZoneId(z1) = zoneId;
+        let z1 = ToJava.toJava(zoneId);
         let ans = JLocalDate.now(z1);
         LocalDate(ans)
 
