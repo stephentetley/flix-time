@@ -24,21 +24,14 @@ pub mod InteropTime.Month {
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
-    use InteropTime.LocalDate.LocalDate.{LocalDate}
     use InteropTime.LocalDateTime.LocalDateTime
-    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
     use InteropTime.MonthDay.MonthDay
-    use InteropTime.MonthDay.MonthDay.{MonthDay}
     use InteropTime.OffsetDateTime.OffsetDateTime
-    use InteropTime.OffsetDateTime.OffsetDateTime.{OffsetDateTime}
     use InteropTime.YearMonth.YearMonth
-    use InteropTime.YearMonth.YearMonth.{YearMonth}
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime}
-
+    
     use InteropLocale.Locale.Locale
-    use InteropLocale.Locale.Locale.{Locale}
-
+    
     import java.time.{Month => JMonth}
     import java.lang.{Enum => JEnum}
 
@@ -118,32 +111,32 @@ pub mod InteropTime.Month {
     /// `fromTemporalAccessor` specialized
 
     pub def fromLocalDate(x: LocalDate): Month =
-        let LocalDate(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JMonth.$from(x1) };
         ToFlix.toFlix(ans)
 
     pub def fromLocalDateTime(x: LocalDateTime): Month =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JMonth.$from(x1) };
         ToFlix.toFlix(ans)
 
     pub def fromMonthDay(x: MonthDay): Month =
-        let MonthDay(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JMonth.$from(x1) };
         ToFlix.toFlix(ans)
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Month =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JMonth.$from(x1) };
         ToFlix.toFlix(ans)
 
     pub def fromYearMonth(x: YearMonth): Month =
-        let YearMonth(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JMonth.$from(x1) };
         ToFlix.toFlix(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): Month =
-        let ZonedDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JMonth.$from(x1) };
         ToFlix.toFlix(ans)
 
@@ -152,7 +145,7 @@ pub mod InteropTime.Month {
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
         let x1 = ToJava.toJava(x);
         let s1 = ToJava.toJava(style);
-        let Locale(locale1) = locale;
+        let locale1 = ToJava.toJava(locale);
         unsafe IO { x1.getDisplayName(s1, locale1) }
 
     pub def getValue(x: Month): Int32 =
@@ -192,6 +185,5 @@ pub mod InteropTime.Month {
         let x2 = unsafe IO { x1.minus(y) };
         ToFlix.toFlix(x2)
 
-
-
 }
+

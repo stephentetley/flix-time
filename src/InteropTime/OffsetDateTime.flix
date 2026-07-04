@@ -158,28 +158,28 @@ pub mod InteropTime.OffsetDateTime {
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetDateTime \ IO =
-        let ZoneId(z1) = zone;
+        let z1 = ToJava.toJava(zone);
         let ans = JOffsetDateTime.now(z1);
         OffsetDateTime(ans)
 
     /// `at` functions
 
     pub def atZoneSameInstant(zone: {zone = ZoneId }, x: OffsetDateTime): ZonedDateTime =
-        let OffsetDateTime(x1) = x;
-        let ZoneId(z1) = zone#zone;
+        let x1 = ToJava.toJava(x);
+        let z1 = ToJava.toJava(zone#zone);
         let ans = unsafe IO { x1.atZoneSameInstant(z1) };
         ZonedDateTime(ans)
 
     pub def atZoneSimilarLocal(zone: {zone = ZoneId }, x: OffsetDateTime): ZonedDateTime =
-        let OffsetDateTime(x1) = x;
-        let ZoneId(z1) = zone#zone;
+        let x1 = ToJava.toJava(x);
+        let z1 = ToJava.toJava(zone#zone);
         let ans = unsafe IO { x1.atZoneSimilarLocal(z1) };
         ZonedDateTime(ans)
 
 
     pub def fromLocalDateTime(offset: {offset = ZoneOffset }, dateTime: LocalDateTime): OffsetDateTime =
-        let LocalDateTime(dt1) = dateTime;
-        let ZoneOffset(o1) = offset#offset;
+        let dt1 = ToJava.toJava(dateTime);
+        let o1 = ToJava.toJava(offset#offset);
         let ans = unsafe IO { JOffsetDateTime.of(dt1, o1) };
         OffsetDateTime(ans)
 
@@ -187,16 +187,16 @@ pub mod InteropTime.OffsetDateTime {
     /// `from` functions
 
     pub def fromLocalDateLocalTime(offset: {offset = ZoneOffset }, date: LocalDate, time: LocalTime): OffsetDateTime =
-        let LocalDate(d1) = date;
-        let LocalTime(t1) = time;
-        let ZoneOffset(o1) = offset#offset;
-        let ans = unsafe IO { JOffsetDateTime.of(d1, t1, o1) };
+        let d1 = ToJava.toJava(date);
+        let t1 = ToJava.toJava(time);
+        let zo1 = ToJava.toJava(offset#offset);
+        let ans = unsafe IO { JOffsetDateTime.of(d1, t1, zo1) };
         OffsetDateTime(ans)
 
     /// `fromTemporalAccessor` specialized
 
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
-        let ZonedDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JOffsetDateTime.$from(x1) };
         OffsetDateTime(ans)
 
@@ -207,7 +207,7 @@ pub mod InteropTime.OffsetDateTime {
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDate(x: OffsetDateTime): LocalDate =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toLocalDate() };
         LocalDate(ans)
 
@@ -215,7 +215,7 @@ pub mod InteropTime.OffsetDateTime {
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalTime(x: OffsetDateTime): LocalTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toLocalTime() };
         LocalTime(ans)
 
@@ -223,7 +223,7 @@ pub mod InteropTime.OffsetDateTime {
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toLocalDateTime() };
         LocalDateTime(ans)
 
@@ -232,7 +232,7 @@ pub mod InteropTime.OffsetDateTime {
     /// Returns the given date-time `x` as __.
     ///
     pub def toOffsetTime(x: OffsetDateTime): OffsetTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toOffsetTime() };
         OffsetTime(ans)
 
@@ -240,18 +240,18 @@ pub mod InteropTime.OffsetDateTime {
     /// Returns the given date-time `x` as __.
     ///
     pub def toZonedDateTime(x: OffsetDateTime): ZonedDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toZonedDateTime() };
         ZonedDateTime(ans)
 
 
     pub def toInstant(x: OffsetDateTime): InstantZ =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toInstant() };
         InstantZ(ans)
 
     pub def toEpochSecond(x: OffsetDateTime): Int64 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.toEpochSecond() }
 
     /// `parse` / `format` functions
@@ -264,9 +264,9 @@ pub mod InteropTime.OffsetDateTime {
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, OffsetDateTime] =
         try {
-            let DateTimeFormatter(fmtr) = formatter;
+            let fmt1 = ToJava.toJava(formatter);
             let s1 = String.trim(s);
-            let ans = unsafe IO { JOffsetDateTime.parse(s1, fmtr) };
+            let ans = unsafe IO { JOffsetDateTime.parse(s1, fmt1) };
             Ok(OffsetDateTime(ans))
         } catch {
             case e: JException => Err(e.getMessage())
@@ -277,9 +277,9 @@ pub mod InteropTime.OffsetDateTime {
     /// Returns OffsetDateTime `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: OffsetDateTime): String =
-        let OffsetDateTime(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        unsafe IO { x1.format(fmtr) }
+        let x1 = ToJava.toJava(x);
+        let fmt1 = ToJava.toJava(formatter);
+        unsafe IO { x1.format(fmt1) }
 
     // predicates / comparisons
 
@@ -287,33 +287,33 @@ pub mod InteropTime.OffsetDateTime {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: OffsetDateTime, y: OffsetDateTime): Bool =
-        let OffsetDateTime(x1) = x;
-        let OffsetDateTime(y1) = y;
+        let x1 = ToJava.toJava(x);
+        let y1 = ToJava.toJava(y);
         unsafe IO { x1.isBefore(y1) }
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: OffsetDateTime, y: OffsetDateTime): Bool =
-        let OffsetDateTime(x1) = x;
-        let OffsetDateTime(y1) = y;
+        let x1 = ToJava.toJava(x);
+        let y1 = ToJava.toJava(y);
         unsafe IO { x1.isAfter(y1) }
 
 
     pub def isInstantEqual(x: OffsetDateTime, y: OffsetDateTime): Bool =
-        let OffsetDateTime(x1) = x;
-        let OffsetDateTime(y1) = y;
+        let x1 = ToJava.toJava(x);
+        let y1 = ToJava.toJava(y);
         unsafe IO { x1.isEqual(y1) }
 
 
     pub def isAmOfDay(x: OffsetDateTime): Bool = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let tf1 = unsafe IO { JChronoField.AMPM_OF_DAY };
         unsafe IO { x1.get(tf1) == 0 }
 
 
     pub def isPmOfDay(x: OffsetDateTime): Bool = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let tf1 = unsafe IO { JChronoField.AMPM_OF_DAY };
         unsafe IO { x1.get(tf1) == 1 }
 
@@ -323,8 +323,8 @@ pub mod InteropTime.OffsetDateTime {
     // pub def timeLineOrder(x: OffsetDateTime, y: OffsetDateTime): Comparison =
     //     import static java.time.OffsetDateTime.timeLineOrder(): ##java.util.Comparator \ {};
     //     import java.util.Comparator.compare(##java.lang.Object, ##java.lang.Object): Int32 \ {};
-    //     let OffsetDateTime(x1) = x;
-    //     let OffsetDateTime(y1) = y;
+    //     let x1 = ToJava.toJava(x);
+    //     let y1 = ToJava.toJava(y);
     //     let cmp = timeLineOrder();
     //     compare(cmp, checked_cast(x1), checked_cast(y1)) |> Comparison.fromInt32
 
@@ -332,70 +332,70 @@ pub mod InteropTime.OffsetDateTime {
     /// Get / Set...
 
     pub def getOffset(x: OffsetDateTime): ZoneOffset =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.getOffset() };
         ZoneOffset(ans)
 
     pub def withOffsetSameInstant(offset: ZoneOffset, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
-        let ZoneOffset(o1) = offset;
+        let x1 = ToJava.toJava(x);
+        let o1 = ToJava.toJava(offset);
         let ans = unsafe IO { x1.$withOffsetSameInstant(o1) };
         OffsetDateTime(ans)
 
     pub def withOffsetSameLocal(offset: ZoneOffset, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
-        let ZoneOffset(o1) = offset;
+        let x1 = ToJava.toJava(x);
+        let o1 = ToJava.toJava(offset);
         let ans = unsafe IO { x1.$withOffsetSameLocal(o1) };
         OffsetDateTime(ans)
 
 
     pub def getNano(x: OffsetDateTime): Int32 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getNano() }
 
     pub def withNano(nano: Int32, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withNano(nano) };
         OffsetDateTime(ans)
 
     pub def getSecond(x: OffsetDateTime): Int32 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getSecond() }
 
     pub def withSecond(second: Int32, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withSecond(second) };
         OffsetDateTime(ans)
 
 
     pub def getMinute(x: OffsetDateTime): Int32 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getMinute() }
 
     pub def withMinute(minute: Int32, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withMinute(minute) };
         OffsetDateTime(ans)
 
 
     pub def getHour(x: OffsetDateTime): Int32 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getHour() }
 
     pub def withHour(hour: Int32, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withHour(hour) };
         OffsetDateTime(ans)
 
 
     pub def getDayOfWeek(x: OffsetDateTime): DayOfWeek =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let d1 = unsafe IO { x1.getDayOfWeek() };
         ToFlix.toFlix(d1)
 
 
     pub def adjustDayOfWeek(d: DayOfWeek, x: OffsetDateTime): OffsetDateTime = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.adjustInto(x1) };
         let ans = unchecked_cast(t1 as JOffsetDateTime);
@@ -403,58 +403,58 @@ pub mod InteropTime.OffsetDateTime {
 
 
     pub def getDayOfMonth(x: OffsetDateTime): Int32 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getDayOfMonth() }
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withDayOfMonth(dayOfMonth) };
         OffsetDateTime(ans)
 
 
     pub def getDayOfYear(x: OffsetDateTime): Int32 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getDayOfYear() }
 
     pub def withDayOfYear(dayOfYear: Int32, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withDayOfYear(dayOfYear) };
         OffsetDateTime(ans)
 
     pub def getMonth(x: OffsetDateTime): Month =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let m1 = unsafe IO { x1.getMonth() };
         ToFlix.toFlix(m1)
 
     pub def getMonthValue(x: OffsetDateTime): Int32 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let m1 = unsafe IO { x1.getMonth() };
         unsafe IO { m1.getValue() }
 
     pub def withMonth(month: Int32, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withMonth(month) };
         OffsetDateTime(ans)
 
     pub def getYear(x: OffsetDateTime): Int32 =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getYear() }
 
     pub def withYear(year: Int32, x: OffsetDateTime): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withYear(year) };
         OffsetDateTime(ans)
 
     // MonthDay methods
 
     pub def getMonthDay(x: OffsetDateTime): MonthDay = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JMonthDay.$from(x1) };
         MonthDay(ans)
 
     pub def adjustMonthDay(md: MonthDay, x: OffsetDateTime): OffsetDateTime = 
-        let OffsetDateTime(x1) = x;
-        let MonthDay(md1) = md;
+        let x1 = ToJava.toJava(x);
+        let md1 = ToJava.toJava(md);
         let dt1 = unsafe IO { md1.adjustInto(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
@@ -462,14 +462,14 @@ pub mod InteropTime.OffsetDateTime {
     // YearMonth methods
 
     pub def getYearMonth(x: OffsetDateTime): YearMonth = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JYearMonth.$from(x1) };
         YearMonth(ans)
 
 
     pub def adjustYearMonth(ym: YearMonth, x: OffsetDateTime): OffsetDateTime = 
-        let OffsetDateTime(x1) = x;
-        let YearMonth(ym1) = ym;
+        let x1 = ToJava.toJava(x);
+        let ym1 = ToJava.toJava(ym);
         let dt1 = unsafe IO { ym1.adjustInto(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
@@ -478,13 +478,13 @@ pub mod InteropTime.OffsetDateTime {
     // LocalDate methods
 
     pub def getLocalDate(x: OffsetDateTime): LocalDate = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JLocalDate.$from(x1) };
         LocalDate(ans)
 
     pub def adjustLocalDate(d: LocalDate, x: OffsetDateTime): OffsetDateTime = 
-        let OffsetDateTime(x1) = x;
-        let LocalDate(d1) = d;
+        let x1 = ToJava.toJava(x);
+        let d1 = ToJava.toJava(d);
         let dt1 = unsafe IO { d1.adjustInto(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
@@ -492,13 +492,13 @@ pub mod InteropTime.OffsetDateTime {
     // LocalDateTime methods
 
     pub def getLocalDateTime(x: OffsetDateTime): LocalDateTime = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JLocalDateTime.$from(x1) };
         LocalDateTime(ans)
 
     pub def adjustLocalDateTime(ldt: LocalDateTime, x: OffsetDateTime): OffsetDateTime = 
-        let OffsetDateTime(x1) = x;
-        let LocalDateTime(ldt1) = ldt;
+        let x1 = ToJava.toJava(x);
+        let ldt1 = ToJava.toJava(ldt);
         let dt1 = unsafe IO { ldt1.adjustInto(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
@@ -507,29 +507,29 @@ pub mod InteropTime.OffsetDateTime {
     /// LocalTime methods
 
     pub def getLocalTime(x: OffsetDateTime): LocalTime = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JLocalTime.$from(x1) };
         LocalTime(ans)
 
 
     pub def adjustLocalTime(lt: LocalTime, x: OffsetDateTime): OffsetDateTime = 
-        let OffsetDateTime(x1) = x;
-        let LocalTime(lt1) = lt;
+        let x1 = ToJava.toJava(x);
+        let lt1 = ToJava.toJava(lt);
         let dt1 = unsafe IO { lt1.adjustInto(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
         
 
     pub def getEpochDay(x: OffsetDateTime): Int64 = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.EPOCH_DAY };
         unsafe IO { x1.getLong(f1) }
 
     /// ZoneOffset methods
 
     pub def adjustZoneOffset(zo: ZoneOffset, x: OffsetDateTime): OffsetDateTime = 
-        let OffsetDateTime(x1) = x;
-        let ZoneOffset(zo1) = zo;
+        let x1 = ToJava.toJava(x);
+        let zo1 = ToJava.toJava(zo);
         let dt1 = unsafe IO { zo1.adjustInto(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
@@ -537,7 +537,7 @@ pub mod InteropTime.OffsetDateTime {
     // truncate functions
 
     pub def truncatedToDays(x: OffsetDateTime): OffsetDateTime = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.DAYS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         OffsetDateTime(ans)
@@ -545,96 +545,96 @@ pub mod InteropTime.OffsetDateTime {
     // plus / minus functions
 
     pub def plusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusYears(years) };
         OffsetDateTime(ans)
 
     pub def minusYears(x: OffsetDateTime, years: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusYears(years) };
         OffsetDateTime(ans)
 
     pub def plusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusMonths(months) };
         OffsetDateTime(ans)
 
     pub def minusMonths(x: OffsetDateTime, months: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusMonths(months) };
         OffsetDateTime(ans)
 
     pub def plusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusWeeks(weeks) };
         OffsetDateTime(ans)
 
     pub def minusWeeks(x: OffsetDateTime, weeks: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusWeeks(weeks) };
         OffsetDateTime(ans)
 
     pub def plusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusDays(days) };
         OffsetDateTime(ans)
 
     pub def minusDays(x: OffsetDateTime, days: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusDays(days) };
         OffsetDateTime(ans)
 
     pub def plusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusHours(hours) };
         OffsetDateTime(ans)
 
     pub def minusHours(x: OffsetDateTime, hours: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusHours(hours) };
         OffsetDateTime(ans)
 
     pub def plusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusMinutes(minutes) };
         OffsetDateTime(ans)
 
     pub def minusMinutes(x: OffsetDateTime, minutes: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusMinutes(minutes) };
         OffsetDateTime(ans)
 
     pub def plusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusSeconds(seconds) };
         OffsetDateTime(ans)
 
     pub def minusSeconds(x: OffsetDateTime, seconds: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusSeconds(seconds) };
         OffsetDateTime(ans)
 
     pub def plusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusNanos(nanos) };
         OffsetDateTime(ans)
 
     pub def minusNanos(x: OffsetDateTime, nanos: Int64): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusNanos(nanos) };
         OffsetDateTime(ans)
 
 
     pub def plusDuration(x: OffsetDateTime, d: DurationZ): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
-        let DurationZ(d1) = d;
+        let x1 = ToJava.toJava(x);
+        let d1 = ToJava.toJava(d);
         let dt1 = unsafe IO { d1.addTo(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
     
     pub def minusDuration(x: OffsetDateTime, d: DurationZ): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
-        let DurationZ(d1) = d;
+        let x1 = ToJava.toJava(x);
+        let d1 = ToJava.toJava(d);
         let dt1 = unsafe IO { d1.subtractFrom(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
@@ -642,15 +642,15 @@ pub mod InteropTime.OffsetDateTime {
     // Period methods
 
     pub def plusPeriod(x: OffsetDateTime, p: Period): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
-        let Period(p1) = p;
+        let x1 = ToJava.toJava(x);
+        let p1 = ToJava.toJava(p);
         let dt1 = unsafe IO { p1.addTo(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
 
     pub def minusPeriod(x: OffsetDateTime, p: Period): OffsetDateTime =
-        let OffsetDateTime(x1) = x;
-        let Period(p1) = p;
+        let x1 = ToJava.toJava(x);
+        let p1 = ToJava.toJava(p);
         let dt1 = unsafe IO { p1.subtractFrom(x1) };
         let ans = unchecked_cast(dt1 as JOffsetDateTime);
         OffsetDateTime(ans)
@@ -659,58 +659,59 @@ pub mod InteropTime.OffsetDateTime {
     // between / until functions
 
     pub def between(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): DurationZ =
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let ans = unsafe IO { JDuration.between(b1, e1) };
         DurationZ(ans)
         
 
     pub def secondsUntil(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): Int64 = 
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.SECONDS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def minutesUntil(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): Int64 = 
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.MINUTES };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def hoursUntil(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): Int64 = 
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.HOURS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def halfDaysUntil(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): Int64 = 
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.HALF_DAYS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def daysUntil(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): Int64 = 
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.DAYS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def monthsUntil(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): Int64 = 
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.MONTHS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def yearsUntil(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): Int64 = 
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.YEARS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def quarterYearsUntil(begin: {begin = OffsetDateTime }, end: {end = OffsetDateTime }): Int64 = 
-        let OffsetDateTime(b1) = begin#begin;
-        let OffsetDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JIsoFields.QUARTER_YEARS };
         unsafe IO { b1.until(e1, cu1) }
 
 }
+
