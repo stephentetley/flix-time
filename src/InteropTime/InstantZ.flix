@@ -25,18 +25,12 @@ pub mod InteropTime.InstantZ {
     use InteropTime.InstantZ.InstantZ.{InstantZ}
 
     use InteropTime.DurationZ.DurationZ
-    use InteropTime.DurationZ.DurationZ.{DurationZ}
     use InteropTime.OffsetDateTime.OffsetDateTime
-    use InteropTime.OffsetDateTime.OffsetDateTime.{OffsetDateTime}
     use InteropTime.Period.Period
-    use InteropTime.Period.Period.{Period}
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime}
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
     use InteropTime.ZoneOffset.ZoneOffset
-    use InteropTime.ZoneOffset.ZoneOffset.{ZoneOffset}
-
+    
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
     import java.time.{Instant => JInstant}
@@ -135,14 +129,14 @@ pub mod InteropTime.InstantZ {
     /// `at` functions
 
     pub def atOffset(x: InstantZ, offset: ZoneOffset): OffsetDateTime =
-        let InstantZ(x1) = x;
-        let ZoneOffset(offset1) = offset;
+        let x1 = ToJava.toJava(x);
+        let offset1 = ToJava.toJava(offset);
         let ans = unsafe IO { x1.atOffset(offset1) };
         OffsetDateTime(ans)
 
     pub def atZone(x: InstantZ, zone: ZoneId): ZonedDateTime =
-        let InstantZ(x1) = x;
-        let ZoneId(zone1) = zone;
+        let x1 = ToJava.toJava(x);
+        let zone1 = ToJava.toJava(zone);
         let ans = unsafe IO { x1.atZone(zone1) };
         ZonedDateTime(ans)
 
@@ -159,19 +153,19 @@ pub mod InteropTime.InstantZ {
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JInstant.$from(x1) };
         InstantZ(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-        let ZonedDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JInstant.$from(x1) };
         InstantZ(ans)
 
     /// `to` functions
 
     pub def toEpochMilli(x: InstantZ): Int64 =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.toEpochMilli() }
 
     /// `parse` / `format` functions
@@ -186,7 +180,7 @@ pub mod InteropTime.InstantZ {
         }
 
     pub def format(x: InstantZ): String =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.toString() }
 
 
@@ -196,71 +190,71 @@ pub mod InteropTime.InstantZ {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: InstantZ, y: InstantZ): Bool =
-        let InstantZ(x1) = x;
-        let InstantZ(y1) = y;
+        let x1 = ToJava.toJava(x);
+        let y1 = ToJava.toJava(y);
         unsafe IO { x1.isBefore(y1) }
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: InstantZ, y: InstantZ): Bool =
-        let InstantZ(x1) = x;
-        let InstantZ(y1) = y;
+        let x1 = ToJava.toJava(x);
+        let y1 = ToJava.toJava(y);
         unsafe IO { x1.isAfter(y1) }
 
     
     /// Getters and Setters
 
     pub def getEpochSecond(x: InstantZ): Int64 =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getEpochSecond() }
 
     pub def getNano(x: InstantZ): Int32 =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getNano() }
 
 
     pub def getNanoOfSecond(x: InstantZ): Int64 =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.NANO_OF_SECOND };
         unsafe IO { x1.getLong(f1) }
 
 
     pub def withNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.NANO_OF_SECOND };
         let ans = unsafe IO { x1.$with(f1, i) };
         InstantZ(ans)
 
     pub def getMicroOfSecond(x: InstantZ): Int64 =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.MICRO_OF_SECOND };
         unsafe IO { x1.getLong(f1) }
 
     pub def withMicroOfSecond(i: Int64, x: InstantZ): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.MICRO_OF_SECOND };
         let ans = unsafe IO { x1.$with(f1, i) };
         InstantZ(ans)
 
     pub def getMilliOfSecond(x: InstantZ): Int64 =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.MILLI_OF_SECOND };
         unsafe IO { x1.getLong(f1) }
 
     pub def withMilliOfSecond(i: Int64, x: InstantZ): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.MILLI_OF_SECOND };
         let ans = unsafe IO { x1.$with(f1, i) };
         InstantZ(ans)
 
     pub def getInstantSeconds(x: InstantZ): Int64 =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.INSTANT_SECONDS };
         unsafe IO { x1.getLong(f1) }
 
     pub def withInstantSeconds(i: Int64, x: InstantZ): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let f1 = unsafe IO { JChronoField.INSTANT_SECONDS };
         let ans = unsafe IO { x1.$with(f1, i) };
         InstantZ(ans)
@@ -268,51 +262,51 @@ pub mod InteropTime.InstantZ {
     // `truncatedTo` specialized
 
     pub def truncatedToNanos(x: InstantZ): InstantZ = 
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.NANOS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         InstantZ(ans)
 
 
     pub def truncatedToMicros(x: InstantZ): InstantZ = 
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.MICROS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         InstantZ(ans)
 
     pub def truncatedToMillis(x: InstantZ): InstantZ = 
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.MILLIS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         InstantZ(ans)
 
     pub def truncatedToSeconds(x: InstantZ): InstantZ = 
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.SECONDS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         InstantZ(ans)
 
     pub def truncatedToMinutes(x: InstantZ): InstantZ = 
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.MINUTES };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         InstantZ(ans)
 
     pub def truncatedToHours(x: InstantZ): InstantZ = 
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.HOURS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         InstantZ(ans)
 
     pub def truncatedToHalfDays(x: InstantZ): InstantZ = 
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         InstantZ(ans)
 
 
     pub def truncatedToDays(x: InstantZ): InstantZ = 
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.DAYS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         InstantZ(ans)
@@ -320,41 +314,41 @@ pub mod InteropTime.InstantZ {
     // plus / minus functions
 
     pub def plusSeconds(x: InstantZ, seconds: Int64): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusSeconds(seconds) };
         InstantZ(ans)
 
     pub def minusSeconds(x: InstantZ, seconds: Int64): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusSeconds(seconds) };
         InstantZ(ans)
 
     pub def plusMillis(x: InstantZ, millis: Int64): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusMillis(millis) };
         InstantZ(ans)
 
     pub def minusMillis(x: InstantZ, millis: Int64): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusMillis(millis) };
         InstantZ(ans)
 
     pub def plusNanos(x: InstantZ, nanos: Int64): InstantZ =
-        let InstantZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusNanos(nanos) };
         InstantZ(ans)
 
 
     pub def plusDuration(x: InstantZ, d: DurationZ): InstantZ =
-        let InstantZ(x1) = x;
-        let DurationZ(d1) = d;
+        let x1 = ToJava.toJava(x);
+        let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.addTo(x1) };
         let ans = unchecked_cast(t1 as JInstant);
         InstantZ(ans)
     
     pub def minusDuration(x: InstantZ, d: DurationZ): InstantZ =
-        let InstantZ(x1) = x;
-        let DurationZ(d1) = d;
+        let x1 = ToJava.toJava(x);
+        let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.subtractFrom(x1) };
         let ans = unchecked_cast(t1 as JInstant);
         InstantZ(ans)
@@ -362,15 +356,15 @@ pub mod InteropTime.InstantZ {
     // Period methods
 
     pub def plusPeriod(x: InstantZ, p: Period): InstantZ =
-        let InstantZ(x1) = x;
-        let Period(p1) = p;
+        let x1 = ToJava.toJava(x);
+        let p1 = ToJava.toJava(p);
         let t1 = unsafe IO { p1.addTo(x1) };
         let ans = unchecked_cast(t1 as JInstant);
         InstantZ(ans)
     
     pub def minusPeriod(x: InstantZ, p: Period): InstantZ =
-        let InstantZ(x1) = x;
-        let Period(p1) = p;
+        let x1 = ToJava.toJava(x);
+        let p1 = ToJava.toJava(p);
         let t1 = unsafe IO { p1.subtractFrom(x1) };
         let ans = unchecked_cast(t1 as JInstant);
         InstantZ(ans)
@@ -379,59 +373,60 @@ pub mod InteropTime.InstantZ {
     // between / until functions
 
     pub def between(begin: {begin = InstantZ }, end: {end = InstantZ }): DurationZ =
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let ans = unsafe IO { JDuration.between(b1, e1) };
         DurationZ(ans)
 
     // `until` specialized
 
     pub def nanosUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.NANOS };
         unsafe IO { b1.until(e1, u1) }
 
     pub def microsUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.MICROS };
         unsafe IO { b1.until(e1, u1) }
 
     pub def millisUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.MILLIS };
         unsafe IO { b1.until(e1, u1) }
 
     pub def secondsUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.SECONDS };
         unsafe IO { b1.until(e1, u1) }
 
     pub def minutesUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.MINUTES };
         unsafe IO { b1.until(e1, u1) }
 
     pub def hoursUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.HOURS };
         unsafe IO { b1.until(e1, u1) }
 
     pub def halfDaysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
         unsafe IO { b1.until(e1, u1) }
 
     pub def daysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let InstantZ(b1) = begin#begin;
-        let InstantZ(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.DAYS };
         unsafe IO { b1.until(e1, u1) }
 
 }
+

@@ -252,7 +252,7 @@ pub mod InteropTime.DurationZ {
     /// Return the number of days in Duration `x`.
     ///
     pub def toDaysPart(x: DurationZ): Int64 =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.toDaysPart() }
 
     /// `parse` / `format` functions
@@ -268,21 +268,21 @@ pub mod InteropTime.DurationZ {
 
     /// Note - alias of `toString`
     pub def format(x: DurationZ): String =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.toString() }
 
 
     /// predicates / comparisons
 
     pub def isZero(x: DurationZ): Bool =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.isZero() }
 
     pub def isPositive(x: DurationZ): Bool =
         not isNegative(x)
 
     pub def isNegative(x: DurationZ): Bool =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.isNegative() }
 
     /// Duration functions
@@ -291,7 +291,7 @@ pub mod InteropTime.DurationZ {
     /// Returns the absolute value of `x`.
     ///
     pub def abs(x: DurationZ): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.abs() };
         DurationZ(ans)
 
@@ -302,14 +302,14 @@ pub mod InteropTime.DurationZ {
     /// Get the nanosecond part of the duration `x`.
     ///
     pub def getNano(x: DurationZ): Int32 =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getNano() }
 
     ///
     /// Set the nano part of the duration `x` to `seconds``.
     ///
     pub def withNanos(nanos: Int32, x: DurationZ): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withNanos(nanos) };
         DurationZ(ans)
 
@@ -317,57 +317,57 @@ pub mod InteropTime.DurationZ {
     /// Get the second part of the duration `x`.
     ///
     pub def getSeconds(x: DurationZ): Int64 =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getSeconds() }
 
     ///
     /// Set the seconds part of the duration `x` to `seconds``.
     ///
     pub def withSeconds(seconds: Int64, x: DurationZ): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withSeconds(seconds) };
         DurationZ(ans)
 
     /// #truncate functions
     
     pub def truncatedToNanos(x: DurationZ): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.NANOS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         DurationZ(ans)
 
     pub def truncatedToMicros(x: DurationZ): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.MICROS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         DurationZ(ans)
 
     pub def truncatedToMillis(x: DurationZ): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.MILLIS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         DurationZ(ans)
 
     pub def truncatedToSeconds(x: DurationZ): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.SECONDS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         DurationZ(ans)
 
     pub def truncatedToMinutes(x: DurationZ): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.MINUTES };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         DurationZ(ans)
 
     pub def truncatedToHours(x: DurationZ): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.HOURS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         DurationZ(ans)
 
     pub def truncatedToHalfDays(x: DurationZ): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         DurationZ(ans)
@@ -377,74 +377,74 @@ pub mod InteropTime.DurationZ {
 
 
     pub def plusDays(x: DurationZ, days: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusDays(days) };
         DurationZ(ans)
 
     pub def minusDays(x: DurationZ, days: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusDays(days) };
         DurationZ(ans)
 
     pub def plusHours(x: DurationZ, hours: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusHours(hours) };
         DurationZ(ans)
 
     pub def minusHours(x: DurationZ, hours: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusHours(hours) };
         DurationZ(ans)
 
     pub def plusMinutes(x: DurationZ, minutes: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusMinutes(minutes) };
         DurationZ(ans)
 
     pub def minusMinutes(x: DurationZ, minutes: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusMinutes(minutes) };
         DurationZ(ans)
 
     pub def plusSeconds(x: DurationZ, seconds: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusSeconds(seconds) };
         DurationZ(ans)
 
     pub def minusSeconds(x: DurationZ, seconds: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusSeconds(seconds) };
         DurationZ(ans)
 
     pub def plusMillis(x: DurationZ, millis: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusMillis(millis) };
         DurationZ(ans)
 
     pub def minusMillis(x: DurationZ, millis: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusMillis(millis) };
         DurationZ(ans)
 
     pub def plusNanos(x: DurationZ, nanos: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusNanos(nanos) };
         DurationZ(ans)
 
     pub def minusNanos(x: DurationZ, nanos: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusNanos(nanos) };
         DurationZ(ans)
 
 
     pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
         let ans = unsafe IO { x1.plus(i, u1) };
         DurationZ(ans)
 
     pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
         let ans = unsafe IO { x1.minus(i, u1) };
         DurationZ(ans)
@@ -453,14 +453,15 @@ pub mod InteropTime.DurationZ {
     /// multiply / divide functions
 
     pub def multipliedBy(x: DurationZ, y: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.multipliedBy(y) };
         DurationZ(ans)
 
     pub def dividedBy(x: DurationZ, y: Int64): DurationZ =
-        let DurationZ(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.dividedBy(y) };
         DurationZ(ans)
 
 
 }
+

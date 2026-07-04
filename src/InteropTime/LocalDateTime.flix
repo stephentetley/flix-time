@@ -23,33 +23,21 @@ pub mod InteropTime.LocalDateTime {
 
 
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
     use InteropTime.Format.DateTimeFormatter.DateTimeFormat
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
-    use InteropTime.DurationZ.DurationZ.{DurationZ}
     use InteropTime.InstantZ.InstantZ
-    use InteropTime.InstantZ.InstantZ.{InstantZ}
     use InteropTime.LocalDate.LocalDate
-    use InteropTime.LocalDate.LocalDate.{LocalDate}
     use InteropTime.LocalTime.LocalTime
-    use InteropTime.LocalTime.LocalTime.{LocalTime}
     use InteropTime.Month.Month
     use InteropTime.MonthDay.MonthDay
-    use InteropTime.MonthDay.MonthDay.{MonthDay}
     use InteropTime.Period.Period
-    use InteropTime.Period.Period.{Period}
     use InteropTime.OffsetDateTime.OffsetDateTime
-    use InteropTime.OffsetDateTime.OffsetDateTime.{OffsetDateTime}
     use InteropTime.YearMonth.YearMonth
-    use InteropTime.YearMonth.YearMonth.{YearMonth}
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime}
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
     use InteropTime.ZoneOffset.ZoneOffset
-    use InteropTime.ZoneOffset.ZoneOffset.{ZoneOffset}
-
+    
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
     import java.time.{LocalDate => JLocalDate}
@@ -165,39 +153,39 @@ pub mod InteropTime.LocalDateTime {
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): LocalDateTime \ IO =
-        let ZoneId(z) = zone;
-        let ans = JLocalDateTime.now(z);
+        let zone1 = ToJava.toJava(zone);
+        let ans = JLocalDateTime.now(zone1);
         LocalDateTime(ans)
 
 
     /// `from` functions
 
     pub def fromLocalDateLocalTime(d: LocalDate, t: LocalTime): LocalDateTime =
-        let LocalDate(d1) = d;
-        let LocalTime(t1) = t;
+        let d1 = ToJava.toJava(d);
+        let t1 = ToJava.toJava(t);
         let ans = unsafe IO { JLocalDateTime.of(d1, t1) };
         LocalDateTime(ans)
 
     pub def ofEpochSecond(offset: {offset = ZoneOffset }, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
-        let ZoneOffset(o1) = offset#offset;
+        let o1 = ToJava.toJava(offset#offset);
         let ans = unsafe IO { JLocalDateTime.ofEpochSecond(epochSecond, nanoOfSecond, o1) };
         LocalDateTime(ans)
 
     pub def ofInstant(zone: {zone = ZoneId }, x: InstantZ): LocalDateTime =
-        let InstantZ(x1) = x;
-        let ZoneId(z1) = zone#zone;
+        let x1 = ToJava.toJava(x);
+        let z1 = ToJava.toJava(zone#zone);
         let ans = unsafe IO { JLocalDateTime.ofInstant(x1, z1) };
         LocalDateTime(ans)
 
     // `fromTemporalAccessor` specialized
 
     pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
-        let OffsetDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JLocalDateTime.$from(x1) };
         LocalDateTime(ans)
 
     pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
-        let ZonedDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { JLocalDateTime.$from(x1) };
         LocalDateTime(ans)
 
@@ -209,7 +197,7 @@ pub mod InteropTime.LocalDateTime {
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDate(x: LocalDateTime): LocalDate =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toLocalDate() };
         LocalDate(ans)
 
@@ -217,7 +205,7 @@ pub mod InteropTime.LocalDateTime {
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalTime(x: LocalDateTime): LocalTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toLocalTime() };
         LocalTime(ans)
 
@@ -243,9 +231,9 @@ pub mod InteropTime.LocalDateTime {
     /// Returns LocalDateTime `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: LocalDateTime): String =
-        let LocalDateTime(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        unsafe IO { x1.format(fmtr) }
+        let x1 = ToJava.toJava(x);
+        let fmt1 = ToJava.toJava(formatter);
+        unsafe IO { x1.format(fmt1) }
 
 
     /// predicates / comparisons
@@ -254,108 +242,108 @@ pub mod InteropTime.LocalDateTime {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: LocalDateTime, y: LocalDateTime): Bool =
-        let LocalDateTime(x1) = x;
-        let LocalDateTime(y1) = y;
+        let x1 = ToJava.toJava(x);
+        let y1 = ToJava.toJava(y);
         unsafe IO { x1.isBefore(y1) }
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: LocalDateTime, y: LocalDateTime): Bool =
-        let LocalDateTime(x1) = x;
-        let LocalDateTime(y1) = y;
+        let x1 = ToJava.toJava(x);
+        let y1 = ToJava.toJava(y);
         unsafe IO { x1.isAfter(y1) }
 
     /// LocalDateTime functions
 
     pub def getMonthValue(x: LocalDateTime): Int32 =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let m1 = unsafe IO { x1.getMonth() };
         unsafe IO { m1.getValue() }
 
     /// Getters and Setters
 
     pub def getYear(x: LocalDateTime): Int32 =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getYear() }
 
     pub def withYear(year: Int32, x: LocalDateTime): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withYear(year) };
         LocalDateTime(ans)
 
     pub def getMonth(x: LocalDateTime): Month =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         ToFlix.toFlix(unsafe IO { x1.getMonth() })
 
     pub def withMonth(month: Int32, x: LocalDateTime): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withMonth(month) };
         LocalDateTime(ans)
 
     pub def getDayOfYear(x: LocalDateTime): Int32 =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getDayOfYear() }
 
     pub def withDayOfYear(dayOfYear: Int32, x: LocalDateTime): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withDayOfYear(dayOfYear) };
         LocalDateTime(ans)
 
     pub def getDayOfMonth(x: LocalDateTime): Int32 =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getDayOfMonth() }
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: LocalDateTime): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withDayOfMonth(dayOfMonth) };
         LocalDateTime(ans)
 
     pub def getDayOfWeek(x: LocalDateTime): DayOfWeek =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         ToFlix.toFlix(unsafe IO { x1.getDayOfWeek() })
 
     pub def getHour(x: LocalDateTime): Int32 =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getHour() }
 
     pub def withHour(hour: Int32, x: LocalDateTime): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withHour(hour) };
         LocalDateTime(ans)
 
     pub def getMinute(x: LocalDateTime): Int32 =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getMinute() }
 
     pub def withMinute(minute: Int32, x: LocalDateTime): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withMinute(minute) };
         LocalDateTime(ans)
 
     pub def getSecond(x: LocalDateTime): Int32 =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getSecond() }
 
     pub def withSecond(second: Int32, x: LocalDateTime): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withSecond(second) };
         LocalDateTime(ans)
 
     pub def getNano(x: LocalDateTime): Int32 =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         unsafe IO { x1.getNano() }
 
     pub def withNano(nano: Int32, x: LocalDateTime): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withNano(nano) };
         LocalDateTime(ans)
 
     /// YearMonth methods
 
     pub def adjustYearMonth(ym: YearMonth, x: LocalDateTime): LocalDateTime = 
-        let LocalDateTime(x1) = x;
-        let YearMonth(ym1) = ym;
+        let x1 = ToJava.toJava(x);
+        let ym1 = ToJava.toJava(ym);
         let t1 = unsafe IO { ym1.adjustInto(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
@@ -363,8 +351,8 @@ pub mod InteropTime.LocalDateTime {
     /// LocalDate methods
 
     pub def adjustLocalDate(d: LocalDate, x: LocalDateTime): LocalDateTime = 
-        let LocalDateTime(x1) = x;
-        let LocalDate(d1) = d;
+        let x1 = ToJava.toJava(x);
+        let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.adjustInto(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
@@ -372,8 +360,8 @@ pub mod InteropTime.LocalDateTime {
     /// LocalTime methods
 
     pub def adjustLocalTime(lt: LocalTime, x: LocalDateTime): LocalDateTime = 
-        let LocalDateTime(x1) = x;
-        let LocalTime(lt1) = lt;
+        let x1 = ToJava.toJava(x);
+        let lt1 = ToJava.toJava(lt);
         let t1 = unsafe IO { lt1.adjustInto(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
@@ -381,7 +369,7 @@ pub mod InteropTime.LocalDateTime {
     /// DayOfWeek methods
 
     pub def adjustDayOfWeek(d: DayOfWeek, x: LocalDateTime): LocalDateTime = 
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.adjustInto(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
@@ -390,8 +378,8 @@ pub mod InteropTime.LocalDateTime {
     /// MonthDay methods
 
     pub def adjustMonthDay(md: MonthDay, x: LocalDateTime): LocalDateTime = 
-        let LocalDateTime(x1) = x;
-        let MonthDay(md1) = md;
+        let x1 = ToJava.toJava(x);
+        let md1 = ToJava.toJava(md);
         let t1 = unsafe IO { md1.adjustInto(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
@@ -401,7 +389,7 @@ pub mod InteropTime.LocalDateTime {
     // truncate functions
 
     pub def truncatedToDays(x: LocalDateTime): LocalDateTime = 
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let u1 = unsafe IO { JChronoUnit.DAYS };
         let ans = unsafe IO { x1.truncatedTo(u1) };
         LocalDateTime(ans)
@@ -409,111 +397,111 @@ pub mod InteropTime.LocalDateTime {
     // plus / minus functions
 
     pub def plusYears(x: LocalDateTime, years: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusYears(years) };
         LocalDateTime(ans)
 
     pub def minusYears(x: LocalDateTime, years: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusYears(years) };
         LocalDateTime(ans)
 
     pub def plusMonths(x: LocalDateTime, months: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusMonths(months) };
         LocalDateTime(ans)
 
     pub def minusMonths(x: LocalDateTime, months: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusMonths(months) };
         LocalDateTime(ans)
 
     pub def plusWeeks(x: LocalDateTime, weeks: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusWeeks( weeks) };
         LocalDateTime(ans)
 
     pub def minusWeeks(x: LocalDateTime, weeks: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusWeeks(weeks) };
         LocalDateTime(ans)
 
     pub def plusDays(x: LocalDateTime, days: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusDays(days) };
         LocalDateTime(ans)
 
     pub def minusDays(x: LocalDateTime, days: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusDays(days) };
         LocalDateTime(ans)
 
     pub def plusHours(x: LocalDateTime, hours: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusHours(hours) };
         LocalDateTime(ans)
 
     pub def minusHours(x: LocalDateTime, hours: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusHours(hours) };
         LocalDateTime(ans)
 
     pub def plusMinutes(x: LocalDateTime, minutes: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusMinutes(minutes) };
         LocalDateTime(ans)
 
     pub def minusMinutes(x: LocalDateTime, minutes: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusMinutes(minutes) };
         LocalDateTime(ans)
 
     pub def plusSeconds(x: LocalDateTime, seconds: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusSeconds(seconds) };
         LocalDateTime(ans)
 
     pub def minusSeconds(x: LocalDateTime, seconds: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusSeconds(seconds) };
         LocalDateTime(ans)
 
     pub def plusNanos(x: LocalDateTime, nanos: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.plusNanos(nanos) };
         LocalDateTime(ans)
 
     pub def minusNanos(x: LocalDateTime, nanos: Int64): LocalDateTime =
-        let LocalDateTime(x1) = x;
+        let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.minusNanos(nanos) };
         LocalDateTime(ans)
 
 
     pub def plusPeriod(x: LocalDateTime, p: Period): LocalDateTime =
-        let LocalDateTime(x1) = x;
-        let Period(p1) = p;
+        let x1 = ToJava.toJava(x);
+        let p1 = ToJava.toJava(p);
         let t1 = unsafe IO { p1.addTo(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
     
     pub def minusPeriod(x: LocalDateTime, p: Period): LocalDateTime =
-        let LocalDateTime(x1) = x;
-        let Period(p1) = p;
+        let x1 = ToJava.toJava(x);
+        let p1 = ToJava.toJava(p);
         let t1 = unsafe IO { p1.subtractFrom(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
 
 
     pub def plusDuration(x: LocalDateTime, d: DurationZ): LocalDateTime =
-        let LocalDateTime(x1) = x;
-        let DurationZ(d1) = d;
+        let x1 = ToJava.toJava(x);
+        let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.addTo(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
     
     pub def minusDuration(x: LocalDateTime, d: DurationZ): LocalDateTime =
-        let LocalDateTime(x1) = x;
-        let DurationZ(d1) = d;
+        let x1 = ToJava.toJava(x);
+        let d1 = ToJava.toJava(d);
         let t1 = unsafe IO { d1.subtractFrom(x1) };
         let ans = unchecked_cast(t1 as JLocalDateTime);
         LocalDateTime(ans)
@@ -522,56 +510,56 @@ pub mod InteropTime.LocalDateTime {
     // between / until functions
 
     pub def between(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): DurationZ =
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let ans = unsafe IO { JDuration.between(b1, e1) };
         DurationZ(ans)
 
     pub def secondsUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.SECONDS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def minutesUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.MINUTES };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def hoursUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.HOURS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def halfDaysUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.HALF_DAYS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def daysUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.DAYS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def monthsUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.MONTHS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def yearsUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JChronoUnit.YEARS };
         unsafe IO { b1.until(e1, cu1) }
 
     pub def quarterYearsUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
-        let LocalDateTime(b1) = begin#begin;
-        let LocalDateTime(e1) = end#end;
+        let b1 = ToJava.toJava(begin#begin);
+        let e1 = ToJava.toJava(end#end);
         let cu1 = unsafe IO { JIsoFields.QUARTER_YEARS };
         unsafe IO { b1.until(e1, cu1) }
 
