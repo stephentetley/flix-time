@@ -362,7 +362,7 @@ pub mod InteropTime.LocalTime {
         let b1 = ToJava.toJava(begin#begin);
         let e1 = ToJava.toJava(end#end);
         let ans = unsafe IO { JDuration.between(b1, e1) };
-        DurationZ(ans)
+        ToFlix.toFlix(ans)
 
 
 

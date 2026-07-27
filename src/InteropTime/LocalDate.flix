@@ -156,25 +156,25 @@ pub mod InteropTime.LocalDate {
     pub def atStartOfDay(x: LocalDate): LocalDateTime =
         let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.atStartOfDay() };
-        LocalDateTime(ans)
+        ToFlix.toFlix(ans)
 
     pub def atStartOfDayWithZoneId(x: LocalDate, zoneId: ZoneId): ZonedDateTime =
         let x1 = ToJava.toJava(x);
         let z1 = ToJava.toJava(zoneId);
         let ans = unsafe IO { x1.atStartOfDay(z1) };
-        ZonedDateTime(ans)
+        ToFlix.toFlix(ans)
 
     pub def atTimeWithLocalTime(x: LocalDate, t: LocalTime): LocalDateTime =
         let x1 = ToJava.toJava(x);
         let t1 = ToJava.toJava(t);
         let ans = unsafe IO { x1.atTime(t1) };
-        LocalDateTime(ans)
+        ToFlix.toFlix(ans)
 
     pub def atTimeWithOffsetTime(x: LocalDate, t: OffsetTime): OffsetDateTime =
         let x1 = ToJava.toJava(x);
         let t1 = ToJava.toJava(t);
         let ans = unsafe IO { x1.atTime(t1) };
-        OffsetDateTime(ans)
+        ToFlix.toFlix(ans)
 
     /// ## `from` functions
 

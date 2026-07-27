@@ -110,7 +110,7 @@ pub mod InteropTime.ClockZ {
     pub def instant(x: ClockZ): InstantZ \ IO =
         let x1 = ToJava.toJava(x);
         let ans = x1.instant();
-        InstantZ(ans)
+        ToFlix.toFlix(ans)
 
 
     // Getters and Setters (getZone and withZone are abstract in Java)

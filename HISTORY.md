@@ -1,5 +1,6 @@
-### 
-   ...
+### v0.19.1 
+   Updated `charset-locale` dependency.
+   Fixed internal constructor use where the constructor wasn't imported.
 
 ### v0.19.0
    Updated to use "unsafe IO as r" syntax.

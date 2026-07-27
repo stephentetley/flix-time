@@ -132,13 +132,13 @@ pub mod InteropTime.InstantZ {
         let x1 = ToJava.toJava(x);
         let offset1 = ToJava.toJava(offset);
         let ans = unsafe IO { x1.atOffset(offset1) };
-        OffsetDateTime(ans)
+        ToFlix.toFlix(ans)
 
     pub def atZone(x: InstantZ, zone: ZoneId): ZonedDateTime =
         let x1 = ToJava.toJava(x);
         let zone1 = ToJava.toJava(zone);
         let ans = unsafe IO { x1.atZone(zone1) };
-        ZonedDateTime(ans)
+        ToFlix.toFlix(ans)
 
     /// `of` functions
 
@@ -376,7 +376,7 @@ pub mod InteropTime.InstantZ {
         let b1 = ToJava.toJava(begin#begin);
         let e1 = ToJava.toJava(end#end);
         let ans = unsafe IO { JDuration.between(b1, e1) };
-        DurationZ(ans)
+        ToFlix.toFlix(ans)
 
     // `until` specialized
 

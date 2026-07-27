@@ -199,7 +199,7 @@ pub mod InteropTime.LocalDateTime {
     pub def toLocalDate(x: LocalDateTime): LocalDate =
         let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toLocalDate() };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     ///
     /// Returns the given date-time `x` as __.
@@ -207,7 +207,7 @@ pub mod InteropTime.LocalDateTime {
     pub def toLocalTime(x: LocalDateTime): LocalTime =
         let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.toLocalTime() };
-        LocalTime(ans)
+        ToFlix.toFlix(ans)
 
     /// `parse` / `format` functions
 
@@ -219,10 +219,10 @@ pub mod InteropTime.LocalDateTime {
     ///
     pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, LocalDateTime] =
         try {
-            let DateTimeFormatter(fmtr) = formatter;
+            let formatter1 = ToJava.toJava(formatter);
             let s1 = String.trim(s);
-            let ans = unsafe IO { JLocalDateTime.parse(s1, fmtr) };
-            Ok(LocalDateTime(ans))
+            let ans = unsafe IO { JLocalDateTime.parse(s1, formatter1) };
+            Ok(ToFlix.toFlix(ans))
         } catch {
             case e: JException => Err(e.getMessage())
         }
@@ -513,7 +513,7 @@ pub mod InteropTime.LocalDateTime {
         let b1 = ToJava.toJava(begin#begin);
         let e1 = ToJava.toJava(end#end);
         let ans = unsafe IO { JDuration.between(b1, e1) };
-        DurationZ(ans)
+        ToFlix.toFlix(ans)
 
     pub def secondsUntil(begin: {begin = LocalDateTime }, end: {end = LocalDateTime }): Int64 = 
         let b1 = ToJava.toJava(begin#begin);
