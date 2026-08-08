@@ -17,19 +17,19 @@
 
 pub mod InteropTime.Format.DateTimeFormatterBuilder {
 
+    use EffectExtras.Fail.Fail
+    use InteropLocale.Locale.Locale
 
-    use InteropTime.Format.DateTimeFormatterBuilder.DateTimeFormatterBuilder
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
     use InteropTime.Format.FormatStyle.FormatStyle
     use InteropTime.Format.TextStyle.TextStyle
 
-    use InteropLocale.Locale.Locale
 
     import java.time.format.{DateTimeFormatterBuilder => JDateTimeFormatterBuilder}
     import java.time.format.{DateTimeFormatter => JDateTimeFormatter}
     import java.util.{Set => JSet}
-    import java.lang.{Exception}
+    import java.lang.{Exception => JException}
 
     // Builder is like an array, doesn't need IO for evaluation
 
@@ -64,121 +64,121 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
         def parseLenient(): Unit
     }
 
-    pub def handle(f: a -> b \ ef): a -> Result[String, (DateTimeFormatter[t], b)] \ (ef - DateTimeFormatterBuilder) = x -> {
-        let builder = unsafe IO as {ef - DateTimeFormatterBuilder} { new JDateTimeFormatterBuilder() };
+    pub def handle(f: a -> b \ ef): a -> (DateTimeFormatter[t], b) \ (ef + Fail - DateTimeFormatterBuilder) = x -> {
+        let builder = unsafe IO { new JDateTimeFormatterBuilder() };
         let ans = run {
-            Ok(f(x))
+            f(x)
         } with handler DateTimeFormatterBuilder {
             
             def appendFormatter(fmt, k) = {
-                let DateTimeFormatter(fmt1) = fmt;
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.append(fmt1) };
+                let fmt1 = ToJava.toJava(fmt);
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.append(fmt1) };
                 k()
             }
 
             def appendChronologyId(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendChronologyId() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendChronologyId() };
                 k()
             }
 
             def appendChronologyText(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendChronologyText(style1) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendChronologyText(style1) };
                 k()
             }
 
             def appendDayPeriodText(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendDayPeriodText(style1) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendDayPeriodText(style1) };
                 k()
             }
 
             def appendGenericZoneText(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendGenericZoneText(style1) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendGenericZoneText(style1) };
                 k()
             }
 
             def appendInstant(k) = try {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendInstant() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendInstant() };
                 k()
             } catch { 
-                case ex: Exception => Err(ex.getMessage())
+                case ex: JException => Fail.report(ex.getMessage())
             }
 
             def appendInstantWithFractionalDigits(i, k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendInstant(i) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendInstant(i) };
                 k()
             }
 
             def appendStringLiteral(s, k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLiteral(s) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLiteral(s) };
                 k()
             }
 
             def appendCharLiteral(c, k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLiteral(c) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLiteral(c) };
                 k()
             }
 
             def appendLocalized(timeStyle, dateStyle, k) = {
                 let timeStyle1 = ToJava.toJava(timeStyle#timeStyle);
                 let dateStyle1 = ToJava.toJava(dateStyle#dateStyle);
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLocalized(timeStyle1, dateStyle1) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLocalized(timeStyle1, dateStyle1) };
                 k()
             }
 
             def appendLocalizedWithTemplateString(s, k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLocalized(s) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLocalized(s) };
                 k()
             }
 
             def appendLocalizedOffset(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendLocalizedOffset(style1) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLocalizedOffset(style1) };
                 k()
             }
 
             def appendOffset(pattern, noOffsetText, k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) };
                 k()
             }
 
             def appendOffsetId(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendOffsetId() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendOffsetId() };
                 k()
             }
 
             def appendOptional(fmt, k) = {
                 let DateTimeFormatter(fmt1) = fmt;
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendOptional(fmt1) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendOptional(fmt1) };
                 k()
             }
 
             def appendPattern(patt, k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendPattern(patt) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendPattern(patt) };
                 k()
             }
 
             def appendZoneId(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneId() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneId() };
                 k()
             }
 
 
             def appendZoneOrOffsetId(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneOrOffsetId() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneOrOffsetId() };
                 k()
             }
 
             def appendZoneRegionId(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneRegionId() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneRegionId() };
                 k()
             }
 
             def appendZoneText(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1) };
                 k()
             }
 
@@ -190,83 +190,65 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             //     ()
 
             def optionalStart(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.optionalStart() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.optionalStart() };
                 k()
             }
 
             def optionalEnd(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.optionalEnd() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.optionalEnd() };
                 k()
             }
 
 
-            def padNext(n, k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.padNext(n) };
+            def padNext(n, k) = try {
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.padNext(n) };
                 k()
+            } catch {
+                case ex: JException => Fail.report(ex.getMessage())
             }
 
             def padNextWithChar(n, ch, k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.padNext(n, ch) };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.padNext(n, ch) };
                 k()
             }
 
             def parseCaseSensitive(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.parseCaseSensitive() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.parseCaseSensitive() };
                 k()
             }
 
             def parseCaseInsensitive(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.parseCaseInsensitive() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.parseCaseInsensitive() };
                 k()
             }
 
             def parseStrict(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.parseStrict() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.parseStrict() };
                 k()
             }
 
             def parseLenient(k) = {
-                unsafe IO as {ef - DateTimeFormatterBuilder} { discard builder.parseLenient() };
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.parseLenient() };
                 k()
             }
             
         };
-        match ans {
-            case Ok(ans1)    => { 
-                let jfmt: JDateTimeFormatter = unsafe IO { builder.toFormatter() };
-                Ok((DateTimeFormatter.DateTimeFormatter(jfmt), ans1))
-            }
-            case Err(msg) => Err(msg)
-        }  
+        let jfmt: JDateTimeFormatter = unsafe IO { builder.toFormatter() };
+        (ToFlix.toFlix(jfmt), ans)
     }
 
 
-    pub def runDefault(buildfun: Unit -> a \ ef): Result[String, (DateTimeFormatter[t], a)] \ (ef - DateTimeFormatterBuilder) = 
+    pub def runDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): (DateTimeFormatter[t], a) \ (ef + Fail - DateTimeFormatterBuilder) = 
         handle(buildfun)()
 
+    pub def execDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): DateTimeFormatter[t] \ (ef + Fail - DateTimeFormatterBuilder)  = 
+        handle(buildfun)() |> fst
 
+    pub def runDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[String, (DateTimeFormatter[t], a)] \ (ef - Fail - DateTimeFormatterBuilder)  = 
+        run { handle(buildfun)() } with EffectExtras.Fail.runWithResult
 
-
-    // def handleWithLocale(loc: Locale, builder: a -> b \ ef): a -> Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) = 
-    //     let Locale.Locale(loc1) = loc;
-    //     handleHelper(builder, bld -> unsafe IO { bld.toFormatter(loc1)}) 
-    
-    // def buildWithLocale(loc: Locale, builder: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - DateTimeFormatterBuilder) = 
-    //     let Locale.Locale(loc1) = loc;
-    //     handleHelper(builder, bld -> unsafe IO { bld.toFormatter(loc1)})() 
-
-    // // TODO: some builder functions are probably locale sensitive if so they should be in IO...
-
-
-    // // Java 16
-
-    // // TODO use wrapped types
-    // def appendGenericZoneTextWithZones(style:TextStyle, preferredZones: JSet): Unit \ DateTimeFormatterBuilder =
-    //     let builder = DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
-    //     let style1 = ToJava.toJava(style);
-    //     discard builder.appendGenericZoneText(style1, preferredZones);
-    //     ()
-
+    pub def execDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - Fail - DateTimeFormatterBuilder)  = 
+        { run { handle(buildfun)() } with EffectExtras.Fail.runWithResult } |> Result.map(fst)
 
 
 }

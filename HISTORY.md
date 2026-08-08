@@ -1,3 +1,7 @@
+### v0.20.0
+   Reworked `DateTimeFormatterBuilder`.
+   Updated `charset-locale` dependency.
+   
 ### v0.19.1 
    Updated `charset-locale` dependency.
    Fixed internal constructor use where the constructor wasn't imported.
