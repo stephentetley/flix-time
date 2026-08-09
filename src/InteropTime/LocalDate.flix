@@ -300,7 +300,7 @@ pub mod InteropTime.LocalDate {
     pub def withDayOfMonth(dayOfMonth: Int32, x: LocalDate): LocalDate =
         let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withDayOfMonth(dayOfMonth) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def getDayOfYear(x: LocalDate): Int32 =
@@ -310,13 +310,13 @@ pub mod InteropTime.LocalDate {
     pub def withDayOfYear(dayOfYear: Int32, x: LocalDate): LocalDate =
         let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withDayOfYear(dayOfYear) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def withMonth(month: Int32, x: LocalDate): LocalDate =
         let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withMonth(month) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     pub def getYear(x: LocalDate): Int32 =
         let x1 = ToJava.toJava(x);
@@ -325,7 +325,7 @@ pub mod InteropTime.LocalDate {
     pub def withYear(year: Int32, x: LocalDate): LocalDate =
         let x1 = ToJava.toJava(x);
         let ans = unsafe IO { x1.$withYear(year) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
@@ -358,7 +358,7 @@ pub mod InteropTime.LocalDate {
         let x1 = ToJava.toJava(x);
         let tf1 = unsafe IO { JIsoFields.DAY_OF_QUARTER };
         let ans = unsafe IO { x1.$with(tf1, Int32.toInt64(d)) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     pub def getQuarterOfYear(x: LocalDate): Int64 =  
         let x1 = ToJava.toJava(x);
@@ -369,7 +369,7 @@ pub mod InteropTime.LocalDate {
         let x1 = ToJava.toJava(x);
         let tf1 = unsafe IO { JIsoFields.QUARTER_OF_YEAR };
         let ans = unsafe IO { x1.$with(tf1, Int32.toInt64(d)) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     pub def getWeekOfYear(x: LocalDate): Int64 = 
         let x1 = ToJava.toJava(x);
@@ -383,7 +383,7 @@ pub mod InteropTime.LocalDate {
         let wf1 = unsafe IO { JWeekFields.ISO };
         let tf1 = unsafe IO { wf1.weekBasedYear() };
         let ans = unsafe IO { x1.$with(tf1, Int32.toInt64(d)) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
@@ -417,21 +417,21 @@ pub mod InteropTime.LocalDate {
         let x1 = ToJava.toJava(x);
         let i1 = ToJava.toJava(i);
         let ans = unsafe IO { x1.$with(i1) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def adjustYearMonth(i: YearMonth, x: LocalDate): LocalDate =
         let x1 = ToJava.toJava(x);
         let i1 = ToJava.toJava(i);
         let ans = unsafe IO { x1.$with(i1) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
         let x1 = ToJava.toJava(x);
         let cf1 = unsafe IO { JChronoField.EPOCH_DAY };
         let ans = unsafe IO { x1.$with(cf1, i) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     /// DayOfWeek methods
 
@@ -440,114 +440,114 @@ pub mod InteropTime.LocalDate {
         let x1 = ToJava.toJava(x);
         let d1 = unsafe IO { x1.adjustInto(ld1) };
         let ans = unchecked_cast(d1 as JLocalDate);
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     
     pub def adjustToFirstDayOfMonth(x: LocalDate): LocalDate = 
         let x1 = ToJava.toJava(x);
         let d1 = unsafe IO { JTemporalAdjusters.firstDayOfMonth() };
         let ans = unsafe IO { x1.$with(d1) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     pub def adjustToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
         let x1 = ToJava.toJava(x);
         let d1 = unsafe IO { JTemporalAdjusters.firstDayOfNextMonth() };
         let ans = unsafe IO { x1.$with(d1) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     pub def adjustToFirstDayOfNextYear(x: LocalDate): LocalDate = 
         let x1 = ToJava.toJava(x);
         let d1 = unsafe IO { JTemporalAdjusters.firstDayOfNextYear() };
         let ans = unsafe IO { x1.$with(d1) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     pub def adjustToLastDayOfMonth(x: LocalDate): LocalDate =  
         let x1 = ToJava.toJava(x);
         let d1 = unsafe IO { JTemporalAdjusters.lastDayOfMonth() };
         let ans = unsafe IO { x1.$with(d1) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def adjustToLastDayOfYear(x: LocalDate): LocalDate =  
         let x1 = ToJava.toJava(x);
         let d1 = unsafe IO { JTemporalAdjusters.lastDayOfYear() };
         let ans = unsafe IO { x1.$with(d1) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     /// plus / minus functions
 
     pub def plusYears(x: LocalDate, years: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
-        LocalDate(unsafe IO { x1.plusYears(years) })
+        ToFlix.toFlix(unsafe IO { x1.plusYears(years) })
 
     pub def minusYears(x: LocalDate, years: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
-        LocalDate(unsafe IO { x1.minusYears(years) })
+        ToFlix.toFlix(unsafe IO { x1.minusYears(years) })
 
     pub def plusMonths(x: LocalDate, months: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
-        LocalDate(unsafe IO { x1.plusMonths(months) })
+        ToFlix.toFlix(unsafe IO { x1.plusMonths(months) })
 
     pub def minusMonths(x: LocalDate, months: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
-        LocalDate(unsafe IO { x1.minusMonths(months) })
+        ToFlix.toFlix(unsafe IO { x1.minusMonths(months) })
 
     pub def plusWeeks(x: LocalDate, weeks: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
-        LocalDate(unsafe IO { x1.plusWeeks(weeks) })
+        ToFlix.toFlix(unsafe IO { x1.plusWeeks(weeks) })
 
     pub def minusWeeks(x: LocalDate, weeks: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
-        LocalDate(unsafe IO { x1.minusWeeks(weeks) })
+        ToFlix.toFlix(unsafe IO { x1.minusWeeks(weeks) })
 
     pub def plusDays(x: LocalDate, days: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
-        LocalDate(unsafe IO { x1.plusDays(days) })
+        ToFlix.toFlix(unsafe IO { x1.plusDays(days) })
 
     pub def minusDays(x: LocalDate, days: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
-        LocalDate(unsafe IO { x1.minusDays(days) })
+        ToFlix.toFlix(unsafe IO { x1.minusDays(days) })
 
 
     pub def plusDecades(x: LocalDate, i: Int64): LocalDate =
         let x1 = ToJava.toJava(x);
         let u = unsafe IO { JChronoUnit.DECADES };
         let ans = unsafe IO { x1.plus(i, u) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
         let x1 = ToJava.toJava(x);
         let u = unsafe IO { JChronoUnit.DECADES };
         let ans = unsafe IO { x1.minus(i, u) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
         let x1 = ToJava.toJava(x);
         let u = unsafe IO { JChronoUnit.CENTURIES };
         let ans = unsafe IO { x1.plus(i, u) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
         let x1 = ToJava.toJava(x);
         let u = unsafe IO { JChronoUnit.CENTURIES };
         let ans = unsafe IO { x1.minus(i, u) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
         let x1 = ToJava.toJava(x);
         let u = unsafe IO { JChronoUnit.MILLENNIA };
         let ans = unsafe IO { x1.plus(i, u) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
         let x1 = ToJava.toJava(x);
         let u = unsafe IO { JChronoUnit.MILLENNIA };
         let ans = unsafe IO { x1.minus(i, u) };
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
 
     // Period methods
@@ -557,14 +557,14 @@ pub mod InteropTime.LocalDate {
         let p1 = ToJava.toJava(p);
         let t1 = unsafe IO { p1.addTo(x1) };
         let ans = unchecked_cast(t1 as JLocalDate);
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
     
     pub def minusPeriod(x: LocalDate, p: Period): LocalDate =
         let x1 = ToJava.toJava(x);
         let p1 = ToJava.toJava(p);
         let t1 = unsafe IO { p1.subtractFrom(x1) };
         let ans = unchecked_cast(t1 as JLocalDate);
-        LocalDate(ans)
+        ToFlix.toFlix(ans)
 
     // between / until functions
 

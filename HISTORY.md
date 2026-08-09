@@ -1,4 +1,5 @@
 ### v0.20.0
+   Many internal changes to trial "AdaptorExtras".
    Reworked `DateTimeFormatterBuilder`.
    Updated `charset-locale` dependency.
    

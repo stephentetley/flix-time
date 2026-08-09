@@ -16,11 +16,12 @@
 
 pub mod InteropTime.Format.DecimalStyle {
 
+
+    use InteropLocale.Locale.{Locale}
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
 
-
-    use InteropLocale.Locale.{Locale}
+    use InteropTime.Internal.AdaptorExtras
 
     
     import java.time.format.{DecimalStyle => JDecimalStyle}
@@ -71,13 +72,11 @@ pub mod InteropTime.Format.DecimalStyle {
     pub def standard(): DecimalStyle = DecimalStyle(unsafe IO { JDecimalStyle.STANDARD }) 
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
-        let Locale.Locale(loc1) = loc;
-        let ans = JDecimalStyle.of(loc1);
-        DecimalStyle(ans)
+        AdaptorExtras.op(loc, jloc -> JDecimalStyle.of(jloc))
+
 
     pub def decimalStyleWithDefaultLocale(): DecimalStyle \ IO = 
-        let ans = JDecimalStyle.ofDefaultLocale();
-        DecimalStyle(ans)
+        AdaptorExtras.of(_ -> { JDecimalStyle.ofDefaultLocale() })
 
 
     /// ## DecimalStyle functions
@@ -103,41 +102,29 @@ pub mod InteropTime.Format.DecimalStyle {
     /// Getters and Setters
 
     pub def getDecimalSeparator(x: DecimalStyle): Char = 
-        let DecimalStyle(x1) = x;
-        unsafe IO { x1.getDecimalSeparator() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDecimalSeparator() })
 
 
     pub def withDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
-        let DecimalStyle(x1) = x;
-        let ans = unsafe IO { x1.$withDecimalSeparator(sep) };
-        DecimalStyle(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withDecimalSeparator(sep) })
 
     pub def getNegativeSign(x: DecimalStyle): Char = 
-        let DecimalStyle(x1) = x;
-        unsafe IO { x1.getNegativeSign() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getNegativeSign() })
 
     pub def withNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
-        let DecimalStyle(x1) = x;
-        let ans = unsafe IO { x1.$withNegativeSign(sign) };
-        DecimalStyle(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withNegativeSign(sign) })
 
     pub def getPositiveSign(x: DecimalStyle): Char = 
-        let DecimalStyle(x1) = x;
-        unsafe IO { x1.getPositiveSign() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getPositiveSign() })
 
     pub def withPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
-        let DecimalStyle(x1) = x;
-        let ans = unsafe IO { x1.$withPositiveSign(sign) };
-        DecimalStyle(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withPositiveSign(sign) })
 
     pub def getZeroDigit(x: DecimalStyle): Char = 
-        let DecimalStyle(x1) = x;
-        unsafe IO { x1.getZeroDigit() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getZeroDigit() })
 
     pub def withZeroDigit(digit: Char, x: DecimalStyle): DecimalStyle = 
-        let DecimalStyle(x1) = x;
-        let ans = unsafe IO { x1.$withZeroDigit(digit) };
-        DecimalStyle(ans)
+        AdaptorExtras.op(x, x1  -> unsafe IO { x1.$withZeroDigit(digit) })
 
     
 }

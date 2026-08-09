@@ -133,7 +133,7 @@ pub mod InteropTime.DayOfWeek {
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
         let x1 = ToJava.toJava(x);
         let s1 = ToJava.toJava(style);
-        let Locale.Locale(locale1) = locale;
+        let locale1 = ToJava.toJava(locale);
         unsafe IO { x1.getDisplayName(s1, locale1) }
 
 

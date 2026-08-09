@@ -31,7 +31,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
     import java.util.{Set => JSet}
     import java.lang.{Exception => JException}
 
-    // Builder is like an array, doesn't need IO for evaluation
+    // Builder doesn't need IO for evaluation
 
     pub eff DateTimeFormatterBuilder {
         def appendFormatter(fmt: DateTimeFormatter[_]): Unit
@@ -121,11 +121,13 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
                 k()
             }
 
-            def appendLocalized(timeStyle, dateStyle, k) = {
+            def appendLocalized(timeStyle, dateStyle, k) = try {
                 let timeStyle1 = ToJava.toJava(timeStyle#timeStyle);
                 let dateStyle1 = ToJava.toJava(dateStyle#dateStyle);
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLocalized(timeStyle1, dateStyle1) };
                 k()
+            } catch {
+                case ex: JException => Fail.report(ex.getMessage())
             }
 
             def appendLocalizedWithTemplateString(s, k) = {
@@ -133,15 +135,19 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
                 k()
             }
 
-            def appendLocalizedOffset(style, k) = {
+            def appendLocalizedOffset(style, k) = try {
                 let style1 = ToJava.toJava(style);
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLocalizedOffset(style1) };
                 k()
+            } catch {
+                case ex: JException => Fail.report(ex.getMessage())
             }
 
-            def appendOffset(pattern, noOffsetText, k) = {
+            def appendOffset(pattern, noOffsetText, k) = try {
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) };
                 k()
+            } catch {
+                case ex: JException => Fail.report(ex.getMessage())
             }
 
             def appendOffsetId(k) = {
@@ -155,9 +161,11 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
                 k()
             }
 
-            def appendPattern(patt, k) = {
+            def appendPattern(patt, k) = try {
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendPattern(patt) };
                 k()
+            } catch {
+                case ex: JException => Fail.report(ex.getMessage())
             }
 
             def appendZoneId(k) = {
@@ -194,9 +202,11 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
                 k()
             }
 
-            def optionalEnd(k) = {
+            def optionalEnd(k) = try {
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.optionalEnd() };
                 k()
+            } catch {
+                case ex: JException => Fail.report(ex.getMessage())
             }
 
 
@@ -207,9 +217,11 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
                 case ex: JException => Fail.report(ex.getMessage())
             }
 
-            def padNextWithChar(n, ch, k) = {
+            def padNextWithChar(n, ch, k) = try {
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.padNext(n, ch) };
                 k()
+            } catch {
+                case ex: JException => Fail.report(ex.getMessage())
             }
 
             def parseCaseSensitive(k) = {
