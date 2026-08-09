@@ -29,9 +29,16 @@ pub mod InteropTime.Chrono.MinguoEra {
 
 
 
-    pub enum MinguoEra with Eq, Order, ToString, Hash {
+    pub enum MinguoEra with Eq, Order, ToString {
         case BEFORE_ROC
         case ROC
+    }
+
+    instance Hash[MinguoEra] {
+        pub def hash(x: MinguoEra): Int32 = match x {
+            case MinguoEra.BEFORE_ROC => unsafe IO { let x1 = JMinguoEra.BEFORE_ROC; x1.hashCode() }
+            case MinguoEra.ROC        => unsafe IO { let x1 = JMinguoEra.ROC; x1.hashCode() }
+        }
     }
 
     instance ToJava[MinguoEra] {

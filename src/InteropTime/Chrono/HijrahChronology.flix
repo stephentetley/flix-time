@@ -18,8 +18,6 @@
 
 pub mod InteropTime.Chrono.HijrahChronology {
 
-    use InteropTime.Chrono.HijrahChronology.HijrahChronology
-    use InteropTime.Chrono.HijrahChronology.HijrahChronology.{HijrahChronology}
     
     use InteropTime.Internal.AdaptorExtras
 

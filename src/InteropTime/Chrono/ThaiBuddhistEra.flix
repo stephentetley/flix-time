@@ -31,9 +31,16 @@ pub mod InteropTime.Chrono.ThaiBuddhistEra {
     import java.lang.{Enum => JEnum }
 
 
-    pub enum ThaiBuddhistEra with Eq, Order, ToString, Hash {
+    pub enum ThaiBuddhistEra with Eq, Order, ToString {
         case BEFORE_BE
         case BE
+    }
+
+   instance Hash[ThaiBuddhistEra] {
+        pub def hash(x: ThaiBuddhistEra): Int32 = match x {
+            case ThaiBuddhistEra.BEFORE_BE  => unsafe IO { let x1 = JThaiBuddhistEra.BEFORE_BE; x1.hashCode() }
+            case ThaiBuddhistEra.BE         => unsafe IO { let x1 = JThaiBuddhistEra.BE; x1.hashCode() }
+        }
     }
 
     instance ToJava[ThaiBuddhistEra] {

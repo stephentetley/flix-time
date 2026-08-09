@@ -21,7 +21,7 @@ pub mod InteropTime.Temporal.ChronoUnit {
 
     import java.time.temporal.{ChronoUnit => JChronoUnit}
 
-    pub enum ChronoUnit with Eq, Order, ToString, Hash {
+    pub enum ChronoUnit with Eq, Order, ToString {
         case Nanos
         case Micros
         case Millis
@@ -43,6 +43,26 @@ pub mod InteropTime.Temporal.ChronoUnit {
 
     // DateChronoUnits = {Days, Months, Years, Centuries, Millennia, Eras}
 
+    instance Hash[ChronoUnit] {
+        pub def hash(x: ChronoUnit): Int32 = match x {
+            case ChronoUnit.Nanos       => unsafe IO { let x1 = JChronoUnit.NANOS; x1.hashCode() }
+            case ChronoUnit.Micros      => unsafe IO { let x1 = JChronoUnit.MICROS; x1.hashCode() }
+            case ChronoUnit.Millis      => unsafe IO { let x1 = JChronoUnit.MILLIS; x1.hashCode() }
+            case ChronoUnit.Seconds     => unsafe IO { let x1 = JChronoUnit.SECONDS; x1.hashCode() }
+            case ChronoUnit.Minutes     => unsafe IO { let x1 = JChronoUnit.MINUTES; x1.hashCode() }
+            case ChronoUnit.Hours       => unsafe IO { let x1 = JChronoUnit.HOURS; x1.hashCode() }
+            case ChronoUnit.HalfDays    => unsafe IO { let x1 = JChronoUnit.HALF_DAYS; x1.hashCode() }
+            case ChronoUnit.Days        => unsafe IO { let x1 = JChronoUnit.DAYS; x1.hashCode() }
+            case ChronoUnit.Weeks       => unsafe IO { let x1 = JChronoUnit.WEEKS; x1.hashCode() }
+            case ChronoUnit.Months      => unsafe IO { let x1 = JChronoUnit.MONTHS; x1.hashCode() }
+            case ChronoUnit.Years       => unsafe IO { let x1 = JChronoUnit.YEARS; x1.hashCode() }
+            case ChronoUnit.Decades     => unsafe IO { let x1 = JChronoUnit.DECADES; x1.hashCode() }
+            case ChronoUnit.Centuries   => unsafe IO { let x1 = JChronoUnit.CENTURIES; x1.hashCode() }
+            case ChronoUnit.Millennia   => unsafe IO { let x1 = JChronoUnit.MILLENNIA; x1.hashCode() }
+            case ChronoUnit.Eras        => unsafe IO { let x1 = JChronoUnit.ERAS; x1.hashCode() }
+            case ChronoUnit.Forever     => unsafe IO { let x1 = JChronoUnit.FOREVER; x1.hashCode() }
+        }
+    }
 
 
     instance ToJava[ChronoUnit] {

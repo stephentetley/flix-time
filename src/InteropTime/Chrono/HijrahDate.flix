@@ -18,8 +18,8 @@
 pub mod InteropTime.Chrono.HijrahDate {
 
 
-    use InteropTime.Chrono.HijrahDate.HijrahDate
-    use InteropTime.Chrono.HijrahDate.HijrahDate.{HijrahDate}
+    
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Chrono.HijrahChronology.HijrahChronology
     use InteropTime.Chrono.HijrahChronology.HijrahChronology.{HijrahChronology}
@@ -63,16 +63,24 @@ pub mod InteropTime.Chrono.HijrahDate {
     }
 
     instance Eq[HijrahDate] {
-        pub def eq(x: HijrahDate, y: HijrahDate): Bool = InteropTime.Chrono.HijrahDate.equals(x, y)
+        pub def eq(x: HijrahDate, y: HijrahDate): Bool = 
+            let HijrahDate(x1) = x;
+            let HijrahDate(y1) = y;
+            unsafe IO { x1.equals(y1) }
+
     }
 
     instance Order[HijrahDate] {
         pub def compare(x: HijrahDate, y: HijrahDate): Comparison =
-            InteropTime.Chrono.HijrahDate.compareTo(x, y) |> Comparison.fromInt32
+            let HijrahDate(x1) = x;
+            let HijrahDate(y1) = y;
+            unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
     instance Hash[HijrahDate] {
-        pub def hash(x: HijrahDate): Int32 = InteropTime.Chrono.HijrahDate.hashCode(x)
+        pub def hash(x: HijrahDate): Int32 = 
+            let HijrahDate(x1) = x;
+            unsafe IO { x1.hashCode() }
     }
 
     instance ToJava[HijrahDate] {
@@ -90,7 +98,7 @@ pub mod InteropTime.Chrono.HijrahDate {
     pub def hijrahDate(prolepticYear: {prolepticYear = Int32}, 
                         month: {month = Int32}, 
                         dayOfMonth: {dayOfMonth = Int32}): HijrahDate =
-        HijrahDate(unsafe IO { JHijrahDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+        AdaptorExtras.of(() -> unsafe IO { JHijrahDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
 
 
@@ -98,138 +106,95 @@ pub mod InteropTime.Chrono.HijrahDate {
     /// Returns ___
     ///
     pub def now(): HijrahDate \ IO =
-        HijrahDate(JHijrahDate.now())
+        AdaptorExtras.of(() -> { JHijrahDate.now() })
 
     pub def nowWithClock(x: ClockZ): HijrahDate \ IO =
-        let ClockZ(x1) = x;
-        HijrahDate(JHijrahDate.now(x1))
+        AdaptorExtras.op(x, x1 -> { JHijrahDate.now(x1) })
 
     pub def nowWithZoneId(x: ZoneId): HijrahDate \ IO =
-        let ZoneId(x1) = x;
-        HijrahDate(JHijrahDate.now(x1))
-
-
-    pub def equals(x: HijrahDate, y: HijrahDate): Bool =
-        let HijrahDate(x1) = x;
-        let HijrahDate(y1) = y;
-        unsafe IO { x1.equals(y1) }
-
-    pub def hashCode(x: HijrahDate): Int32 =
-        let HijrahDate(x1) = x;
-        unsafe IO { x1.hashCode() }
-
-
+        AdaptorExtras.op(x, x1 -> { JHijrahDate.now(x1) })
+    
+    
     pub def isEqual(x: HijrahDate, y: HijrahDate): Bool =
-        let HijrahDate(x1) = x;
-        let HijrahDate(y1) = y;
-        unsafe IO { x1.isEqual(y1) }
-
-    pub def compareTo(x: HijrahDate, y: HijrahDate): Int32 =
-        let HijrahDate(x1) = x;
-        let HijrahDate(y1) = y;
-        unsafe IO { x1.compareTo(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isEqual(y1) })
 
     pub def isAfter(x: HijrahDate, y: HijrahDate): Bool =
-        let HijrahDate(x1) = x;
-        let HijrahDate(y1) = y;
-        unsafe IO { x1.isAfter(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     pub def isBefore(x: HijrahDate, y: HijrahDate): Bool =
-        let HijrahDate(x1) = x;
-        let HijrahDate(y1) = y;
-        unsafe IO { x1.isBefore(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
 
     pub def toEpochDay(x: HijrahDate): Int64 =
-        let HijrahDate(x1) = x;
-        unsafe IO { x1.toEpochDay() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
 
     pub def toLocalDate(x: HijrahDate): LocalDate =
-        let HijrahDate(x1) = x;
-        let ans = unsafe IO { JLocalDate.$from(x1) };
-        LocalDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
     pub def fromLocalDate(x: LocalDate): HijrahDate =
-        let LocalDate(x1) = x;
-        let ans = unsafe IO { JHijrahDate.$from(x1) };
-        HijrahDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JHijrahDate.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): HijrahDate =
-        let LocalDateTime(x1) = x;
-        let ans = unsafe IO { JHijrahDate.$from(x1) };
-        HijrahDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JHijrahDate.$from(x1) })
 
 
     pub def getChronology(x: HijrahDate): HijrahChronology =
-        let HijrahDate(x1) = x;
-        HijrahChronology(unsafe IO { x1.getChronology() })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getChronology() })
 
     pub def getEra(x: HijrahDate): HijrahEra =
-        let HijrahDate(x1) = x;
-        let ans = unsafe IO { x1.getEra() };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getEra() })
 
 
     pub def isLeapYear(x: HijrahDate): Bool =
-        let HijrahDate(x1) = x;
-        unsafe IO { x1.isLeapYear() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isLeapYear() })
 
     pub def lengthOfMonth(x: HijrahDate): Int32 =
-        let HijrahDate(x1) = x;
-        unsafe IO { x1.lengthOfMonth() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.lengthOfMonth() })
 
     pub def lengthOfYear(x: HijrahDate): Int32 =
-        let HijrahDate(x1) = x;
-        unsafe IO { x1.lengthOfYear() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.lengthOfYear() })
 
 
     pub def plusPeriod(x: HijrahDate, p: Period): HijrahDate =
-        let HijrahDate(x1) = x;
-        let Period(p1) = p;
-        let t1 = unsafe IO { p1.addTo(x1) };
-        let ans = unchecked_cast(t1 as JHijrahDate);
-        HijrahDate(ans)
+        AdaptorExtras.op2(x, p, (x1, p1) -> {
+            let t1 = unsafe IO { p1.addTo(x1) };
+            unchecked_cast(t1 as JHijrahDate)
+        })
 
     pub def minusPeriod(x: HijrahDate, p: Period): HijrahDate =
-        let HijrahDate(x1) = x;
-        let Period(p1) = p;
-        let t1 = unsafe IO { p1.subtractFrom(x1) };
-        let ans = unchecked_cast(t1 as JHijrahDate);
-        HijrahDate(ans)
+        AdaptorExtras.op2(x, p, (x1, p1) -> {
+            let t1 = unsafe IO { p1.subtractFrom(x1) };
+            unchecked_cast(t1 as JHijrahDate)
+        })
 
 
 
     pub def plusChrono(x: HijrahDate, 
                         i: Int64, 
                         cu: ChronoUnit): HijrahDate =
-        let HijrahDate(x1) = x;
-        let cu1 = ToJava.toJava(cu);
-        let ans: JChronoLocalDate = unsafe IO { x1.plus(i, cu1) };
-        let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
-        HijrahDate(ans1)
+        AdaptorExtras.op2(x, cu, (x1, cu1) -> {
+            let ans: JChronoLocalDate = unsafe IO { x1.plus(i, cu1) };
+            unchecked_cast(ans as JHijrahDate)
+        })
 
     pub def minusChrono(x: HijrahDate, i: Int64, cu: ChronoUnit): HijrahDate =
-        let HijrahDate(x1) = x;
-        let cu1 = ToJava.toJava(cu);
-        let ans: JChronoLocalDate = unsafe IO { x1.minus(i, cu1) };
-        let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
-        HijrahDate(ans1)
+        AdaptorExtras.op2(x, cu, (x1, cu1) -> {
+            let ans: JChronoLocalDate = unsafe IO { x1.minus(i, cu1) };
+            unchecked_cast(ans as JHijrahDate)
+        })
 
 
 
     pub def until(begin: {begin = HijrahDate}, end: {end = HijrahDate}, cu: ChronoUnit): Int64 =
-        let HijrahDate(b1) = begin#begin;
-        let HijrahDate(e1) = end#end;
-        let te1: JTemporal = checked_cast(e1);
-        let cu1 = ToJava.toJava(cu);
-        let tu1: JTemporalUnit = checked_cast(cu1);
-        unsafe IO { b1.until(te1, tu1) }
+        AdaptorExtras.extract3(begin#begin, end#end, cu, (begin1, end1, cu1) -> {
+            let tend1: JTemporal = checked_cast(end1);
+            let tu1: JTemporalUnit = checked_cast(cu1);
+            unsafe IO { begin1.until(tend1, tu1) }
+        })
 
     // just MonthOfYear / Year...
     pub def getChrono(x: HijrahDate, cf: ChronoField): Int64 =
-        let HijrahDate(x1) = x;
-        let cf1 = ToJava.toJava(cf);
-        unsafe IO { x1.getLong(cf1) }
+        AdaptorExtras.extract2(x, cf, (x1, cf1) -> unsafe IO { x1.getLong(cf1) })
 
     pub def getYear(x: HijrahDate): Int32 =
         match getChrono(x, open_variant ChronoField.Year) |> Int64.tryToInt32 {
@@ -245,10 +210,9 @@ pub mod InteropTime.Chrono.HijrahDate {
 
     // <MonthOfYear, Year>
     pub def withChrono(x: HijrahDate, cf: ChronoField, i: Int64): HijrahDate =
-        let HijrahDate(x1) = x;
-        let cf1 = ToJava.toJava(cf);
-        let ans: JChronoLocalDate = unsafe IO { x1.$with(cf1, i) };
-        let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
-        HijrahDate(ans1)
+        AdaptorExtras.op2(x, cf, (x1, cf1) -> {
+            let ans: JChronoLocalDate = unsafe IO { x1.$with(cf1, i) };
+            unchecked_cast(ans as JHijrahDate)
+        })
 
 }

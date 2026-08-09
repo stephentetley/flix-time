@@ -31,12 +31,18 @@ pub mod InteropTime.Chrono.IsoEra {
     import java.lang.{Enum => JEnum}
 
 
-    pub enum IsoEra with Eq, Order, ToString, Hash {
+    pub enum IsoEra with Eq, Order, ToString {
         case BCE
         case CE
     }
 
-    
+    instance Hash[IsoEra] {
+        pub def hash(x: IsoEra): Int32 = match x {
+            case IsoEra.BCE => unsafe IO { let x1 = JIsoEra.BCE; x1.hashCode() }
+            case IsoEra.CE  => unsafe IO { let x1 = JIsoEra.CE; x1.hashCode() }
+        }
+    }
+
     instance ToJava[IsoEra] {
         type Out = JIsoEra
         pub def toJava(x: IsoEra): JIsoEra = match x {

@@ -2,6 +2,7 @@
    Many internal changes to trial "AdaptorExtras".
    Reworked `DateTimeFormatterBuilder`.
    Updated `charset-locale` dependency.
+   Made hash on enums use the Java implementation (hashCode).
    
 ### v0.19.1 
    Updated `charset-locale` dependency.

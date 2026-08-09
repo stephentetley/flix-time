@@ -35,7 +35,7 @@ pub mod InteropTime.Month {
     import java.time.{Month => JMonth}
     import java.lang.{Enum => JEnum}
 
-    pub enum Month with Eq, Order, ToString, Hash {
+    pub enum Month with Eq, Order, ToString {
         case January
         case February
         case March
@@ -68,6 +68,24 @@ pub mod InteropTime.Month {
             case _ => None
         }
     }
+
+    instance Hash[Month] {
+        pub def hash(x: Month): Int32 = match x {
+            case Month.January      => unsafe IO { let x1 = JMonth.JANUARY; x1.hashCode() }
+            case Month.February     => unsafe IO { let x1 = JMonth.FEBRUARY; x1.hashCode() }
+            case Month.March        => unsafe IO { let x1 = JMonth.MARCH; x1.hashCode() }
+            case Month.April        => unsafe IO { let x1 = JMonth.APRIL; x1.hashCode() }
+            case Month.May          => unsafe IO { let x1 = JMonth.MAY; x1.hashCode() }
+            case Month.June         => unsafe IO { let x1 = JMonth.JUNE; x1.hashCode() }
+            case Month.July         => unsafe IO { let x1 = JMonth.JULY; x1.hashCode() }
+            case Month.August       => unsafe IO { let x1 = JMonth.AUGUST; x1.hashCode() }
+            case Month.September    => unsafe IO { let x1 = JMonth.SEPTEMBER; x1.hashCode() }
+            case Month.October      => unsafe IO { let x1 = JMonth.OCTOBER; x1.hashCode() }
+            case Month.November     => unsafe IO { let x1 = JMonth.NOVEMBER; x1.hashCode() }
+            case Month.December     => unsafe IO { let x1 = JMonth.DECEMBER; x1.hashCode() }
+        }
+    }
+
 
     instance ToJava[Month] {
         type Out = JMonth

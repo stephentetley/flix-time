@@ -39,7 +39,7 @@ pub mod InteropTime.DayOfWeek {
     ///
     /// Days are reprepresented as an enum from Monday to Sunday.
     ///
-    pub enum DayOfWeek with Eq, Order, ToString, Hash {
+    pub enum DayOfWeek with Eq, Order, ToString {
         case Monday
         case Tuesday
         case Wednesday
@@ -59,6 +59,19 @@ pub mod InteropTime.DayOfWeek {
             case "Saturday"  => Some(Saturday)
             case "Sunday"    => Some(Sunday)
             case _           => None
+        }
+    }
+
+    
+    instance Hash[DayOfWeek] {
+        pub def hash(x: DayOfWeek): Int32 = match x {
+            case DayOfWeek.Monday       => unsafe IO { let x1 = JDayOfWeek.MONDAY; x1.hashCode() }
+            case DayOfWeek.Tuesday      => unsafe IO { let x1 = JDayOfWeek.TUESDAY; x1.hashCode() }
+            case DayOfWeek.Wednesday    => unsafe IO { let x1 = JDayOfWeek.WEDNESDAY; x1.hashCode() }
+            case DayOfWeek.Thursday     => unsafe IO { let x1 = JDayOfWeek.THURSDAY; x1.hashCode() }
+            case DayOfWeek.Friday       => unsafe IO { let x1 = JDayOfWeek.FRIDAY; x1.hashCode() }
+            case DayOfWeek.Saturday     => unsafe IO { let x1 = JDayOfWeek.SATURDAY; x1.hashCode() }
+            case DayOfWeek.Sunday       => unsafe IO { let x1 = JDayOfWeek.SUNDAY; x1.hashCode() }
         }
     }
 

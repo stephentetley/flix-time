@@ -20,6 +20,8 @@ pub mod InteropTime.Chrono.HijrahEra {
     use InteropTime.Chrono.HijrahEra.HijrahEra
     use InteropTime.Chrono.HijrahEra.HijrahEra.{AH}
 
+    use InteropTime.Internal.AdaptorExtras
+
     use InteropTime.Format.TextStyle.TextStyle
 
     use InteropLocale.Locale.Locale
@@ -32,8 +34,15 @@ pub mod InteropTime.Chrono.HijrahEra {
     ///
     /// Enum / Java Enum
     ///
-    pub enum HijrahEra with Eq, Order, ToString, Hash {
+    pub enum HijrahEra with Eq, Order, ToString {
         case AH
+    }
+
+    
+    instance Hash[HijrahEra] {
+        pub def hash(x: HijrahEra): Int32 = match x {
+            case HijrahEra.AH   => unsafe IO { let x1 = JHijrahEra.AH; x1.hashCode() }
+        }
     }
 
 

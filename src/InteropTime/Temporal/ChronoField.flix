@@ -26,7 +26,7 @@ pub mod InteropTime.Temporal.ChronoField {
     ///
     /// ChronoField
     ///
-    pub enum ChronoField with Eq, Order, ToString, Hash {
+    pub enum ChronoField with Eq, Order, ToString {
         case NanoOfSecond
         case NanoOfDay
         case MicroOfSecond
@@ -57,6 +57,41 @@ pub mod InteropTime.Temporal.ChronoField {
         case Era
         case InstantSeconds
         case OffsetSeconds
+    }
+
+    instance Hash[ChronoField] {
+        pub def hash(x: ChronoField): Int32 = match x {
+            case ChronoField.NanoOfSecond               => unsafe IO { let x1 = JChronoField.NANO_OF_SECOND; x1.hashCode() }
+            case ChronoField.NanoOfDay                  => unsafe IO { let x1 = JChronoField.NANO_OF_DAY; x1.hashCode() }
+            case ChronoField.MicroOfSecond              => unsafe IO { let x1 = JChronoField.MICRO_OF_SECOND; x1.hashCode() }
+            case ChronoField.MicroOfDay                 => unsafe IO { let x1 = JChronoField.MICRO_OF_DAY; x1.hashCode() }
+            case ChronoField.MilliOfSecond              => unsafe IO { let x1 = JChronoField.MILLI_OF_SECOND; x1.hashCode() }
+            case ChronoField.MilliOfDay                 => unsafe IO { let x1 = JChronoField.MILLI_OF_DAY; x1.hashCode() }
+            case ChronoField.SecondOfMinute             => unsafe IO { let x1 = JChronoField.SECOND_OF_MINUTE; x1.hashCode() }
+            case ChronoField.SecondOfDay                => unsafe IO { let x1 = JChronoField.SECOND_OF_DAY; x1.hashCode() }
+            case ChronoField.MinuteOfHour               => unsafe IO { let x1 = JChronoField.MINUTE_OF_HOUR; x1.hashCode() }
+            case ChronoField.MinuteOfDay                => unsafe IO { let x1 = JChronoField.MINUTE_OF_DAY; x1.hashCode() }
+            case ChronoField.HourOfAmPm                 => unsafe IO { let x1 = JChronoField.HOUR_OF_AMPM; x1.hashCode() }
+            case ChronoField.ClockHourOfAmPm            => unsafe IO { let x1 = JChronoField.CLOCK_HOUR_OF_AMPM; x1.hashCode() }
+            case ChronoField.HourOfDay                  => unsafe IO { let x1 = JChronoField.HOUR_OF_DAY; x1.hashCode() }
+            case ChronoField.ClockHourOfDay             => unsafe IO { let x1 = JChronoField.CLOCK_HOUR_OF_DAY; x1.hashCode() }
+            case ChronoField.AmPmOfDay                  => unsafe IO { let x1 = JChronoField.AMPM_OF_DAY; x1.hashCode() }
+            case ChronoField.DayOfWeek                  => unsafe IO { let x1 = JChronoField.DAY_OF_WEEK; x1.hashCode() }
+            case ChronoField.AlignedDayOfWeekInMonth    => unsafe IO { let x1 = JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH; x1.hashCode() }
+            case ChronoField.AlignedDayOfWeekInYear     => unsafe IO { let x1 = JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR; x1.hashCode() }
+            case ChronoField.DayOfMonth                 => unsafe IO { let x1 = JChronoField.DAY_OF_MONTH; x1.hashCode() }
+            case ChronoField.DayOfYear                  => unsafe IO { let x1 = JChronoField.DAY_OF_YEAR; x1.hashCode() }
+            case ChronoField.EpochDay                   => unsafe IO { let x1 = JChronoField.EPOCH_DAY; x1.hashCode() }
+            case ChronoField.AlignedWeekOfMonth         => unsafe IO { let x1 = JChronoField.ALIGNED_WEEK_OF_MONTH; x1.hashCode() }
+            case ChronoField.AlignedWeekOfYear          => unsafe IO { let x1 = JChronoField.ALIGNED_WEEK_OF_YEAR; x1.hashCode() }
+            case ChronoField.MonthOfYear                => unsafe IO { let x1 = JChronoField.MONTH_OF_YEAR; x1.hashCode() }
+            case ChronoField.ProlepticMonth             => unsafe IO { let x1 = JChronoField.PROLEPTIC_MONTH; x1.hashCode() }
+            case ChronoField.YearOfEra                  => unsafe IO { let x1 = JChronoField.YEAR_OF_ERA; x1.hashCode() }
+            case ChronoField.Year                       => unsafe IO { let x1 = JChronoField.YEAR; x1.hashCode() }
+            case ChronoField.Era                        => unsafe IO { let x1 = JChronoField.ERA; x1.hashCode() }
+            case ChronoField.InstantSeconds             => unsafe IO { let x1 = JChronoField.INSTANT_SECONDS; x1.hashCode() }
+            case ChronoField.OffsetSeconds              => unsafe IO { let x1 = JChronoField.OFFSET_SECONDS; x1.hashCode() }
+        }
     }
 
 

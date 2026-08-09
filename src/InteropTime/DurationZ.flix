@@ -42,7 +42,7 @@ pub mod InteropTime.DurationZ {
         pub def toString(x: DurationZ): String =
             let DurationZ(x1) = x;
             unsafe IO { x1.toString() }
-   }
+    }
 
     ///
     /// Parse the string `s` as a Duration, leading or trailing whitespace is trimmed.
@@ -58,27 +58,27 @@ pub mod InteropTime.DurationZ {
             } catch {
                 case _: JException => None
             }
-   }
+    }
 
     instance Eq[DurationZ] {
         pub def eq(x: DurationZ, y: DurationZ): Bool =
             let DurationZ(x1) = x;
             let DurationZ(y1) = y;
             unsafe IO { x1.equals(y1) }
-   }
+    }
 
     instance Hash[DurationZ] {
         pub def hash(x: DurationZ): Int32 =
             let DurationZ(x1) = x;
             unsafe IO { x1.hashCode() }
-   }
+    }
 
     instance Order[DurationZ] {
         pub def compare(x: DurationZ, y: DurationZ): Comparison =
             let DurationZ(x1) = x;
             let DurationZ(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
-   }
+    }
 
     instance Add[DurationZ] {
         pub def add(x: DurationZ, y: DurationZ): DurationZ =
@@ -86,7 +86,7 @@ pub mod InteropTime.DurationZ {
             let DurationZ(y1) = y;
             let ans = unsafe IO { x1.plus(y1) };
             DurationZ(ans)
-   }
+    }
 
     instance Sub[DurationZ] {
         pub def sub(x: DurationZ, y: DurationZ): DurationZ =
@@ -94,24 +94,24 @@ pub mod InteropTime.DurationZ {
             let DurationZ(y1) = y;
             let ans = unsafe IO { x1.minus(y1) };
             DurationZ(ans)
-   }
+    }
 
     instance Neg[DurationZ] {
         pub def neg(x: DurationZ): DurationZ =
             let DurationZ(x1) = x;
             let ans = unsafe IO { x1.negated() };
             DurationZ(ans)
-   }
+    }
 
     /// `combine` is addition
     instance SemiGroup[DurationZ] {
         pub def combine(x: DurationZ, y: DurationZ): DurationZ = Add.add(x, y)
-   }
+    }
 
     /// Monoid is addition
     instance Monoid[DurationZ] {
         pub def empty(): DurationZ = InteropTime.DurationZ.zero()
-   }
+    }
 
 
     instance ToJava[DurationZ] {
