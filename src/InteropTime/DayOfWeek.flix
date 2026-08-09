@@ -18,9 +18,7 @@
 
 pub mod InteropTime.DayOfWeek {
 
-    use InteropTime.DayOfWeek.DayOfWeek
-    use InteropTime.DayOfWeek.DayOfWeek.{Monday, Tuesday,
-        Wednesday, Thursday, Friday, Saturday, Sunday}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
@@ -121,51 +119,37 @@ pub mod InteropTime.DayOfWeek {
     // `fromTemporalAccessor` specialized
 
     pub def fromLocalDate(x: LocalDate): DayOfWeek =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JDayOfWeek.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JDayOfWeek.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
     pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JDayOfWeek.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
     pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JDayOfWeek.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
     
 
     /// DayOfWeek functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
-        let x1 = ToJava.toJava(x);
-        let s1 = ToJava.toJava(style);
-        let locale1 = ToJava.toJava(locale);
-        unsafe IO { x1.getDisplayName(s1, locale1) }
+        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) -> 
+            unsafe IO { x1.getDisplayName(style1, locale1) }
+        )
 
 
     pub def getValue(x: DayOfWeek): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.getValue() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
 
 
     /// plus / minus functions
 
     pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.plus(days) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plus(days) })
 
     pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.minus(days) };
-        ToFlix.toFlix(ans)
-
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minus(days) })
 
 }
+

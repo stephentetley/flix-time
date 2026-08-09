@@ -83,13 +83,9 @@ pub mod InteropTime.Chrono.MinguoChronology {
         AdaptorExtras.op(x, x1 ->  unsafe IO { x1.eraOf(i) })
 
     pub def eras(x: MinguoChronology): List[MinguoEra] = 
-        def convert(e) = {
-            let e1: JMinguoEra = unchecked_cast(e as JMinguoEra);
-            ToFlix.toFlix(e1)
-        };
-        let MinguoChronology(x1) = x;
-        let jlist: JList[JEra] = unsafe IO { x1.eras() };
-        let xs: List[JEra] = Adaptor.fromList(jlist);
-        List.map(convert, xs)
+        AdaptorExtras.extract(x, x1 -> {
+            let jlist: JList[JEra] = unsafe IO { x1.eras() };
+            AdaptorExtras.fromListWith(jlist, e1 -> unchecked_cast(e1 as JMinguoEra) |> ToFlix.toFlix)
+        })
 
 }

@@ -20,8 +20,8 @@
 
 pub mod InteropTime.DurationZ {
 
-    use InteropTime.DurationZ.DurationZ
-    use InteropTime.DurationZ.DurationZ.{DurationZ}
+
+    use InteropTime.Internal.AdaptorExtras
 
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
@@ -40,7 +40,7 @@ pub mod InteropTime.DurationZ {
     ///
     instance ToString[DurationZ] {
         pub def toString(x: DurationZ): String =
-            let DurationZ(x1) = x;
+            let DurationZ.DurationZ(x1) = x;
             unsafe IO { x1.toString() }
     }
 
@@ -54,7 +54,7 @@ pub mod InteropTime.DurationZ {
             try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JDuration.parse(s1) };
-                DurationZ(ans) |> Some
+                DurationZ.DurationZ(ans) |> Some
             } catch {
                 case _: JException => None
             }
@@ -62,55 +62,60 @@ pub mod InteropTime.DurationZ {
 
     instance Eq[DurationZ] {
         pub def eq(x: DurationZ, y: DurationZ): Bool =
-            let DurationZ(x1) = x;
-            let DurationZ(y1) = y;
+            let DurationZ.DurationZ(x1) = x;
+            let DurationZ.DurationZ(y1) = y;
             unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[DurationZ] {
         pub def hash(x: DurationZ): Int32 =
-            let DurationZ(x1) = x;
+            let DurationZ.DurationZ(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
     instance Order[DurationZ] {
         pub def compare(x: DurationZ, y: DurationZ): Comparison =
-            let DurationZ(x1) = x;
-            let DurationZ(y1) = y;
+            let DurationZ.DurationZ(x1) = x;
+            let DurationZ.DurationZ(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
     instance Add[DurationZ] {
         pub def add(x: DurationZ, y: DurationZ): DurationZ =
-            let DurationZ(x1) = x;
-            let DurationZ(y1) = y;
+            let DurationZ.DurationZ(x1) = x;
+            let DurationZ.DurationZ(y1) = y;
             let ans = unsafe IO { x1.plus(y1) };
             DurationZ(ans)
     }
 
     instance Sub[DurationZ] {
         pub def sub(x: DurationZ, y: DurationZ): DurationZ =
-            let DurationZ(x1) = x;
-            let DurationZ(y1) = y;
+            let DurationZ.DurationZ(x1) = x;
+            let DurationZ.DurationZ(y1) = y;
             let ans = unsafe IO { x1.minus(y1) };
-            DurationZ(ans)
+            DurationZ.DurationZ(ans)
     }
 
     instance Neg[DurationZ] {
         pub def neg(x: DurationZ): DurationZ =
-            let DurationZ(x1) = x;
+            let DurationZ.DurationZ(x1) = x;
             let ans = unsafe IO { x1.negated() };
-            DurationZ(ans)
+            DurationZ.DurationZ(ans)
     }
 
     /// `combine` is addition
     instance SemiGroup[DurationZ] {
-        pub def combine(x: DurationZ, y: DurationZ): DurationZ = Add.add(x, y)
+        pub def combine(x: DurationZ, y: DurationZ): DurationZ = 
+            let DurationZ.DurationZ(x1) = x;
+            let DurationZ.DurationZ(y1) = y;
+            let ans = unsafe IO { x1.plus(y1) };
+            DurationZ.DurationZ(ans)
     }
 
     /// Monoid is addition
     instance Monoid[DurationZ] {
-        pub def empty(): DurationZ = InteropTime.DurationZ.zero()
+        pub def empty(): DurationZ = 
+            DurationZ.DurationZ(unsafe IO { JDuration.ZERO} )
     }
 
 
@@ -123,7 +128,8 @@ pub mod InteropTime.DurationZ {
 
     instance ToFlix[DurationZ] {
         type In = JDuration
-        pub def toFlix(x: JDuration): DurationZ = DurationZ.DurationZ(x)
+        pub def toFlix(x: JDuration): DurationZ = 
+            DurationZ.DurationZ(x)
     }
     
 
@@ -134,8 +140,7 @@ pub mod InteropTime.DurationZ {
     ///
     pub def duration(seconds: {seconds = Int64}, 
                         nanos: {nanos = Int64}): DurationZ =
-        let ans = unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) };
-        DurationZ(ans)
+        AdaptorExtras.of(() -> unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) })
 
     /// "abstract constructors" (e.g. `zero`)
 

@@ -22,16 +22,13 @@ pub mod InteropTime.Chrono.HijrahChronology {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
-    use InteropTime.Chrono.HijrahDate.HijrahDate.{HijrahDate}
     use InteropTime.Chrono.HijrahEra.HijrahEra
     use InteropTime.Format.ResolverStyle.ResolverStyle
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Temporal.ValueRange.ValueRange
     use InteropTime.Temporal.ChronoField
     use InteropTime.ClockZ.ClockZ
-    use InteropTime.ClockZ.ClockZ.{ClockZ}
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
 
     use InteropLocale.Locale.Locale
 
@@ -118,14 +115,11 @@ pub mod InteropTime.Chrono.HijrahChronology {
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.eraOf(i) })
 
     pub def eras(x: HijrahChronology): List[HijrahEra]  =
-        def convert(e) = {
-            let e1: JHijrahEra = unchecked_cast(e as JHijrahEra);
-            ToFlix.toFlix(e1)
-        };
-        let HijrahChronology(x1) = x;
-        let jlist: JList[JEra] = unsafe IO { x1.eras() };
-        let xs: List[JEra] = Adaptor.fromList(jlist);
-        List.map(convert, xs)
+        AdaptorExtras.extract(x, x1 -> {
+            let jlist: JList[JEra] = unsafe IO { x1.eras() };
+            AdaptorExtras.fromListWith(jlist, e1 -> unchecked_cast(e1 as JHijrahEra) |> ToFlix.toFlix)
+        })
+
 
 
     pub def getId(x: HijrahChronology): String =

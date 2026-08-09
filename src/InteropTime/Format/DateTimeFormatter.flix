@@ -17,10 +17,8 @@
 
 pub mod InteropTime.Format.DateTimeFormatter {
 
-    use InteropLocale.Locale.{Locale}
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
-    
+    use InteropLocale.Locale
+        
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.DecimalStyle.DecimalStyle

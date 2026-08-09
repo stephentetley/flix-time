@@ -40,4 +40,15 @@ mod TestThaiBuddhistChronology {
         println(e1);
         assertTrue(true)
 
+    /////////////////////////////////////////////////////////////////////////////
+    // eras                                                                    //
+    /////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    def eras01(): Unit \ {Assert, IO} = 
+        let current = InteropTime.Chrono.ThaiBuddhistChronology.getInstance();
+        let xs = InteropTime.Chrono.ThaiBuddhistChronology.eras(current);
+        println("Thai Buddhist eras: ${xs}");
+        assertTrue(not List.isEmpty(xs))
+
 }

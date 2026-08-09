@@ -18,8 +18,9 @@
 
 pub mod InteropTime.ClockZ {
 
-    use InteropTime.ClockZ.ClockZ
-    use InteropTime.ClockZ.ClockZ.{ClockZ}
+
+    use InteropTime.Internal.AdaptorExtras
+
     use InteropTime.DurationZ.DurationZ
     use InteropTime.InstantZ.InstantZ
     use InteropTime.ZoneId.ZoneId
@@ -43,7 +44,8 @@ pub mod InteropTime.ClockZ {
 
     instance ToFlix[ClockZ] {
         type In = JClock
-        pub def toFlix(x: JClock): ClockZ = ClockZ.ClockZ(x)
+        pub def toFlix(x: JClock): ClockZ = 
+            ClockZ.ClockZ(x)
     }
 
 
@@ -51,47 +53,32 @@ pub mod InteropTime.ClockZ {
 
     /// Pure or Impure? 
     pub def fixedClock(inst: InstantZ, zone: ZoneId): ClockZ \ IO =
-        let inst1 = ToJava.toJava(inst);
-        let zone1 = ToJava.toJava(zone);
-        let ans = JClock.fixed(inst1, zone1);
-        ClockZ(ans)
-
+        AdaptorExtras.op2(inst, zone, (inst1, zone1) -> { JClock.fixed(inst1, zone1) })
+        
     pub def systemClock(zone: ZoneId): ClockZ \ IO =
-        let zone1 = ToJava.toJava(zone);
-        let ans = JClock.system(zone1);
-        ClockZ(ans)
+        AdaptorExtras.op(zone, zone1 -> { JClock.system(zone1) })
 
-    pub def systemClockDefaultZone(): ClockZ \ IO = ClockZ(JClock.systemDefaultZone())
+    pub def systemClockDefaultZone(): ClockZ \ IO = 
+        AdaptorExtras.of(() -> { JClock.systemDefaultZone() })
 
-    pub def systemClockUTC(): ClockZ \ IO = ClockZ(JClock.systemUTC())
+    pub def systemClockUTC(): ClockZ \ IO = 
+        AdaptorExtras.of(() -> { JClock.systemUTC() })
 
     pub def offset(d: DurationZ, c: ClockZ): ClockZ \ IO =
-        let d1 = ToJava.toJava(d);
-        let c1 = ToJava.toJava(c);
-        let ans = JClock.offset(c1, d1);
-        ClockZ(ans)
+        AdaptorExtras.op2(d, c, (d1, c1) -> { JClock.offset(c1, d1) })
 
     pub def tick(d: DurationZ, c: ClockZ): ClockZ \ IO =
-        let d1 = ToJava.toJava(d);
-        let c1 = ToJava.toJava(c);
-        let ans = JClock.tick(c1, d1);
-        ClockZ(ans)
+        AdaptorExtras.op2(d, c, (d1, c1) -> { JClock.tick(c1, d1) })
 
 
     pub def tickMillis(zoneId: ZoneId): ClockZ \ IO =
-        let zoneId1 = ToJava.toJava(zoneId);
-        let ans = JClock.tickMillis(zoneId1);
-        ClockZ(ans)
+        AdaptorExtras.op(zoneId, zoneId1 -> { JClock.tickMillis(zoneId1) })
 
     pub def tickSeconds(zoneId: ZoneId): ClockZ \ IO =
-        let zoneId1 = ToJava.toJava(zoneId);
-        let ans = JClock.tickSeconds(zoneId1);
-        ClockZ(ans)
+        AdaptorExtras.op(zoneId, zoneId1 -> { JClock.tickSeconds(zoneId1) })
 
     pub def tickMinutes(zoneId: ZoneId): ClockZ \ IO =
-        let zoneId1 = ToJava.toJava(zoneId);
-        let ans = JClock.tickMinutes(zoneId1);
-        ClockZ(ans)
+        AdaptorExtras.op(zoneId, zoneId1 -> { JClock.tickMinutes(zoneId1) })
 
     /// Clock functions
 
@@ -100,17 +87,13 @@ pub mod InteropTime.ClockZ {
     /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
     ///
     pub def toString(x: ClockZ): String \ IO =
-        let x1 = ToJava.toJava(x);
-        x1.toString()
+        AdaptorExtras.extract(x, x1 -> { x1.toString() })
 
     pub def millis(x: ClockZ): Int64 \ IO =
-        let x1 = ToJava.toJava(x);
-        x1.millis()
+        AdaptorExtras.extract(x, x1 -> { x1.millis() })
 
     pub def instant(x: ClockZ): InstantZ \ IO =
-        let x1 = ToJava.toJava(x);
-        let ans = x1.instant();
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> { x1.instant() })
 
 
     // Getters and Setters (getZone and withZone are abstract in Java)

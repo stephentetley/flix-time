@@ -22,6 +22,8 @@
 pub mod InteropTime.Internal.AdaptorExtras {
 
     import java.lang.{Exception => JException}
+    import java.util.{Iterator => JIterator}
+    import java.util.{List => JList}
 
     pub def op(x: a, f: ToJava.Out[a] -> ToFlix.In[ans] \ ef + ToJava.Aef[a] + ToFlix.Aef[ans]): ans \ ef + ToJava.Aef[a] + ToFlix.Aef[ans] with ToJava[a], ToFlix[ans] =
         let jx = ToJava.toJava(x);
@@ -92,5 +94,20 @@ pub mod InteropTime.Internal.AdaptorExtras {
         let jy = ToJava.toJava(y);
         let jz = ToJava.toJava(z);
         f(jx, jy, jz)
+
+
+    ///
+    /// Returns all elements in the given Java List as a Flix List converting each element wit `ToFlix.toFlix`.
+    ///
+    pub def fromListOf(l: JList[ToFlix.In[a]]): List[a] \ ToFlix.Aef[a] with ToFlix[a] = region rc {
+        let iter1 = Adaptor.fromListToIterator(rc, l);
+        Iterator.map(ToFlix.toFlix, iter1) |> Iterator.toList
+    }
+
+    pub def fromListWith(l: JList[a], f: a -> b \ ef): List[b] \ ef = region rc {
+        let iter1 = Adaptor.fromListToIterator(rc, l);
+        Iterator.map(f, iter1) |> Iterator.toList
+    }
+
 
 }
