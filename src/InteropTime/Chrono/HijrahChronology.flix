@@ -20,6 +20,8 @@ pub mod InteropTime.Chrono.HijrahChronology {
 
     use InteropTime.Chrono.HijrahChronology.HijrahChronology
     use InteropTime.Chrono.HijrahChronology.HijrahChronology.{HijrahChronology}
+    
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
     use InteropTime.Chrono.HijrahDate.HijrahDate.{HijrahDate}
@@ -27,7 +29,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
     use InteropTime.Format.ResolverStyle.ResolverStyle
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Temporal.ValueRange.ValueRange
-    use InteropTime.Temporal.ValueRange.ValueRange.{ValueRange}
+    use InteropTime.Temporal.ChronoField
     use InteropTime.ClockZ.ClockZ
     use InteropTime.ClockZ.ClockZ.{ClockZ}
     use InteropTime.ZoneId.ZoneId
@@ -71,70 +73,51 @@ pub mod InteropTime.Chrono.HijrahChronology {
                     month: {month = Int32}, 
                     dayOfMonth: {dayOfMonth = Int32},
                     chrono: {chrono = HijrahChronology}): HijrahDate =
-        let HijrahChronology(chrono1) = chrono#chrono;
-        HijrahDate(unsafe IO { chrono1.date(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+        AdaptorExtras.op(chrono#chrono, chrono1 ->
+            unsafe IO { chrono1.date(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) }
+        )
 
     pub def dateWithEra(era: {era = HijrahEra}, 
                         yearOfEra: {yearOfEra = Int32}, 
                         month: {month = Int32}, 
                         dayOfMonth: {dayOfMonth = Int32},
                         x: HijrahChronology): HijrahDate =
-        let HijrahChronology(x1) = x;
-        let era1 = ToJava.toJava(era#era);
-        let ans: JChronoLocalDate = unsafe IO { x1.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) };
-        let ans1: JHijrahDate = unchecked_cast(ans as JHijrahDate);
-        HijrahDate(ans1)
+        AdaptorExtras.op2(x, era#era, (x1, era1) -> {
+            let ans: JChronoLocalDate = unsafe IO { x1.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) };
+            unchecked_cast(ans as JHijrahDate)
+        })
 
 
     pub def dateNow(x: HijrahChronology): HijrahDate \ IO = 
-        let HijrahChronology(x1) = x;
-        let ans = x1.dateNow();
-        HijrahDate(ans)
+        AdaptorExtras.op(x, x1 -> { x1.dateNow() })
 
     pub def dateNowWithClock(x: HijrahChronology, clock: ClockZ): HijrahDate \ IO =
-        let HijrahChronology(x1) = x;
-        let ClockZ(clock1) = clock;
-        let ans = x1.dateNow(clock1);
-        HijrahDate(ans)
+        AdaptorExtras.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: HijrahChronology, zone: ZoneId): HijrahDate \ IO =
-        let HijrahChronology(x1) = x;
-        let ZoneId(zone1) = zone;
-        let ans = x1.dateNow(zone1);
-        HijrahDate(ans)
+        AdaptorExtras.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
 
     pub def dateEpochDay(x: HijrahChronology, epochDay: Int64): Result[String, HijrahDate] =
-        try {
-            let HijrahChronology(x1) = x;
-            let ans = unsafe IO { x1.dateEpochDay(epochDay) };
-            Ok(HijrahDate(ans))
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+        AdaptorExtras.opWithResult(x, x1 -> unsafe IO { x1.dateEpochDay(epochDay) })
 
     pub def toString(x: HijrahChronology): String =
-        let HijrahChronology(x1) = x;
-        unsafe IO { x1.toString() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toString() })
             
 
     pub def getDisplayName(style: TextStyle, loc: Locale, x: HijrahChronology): String =
-        let HijrahChronology(x1) = x;
-        let s1 = ToJava.toJava(style);
-        let Locale.Locale(loc1) = loc;
-        unsafe IO { x1.getDisplayName(s1, loc1) }
+        AdaptorExtras.extract3(style, loc, x, (style1, loc1, x1) -> 
+            unsafe IO { x1.getDisplayName(style1, loc1) }
+        )
 
 
     pub def getCalendarType(x: HijrahChronology): String =
-        let HijrahChronology(x1) = x;
-        unsafe IO { x1.getCalendarType() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
 
     pub def eraOf(x: HijrahChronology, i: Int32): HijrahEra =
-        let HijrahChronology(x1) = x;
-        let ans = unsafe IO { x1.eraOf(i) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.eraOf(i) })
 
     pub def eras(x: HijrahChronology): List[HijrahEra]  =
         def convert(e) = {
@@ -148,24 +131,17 @@ pub mod InteropTime.Chrono.HijrahChronology {
 
 
     pub def getId(x: HijrahChronology): String =
-        let HijrahChronology(x1) = x;
-        unsafe IO { x1.getId() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
         
     pub def isLeapYear(prolepticYear: Int64, x: HijrahChronology): Bool =
-        let HijrahChronology(x1) = x;
-        unsafe IO { x1.isLeapYear(prolepticYear) }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isLeapYear(prolepticYear) })
 
     
     pub def prolepticYear(era: HijrahEra, yearOfEra: Int32, x: HijrahChronology): Int32 =
-        let HijrahChronology(x1) = x;
-        let era1 = ToJava.toJava(era);
-        unsafe IO { x1.prolepticYear(era1, yearOfEra) }
+        AdaptorExtras.extract2(era, x, (era1, x1) -> unsafe IO { x1.prolepticYear(era1, yearOfEra) })
 
     pub def rangeYear(x: HijrahChronology): ValueRange =
-        let HijrahChronology(x1) = x;
-        let f1 = unsafe IO { JChronoField.YEAR };
-        let vr1 = unsafe IO { x1.range(f1) };
-        ValueRange(vr1)
+        AdaptorExtras.op2(x, ChronoField.Year, (x1, f1) -> unsafe IO { x1.range(f1) })
 
 
 

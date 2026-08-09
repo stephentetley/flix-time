@@ -17,12 +17,9 @@
 
 pub mod InteropTime.Format.TextStyle {
 
-    use InteropTime.Format.TextStyle.TextStyle
-    use InteropTime.Format.TextStyle.TextStyle.{Full, FullStandalone,
-        Narrow, NarrowStandalone, Short, ShortStandalone}
+    use InteropTime.Internal.AdaptorExtras
 
     import java.time.format.{TextStyle => JTextStyle}
-    import java.lang.{Enum => JEnum}
 
     pub enum TextStyle with Eq, Order, ToString, Hash {
         case Full
@@ -65,19 +62,17 @@ pub mod InteropTime.Format.TextStyle {
     /// predicates / comparisons
 
     pub def isStandalone(x: TextStyle): Bool =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.isStandalone() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isStandalone() })
 
-    /// Getters and Setters
+    // /// Getters and Setters
     
     pub def asStandalone(x: TextStyle): TextStyle =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.asStandalone() };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.asStandalone() })
 
     pub def asNormal(x: TextStyle): TextStyle =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.asNormal() };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.asNormal() })
 
+    
 }
+
+

@@ -17,8 +17,8 @@
 
 pub mod InteropTime.Chrono.ThaiBuddhistEra {
 
-    use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra
-    use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra.{BEFORE_BE, BE}
+
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Temporal.ChronoField.ChronoField
@@ -54,25 +54,17 @@ pub mod InteropTime.Chrono.ThaiBuddhistEra {
     }
 
     pub def getValue(x: ThaiBuddhistEra): Int32 = 
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.getValue() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
 
 
 
     //
     pub def getDisplayName(style: TextStyle, locale: Locale, x: ThaiBuddhistEra): String = 
-        let x1 = ToJava.toJava(x);
-        let style1 = ToJava.toJava(style);
-        let Locale.Locale(locale1) = locale;
-        unsafe IO { x1.getDisplayName(style1, locale1) }
+        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) -> unsafe IO { x1.getDisplayName(style1, locale1) })
         
     // Note only ERA is a valid field, suggests we should provide `rangeEra` instead...
     pub def rangeEra(x: ThaiBuddhistEra): ValueRange = 
-        let x1 = ToJava.toJava(x);
-        let cf1 = ToJava.toJava(ChronoField.Era);
-        let ans = unsafe IO { x1.range(cf1) };
-        ValueRange(ans)
-        
+        AdaptorExtras.op2(x, ChronoField.Era, (x1, cf1) -> unsafe IO { x1.range(cf1) })
 
 
 }

@@ -18,8 +18,7 @@ pub mod InteropTime.Format.DecimalStyle {
 
 
     use InteropLocale.Locale.{Locale}
-    use InteropTime.Format.DecimalStyle.DecimalStyle
-    use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
+     
 
     use InteropTime.Internal.AdaptorExtras
 

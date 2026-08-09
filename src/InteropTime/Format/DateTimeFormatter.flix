@@ -17,8 +17,11 @@
 
 pub mod InteropTime.Format.DateTimeFormatter {
 
+    use InteropLocale.Locale.{Locale}
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
+    
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
@@ -27,7 +30,7 @@ pub mod InteropTime.Format.DateTimeFormatter {
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneId.ZoneId.{ZoneId}
 
-    use InteropLocale.Locale.{Locale}
+    
 
     import java.time.format.{DateTimeFormatter => JDateTimeFormatter}
     import java.time.{ZoneId => JZoneId}
@@ -38,6 +41,8 @@ pub mod InteropTime.Format.DateTimeFormatter {
     ///
     /// This uses a phantom type parameter to restrict the application of
     /// specific format types (date, time, date-time).
+    ///
+    /// July 2026 - the phantom type is not playing well with AdaptorExtras
     ///
     pub enum DateTimeFormatter[_ftype: Type](JDateTimeFormatter)
 
@@ -130,38 +135,31 @@ pub mod InteropTime.Format.DateTimeFormatter {
     /// ## `from` functions
 
     pub def fromPattern(pattern: String): Result[String, DateTimeFormatter[t]] =
-        try {
+        AdaptorExtras.ofWithResult(() -> {
             let s1 = String.trim(pattern);
-            DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofPattern(s1) }) |> Ok
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+            unsafe IO { JDateTimeFormatter.ofPattern(s1) }
+        })
 
+    // Varies according to system locale
+    pub def fromLocalizedTime(style: FormatStyle): DateTimeFormatter[TimeFormat] \ IO =
+        AdaptorExtras.op(style, style1 -> { JDateTimeFormatter.ofLocalizedTime(style1) })
 
-    pub def fromLocalizedTime(style: FormatStyle): DateTimeFormatter[TimeFormat] =
-        let style1 = ToJava.toJava(style);
-        DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofLocalizedTime(style1) })
+    // Varies according to system locale
+    pub def fromLocalizedDateTime(style: FormatStyle): DateTimeFormatter[DateTimeFormat] \ IO =
+        AdaptorExtras.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDateTime(style1) })
 
-    pub def fromLocalizedDateTime(style: FormatStyle): DateTimeFormatter[DateTimeFormat] =
-        let style1 = ToJava.toJava(style);
-        DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofLocalizedDateTime(style1) })
+    pub def fromLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter[DateTimeFormat] \ IO =
+        AdaptorExtras.op2(dateStyle, timeStyle, (d1, t1) -> { JDateTimeFormatter.ofLocalizedDateTime(d1, t1) })
 
-    pub def fromLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter[DateTimeFormat] =
-        let d1 = ToJava.toJava(dateStyle);
-        let t1 = ToJava.toJava(timeStyle);
-        DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofLocalizedDateTime(d1, t1) })
-
-    pub def fromLocalizedDate(style: FormatStyle): DateTimeFormatter[DateFormat] =
-        let style1 = ToJava.toJava(style);
-        DateTimeFormatter(unsafe IO { JDateTimeFormatter.ofLocalizedDate(style1) })
+    pub def fromLocalizedDate(style: FormatStyle): DateTimeFormatter[DateFormat] \ IO =
+        AdaptorExtras.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDate(style1) })
 
     /// ## Getters and Setters
 
     pub def getZone(x: DateTimeFormatter[t]): ZoneId =
-        let DateTimeFormatter(x1) = x;
-        let ans = unsafe IO { x1.getZone() };
-        ZoneId(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getZone() })
 
+    
     pub def withZone(zone: ZoneId, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
         let DateTimeFormatter(x1) = x;
         let ZoneId(z1) = zone;
