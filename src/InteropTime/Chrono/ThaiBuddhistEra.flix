@@ -23,7 +23,6 @@ pub mod InteropTime.Chrono.ThaiBuddhistEra {
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Temporal.ChronoField.ChronoField
     use InteropTime.Temporal.ValueRange.ValueRange
-    use InteropTime.Temporal.ValueRange.ValueRange.{ValueRange }
 
     use InteropLocale.Locale.Locale
 
@@ -75,3 +74,4 @@ pub mod InteropTime.Chrono.ThaiBuddhistEra {
 
 
 }
+

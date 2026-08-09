@@ -19,17 +19,13 @@
 
 pub mod InteropTime.Chrono.JapaneseChronology {
 
-    use InteropTime.Chrono.JapaneseChronology.JapaneseChronology
-    use InteropTime.Chrono.JapaneseChronology.JapaneseChronology.{JapaneseChronology}
+    
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Chrono.JapaneseDate.JapaneseDate
-    use InteropTime.Chrono.JapaneseDate.JapaneseDate.{JapaneseDate}
     use InteropTime.Chrono.JapaneseEra.JapaneseEra
-    use InteropTime.Chrono.JapaneseEra.JapaneseEra.{JapaneseEra}
     use InteropTime.ClockZ.ClockZ
-    use InteropTime.ClockZ.ClockZ.{ClockZ}
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
 
     import java.util.{List => JList}
     import java.time.chrono.{JapaneseChronology => JJapaneseChronology}
@@ -63,37 +59,26 @@ pub mod InteropTime.Chrono.JapaneseChronology {
 
 
     pub def getInstance(): JapaneseChronology \ IO = 
-        JapaneseChronology(checked_ecast(JJapaneseChronology.INSTANCE))
+        AdaptorExtras.of(() -> checked_ecast(JJapaneseChronology.INSTANCE))
 
     pub def getCalendarType(x: JapaneseChronology): String = 
-        let JapaneseChronology(x1) = x;
-        unsafe IO { x1.getCalendarType() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
 
     pub def dateNow(x: JapaneseChronology): JapaneseDate \ IO = 
-        let JapaneseChronology(x1) = x;
-        let ans = x1.dateNow();
-        JapaneseDate(ans)
+        AdaptorExtras.op(x, x1 -> { x1.dateNow() })
 
 
     pub def dateNowWithClock(x: JapaneseChronology, clock: ClockZ): JapaneseDate \ IO =
-        let JapaneseChronology(x1) = x;
-        let ClockZ(clock1) = clock;
-        let ans = x1.dateNow(clock1);
-        JapaneseDate(ans)
+        AdaptorExtras.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate \ IO =
-        let JapaneseChronology(x1) = x;
-        let ZoneId(zone1) = zone;
-        let ans = x1.dateNow(zone1);
-        JapaneseDate(ans)
+        AdaptorExtras.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
 
     pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
-        let JapaneseChronology(x1) = x;
-        let ans = unsafe IO { x1.eraOf(i) };
-        JapaneseEra(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.eraOf(i) })
 
     pub def eras(x: JapaneseChronology): List[JapaneseEra] = 
         def convert(e) = {

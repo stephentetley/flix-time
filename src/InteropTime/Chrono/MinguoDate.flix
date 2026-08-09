@@ -18,16 +18,12 @@
 pub mod InteropTime.Chrono.MinguoDate {
 
 
-    use InteropTime.Chrono.MinguoDate.MinguoDate
-    use InteropTime.Chrono.MinguoDate.MinguoDate.{MinguoDate}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Chrono.MinguoChronology.MinguoChronology
-    use InteropTime.Chrono.MinguoChronology.MinguoChronology.{MinguoChronology}
     use InteropTime.Chrono.MinguoEra.MinguoEra
     use InteropTime.LocalDate.LocalDate
-    use InteropTime.LocalDate.LocalDate.{LocalDate}
     use InteropTime.LocalDateTime.LocalDateTime
-    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
 
     import java.time.chrono.{MinguoDate => JMinguoDate}
     import java.time.chrono.{MinguoEra => JMinguoEra}
@@ -50,11 +46,17 @@ pub mod InteropTime.Chrono.MinguoDate {
     }
 
     instance Eq[MinguoDate] {
-        pub def eq(x: MinguoDate, y: MinguoDate): Bool = InteropTime.Chrono.MinguoDate.equals(x, y)
+        pub def eq(x: MinguoDate, y: MinguoDate): Bool = 
+            let MinguoDate.MinguoDate(x1) = x;
+            let MinguoDate.MinguoDate(y1) = y;
+            unsafe IO { x1.equals(y1) }
+
     }
 
     instance Hash[MinguoDate] {
-        pub def hash(x: MinguoDate): Int32 = InteropTime.Chrono.MinguoDate.hashCode(x)
+        pub def hash(x: MinguoDate): Int32 =
+            let MinguoDate.MinguoDate(x1) = x;
+            unsafe IO { x1.hashCode() }
     }
 
     instance ToJava[MinguoDate] {
@@ -66,49 +68,31 @@ pub mod InteropTime.Chrono.MinguoDate {
 
     instance ToFlix[MinguoDate] {
         type In = JMinguoDate
-        pub def toFlix(x: JMinguoDate): MinguoDate = MinguoDate.MinguoDate(x)
+        pub def toFlix(x: JMinguoDate): MinguoDate = 
+            MinguoDate.MinguoDate(x)
     }
 
     ///
     /// Returns ___
     ///
-    pub def now(): MinguoDate \ IO = MinguoDate(JMinguoDate.now())
-
-
-    pub def equals(x: MinguoDate, y: MinguoDate): Bool = 
-        let MinguoDate(x1) = x;
-        let MinguoDate(y1) = y;
-        unsafe IO { x1.equals(y1) }
-
-    pub def hashCode(x: MinguoDate): Int32 = 
-        let MinguoDate(x1) = x;
-        unsafe IO { x1.hashCode() }
+    pub def now(): MinguoDate \ IO = 
+        MinguoDate(JMinguoDate.now())
 
 
     pub def toLocalDate(x: MinguoDate): LocalDate =
-        let MinguoDate(x1) = x;
-        let ans = unsafe IO { JLocalDate.$from(x1) };
-        LocalDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
     pub def fromLocalDate(x: LocalDate): MinguoDate = 
-        let LocalDate(x1) = x;
-        let ans = unsafe IO { JMinguoDate.$from(x1) };
-        MinguoDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): MinguoDate =
-        let LocalDateTime(x1) = x;
-        let ans = unsafe IO { JMinguoDate.$from(x1) };
-        MinguoDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
 
     pub def getChronology(x: MinguoDate): MinguoChronology = 
-        let MinguoDate(x1) = x;
-        let ans = unsafe IO { x1.getChronology() };
-        MinguoChronology(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getChronology() })
 
     pub def getEra(x: MinguoDate): MinguoEra = 
-        let MinguoDate(x1) = x;
-        let ans = unsafe IO { x1.getEra() };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getEra() })
 
 
     // pub def getDayOfWeek(x: MinguoDate): Int32 = 

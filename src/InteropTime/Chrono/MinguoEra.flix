@@ -17,8 +17,7 @@
 
 pub mod InteropTime.Chrono.MinguoEra {
     
-    use InteropTime.Chrono.MinguoEra.MinguoEra
-    use InteropTime.Chrono.MinguoEra.MinguoEra.{BEFORE_ROC, ROC}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TextStyle.TextStyle
 
@@ -60,17 +59,14 @@ pub mod InteropTime.Chrono.MinguoEra {
 
 
     pub def getValue(x: MinguoEra): Int32 = 
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.getValue() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
 
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: MinguoEra): String = 
-        let x1 = ToJava.toJava(x);
-        let style1 = ToJava.toJava(style);
-        let Locale.Locale(locale1) = locale;
-        unsafe IO { x1.getDisplayName(style1, locale1) }
-
-
+        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) ->
+            unsafe IO { x1.getDisplayName(style1, locale1) }
+        )
 
 }
+

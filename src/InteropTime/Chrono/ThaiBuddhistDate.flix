@@ -18,16 +18,12 @@
 pub mod InteropTime.Chrono.ThaiBuddhistDate {
 
 
-    use InteropTime.Chrono.ThaiBuddhistDate.ThaiBuddhistDate
-    use InteropTime.Chrono.ThaiBuddhistDate.ThaiBuddhistDate.{ThaiBuddhistDate}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology
-    use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology.{ThaiBuddhistChronology}
     use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra
     use InteropTime.LocalDate.LocalDate
-    use InteropTime.LocalDate.LocalDate.{LocalDate}
     use InteropTime.LocalDateTime.LocalDateTime
-    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
 
     import java.time.chrono.{ThaiBuddhistDate => JThaiBuddhistDate}
     import java.time.chrono.{ThaiBuddhistChronology => JThaiBuddhistChronology}
@@ -45,16 +41,23 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
     ///
     instance ToString[ThaiBuddhistDate] {
         pub def toString(x: ThaiBuddhistDate): String =
-            let ThaiBuddhistDate(x1) = x;
+            let ThaiBuddhistDate.ThaiBuddhistDate(x1) = x;
             unsafe IO { x1.toString() }
     }
 
     instance Eq[ThaiBuddhistDate] {
-        pub def eq(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = InteropTime.Chrono.ThaiBuddhistDate.equals(x, y)
+        pub def eq(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = 
+            let ThaiBuddhistDate.ThaiBuddhistDate(x1) = x;
+            let ThaiBuddhistDate.ThaiBuddhistDate(y1) = y;
+            unsafe IO { x1.equals(y1) }
+
     }
 
     instance Hash[ThaiBuddhistDate] {
-        pub def hash(x: ThaiBuddhistDate): Int32 = InteropTime.Chrono.ThaiBuddhistDate.hashCode(x)
+        pub def hash(x: ThaiBuddhistDate): Int32 = 
+            let ThaiBuddhistDate.ThaiBuddhistDate(x1) = x;
+            unsafe IO { x1.hashCode() }
+
     }
 
     instance ToJava[ThaiBuddhistDate] {
@@ -72,43 +75,27 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
     ///
     /// Returns ___
     ///
-    pub def now(): ThaiBuddhistDate \ IO = ThaiBuddhistDate(JThaiBuddhistDate.now())
+    pub def now(): ThaiBuddhistDate \ IO = 
+        AdaptorExtras.of(() -> { JThaiBuddhistDate.now() })
 
 
-    pub def equals(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool = 
-        let ThaiBuddhistDate(x1) = x;
-        let ThaiBuddhistDate(y1) = y;
-        unsafe IO { x1.equals(y1) }
-
-    pub def hashCode(x: ThaiBuddhistDate): Int32 = 
-        let ThaiBuddhistDate(x1) = x;
-        unsafe IO { x1.hashCode() }
-
+    
+    
 
     pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
-        let ThaiBuddhistDate(x1) = x;
-        let ans = unsafe IO { JLocalDate.$from(x1) };
-        LocalDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
     pub def fromLocalDate(x: LocalDate): ThaiBuddhistDate = 
-        let LocalDate(x1) = x;
-        let ans = unsafe IO { JThaiBuddhistDate.$from(x1) };
-        ThaiBuddhistDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): ThaiBuddhistDate =
-        let LocalDateTime(x1) = x;
-        let ans = unsafe IO { JThaiBuddhistDate.$from(x1) };
-        ThaiBuddhistDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
 
     pub def getChronology(x: ThaiBuddhistDate): ThaiBuddhistChronology = 
-        let ThaiBuddhistDate(x1) = x;
-        let ans = unsafe IO { x1.getChronology() };
-        ThaiBuddhistChronology(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getChronology() })
 
     pub def getEra(x: ThaiBuddhistDate): ThaiBuddhistEra = 
-        let ThaiBuddhistDate(x1) = x;
-        let ans = unsafe IO { x1.getEra() };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getEra() })
 
     // pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
     //     getChronoFieldHelper(x, InteropTime.Temporal.ChronoField.DayOfWeek)

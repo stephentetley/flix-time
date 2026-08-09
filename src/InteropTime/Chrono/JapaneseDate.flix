@@ -19,23 +19,15 @@
 pub mod InteropTime.Chrono.JapaneseDate {
 
 
-    use InteropTime.Chrono.JapaneseDate.JapaneseDate
-    use InteropTime.Chrono.JapaneseDate.JapaneseDate.{JapaneseDate}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
-    use InteropTime.Chrono.HijrahDate.HijrahDate.{HijrahDate}
     use InteropTime.Chrono.MinguoDate.MinguoDate
-    use InteropTime.Chrono.MinguoDate.MinguoDate.{MinguoDate}
     use InteropTime.Chrono.ThaiBuddhistDate.ThaiBuddhistDate
-    use InteropTime.Chrono.ThaiBuddhistDate.ThaiBuddhistDate.{ThaiBuddhistDate}
     use InteropTime.Chrono.JapaneseChronology.JapaneseChronology
-    use InteropTime.Chrono.JapaneseChronology.JapaneseChronology.{JapaneseChronology}
     use InteropTime.Chrono.JapaneseEra.JapaneseEra
-    use InteropTime.Chrono.JapaneseEra.JapaneseEra.{JapaneseEra}
     use InteropTime.LocalDate.LocalDate
-    use InteropTime.LocalDate.LocalDate.{LocalDate}
     use InteropTime.LocalDateTime.LocalDateTime
-    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
     
     import java.time.chrono.{JapaneseDate => JJapaneseDate}
     import java.time.chrono.{Chronology => JChronology, 
@@ -61,11 +53,17 @@ pub mod InteropTime.Chrono.JapaneseDate {
     }
 
     instance Eq[JapaneseDate] {
-        pub def eq(x: JapaneseDate, y: JapaneseDate): Bool = InteropTime.Chrono.JapaneseDate.equals(x, y)
+        pub def eq(x: JapaneseDate, y: JapaneseDate): Bool =
+            let JapaneseDate(x1) = x;
+            let JapaneseDate(y1) = y;
+            unsafe IO { x1.equals(y1) }
+
     }
 
     instance Hash[JapaneseDate] {
-        pub def hash(x: JapaneseDate): Int32 = InteropTime.Chrono.JapaneseDate.hashCode(x)
+        pub def hash(x: JapaneseDate): Int32 =
+            let JapaneseDate(x1) = x;
+            unsafe IO { x1.hashCode() }
     }
 
     instance ToJava[JapaneseDate] {
@@ -87,45 +85,33 @@ pub mod InteropTime.Chrono.JapaneseDate {
     pub def japaneseDate(prolepticYear: {prolepticYear = Int32}, 
                             month: {month = Int32}, 
                             dayOfMonth: {dayOfMonth = Int32}): JapaneseDate  =
-        JapaneseDate(unsafe IO { JJapaneseDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+        AdaptorExtras.of(() -> unsafe IO { JJapaneseDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
     pub def japaneseDateWithJapaneseEra(era: JapaneseEra, 
                                         yearOfEra: {yearOfEra = Int32}, 
                                         month: {month = Int32}, 
                                         dayOfMonth: {dayOfMonth = Int32}): JapaneseDate  =
-        let JapaneseEra(era1) = era;
-        JapaneseDate(unsafe IO { JJapaneseDate.of(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) })
+        
+        AdaptorExtras.op(era, era1 -> 
+            unsafe IO { JJapaneseDate.of(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) }
+        )
 
 
     //
     // Returns ___
     //
     pub def now(): JapaneseDate \ IO =
-        JapaneseDate(JJapaneseDate.now())
+        AdaptorExtras.of(() -> { JJapaneseDate.now() })
 
-    pub def equals(x: JapaneseDate, y: JapaneseDate): Bool = 
-        let JapaneseDate(x1) = x;
-        let JapaneseDate(y1) = y;
-        unsafe IO { x1.equals(y1) }
-
-    pub def hashCode(x: JapaneseDate): Int32 = 
-        let JapaneseDate(x1) = x;
-        unsafe IO { x1.hashCode() }
         
     pub def toLocalDate(x: JapaneseDate): LocalDate =
-        let JapaneseDate(x1) = x;
-        let ans = unsafe IO { JLocalDate.$from(x1) };
-        LocalDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
     pub def fromLocalDate(x: LocalDate): JapaneseDate = 
-        let LocalDate(x1) = x;
-        let ans = unsafe IO { JJapaneseDate.$from(x1) };
-        JapaneseDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): JapaneseDate =
-        let LocalDateTime(x1) = x;
-        let ans = unsafe IO { JJapaneseDate.$from(x1) };
-        JapaneseDate(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
 
 
     // pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
@@ -146,19 +132,14 @@ pub mod InteropTime.Chrono.JapaneseDate {
 
 
     pub def getChronology(x: JapaneseDate): JapaneseChronology = 
-        let JapaneseDate(x1) = x;
-        let ans = unsafe IO { x1.getChronology() };
-        JapaneseChronology(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getChronology() })
 
 
     pub def getEra(x: JapaneseDate): JapaneseEra = 
-        let JapaneseDate(x1) = x;
-        let ans = unsafe IO { x1.getEra() };
-        JapaneseEra(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getEra() })
 
     pub def lengthOfMonth(x: JapaneseDate): Int32 = 
-        let JapaneseDate(x1) = x;
-        unsafe IO { x1.lengthOfMonth() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.lengthOfMonth() })
     
     /// pub def getDayOfWeek(x: JapaneseDate): Int32 = 
     ///     getChronoFieldHelper(x, InteropTime.Temporal.ChronoField.DayOfWeek)

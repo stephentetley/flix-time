@@ -17,14 +17,12 @@
 
 pub mod InteropTime.Chrono.HijrahEra {
     
-    use InteropTime.Chrono.HijrahEra.HijrahEra
-    use InteropTime.Chrono.HijrahEra.HijrahEra.{AH}
-
+    use InteropLocale.Locale.Locale
+    
     use InteropTime.Internal.AdaptorExtras
-
     use InteropTime.Format.TextStyle.TextStyle
 
-    use InteropLocale.Locale.Locale
+    
 
     import java.time.chrono.{HijrahEra => JHijrahEra}
     import java.time.chrono.{Era => JEra}
@@ -77,10 +75,9 @@ pub mod InteropTime.Chrono.HijrahEra {
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String =
-        let x1 = ToJava.toJava(x);
-        let style1 = ToJava.toJava(style);
-        let Locale.Locale(locale1) = locale;
-        unsafe IO { x1.getDisplayName(style1, locale1) }
+        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) ->
+            unsafe IO { x1.getDisplayName(style1, locale1) }
+        )
         
  
 }

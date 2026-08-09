@@ -16,12 +16,10 @@
 
 pub mod InteropTime.Chrono.IsoChronology {
 
-    use InteropTime.Chrono.IsoChronology.IsoChronology
-    use InteropTime.Chrono.IsoChronology.IsoChronology.{IsoChronology}
+    use InteropTime.Internal.AdaptorExtras
     use InteropTime.Chrono.IsoEra.IsoEra
     use InteropTime.LocalDate.LocalDate
-    use InteropTime.LocalDate.LocalDate.{LocalDate}
-
+    
     import java.time.chrono.{IsoChronology => JIsoChronology}
     import java.time.chrono.{Chronology => JChronology, 
         ChronoLocalDate => JChronoLocalDate, 
@@ -52,24 +50,20 @@ pub mod InteropTime.Chrono.IsoChronology {
         pub def toFlix(x: JIsoChronology): IsoChronology = IsoChronology.IsoChronology(x)
     }
     
+
     pub def getInstance(): IsoChronology \ IO = 
-        IsoChronology(checked_ecast(JIsoChronology.INSTANCE))
+        AdaptorExtras.of(() -> checked_ecast(JIsoChronology.INSTANCE))
 
     pub def getCalendarType(x: IsoChronology): String =
-        let IsoChronology(x1) = x;
-        unsafe IO { x1.getCalendarType() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
 
     pub def dateNow(x: IsoChronology): LocalDate \ IO = 
-        let IsoChronology(x1) = x;
-        let ans = x1.dateNow();
-        LocalDate(ans)
+        AdaptorExtras.op(x, x1 -> x1.dateNow())
 
 
 
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra =
-        let IsoChronology(x1) = x;
-        let ans = unsafe IO { x1.eraOf(i) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.eraOf(i) })
 
 
     pub def eras(x: IsoChronology): List[IsoEra] =
@@ -83,7 +77,6 @@ pub mod InteropTime.Chrono.IsoChronology {
         List.map(convert, xs)
 
     pub def getId(x: IsoChronology): String =
-        let IsoChronology(x1) = x;
-        unsafe IO { x1.getId() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
 
 }

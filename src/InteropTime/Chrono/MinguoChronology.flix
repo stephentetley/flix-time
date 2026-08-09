@@ -17,8 +17,8 @@
 
 pub mod InteropTime.Chrono.MinguoChronology {
 
-    use InteropTime.Chrono.MinguoChronology.MinguoChronology
-    use InteropTime.Chrono.MinguoChronology.MinguoChronology.{MinguoChronology}
+
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Chrono.MinguoDate.MinguoDate
     use InteropTime.Chrono.MinguoDate.MinguoDate.{MinguoDate}
@@ -40,7 +40,7 @@ pub mod InteropTime.Chrono.MinguoChronology {
 
     instance ToString[MinguoChronology] {
         pub def toString(x: MinguoChronology): String =
-            let MinguoChronology(x1) = x;
+            let MinguoChronology.MinguoChronology(x1) = x;
             unsafe IO { x1.toString() }
     }
 
@@ -53,44 +53,34 @@ pub mod InteropTime.Chrono.MinguoChronology {
 
     instance ToFlix[MinguoChronology] {
         type In = JMinguoChronology
-        pub def toFlix(x: JMinguoChronology): MinguoChronology = MinguoChronology.MinguoChronology(x)
+        pub def toFlix(x: JMinguoChronology): MinguoChronology = 
+            MinguoChronology.MinguoChronology(x)
     }
 
 
     pub def getInstance(): MinguoChronology \ IO = 
-        MinguoChronology(checked_ecast(JMinguoChronology.INSTANCE))
+        AdaptorExtras.of(() -> checked_ecast(JMinguoChronology.INSTANCE))
 
     pub def getCalendarType(x: MinguoChronology): String = 
-        let MinguoChronology(x1) = x;
-        unsafe IO { x1.getCalendarType() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
 
 
     pub def dateNow(x: MinguoChronology): MinguoDate \ IO = 
-        let MinguoChronology(x1) = x;
-        let ans = x1.dateNow();
-        MinguoDate(ans)
+        AdaptorExtras.op(x, x1 -> { x1.dateNow() })
 
     pub def dateNowWithClock(x: MinguoChronology, clock: ClockZ): MinguoDate \ IO =
-        let MinguoChronology(x1) = x;
-        let ClockZ(clock1) = clock;
-        let ans = x1.dateNow(clock1);
-        MinguoDate(ans)
+        AdaptorExtras.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
 
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: MinguoChronology, zone: ZoneId): MinguoDate \ IO =
-        let MinguoChronology(x1) = x;
-        let ZoneId(zone1) = zone;
-        let ans = x1.dateNow(zone1);        
-        MinguoDate(ans)
+        AdaptorExtras.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
                 
 
     pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
-        let MinguoChronology(x1) = x;
-        let ans = unsafe IO { x1.eraOf(i) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 ->  unsafe IO { x1.eraOf(i) })
 
     pub def eras(x: MinguoChronology): List[MinguoEra] = 
         def convert(e) = {
