@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Stephen Tetley
+ * Copyright 2026 Stephen Tetley
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ pub mod InteropTime.Internal.AdaptorExtras {
     import java.lang.{Exception => JException}
     import java.util.{Iterator => JIterator}
     import java.util.{List => JList}
+    import java.util.{Set => JSet}
 
     pub def op(x: a, f: ToJava.Out[a] -> ToFlix.In[ans] \ ef + ToJava.Aef[a] + ToFlix.Aef[ans]): ans \ ef + ToJava.Aef[a] + ToFlix.Aef[ans] with ToJava[a], ToFlix[ans] =
         let jx = ToJava.toJava(x);
@@ -108,6 +109,14 @@ pub mod InteropTime.Internal.AdaptorExtras {
         let iter1 = Adaptor.fromListToIterator(rc, l);
         Iterator.map(f, iter1) |> Iterator.toList
     }
+
+    // pub def fromSetViaIterator(s: JSet[a], 
+    //                             step: a -> b \ ef, 
+    //                             term: Iterator[b, ef, r] -> t[b] \ ef): t[b] \ ef = region rc {
+    //     let iter1 = Adaptor.fromSetToIterator(rc, s);
+    //     let iter2 = Iterator.map(step, iter1);
+    //     term(iter2)
+    // }
 
 
 }

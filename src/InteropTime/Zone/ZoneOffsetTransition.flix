@@ -17,17 +17,12 @@
 
 pub mod InteropTime.Zone.ZoneOffsetTransition {
 
-    use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition
-    use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition.{ZoneOffsetTransition}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.ZoneOffset.ZoneOffset
-    use InteropTime.ZoneOffset.ZoneOffset.{ZoneOffset}
     use InteropTime.LocalDateTime.LocalDateTime
-    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
     use InteropTime.DurationZ.DurationZ
-    use InteropTime.DurationZ.DurationZ.{DurationZ}
     use InteropTime.InstantZ.InstantZ
-    use InteropTime.InstantZ.InstantZ.{InstantZ}
 
     import java.time.zone.{ZoneOffsetTransition => JZoneOffsetTransition }
 
@@ -39,27 +34,27 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
 
     instance ToString[ZoneOffsetTransition] {
         pub def toString(x: ZoneOffsetTransition): String =
-            let ZoneOffsetTransition(x1) = x;
+            let ZoneOffsetTransition.ZoneOffsetTransition(x1) = x;
             unsafe IO { x1.toString() }
     }
 
     instance Eq[ZoneOffsetTransition] {
         pub def eq(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Bool =
-            let ZoneOffsetTransition(x1) = x;
-            let ZoneOffsetTransition(y1) = y;
+            let ZoneOffsetTransition.ZoneOffsetTransition(x1) = x;
+            let ZoneOffsetTransition.ZoneOffsetTransition(y1) = y;
             unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[ZoneOffsetTransition] {
         pub def hash(x: ZoneOffsetTransition): Int32 =
-            let ZoneOffsetTransition(x1) = x;
+            let ZoneOffsetTransition.ZoneOffsetTransition(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
     instance Order[ZoneOffsetTransition] {
         pub def compare(x: ZoneOffsetTransition, y: ZoneOffsetTransition): Comparison =
-            let ZoneOffsetTransition(x1) = x;
-            let ZoneOffsetTransition(y1) = y;
+            let ZoneOffsetTransition.ZoneOffsetTransition(x1) = x;
+            let ZoneOffsetTransition.ZoneOffsetTransition(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
@@ -72,66 +67,54 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
 
     instance ToFlix[ZoneOffsetTransition] {
         type In = JZoneOffsetTransition
-        pub def toFlix(x: JZoneOffsetTransition): ZoneOffsetTransition = ZoneOffsetTransition.ZoneOffsetTransition(x)
+        pub def toFlix(x: JZoneOffsetTransition): ZoneOffsetTransition = 
+            ZoneOffsetTransition.ZoneOffsetTransition(x)
     }
 
 
     /// Constructors
 
     pub def zoneOffsetTransition(transition: {transition = LocalDateTime}, before: {before = ZoneOffset}, after: {after = ZoneOffset}): ZoneOffsetTransition =
-        let ZoneOffset(before1) = before#before;
-        let ZoneOffset(after1) = after#after;
-        let LocalDateTime(transition1) =  transition#transition;
-        ZoneOffsetTransition(unsafe IO { JZoneOffsetTransition.of(transition1, before1, after1)})
+        AdaptorExtras.op3(
+            before#before, 
+            after#after, 
+            transition#transition, 
+            (before1, after1, transition1) -> unsafe IO { JZoneOffsetTransition.of(transition1, before1, after1)}
+        )
     
     /// `to` functions
 
     pub def toEpochSecond(x: ZoneOffsetTransition): Int64 =
-        let ZoneOffsetTransition(x1) = x;
-        unsafe IO { x1.toEpochSecond() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochSecond() })
 
 
     /// predicates / comparisons
 
     pub def isGap(x: ZoneOffsetTransition): Bool =
-        let ZoneOffsetTransition(x1) = x;
-        unsafe IO { x1.isGap() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isGap() })
 
     pub def isOverlap(x: ZoneOffsetTransition): Bool =
-        let ZoneOffsetTransition(x1) = x;
-        unsafe IO { x1.isOverlap() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isOverlap() })
 
     /// ZoneOffsetTransition functions
 
     pub def getDateTimeBefore(x: ZoneOffsetTransition): LocalDateTime =
-        let ZoneOffsetTransition(x1) = x;
-        let ans = unsafe IO { x1.getDateTimeBefore() };
-        LocalDateTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDateTimeBefore() })
 
     pub def getDateTimeAfter(x: ZoneOffsetTransition): LocalDateTime =
-        let ZoneOffsetTransition(x1) = x;
-        let ans = unsafe IO { x1.getDateTimeAfter() };
-        LocalDateTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDateTimeAfter() })
 
 
     pub def getOffsetBefore(x: ZoneOffsetTransition): ZoneOffset =
-        let ZoneOffsetTransition(x1) = x;
-        let ans = unsafe IO { x1.getOffsetBefore() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetBefore() })
 
     pub def getOffsetAfter(x: ZoneOffsetTransition): ZoneOffset =
-        let ZoneOffsetTransition(x1) = x;
-        let ans = unsafe IO { x1.getOffsetAfter() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetAfter() })
 
     pub def getDuration(x: ZoneOffsetTransition): DurationZ =
-        let ZoneOffsetTransition(x1) = x;
-        let ans = unsafe IO { x1.getDuration() };
-        DurationZ(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDuration() })
 
     pub def getInstant(x: ZoneOffsetTransition): InstantZ =
-        let ZoneOffsetTransition(x1) = x;
-        let ans = unsafe IO { x1.getInstant() };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getInstant() })
 
 }

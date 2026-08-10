@@ -19,10 +19,8 @@ pub mod InteropTime.Format.DecimalStyle {
 
     use InteropLocale.Locale.{Locale}
      
-
     use InteropTime.Internal.AdaptorExtras
 
-    
     import java.time.format.{DecimalStyle => JDecimalStyle}
     import java.util.{Locale => JLocale, 
                         Set => JSet,

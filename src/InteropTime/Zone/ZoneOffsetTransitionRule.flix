@@ -17,19 +17,15 @@
 
 pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
 
-    use InteropTime.Zone.ZoneOffsetTransitionRule.ZoneOffsetTransitionRule
-    use InteropTime.Zone.ZoneOffsetTransitionRule.ZoneOffsetTransitionRule.{ZoneOffsetTransitionRule}
+    use InteropTime.Internal.AdaptorExtras
 
-    use InteropTime.Zone.ZoneOffsetTransitionRule.TimeDefinition.{Standard, UTC, Wall}
+
     use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition
-    use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition.{ZoneOffsetTransition}
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.Month.Month
     use InteropTime.LocalTime.LocalTime
-    use InteropTime.LocalTime.LocalTime.{LocalTime}
     use InteropTime.ZoneOffset.ZoneOffset
-    use InteropTime.ZoneOffset.ZoneOffset.{ZoneOffset}
-
+    
     import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule}
     import java.time.zone.{ZoneOffsetTransitionRule$TimeDefinition => JTimeDefinition}
     import java.lang.{Enum => JEnum}
@@ -42,21 +38,21 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
 
     instance ToString[ZoneOffsetTransitionRule] {
         pub def toString(x: ZoneOffsetTransitionRule): String =
-            let ZoneOffsetTransitionRule(x1) = x;
+            let ZoneOffsetTransitionRule.ZoneOffsetTransitionRule(x1) = x;
             unsafe IO { x1.toString() }
     }
 
     instance Eq[ZoneOffsetTransitionRule] {
         pub def eq(x: ZoneOffsetTransitionRule, y: ZoneOffsetTransitionRule): Bool =
-            let ZoneOffsetTransitionRule(x1) = x;
-            let ZoneOffsetTransitionRule(y1) = y;
+            let ZoneOffsetTransitionRule.ZoneOffsetTransitionRule(x1) = x;
+            let ZoneOffsetTransitionRule.ZoneOffsetTransitionRule(y1) = y;
             unsafe IO { x1.equals(y1) }
 
     }
 
     instance Hash[ZoneOffsetTransitionRule] {
         pub def hash(x: ZoneOffsetTransitionRule): Int32 =
-            let ZoneOffsetTransitionRule(x1) = x;
+            let ZoneOffsetTransitionRule.ZoneOffsetTransitionRule(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
@@ -70,15 +66,25 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
 
     instance ToFlix[ZoneOffsetTransitionRule] {
         type In = JZoneOffsetTransitionRule
-        pub def toFlix(x: JZoneOffsetTransitionRule): ZoneOffsetTransitionRule = ZoneOffsetTransitionRule.ZoneOffsetTransitionRule(x)
+        pub def toFlix(x: JZoneOffsetTransitionRule): ZoneOffsetTransitionRule = 
+            ZoneOffsetTransitionRule.ZoneOffsetTransitionRule(x)
     }
 
 
-    pub enum TimeDefinition with Eq, Order, ToString, Hash {
+    pub enum TimeDefinition with Eq, Order, ToString {
         case Standard
         case UTC
         case Wall
     }
+
+    instance Hash[TimeDefinition] {
+        pub def hash(x: TimeDefinition): Int32 = match x {
+            case TimeDefinition.Standard    => unsafe IO { let x1 = JTimeDefinition.STANDARD; x1.hashCode() }
+            case TimeDefinition.UTC         => unsafe IO { let x1 = JTimeDefinition.UTC; x1.hashCode() }
+            case TimeDefinition.Wall        => unsafe IO { let x1 = JTimeDefinition.WALL; x1.hashCode() }
+        }
+    }
+
 
 
     instance ToJava[TimeDefinition] {
@@ -101,6 +107,8 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
     }
 
     /// Constructors
+
+    // opWithResult6 ?
 
     pub def zoneOffsetTransitionRule(month: {month = Month}, 
                                         dayOfMonthIndicator: {dayOfMonthIndicator = Int32}, 
@@ -135,54 +143,38 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
     /// predicates / comparisons
     
     pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        unsafe IO { x1.isMidnightEndOfDay() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isMidnightEndOfDay() })
 
 
     /// ZoneOffsetTransitionRule functions
 
     pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe IO { x1.createTransition(year) };
-        ZoneOffsetTransition(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.createTransition(year) })
 
 
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
-        let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe IO { x1.getTimeDefinition() };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getTimeDefinition() })
 
     pub def getDayOfMonthIndicator(x: ZoneOffsetTransitionRule): Int32  = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        unsafe IO { x1.getDayOfMonthIndicator() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfMonthIndicator() })
 
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe IO { x1.getDayOfWeek() };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDayOfWeek() })
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe IO { x1.getLocalTime() };
-        LocalTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getLocalTime() })
 
 
     pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe IO { x1.getStandardOffset() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getStandardOffset() })
 
     pub def getOffsetBefore(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe IO { x1.getOffsetBefore() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetBefore() })
 
 
     pub def getOffsetAfter(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        let ZoneOffsetTransitionRule(x1) = x;
-        let ans = unsafe IO { x1.getOffsetAfter() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetAfter() })
 
 
 }
