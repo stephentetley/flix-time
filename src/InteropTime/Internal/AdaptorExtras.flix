@@ -22,7 +22,6 @@
 pub mod InteropTime.Internal.AdaptorExtras {
 
     import java.lang.{Exception => JException}
-    import java.util.{Iterator => JIterator}
     import java.util.{List => JList}
     import java.util.{Set => JSet}
 
@@ -105,10 +104,10 @@ pub mod InteropTime.Internal.AdaptorExtras {
         Iterator.map(ToFlix.toFlix, iter1) |> Iterator.toList
     }
 
-    pub def fromListWith(l: JList[a], f: a -> b \ ef): List[b] \ ef = region rc {
-        let iter1 = Adaptor.fromListToIterator(rc, l);
-        Iterator.map(f, iter1) |> Iterator.toList
-    }
+    // pub def fromListWith(l: JList[a], f: a -> b \ ef): List[b] \ ef = region rc {
+    //     let iter1 = Adaptor.fromListToIterator(rc, l);
+    //     Iterator.map(f, iter1) |> Iterator.toList
+    // }
 
     // pub def fromSetViaIterator(s: JSet[a], 
     //                             step: a -> b \ ef, 

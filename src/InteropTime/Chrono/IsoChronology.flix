@@ -69,7 +69,7 @@ pub mod InteropTime.Chrono.IsoChronology {
     pub def eras(x: IsoChronology): List[IsoEra] =
         AdaptorExtras.extract(x, x1 -> {
             let jlist: JList[JEra] = unsafe IO { x1.eras() };
-            AdaptorExtras.fromListWith(jlist, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix)
+            AdaptorExtras.Collection.toList(jlist, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix)
         })
 
     pub def getId(x: IsoChronology): String =

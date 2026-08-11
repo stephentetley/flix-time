@@ -78,19 +78,13 @@ pub mod InteropTime.Format.DecimalStyle {
 
     /// ## DecimalStyle functions
 
+    // Return List rather than Set as we want to ignore Set's Order constraint
     pub def getAvailableLocales(): List[Locale] \ IO =
         let locs = JDecimalStyle.getAvailableLocales();
-        let locs1: List[JLocale] = fromSetAsList(locs);
-        List.map(Locale.Locale, locs1)
+        AdaptorExtras.Collection.toList(locs, ToFlix.toFlix)
+        
 
 
-    /// Candidate for Adaptor...
-    def fromSetAsList(s: JSet[a]): List[a] = region rc {
-        let proxy: Proxy[a] = Proxy.Proxy;
-        let jiter: JIterator[a] = unsafe IO { s.iterator() };
-        let iter = Adaptor.fromIterator(rc, proxy, jiter);
-        Iterator.toList(iter)
-    }
 
 
     // Note - should the Locale module provide a function marshal and unmarshal functions

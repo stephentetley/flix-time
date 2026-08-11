@@ -87,7 +87,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
     pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
         AdaptorExtras.extract(x, x1 -> {
             let jlist: JList[JEra] = unsafe IO { x1.eras() };
-            AdaptorExtras.fromListWith(jlist, e1 -> unchecked_cast(e1 as JThaiBuddhistEra) |> ToFlix.toFlix)
+            AdaptorExtras.Collection.toList(jlist, e1 -> unchecked_cast(e1 as JThaiBuddhistEra) |> ToFlix.toFlix)
         })
 
     pub def isIsoBased(x: ThaiBuddhistChronology): Bool =

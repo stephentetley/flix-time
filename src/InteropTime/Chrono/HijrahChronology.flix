@@ -117,9 +117,9 @@ pub mod InteropTime.Chrono.HijrahChronology {
     pub def eras(x: HijrahChronology): List[HijrahEra]  =
         AdaptorExtras.extract(x, x1 -> {
             let jlist: JList[JEra] = unsafe IO { x1.eras() };
-            AdaptorExtras.fromListWith(jlist, e1 -> unchecked_cast(e1 as JHijrahEra) |> ToFlix.toFlix)
+            AdaptorExtras.Collection.toList(jlist, e1 -> unchecked_cast(e1 as JHijrahEra) |> ToFlix.toFlix)
         })
-
+        
 
 
     pub def getId(x: HijrahChronology): String =

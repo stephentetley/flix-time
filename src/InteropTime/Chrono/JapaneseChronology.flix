@@ -83,7 +83,7 @@ pub mod InteropTime.Chrono.JapaneseChronology {
     pub def eras(x: JapaneseChronology): List[JapaneseEra] = 
         AdaptorExtras.extract(x, x1 -> {
             let jlist: JList[JEra] = unsafe IO { x1.eras() };
-            AdaptorExtras.fromListWith(jlist, e1 -> unchecked_cast(e1 as JJapaneseEra) |> ToFlix.toFlix)
+            AdaptorExtras.Collection.toList(jlist, e1 -> unchecked_cast(e1 as JJapaneseEra) |> ToFlix.toFlix)
         })
 
 
