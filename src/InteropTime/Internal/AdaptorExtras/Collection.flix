@@ -24,6 +24,7 @@ pub mod InteropTime.Internal.AdaptorExtras.Collection {
     import java.util.{Iterator => JIterator}
     import java.lang.{Iterable => JIterable}
     import java.util.{List => JList}
+    import java.util.{Set => JSet}
 
     pub enum LeftFold[ac: Type, jx: Type, a: Type, b: Type, ef1: Eff, ef2: Eff, ef3: Eff] {
         case LeftFold(jx -> a \ ef1, ac -> a -> ac \ ef2, ac, ac -> b \ ef3)
@@ -53,10 +54,26 @@ pub mod InteropTime.Internal.AdaptorExtras.Collection {
         let lf = LeftFold.LeftFold(convert, (f, x) -> (ks -> List.cons(x, ks)) >> f, ks -> ks, ks -> ks(Nil));
         leftFold(lf, xs)
 
-    pub def toset(xs: t[x],
+    pub def toSet(xs: t[x],
                     convert: x -> a \ ef1): Set[a] \ ef1 with Order[a]= 
         let lf = LeftFold.LeftFold(convert, (ac, x) -> Set.insert(x, ac), Set.empty(), identity);
         leftFold(lf, xs)
+
+    pub def toJList(xs: t,
+                    convert: Iterable.Elm[t] -> x \ ef): JList[x] \ ef + Iterable.Aef[t] with Iterable[t] = region rc {
+        let flixiter = Iterable.iterator(rc, xs);
+        let jlist = unsafe IO { JList.of() };
+        Iterator.forEach(et -> { let x = convert(et); unsafe IO { jlist.addLast(x) }}, flixiter);
+        jlist
+    }
+
+    pub def toJSet(xs: t,
+                    convert: Iterable.Elm[t] -> x \ ef): JSet[x] \ ef + Iterable.Aef[t] with Iterable[t] = region rc {
+        let flixiter = Iterable.iterator(rc, xs);
+        let jset = unsafe IO { JSet.of() };
+        Iterator.forEach(et -> { let x = convert(et); discard unsafe IO { jset.add(x) }}, flixiter);
+        jset
+    }
 
 
 }

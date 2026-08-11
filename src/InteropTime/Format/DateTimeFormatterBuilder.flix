@@ -20,6 +20,9 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
     use EffectExtras.Fail.Fail
     use InteropLocale.Locale.Locale
 
+    use InteropTime.Internal.AdaptorExtras
+
+    use InteropTime.ZoneId
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
     use InteropTime.Format.FormatStyle.FormatStyle
@@ -28,8 +31,10 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
 
     import java.time.format.{DateTimeFormatterBuilder => JDateTimeFormatterBuilder}
     import java.time.format.{DateTimeFormatter => JDateTimeFormatter}
+    import java.time.{ZoneId => JZoneId}
     import java.util.{Set => JSet}
     import java.lang.{Exception => JException}
+
 
     // Builder doesn't need IO for evaluation
 
@@ -54,6 +59,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
         def appendZoneOrOffsetId(): Unit
         def appendZoneRegionId(): Unit
         def appendZoneText(style: TextStyle): Unit
+        def appendZoneTextWithZoneIds(style: TextStyle, zones: List[ZoneId]): Unit
         def optionalStart(): Unit
         def optionalEnd(): Unit
         def padNext(n: Int32): Unit
@@ -190,12 +196,13 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
                 k()
             }
 
-            // TODO use wrapped types
-            // def appendZoneTextWithZones(style: TextStyle, preferredZones: JSet): Unit
-            //     let builder = DateTimeFormatterBuilder.currentDateTimeFormatterBuilder();
-            //     let style1 = ToJava.toJava(style);
-            //     discard builder.appendZoneText(style1, preferredZones);
-            //     ()
+            
+            def appendZoneTextWithZoneIds(style, preferredZones, k) = {
+                let style1 = ToJava.toJava(style);
+                let jset: JSet[JZoneId] = AdaptorExtras.Collection.toJSet(preferredZones, ToJava.toJava);
+                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1, jset) };
+                k()
+            }
 
             def optionalStart(k) = {
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.optionalStart() };
