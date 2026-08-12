@@ -30,6 +30,7 @@ pub mod InteropTime.Internal.AdaptorExtras.Collection {
     import java.util.{HashSet => JHashSet}
     import java.util.{Vector => JVector}
     import java.util.{Map => JMap}
+    import java.util.{Map$Entry => JMapEntry}
     import java.util.{HashMap => JHashMap}
     import java.util.function.{BiConsumer => JBiConsumer}
 
@@ -39,10 +40,8 @@ pub mod InteropTime.Internal.AdaptorExtras.Collection {
 
 
     pub def leftFold(lf: LeftFold[ac, jx, a, b, ef1, ef2, ef3], 
-                        xs: t[jx]): b \ ef1 + ef2 + ef3 = 
+                        jiter: JIterator[jx]): b \ ef1 + ef2 + ef3 = 
         let LeftFold.LeftFold(convert1, step, start, final) = lf;
-        let xs1: JIterable[jx] = unchecked_cast(xs as JIterable[jx]);
-        let jiter: JIterator[jx] = unsafe IO as { ef1 + ef2} { xs1.iterator() };
         @Tailrec
         def loop(ac) = {
             let more = unsafe IO as { ef1 + ef2 + ef3} { jiter.hasNext() };
@@ -56,17 +55,37 @@ pub mod InteropTime.Internal.AdaptorExtras.Collection {
         loop(start)
 
 
-    pub def toList(xs: t[x],
-                    convert: x -> a \ ef1): List[a] \ ef1 = 
+    pub def toList(jiter: JIterator[jx],
+                    convert: jx -> a \ ef1): List[a] \ ef1 = 
         let lf = LeftFold.LeftFold(convert, (f, x) -> (ks -> List.cons(x, ks)) >> f, ks -> ks, ks -> ks(Nil));
-        leftFold(lf, xs)
+        leftFold(lf, jiter)
 
-    pub def toSet(xs: t[x],
-                    convert: x -> a \ ef1): Set[a] \ ef1 with Order[a]= 
+    pub def toSet(jiter: JIterator[jx],
+                    convert: jx -> a \ ef1): Set[a] \ ef1 with Order[a]= 
         let lf = LeftFold.LeftFold(convert, (ac, x) -> Set.insert(x, ac), Set.empty(), identity);
-        leftFold(lf, xs)
+        leftFold(lf, jiter)
 
-    // toMap can use entrySet()
+    // // toMap can use entrySet()
+    pub def toMap(mobj: JMap[kx, vx]    ,
+                    convertKey: kx -> k \ ef1,
+                    convertValue: vx -> v \ ef2): Map[k, v] \ ef1 + ef2 with Order[k] = 
+        def convert(e: JMapEntry[kx, vx]): (k, v) \ ef1 + ef2 = {
+            let kx: kx = e.getKey();
+            let vx: vx = e.getValue();
+            let k: k = convertKey(kx);
+            let v: v = convertValue(vx);
+            (k, v)
+        };
+        def step(ac, es) = match es {
+            case (k, v) => Map.insert(k, v, ac)
+        };
+        let entryset: JSet[JMapEntry[kx, vx]] = unsafe IO { mobj.entrySet() };
+        let oiter: JIterable[JMapEntry[kx, vx]] = unchecked_cast(entryset as JIterable[JMapEntry[kx, vx]]);
+        let jiter: JIterator[JMapEntry[kx, vx]] = unsafe IO as { ef1 + ef2} { oiter.iterator() };
+        let lf = LeftFold.LeftFold(convert, step, Map.empty(), identity);
+        leftFold(lf, jiter)
+
+
 
     // toMutMap can use JMap.forEach because it can mutate the MutMap supplied by the closure
     pub def toMutMap(rc: Region[r],

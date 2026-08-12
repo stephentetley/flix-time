@@ -81,7 +81,7 @@ pub mod InteropTime.Format.DecimalStyle {
     // Return List rather than Set as we want to ignore Set's Order constraint
     pub def getAvailableLocales(): List[Locale] \ IO =
         let locs = JDecimalStyle.getAvailableLocales();
-        AdaptorExtras.Collection.toList(locs, ToFlix.toFlix)
+        AdaptorExtras.Collection.toList(locs.iterator(), ToFlix.toFlix)
         
 
 

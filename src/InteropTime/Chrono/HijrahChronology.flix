@@ -39,7 +39,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
         Era => JEra, 
         HijrahEra => JHijrahEra}
     import java.time.temporal.{ChronoField => JChronoField}
-    import java.util.{List => JList}
+    import java.util.{Iterator => JIterator}
     import java.lang.{Exception => JException}
 
     pub enum HijrahChronology(JHijrahChronology)
@@ -116,8 +116,8 @@ pub mod InteropTime.Chrono.HijrahChronology {
 
     pub def eras(x: HijrahChronology): List[HijrahEra]  =
         AdaptorExtras.extract(x, x1 -> {
-            let jlist: JList[JEra] = unsafe IO { x1.eras() };
-            AdaptorExtras.Collection.toList(jlist, e1 -> unchecked_cast(e1 as JHijrahEra) |> ToFlix.toFlix)
+            let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
+            AdaptorExtras.Collection.toList(jiter, e1 -> unchecked_cast(e1 as JHijrahEra) |> ToFlix.toFlix)
         })
         
 

@@ -26,7 +26,7 @@ pub mod InteropTime.Chrono.IsoChronology {
         Era => JEra, 
         IsoEra => JIsoEra}
     import java.time.{LocalDate => JLocalDate}
-    import java.util.{List => JList}
+    import java.util.{Iterator => JIterator}
 
 
     pub enum IsoChronology(JIsoChronology)
@@ -68,8 +68,8 @@ pub mod InteropTime.Chrono.IsoChronology {
 
     pub def eras(x: IsoChronology): List[IsoEra] =
         AdaptorExtras.extract(x, x1 -> {
-            let jlist: JList[JEra] = unsafe IO { x1.eras() };
-            AdaptorExtras.Collection.toList(jlist, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix)
+            let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
+            AdaptorExtras.Collection.toList(jiter, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix)
         })
 
     pub def getId(x: IsoChronology): String =

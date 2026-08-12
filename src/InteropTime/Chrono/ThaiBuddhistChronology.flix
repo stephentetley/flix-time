@@ -30,7 +30,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
         Era => JEra,
         ThaiBuddhistDate => JThaiBuddhistDate, 
         ThaiBuddhistEra => JThaiBuddhistEra}
-    import java.util.{List => JList}
+    import java.util.{Iterator => JIterator}
     import java.lang.{Exception => JException}
 
     pub enum ThaiBuddhistChronology(JThaiBuddhistChronology)
@@ -86,8 +86,8 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
 
     pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
         AdaptorExtras.extract(x, x1 -> {
-            let jlist: JList[JEra] = unsafe IO { x1.eras() };
-            AdaptorExtras.Collection.toList(jlist, e1 -> unchecked_cast(e1 as JThaiBuddhistEra) |> ToFlix.toFlix)
+            let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
+            AdaptorExtras.Collection.toList(jiter, e1 -> unchecked_cast(e1 as JThaiBuddhistEra) |> ToFlix.toFlix)
         })
 
     pub def isIsoBased(x: ThaiBuddhistChronology): Bool =
