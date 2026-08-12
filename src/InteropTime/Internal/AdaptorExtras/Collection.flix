@@ -31,6 +31,7 @@ pub mod InteropTime.Internal.AdaptorExtras.Collection {
     import java.util.{Vector => JVector}
     import java.util.{Map => JMap}
     import java.util.{HashMap => JHashMap}
+    import java.util.function.{BiConsumer => JBiConsumer}
 
     pub enum LeftFold[ac: Type, jx: Type, a: Type, b: Type, ef1: Eff, ef2: Eff, ef3: Eff] {
         case LeftFold(jx -> a \ ef1, ac -> a -> ac \ ef2, ac, ac -> b \ ef3)
@@ -64,6 +65,27 @@ pub mod InteropTime.Internal.AdaptorExtras.Collection {
                     convert: x -> a \ ef1): Set[a] \ ef1 with Order[a]= 
         let lf = LeftFold.LeftFold(convert, (ac, x) -> Set.insert(x, ac), Set.empty(), identity);
         leftFold(lf, xs)
+
+    // toMap can use entrySet()
+
+    // toMutMap can use JMap.forEach because it can mutate the MutMap supplied by the closure
+    pub def toMutMap(rc: Region[r],
+                    mobj: JMap[kx, vx],
+                    convertKey: kx -> k \ ef1,
+                    convertValue: vx -> v \ ef2): MutMap[k, v, r] \ ef1 + ef2 + r with Order[k] = 
+        let flixmap = MutMap.empty(rc);
+        def action(): JBiConsumer[kx, vx] = { 
+            new JBiConsumer[kx, vx] {
+                def accept(_this: JBiConsumer[kx, vx], kx: kx, vx: vx): Unit \ r + ef1 + ef2 = 
+                    let k = convertKey(kx);
+                    let v = convertValue(vx);
+                    MutMap.put(k, v, flixmap)
+            }
+        };
+        unsafe IO as { ef1 + ef2 + r} { mobj.forEach(action())};
+        flixmap
+
+    // ToJava
 
 
     // via ArrayList
