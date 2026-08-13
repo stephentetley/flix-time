@@ -21,8 +21,7 @@
 
 pub mod InteropTime.InstantZ {
 
-    use InteropTime.InstantZ.InstantZ
-    use InteropTime.InstantZ.InstantZ.{InstantZ}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.DurationZ.DurationZ
     use InteropTime.OffsetDateTime.OffsetDateTime
@@ -107,8 +106,7 @@ pub mod InteropTime.InstantZ {
 
     pub def instant(epochSecond: {epochSecond = Int64}, 
                     nano: {nano = Int64 }): InstantZ =
-        let ans = unsafe IO { JInstant.ofEpochSecond(epochSecond#epochSecond, nano#nano) };
-        InstantZ(ans)
+        AdaptorExtras.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond#epochSecond, nano#nano) })
 
     /// `now` and "abstract constructors" (e.g. `epoch`)
 
@@ -129,59 +127,42 @@ pub mod InteropTime.InstantZ {
     /// `at` functions
 
     pub def atOffset(x: InstantZ, offset: ZoneOffset): OffsetDateTime =
-        let x1 = ToJava.toJava(x);
-        let offset1 = ToJava.toJava(offset);
-        let ans = unsafe IO { x1.atOffset(offset1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op2(x, offset, (x1, offset1) -> unsafe IO { x1.atOffset(offset1) })
 
     pub def atZone(x: InstantZ, zone: ZoneId): ZonedDateTime =
-        let x1 = ToJava.toJava(x);
-        let zone1 = ToJava.toJava(zone);
-        let ans = unsafe IO { x1.atZone(zone1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op2(x, zone, (x1, zone1) -> unsafe IO { x1.atZone(zone1) })
 
     /// `of` functions
 
     pub def ofEpochSecond(epochSecond: Int64): InstantZ =
-        let ans = unsafe IO { JInstant.ofEpochSecond(epochSecond) };
-        InstantZ(ans)
+        AdaptorExtras.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond) })
 
 
     pub def ofEpochMilli(epochMilli: Int64): InstantZ =
-        let ans = unsafe IO { JInstant.ofEpochMilli(epochMilli) };
-        InstantZ(ans)
+        AdaptorExtras.of(() -> unsafe IO { JInstant.ofEpochMilli(epochMilli) })
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JInstant.$from(x1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JInstant.$from(x1) })
 
     pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JInstant.$from(x1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JInstant.$from(x1) })
 
     /// `to` functions
 
     pub def toEpochMilli(x: InstantZ): Int64 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.toEpochMilli() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochMilli() })
 
     /// `parse` / `format` functions
 
     pub def parse(s: String): Result[String, InstantZ] =
-        try {
+        AdaptorExtras.ofWithResult(() -> {
             let s1 = String.trim(s);
-            let ans = unsafe IO { JInstant.parse(s1) };
-            Ok(InstantZ(ans))
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+            unsafe IO { JInstant.parse(s1) }
+        })
 
     pub def format(x: InstantZ): String =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.toString() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toString() })
 
 
     /// predicates / comparisons
@@ -190,41 +171,36 @@ pub mod InteropTime.InstantZ {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: InstantZ, y: InstantZ): Bool =
-        let x1 = ToJava.toJava(x);
-        let y1 = ToJava.toJava(y);
-        unsafe IO { x1.isBefore(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: InstantZ, y: InstantZ): Bool =
-        let x1 = ToJava.toJava(x);
-        let y1 = ToJava.toJava(y);
-        unsafe IO { x1.isAfter(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     
     /// Getters and Setters
 
     pub def getEpochSecond(x: InstantZ): Int64 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.getEpochSecond() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getEpochSecond() })
 
     pub def getNano(x: InstantZ): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.getNano() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getNano() })
 
 
     pub def getNanoOfSecond(x: InstantZ): Int64 =
-        let x1 = ToJava.toJava(x);
-        let f1 = unsafe IO { JChronoField.NANO_OF_SECOND };
-        unsafe IO { x1.getLong(f1) }
+        AdaptorExtras.extract(x, x1 -> {
+            let f1 = unsafe IO { JChronoField.NANO_OF_SECOND };
+            unsafe IO { x1.getLong(f1) }
+        })
 
 
     pub def withNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let f1 = unsafe IO { JChronoField.NANO_OF_SECOND };
-        let ans = unsafe IO { x1.$with(f1, i) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let f1 = unsafe IO { JChronoField.NANO_OF_SECOND };
+            unsafe IO { x1.$with(f1, i) }
+        })
 
     pub def getMicroOfSecond(x: InstantZ): Int64 =
         let x1 = ToJava.toJava(x);
@@ -423,10 +399,10 @@ pub mod InteropTime.InstantZ {
         unsafe IO { b1.until(e1, u1) }
 
     pub def daysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
-        let u1 = unsafe IO { JChronoUnit.DAYS };
-        unsafe IO { b1.until(e1, u1) }
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            let u1 = unsafe IO { JChronoUnit.DAYS };
+            unsafe IO { begin1.until(end1, u1) }
+        })
 
 }
 

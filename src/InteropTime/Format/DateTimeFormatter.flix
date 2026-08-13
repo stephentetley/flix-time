@@ -159,36 +159,26 @@ pub mod InteropTime.Format.DateTimeFormatter {
 
     
     pub def withZone(zone: ZoneId, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
-        let DateTimeFormatter(x1) = x;
-        let ZoneId(z1) = zone;
-        DateTimeFormatter(unsafe IO { x1.$withZone(z1) })
+        AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { x1.$withZone(zone1) })
 
 
-    pub def getLocale(x: DateTimeFormatter[t]): Locale =
-        let DateTimeFormatter(x1) = x;
-        Locale.Locale(unsafe IO { x1.getLocale() })
+    pub def getLocale(x: DateTimeFormatter[t]): Locale \ IO =
+        AdaptorExtras.op(x, x1 -> { x1.getLocale() })
 
     pub def withLocale(locale: Locale, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
-        let Locale.Locale(locale1) = locale;
-        let DateTimeFormatter(x1) = x;
-        DateTimeFormatter(unsafe IO { x1.$withLocale(locale1) })
+        AdaptorExtras.op2(locale, x, (locale1, x1) -> unsafe IO { x1.$withLocale(locale1) })
 
     pub def getDecimalStyle(x: DateTimeFormatter[t]): DecimalStyle =
-        let DateTimeFormatter(x1) = x;
-        DecimalStyle(unsafe IO { x1.getDecimalStyle() })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDecimalStyle() })
 
     pub def withDecimalStyle(style: DecimalStyle, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
-        let DecimalStyle(style1) = style;
-        let DateTimeFormatter(x1) = x;
-        DateTimeFormatter(unsafe IO { x1.$withDecimalStyle(style1) })
+        AdaptorExtras.op2(style, x, (style1, x1) -> unsafe IO { x1.$withDecimalStyle(style1) })
 
     pub def getResolverStyle(x: DateTimeFormatter[t]): ResolverStyle =
-        let DateTimeFormatter(x1) = x;
-        ToFlix.toFlix(unsafe IO { x1.getResolverStyle() })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getResolverStyle() })
 
     pub def withResolverStyle(style: ResolverStyle, x: DateTimeFormatter[t]): DateTimeFormatter[t] =
-        let DateTimeFormatter(x1) = x;
-        let style1 = ToJava.toJava(style);
-        DateTimeFormatter(unsafe IO { x1.$withResolverStyle(style1) })
+        AdaptorExtras.op2(style, x, (style1, x1) -> unsafe IO { x1.$withResolverStyle(style1) })
 
 }
+

@@ -162,7 +162,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             }
 
             def appendOptional(fmt, k) = {
-                let DateTimeFormatter(fmt1) = fmt;
+                let fmt1 = ToJava.toJava(fmt);
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendOptional(fmt1) };
                 k()
             }
