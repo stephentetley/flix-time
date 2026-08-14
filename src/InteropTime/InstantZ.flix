@@ -203,206 +203,187 @@ pub mod InteropTime.InstantZ {
         })
 
     pub def getMicroOfSecond(x: InstantZ): Int64 =
-        let x1 = ToJava.toJava(x);
-        let f1 = unsafe IO { JChronoField.MICRO_OF_SECOND };
-        unsafe IO { x1.getLong(f1) }
+        AdaptorExtras.extract(x, x1 -> {
+            let f1 = unsafe IO { JChronoField.MICRO_OF_SECOND };
+            unsafe IO { x1.getLong(f1) }
+        })
 
     pub def withMicroOfSecond(i: Int64, x: InstantZ): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let f1 = unsafe IO { JChronoField.MICRO_OF_SECOND };
-        let ans = unsafe IO { x1.$with(f1, i) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let f1 = unsafe IO { JChronoField.MICRO_OF_SECOND };
+            unsafe IO { x1.$with(f1, i) }
+        })
 
     pub def getMilliOfSecond(x: InstantZ): Int64 =
-        let x1 = ToJava.toJava(x);
-        let f1 = unsafe IO { JChronoField.MILLI_OF_SECOND };
-        unsafe IO { x1.getLong(f1) }
+        AdaptorExtras.extract(x, x1 -> {
+            let f1 = unsafe IO { JChronoField.MILLI_OF_SECOND };
+            unsafe IO { x1.getLong(f1) }
+        })
 
     pub def withMilliOfSecond(i: Int64, x: InstantZ): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let f1 = unsafe IO { JChronoField.MILLI_OF_SECOND };
-        let ans = unsafe IO { x1.$with(f1, i) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let f1 = unsafe IO { JChronoField.MILLI_OF_SECOND };
+            unsafe IO { x1.$with(f1, i) }
+        })
+
 
     pub def getInstantSeconds(x: InstantZ): Int64 =
-        let x1 = ToJava.toJava(x);
-        let f1 = unsafe IO { JChronoField.INSTANT_SECONDS };
-        unsafe IO { x1.getLong(f1) }
+        AdaptorExtras.extract(x, x1 -> {
+            let f1 = unsafe IO { JChronoField.INSTANT_SECONDS };
+            unsafe IO { x1.getLong(f1) }
+        })
 
     pub def withInstantSeconds(i: Int64, x: InstantZ): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let f1 = unsafe IO { JChronoField.INSTANT_SECONDS };
-        let ans = unsafe IO { x1.$with(f1, i) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let f1 = unsafe IO { JChronoField.INSTANT_SECONDS };
+            unsafe IO { x1.$with(f1, i) }
+        })
 
     // `truncatedTo` specialized
 
     pub def truncatedToNanos(x: InstantZ): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let u1 = unsafe IO { JChronoUnit.NANOS };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u1 = unsafe IO { JChronoUnit.NANOS };
+            unsafe IO { x1.truncatedTo(u1) }
+        })
 
 
     pub def truncatedToMicros(x: InstantZ): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let u1 = unsafe IO { JChronoUnit.MICROS };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u1 = unsafe IO { JChronoUnit.MICROS };
+            unsafe IO { x1.truncatedTo(u1) }
+        })
 
     pub def truncatedToMillis(x: InstantZ): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let u1 = unsafe IO { JChronoUnit.MILLIS };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u1 = unsafe IO { JChronoUnit.MILLIS };
+            unsafe IO { x1.truncatedTo(u1) }
+        })
 
     pub def truncatedToSeconds(x: InstantZ): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let u1 = unsafe IO { JChronoUnit.SECONDS };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u1 = unsafe IO { JChronoUnit.SECONDS };
+            unsafe IO { x1.truncatedTo(u1) }
+        })
 
     pub def truncatedToMinutes(x: InstantZ): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let u1 = unsafe IO { JChronoUnit.MINUTES };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u1 = unsafe IO { JChronoUnit.MINUTES };
+            unsafe IO { x1.truncatedTo(u1) }
+        })
 
     pub def truncatedToHours(x: InstantZ): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let u1 = unsafe IO { JChronoUnit.HOURS };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u1 = unsafe IO { JChronoUnit.HOURS };
+            unsafe IO { x1.truncatedTo(u1) }
+        })
 
     pub def truncatedToHalfDays(x: InstantZ): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
+            unsafe IO { x1.truncatedTo(u1) }
+        })
 
 
     pub def truncatedToDays(x: InstantZ): InstantZ = 
-        let x1 = ToJava.toJava(x);
-        let u1 = unsafe IO { JChronoUnit.DAYS };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u1 = unsafe IO { JChronoUnit.DAYS };
+            unsafe IO { x1.truncatedTo(u1) }
+        })
 
     // plus / minus functions
 
     pub def plusSeconds(x: InstantZ, seconds: Int64): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.plusSeconds(seconds) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusSeconds(seconds) })
+            
 
     pub def minusSeconds(x: InstantZ, seconds: Int64): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.minusSeconds(seconds) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusSeconds(seconds) })
 
     pub def plusMillis(x: InstantZ, millis: Int64): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.plusMillis(millis) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMillis(millis) })
 
     pub def minusMillis(x: InstantZ, millis: Int64): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.minusMillis(millis) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 ->  unsafe IO { x1.minusMillis(millis) })
 
     pub def plusNanos(x: InstantZ, nanos: Int64): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.plusNanos(nanos) };
-        InstantZ(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusNanos(nanos) })
 
 
     pub def plusDuration(x: InstantZ, d: DurationZ): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let d1 = ToJava.toJava(d);
-        let t1 = unsafe IO { d1.addTo(x1) };
-        let ans = unchecked_cast(t1 as JInstant);
-        InstantZ(ans)
+        AdaptorExtras.op2(x, d, (x1, d1) -> {
+            let t1 = unsafe IO { d1.addTo(x1) };
+            unchecked_cast(t1 as JInstant)
+        })
     
     pub def minusDuration(x: InstantZ, d: DurationZ): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let d1 = ToJava.toJava(d);
-        let t1 = unsafe IO { d1.subtractFrom(x1) };
-        let ans = unchecked_cast(t1 as JInstant);
-        InstantZ(ans)
+        AdaptorExtras.op2(x, d, (x1, d1) -> {
+            let t1 = unsafe IO { d1.subtractFrom(x1) };
+            unchecked_cast(t1 as JInstant)
+        })
 
     // Period methods
 
     pub def plusPeriod(x: InstantZ, p: Period): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let p1 = ToJava.toJava(p);
-        let t1 = unsafe IO { p1.addTo(x1) };
-        let ans = unchecked_cast(t1 as JInstant);
-        InstantZ(ans)
+        AdaptorExtras.op2(x, p, (x1, p1) -> {
+            let t1 = unsafe IO { p1.addTo(x1) };
+            unchecked_cast(t1 as JInstant)
+        })
     
     pub def minusPeriod(x: InstantZ, p: Period): InstantZ =
-        let x1 = ToJava.toJava(x);
-        let p1 = ToJava.toJava(p);
-        let t1 = unsafe IO { p1.subtractFrom(x1) };
-        let ans = unchecked_cast(t1 as JInstant);
-        InstantZ(ans)
+        AdaptorExtras.op2(x, p, (x1, p1) -> {
+            let t1 = unsafe IO { p1.subtractFrom(x1) };
+            unchecked_cast(t1 as JInstant)
+        })
 
 
     // between / until functions
 
     pub def between(begin: {begin = InstantZ }, end: {end = InstantZ }): DurationZ =
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
-        let ans = unsafe IO { JDuration.between(b1, e1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op2(begin#begin, end#end, (begin1, end1) -> {
+           unsafe IO { JDuration.between(begin1, end1) }
+        })
 
     // `until` specialized
+    def untilHelper(junit: JChronoUnit, begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, junit) }
+        })
+
 
     pub def nanosUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.NANOS };
-        unsafe IO { b1.until(e1, u1) }
+        untilHelper(u1, begin, end)
 
     pub def microsUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.MICROS };
-        unsafe IO { b1.until(e1, u1) }
+        untilHelper(u1, begin, end)
+        
 
     pub def millisUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.MILLIS };
-        unsafe IO { b1.until(e1, u1) }
+        untilHelper(u1, begin, end)
 
     pub def secondsUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.SECONDS };
-        unsafe IO { b1.until(e1, u1) }
+        untilHelper(u1, begin, end)
+        
 
     pub def minutesUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.MINUTES };
-        unsafe IO { b1.until(e1, u1) }
+        untilHelper(u1, begin, end)
 
     pub def hoursUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.HOURS };
-        unsafe IO { b1.until(e1, u1) }
+        untilHelper(u1, begin, end)
 
     pub def halfDaysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
         let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-        unsafe IO { b1.until(e1, u1) }
+        untilHelper(u1, begin, end)
 
     pub def daysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            let u1 = unsafe IO { JChronoUnit.DAYS };
-            unsafe IO { begin1.until(end1, u1) }
-        })
+        let u1 = unsafe IO { JChronoUnit.DAYS };
+        untilHelper(u1, begin, end)
 
 }
 
