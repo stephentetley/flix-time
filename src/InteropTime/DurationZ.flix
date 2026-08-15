@@ -309,47 +309,38 @@ pub mod InteropTime.DurationZ {
 
     /// #truncate functions
     
-    pub def truncatedToNanos(x: DurationZ): DurationZ = 
+    def truncatedToHelper(junit: JChronoUnit, x: DurationZ): DurationZ = 
         AdaptorExtras.op(x, x1 -> { 
-            let u1 = unsafe IO { JChronoUnit.NANOS };
-            unsafe IO { x1.truncatedTo(u1) }
+            unsafe IO { x1.truncatedTo(junit) }
         })
+
+    pub def truncatedToNanos(x: DurationZ): DurationZ = 
+        let u1 = unsafe IO { JChronoUnit.NANOS };
+        truncatedToHelper(u1, x)
 
     pub def truncatedToMicros(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> { 
-            let u1 = unsafe IO { JChronoUnit.MICROS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        let u1 = unsafe IO { JChronoUnit.MICROS };
+        truncatedToHelper(u1, x)
 
     pub def truncatedToMillis(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> { 
-            let u1 = unsafe IO { JChronoUnit.MILLIS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        let u1 = unsafe IO { JChronoUnit.MILLIS };
+        truncatedToHelper(u1, x)
 
     pub def truncatedToSeconds(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> { 
-            let u1 = unsafe IO { JChronoUnit.SECONDS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        let u1 = unsafe IO { JChronoUnit.SECONDS };
+        truncatedToHelper(u1, x)
 
     pub def truncatedToMinutes(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> { 
-            let u1 = unsafe IO { JChronoUnit.MINUTES };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        let u1 = unsafe IO { JChronoUnit.MINUTES };
+        truncatedToHelper(u1, x)
 
     pub def truncatedToHours(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> { 
-            let u1 = unsafe IO { JChronoUnit.HOURS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        let u1 = unsafe IO { JChronoUnit.HOURS };
+        truncatedToHelper(u1, x)
 
     pub def truncatedToHalfDays(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> { 
-            let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
+        truncatedToHelper(u1, x)
 
 
     /// ## plus / minus functions
