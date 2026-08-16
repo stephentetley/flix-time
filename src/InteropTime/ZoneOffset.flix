@@ -18,8 +18,7 @@
 pub mod InteropTime.ZoneOffset {
 
 
-    use InteropTime.ZoneOffset.ZoneOffset
-    use InteropTime.ZoneOffset.ZoneOffset.{ZoneOffset}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Zone.ZoneRules.ZoneRules
     use InteropTime.Zone.ZoneRules.ZoneRules.{ZoneRules}
@@ -47,28 +46,28 @@ pub mod InteropTime.ZoneOffset {
     ///
     instance ToString[ZoneOffset] {
         pub def toString(x: ZoneOffset): String =
-            let ZoneOffset(x1) = x;
+            let ZoneOffset.ZoneOffset(x1) = x;
             unsafe IO { x1.toString() }
     }
 
     instance Eq[ZoneOffset] {
         pub def eq(x: ZoneOffset, y: ZoneOffset): Bool =
-            let ZoneOffset(x1) = x;
-            let ZoneOffset(y1) = y;
+            let ZoneOffset.ZoneOffset(x1) = x;
+            let ZoneOffset.ZoneOffset(y1) = y;
             unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[ZoneOffset] {
         pub def hash(x: ZoneOffset): Int32 =
-            let ZoneOffset(x1) = x;
+            let ZoneOffset.ZoneOffset(x1) = x;
             unsafe IO { x1.hashCode() }
 
     }
 
     instance Order[ZoneOffset] {
         pub def compare(x: ZoneOffset, y: ZoneOffset): Comparison =
-            let ZoneOffset(x1) = x;
-            let ZoneOffset(y1) = y;
+            let ZoneOffset.ZoneOffset(x1) = x;
+            let ZoneOffset.ZoneOffset(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
@@ -81,14 +80,10 @@ pub mod InteropTime.ZoneOffset {
 
     instance ToFlix[ZoneOffset] {
         type In = JZoneOffset
-        pub def toFlix(x: JZoneOffset): ZoneOffset = ZoneOffset.ZoneOffset(x)
+        pub def toFlix(x: JZoneOffset): ZoneOffset = 
+            ZoneOffset.ZoneOffset(x)
     }
 
-    
-    // TODO - do we need this for interring into Java collections?
-    pub def fromJavaObject(o: Object): ZoneOffset = 
-        let ans = unchecked_cast(o as JZoneOffset);
-        ZoneOffset(ans)
 
 
     /// "abstract constructors" (e.g. `utc`)
@@ -105,64 +100,51 @@ pub mod InteropTime.ZoneOffset {
     /// `of` functions
 
     pub def ofHours(hours: Int32): ZoneOffset =
-        let ans = unsafe IO { JZoneOffset.ofHours(hours) };
-        ZoneOffset(ans)
+        AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofHours(hours) })
 
     pub def ofHoursMinutes(hours: {hours = Int32}, 
                             minutes: {minutes = Int32}): ZoneOffset =
-        let ans = unsafe IO { JZoneOffset.ofHoursMinutes(hours#hours, minutes#minutes) };
-        ZoneOffset(ans)
+        AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofHoursMinutes(hours#hours, minutes#minutes) })
 
     pub def ofHoursMinutesSeconds(hours: {hours = Int32}, 
                                     minutes: {minutes = Int32}, 
                                     seconds: {seconds = Int32}): ZoneOffset =
-        let ans = unsafe IO { JZoneOffset.ofHoursMinutesSeconds(hours#hours, minutes#minutes, seconds#seconds) };
-        ZoneOffset(ans)
+        AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofHoursMinutesSeconds(hours#hours, minutes#minutes, seconds#seconds) })
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
-        let ans = unsafe IO { JZoneOffset.ofTotalSeconds(seconds) };
-        ZoneOffset(ans)
+        AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofTotalSeconds(seconds) })
 
     // `from(TemporalAccessor x)` has problems - instead we can write the functions 
     // we want by calling the respective object
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset =
-        let OffsetDateTime(x1) = x;
-        let ans = unsafe IO { x1.getOffset() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
 
     pub def fromOffsetTime(x: OffsetTime): ZoneOffset =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.getOffset() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
             
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset =
-        let ZonedDateTime(x1) = x;
-        let ans = unsafe IO { x1.getOffset() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
     
     /// ZoneOffset functions
 
     pub def getId(x: ZoneOffset): String =
-        let ZoneOffset(x1) = x;
-        unsafe IO { x1.getId() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
 
     pub def getRules(x: ZoneOffset): ZoneRules =
-        let ZoneOffset(x1) = x;
-        let ans = unsafe IO { x1.getRules() };
-        ZoneRules(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getRules() })
 
     pub def getTotalSeconds(x: ZoneOffset): Int32 =
-        let ZoneOffset(x1) = x;
-        unsafe IO { x1.getTotalSeconds() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getTotalSeconds() })
 
 
 
 
     pub def getOffsetSeconds(x: ZoneOffset): Int32 =
-        let ZoneOffset(x1) = x;
-        let f1 = unsafe IO { JChronoField.OFFSET_SECONDS };
-        unsafe IO { x1.get(f1) }
+        AdaptorExtras.extract(x, x1 -> {
+            let field = unsafe IO { JChronoField.OFFSET_SECONDS };
+            unsafe IO { x1.get(field) }
+        })
 
 
 

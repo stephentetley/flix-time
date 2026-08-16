@@ -81,9 +81,6 @@ pub mod InteropTime.ZoneId {
         type In = JZoneId
         pub def toFlix(x: JZoneId): ZoneId = ZoneId.ZoneId(x)
     }
-    
-    pub def fromJavaObject(o: Object): ZoneId = 
-        ZoneId(unchecked_cast(o as JZoneId))
 
     /// Constructors
 
