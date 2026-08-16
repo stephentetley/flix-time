@@ -303,248 +303,251 @@ pub mod InteropTime.LocalDate {
 
 
     /// Get / Set Iso
-    def getIsoOfHelper(field: JTemporalField, x: LocalDate): Int64 = 
-        AdaptorExtras.extract(x, (x1: JLocalDate) -> unsafe IO { x1.getLong(field) })
-
-    def withIsoOfHelper(field: JTemporalField, n: Int64, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$with(field, n) })
+    
+    // def withIsoOfHelper(field: JTemporalField, n: Int64, x: LocalDate): LocalDate =
+    //     AdaptorExtras.op(x, x1 -> unsafe IO { x1.$with(field, n) })
 
 
     pub def getDayOfQuarter(x: LocalDate): Int64 = 
-        let field = unsafe IO { JIsoFields.DAY_OF_QUARTER };
-        getIsoOfHelper(field, x)
+        AdaptorExtras.extract(x, x1 -> {
+            let field = unsafe IO { JIsoFields.DAY_OF_QUARTER };
+            unsafe IO { x1.getLong(field) }
+        })
+
 
     pub def withDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
-        let field = unsafe IO { JIsoFields.DAY_OF_QUARTER };
-        withIsoOfHelper(field, Int32.toInt64(d), x)
+        AdaptorExtras.op(x, x1 -> {
+            let field = unsafe IO { JIsoFields.DAY_OF_QUARTER };
+            unsafe IO { x1.$with(field, Int32.toInt64(d)) }
+        })
 
     pub def getQuarterOfYear(x: LocalDate): Int64 =  
-        let field = unsafe IO { JIsoFields.QUARTER_OF_YEAR };
-        getIsoOfHelper(field, x)
+        AdaptorExtras.extract(x, x1 -> {
+            let field = unsafe IO { JIsoFields.QUARTER_OF_YEAR };
+            unsafe IO { x1.getLong(field) }
+        })
 
     pub def withQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
-        let field = unsafe IO { JIsoFields.QUARTER_OF_YEAR };
-        withIsoOfHelper(field, Int32.toInt64(d), x)
+        AdaptorExtras.op(x, x1 -> {
+            let field = unsafe IO { JIsoFields.QUARTER_OF_YEAR };
+            unsafe IO { x1.$with(field, Int32.toInt64(d)) }
+        })
 
     pub def getWeekOfYear(x: LocalDate): Int64 = 
-        let weekFields = unsafe IO { JWeekFields.ISO };
-        let field: JTemporalField = unsafe IO { weekFields.weekBasedYear() };
-        getIsoOfHelper(field, x)
+        AdaptorExtras.extract(x, x1 -> {
+            let weekFields = unsafe IO { JWeekFields.ISO };
+            let field: JTemporalField = unsafe IO { weekFields.weekBasedYear() };
+            unsafe IO { x1.getLong(field) }
+        })
 
 
     pub def withWeekOfYear(d: Int32, x: LocalDate): LocalDate =
-        let weekFields = unsafe IO { JWeekFields.ISO };
-        let field = unsafe IO { weekFields.weekBasedYear() };
-        withIsoOfHelper(field, Int32.toInt64(d), x)
+        AdaptorExtras.op(x, x1 -> {
+            let weekFields = unsafe IO { JWeekFields.ISO };
+            let field = unsafe IO { weekFields.weekBasedYear() };
+            unsafe IO { x1.$with(field, Int32.toInt64(d)) }
+        })
 
 
     pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
-        let field = unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH };
-        let field1: JTemporalField = checked_cast(field);
-        getIsoOfHelper(field1, x)
+        AdaptorExtras.extract(x, x1 -> {
+            let field = unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH };
+            let field1: JTemporalField = checked_cast(field);
+            unsafe IO { x1.getLong(field1) }
+        })
         
     
     pub def getAlignedDayOfWeekInYear(x: LocalDate): Int64 =
-        let field = unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR };
-        let field1: JTemporalField = checked_cast(field);
-        getIsoOfHelper(field1, x)
+        AdaptorExtras.extract(x, x1 -> {
+            let field = unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR };
+            let field1: JTemporalField = checked_cast(field);
+            unsafe IO { x1.getLong(field1) }
+        })
 
 
     pub def getAlignedWeekOfMonth(x: LocalDate): Int64 =
-        let field = unsafe IO { JChronoField.ALIGNED_WEEK_OF_MONTH };
-        let field1: JTemporalField = checked_cast(field);
-        getIsoOfHelper(field1, x)
+        AdaptorExtras.extract(x, x1 -> {
+            let field = unsafe IO { JChronoField.ALIGNED_WEEK_OF_MONTH };
+            let field1: JTemporalField = checked_cast(field);
+            unsafe IO { x1.getLong(field1) }
+        })
 
 
     pub def getAlignedWeekOfYear(x: LocalDate): Int64 =
-        let field = unsafe IO { JChronoField.ALIGNED_WEEK_OF_YEAR };
-        let field1: JTemporalField = checked_cast(field);
-        getIsoOfHelper(field1, x)
+        AdaptorExtras.extract(x, x1 -> {
+            let field = unsafe IO { JChronoField.ALIGNED_WEEK_OF_YEAR };
+            let field1: JTemporalField = checked_cast(field);
+            unsafe IO { x1.getLong(field1) }
+        })
 
 
     pub def getEra(x: LocalDate): Int64 =
-        let x1 = ToJava.toJava(x);
-        let field = unsafe IO { JChronoField.ERA };
-        unsafe IO { x1.getLong(field) }
+        AdaptorExtras.extract(x, x1 -> {
+            let field = unsafe IO { JChronoField.ERA };
+            unsafe IO { x1.getLong(field) }
+        })
 
-    pub def adjustMonthDay(i: MonthDay, x: LocalDate): LocalDate =
-        let x1 = ToJava.toJava(x);
-        let i1 = ToJava.toJava(i);
-        let ans = unsafe IO { x1.$with(i1) };
-        ToFlix.toFlix(ans)
+    pub def adjustMonthDay(md: MonthDay, x: LocalDate): LocalDate =
+        AdaptorExtras.op2(md, x, (md1, x1) -> unsafe IO { x1.$with(md1) })
 
 
-    pub def adjustYearMonth(i: YearMonth, x: LocalDate): LocalDate =
-        let x1 = ToJava.toJava(x);
-        let i1 = ToJava.toJava(i);
-        let ans = unsafe IO { x1.$with(i1) };
-        ToFlix.toFlix(ans)
+    pub def adjustYearMonth(ym: YearMonth, x: LocalDate): LocalDate =
+        AdaptorExtras.op2(ym, x, (ym1, x1) -> unsafe IO { x1.$with(ym1) })
 
 
     pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
-        let x1 = ToJava.toJava(x);
-        let cf1 = unsafe IO { JChronoField.EPOCH_DAY };
-        let ans = unsafe IO { x1.$with(cf1, i) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let cf1 = unsafe IO { JChronoField.EPOCH_DAY };
+            unsafe IO { x1.$with(cf1, i) }
+        })
 
     /// DayOfWeek methods
 
     pub def adjustDayOfWeek(x: DayOfWeek, ld: LocalDate): LocalDate = 
-        let ld1 = ToJava.toJava(ld);
-        let x1 = ToJava.toJava(x);
-        let d1 = unsafe IO { x1.adjustInto(ld1) };
-        let ans = unchecked_cast(d1 as JLocalDate);
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op2(x, ld, (x1, ld1) -> {
+            let d1 = unsafe IO { x1.adjustInto(ld1) };
+            unchecked_cast(d1 as JLocalDate)
+        })
 
     
     pub def adjustToFirstDayOfMonth(x: LocalDate): LocalDate = 
-        let x1 = ToJava.toJava(x);
-        let d1 = unsafe IO { JTemporalAdjusters.firstDayOfMonth() };
-        let ans = unsafe IO { x1.$with(d1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let d1 = unsafe IO { JTemporalAdjusters.firstDayOfMonth() };
+            unsafe IO { x1.$with(d1) }
+        })
 
     pub def adjustToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
-        let x1 = ToJava.toJava(x);
-        let d1 = unsafe IO { JTemporalAdjusters.firstDayOfNextMonth() };
-        let ans = unsafe IO { x1.$with(d1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let d1 = unsafe IO { JTemporalAdjusters.firstDayOfNextMonth() };
+            unsafe IO { x1.$with(d1) }
+        })
 
     pub def adjustToFirstDayOfNextYear(x: LocalDate): LocalDate = 
-        let x1 = ToJava.toJava(x);
-        let d1 = unsafe IO { JTemporalAdjusters.firstDayOfNextYear() };
-        let ans = unsafe IO { x1.$with(d1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let d1 = unsafe IO { JTemporalAdjusters.firstDayOfNextYear() };
+            unsafe IO { x1.$with(d1) }
+        })
 
     pub def adjustToLastDayOfMonth(x: LocalDate): LocalDate =  
-        let x1 = ToJava.toJava(x);
-        let d1 = unsafe IO { JTemporalAdjusters.lastDayOfMonth() };
-        let ans = unsafe IO { x1.$with(d1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let d1 = unsafe IO { JTemporalAdjusters.lastDayOfMonth() };
+            unsafe IO { x1.$with(d1) }
+        })
 
 
     pub def adjustToLastDayOfYear(x: LocalDate): LocalDate =  
-        let x1 = ToJava.toJava(x);
-        let d1 = unsafe IO { JTemporalAdjusters.lastDayOfYear() };
-        let ans = unsafe IO { x1.$with(d1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let d1 = unsafe IO { JTemporalAdjusters.lastDayOfYear() };
+            unsafe IO { x1.$with(d1) }
+        })
 
 
     /// plus / minus functions
 
     pub def plusYears(x: LocalDate, years: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.plusYears(years) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusYears(years) })
 
     pub def minusYears(x: LocalDate, years: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.minusYears(years) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusYears(years) })
 
     pub def plusMonths(x: LocalDate, months: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.plusMonths(months) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMonths(months) })
 
     pub def minusMonths(x: LocalDate, months: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.minusMonths(months) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMonths(months) })
 
     pub def plusWeeks(x: LocalDate, weeks: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.plusWeeks(weeks) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusWeeks(weeks) })
 
     pub def minusWeeks(x: LocalDate, weeks: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.minusWeeks(weeks) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusWeeks(weeks) })
 
     pub def plusDays(x: LocalDate, days: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.plusDays(days) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusDays(days) })
 
     pub def minusDays(x: LocalDate, days: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.minusDays(days) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusDays(days) })
 
 
     pub def plusDecades(x: LocalDate, i: Int64): LocalDate =
-        let x1 = ToJava.toJava(x);
-        let u = unsafe IO { JChronoUnit.DECADES };
-        let ans = unsafe IO { x1.plus(i, u) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u = unsafe IO { JChronoUnit.DECADES };
+            unsafe IO { x1.plus(i, u) }
+        })
 
 
     pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
-        let x1 = ToJava.toJava(x);
-        let u = unsafe IO { JChronoUnit.DECADES };
-        let ans = unsafe IO { x1.minus(i, u) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u = unsafe IO { JChronoUnit.DECADES };
+            unsafe IO { x1.minus(i, u) }
+        })
 
     pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
-        let x1 = ToJava.toJava(x);
-        let u = unsafe IO { JChronoUnit.CENTURIES };
-        let ans = unsafe IO { x1.plus(i, u) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u = unsafe IO { JChronoUnit.CENTURIES };
+            unsafe IO { x1.plus(i, u) }
+        })
 
 
     pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
-        let x1 = ToJava.toJava(x);
-        let u = unsafe IO { JChronoUnit.CENTURIES };
-        let ans = unsafe IO { x1.minus(i, u) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u = unsafe IO { JChronoUnit.CENTURIES };
+            unsafe IO { x1.minus(i, u) }
+        })
 
 
     pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
-        let x1 = ToJava.toJava(x);
-        let u = unsafe IO { JChronoUnit.MILLENNIA };
-        let ans = unsafe IO { x1.plus(i, u) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u = unsafe IO { JChronoUnit.MILLENNIA };
+            unsafe IO { x1.plus(i, u) }
+        })
 
     pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
-        let x1 = ToJava.toJava(x);
-        let u = unsafe IO { JChronoUnit.MILLENNIA };
-        let ans = unsafe IO { x1.minus(i, u) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> {
+            let u = unsafe IO { JChronoUnit.MILLENNIA };
+            unsafe IO { x1.minus(i, u) }
+        })
 
 
     // Period methods
 
     pub def plusPeriod(x: LocalDate, p: Period): LocalDate =
-        let x1 = ToJava.toJava(x);
-        let p1 = ToJava.toJava(p);
-        let t1 = unsafe IO { p1.addTo(x1) };
-        let ans = unchecked_cast(t1 as JLocalDate);
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op2(x, p, (x1, p1) -> {
+            let t1 = unsafe IO { p1.addTo(x1) };
+            unchecked_cast(t1 as JLocalDate)
+        })  
     
     pub def minusPeriod(x: LocalDate, p: Period): LocalDate =
-        let x1 = ToJava.toJava(x);
-        let p1 = ToJava.toJava(p);
-        let t1 = unsafe IO { p1.subtractFrom(x1) };
-        let ans = unchecked_cast(t1 as JLocalDate);
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op2(x, p, (x1, p1) -> {
+            let t1 = unsafe IO { p1.subtractFrom(x1) };
+            unchecked_cast(t1 as JLocalDate)
+        })
 
     // between / until functions
 
-    pub def daysUntil(begin: {begin = LocalDate }, end: {end = LocalDate }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
-        let u1 = unsafe IO { JChronoUnit.DAYS };
-        unsafe IO { b1.until(e1, u1) }
+    pub def daysUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            let u1 = unsafe IO { JChronoUnit.DAYS };
+            unsafe IO { begin1.until(end1, u1) }
+        })
 
-    pub def monthsUntil(begin: {begin = LocalDate }, end: {end = LocalDate }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
-        let u1 = unsafe IO { JChronoUnit.MONTHS };
-        unsafe IO { b1.until(e1, u1) }
+    pub def monthsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            let u1 = unsafe IO { JChronoUnit.MONTHS };
+            unsafe IO { begin1.until(end1, u1) }
+        })
 
-    pub def yearsUntil(begin: {begin = LocalDate }, end: {end = LocalDate }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
-        let u1 = unsafe IO { JChronoUnit.YEARS };
-        unsafe IO { b1.until(e1, u1) }
+    pub def yearsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            let u1 = unsafe IO { JChronoUnit.YEARS };
+            unsafe IO { begin1.until(end1, u1) }
+        })
 
     pub def quarterYearsUntil(begin: {begin = LocalDate }, end: {end = LocalDate }): Int64 = 
-        let b1 = ToJava.toJava(begin#begin);
-        let e1 = ToJava.toJava(end#end);
-        let u1 = unsafe IO { JIsoFields.QUARTER_YEARS };
-        unsafe IO { b1.until(e1, u1) }
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            let u1 = unsafe IO { JIsoFields.QUARTER_YEARS };
+            unsafe IO { begin1.until(end1, u1) }
+        })
 
 
 }
