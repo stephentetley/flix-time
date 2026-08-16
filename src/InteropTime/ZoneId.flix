@@ -19,22 +19,15 @@
 pub mod InteropTime.ZoneId {
 
     
-    use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Zone.ZoneRules.ZoneRules
-    use InteropTime.Zone.ZoneRules.ZoneRules.{ZoneRules}
     use InteropTime.OffsetDateTime.OffsetDateTime
-    use InteropTime.OffsetDateTime.OffsetDateTime.{OffsetDateTime}
     use InteropTime.OffsetTime.OffsetTime
-    use InteropTime.OffsetTime.OffsetTime.{OffsetTime}
     use InteropTime.ZoneOffset.ZoneOffset
-    use InteropTime.ZoneOffset.ZoneOffset.{ZoneOffset}
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime}
     use InteropLocale.Locale.Locale
-    use InteropLocale.Locale.Locale.{Locale}
     
     import java.time.{ZoneId => JZoneId}
     import java.time.{ZoneOffset => JZoneOffset}
@@ -53,20 +46,20 @@ pub mod InteropTime.ZoneId {
     ///
     instance ToString[ZoneId] {
         pub def toString(x: ZoneId): String =
-            let ZoneId(x1) = x;
+            let ZoneId.ZoneId(x1) = x;
             unsafe IO { x1.toString() }
     }
 
     instance Eq[ZoneId] {
         pub def eq(x: ZoneId, y: ZoneId): Bool =
-            let ZoneId(x1) = x;
-            let ZoneId(y1) = y;
+            let ZoneId.ZoneId(x1) = x;
+            let ZoneId.ZoneId(y1) = y;
             unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[ZoneId] {
         pub def hash(x: ZoneId): Int32 =
-            let ZoneId(x1) = x;
+            let ZoneId.ZoneId(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
@@ -79,43 +72,33 @@ pub mod InteropTime.ZoneId {
 
     instance ToFlix[ZoneId] {
         type In = JZoneId
-        pub def toFlix(x: JZoneId): ZoneId = ZoneId.ZoneId(x)
+        pub def toFlix(x: JZoneId): ZoneId = 
+            ZoneId.ZoneId(x)
     }
 
     /// Constructors
 
-    pub def zoneId(zoneId: {zoneId = String}): Result[String, ZoneId] =
-        try {
-            ZoneId(unsafe IO { JZoneId.of(zoneId#zoneId) }) |> Ok
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+    pub def zoneId(zone: {zone = String}): Result[String, ZoneId] =
+        AdaptorExtras.ofWithResult(() -> unsafe IO { JZoneId.of(zone#zone) })
 
     /// Ideally not in IO...
-    pub def zoneIdWithAliases(zoneId: {zoneId = String}, 
+    pub def zoneIdWithAliases(zone: {zone = String}, 
                                 aliases: Map[String, String]): Result[String, ZoneId] \ IO =
-        try {
+        AdaptorExtras.ofWithResult(() -> {
             let jmap = Adaptor.toMap(aliases);
-            let ans = unsafe IO { JZoneId.of(zoneId#zoneId, jmap) };
-            Ok(ZoneId(ans))
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+            unsafe IO { JZoneId.of(zone#zone, jmap) }
+        })
 
 
     /// "abstract constructors" (e.g. `utc`)
 
-    pub def utc(): ZoneId = match zoneId(zoneId = "Z") {
+    pub def utc(): ZoneId = match zoneId(zone = "Z") {
         case Ok(z)  => z
         case Err(_) => bug!("ZoneId.utc() - failed")
     }
 
     pub def systemDefault(): Result[String, ZoneId] \ IO =
-        try {
-            ZoneId(JZoneId.systemDefault()) |> Ok
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+        AdaptorExtras.ofWithResult(() -> JZoneId.systemDefault())
 
 
 
@@ -123,51 +106,37 @@ pub mod InteropTime.ZoneId {
 
     pub def fromOffset(prefix: {prefix = Option[String]}, 
                         offset: {offset = ZoneOffset}): ZoneId =
-        let p1 = match prefix#prefix {
-            case Some(s) => s
-            case _       => ""
-        };
-        let ZoneOffset(o1) = offset#offset;
-        ZoneId(unsafe IO { JZoneId.ofOffset(p1, o1) })
+        let prefix1 = Option.getWithDefault("", prefix#prefix);
+        AdaptorExtras.op(offset#offset, offset1 -> unsafe IO { JZoneId.ofOffset(prefix1, offset1) })
 
     /// `fromTemporalAccessor` specialized
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId =
-        let OffsetDateTime(x1) = x;
-        let ans = unsafe IO { JZoneId.$from(x1) };
-        ZoneId(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 
     pub def fromOffsetTime(x: OffsetTime): ZoneId =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { JZoneId.$from(x1) };
-        ZoneId(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 
     pub def fromZonedDateTime(x: ZonedDateTime): ZoneId =
-        let ZonedDateTime(x1) = x;
-        let ans = unsafe IO { JZoneId.$from(x1) };
-        ZoneId(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 
     pub def fromZoneOffset(x: ZoneOffset): ZoneId =
-        let ZoneOffset(x1) = x;
-        let ans = unsafe IO { JZoneId.$from(x1) };
-        ZoneId(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 
 
     /// ZoneId functions
 
-    pub def getDisplayName(style: TextStyle, locale: Locale, z: ZoneId): String =
-        let style1 = ToJava.toJava(style);
-        let Locale(locale1) = locale;
-        let ZoneId(z1) = z;
-        unsafe IO { z1.getDisplayName(style1, locale1) }
+    pub def getDisplayName(style: TextStyle, locale: Locale, zone: ZoneId): String =
+        AdaptorExtras.extract3(style, locale, zone, (style1, locale1, zone1) -> 
+            unsafe IO { zone1.getDisplayName(style1, locale1) }
+        )
 
     ///
     /// Returns the unique ID of the time zone.
     ///
     pub def getTimeZoneId(x: ZoneId): String =
-        let ZoneId(x1) = x;
-        unsafe IO { x1.getId() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
 
     pub def getAvailableZoneIds(): Set[String] \ IO =
         try {
@@ -180,18 +149,10 @@ pub mod InteropTime.ZoneId {
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =
-        try {
-            let ZoneId(x1) = x;
-            let ans = unsafe IO { x1.getRules() };
-            Some(ZoneRules(ans))
-        } catch {
-            case _: JException => None
-        }
+        AdaptorExtras.opWithOption(x, x1 -> unsafe IO { x1.getRules() })
 
     pub def normalized(x: ZoneId): ZoneId =
-        let ZoneId(x1) = x;
-        let x2 = unsafe IO { x1.normalized() };
-        ZoneId(x2)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.normalized() })
 
 
 }

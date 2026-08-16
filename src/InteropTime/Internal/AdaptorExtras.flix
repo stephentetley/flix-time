@@ -37,6 +37,15 @@ pub mod InteropTime.Internal.AdaptorExtras {
             case ex: JException => Err(ex.getMessage())
         }
 
+    pub def opWithOption(x: a, f: ToJava.Out[a] -> ToFlix.In[ans] \ ef + ToJava.Aef[a] + ToFlix.Aef[ans]): Option[ans] \ ef + ToJava.Aef[a] + ToFlix.Aef[ans] with ToJava[a], ToFlix[ans] = 
+        try {
+            let x1 = ToJava.toJava(x);
+            let ans = f(x1);
+            if (not Object.isNull(ans)) Some(ToFlix.toFlix(ans)) else None
+        } catch {
+            case _: JException => None
+        }
+
     pub def op2(x: a, 
                 y: b, 
                 f: ToJava.Out[a] -> ToJava.Out[b] -> ToFlix.In[ans] \ ef + ToJava.Aef[a] + ToJava.Aef[b] + ToFlix.Aef[ans]): ans \ ef + ToJava.Aef[a] + ToJava.Aef[b] + ToFlix.Aef[ans] with ToJava[a], ToJava[b], ToFlix[ans] =
@@ -68,6 +77,14 @@ pub mod InteropTime.Internal.AdaptorExtras {
             case ex: JException => Err(ex.getMessage())
         }
 
+    pub def ofWithOption(f: Unit -> ToFlix.In[ans] \ ef + ToFlix.Aef[ans]): Option[ans] \ ef + ToFlix.Aef[ans] with ToFlix[ans] =
+        try {
+            let ans = f();
+            if (not Object.isNull(ans)) Some(ToFlix.toFlix(ans)) else None
+        } catch {
+            case _: JException => None
+        }
+
     // No need for higher arity versions of `of` (obviously)
 
     pub def extract(x: a, f: ToJava.Out[a] -> ans \ ef + ToJava.Aef[a]): ans \ ef + ToJava.Aef[a] with ToJava[a] =
@@ -80,6 +97,14 @@ pub mod InteropTime.Internal.AdaptorExtras {
             Ok(f(jx))
         } catch {
             case ex: JException => Err(ex.getMessage())
+        }
+
+    pub def extractWithOption(x: a, f: ToJava.Out[a] -> b \ ef + ToJava.Aef[a]): Option[b] \ ef + ToJava.Aef[a] with ToJava[a] =
+        try {
+            let x1 = ToJava.toJava(x);
+            Some(f(x1))
+        } catch {
+            case _: JException => None
         }
 
     pub def extract2(x: a, y: b, f: ToJava.Out[a] -> ToJava.Out[b] -> ans \ ef + ToJava.Aef[a] + ToJava.Aef[b]): ans \ ef + ToJava.Aef[a] + ToJava.Aef[b] with ToJava[a], ToJava[b] =
