@@ -17,29 +17,21 @@
 
 pub mod InteropTime.Year {
 
-    use InteropTime.Year.Year
-    use InteropTime.Year.Year.{Year}
+    
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
     use InteropTime.Format.DateTimeFormatter.DateFormat
     use InteropTime.ClockZ.ClockZ
-    use InteropTime.ClockZ.ClockZ.{ClockZ}
     use InteropTime.LocalDate.LocalDate
-    use InteropTime.LocalDate.LocalDate.{LocalDate}
     use InteropTime.LocalDateTime.LocalDateTime
-    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
     use InteropTime.Month.Month
     use InteropTime.MonthDay.MonthDay
-    use InteropTime.MonthDay.MonthDay.{MonthDay}
     use InteropTime.OffsetDateTime.OffsetDateTime
-    use InteropTime.OffsetDateTime.OffsetDateTime.{OffsetDateTime}
     use InteropTime.YearMonth.YearMonth
-    use InteropTime.YearMonth.YearMonth.{YearMonth}
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime}
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
 
 
     import java.lang.{Object, CharSequence}
@@ -55,7 +47,7 @@ pub mod InteropTime.Year {
 
     instance ToString[Year] {
         pub def toString(x: Year): String =
-            let Year(x1) = x;
+            let Year.Year(x1) = x;
             unsafe IO { x1.toString() }
     }
 
@@ -67,7 +59,7 @@ pub mod InteropTime.Year {
             try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JYear.parse(s1) };
-                Some(Year(ans))
+                Some(Year.Year(ans))
             } catch {
                 case _: JException => None
             }
@@ -75,22 +67,22 @@ pub mod InteropTime.Year {
 
     instance Eq[Year] {
         pub def eq(x: Year, y: Year): Bool =
-            let Year(x1) = x;
-            let Year(y1) = y;
+            let Year.Year(x1) = x;
+            let Year.Year(y1) = y;
             unsafe IO { x1.equals(y1) }
 
     }
 
     instance Hash[Year] {
         pub def hash(x: Year): Int32 =
-            let Year(x1) = x;
+            let Year.Year(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
     instance Order[Year] {
         pub def compare(x: Year, y: Year): Comparison =
-            let Year(x1) = x;
-            let Year(y1) = y;
+            let Year.Year(x1) = x;
+            let Year.Year(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
@@ -103,7 +95,8 @@ pub mod InteropTime.Year {
 
     instance ToFlix[Year] {
         type In = JYear
-        pub def toFlix(x: JYear): Year = Year.Year(x)
+        pub def toFlix(x: JYear): Year = 
+            Year.Year(x)
     }
 
     /// Constructors
@@ -118,78 +111,42 @@ pub mod InteropTime.Year {
     pub def now(): Year \ IO = Year(JYear.now())
 
     pub def nowWithClock(x: ClockZ): Year \ IO =
-        let ClockZ(x1) = x;
-        let ans = JYear.now(x1);
-        Year(ans)
+        AdaptorExtras.op(x, x1 -> JYear.now(x1))
 
     pub def nowWithZoneId(x: ZoneId): Year \ IO =
-        let ZoneId(x1) = x;
-        let ans = JYear.now(x1);
-        Year(ans)
+        AdaptorExtras.op(x, x1 -> JYear.now(x1))
 
     /// `at` functions
 
     pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
-        try {
-            let Year(x1) = x;
-            let ans = unsafe IO { x1.atDay(dayOfYear) };
-            Some(LocalDate(ans))
-        } catch {
-            case _: JException => None
-        }
+        AdaptorExtras.opWithOption(x, x1 -> unsafe IO { x1.atDay(dayOfYear) })
 
     pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
-        try {
-            let Year(x1) = x;
-            let ans = unsafe IO { x1.atMonth(month) };
-            Some(YearMonth(ans))
-        }catch {
-            case _: JException => None
-        }
+        AdaptorExtras.opWithOption(x, x1 -> unsafe IO { x1.atMonth(month) })
 
-    pub def atMonthWithMonth(x: Year, month: Month): Option[YearMonth] =
-        try {
-            let Year(x1) = x;
-            let m1 = ToJava.toJava(month);
-            let ans = unsafe IO { x1.atMonth(m1) };
-            Some(YearMonth(ans))
-        } catch {
-            case _: JException => None
-        }
+    pub def atMonthWithMonth(x: Year, month: Month): YearMonth =
+        AdaptorExtras.op2(x, month, (x1, month1) -> unsafe IO { x1.atMonth(month1) })
 
-    pub def atMonthDay(x: Year, monthDay: MonthDay): LocalDate =
-        let Year(x1) = x;
-        let MonthDay(m1) = monthDay;
-        let ans = unsafe IO { x1.atMonthDay(m1) };
-        LocalDate(ans)
+    pub def atMonthDay(x: Year, md: MonthDay): LocalDate =
+        AdaptorExtras.op2(x, md, (x1, md1) -> unsafe IO { x1.atMonthDay(md1) })
 
 
     // `from` functions
 
     pub def fromLocalDate(x: LocalDate): Year =
-        let LocalDate(x1) = x;
-        let ans = unsafe IO { JYear.$from(x1) };
-        Year(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): Year =
-        let LocalDateTime(x1) = x;
-        let ans = unsafe IO { JYear.$from(x1) };
-        Year(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Year =
-        let OffsetDateTime(x1) = x;
-        let ans = unsafe IO { JYear.$from(x1) };
-        Year(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     pub def fromYearMonth(x: YearMonth): Year =
-        let YearMonth(x1) = x;
-        let ans = unsafe IO { JYear.$from(x1) };
-        Year(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
     
     pub def fromZonedDateTime(x: ZonedDateTime): Year =
-        let ZonedDateTime(x1) = x;
-        let ans = unsafe IO { JYear.$from(x1) };
-        Year(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     /// `parse` / `format` functions  
 
@@ -200,22 +157,18 @@ pub mod InteropTime.Year {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, Year] =
-        try {
-            let DateTimeFormatter(fmtr) = formatter;
+        AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
-            let ans = unsafe IO { JYear.parse(s1, fmtr) };
-            Ok(Year(ans))
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+            unsafe IO { JYear.parse(s1, formatter1) }
+        })
 
     ///
     /// Returns the Year `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateTimeFormatter[DateFormat], x: Year): String =
-        let Year(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        unsafe IO { x1.format(fmtr) }
+        AdaptorExtras.extract2(formatter, x, (formatter1, x1) ->
+            unsafe IO { x1.format(formatter1) }
+        )
 
 
     /// predicates / comparisons
@@ -224,24 +177,19 @@ pub mod InteropTime.Year {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: Year, y: Year): Bool =
-        let Year(x1) = x;
-        let Year(y1) = y;
-        unsafe IO { x1.isBefore(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: Year, y: Year): Bool =
-        let Year(x1) = x;
-        let Year(y1) = y;
-        unsafe IO { x1.isAfter(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeap(x: Year): Bool =
-        let Year(x1) = x;
-        unsafe IO { x1.isLeap() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isLeap() })
 
     ///
     /// Returns `true` if `x` is a leap year.
@@ -253,9 +201,7 @@ pub mod InteropTime.Year {
     /// Returns `true` if _.
     ///
     pub def isValidMonthDay(md: MonthDay, x: Year): Bool =
-        let MonthDay(md1) = md;
-        let Year(x1) = x;
-        unsafe IO { x1.isValidMonthDay(md1) }
+        AdaptorExtras.extract2(md, x, (md1, x1) -> unsafe IO { x1.isValidMonthDay(md1) })
 
 
     /// Year functions
@@ -264,47 +210,42 @@ pub mod InteropTime.Year {
     /// Returns _
     ///
     pub def length(x: Year): Int32 =
-        let Year(x1) = x;
-        unsafe IO { x1.length() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.length() })
+        
 
     /// plus / minus functions
 
     ///
     /// _
     ///
-    pub def plusYears(x: Year, yearsToAdd: Int64): Year =
-        let Year(x1) = x;
-        let ans = unsafe IO { x1.plusYears(yearsToAdd) };
-        Year(ans)
+    pub def plusYears(x: Year, n: Int64): Year =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusYears(n) })
 
     ///
     /// _
     ///
-    pub def minusYears(x: Year, yearsToSubtract: Int64): Year =
-        let Year(x1) = x;
-        let ans = unsafe IO { x1.minusYears(yearsToSubtract) };
-        Year(ans)
+    pub def minusYears(x: Year, n: Int64): Year =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusYears(n) })
 
 
     // between / until functions
+    
+    // TODO inlining the (Java) ChronoUnit looks fine, should we do it everywhere?
 
     pub def yearsUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
-        let Year(b1) = begin#begin;
-        let Year(e1) = end#end;
-        let cu1 = unsafe IO { JChronoUnit.YEARS };
-        unsafe IO { b1.until(e1, cu1) }
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.YEARS) }
+        )
 
     pub def decadesUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
-        let Year(b1) = begin#begin;
-        let Year(e1) = end#end;
-        let cu1 = unsafe IO { JChronoUnit.DECADES };
-        unsafe IO { b1.until(e1, cu1) }
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.DECADES) }
+        )
 
     pub def centuriesUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
-        let Year(b1) = begin#begin;
-        let Year(e1) = end#end;
-        let cu1 = unsafe IO { JChronoUnit.CENTURIES };
-        unsafe IO { b1.until(e1, cu1) }
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.CENTURIES) }
+        )
 
 
 }
