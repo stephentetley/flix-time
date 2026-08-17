@@ -18,8 +18,8 @@
 
 pub mod InteropTime.MonthDay {
 
-    use InteropTime.MonthDay.MonthDay
-    use InteropTime.MonthDay.MonthDay.{MonthDay}
+
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
     use InteropTime.Format.DateTimeFormatter.DateFormat
@@ -42,7 +42,7 @@ pub mod InteropTime.MonthDay {
 
     instance ToString[MonthDay] {
         pub def toString(x: MonthDay): String =
-            let MonthDay(x1) = x;
+            let MonthDay.MonthDay(x1) = x;
             unsafe IO { x1.toString() }
     }
 
@@ -54,7 +54,7 @@ pub mod InteropTime.MonthDay {
             try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JMonthDay.parse(s1) };
-                Some(MonthDay(ans))
+                Some(MonthDay.MonthDay(ans))
             } catch {
                 case _: JException => None
             }
@@ -62,21 +62,21 @@ pub mod InteropTime.MonthDay {
 
     instance Eq[MonthDay] {
         pub def eq(x: MonthDay, y: MonthDay): Bool =
-            let MonthDay(x1) = x;
-            let MonthDay(y1) = y;
+            let MonthDay.MonthDay(x1) = x;
+            let MonthDay.MonthDay(y1) = y;
             unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[MonthDay] {
         pub def hash(x: MonthDay): Int32 =
-            let MonthDay(x1) = x;
+            let MonthDay.MonthDay(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
     instance Order[MonthDay] {
         pub def compare(x: MonthDay, y: MonthDay): Comparison =
-            let MonthDay(x1) = x;
-            let MonthDay(y1) = y;
+            let MonthDay.MonthDay(x1) = x;
+            let MonthDay.MonthDay(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
@@ -90,7 +90,8 @@ pub mod InteropTime.MonthDay {
 
     instance ToFlix[MonthDay] {
         type In = JMonthDay
-        pub def toFlix(x: JMonthDay): MonthDay = MonthDay.MonthDay(x)
+        pub def toFlix(x: JMonthDay): MonthDay = 
+            MonthDay.MonthDay(x)
     }
 
     // Constructors
@@ -101,39 +102,30 @@ pub mod InteropTime.MonthDay {
 
     pub def monthDayWithMonth(month: {month = Month}, 
                                 dayOfMonth: {dayOfMonth = Int32}): MonthDay =
-        let m1 = ToJava.toJava(month#month);
-        let ans = unsafe IO { JMonthDay.of(m1, dayOfMonth#dayOfMonth) };
-        MonthDay(ans)
+        AdaptorExtras.op(month#month, month1 -> 
+            unsafe IO { JMonthDay.of(month1, dayOfMonth#dayOfMonth) }
+        )
 
     /// `now` and "abstract constructors" if any
 
     pub def now(): MonthDay \ IO = MonthDay(JMonthDay.now())
 
     pub def nowWithZoneId(x: ZoneId): MonthDay \ IO =
-        let x1 = ToJava.toJava(x);
-        MonthDay(JMonthDay.now(x1))
+        AdaptorExtras.op(x, x1 -> JMonthDay.now(x1))
 
 
     // `fromTemporalAccessor` specialized
     pub def fromLocalDate(x: LocalDate): MonthDay =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonthDay.$from(x1) };
-        MonthDay(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
         
     pub def fromLocalDateTime(x: LocalDateTime): MonthDay =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonthDay.$from(x1) };
-        MonthDay(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
 
     pub def fromOffsetDateTime(x: OffsetDateTime): MonthDay =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonthDay.$from(x1) };
-        MonthDay(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
 
     pub def fromZonedDateTime(x: ZonedDateTime): MonthDay =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonthDay.$from(x1) };
-        MonthDay(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
 
     // `parse` / `format` functions
 
@@ -144,23 +136,20 @@ pub mod InteropTime.MonthDay {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, MonthDay] =
-        try {
-            let fmt1 = ToJava.toJava(formatter);
+        AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
-            let ans = unsafe IO { JMonthDay.parse(s1, fmt1) };
-            Ok(MonthDay(ans))
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+            unsafe IO { JMonthDay.parse(s1, formatter1) }
+        })
+        
 
 
     ///
     /// Returns MonthDay `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateTimeFormatter[DateFormat], x: MonthDay): String =
-        let x1 = ToJava.toJava(x);
-        let fmt1 = ToJava.toJava(formatter);
-        unsafe IO { x1.format(fmt1) }
+        AdaptorExtras.op2(formatter, x, (formatter1, x1) -> 
+            unsafe IO { x1.format(formatter1) }
+        )
 
     /// predicates / comparisons
 
@@ -168,55 +157,42 @@ pub mod InteropTime.MonthDay {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: MonthDay, y: MonthDay): Bool =
-        let x1 = ToJava.toJava(x);
-        let y1 = ToJava.toJava(y);
-        unsafe IO { x1.isBefore(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: MonthDay, y: MonthDay): Bool =
-        let x1 = ToJava.toJava(x);
-        let y1 = ToJava.toJava(y);
-        unsafe IO { x1.isAfter(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     ///
     /// Returns `true` if `year` is valid for the MonthDay `x`.
     ///
     pub def isValidYear(year: Int32, x: MonthDay): Bool =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.isValidYear(year) }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isValidYear(year) })
         
 
     /// Getters and Setters
 
     pub def getDayOfMonth(x: MonthDay): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.getDayOfMonth() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfMonth() })
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: MonthDay): MonthDay =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.$withDayOfMonth(dayOfMonth) };
-        MonthDay(ans)
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.$withDayOfMonth(dayOfMonth) }
+        )
 
     pub def getMonth(x: MonthDay): Month =
-        let x1 = ToJava.toJava(x);
-        ToFlix.toFlix(unsafe IO { x1.getMonth() })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getMonth() })
 
     pub def withMonth(month: Month, x: MonthDay): MonthDay =
-        let x1 = ToJava.toJava(x);
-        let m1 = ToJava.toJava(month);
-        let ans = unsafe IO { x1.$with(m1) };
-        MonthDay(ans)
+        AdaptorExtras.op2(month, x, (month1, x1) -> unsafe IO { x1.$with(month1) })
 
     pub def getMonthValue(x: MonthDay): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.getMonthValue() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getMonthValue() })
 
     pub def withMonthValue(month: Int32, x: MonthDay): MonthDay =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.$withMonth(month) };
-        MonthDay(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
 
 }
 

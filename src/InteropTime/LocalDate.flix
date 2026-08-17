@@ -309,29 +309,25 @@ pub mod InteropTime.LocalDate {
 
 
     pub def getDayOfQuarter(x: LocalDate): Int64 = 
-        AdaptorExtras.extract(x, x1 -> {
-            let field = unsafe IO { JIsoFields.DAY_OF_QUARTER };
-            unsafe IO { x1.getLong(field) }
-        })
+        AdaptorExtras.extract(x, x1 -> 
+            unsafe IO { x1.getLong(JIsoFields.DAY_OF_QUARTER) }
+        )
 
 
     pub def withDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> {
-            let field = unsafe IO { JIsoFields.DAY_OF_QUARTER };
-            unsafe IO { x1.$with(field, Int32.toInt64(d)) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.$with(JIsoFields.DAY_OF_QUARTER, Int32.toInt64(d)) }
+        )
 
     pub def getQuarterOfYear(x: LocalDate): Int64 =  
-        AdaptorExtras.extract(x, x1 -> {
-            let field = unsafe IO { JIsoFields.QUARTER_OF_YEAR };
-            unsafe IO { x1.getLong(field) }
-        })
+        AdaptorExtras.extract(x, x1 -> 
+            unsafe IO { x1.getLong(JIsoFields.QUARTER_OF_YEAR) }
+        )
 
     pub def withQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> {
-            let field = unsafe IO { JIsoFields.QUARTER_OF_YEAR };
-            unsafe IO { x1.$with(field, Int32.toInt64(d)) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.$with(JIsoFields.QUARTER_OF_YEAR, Int32.toInt64(d)) }
+        )
 
     pub def getWeekOfYear(x: LocalDate): Int64 = 
         AdaptorExtras.extract(x, x1 -> {
@@ -382,10 +378,9 @@ pub mod InteropTime.LocalDate {
 
 
     pub def getEra(x: LocalDate): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
-            let field = unsafe IO { JChronoField.ERA };
-            unsafe IO { x1.getLong(field) }
-        })
+        AdaptorExtras.extract(x, x1 -> 
+            unsafe IO { x1.getLong(JChronoField.ERA) }
+        )
 
     pub def adjustMonthDay(md: MonthDay, x: LocalDate): LocalDate =
         AdaptorExtras.op2(md, x, (md1, x1) -> unsafe IO { x1.$with(md1) })
@@ -396,10 +391,9 @@ pub mod InteropTime.LocalDate {
 
 
     pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> {
-            let cf1 = unsafe IO { JChronoField.EPOCH_DAY };
-            unsafe IO { x1.$with(cf1, i) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.$with(JChronoField.EPOCH_DAY, i) }
+        )
 
     /// DayOfWeek methods
 
@@ -470,43 +464,37 @@ pub mod InteropTime.LocalDate {
 
 
     pub def plusDecades(x: LocalDate, i: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> {
-            let u = unsafe IO { JChronoUnit.DECADES };
-            unsafe IO { x1.plus(i, u) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.plus(i, JChronoUnit.DECADES) }
+        )
 
 
     pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> {
-            let u = unsafe IO { JChronoUnit.DECADES };
-            unsafe IO { x1.minus(i, u) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.minus(i, JChronoUnit.DECADES) }
+        )
 
     pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> {
-            let u = unsafe IO { JChronoUnit.CENTURIES };
-            unsafe IO { x1.plus(i, u) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.plus(i, JChronoUnit.CENTURIES) }
+        )
 
 
     pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> {
-            let u = unsafe IO { JChronoUnit.CENTURIES };
-            unsafe IO { x1.minus(i, u) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.minus(i, JChronoUnit.CENTURIES) }
+        )
 
 
     pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> {
-            let u = unsafe IO { JChronoUnit.MILLENNIA };
-            unsafe IO { x1.plus(i, u) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.plus(i, JChronoUnit.MILLENNIA) }
+        )
 
     pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> {
-            let u = unsafe IO { JChronoUnit.MILLENNIA };
-            unsafe IO { x1.minus(i, u) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.minus(i, JChronoUnit.MILLENNIA) }
+        )
 
 
     // Period methods
@@ -526,28 +514,24 @@ pub mod InteropTime.LocalDate {
     // between / until functions
 
     pub def daysUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            let u1 = unsafe IO { JChronoUnit.DAYS };
-            unsafe IO { begin1.until(end1, u1) }
-        })
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) ->
+            unsafe IO { begin1.until(end1, JChronoUnit.DAYS) }
+        )
 
     pub def monthsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            let u1 = unsafe IO { JChronoUnit.MONTHS };
-            unsafe IO { begin1.until(end1, u1) }
-        })
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.MONTHS) }
+        )
 
     pub def yearsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            let u1 = unsafe IO { JChronoUnit.YEARS };
-            unsafe IO { begin1.until(end1, u1) }
-        })
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.YEARS) }
+        )
 
     pub def quarterYearsUntil(begin: {begin = LocalDate }, end: {end = LocalDate }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            let u1 = unsafe IO { JIsoFields.QUARTER_YEARS };
-            unsafe IO { begin1.until(end1, u1) }
-        })
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JIsoFields.QUARTER_YEARS) }
+        )
 
 
 }
