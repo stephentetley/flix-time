@@ -18,35 +18,25 @@
 
 pub mod InteropTime.OffsetDateTime {
 
+    use InteropTime.Internal.AdaptorExtras
+
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
     use InteropTime.Format.DateTimeFormatter.DateTimeFormat
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
-    use InteropTime.DurationZ.DurationZ.{DurationZ }
     use InteropTime.InstantZ.InstantZ
-    use InteropTime.InstantZ.InstantZ.{InstantZ}
     use InteropTime.LocalDate.LocalDate
-    use InteropTime.LocalDate.LocalDate.{LocalDate}
     use InteropTime.LocalDateTime.LocalDateTime
-    use InteropTime.LocalDateTime.LocalDateTime.{LocalDateTime}
     use InteropTime.LocalTime.LocalTime
-    use InteropTime.LocalTime.LocalTime.{LocalTime}
     use InteropTime.Month.Month
     use InteropTime.MonthDay.MonthDay
-    use InteropTime.MonthDay.MonthDay.{MonthDay}
     use InteropTime.OffsetTime.OffsetTime
-    use InteropTime.OffsetTime.OffsetTime.{OffsetTime}
     use InteropTime.Period.Period
-    use InteropTime.Period.Period.{Period}
     use InteropTime.YearMonth.YearMonth
-    use InteropTime.YearMonth.YearMonth.{YearMonth}
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime }
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
     use InteropTime.ZoneOffset.ZoneOffset
-    use InteropTime.ZoneOffset.ZoneOffset.{ZoneOffset}
 
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
@@ -137,10 +127,17 @@ pub mod InteropTime.OffsetDateTime {
                             minute: {minute = Int32},
                             second: {second = Int32}, 
                             nanoSecond: {nanoSecond = Int32}, 
-                            offset: {offset = ZoneOffset}): OffsetDateTime =
-        let ZoneOffset(o1) = offset#offset;
-        let ans = unsafe IO { JOffsetDateTime.of(year#year, month#month, dayOfMonth#dayOfMonth, hour#hour, minute#minute, second#second, nanoSecond#nanoSecond, o1) };
-        ToFlix.toFlix(ans)
+                            offset: ZoneOffset): OffsetDateTime =
+        AdaptorExtras.op(offset, offset1 ->
+            unsafe IO { JOffsetDateTime.of(year#year, 
+                                            month#month, 
+                                            dayOfMonth#dayOfMonth, 
+                                            hour#hour, 
+                                            minute#minute, 
+                                            second#second, 
+                                            nanoSecond#nanoSecond, 
+                                            offset1) }
+        )
 
 
     /// `now` functions
@@ -148,44 +145,37 @@ pub mod InteropTime.OffsetDateTime {
     ///
     /// Returns the current date-time from the system clock using the system zone id.
     ///
-    pub def now(): OffsetDateTime \ IO = ToFlix.toFlix(JOffsetDateTime.now())
+    pub def now(): OffsetDateTime \ IO = 
+        AdaptorExtras.of(() -> JOffsetDateTime.now())
 
     ///
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetDateTime \ IO =
-        let z1 = ToJava.toJava(zone);
-        let ans = JOffsetDateTime.now(z1);
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(zone, zone1 -> JOffsetDateTime.now(zone1))
 
     /// `at` functions
 
-    pub def atZoneSameInstant(zone: {zone = ZoneId }, x: OffsetDateTime): ZonedDateTime =
-        let x1 = ToJava.toJava(x);
-        let z1 = ToJava.toJava(zone#zone);
-        let ans = unsafe IO { x1.atZoneSameInstant(z1) };
-        ToFlix.toFlix(ans)
+    pub def atZoneSameInstant(zone: ZoneId, x: OffsetDateTime): ZonedDateTime =
+        AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { x1.atZoneSameInstant(zone1) })
 
-    pub def atZoneSimilarLocal(zone: {zone = ZoneId }, x: OffsetDateTime): ZonedDateTime =
-        let x1 = ToJava.toJava(x);
-        let z1 = ToJava.toJava(zone#zone);
-        let ans = unsafe IO { x1.atZoneSimilarLocal(z1) };
-        ToFlix.toFlix(ans)
+    pub def atZoneSimilarLocal(zone: ZoneId, x: OffsetDateTime): ZonedDateTime =
+        AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { x1.atZoneSimilarLocal(zone1) })
 
 
-    pub def fromLocalDateTime(offset: {offset = ZoneOffset }, dateTime: LocalDateTime): OffsetDateTime =
+    pub def fromLocalDateTime(offset: ZoneOffset, dateTime: LocalDateTime): OffsetDateTime =
         let dt1 = ToJava.toJava(dateTime);
-        let o1 = ToJava.toJava(offset#offset);
+        let o1 = ToJava.toJava(offset);
         let ans = unsafe IO { JOffsetDateTime.of(dt1, o1) };
         ToFlix.toFlix(ans)
 
 
     /// `from` functions
 
-    pub def fromLocalDateLocalTime(offset: {offset = ZoneOffset }, date: LocalDate, time: LocalTime): OffsetDateTime =
+    pub def fromLocalDateLocalTime(offset: ZoneOffset, date: LocalDate, time: LocalTime): OffsetDateTime =
         let d1 = ToJava.toJava(date);
         let t1 = ToJava.toJava(time);
-        let zo1 = ToJava.toJava(offset#offset);
+        let zo1 = ToJava.toJava(offset);
         let ans = unsafe IO { JOffsetDateTime.of(d1, t1, zo1) };
         ToFlix.toFlix(ans)
 

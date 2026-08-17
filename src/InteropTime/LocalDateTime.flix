@@ -158,8 +158,8 @@ pub mod InteropTime.LocalDateTime {
     pub def fromLocalDateLocalTime(ld: LocalDate, lt: LocalTime): LocalDateTime =
         AdaptorExtras.op2(ld, lt, (ld1, lt1) -> unsafe IO { JLocalDateTime.of(ld1, lt1) })
 
-    pub def ofEpochSecond(offset: {offset = ZoneOffset }, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
-        AdaptorExtras.op(offset#offset, offset1 ->
+    pub def ofEpochSecond(offset: ZoneOffset, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
+        AdaptorExtras.op(offset, offset1 ->
             unsafe IO { JLocalDateTime.ofEpochSecond(epochSecond, nanoOfSecond, offset1) }
         )
 

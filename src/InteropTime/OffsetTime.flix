@@ -113,12 +113,12 @@ pub mod InteropTime.OffsetTime {
 
     /// Constructors
 
-    pub def offsetTime(hour: { hour = Int32}, 
+    pub def offsetTime(hour: {hour = Int32}, 
                         minute: {minute = Int32}, 
                         second: {second = Int32}, 
                         nanoSecond: {nanoSecond = Int32}, 
-                        offset: {offset = ZoneOffset}): OffsetTime =
-        let ZoneOffset(offset1) = offset#offset;
+                        offset: ZoneOffset): OffsetTime =
+        let ZoneOffset(offset1) = offset;
         let ans = unsafe IO { JOffsetTime.of(hour#hour, minute#minute, second#second, nanoSecond#nanoSecond, offset1) };
         OffsetTime(ans)
 
@@ -139,16 +139,16 @@ pub mod InteropTime.OffsetTime {
 
     /// `from` functions
 
-    pub def fromLocalTime(offset: {offset = ZoneOffset }, x: LocalTime): OffsetTime =
+    pub def fromLocalTime(offset: ZoneOffset, x: LocalTime): OffsetTime =
         let LocalTime(x1) = x;
-        let ZoneOffset(o1) = offset#offset;
+        let ZoneOffset(o1) = offset;
         let ans = unsafe IO { JOffsetTime.of(x1, o1) };
         OffsetTime(ans)
 
 
-    pub def ofInstant(zone: {zone = ZoneId }, x: InstantZ): OffsetTime =
+    pub def ofInstant(zone: ZoneId, x: InstantZ): OffsetTime =
         let InstantZ(x1) = x;
-        let ZoneId(z1) = zone#zone;
+        let ZoneId(z1) = zone;
         let ans = unsafe IO { JOffsetTime.ofInstant(x1, z1) };
         OffsetTime(ans)
 

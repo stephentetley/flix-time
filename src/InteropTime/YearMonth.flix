@@ -231,16 +231,14 @@ pub mod InteropTime.YearMonth {
     // between / until functions
 
     pub def monthsUntil(begin: {begin = YearMonth}, end: {end = YearMonth}): Int64 =
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            let u1 = unsafe IO { JChronoUnit.MONTHS };
-            unsafe IO { begin1.until(end1, u1) }
-        })
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.MONTHS) }
+        )
 
 
     pub def yearsUntil(begin: {begin = YearMonth}, end: {end = YearMonth}): Int64 =
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            let u1 = unsafe IO { JChronoUnit.YEARS };
-            unsafe IO { begin1.until(end1, u1) }
-        })
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.YEARS) }
+        )
 
 }

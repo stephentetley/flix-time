@@ -190,106 +190,90 @@ pub mod InteropTime.InstantZ {
 
 
     pub def getNanoOfSecond(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
-            let f1 = unsafe IO { JChronoField.NANO_OF_SECOND };
-            unsafe IO { x1.getLong(f1) }
-        })
+        AdaptorExtras.extract(x, x1 -> 
+            unsafe IO { x1.getLong(JChronoField.NANO_OF_SECOND) }
+        )
 
 
     pub def withNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
-        AdaptorExtras.op(x, x1 -> {
-            let f1 = unsafe IO { JChronoField.NANO_OF_SECOND };
-            unsafe IO { x1.$with(f1, i) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.$with(JChronoField.NANO_OF_SECOND, i) }
+        )
 
     pub def getMicroOfSecond(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
-            let f1 = unsafe IO { JChronoField.MICRO_OF_SECOND };
-            unsafe IO { x1.getLong(f1) }
-        })
+        AdaptorExtras.extract(x, x1 -> 
+            unsafe IO { x1.getLong(JChronoField.MICRO_OF_SECOND) }
+        )
 
     pub def withMicroOfSecond(i: Int64, x: InstantZ): InstantZ =
-        AdaptorExtras.op(x, x1 -> {
-            let f1 = unsafe IO { JChronoField.MICRO_OF_SECOND };
-            unsafe IO { x1.$with(f1, i) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.$with(JChronoField.MICRO_OF_SECOND, i) }
+        )
 
     pub def getMilliOfSecond(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
-            let f1 = unsafe IO { JChronoField.MILLI_OF_SECOND };
-            unsafe IO { x1.getLong(f1) }
-        })
+        AdaptorExtras.extract(x, x1 -> 
+            unsafe IO { x1.getLong(JChronoField.MILLI_OF_SECOND) }
+        )
 
     pub def withMilliOfSecond(i: Int64, x: InstantZ): InstantZ =
-        AdaptorExtras.op(x, x1 -> {
-            let f1 = unsafe IO { JChronoField.MILLI_OF_SECOND };
-            unsafe IO { x1.$with(f1, i) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.$with(JChronoField.MILLI_OF_SECOND, i) }
+        )
 
 
     pub def getInstantSeconds(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
-            let f1 = unsafe IO { JChronoField.INSTANT_SECONDS };
-            unsafe IO { x1.getLong(f1) }
-        })
+        AdaptorExtras.extract(x, x1 -> 
+            unsafe IO { x1.getLong(JChronoField.INSTANT_SECONDS) }
+        )
 
     pub def withInstantSeconds(i: Int64, x: InstantZ): InstantZ =
-        AdaptorExtras.op(x, x1 -> {
-            let f1 = unsafe IO { JChronoField.INSTANT_SECONDS };
-            unsafe IO { x1.$with(f1, i) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.$with(JChronoField.INSTANT_SECONDS, i) }
+        )
 
     // `truncatedTo` specialized
 
     pub def truncatedToNanos(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.NANOS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.truncatedTo(JChronoUnit.NANOS) }
+        )
 
 
     pub def truncatedToMicros(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.MICROS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.truncatedTo(JChronoUnit.MICROS) }
+        )
 
     pub def truncatedToMillis(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.MILLIS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.truncatedTo(JChronoUnit.MILLIS) }
+        )
 
     pub def truncatedToSeconds(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.SECONDS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.truncatedTo(JChronoUnit.SECONDS) }
+        )
 
     pub def truncatedToMinutes(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.MINUTES };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.truncatedTo(JChronoUnit.MINUTES) }
+        )
 
     pub def truncatedToHours(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.HOURS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.truncatedTo(JChronoUnit.HOURS) }
+        )
 
     pub def truncatedToHalfDays(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.truncatedTo(JChronoUnit.HALF_DAYS) }
+        )
 
 
     pub def truncatedToDays(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.DAYS };
-            unsafe IO { x1.truncatedTo(u1) }
-        })
+        AdaptorExtras.op(x, x1 ->
+            unsafe IO { x1.truncatedTo(JChronoUnit.DAYS) }
+        )
 
     // plus / minus functions
 

@@ -193,10 +193,9 @@ pub mod InteropTime.DurationZ {
     // `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
 
     pub def ofHalfDays(i: Int64): DurationZ = 
-        AdaptorExtras.of(() -> {
-            let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-            unsafe IO {  JDuration.of(i, u1) }
-        })
+        AdaptorExtras.of(() -> 
+            unsafe IO {  JDuration.of(i, JChronoUnit.HALF_DAYS) }
+        )
 
 
     /// `to` functions
@@ -374,16 +373,14 @@ pub mod InteropTime.DurationZ {
 
 
     pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-            unsafe IO { x1.plus(i, u1) }
-        })
+        AdaptorExtras.op(x, x1 ->
+            unsafe IO { x1.plus(i, JChronoUnit.HALF_DAYS) }
+        )
 
     pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        AdaptorExtras.op(x, x1 -> {
-            let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-            unsafe IO { x1.minus(i, u1) }
-        })
+        AdaptorExtras.op(x, x1 -> 
+            unsafe IO { x1.minus(i, JChronoUnit.HALF_DAYS) }
+        )
 
 
     /// multiply / divide functions

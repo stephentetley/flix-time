@@ -125,8 +125,8 @@ pub mod InteropTime.ZonedDateTime {
                             minute: {minute = Int32}, 
                             second: {second = Int32}, 
                             nanoSecond: {nanoSecond = Int32}, 
-                            zone: {zone = ZoneId}): ZonedDateTime =
-        AdaptorExtras.op(zone#zone, zone1 -> 
+                            zone: ZoneId): ZonedDateTime =
+        AdaptorExtras.op(zone, zone1 -> 
             unsafe IO { JZonedDateTime.of(year#year, 
                                             month#month, 
                                             dayOfMonth#dayOfMonth, 
@@ -151,12 +151,12 @@ pub mod InteropTime.ZonedDateTime {
 
     /// `from` functions
 
-    pub def fromLocalDateTime(zone: {zone = ZoneId }, dt: LocalDateTime): ZonedDateTime =
-        AdaptorExtras.op2(zone#zone, dt, (zone1, dt1) -> unsafe IO { JZonedDateTime.of(dt1, zone1) })
+    pub def fromLocalDateTime(zone: ZoneId, dt: LocalDateTime): ZonedDateTime =
+        AdaptorExtras.op2(zone, dt, (zone1, dt1) -> unsafe IO { JZonedDateTime.of(dt1, zone1) })
 
 
-    pub def fromLocalDateLocalTime(zone: {zone = ZoneId }, date: LocalDate, time: LocalTime): ZonedDateTime =
-        AdaptorExtras.op3(zone#zone, date, time, (zone1, date1, time1) ->
+    pub def fromLocalDateLocalTime(zone: ZoneId, date: LocalDate, time: LocalTime): ZonedDateTime =
+        AdaptorExtras.op3(zone, date, time, (zone1, date1, time1) ->
             unsafe IO { JZonedDateTime.of(date1, time1, zone1) }
         )
 
