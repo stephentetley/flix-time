@@ -345,45 +345,48 @@ pub mod InteropTime.InstantZ {
         })
 
     // `until` specialized
-    def untilHelper(junit: JChronoUnit, begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
+
+    pub def nanosUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
         AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            unsafe IO { begin1.until(end1, junit) }
+            unsafe IO { begin1.until(end1, JChronoUnit.NANOS) }
         })
 
-
-    pub def nanosUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.NANOS };
-        untilHelper(u1, begin, end)
-
     pub def microsUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.MICROS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.MICROS) }
+        })
         
 
     pub def millisUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.MILLIS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.MILLIS) }
+        })
 
     pub def secondsUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.SECONDS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.SECONDS) }
+        })
         
 
     pub def minutesUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.MINUTES };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.MINUTES) }
+        })
 
     pub def hoursUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.HOURS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.HOURS) }
+        })
 
     pub def halfDaysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.HALF_DAYS) }
+        })
 
     pub def daysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.DAYS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.DAYS) }
+        })
 
 }
 

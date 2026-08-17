@@ -304,10 +304,6 @@ pub mod InteropTime.LocalDate {
 
     /// Get / Set Iso
     
-    // def withIsoOfHelper(field: JTemporalField, n: Int64, x: LocalDate): LocalDate =
-    //     AdaptorExtras.op(x, x1 -> unsafe IO { x1.$with(field, n) })
-
-
     pub def getDayOfQuarter(x: LocalDate): Int64 = 
         AdaptorExtras.extract(x, x1 -> 
             unsafe IO { x1.getLong(JIsoFields.DAY_OF_QUARTER) }

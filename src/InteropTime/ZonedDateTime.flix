@@ -451,44 +451,56 @@ pub mod InteropTime.ZonedDateTime {
 
     // `until` specialized
 
-    pub def untilHelper(jcu: JChronoUnit, begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
+
+    pub def secondsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
         AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
-            unsafe IO { begin1.until(end1, jcu) }
+            unsafe IO { begin1.until(end1, JChronoUnit.SECONDS) }
         })
 
 
-    pub def secondsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.SECONDS };
-        untilHelper(u1, begin, end)
-
-
     pub def minutesUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.MINUTES };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.MINUTES) }
+        })
+
 
     pub def hoursUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.HOURS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.HOURS) }
+        })
+
 
     pub def halfDaysUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.HALF_DAYS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.HALF_DAYS) }
+        })
+
 
     pub def daysUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.DAYS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.DAYS) }
+        })
+
 
     pub def monthsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.MONTHS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.MONTHS) }
+        })
+
 
     pub def yearsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        let u1 = unsafe IO { JChronoUnit.YEARS };
-        untilHelper(u1, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+            unsafe IO { begin1.until(end1, JChronoUnit.YEARS) }
+        })
+
 
     pub def quarterYearsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        let u1 = unsafe IO { JIsoFields.QUARTER_YEARS };
-        let u2 = unchecked_cast(u1 as JChronoUnit);
-        untilHelper(u2, begin, end)
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { 
+                let u1 = unchecked_cast(JIsoFields.QUARTER_YEARS as JChronoUnit);
+                begin1.until(end1, u1) 
+            }
+        )
+
 
 }

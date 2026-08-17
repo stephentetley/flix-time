@@ -26,8 +26,6 @@ pub mod InteropTime.Format.DateTimeFormatter {
     use InteropTime.Format.FormatStyle.FormatStyle
     use InteropTime.Format.ResolverStyle.ResolverStyle
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
-
     
 
     import java.time.format.{DateTimeFormatter => JDateTimeFormatter}
