@@ -17,10 +17,8 @@
 
 pub mod InteropTime.Month {
 
-    use InteropTime.Month.Month
-    use InteropTime.Month.Month.{January, February, March,
-        April, May, June, July, August, September, October,
-        November, December}
+
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
@@ -129,79 +127,55 @@ pub mod InteropTime.Month {
     /// `fromTemporalAccessor` specialized
 
     pub def fromLocalDate(x: LocalDate): Month =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonth.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): Month =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonth.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     pub def fromMonthDay(x: MonthDay): Month =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonth.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     pub def fromOffsetDateTime(x: OffsetDateTime): Month =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonth.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     pub def fromYearMonth(x: YearMonth): Month =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonth.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     pub def fromZonedDateTime(x: ZonedDateTime): Month =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { JMonth.$from(x1) };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     /// Month functions
     
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
-        let x1 = ToJava.toJava(x);
-        let s1 = ToJava.toJava(style);
-        let locale1 = ToJava.toJava(locale);
-        unsafe IO { x1.getDisplayName(s1, locale1) }
+        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) -> 
+            unsafe IO { x1.getDisplayName(style1, locale1) }
+        )
 
     pub def getValue(x: Month): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.getValue() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
 
     pub def firstDayOfYear(leap: Bool, x: Month): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.firstDayOfYear(leap) }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.firstDayOfYear(leap) })
 
     pub def firstMonthOfQuarter(x: Month): Month =
-        let x1 = ToJava.toJava(x);
-        let ans = unsafe IO { x1.firstMonthOfQuarter() };
-        ToFlix.toFlix(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.firstMonthOfQuarter() })
 
     pub def maxLength(x: Month): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.maxLength() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.maxLength() })
 
     pub def minLength(x: Month): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.minLength() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.minLength() })
 
     pub def length(leap: Bool, x: Month): Int32 =
-        let x1 = ToJava.toJava(x);
-        unsafe IO { x1.length(leap) }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.length(leap) })
 
     // plus / minus functions
 
     pub def plus(x:Month, y: Int64): Month =
-        let x1 = ToJava.toJava(x);
-        let x2 = unsafe IO { x1.plus(y) };
-        ToFlix.toFlix(x2)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plus(y) })
 
     pub def minus(x:Month, y: Int64): Month =
-        let x1 = ToJava.toJava(x);
-        let x2 = unsafe IO { x1.minus(y) };
-        ToFlix.toFlix(x2)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minus(y) })
 
 }
 
