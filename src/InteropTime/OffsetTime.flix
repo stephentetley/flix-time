@@ -18,27 +18,18 @@
 
 pub mod InteropTime.OffsetTime {
 
-    use InteropTime.OffsetTime.OffsetTime
-    use InteropTime.OffsetTime.OffsetTime.{OffsetTime}
+    use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
     use InteropTime.Format.DateTimeFormatter.TimeFormat
     use InteropTime.DurationZ.DurationZ
-    use InteropTime.DurationZ.DurationZ.{DurationZ}
     use InteropTime.InstantZ.InstantZ
-    use InteropTime.InstantZ.InstantZ.{InstantZ}
     use InteropTime.LocalTime.LocalTime
-    use InteropTime.LocalTime.LocalTime.{LocalTime}
     use InteropTime.OffsetDateTime.OffsetDateTime
-    use InteropTime.OffsetDateTime.OffsetDateTime.{OffsetDateTime}
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime }
     use InteropTime.ZoneOffset.ZoneOffset
-    use InteropTime.ZoneOffset.ZoneOffset.{ZoneOffset }
-
+    
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
     import java.time.{OffsetTime => JOffsetTime}
@@ -59,7 +50,7 @@ pub mod InteropTime.OffsetTime {
     ///
     instance ToString[OffsetTime] {
         pub def toString(x: OffsetTime): String =
-            let OffsetTime(x1) = x;
+            let OffsetTime.OffsetTime(x1) = x;
             unsafe IO { x1.toString() }
     }
 
@@ -73,7 +64,7 @@ pub mod InteropTime.OffsetTime {
             try {
                 let s1 = String.trim(s);
                 let ans = unsafe IO { JOffsetTime.parse(s1) };
-                Some(OffsetTime(ans))
+                Some(OffsetTime.OffsetTime(ans))
             } catch {
                 case _: JException => None
             }
@@ -81,21 +72,21 @@ pub mod InteropTime.OffsetTime {
 
     instance Eq[OffsetTime] {
         pub def eq(x: OffsetTime, y: OffsetTime): Bool =
-            let OffsetTime(x1) = x;
-            let OffsetTime(y1) = y;
+            let OffsetTime.OffsetTime(x1) = x;
+            let OffsetTime.OffsetTime(y1) = y;
             unsafe IO { x1.equals(y1) }
     }
 
     instance Hash[OffsetTime] {
         pub def hash(x: OffsetTime): Int32 =
-            let OffsetTime(x1) = x;
+            let OffsetTime.OffsetTime(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
     instance Order[OffsetTime] {
         pub def compare(x: OffsetTime, y: OffsetTime): Comparison =
-            let OffsetTime(x1) = x;
-            let OffsetTime(y1) = y;
+            let OffsetTime.OffsetTime(x1) = x;
+            let OffsetTime.OffsetTime(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
@@ -108,7 +99,8 @@ pub mod InteropTime.OffsetTime {
 
     instance ToFlix[OffsetTime] {
         type In = JOffsetTime
-        pub def toFlix(x: JOffsetTime): OffsetTime = OffsetTime.OffsetTime(x)
+        pub def toFlix(x: JOffsetTime): OffsetTime = 
+            OffsetTime.OffsetTime(x)
     }
 
     /// Constructors
@@ -118,39 +110,40 @@ pub mod InteropTime.OffsetTime {
                         second: {second = Int32}, 
                         nanoSecond: {nanoSecond = Int32}, 
                         offset: ZoneOffset): OffsetTime =
-        let ZoneOffset(offset1) = offset;
-        let ans = unsafe IO { JOffsetTime.of(hour#hour, minute#minute, second#second, nanoSecond#nanoSecond, offset1) };
-        OffsetTime(ans)
+        AdaptorExtras.op(offset, offset1 -> 
+            unsafe IO { JOffsetTime.of(hour#hour, 
+                                        minute#minute, 
+                                        second#second, 
+                                        nanoSecond#nanoSecond, 
+                                        offset1) }
+        )
 
     /// `now` and "abstract constructors" if any
 
     ///
     /// Returns the current time from the system clock.
     ///
-    pub def now(): OffsetTime \ IO = OffsetTime(JOffsetTime.now())
+    pub def now(): OffsetTime \ IO = 
+        AdaptorExtras.of(() -> JOffsetTime.now())
 
     ///
     /// Returns the current time from the system clock.
     ///
     pub def nowWithZoneId(zone: ZoneId): OffsetTime \ IO =
-        let ZoneId(zone1) = zone;
-        let ans = JOffsetTime.now(zone1);
-        OffsetTime(ans)
+        AdaptorExtras.op(zone, zone1 -> JOffsetTime.now(zone1))
 
     /// `from` functions
 
     pub def fromLocalTime(offset: ZoneOffset, x: LocalTime): OffsetTime =
-        let LocalTime(x1) = x;
-        let ZoneOffset(o1) = offset;
-        let ans = unsafe IO { JOffsetTime.of(x1, o1) };
-        OffsetTime(ans)
+        AdaptorExtras.op2(offset, x, (offset1, x1) -> 
+            unsafe IO { JOffsetTime.of(x1, offset1) }
+        )
 
 
     pub def ofInstant(zone: ZoneId, x: InstantZ): OffsetTime =
-        let InstantZ(x1) = x;
-        let ZoneId(z1) = zone;
-        let ans = unsafe IO { JOffsetTime.ofInstant(x1, z1) };
-        OffsetTime(ans)
+        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
+            unsafe IO { JOffsetTime.ofInstant(x1, zone1) }
+        )
 
 
 
@@ -158,14 +151,10 @@ pub mod InteropTime.OffsetTime {
 
 
     pub def fromOffsetDateTime(x: OffsetDateTime): OffsetTime = 
-        let OffsetDateTime(x1) = x;
-        let ans = unsafe IO { JOffsetTime.$from(x1) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetTime.$from(x1) })
 
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime =
-        let ZonedDateTime(x1) = x;
-        let ans = unsafe IO { JOffsetTime.$from(x1) };
-        OffsetTime(ans) 
+        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetTime.$from(x1) }) 
 
     // `parse` / `format` functions        
 
@@ -176,22 +165,18 @@ pub mod InteropTime.OffsetTime {
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
     pub def parse(formatter: DateTimeFormatter[TimeFormat], s: String): Result[String, OffsetTime] =
-        try {
-            let DateTimeFormatter(fmtr) = formatter;
+        AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
-            let ans = unsafe IO { JOffsetTime.parse(s1, fmtr) };
-            Ok(OffsetTime(ans))
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+            unsafe IO { JOffsetTime.parse(s1, formatter1) }
+        })
 
     ///
     /// Returns OffsetTime `x` as a String using `formatter`.
     ///
     pub def format(formatter: DateTimeFormatter[TimeFormat], x: OffsetTime): String =
-        let OffsetTime(x1) = x;
-        let DateTimeFormatter(fmtr) = formatter;
-        unsafe IO { x1.format(fmtr) }
+        AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> 
+            unsafe IO { x1.format(formatter1) }
+        )
 
     /// ## predicates / comparisons
 
@@ -199,188 +184,141 @@ pub mod InteropTime.OffsetTime {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: OffsetTime, y: OffsetTime): Bool =
-        let OffsetTime(x1) = x;
-        let OffsetTime(y1) = y;
-        unsafe IO { x1.isBefore(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: OffsetTime, y: OffsetTime): Bool =
-        let OffsetTime(x1) = x;
-        let OffsetTime(y1) = y;
-        unsafe IO { x1.isAfter(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     pub def isInstantEqual(x: OffsetTime, y: OffsetTime): Bool =
-        let OffsetTime(x1) = x;
-        let OffsetTime(y1) = y;
-        unsafe IO { x1.isEqual(y1) }
+        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isEqual(y1) })
 
     pub def isAmOfDay(x: OffsetTime): Bool = 
-        let OffsetTime(x1) = x;
-        let tf1 = unsafe IO { JChronoField.AMPM_OF_DAY };
-        unsafe IO { x1.get(tf1) == 0 }
+        AdaptorExtras.extract(x, x1 -> 
+            unsafe IO { x1.get(JChronoField.AMPM_OF_DAY) == 0 }
+        )
 
 
     pub def isPmOfDay(x: OffsetTime): Bool = 
-        let OffsetTime(x1) = x;
-        let tf1 = unsafe IO { JChronoField.AMPM_OF_DAY };
-        unsafe IO { x1.get(tf1) == 1 }
+        AdaptorExtras.extract(x, x1 ->
+            unsafe IO { x1.get(JChronoField.AMPM_OF_DAY) == 1 }
+        )
 
     /// Getters and Setters
 
     pub def getHour(x: OffsetTime): Int32 =
-        let OffsetTime(x1) = x;
-        unsafe IO { x1.getHour() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getHour() })
 
     pub def withHour(hour: Int32, x: OffsetTime): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.$withHour(hour) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withHour(hour) })
 
     pub def getMinute(x: OffsetTime): Int32 =
-        let OffsetTime(x1) = x;
-        unsafe IO { x1.getMinute() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getMinute() })
 
     pub def withMinute(minute: Int32, x: OffsetTime): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.$withMinute(minute) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withMinute(minute) })
 
     pub def getSecond(x: OffsetTime): Int32 =
-        let OffsetTime(x1) = x;
-        unsafe IO { x1.getSecond() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getSecond() })
 
     pub def withSecond(second: Int32, x: OffsetTime): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.$withSecond(second) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withSecond(second) })
 
     pub def getNano(x: OffsetTime): Int32 =
-        let OffsetTime(x1) = x;
-        unsafe IO { x1.getNano() }
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getNano() })
 
     pub def withNano(nano: Int32, x: OffsetTime): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.$withNano(nano) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withNano(nano) })
 
     pub def getOffset(x: OffsetTime): ZoneOffset =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.getOffset() };
-        ZoneOffset(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
 
     pub def withOffsetSameInstant(x: OffsetTime, offset: ZoneOffset): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ZoneOffset(o1) = offset;
-        let ans = unsafe IO { x1.$withOffsetSameInstant(o1) };
-        OffsetTime(ans)
+        AdaptorExtras.op2(x, offset, (x1, offset1)-> 
+            unsafe IO { x1.$withOffsetSameInstant(offset1) }
+        )
 
     pub def withOffsetSameLocal(x: OffsetTime, offset: ZoneOffset): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ZoneOffset(o1) = offset;
-        let ans = unsafe IO { x1.$withOffsetSameLocal(o1) };
-        OffsetTime(ans)
+        AdaptorExtras.op2(x, offset, (x1, offset1)-> 
+            unsafe IO { x1.$withOffsetSameLocal(offset1) }
+        )
 
     pub def adjustLocalTime(lt: LocalTime, x: OffsetTime): OffsetTime = 
-        let OffsetTime(x1) = x;
-        let LocalTime(lt1) = lt;
-        let t1 = unsafe IO { lt1.adjustInto(x1) };
-        let ans = unchecked_cast(t1 as JOffsetTime);
-        OffsetTime(ans)
+        AdaptorExtras.op2(lt, x, (lt1, x1) -> {
+            let t1 = unsafe IO { lt1.adjustInto(x1) };
+            unchecked_cast(t1 as JOffsetTime)
+        })
 
     // truncate functions
 
     pub def truncatedToHours(x: OffsetTime): OffsetTime = 
-        let OffsetTime(x1) = x;
-        let u1 = unsafe IO { JChronoUnit.HOURS };
-        let ans = unsafe IO { x1.truncatedTo(u1) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.HOURS) })
 
     // plus / minus functions
 
     pub def plusHours(x: OffsetTime, hours: Int64): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.plusHours(hours) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusHours(hours) })
 
     pub def minusHours(x: OffsetTime, hours: Int64): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.minusHours(hours) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusHours(hours) })
 
     pub def plusMinutes(x: OffsetTime, minutes: Int64): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.plusMinutes(minutes) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMinutes(minutes) })
 
     pub def minusMinutes(x: OffsetTime, minutes: Int64): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.minusMinutes(minutes) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMinutes(minutes) })
 
     pub def plusSeconds(x: OffsetTime, seconds: Int64): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.plusSeconds(seconds) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusSeconds(seconds) })
 
     pub def minusSeconds(x: OffsetTime, seconds: Int64): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.minusSeconds(seconds) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusSeconds(seconds) })
 
     pub def plusNanos(x: OffsetTime, nanos: Int64): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.plusNanos(nanos) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusNanos(nanos) })
 
     pub def minusNanos(x: OffsetTime, nanos: Int64): OffsetTime =
-        let OffsetTime(x1) = x;
-        let ans = unsafe IO { x1.minusNanos(nanos) };
-        OffsetTime(ans)
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusNanos(nanos) })
 
 
     pub def plusDuration(x: OffsetTime, d: DurationZ): OffsetTime =
-        let OffsetTime(x1) = x;
-        let DurationZ(d1) = d;
-        let t1 = unsafe IO { d1.addTo(x1) };
-        let ans = unchecked_cast(t1 as JOffsetTime);
-        OffsetTime(ans)
+        AdaptorExtras.op2(x, d, (x1, d1) -> {
+            let t1 = unsafe IO { d1.addTo(x1) };
+            unchecked_cast(t1 as JOffsetTime)
+        })
     
     pub def minusDuration(x: OffsetTime, d: DurationZ): OffsetTime =
-        let OffsetTime(x1) = x;
-        let DurationZ(d1) = d;
-        let t1 = unsafe IO { d1.subtractFrom(x1) };
-        let ans = unchecked_cast(t1 as JOffsetTime);
-        OffsetTime(ans)
+        AdaptorExtras.op2(x, d, (x1, d1) -> {
+            let t1 = unsafe IO { d1.subtractFrom(x1) };
+            unchecked_cast(t1 as JOffsetTime)   
+        })
 
 
     // between / until functions
     
-    pub def between(begin: {begin = OffsetTime }, end: {end = OffsetTime }): DurationZ =
-        let OffsetTime(b1) = begin#begin;
-        let OffsetTime(e1) = end#end;
-        let ans = unsafe IO { JDuration.between(b1, e1) };
-        DurationZ(ans)
+    pub def between(begin: {begin = OffsetTime}, end: {end = OffsetTime}): DurationZ =
+        AdaptorExtras.op2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { JDuration.between(begin1, end1) }
+        )
 
 
-    pub def secondsUntil(begin: {begin = OffsetTime }, end: {end = OffsetTime }): Int64 = 
-        let OffsetTime(b1) = begin#begin;
-        let OffsetTime(e1) = end#end;
-        let u1 = unsafe IO { JChronoUnit.SECONDS };
-        unsafe IO { b1.until(e1, u1) }
+    pub def secondsUntil(begin: {begin = OffsetTime}, end: {end = OffsetTime}): Int64 = 
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.SECONDS) }
+        )
 
 
-    pub def minutesUntil(begin: {begin = OffsetTime }, end: {end = OffsetTime }): Int64 = 
-        let OffsetTime(b1) = begin#begin;
-        let OffsetTime(e1) = end#end;
-        let u1 = unsafe IO { JChronoUnit.MINUTES };
-        unsafe IO { b1.until(e1, u1) }
+    pub def minutesUntil(begin: {begin = OffsetTime}, end: {end = OffsetTime}): Int64 = 
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.MINUTES) }
+        )
 
-    pub def hoursUntil(begin: {begin = OffsetTime }, end: {end = OffsetTime }): Int64 = 
-        let OffsetTime(b1) = begin#begin;
-        let OffsetTime(e1) = end#end;
-        let u1 = unsafe IO { JChronoUnit.HOURS };
-        unsafe IO { b1.until(e1, u1) }
+    pub def hoursUntil(begin: {begin = OffsetTime}, end: {end = OffsetTime}): Int64 = 
+        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+            unsafe IO { begin1.until(end1, JChronoUnit.HOURS) }
+        )
 
 }
+
