@@ -133,7 +133,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
         AdaptorExtras.extract2(era, x, (era1, x1) -> unsafe IO { x1.prolepticYear(era1, yearOfEra) })
 
     pub def rangeYear(x: HijrahChronology): ValueRange =
-        AdaptorExtras.op2(x, ChronoField.Year, (x1, f1) -> unsafe IO { x1.range(f1) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.range(JChronoField.YEAR) })
 
 
 

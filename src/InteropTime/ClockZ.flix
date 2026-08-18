@@ -71,14 +71,14 @@ pub mod InteropTime.ClockZ {
         AdaptorExtras.op2(d, c, (d1, c1) -> { JClock.tick(c1, d1) })
 
 
-    pub def tickMillis(zoneId: ZoneId): ClockZ \ IO =
-        AdaptorExtras.op(zoneId, zoneId1 -> { JClock.tickMillis(zoneId1) })
+    pub def tickMillis(zone: ZoneId): ClockZ \ IO =
+        AdaptorExtras.op(zone, zone1 -> { JClock.tickMillis(zone1) })
 
-    pub def tickSeconds(zoneId: ZoneId): ClockZ \ IO =
-        AdaptorExtras.op(zoneId, zoneId1 -> { JClock.tickSeconds(zoneId1) })
+    pub def tickSeconds(zone: ZoneId): ClockZ \ IO =
+        AdaptorExtras.op(zone, zone1 -> { JClock.tickSeconds(zone1) })
 
-    pub def tickMinutes(zoneId: ZoneId): ClockZ \ IO =
-        AdaptorExtras.op(zoneId, zoneId1 -> { JClock.tickMinutes(zoneId1) })
+    pub def tickMinutes(zone: ZoneId): ClockZ \ IO =
+        AdaptorExtras.op(zone, zone1 -> { JClock.tickMinutes(zone1) })
 
     /// Clock functions
 

@@ -93,20 +93,20 @@ mod TestHirjahDate {
         assertTrue(InteropTime.Chrono.HijrahDate.plusChrono(d1, 0i64, open_variant ChronoUnit.Millennia) == d1)
 
 
-    /////////////////////////////////////////////////////////////////////////////
-    // withChrono                                                              //
-    /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
+    // // withChrono                                                              //
+    // /////////////////////////////////////////////////////////////////////////////
 
-    @Test
-    def withChrono01(): Unit \ {Assert, IO} = 
-        let d1 = InteropTime.Chrono.HijrahDate.now();
-        let y1 = InteropTime.Chrono.HijrahDate.getYear(d1);
-        assertTrue(InteropTime.Chrono.HijrahDate.withChrono(d1, open_variant ChronoField.Year, Int32.toInt64(y1)) == d1)
+    // @Test
+    // def withChrono01(): Unit \ {Assert, IO} = 
+    //     let d1 = InteropTime.Chrono.HijrahDate.now();
+    //     let y1 = InteropTime.Chrono.HijrahDate.getYear(d1);
+    //     assertTrue(InteropTime.Chrono.HijrahDate.withChrono(d1, open_variant ChronoField.Year, Int32.toInt64(y1)) == d1)
 
-    @Test
-    def withChrono02(): Unit \ {Assert, IO} = 
-        let d1 = InteropTime.Chrono.HijrahDate.now();
-        let m1 = InteropTime.Chrono.HijrahDate.getMonth(d1) |> Int32.toInt64;
-        assertTrue(InteropTime.Chrono.HijrahDate.withChrono(d1, open_variant ChronoField.MonthOfYear, m1) == d1)
+    // @Test
+    // def withChrono02(): Unit \ {Assert, IO} = 
+    //     let d1 = InteropTime.Chrono.HijrahDate.now();
+    //     let m1 = InteropTime.Chrono.HijrahDate.getMonth(d1) |> Int32.toInt64;
+    //     assertTrue(InteropTime.Chrono.HijrahDate.withChrono(d1, open_variant ChronoField.MonthOfYear, m1) == d1)
         
 }

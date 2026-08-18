@@ -27,6 +27,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistEra {
     use InteropLocale.Locale.Locale
 
     import java.time.chrono.{ThaiBuddhistEra => JThaiBuddhistEra }
+    import java.time.temporal.{ChronoField => JChronoField}
     import java.lang.{Enum => JEnum }
 
 
@@ -70,7 +71,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistEra {
         
     // Note only ERA is a valid field, suggests we should provide `rangeEra` instead...
     pub def rangeEra(x: ThaiBuddhistEra): ValueRange = 
-        AdaptorExtras.op2(x, ChronoField.Era, (x1, cf1) -> unsafe IO { x1.range(cf1) })
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.range(JChronoField.ERA) })
 
 
 }

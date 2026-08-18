@@ -192,27 +192,27 @@ pub mod InteropTime.Chrono.HijrahDate {
             unsafe IO { begin1.until(tend1, tu1) }
         })
 
-    // just MonthOfYear / Year...
-    pub def getChrono(x: HijrahDate, cf: ChronoField): Int64 =
-        AdaptorExtras.extract2(x, cf, (x1, cf1) -> unsafe IO { x1.getLong(cf1) })
+    // // just MonthOfYear / Year...
+    // pub def getChrono(x: HijrahDate, cf: ChronoField): Int64 =
+    //     AdaptorExtras.extract2(x, cf, (x1, cf1) -> unsafe IO { x1.getLong(cf1) })
 
-    pub def getYear(x: HijrahDate): Int32 =
-        match getChrono(x, open_variant ChronoField.Year) |> Int64.tryToInt32 {
-            case Some(i) => i
-            case None => bug!("HijrahDate.getYear()")
-        }
+    // pub def getYear(x: HijrahDate): Int32 =
+    //     match getChrono(x, open_variant ChronoField.Year) |> Int64.tryToInt32 {
+    //         case Some(i) => i
+    //         case None => bug!("HijrahDate.getYear()")
+    //     }
 
-    pub def getMonth(x: HijrahDate): Int32 =
-        match getChrono(x, open_variant ChronoField.MonthOfYear) |> Int64.tryToInt32 {
-            case Some(i) => i
-            case None => bug!("HijrahDate.getMonth()")
-        }
+    // pub def getMonth(x: HijrahDate): Int32 =
+    //     match getChrono(x, open_variant ChronoField.MonthOfYear) |> Int64.tryToInt32 {
+    //         case Some(i) => i
+    //         case None => bug!("HijrahDate.getMonth()")
+    //     }
 
-    // <MonthOfYear, Year>
-    pub def withChrono(x: HijrahDate, cf: ChronoField, i: Int64): HijrahDate =
-        AdaptorExtras.op2(x, cf, (x1, cf1) -> {
-            let ans: JChronoLocalDate = unsafe IO { x1.$with(cf1, i) };
-            unchecked_cast(ans as JHijrahDate)
-        })
+    // // <MonthOfYear, Year>
+    // pub def withChrono(x: HijrahDate, cf: ChronoField, i: Int64): HijrahDate =
+    //     AdaptorExtras.op2(x, cf, (x1, cf1) -> {
+    //         let ans: JChronoLocalDate = unsafe IO { x1.$with(cf1, i) };
+    //         unchecked_cast(ans as JHijrahDate)
+    //     })
 
 }
