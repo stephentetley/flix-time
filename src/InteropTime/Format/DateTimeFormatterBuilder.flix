@@ -24,7 +24,6 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
 
     use InteropTime.ZoneId
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
     use InteropTime.Format.FormatStyle.FormatStyle
     use InteropTime.Format.TextStyle.TextStyle
 
@@ -39,7 +38,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
     // Builder doesn't need IO for evaluation
 
     pub eff DateTimeFormatterBuilder {
-        def appendFormatter(fmt: DateTimeFormatter[_]): Unit
+        def appendFormatter(fmt: DateTimeFormatter): Unit
         def appendChronologyId(): Unit
         def appendChronologyText(style: TextStyle): Unit
         def appendDayPeriodText(style: TextStyle): Unit
@@ -53,7 +52,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
         def appendLocalizedOffset(style: TextStyle): Unit
         def appendOffset(pattern: {pattern = String}, noOffsetText: {noOffsetText = String}): Unit
         def appendOffsetId(): Unit
-        def appendOptional(fmt: DateTimeFormatter[_]): Unit
+        def appendOptional(fmt: DateTimeFormatter): Unit
         def appendPattern(patt: String): Unit
         def appendZoneId(): Unit
         def appendZoneOrOffsetId(): Unit
@@ -70,7 +69,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
         def parseLenient(): Unit
     }
 
-    pub def handle(f: a -> b \ ef): a -> (DateTimeFormatter[t], b) \ (ef + Fail - DateTimeFormatterBuilder) = x -> {
+    pub def handle(f: a -> b \ ef): a -> (DateTimeFormatter, b) \ (ef + Fail - DateTimeFormatterBuilder) = x -> {
         let builder = unsafe IO { new JDateTimeFormatterBuilder() };
         let ans = run {
             f(x)
@@ -257,16 +256,16 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
     }
 
 
-    pub def runDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): (DateTimeFormatter[t], a) \ (ef + Fail - DateTimeFormatterBuilder) = 
+    pub def runDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): (DateTimeFormatter, a) \ (ef + Fail - DateTimeFormatterBuilder) = 
         handle(buildfun)()
 
-    pub def execDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): DateTimeFormatter[t] \ (ef + Fail - DateTimeFormatterBuilder)  = 
+    pub def execDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): DateTimeFormatter \ (ef + Fail - DateTimeFormatterBuilder)  = 
         handle(buildfun)() |> fst
 
-    pub def runDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[String, (DateTimeFormatter[t], a)] \ (ef - Fail - DateTimeFormatterBuilder)  = 
+    pub def runDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[String, (DateTimeFormatter, a)] \ (ef - Fail - DateTimeFormatterBuilder)  = 
         run { handle(buildfun)() } with EffectExtras.Fail.runWithResult
 
-    pub def execDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[String, DateTimeFormatter[t]] \ (ef - Fail - DateTimeFormatterBuilder)  = 
+    pub def execDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[String, DateTimeFormatter] \ (ef - Fail - DateTimeFormatterBuilder)  = 
         { run { handle(buildfun)() } with EffectExtras.Fail.runWithResult } |> Result.map(fst)
 
 

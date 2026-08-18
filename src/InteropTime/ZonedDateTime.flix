@@ -19,8 +19,7 @@ pub mod InteropTime.ZonedDateTime {
 
     use InteropTime.Internal.AdaptorExtras
 
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormat
+    use InteropTime.Format.DateTimeFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
     use InteropTime.LocalDate.LocalDate
@@ -194,7 +193,7 @@ pub mod InteropTime.ZonedDateTime {
     ///
     /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, ZonedDateTime] =
+    pub def parse(formatter: DateTimeFormatter, s: String): Result[String, ZonedDateTime] =
         AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
             unsafe IO { JZonedDateTime.parse(s1, formatter1) }
@@ -203,7 +202,7 @@ pub mod InteropTime.ZonedDateTime {
     ///
     /// Returns ZonedDateTime `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: ZonedDateTime): String =
+    pub def format(formatter: DateTimeFormatter, x: ZonedDateTime): String =
         AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> 
             unsafe IO { x1.format(formatter1) }
         )

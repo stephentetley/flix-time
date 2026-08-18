@@ -20,9 +20,7 @@ pub mod InteropTime.Year {
     
     use InteropTime.Internal.AdaptorExtras
 
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
-    use InteropTime.Format.DateTimeFormatter.DateFormat
+    use InteropTime.Format.DateFormatter
     use InteropTime.ClockZ.ClockZ
     use InteropTime.LocalDate.LocalDate
     use InteropTime.LocalDateTime.LocalDateTime
@@ -156,7 +154,7 @@ pub mod InteropTime.Year {
     ///
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, Year] =
+    pub def parse(formatter: DateFormatter, s: String): Result[String, Year] =
         AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
             unsafe IO { JYear.parse(s1, formatter1) }
@@ -165,7 +163,7 @@ pub mod InteropTime.Year {
     ///
     /// Returns the Year `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter[DateFormat], x: Year): String =
+    pub def format(formatter: DateFormatter, x: Year): String =
         AdaptorExtras.extract2(formatter, x, (formatter1, x1) ->
             unsafe IO { x1.format(formatter1) }
         )

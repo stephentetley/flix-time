@@ -15,15 +15,12 @@
  */
 
 
-
-
 pub mod InteropTime.LocalDate {
 
 
     use InteropTime.Internal.AdaptorExtras
 
-    use InteropTime.Format.DateTimeFormatter.DateFormat
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
+    use InteropTime.Format.DateFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.InstantZ.InstantZ
     use InteropTime.LocalDateTime.LocalDateTime
@@ -194,7 +191,7 @@ pub mod InteropTime.LocalDate {
     ///
     /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, LocalDate] = 
+    pub def parse(formatter: DateFormatter, s: String): Result[String, LocalDate] = 
         AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
             unsafe IO { JLocalDate.parse(s1, formatter1) }
@@ -203,7 +200,7 @@ pub mod InteropTime.LocalDate {
     ///
     /// Returns LocalDate `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter[DateFormat], x: LocalDate): String =
+    pub def format(formatter: DateFormatter, x: LocalDate): String =
         AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> unsafe IO { x1.format(formatter1) })
 
 

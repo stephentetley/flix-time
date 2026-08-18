@@ -19,9 +19,8 @@
 pub mod InteropTime.LocalTime {
 
     use InteropTime.Internal.AdaptorExtras
-        
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.TimeFormat
+
+    use InteropTime.Format.TimeFormatter
     use InteropTime.LocalDateTime.LocalDateTime
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.OffsetTime.OffsetTime
@@ -190,7 +189,7 @@ pub mod InteropTime.LocalTime {
     /// The format of the input string should in the format mandated by `formatter`.
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[TimeFormat], s: String): Result[String, LocalTime] =
+    pub def parse(formatter: TimeFormatter, s: String): Result[String, LocalTime] =
         AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
             unsafe IO { JLocalTime.parse(s1, formatter1) }
@@ -199,7 +198,7 @@ pub mod InteropTime.LocalTime {
     ///
     /// Returns the given LocalTime `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter[TimeFormat], x: LocalTime): String =
+    pub def format(formatter: TimeFormatter, x: LocalTime): String =
         AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> 
             unsafe IO { x1.format(formatter1) }
         )

@@ -20,9 +20,7 @@ pub mod InteropTime.OffsetDateTime {
 
     use InteropTime.Internal.AdaptorExtras
 
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter.{DateTimeFormatter}
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormat
+    use InteropTime.Format.DateTimeFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
     use InteropTime.InstantZ.InstantZ
@@ -231,7 +229,7 @@ pub mod InteropTime.OffsetDateTime {
     ///
     /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateTimeFormat], s: String): Result[String, OffsetDateTime] =
+    pub def parse(formatter: DateTimeFormatter, s: String): Result[String, OffsetDateTime] =
         AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
             unsafe IO { JOffsetDateTime.parse(s1, formatter1) }
@@ -241,7 +239,7 @@ pub mod InteropTime.OffsetDateTime {
     ///
     /// Returns OffsetDateTime `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter[DateTimeFormat], x: OffsetDateTime): String =
+    pub def format(formatter: DateTimeFormatter, x: OffsetDateTime): String =
         AdaptorExtras.op2(formatter, x, (formatter1, x1) -> 
             unsafe IO { x1.format(formatter1) }
         )

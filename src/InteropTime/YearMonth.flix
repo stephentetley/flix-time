@@ -19,8 +19,7 @@ pub mod InteropTime.YearMonth {
 
     use InteropTime.Internal.AdaptorExtras
 
-    use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
-    use InteropTime.Format.DateTimeFormatter.DateFormat
+    use InteropTime.Format.DateFormatter
     use InteropTime.LocalDate.LocalDate
     use InteropTime.LocalDateTime.LocalDateTime
     use InteropTime.Month.Month
@@ -137,7 +136,7 @@ pub mod InteropTime.YearMonth {
     ///
     /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
     ///
-    pub def parse(formatter: DateTimeFormatter[DateFormat], s: String): Result[String, YearMonth] =
+    pub def parse(formatter: DateFormatter, s: String): Result[String, YearMonth] =
         AdaptorExtras.opWithResult(formatter, formatter1 -> {
             let s1 = String.trim(s);
             unsafe IO { JYearMonth.parse(s1, formatter1) }
@@ -146,7 +145,7 @@ pub mod InteropTime.YearMonth {
     ///
     /// Returns YearMonth `x` as a String using `formatter`.
     ///
-    pub def format(formatter: DateTimeFormatter[DateFormat], x: YearMonth): String =
+    pub def format(formatter: DateFormatter, x: YearMonth): String =
         AdaptorExtras.op2(formatter, x, (formatter1, x1) -> 
             unsafe IO { x1.format(formatter1) }
         )
