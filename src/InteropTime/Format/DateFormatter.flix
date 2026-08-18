@@ -15,7 +15,7 @@
  */
 
 
-pub mod InteropTime.Format.TimeFormatter {
+pub mod InteropTime.Format.DateFormatter {
 
     use InteropLocale.Locale
         
@@ -34,37 +34,37 @@ pub mod InteropTime.Format.TimeFormatter {
 
     ///
     /// A wrapper around a Java DateTimeFormatter specifically for 
-    /// time formats.
+    /// date formats.
     ///
-    pub enum TimeFormatter(JDateTimeFormatter)
+    pub enum DateFormatter(JDateTimeFormatter)
 
-    instance ToString[TimeFormatter] {
-        pub def toString(x: TimeFormatter): String =
-            let TimeFormatter.TimeFormatter(x1) = x;
+    instance ToString[DateFormatter] {
+        pub def toString(x: DateFormatter): String =
+            let DateFormatter.DateFormatter(x1) = x;
             unsafe IO { x1.toString() }
     }
 
-    instance FromString[TimeFormatter] {
-        pub def fromString(s: String): Option[TimeFormatter] =
+    instance FromString[DateFormatter] {
+        pub def fromString(s: String): Option[DateFormatter] =
             try {
                 let s1 = String.trim(s);
-                TimeFormatter.TimeFormatter(unsafe IO { JDateTimeFormatter.ofPattern(s1) }) |> Some
+                DateFormatter.DateFormatter(unsafe IO { JDateTimeFormatter.ofPattern(s1) }) |> Some
             } catch {
                 case _: JException => None
             }
     }
 
-    instance ToJava[TimeFormatter] {
+    instance ToJava[DateFormatter] {
         type Out = JDateTimeFormatter
-        pub def toJava(x: TimeFormatter): JDateTimeFormatter = 
-            let TimeFormatter.TimeFormatter(x1) = x;
+        pub def toJava(x: DateFormatter): JDateTimeFormatter = 
+            let DateFormatter.DateFormatter(x1) = x;
             x1
     }
 
-    instance ToFlix[TimeFormatter] {
+    instance ToFlix[DateFormatter] {
         type In = JDateTimeFormatter
-        pub def toFlix(x: JDateTimeFormatter): TimeFormatter = 
-            TimeFormatter.TimeFormatter(x)
+        pub def toFlix(x: JDateTimeFormatter): DateFormatter = 
+            DateFormatter.DateFormatter(x)
     }
 
 
@@ -74,57 +74,65 @@ pub mod InteropTime.Format.TimeFormatter {
     /// Builtin DateTime Formatters
 
 
-    /// Builtin Time Formatters
+    /// Builtin Date Formatters
 
-    pub def iso_local_time(): TimeFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_LOCAL_TIME })
+    pub def basic_iso_date(): DateFormatter =
+        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.BASIC_ISO_DATE })
 
-    pub def iso_offset_time(): TimeFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_OFFSET_TIME })
+    pub def iso_local_date(): DateFormatter =
+        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_LOCAL_DATE })
 
-    pub def basic_iso_time(): TimeFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_TIME })
+    pub def iso_offset_date(): DateFormatter =
+        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_OFFSET_DATE })
+
+    pub def iso_date(): DateFormatter =
+        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_DATE })
+
+    pub def iso_oridinal_date(): DateFormatter =
+        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_ORDINAL_DATE })
+
+    pub def iso_week_date(): DateFormatter =
+        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_WEEK_DATE })
 
     /// ## `from` functions
 
-    pub def fromPattern(pattern: String): Result[String, TimeFormatter] =
+    pub def fromPattern(pattern: String): Result[String, DateFormatter] =
         AdaptorExtras.ofWithResult(() -> {
             let s1 = String.trim(pattern);
             unsafe IO { JDateTimeFormatter.ofPattern(s1) }
         })
 
-    // Varies according to system locale
-    pub def fromLocalizedTime(style: FormatStyle): TimeFormatter \ IO =
-        AdaptorExtras.op(style, style1 -> { JDateTimeFormatter.ofLocalizedTime(style1) })
 
 
+    pub def fromLocalizedDate(style: FormatStyle): DateFormatter \ IO =
+        AdaptorExtras.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDate(style1) })
 
-    // /// ## Getters and Setters
+    /// ## Getters and Setters
 
-    pub def getZone(x: TimeFormatter): ZoneId =
+    pub def getZone(x: DateFormatter): ZoneId =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getZone() })
 
     
-    pub def withZone(zone: ZoneId, x: TimeFormatter): TimeFormatter =
+    pub def withZone(zone: ZoneId, x: DateFormatter): DateFormatter =
         AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { x1.$withZone(zone1) })
 
 
-    pub def getLocale(x: TimeFormatter): Locale \ IO =
+    pub def getLocale(x: DateFormatter): Locale \ IO =
         AdaptorExtras.op(x, x1 -> { x1.getLocale() })
 
-    pub def withLocale(locale: Locale, x: TimeFormatter): TimeFormatter =
+    pub def withLocale(locale: Locale, x: DateFormatter): DateFormatter =
         AdaptorExtras.op2(locale, x, (locale1, x1) -> unsafe IO { x1.$withLocale(locale1) })
 
-    pub def getDecimalStyle(x: TimeFormatter): DecimalStyle =
+    pub def getDecimalStyle(x: DateFormatter): DecimalStyle =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDecimalStyle() })
 
-    pub def withDecimalStyle(style: DecimalStyle, x: TimeFormatter): TimeFormatter =
+    pub def withDecimalStyle(style: DecimalStyle, x: DateFormatter): DateFormatter =
         AdaptorExtras.op2(style, x, (style1, x1) -> unsafe IO { x1.$withDecimalStyle(style1) })
 
-    pub def getResolverStyle(x: TimeFormatter): ResolverStyle =
+    pub def getResolverStyle(x: DateFormatter): ResolverStyle =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getResolverStyle() })
 
-    pub def withResolverStyle(style: ResolverStyle, x: TimeFormatter): TimeFormatter =
+    pub def withResolverStyle(style: ResolverStyle, x: DateFormatter): DateFormatter =
         AdaptorExtras.op2(style, x, (style1, x1) -> unsafe IO { x1.$withResolverStyle(style1) })
 
 }
