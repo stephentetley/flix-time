@@ -20,6 +20,7 @@ pub mod InteropTime.Year {
     
     use InteropTime.Internal.AdaptorExtras
 
+    use InteropTime.Format.TemporalFormat
     use InteropTime.Format.DateFormatter
     use InteropTime.ClockZ.ClockZ
     use InteropTime.LocalDate.LocalDate
@@ -95,6 +96,15 @@ pub mod InteropTime.Year {
         type In = JYear
         pub def toFlix(x: JYear): Year = 
             Year.Year(x)
+    }
+
+    instance TemporalFormat[Year] {
+        type Formatter = DateFormatter
+        type Aef = {}
+        pub def format(formatter: DateFormatter, x: Year): String =
+            let Year.Year(x1) = x;
+            let formatter1 = ToJava.toJava(formatter);
+            unsafe IO { x1.format(formatter1) }
     }
 
     /// Constructors

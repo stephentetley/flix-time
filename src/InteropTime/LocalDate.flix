@@ -20,6 +20,7 @@ pub mod InteropTime.LocalDate {
 
     use InteropTime.Internal.AdaptorExtras
 
+    use InteropTime.Format.TemporalFormat
     use InteropTime.Format.DateFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.InstantZ.InstantZ
@@ -112,6 +113,16 @@ pub mod InteropTime.LocalDate {
         pub def toFlix(x: JLocalDate): LocalDate = 
             LocalDate.LocalDate(x)
     }
+
+    instance TemporalFormat[LocalDate] {
+        type Formatter = DateFormatter
+        type Aef = {}
+        pub def format(formatter: DateFormatter, x: LocalDate): String =
+            let LocalDate.LocalDate(x1) = x;
+            let formatter1 = ToJava.toJava(formatter);
+            unsafe IO { x1.format(formatter1) }
+    }
+    
 
 
     // Constructors

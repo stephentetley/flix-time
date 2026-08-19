@@ -19,6 +19,7 @@ pub mod InteropTime.ZonedDateTime {
 
     use InteropTime.Internal.AdaptorExtras
 
+    use InteropTime.Format.TemporalFormat
     use InteropTime.Format.DateTimeFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
@@ -105,6 +106,15 @@ pub mod InteropTime.ZonedDateTime {
         type In = JZonedDateTime
         pub def toFlix(x: JZonedDateTime): ZonedDateTime = 
             ZonedDateTime.ZonedDateTime(x)
+    }
+
+    instance TemporalFormat[ZonedDateTime] {
+        type Formatter = DateTimeFormatter
+        type Aef = {}
+        pub def format(formatter: DateTimeFormatter, x: ZonedDateTime): String =
+            let ZonedDateTime.ZonedDateTime(x1) = x;
+            let formatter1 = ToJava.toJava(formatter);
+            unsafe IO { x1.format(formatter1) }
     }
 
 

@@ -20,6 +20,7 @@ pub mod InteropTime.LocalTime {
 
     use InteropTime.Internal.AdaptorExtras
 
+    use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TimeFormatter
     use InteropTime.LocalDateTime.LocalDateTime
     use InteropTime.OffsetDateTime.OffsetDateTime
@@ -103,7 +104,14 @@ pub mod InteropTime.LocalTime {
             LocalTime.LocalTime(x)
     }    
 
-
+    instance TemporalFormat[LocalTime] {
+        type Formatter = TimeFormatter
+        type Aef = {}
+        pub def format(formatter: TimeFormatter, x: LocalTime): String =
+            let LocalTime.LocalTime(x1) = x;
+            let formatter1 = ToJava.toJava(formatter);
+            unsafe IO { x1.format(formatter1) }
+    }
 
     // Constructors
 

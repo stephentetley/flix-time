@@ -69,7 +69,7 @@ pub mod InteropTime.Format.DecimalStyle {
     pub def standard(): DecimalStyle = DecimalStyle(unsafe IO { JDecimalStyle.STANDARD }) 
 
     pub def decimalStyle(loc: Locale): DecimalStyle \ IO = 
-        AdaptorExtras.op(loc, jloc -> JDecimalStyle.of(jloc))
+        AdaptorExtras.op(loc, loc1 -> JDecimalStyle.of(loc1))
 
 
     pub def decimalStyleWithDefaultLocale(): DecimalStyle \ IO = 
@@ -84,38 +84,32 @@ pub mod InteropTime.Format.DecimalStyle {
         AdaptorExtras.Collection.toList(locs.iterator(), ToFlix.toFlix)
         
 
-
-
-
-    // Note - should the Locale module provide a function marshal and unmarshal functions
-    // so a client doesn't have to use: `o -> Locale(o as ##java.util.Locale)` ?
-
     /// Getters and Setters
 
     pub def getDecimalSeparator(x: DecimalStyle): Char = 
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDecimalSeparator() })
 
-
-    pub def withDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withDecimalSeparator(sep) })
-
     pub def getNegativeSign(x: DecimalStyle): Char = 
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getNegativeSign() })
-
-    pub def withNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withNegativeSign(sign) })
 
     pub def getPositiveSign(x: DecimalStyle): Char = 
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getPositiveSign() })
 
-    pub def withPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withPositiveSign(sign) })
-
     pub def getZeroDigit(x: DecimalStyle): Char = 
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getZeroDigit() })
+
+    pub def withDecimalSeparator(sep: Char, x: DecimalStyle): DecimalStyle = 
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withDecimalSeparator(sep) })
+
+    pub def withNegativeSign(sign: Char, x: DecimalStyle): DecimalStyle = 
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withNegativeSign(sign) })
+
+    pub def withPositiveSign(sign: Char, x: DecimalStyle): DecimalStyle = 
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withPositiveSign(sign) })
 
     pub def withZeroDigit(digit: Char, x: DecimalStyle): DecimalStyle = 
         AdaptorExtras.op(x, x1  -> unsafe IO { x1.$withZeroDigit(digit) })
 
     
 }
+

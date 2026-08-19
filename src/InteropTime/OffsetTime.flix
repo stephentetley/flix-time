@@ -20,6 +20,7 @@ pub mod InteropTime.OffsetTime {
 
     use InteropTime.Internal.AdaptorExtras
 
+    use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TimeFormatter
     use InteropTime.DurationZ.DurationZ
     use InteropTime.InstantZ.InstantZ
@@ -100,6 +101,15 @@ pub mod InteropTime.OffsetTime {
         type In = JOffsetTime
         pub def toFlix(x: JOffsetTime): OffsetTime = 
             OffsetTime.OffsetTime(x)
+    }
+ 
+    instance TemporalFormat[OffsetTime] {
+        type Formatter = TimeFormatter
+        type Aef = {}
+        pub def format(formatter: TimeFormatter, x: OffsetTime): String =
+            let OffsetTime.OffsetTime(x1) = x;
+            let formatter1 = ToJava.toJava(formatter);
+            unsafe IO { x1.format(formatter1) }
     }
 
     /// Constructors

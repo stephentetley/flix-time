@@ -21,6 +21,7 @@ pub mod InteropTime.MonthDay {
 
     use InteropTime.Internal.AdaptorExtras
 
+    use InteropTime.Format.TemporalFormat
     use InteropTime.Format.DateFormatter
     use InteropTime.LocalDate.LocalDate
     use InteropTime.LocalDateTime.LocalDateTime
@@ -91,6 +92,15 @@ pub mod InteropTime.MonthDay {
         type In = JMonthDay
         pub def toFlix(x: JMonthDay): MonthDay = 
             MonthDay.MonthDay(x)
+    }
+
+    instance TemporalFormat[MonthDay] {
+        type Formatter = DateFormatter
+        type Aef = {}
+        pub def format(formatter: DateFormatter, x: MonthDay): String =
+            let MonthDay.MonthDay(x1) = x;
+            let formatter1 = ToJava.toJava(formatter);
+            unsafe IO { x1.format(formatter1) }
     }
 
     // Constructors

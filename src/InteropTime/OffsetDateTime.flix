@@ -20,6 +20,7 @@ pub mod InteropTime.OffsetDateTime {
 
     use InteropTime.Internal.AdaptorExtras
 
+    use InteropTime.Format.TemporalFormat
     use InteropTime.Format.DateTimeFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
@@ -116,6 +117,14 @@ pub mod InteropTime.OffsetDateTime {
             OffsetDateTime.OffsetDateTime(x)
     }
 
+    instance TemporalFormat[OffsetDateTime] {
+        type Formatter = DateTimeFormatter
+        type Aef = {}
+        pub def format(formatter: DateTimeFormatter, x: OffsetDateTime): String =
+            let OffsetDateTime.OffsetDateTime(x1) = x;
+            let formatter1 = ToJava.toJava(formatter);
+            unsafe IO { x1.format(formatter1) }
+    }
 
     /// Constructors
 

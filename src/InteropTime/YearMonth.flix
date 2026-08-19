@@ -19,6 +19,7 @@ pub mod InteropTime.YearMonth {
 
     use InteropTime.Internal.AdaptorExtras
 
+    use InteropTime.Format.TemporalFormat
     use InteropTime.Format.DateFormatter
     use InteropTime.LocalDate.LocalDate
     use InteropTime.LocalDateTime.LocalDateTime
@@ -96,7 +97,15 @@ pub mod InteropTime.YearMonth {
             YearMonth.YearMonth(x)
     }
 
-
+    
+    instance TemporalFormat[YearMonth] {
+        type Formatter = DateFormatter
+        type Aef = {}
+        pub def format(formatter: DateFormatter, x: YearMonth): String =
+            let YearMonth.YearMonth(x1) = x;
+            let formatter1 = ToJava.toJava(formatter);
+            unsafe IO { x1.format(formatter1) }
+    }
 
     /// Constructors
 
