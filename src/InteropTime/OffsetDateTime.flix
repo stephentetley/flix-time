@@ -21,6 +21,7 @@ pub mod InteropTime.OffsetDateTime {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TemporalFormat
+    use InteropTime.Format.TemporalParse
     use InteropTime.Format.DateTimeFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
@@ -124,6 +125,16 @@ pub mod InteropTime.OffsetDateTime {
             let OffsetDateTime.OffsetDateTime(x1) = x;
             let formatter1 = ToJava.toJava(formatter);
             unsafe IO { x1.format(formatter1) }
+    }
+
+    instance TemporalParse[OffsetDateTime] {
+        type Formatter = DateTimeFormatter
+        type Aef = {}
+        pub def parse(formatter: DateTimeFormatter, s: String): Result[String, OffsetDateTime] = 
+            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+                let s1 = String.trim(s);
+                unsafe IO { JOffsetDateTime.parse(s1, formatter1) }
+            })
     }
 
     /// Constructors
@@ -230,28 +241,6 @@ pub mod InteropTime.OffsetDateTime {
     pub def toEpochSecond(x: OffsetDateTime): Int64 =
         AdaptorExtras.extract(x, x1 ->unsafe IO { x1.toEpochSecond() })
 
-    /// `parse` / `format` functions
-    
-    ///
-    /// Parse the string `s` as a OffsetDateTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should in the format mandated by `formatter`.
-    ///
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def parse(formatter: DateTimeFormatter, s: String): Result[String, OffsetDateTime] =
-        AdaptorExtras.opWithResult(formatter, formatter1 -> {
-            let s1 = String.trim(s);
-            unsafe IO { JOffsetDateTime.parse(s1, formatter1) }
-        })
-
-
-    ///
-    /// Returns OffsetDateTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter, x: OffsetDateTime): String =
-        AdaptorExtras.op2(formatter, x, (formatter1, x1) -> 
-            unsafe IO { x1.format(formatter1) }
-        )
 
     // predicates / comparisons
 

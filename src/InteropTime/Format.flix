@@ -22,5 +22,9 @@ pub mod InteropTime.Format {
         pub def format(formatter: TemporalFormat.Formatter[t], x: t): String \ aef where TemporalFormat.Aef[t] ~ aef
     }
 
-
+    pub trait TemporalParse[t] {
+        type Formatter[t]: Type
+        type Aef[t]: Eff = {}
+        pub def parse(formatter: TemporalFormat.Formatter[t], s: String): Result[String, t] \ aef where TemporalFormat.Aef[t] ~ aef
+    }
 }

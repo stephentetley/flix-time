@@ -21,6 +21,7 @@ pub mod InteropTime.LocalDate {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TemporalFormat
+    use InteropTime.Format.TemporalParse
     use InteropTime.Format.DateFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.InstantZ.InstantZ
@@ -122,7 +123,16 @@ pub mod InteropTime.LocalDate {
             let formatter1 = ToJava.toJava(formatter);
             unsafe IO { x1.format(formatter1) }
     }
-    
+
+    instance TemporalParse[LocalDate] {
+        type Formatter = DateFormatter
+        type Aef = {}
+        pub def parse(formatter: DateFormatter, s: String): Result[String, LocalDate] = 
+            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+                let s1 = String.trim(s);
+                unsafe IO { JLocalDate.parse(s1, formatter1) }
+            })
+    }
 
 
     // Constructors
@@ -192,27 +202,6 @@ pub mod InteropTime.LocalDate {
 
     pub def toEpochDay(x: LocalDate): Int64 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
-
-
-    /// `parse` / `format` functions
-
-    ///
-    /// Parse the string `s` as a LocalDate, leading or trailing whitespace is trimmed.
-    /// The format of the input string should in the format mandated by `formatter`.
-    ///
-    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def parse(formatter: DateFormatter, s: String): Result[String, LocalDate] = 
-        AdaptorExtras.opWithResult(formatter, formatter1 -> {
-            let s1 = String.trim(s);
-            unsafe IO { JLocalDate.parse(s1, formatter1) }
-        })
-
-    ///
-    /// Returns LocalDate `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateFormatter, x: LocalDate): String =
-        AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> unsafe IO { x1.format(formatter1) })
 
 
 

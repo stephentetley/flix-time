@@ -21,6 +21,7 @@ pub mod InteropTime.LocalDateTime {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TemporalFormat
+    use InteropTime.Format.TemporalParse
     use InteropTime.Format.DateTimeFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
@@ -118,8 +119,18 @@ pub mod InteropTime.LocalDateTime {
             let LocalDateTime.LocalDateTime(x1) = x;
             let formatter1 = ToJava.toJava(formatter);
             unsafe IO { x1.format(formatter1) }
-
     }
+
+    instance TemporalParse[LocalDateTime] {
+        type Formatter = DateTimeFormatter
+        type Aef = {}
+        pub def parse(formatter: DateTimeFormatter, s: String): Result[String, LocalDateTime] = 
+            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+                let s1 = String.trim(s);
+                unsafe IO { JLocalDateTime.parse(s1, formatter1) }
+            })
+    }
+
 
     /// Constructors
 
@@ -202,27 +213,6 @@ pub mod InteropTime.LocalDateTime {
     pub def toLocalTime(x: LocalDateTime): LocalTime =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalTime() })
 
-    /// `parse` / `format` functions
-
-    ///
-    /// Parse the string `s` as a LocalDateTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should in the format mandated by `formatter`.
-    ///
-    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def parse(formatter: DateTimeFormatter, s: String): Result[String, LocalDateTime] =
-        AdaptorExtras.opWithResult(formatter, formatter1 -> {
-            let s1 = String.trim(s);
-            unsafe IO { JLocalDateTime.parse(s1, formatter1) }
-        })
-
-    ///
-    /// Returns LocalDateTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter, x: LocalDateTime): String =
-        AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> 
-            unsafe IO { x1.format(formatter1) }
-        )
 
 
     /// predicates / comparisons

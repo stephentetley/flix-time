@@ -20,6 +20,7 @@ pub mod InteropTime.ZonedDateTime {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TemporalFormat
+    use InteropTime.Format.TemporalParse
     use InteropTime.Format.DateTimeFormatter
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.DurationZ.DurationZ
@@ -117,6 +118,16 @@ pub mod InteropTime.ZonedDateTime {
             unsafe IO { x1.format(formatter1) }
     }
 
+    instance TemporalParse[ZonedDateTime] {
+        type Formatter = DateTimeFormatter
+        type Aef = {}
+        pub def parse(formatter: DateTimeFormatter, s: String): Result[String, ZonedDateTime] = 
+            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+                let s1 = String.trim(s);
+                unsafe IO { JZonedDateTime.parse(s1, formatter1) }
+            })
+    }
+
 
     /// Unwrap
 
@@ -195,27 +206,7 @@ pub mod InteropTime.ZonedDateTime {
     pub def toLocalTime(x: ZonedDateTime): LocalTime =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalTime() })
 
-    /// `parse` / `format` functions
 
-    ///
-    /// Parse the string `s` as a ZonedDateTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should in the format mandated by `formatter`.
-    ///
-    /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def parse(formatter: DateTimeFormatter, s: String): Result[String, ZonedDateTime] =
-        AdaptorExtras.opWithResult(formatter, formatter1 -> {
-            let s1 = String.trim(s);
-            unsafe IO { JZonedDateTime.parse(s1, formatter1) }
-        })
-
-    ///
-    /// Returns ZonedDateTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateTimeFormatter, x: ZonedDateTime): String =
-        AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> 
-            unsafe IO { x1.format(formatter1) }
-        )
 
     /// predicates / comparisons
 

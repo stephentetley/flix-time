@@ -21,6 +21,7 @@ pub mod InteropTime.OffsetTime {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TemporalFormat
+    use InteropTime.Format.TemporalParse
     use InteropTime.Format.TimeFormatter
     use InteropTime.DurationZ.DurationZ
     use InteropTime.InstantZ.InstantZ
@@ -112,6 +113,16 @@ pub mod InteropTime.OffsetTime {
             unsafe IO { x1.format(formatter1) }
     }
 
+    instance TemporalParse[OffsetTime] {
+        type Formatter = TimeFormatter
+        type Aef = {}
+        pub def parse(formatter: TimeFormatter, s: String): Result[String, OffsetTime] = 
+            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+                let s1 = String.trim(s);
+                unsafe IO { JOffsetTime.parse(s1, formatter1) }
+            })
+    }
+
     /// Constructors
 
     pub def offsetTime(hour: {hour = Int32}, 
@@ -165,27 +176,7 @@ pub mod InteropTime.OffsetTime {
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime =
         AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetTime.$from(x1) }) 
 
-    // `parse` / `format` functions        
 
-    ///
-    /// Parse the string `s` as a OffsetTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should in the format mandated by `formatter`.
-    ///
-    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def parse(formatter: TimeFormatter, s: String): Result[String, OffsetTime] =
-        AdaptorExtras.opWithResult(formatter, formatter1 -> {
-            let s1 = String.trim(s);
-            unsafe IO { JOffsetTime.parse(s1, formatter1) }
-        })
-
-    ///
-    /// Returns OffsetTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: TimeFormatter, x: OffsetTime): String =
-        AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> 
-            unsafe IO { x1.format(formatter1) }
-        )
 
     /// ## predicates / comparisons
 

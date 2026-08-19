@@ -20,6 +20,7 @@ pub mod InteropTime.YearMonth {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TemporalFormat
+    use InteropTime.Format.TemporalParse
     use InteropTime.Format.DateFormatter
     use InteropTime.LocalDate.LocalDate
     use InteropTime.LocalDateTime.LocalDateTime
@@ -107,6 +108,16 @@ pub mod InteropTime.YearMonth {
             unsafe IO { x1.format(formatter1) }
     }
 
+    instance TemporalParse[YearMonth] {
+        type Formatter = DateFormatter
+        type Aef = {}
+        pub def parse(formatter: DateFormatter, s: String): Result[String, YearMonth] = 
+            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+                let s1 = String.trim(s);
+                unsafe IO { JYearMonth.parse(s1, formatter1) }
+            })
+    }
+
     /// Constructors
 
     pub def yearMonth(year: {year = Int32}, month: {month = Int32}): YearMonth =
@@ -137,27 +148,6 @@ pub mod InteropTime.YearMonth {
     pub def fromZonedDateTime(x: ZonedDateTime): YearMonth =
         AdaptorExtras.op(x, x1 -> unsafe IO { JYearMonth.$from(x1) })
 
-    /// `parse` / `format` functions  
-
-    ///
-    /// Parse the string `s` as a YearMonth, leading or trailing whitespace is trimmed.
-    /// The format of the input string should in the format mandated by `formatter`.
-    ///
-    /// A successful parse is wrapped with `Ok(_)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def parse(formatter: DateFormatter, s: String): Result[String, YearMonth] =
-        AdaptorExtras.opWithResult(formatter, formatter1 -> {
-            let s1 = String.trim(s);
-            unsafe IO { JYearMonth.parse(s1, formatter1) }
-        })
-    
-    ///
-    /// Returns YearMonth `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateFormatter, x: YearMonth): String =
-        AdaptorExtras.op2(formatter, x, (formatter1, x1) -> 
-            unsafe IO { x1.format(formatter1) }
-        )
 
 
     /// predicates / comparisons

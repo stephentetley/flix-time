@@ -24,6 +24,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
     use InteropTime.DayOfWeek.DayOfWeek
     use InteropTime.Month.Month
     use InteropTime.LocalTime.LocalTime
+    use InteropTime.LocalDateTime.LocalDateTime
     use InteropTime.ZoneOffset.ZoneOffset
     
     import java.time.zone.{ZoneOffsetTransitionRule => JZoneOffsetTransitionRule}
@@ -140,20 +141,20 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
             case e: JException => Err(e.getMessage())
         }
 
-    /// predicates / comparisons
-    
-    pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isMidnightEndOfDay() })
 
-
-    /// ZoneOffsetTransitionRule functions
+    pub def createDateTime(ldt: LocalDateTime, 
+                            standardOffset: {standardOffset = ZoneOffset}, 
+                            wallOffset: {wallOffset = ZoneOffset},
+                            x: TimeDefinition): LocalDateTime = 
+        AdaptorExtras.op4(ldt, standardOffset#standardOffset, wallOffset#wallOffset, x, 
+                            (ldt1, standardOffset1, wallOffset1, x1) ->
+            unsafe IO { x1.createDateTime(ldt1, standardOffset1, wallOffset1) }
+        )
 
     pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.createTransition(year) })
 
 
-    pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getTimeDefinition() })
 
     pub def getDayOfMonthIndicator(x: ZoneOffsetTransitionRule): Int32  = 
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfMonthIndicator() })
@@ -165,16 +166,30 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getLocalTime() })
 
-
-    pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getStandardOffset() })
-
-    pub def getOffsetBefore(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetBefore() })
+    pub def getMonth(x: ZoneOffsetTransitionRule): Month  = 
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getMonth() })
 
 
     pub def getOffsetAfter(x: ZoneOffsetTransitionRule): ZoneOffset  = 
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetAfter() })
+
+    pub def getOffsetBefore(x: ZoneOffsetTransitionRule): ZoneOffset  = 
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetBefore() })
+
+    pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getStandardOffset() })
+
+    pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getTimeDefinition() })
+
+
+    /// predicates / comparisons
+    
+    pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isMidnightEndOfDay() })
+
+
+
 
 
 }

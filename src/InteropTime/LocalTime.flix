@@ -21,6 +21,7 @@ pub mod InteropTime.LocalTime {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Format.TemporalFormat
+    use InteropTime.Format.TemporalParse
     use InteropTime.Format.TimeFormatter
     use InteropTime.LocalDateTime.LocalDateTime
     use InteropTime.OffsetDateTime.OffsetDateTime
@@ -113,6 +114,16 @@ pub mod InteropTime.LocalTime {
             unsafe IO { x1.format(formatter1) }
     }
 
+    instance TemporalParse[LocalTime] {
+        type Formatter = TimeFormatter
+        type Aef = {}
+        pub def parse(formatter: TimeFormatter, s: String): Result[String, LocalTime] = 
+            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+                let s1 = String.trim(s);
+                unsafe IO { JLocalTime.parse(s1, formatter1) }
+            })
+    }
+
     // Constructors
 
     pub def localTime(hour: {hour = Int32}, minute: {minute = Int32}): LocalTime =
@@ -189,27 +200,6 @@ pub mod InteropTime.LocalTime {
 
     pub def toNanoOfDay(x: LocalTime): Int64 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toNanoOfDay() })
-
-    /// `parse` / `format` functions
-
-    ///
-    /// Parse the string `s` as a LocalTime, leading or trailing whitespace is trimmed.
-    /// The format of the input string should in the format mandated by `formatter`.
-    /// A successful parse is wrapped with `OK(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def parse(formatter: TimeFormatter, s: String): Result[String, LocalTime] =
-        AdaptorExtras.opWithResult(formatter, formatter1 -> {
-            let s1 = String.trim(s);
-            unsafe IO { JLocalTime.parse(s1, formatter1) }
-        })
-
-    ///
-    /// Returns the given LocalTime `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: TimeFormatter, x: LocalTime): String =
-        AdaptorExtras.extract2(formatter, x, (formatter1, x1) -> 
-            unsafe IO { x1.format(formatter1) }
-        )
 
 
     /// predicates / comparisons

@@ -64,6 +64,18 @@ pub mod InteropTime.Internal.AdaptorExtras {
         let ans = f(x1, y1, z1);
         ToFlix.toFlix(ans)
 
+    pub def op4(w: a,
+                x: b, 
+                y: c, 
+                z: d, 
+                f: ToJava.Out[a] -> ToJava.Out[b] -> ToJava.Out[c] -> ToJava.Out[d] -> ToFlix.In[ans] \ ef + ToJava.Aef[a] + ToJava.Aef[b] + ToJava.Aef[c] + ToJava.Aef[d] + ToFlix.Aef[ans]): ans \ ef + ToJava.Aef[a] + ToJava.Aef[b] + ToJava.Aef[c] + ToJava.Aef[d] + ToFlix.Aef[ans] with ToJava[a], ToJava[b], ToJava[c], ToJava[d], ToFlix[ans] =
+        let w1 = ToJava.toJava(w);
+        let x1 = ToJava.toJava(x);
+        let y1 = ToJava.toJava(y);
+        let z1 = ToJava.toJava(z);
+        let ans = f(w1, x1, y1, z1);
+        ToFlix.toFlix(ans)
+
 
     pub def of(f: Unit -> ToFlix.In[ans] \ ef + ToFlix.Aef[ans]): ans \ ef + ToFlix.Aef[ans] with ToFlix[ans] =
         let ans = f();

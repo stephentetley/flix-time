@@ -88,14 +88,6 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochSecond() })
 
 
-    /// predicates / comparisons
-
-    pub def isGap(x: ZoneOffsetTransition): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isGap() })
-
-    pub def isOverlap(x: ZoneOffsetTransition): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isOverlap() })
-
     /// ZoneOffsetTransition functions
 
     pub def getDateTimeBefore(x: ZoneOffsetTransition): LocalDateTime =
@@ -105,16 +97,32 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDateTimeAfter() })
 
 
-    pub def getOffsetBefore(x: ZoneOffsetTransition): ZoneOffset =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetBefore() })
-
-    pub def getOffsetAfter(x: ZoneOffsetTransition): ZoneOffset =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetAfter() })
-
     pub def getDuration(x: ZoneOffsetTransition): DurationZ =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDuration() })
 
     pub def getInstant(x: ZoneOffsetTransition): InstantZ =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getInstant() })
+
+    pub def getOffsetBefore(x: ZoneOffsetTransition): ZoneOffset =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetBefore() })
+
+    pub def getOffsetAfter(x: ZoneOffsetTransition): ZoneOffset =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetAfter() })
+        
+
+    /// predicates / comparisons
+
+    pub def isGap(x: ZoneOffsetTransition): Bool =
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isGap() })
+
+    pub def isOverlap(x: ZoneOffsetTransition): Bool =
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isOverlap() })
+
+    pub def isValidOffset(offset: ZoneOffset, x: ZoneOffsetTransition): Bool =
+        AdaptorExtras.extract2(offset, x, (offset1, x1) -> 
+            unsafe IO { x1.isValidOffset(offset1) }
+        )
+
+
 
 }

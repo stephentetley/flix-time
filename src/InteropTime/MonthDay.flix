@@ -20,8 +20,9 @@ pub mod InteropTime.MonthDay {
 
 
     use InteropTime.Internal.AdaptorExtras
-
+    
     use InteropTime.Format.TemporalFormat
+    use InteropTime.Format.TemporalParse
     use InteropTime.Format.DateFormatter
     use InteropTime.LocalDate.LocalDate
     use InteropTime.LocalDateTime.LocalDateTime
@@ -102,6 +103,17 @@ pub mod InteropTime.MonthDay {
             let formatter1 = ToJava.toJava(formatter);
             unsafe IO { x1.format(formatter1) }
     }
+    
+    instance TemporalParse[MonthDay] {
+        type Formatter = DateFormatter
+        type Aef = {}
+        pub def parse(formatter: DateFormatter, s: String): Result[String, MonthDay] = 
+            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+                let s1 = String.trim(s);
+                unsafe IO { JMonthDay.parse(s1, formatter1) }
+            })
+    }
+
 
     // Constructors
 
@@ -138,27 +150,6 @@ pub mod InteropTime.MonthDay {
 
     // `parse` / `format` functions
 
-    ///
-    /// Parse the string `s` as a MonthDay, leading or trailing whitespace is trimmed.
-    /// The format of the input string should in the format mandated by `formatter`.
-    ///
-    /// A successful parse is wrapped with `Ok(x)`, a parse failure is indicated by `Err(_)`.
-    ///
-    pub def parse(formatter: DateFormatter, s: String): Result[String, MonthDay] =
-        AdaptorExtras.opWithResult(formatter, formatter1 -> {
-            let s1 = String.trim(s);
-            unsafe IO { JMonthDay.parse(s1, formatter1) }
-        })
-        
-
-
-    ///
-    /// Returns MonthDay `x` as a String using `formatter`.
-    ///
-    pub def format(formatter: DateFormatter, x: MonthDay): String =
-        AdaptorExtras.op2(formatter, x, (formatter1, x1) -> 
-            unsafe IO { x1.format(formatter1) }
-        )
 
     /// predicates / comparisons
 
