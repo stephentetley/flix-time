@@ -5,6 +5,7 @@
    Reworked `DateTimeFormatterBuilder`.
    Updated `charset-locale` dependency.
    Made hash on enums use the Java implementation (hashCode).
+   Added traits `TemporalFormat` and `TemporalParse`.
    
 ### v0.19.1 
    Updated `charset-locale` dependency.
