@@ -199,8 +199,6 @@ pub mod InteropTime.LocalDateTime {
     pub def toDayOfWeek(x: LocalDateTime): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
-
-    
     ///
     /// Returns the given date-time `x` as __.
     ///

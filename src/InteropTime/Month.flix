@@ -152,10 +152,10 @@ pub mod InteropTime.Month {
 
     // plus / minus functions
 
-    pub def plus(x:Month, y: Int64): Month =
+    pub def plusMonths(x: Month, y: Int64): Month =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.plus(y) })
 
-    pub def minus(x:Month, y: Int64): Month =
+    pub def minusMonths(x: Month, y: Int64): Month =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.minus(y) })
 
 }
