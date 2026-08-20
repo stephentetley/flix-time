@@ -83,9 +83,9 @@ pub mod InteropTime.ZoneId {
 
     /// Ideally not in IO...
     pub def zoneIdWithAliases(zone: {zone = String}, 
-                                aliases: Map[String, String]): Result[String, ZoneId] \ IO =
+                                aliases: Map[String, String]): Result[String, ZoneId] =
         AdaptorExtras.ofWithResult(() -> {
-            let jmap = Adaptor.toMap(aliases);
+            let jmap = InteropTime.Internal.AdaptorExtras.Collection.toJMap(aliases, identity, identity);
             unsafe IO { JZoneId.of(zone#zone, jmap) }
         })
 
@@ -127,16 +127,6 @@ pub mod InteropTime.ZoneId {
 
     /// ZoneId functions
 
-    pub def getDisplayName(style: TextStyle, locale: Locale, zone: ZoneId): String =
-        AdaptorExtras.extract3(style, locale, zone, (style1, locale1, zone1) -> 
-            unsafe IO { zone1.getDisplayName(style1, locale1) }
-        )
-
-    ///
-    /// Returns the unique ID of the time zone.
-    ///
-    pub def getTimeZoneId(x: ZoneId): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
 
     pub def getAvailableZoneIds(): Set[String] \ IO =
         try {
@@ -146,6 +136,16 @@ pub mod InteropTime.ZoneId {
             case _: JException => Set.empty()
         }
 
+    pub def getDisplayName(style: TextStyle, locale: Locale, zone: ZoneId): String =
+        AdaptorExtras.extract3(style, locale, zone, (style1, locale1, zone1) -> 
+            unsafe IO { zone1.getDisplayName(style1, locale1) }
+        )
+
+    ///
+    /// Returns the unique ID of the time zone.
+    ///
+    pub def getId(x: ZoneId): String =
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =

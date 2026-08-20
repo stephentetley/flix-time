@@ -21,13 +21,9 @@ pub mod InteropTime.ZoneOffset {
     use InteropTime.Internal.AdaptorExtras
 
     use InteropTime.Zone.ZoneRules.ZoneRules
-    use InteropTime.Zone.ZoneRules.ZoneRules.{ZoneRules}
     use InteropTime.OffsetDateTime.OffsetDateTime
-    use InteropTime.OffsetDateTime.OffsetDateTime.{OffsetDateTime}
     use InteropTime.OffsetTime.OffsetTime
-    use InteropTime.OffsetTime.OffsetTime.{OffsetTime}
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropTime.ZonedDateTime.ZonedDateTime.{ZonedDateTime}
 
     import java.time.{ZoneOffset => JZoneOffset}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor, 
@@ -138,14 +134,11 @@ pub mod InteropTime.ZoneOffset {
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getTotalSeconds() })
 
 
-
-
     pub def getOffsetSeconds(x: ZoneOffset): Int32 =
         AdaptorExtras.extract(x, x1 -> {
             let field = unsafe IO { JChronoField.OFFSET_SECONDS };
             unsafe IO { x1.get(field) }
         })
 
-
-
 }
+

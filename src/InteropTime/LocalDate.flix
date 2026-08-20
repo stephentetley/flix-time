@@ -37,6 +37,7 @@ pub mod InteropTime.LocalDate {
     use InteropTime.ZoneId.ZoneId
 
     import java.time.{LocalDate => JLocalDate}
+    import java.time.{DayOfWeek => JDayOfWeek}
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
@@ -203,7 +204,8 @@ pub mod InteropTime.LocalDate {
     pub def toEpochDay(x: LocalDate): Int64 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
 
-
+    pub def toDayOfWeek(x: LocalDate): DayOfWeek =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
     /// predicates / comparisons
 

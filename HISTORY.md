@@ -6,6 +6,7 @@
    Updated `charset-locale` dependency.
    Made hash on enums use the Java implementation (hashCode).
    Added traits `TemporalFormat` and `TemporalParse`.
+   Replaced `fromX` functions with `toX` in the respective source module.
    
 ### v0.19.1 
    Updated `charset-locale` dependency.

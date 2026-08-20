@@ -114,21 +114,7 @@ pub mod InteropTime.DayOfWeek {
         case _ => None
     }
 
-    // `from` functions
 
-    // `fromTemporalAccessor` specialized
-
-    pub def fromLocalDate(x: LocalDate): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
-
-    pub def fromLocalDateTime(x: LocalDateTime): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
-
-    pub def fromZonedDateTime(x: ZonedDateTime): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
     
 
     /// DayOfWeek functions

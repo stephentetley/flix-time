@@ -38,7 +38,7 @@ pub mod InteropTime.OffsetDateTime {
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneOffset.ZoneOffset
 
-    import java.lang.{Object, CharSequence}
+    import java.time.{DayOfWeek =>JDayOfWeek}
     import java.time.{Duration => JDuration}
     import java.time.{LocalDate => JLocalDate}
     import java.time.{LocalDateTime => JLocalDateTime}
@@ -195,13 +195,14 @@ pub mod InteropTime.OffsetDateTime {
             unsafe IO { JOffsetDateTime.of(ld1, lt1, offset1) }
         )
 
-    /// `fromTemporalAccessor` specialized
 
     pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
         AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetDateTime.$from(x1) })
 
     /// `to` functions
 
+    pub def toDayOfWeek(x: OffsetDateTime): DayOfWeek =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
     ///
     /// Returns the given date-time `x` as __.
