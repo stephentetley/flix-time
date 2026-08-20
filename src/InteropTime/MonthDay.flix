@@ -135,20 +135,6 @@ pub mod InteropTime.MonthDay {
         AdaptorExtras.op(x, x1 -> JMonthDay.now(x1))
 
 
-    // `fromTemporalAccessor` specialized
-    pub def fromLocalDate(x: LocalDate): MonthDay =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
-        
-    pub def fromLocalDateTime(x: LocalDateTime): MonthDay =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): MonthDay =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
-
-    pub def fromZonedDateTime(x: ZonedDateTime): MonthDay =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
-
-    // `parse` / `format` functions
 
 
     /// predicates / comparisons

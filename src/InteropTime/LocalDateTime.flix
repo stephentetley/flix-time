@@ -40,6 +40,7 @@ pub mod InteropTime.LocalDateTime {
     
     import java.time.{Duration => JDuration}
     import java.time.{DayOfWeek => JDayOfWeek}
+    import java.time.{MonthDay => JMonthDay}
     import java.time.{Year => JYear}
     import java.time.{LocalDate => JLocalDate}
     import java.time.{LocalDateTime => JLocalDateTime}
@@ -205,6 +206,9 @@ pub mod InteropTime.LocalDateTime {
 
     pub def toDayOfWeek(x: LocalDateTime): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
+        
+    pub def toMonthDay(x: LocalDateTime): MonthDay =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
 
     pub def toYear(x: LocalDateTime): Year =
         AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })        
