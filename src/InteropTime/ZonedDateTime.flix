@@ -30,6 +30,7 @@ pub mod InteropTime.ZonedDateTime {
     use InteropTime.LocalTime.LocalTime
     use InteropTime.Month.Month
     use InteropTime.MonthDay.MonthDay
+    use InteropTime.OffsetTime
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.Period.Period
     use InteropTime.Year
@@ -44,6 +45,8 @@ pub mod InteropTime.ZonedDateTime {
     import java.time.{Year => JYear}
     import java.time.{Duration => JDuration}
     import java.time.{Instant => JInstant}
+    import java.time.{OffsetDateTime => JOffsetDateTime}
+    import java.time.{OffsetTime => JOffsetTime}
     import java.time.{ZonedDateTime => JZonedDateTime}
     import java.time.{ZoneId => JZoneId}
     import java.time.{LocalDateTime => JLocalDateTime, LocalDate => JLocalDate}
@@ -137,13 +140,6 @@ pub mod InteropTime.ZonedDateTime {
     }
 
 
-    /// Unwrap
-
-    pub def getZonedDateTime(x: ZonedDateTime): JZonedDateTime = 
-        let ZonedDateTime(x1) = x;
-        x1
-
-
     /// Constructors
 
     pub def zonedDateTime(year: {year = Int32}, 
@@ -177,22 +173,14 @@ pub mod InteropTime.ZonedDateTime {
     pub def nowWithZoneId(zone: ZoneId): ZonedDateTime \ IO =
         AdaptorExtras.op(zone, zone1 -> JZonedDateTime.now(zone1))
 
-    /// `from` functions
 
-    pub def fromLocalDateTime(zone: ZoneId, dt: LocalDateTime): ZonedDateTime =
-        AdaptorExtras.op2(zone, dt, (zone1, dt1) -> unsafe IO { JZonedDateTime.of(dt1, zone1) })
-
-
-    pub def fromLocalDateLocalTime(zone: ZoneId, date: LocalDate, time: LocalTime): ZonedDateTime =
+    pub def ofLocalDateLocalTime(zone: ZoneId, date: LocalDate, time: LocalTime): ZonedDateTime =
         AdaptorExtras.op3(zone, date, time, (zone1, date1, time1) ->
             unsafe IO { JZonedDateTime.of(date1, time1, zone1) }
         )
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZonedDateTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JZonedDateTime.$from(x1) })
 
-
-    /// `to` functions
+    /// toX functions
 
     pub def toDayOfWeek(x: ZonedDateTime): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
@@ -224,12 +212,21 @@ pub mod InteropTime.ZonedDateTime {
     pub def toMonthDay(x: ZonedDateTime): MonthDay =
         AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
 
+
+    pub def toOffsetTime(x: ZonedDateTime): OffsetTime =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetTime.$from(x1) }) 
+
+    pub def toOffsetDateTime(x: ZonedDateTime): OffsetDateTime = 
+        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetDateTime.$from(x1) })
+
     pub def toYear(x: ZonedDateTime): Year =
         AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     pub def toYearMonth(x: ZonedDateTime): YearMonth =
         AdaptorExtras.op(x, x1 -> unsafe IO { JYearMonth.$from(x1) })
 
+    pub def toZoneOffset(x: ZonedDateTime): ZoneOffset =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
 
 
 

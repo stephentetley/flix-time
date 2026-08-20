@@ -33,6 +33,7 @@ pub mod InteropTime.OffsetTime {
     
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
+    import java.time.{LocalTime => JLocalTime}
     import java.time.{OffsetTime => JOffsetTime}
     import java.time.{ZoneId => JZoneId}
     import java.time.temporal.{ChronoField => JChronoField}
@@ -153,31 +154,14 @@ pub mod InteropTime.OffsetTime {
     pub def nowWithZoneId(zone: ZoneId): OffsetTime \ IO =
         AdaptorExtras.op(zone, zone1 -> JOffsetTime.now(zone1))
 
-    /// `from` functions
 
-    pub def fromLocalTime(offset: ZoneOffset, x: LocalTime): OffsetTime =
-        AdaptorExtras.op2(offset, x, (offset1, x1) -> 
-            unsafe IO { JOffsetTime.of(x1, offset1) }
-        )
+    /// toX functions
+    
+    pub def toLocalTime(x: OffsetTime): LocalTime =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalTime.$from(x1) })
 
-
-    pub def ofInstant(zone: ZoneId, x: InstantZ): OffsetTime =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
-            unsafe IO { JOffsetTime.ofInstant(x1, zone1) }
-        )
-
-
-
-    /// `fromTemporalAccessor` specialized
-
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): OffsetTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetTime.$from(x1) })
-
-    pub def fromZonedDateTime(x: ZonedDateTime): OffsetTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetTime.$from(x1) }) 
-
-
+    pub def toZoneOffset(x: OffsetTime): ZoneOffset =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
 
     /// ## predicates / comparisons
 

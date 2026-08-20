@@ -26,6 +26,7 @@ pub mod InteropTime.InstantZ {
     use InteropTime.DurationZ.DurationZ
     use InteropTime.LocalDateTime
     use InteropTime.OffsetDateTime.OffsetDateTime
+    use InteropTime.OffsetTime
     use InteropTime.Period.Period
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
@@ -35,6 +36,7 @@ pub mod InteropTime.InstantZ {
     import java.time.{Duration => JDuration}
     import java.time.{Instant => JInstant}
     import java.time.{LocalDateTime => JLocalDateTime}
+    import java.time.{OffsetTime => JOffsetTime}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.lang.{Exception => JException}
@@ -144,13 +146,8 @@ pub mod InteropTime.InstantZ {
         AdaptorExtras.of(() -> unsafe IO { JInstant.ofEpochMilli(epochMilli) })
 
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): InstantZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JInstant.$from(x1) })
 
-    pub def fromZonedDateTime(x: ZonedDateTime): InstantZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JInstant.$from(x1) })
-
-    /// `to` functions
+    /// toX functions
 
     pub def toEpochMilli(x: InstantZ): Int64 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochMilli() })
@@ -160,6 +157,11 @@ pub mod InteropTime.InstantZ {
         AdaptorExtras.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JLocalDateTime.ofInstant(x1, zone1) }
         )        
+    
+    pub def toOffsetTime(zone: ZoneId, x: InstantZ): OffsetTime =
+        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
+            unsafe IO { JOffsetTime.ofInstant(x1, zone1) }
+        )
 
     /// `parse` / `format` functions
 

@@ -134,7 +134,7 @@ pub mod InteropTime.YearMonth {
     pub def now(): YearMonth \ IO = YearMonth(JYearMonth.now())
 
 
-    /// to functions
+    /// toX functions
     
     pub def toMonth(x: YearMonth): Month =
         AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })

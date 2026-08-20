@@ -151,7 +151,7 @@ pub mod InteropTime.Period {
 
 
 
-    /// `to` functions
+    /// toX functions
 
     pub def toTotalMonths(x: Period): Int64 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toTotalMonths() })

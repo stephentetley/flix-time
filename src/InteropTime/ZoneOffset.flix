@@ -113,17 +113,7 @@ pub mod InteropTime.ZoneOffset {
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
         AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofTotalSeconds(seconds) })
 
-    // `from(TemporalAccessor x)` has problems - instead we can write the functions 
-    // we want by calling the respective object
 
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneOffset =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
-
-    pub def fromOffsetTime(x: OffsetTime): ZoneOffset =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
-            
-    pub def fromZonedDateTime(x: ZonedDateTime): ZoneOffset =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
     
     /// ZoneOffset functions
 

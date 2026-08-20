@@ -30,10 +30,11 @@ pub mod InteropTime.LocalTime {
     use InteropTime.InstantZ.InstantZ
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
+    use InteropTime.ZoneOffset
     
-    import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
     import java.time.{LocalTime => JLocalTime}
+    import java.time.{OffsetTime => JOffsetTime}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{Temporal => JTemporal}
@@ -172,28 +173,13 @@ pub mod InteropTime.LocalTime {
 
 
     pub def ofNanoOfDay(nanoOfDay: Int64): LocalTime =
-        let ans = unsafe IO { JLocalTime.ofNanoOfDay(nanoOfDay) };
-        LocalTime(ans)
+        AdaptorExtras.of(() -> unsafe IO { JLocalTime.ofNanoOfDay(nanoOfDay) })
 
     pub def ofSecondOfDay(secondOfDay: Int64): LocalTime =
-        let ans = unsafe IO { JLocalTime.ofSecondOfDay(secondOfDay) };
-        LocalTime(ans)
+        AdaptorExtras.of(() -> unsafe IO { JLocalTime.ofSecondOfDay(secondOfDay) })
 
-    /// `fromTemporalAccessor` specialized
 
-    pub def fromLocalDateTime(x: LocalDateTime): LocalTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalTime.$from(x1) })
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): LocalTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalTime.$from(x1) })
-
-    pub def fromOffsetTime(x: OffsetTime): LocalTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalTime.$from(x1) })
-
-    pub def fromZonedDateTime(x: ZonedDateTime): LocalTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalTime.$from(x1) })
-
-    /// `to` functions
+    /// toX functions
 
     pub def toSecondOfDay(x: LocalTime): Int32 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toSecondOfDay() })
@@ -201,6 +187,10 @@ pub mod InteropTime.LocalTime {
     pub def toNanoOfDay(x: LocalTime): Int64 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toNanoOfDay() })
 
+    pub def toOffsetTime(offset: ZoneOffset, x: LocalTime): OffsetTime =
+        AdaptorExtras.op2(offset, x, (offset1, x1) -> 
+            unsafe IO { JOffsetTime.of(x1, offset1) }
+        )
 
     /// predicates / comparisons
 

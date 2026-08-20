@@ -82,7 +82,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
             (before1, after1, transition1) -> unsafe IO { JZoneOffsetTransition.of(transition1, before1, after1)}
         )
     
-    /// `to` functions
+    /// toX functions
 
     pub def toEpochSecond(x: ZoneOffsetTransition): Int64 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochSecond() })

@@ -186,20 +186,12 @@ pub mod InteropTime.OffsetDateTime {
         AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { x1.atZoneSimilarLocal(zone1) })
 
 
-
-
-    /// `from` functions
-
-    pub def fromLocalDateLocalTime(offset: ZoneOffset, ld: LocalDate, lt: LocalTime): OffsetDateTime =
+    pub def ofLocalDateLocalTime(offset: ZoneOffset, ld: LocalDate, lt: LocalTime): OffsetDateTime =
         AdaptorExtras.op3(offset, ld, lt, (offset1, ld1, lt1) -> 
             unsafe IO { JOffsetDateTime.of(ld1, lt1, offset1) }
         )
 
-
-    pub def fromZonedDateTime(x: ZonedDateTime): OffsetDateTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetDateTime.$from(x1) })
-
-    /// `to` functions
+    /// toX functions
 
     pub def toDayOfWeek(x: OffsetDateTime): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
@@ -255,7 +247,8 @@ pub mod InteropTime.OffsetDateTime {
     pub def toZonedDateTime(x: OffsetDateTime): ZonedDateTime =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.toZonedDateTime() })
 
-
+    pub def toZoneOffset(x: OffsetDateTime): ZoneOffset =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
 
 
     // predicates / comparisons

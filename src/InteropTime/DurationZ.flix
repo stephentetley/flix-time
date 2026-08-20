@@ -198,7 +198,7 @@ pub mod InteropTime.DurationZ {
         )
 
 
-    /// `to` functions
+    /// toX functions
 
     ///
     /// Return the number of nanoseconds in Duration `x`.

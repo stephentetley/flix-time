@@ -203,7 +203,7 @@ pub mod InteropTime.LocalDate {
 
 
 
-    /// `to` functions
+    /// toX functions
 
     pub def toEpochDay(x: LocalDate): Int64 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
