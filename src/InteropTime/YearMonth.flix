@@ -26,11 +26,11 @@ pub mod InteropTime.YearMonth {
     use InteropTime.LocalDateTime.LocalDateTime
     use InteropTime.Month.Month
     use InteropTime.OffsetDateTime.OffsetDateTime
-    use InteropTime.Year.Year
+    use InteropTime.Year
     use InteropTime.ZonedDateTime.ZonedDateTime
     
-    import java.lang.{Object, CharSequence}
     import java.time.{YearMonth => JYearMonth}
+    import java.time.{Year => JYear}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor}
     import java.lang.{Exception => JException}
@@ -148,7 +148,10 @@ pub mod InteropTime.YearMonth {
     pub def fromZonedDateTime(x: ZonedDateTime): YearMonth =
         AdaptorExtras.op(x, x1 -> unsafe IO { JYearMonth.$from(x1) })
 
-
+    /// to functions
+    
+    pub def toYear(x: YearMonth): Year =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     /// predicates / comparisons
 

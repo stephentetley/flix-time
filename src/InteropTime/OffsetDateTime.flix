@@ -33,12 +33,14 @@ pub mod InteropTime.OffsetDateTime {
     use InteropTime.MonthDay.MonthDay
     use InteropTime.OffsetTime.OffsetTime
     use InteropTime.Period.Period
+    use InteropTime.Year
     use InteropTime.YearMonth.YearMonth
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneOffset.ZoneOffset
 
-    import java.time.{DayOfWeek =>JDayOfWeek}
+    import java.time.{DayOfWeek => JDayOfWeek}
+    import java.time.{Year => JYear}
     import java.time.{Duration => JDuration}
     import java.time.{LocalDate => JLocalDate}
     import java.time.{LocalDateTime => JLocalDateTime}
@@ -203,6 +205,9 @@ pub mod InteropTime.OffsetDateTime {
 
     pub def toDayOfWeek(x: OffsetDateTime): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
+
+    pub def toYear(x: OffsetDateTime): Year =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     ///
     /// Returns the given date-time `x` as __.

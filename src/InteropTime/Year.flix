@@ -150,23 +150,6 @@ pub mod InteropTime.Year {
         AdaptorExtras.op2(x, md, (x1, md1) -> unsafe IO { x1.atMonthDay(md1) })
 
 
-    // `from` functions
-
-    pub def fromLocalDate(x: LocalDate): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
-
-    pub def fromLocalDateTime(x: LocalDateTime): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
-
-    pub def fromYearMonth(x: YearMonth): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
-    
-    pub def fromZonedDateTime(x: ZonedDateTime): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
-
 
     /// predicates / comparisons
 

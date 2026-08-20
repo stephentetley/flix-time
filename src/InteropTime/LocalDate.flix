@@ -32,12 +32,14 @@ pub mod InteropTime.LocalDate {
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.OffsetTime.OffsetTime
     use InteropTime.Period.Period
+    use InteropTime.Year
     use InteropTime.YearMonth.YearMonth
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
 
     import java.time.{LocalDate => JLocalDate}
     import java.time.{DayOfWeek => JDayOfWeek}
+    import java.time.{Year => JYear}
     import java.time.chrono.{ChronoLocalDate => JChronoLocalDate}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
@@ -199,6 +201,7 @@ pub mod InteropTime.LocalDate {
     pub def fromLocalDateTime(x: LocalDateTime): LocalDate = 
         AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
+
     /// `to` functions
 
     pub def toEpochDay(x: LocalDate): Int64 =
@@ -206,6 +209,9 @@ pub mod InteropTime.LocalDate {
 
     pub def toDayOfWeek(x: LocalDate): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
+    
+    pub def toYear(x: LocalDate): Year =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     /// predicates / comparisons
 
