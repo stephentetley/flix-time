@@ -45,6 +45,7 @@ pub mod InteropTime.ZonedDateTime {
     import java.time.{Duration => JDuration}
     import java.time.{Instant => JInstant}
     import java.time.{ZonedDateTime => JZonedDateTime}
+    import java.time.{ZoneId => JZoneId}
     import java.time.{LocalDateTime => JLocalDateTime, LocalDate => JLocalDate}
     import java.time.chrono.{ChronoZonedDateTime, ChronoLocalDate, ChronoLocalDateTime}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
@@ -267,6 +268,8 @@ pub mod InteropTime.ZonedDateTime {
             unsafe IO { m1.getValue() }
         })
 
+    pub def getZoneId(x: ZonedDateTime): ZoneId =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 
     pub def getDayOfYear(x: ZonedDateTime): Int32 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfYear() })

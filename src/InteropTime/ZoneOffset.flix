@@ -24,7 +24,10 @@ pub mod InteropTime.ZoneOffset {
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.OffsetTime.OffsetTime
     use InteropTime.ZonedDateTime.ZonedDateTime
+    use InteropTime.ZoneId
 
+
+    import java.time.{ZoneId => JZoneId}
     import java.time.{ZoneOffset => JZoneOffset}
     import java.time.temporal.{TemporalAccessor => JTemporalAccessor, 
             TemporalField => JTemporalField, ChronoField => JChronoField}
@@ -140,5 +143,7 @@ pub mod InteropTime.ZoneOffset {
             unsafe IO { x1.get(field) }
         })
 
+    pub def getZoneId(x: ZoneOffset): ZoneId =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 }
 

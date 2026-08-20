@@ -34,6 +34,7 @@ pub mod InteropTime.OffsetTime {
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
     import java.time.{OffsetTime => JOffsetTime}
+    import java.time.{ZoneId => JZoneId}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{Temporal => JTemporal}
@@ -207,6 +208,9 @@ pub mod InteropTime.OffsetTime {
         )
 
     /// Getters and Setters
+
+    pub def getZoneId(x: OffsetTime): ZoneId =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 
     pub def getHour(x: OffsetTime): Int32 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getHour() })

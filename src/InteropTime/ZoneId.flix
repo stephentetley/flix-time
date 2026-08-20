@@ -109,21 +109,6 @@ pub mod InteropTime.ZoneId {
         let prefix1 = Option.getWithDefault("", prefix#prefix);
         AdaptorExtras.op(offset, offset1 -> unsafe IO { JZoneId.ofOffset(prefix1, offset1) })
 
-    /// `fromTemporalAccessor` specialized
-
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
-
-    pub def fromOffsetTime(x: OffsetTime): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
-
-    pub def fromZonedDateTime(x: ZonedDateTime): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
-
-    pub def fromZoneOffset(x: ZoneOffset): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
-
 
     /// ZoneId functions
 

@@ -49,6 +49,7 @@ pub mod InteropTime.OffsetDateTime {
     import java.time.{LocalDateTime => JLocalDateTime}
     import java.time.{LocalTime => JLocalTime}
     import java.time.{OffsetDateTime => JOffsetDateTime}
+    import java.time.{ZoneId => JZoneId}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{IsoFields => JIsoFields}
@@ -300,6 +301,10 @@ pub mod InteropTime.OffsetDateTime {
 
     /// Getters and Setters
     /// Get / Set...
+
+
+    pub def getZoneId(x: OffsetDateTime): ZoneId =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 
     pub def getOffset(x: OffsetDateTime): ZoneOffset =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
