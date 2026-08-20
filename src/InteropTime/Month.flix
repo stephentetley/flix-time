@@ -122,27 +122,8 @@ pub mod InteropTime.Month {
             else bug!("toFlix[Month]")
         }
     }
-    // `from` functions
 
-    /// `fromTemporalAccessor` specialized
 
-    pub def fromLocalDate(x: LocalDate): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
-
-    pub def fromLocalDateTime(x: LocalDateTime): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
-
-    pub def fromMonthDay(x: MonthDay): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
-
-    pub def fromYearMonth(x: YearMonth): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
-
-    pub def fromZonedDateTime(x: ZonedDateTime): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     /// Month functions
     

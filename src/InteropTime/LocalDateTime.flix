@@ -40,10 +40,12 @@ pub mod InteropTime.LocalDateTime {
     
     import java.time.{Duration => JDuration}
     import java.time.{DayOfWeek => JDayOfWeek}
+    import java.time.{Month => JMonth}
     import java.time.{MonthDay => JMonthDay}
     import java.time.{Year => JYear}
     import java.time.{LocalDate => JLocalDate}
     import java.time.{LocalDateTime => JLocalDateTime}
+    import java.time.{OffsetDateTime => JOffsetDateTime}
     import java.time.chrono.{ChronoLocalDate}
     import java.time.chrono.{ChronoLocalDateTime}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
@@ -192,21 +194,15 @@ pub mod InteropTime.LocalDateTime {
             unsafe IO { JLocalDateTime.ofInstant(x1, zone1) }
         )
 
-    // `fromTemporalAccessor` specialized
-
-    pub def fromOffsetDateTime(x: OffsetDateTime): LocalDateTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDateTime.$from(x1) })
-
-    pub def fromZonedDateTime(x: ZonedDateTime): LocalDateTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDateTime.$from(x1) })
-
-
 
     /// `to` functions
 
     pub def toDayOfWeek(x: LocalDateTime): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
-        
+
+    pub def toMonth(x: LocalDateTime): Month =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
+
     pub def toMonthDay(x: LocalDateTime): MonthDay =
         AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
 
@@ -226,6 +222,10 @@ pub mod InteropTime.LocalDateTime {
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalTime() })
 
 
+    pub def toOffsetDateTime(offset: ZoneOffset, ldt: LocalDateTime): OffsetDateTime =
+        AdaptorExtras.op2(offset, ldt, (offset1, ldt1) -> 
+            unsafe IO { JOffsetDateTime.of(ldt1, offset1) }
+        )
 
     /// predicates / comparisons
 

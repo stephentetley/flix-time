@@ -40,14 +40,15 @@ pub mod InteropTime.OffsetDateTime {
     use InteropTime.ZoneOffset.ZoneOffset
 
     import java.time.{DayOfWeek => JDayOfWeek}
+    import java.time.{Month => JMonth}
     import java.time.{MonthDay => JMonthDay}
     import java.time.{Year => JYear}
+    import java.time.{YearMonth => JYearMonth}
     import java.time.{Duration => JDuration}
     import java.time.{LocalDate => JLocalDate}
     import java.time.{LocalDateTime => JLocalDateTime}
     import java.time.{LocalTime => JLocalTime}
     import java.time.{OffsetDateTime => JOffsetDateTime}
-    import java.time.{YearMonth => JYearMonth}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.time.temporal.{IsoFields => JIsoFields}
@@ -184,10 +185,6 @@ pub mod InteropTime.OffsetDateTime {
         AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { x1.atZoneSimilarLocal(zone1) })
 
 
-    pub def fromLocalDateTime(offset: ZoneOffset, ldt: LocalDateTime): OffsetDateTime =
-        AdaptorExtras.op2(offset, ldt, (offset1, ldt1) -> 
-            unsafe IO { JOffsetDateTime.of(ldt1, offset1) }
-        )
 
 
     /// `from` functions
@@ -206,11 +203,12 @@ pub mod InteropTime.OffsetDateTime {
     pub def toDayOfWeek(x: OffsetDateTime): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
-    pub def toMonthDay(x: OffsetDateTime): MonthDay =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
+    pub def toEpochSecond(x: OffsetDateTime): Int64 =
+        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochSecond() })
 
-    pub def toYear(x: OffsetDateTime): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
+
+    pub def toInstant(x: OffsetDateTime): InstantZ =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toInstant() })
 
     ///
     /// Returns the given date-time `x` as __.
@@ -221,14 +219,20 @@ pub mod InteropTime.OffsetDateTime {
     ///
     /// Returns the given date-time `x` as __.
     ///
-    pub def toLocalTime(x: OffsetDateTime): LocalTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalTime() })
+    pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalDateTime() })
 
     ///
     /// Returns the given date-time `x` as __.
     ///
-    pub def toLocalDateTime(x: OffsetDateTime): LocalDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalDateTime() })
+    pub def toLocalTime(x: OffsetDateTime): LocalTime =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalTime() })
+    
+    pub def toMonth(x: OffsetDateTime): Month =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
+
+    pub def toMonthDay(x: OffsetDateTime): MonthDay =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
 
 
     ///
@@ -237,6 +241,13 @@ pub mod InteropTime.OffsetDateTime {
     pub def toOffsetTime(x: OffsetDateTime): OffsetTime =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.toOffsetTime() })
 
+    pub def toYear(x: OffsetDateTime): Year =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
+
+
+    pub def toYearMonth(x: OffsetDateTime): YearMonth =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JYearMonth.$from(x1) })
+
     ///
     /// Returns the given date-time `x` as __.
     ///
@@ -244,11 +255,6 @@ pub mod InteropTime.OffsetDateTime {
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.toZonedDateTime() })
 
 
-    pub def toInstant(x: OffsetDateTime): InstantZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toInstant() })
-
-    pub def toEpochSecond(x: OffsetDateTime): Int64 =
-        AdaptorExtras.extract(x, x1 ->unsafe IO { x1.toEpochSecond() })
 
 
     // predicates / comparisons

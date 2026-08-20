@@ -31,6 +31,7 @@ pub mod InteropTime.MonthDay {
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
     
+    import java.time.{Month => JMonth}
     import java.time.{MonthDay => JMonthDay}
     import java.lang.{Object, CharSequence}
     import java.lang.{Exception => JException}
@@ -134,7 +135,8 @@ pub mod InteropTime.MonthDay {
     pub def nowWithZoneId(x: ZoneId): MonthDay \ IO =
         AdaptorExtras.op(x, x1 -> JMonthDay.now(x1))
 
-
+    pub def toMonth(x: MonthDay): Month =
+        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
 
     /// predicates / comparisons

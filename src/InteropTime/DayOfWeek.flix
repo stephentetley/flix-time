@@ -131,10 +131,10 @@ pub mod InteropTime.DayOfWeek {
 
     /// plus / minus functions
 
-    pub def plus(x: DayOfWeek, days: Int64): DayOfWeek =
+    pub def plusDays(x: DayOfWeek, days: Int64): DayOfWeek =
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.plus(days) })
 
-    pub def minus(x:DayOfWeek, days: Int64): DayOfWeek = 
+    pub def minusDays(x:DayOfWeek, days: Int64): DayOfWeek = 
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.minus(days) })
 
 }
