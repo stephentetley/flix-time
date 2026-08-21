@@ -119,6 +119,28 @@ pub mod InteropTime.Internal.AdaptorExtras {
             case _: JException => None
         }
 
+    // special case detecting null string
+    pub def extractStringWithOption(x: a, f: ToJava.Out[a] -> String \ ef + ToJava.Aef[a]): Option[String] \ ef + ToJava.Aef[a] with ToJava[a] =
+        try {
+            let x1 = ToJava.toJava(x);
+            let str = f(x1);
+            if (not Object.isNull(str)) Some(str) else None
+
+        } catch {
+            case _: JException => None
+        }
+
+    // special case detecting null string
+    pub def extractStringWithResult(x: a, f: ToJava.Out[a] -> String \ ef + ToJava.Aef[a]): Result[String, String] \ ef + ToJava.Aef[a] with ToJava[a] =
+        try {
+            let x1 = ToJava.toJava(x);
+            let str = f(x1);
+            if (not Object.isNull(str)) Ok(str) else Err("extractStringWithResult(null)")
+
+        } catch {
+            case _: JException => Err("extractStringWithResult")
+        }
+
     pub def extract2(x: a, y: b, f: ToJava.Out[a] -> ToJava.Out[b] -> ans \ ef + ToJava.Aef[a] + ToJava.Aef[b]): ans \ ef + ToJava.Aef[a] + ToJava.Aef[b] with ToJava[a], ToJava[b] =
         let x1 = ToJava.toJava(x);
         let y1 = ToJava.toJava(y);
