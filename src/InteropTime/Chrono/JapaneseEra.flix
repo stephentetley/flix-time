@@ -19,7 +19,7 @@
 pub mod InteropTime.Chrono.JapaneseEra {
 
     
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
     use InteropTime.Format.TextStyle.TextStyle
 
     use InteropLocale.Locale.Locale

@@ -20,7 +20,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
     use EffectExtras.Fail.Fail
     use InteropLocale.Locale.Locale
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.ZoneId
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter

@@ -19,7 +19,7 @@
 pub mod InteropTime.Chrono.JapaneseDate {
 
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
     use InteropTime.Chrono.MinguoDate.MinguoDate

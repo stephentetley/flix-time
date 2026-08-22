@@ -18,7 +18,7 @@
 pub mod InteropTime.Chrono.MinguoDate {
 
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Chrono.MinguoChronology.MinguoChronology
     use InteropTime.Chrono.MinguoEra.MinguoEra

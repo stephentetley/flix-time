@@ -16,7 +16,7 @@
 
 pub mod InteropTime.Chrono.IsoChronology {
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
     use InteropTime.Chrono.IsoEra.IsoEra
     use InteropTime.LocalDate.LocalDate
     

@@ -18,7 +18,7 @@
 
 pub mod InteropTime.OffsetDateTime {
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse

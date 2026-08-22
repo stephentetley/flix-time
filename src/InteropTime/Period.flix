@@ -17,7 +17,7 @@
 
 pub mod InteropTime.Period {
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.LocalDate.LocalDate
     

@@ -19,7 +19,7 @@ pub mod InteropTime.Chrono.HijrahDate {
 
 
     
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Chrono.HijrahChronology.HijrahChronology
     use InteropTime.Chrono.HijrahChronology.HijrahChronology.{HijrahChronology}

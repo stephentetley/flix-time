@@ -19,7 +19,7 @@
 pub mod InteropTime.ZoneId {
 
     
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Zone.ZoneRules.ZoneRules
@@ -85,7 +85,7 @@ pub mod InteropTime.ZoneId {
     pub def zoneIdWithAliases(zone: {zone = String}, 
                                 aliases: Map[String, String]): Result[String, ZoneId] =
         AdaptorExtras.ofWithResult(() -> {
-            let jmap = InteropTime.Internal.AdaptorExtras.Collection.toJMap(aliases, identity, identity);
+            let jmap = JavaInterop.AdaptorExtras.Collection.toJMap(aliases, identity, identity);
             unsafe IO { JZoneId.of(zone#zone, jmap) }
         })
 

@@ -20,7 +20,7 @@
 pub mod InteropTime.DurationZ {
 
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}

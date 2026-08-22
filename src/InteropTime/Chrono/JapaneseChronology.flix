@@ -20,7 +20,7 @@
 pub mod InteropTime.Chrono.JapaneseChronology {
 
     
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Chrono.JapaneseDate.JapaneseDate
     use InteropTime.Chrono.JapaneseEra.JapaneseEra

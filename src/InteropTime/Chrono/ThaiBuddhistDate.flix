@@ -18,7 +18,7 @@
 pub mod InteropTime.Chrono.ThaiBuddhistDate {
 
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology
     use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra

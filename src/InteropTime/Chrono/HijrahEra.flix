@@ -19,7 +19,7 @@ pub mod InteropTime.Chrono.HijrahEra {
     
     use InteropLocale.Locale.Locale
     
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
     use InteropTime.Format.TextStyle.TextStyle
 
     

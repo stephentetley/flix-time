@@ -17,7 +17,7 @@
 
 pub mod InteropTime.Format.TextStyle {
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     import java.time.format.{TextStyle => JTextStyle}
 

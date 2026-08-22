@@ -19,7 +19,7 @@ pub mod InteropTime.Format.DateFormatter {
 
     use InteropLocale.Locale
         
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}

@@ -19,7 +19,7 @@
 pub mod InteropTime.ClockZ {
 
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.DurationZ.DurationZ
     use InteropTime.InstantZ.InstantZ

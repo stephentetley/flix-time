@@ -18,7 +18,7 @@
 pub mod InteropTime.Chrono.ThaiBuddhistEra {
 
 
-    use InteropTime.Internal.AdaptorExtras
+    use JavaInterop.AdaptorExtras
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Temporal.ChronoField.ChronoField

@@ -1,5 +1,6 @@
 ### v0.21.0
-   ...
+   Removed `Internal.AdaptorExtras` code and added a dependency on 
+     `adaptor-extras`.
 
 ### v0.20.0
    Many internal changes to trial "AdaptorExtras".
