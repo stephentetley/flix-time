@@ -1,3 +1,8 @@
+### v0.22.0
+   Added `Compat` module to interface with old Java Date and Time classes.
+   Updated functions that use `Result[String, ...]` for failure to use the `Fail` 
+     effect.
+
 ### v0.21.1
    Updated dependencies.
 

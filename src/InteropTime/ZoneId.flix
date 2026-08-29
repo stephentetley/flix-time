@@ -18,8 +18,10 @@
 
 pub mod InteropTime.ZoneId {
 
-    
+    use EffectExtras.Fail.Fail
+
     use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorExtras2
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Zone.ZoneRules.ZoneRules
@@ -78,8 +80,8 @@ pub mod InteropTime.ZoneId {
 
     /// Constructors
 
-    pub def zoneId(zone: {zone = String}): Result[String, ZoneId] =
-        AdaptorExtras.ofWithResult(() -> unsafe IO { JZoneId.of(zone#zone) })
+    pub def zoneId(zone: {zone = String}): ZoneId \ Fail =
+        AdaptorExtras2.of(() -> unsafe IO { JZoneId.of(zone#zone) })
 
     /// Ideally not in IO...
     pub def zoneIdWithAliases(zone: {zone = String}, 
@@ -92,13 +94,10 @@ pub mod InteropTime.ZoneId {
 
     /// "abstract constructors" (e.g. `utc`)
 
-    pub def utc(): ZoneId = match zoneId(zone = "Z") {
-        case Ok(z)  => z
-        case Err(_) => bug!("ZoneId.utc() - failed")
-    }
+    pub def utc(): ZoneId \ Fail = zoneId(zone = "Z")
 
-    pub def systemDefault(): Result[String, ZoneId] \ IO =
-        AdaptorExtras.ofWithResult(() -> JZoneId.systemDefault())
+    pub def systemDefault(): ZoneId \ IO  + Fail =
+        AdaptorExtras2.of(() -> JZoneId.systemDefault())
 
 
 
