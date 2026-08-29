@@ -17,7 +17,9 @@
 
 
 pub mod InteropTime.OffsetTime {
-
+    
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
@@ -118,8 +120,8 @@ pub mod InteropTime.OffsetTime {
     instance TemporalParse[OffsetTime] {
         type Formatter = TimeFormatter
         type Aef = {}
-        pub def parse(formatter: TimeFormatter, s: String): Result[String, OffsetTime] = 
-            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
+        pub def parse(formatter: TimeFormatter, s: String): OffsetTime \ Fail = 
+            AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JOffsetTime.parse(s1, formatter1) }
             })
@@ -127,12 +129,12 @@ pub mod InteropTime.OffsetTime {
 
     /// Constructors
 
-    pub def offsetTime(hour: {hour = Int32}, 
+    pub def newOffsetTime(hour: {hour = Int32}, 
                         minute: {minute = Int32}, 
                         second: {second = Int32}, 
                         nanoSecond: {nanoSecond = Int32}, 
-                        offset: ZoneOffset): OffsetTime =
-        AdaptorUnchecked.op(offset, offset1 -> 
+                        offset: ZoneOffset): OffsetTime \ Fail =
+        AdaptorChecked.op(offset, offset1 -> 
             unsafe IO { JOffsetTime.of(hour#hour, 
                                         minute#minute, 
                                         second#second, 

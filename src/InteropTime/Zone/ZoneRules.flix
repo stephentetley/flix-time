@@ -70,7 +70,7 @@ pub mod InteropTime.Zone.ZoneRules {
 
     /// Constructors
 
-    pub def zoneRules(offset: ZoneOffset): ZoneRules =
+    pub def newZoneRules(offset: ZoneOffset): ZoneRules =
         AdaptorUnchecked.op(offset, offset1 -> unsafe IO { JZoneRules.of(offset1) })
 
     /// ZoneRules functions

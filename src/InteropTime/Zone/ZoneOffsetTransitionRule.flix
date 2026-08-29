@@ -110,9 +110,8 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
 
     /// Constructors
 
-    // opWithResult6 ?
 
-    pub def zoneOffsetTransitionRule(month: {month = Month}, 
+    pub def newZoneOffsetTransitionRule(month: {month = Month}, 
                                         dayOfMonthIndicator: {dayOfMonthIndicator = Int32}, 
                                         dayOfWeek: {dayOfWeek = DayOfWeek}, 
                                         time: {time = LocalTime},

@@ -17,7 +17,8 @@
 
 pub mod InteropTime.LocalDate {
 
-
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
@@ -133,8 +134,8 @@ pub mod InteropTime.LocalDate {
     instance TemporalParse[LocalDate] {
         type Formatter = DateFormatter
         type Aef = {}
-        pub def parse(formatter: DateFormatter, s: String): Result[String, LocalDate] = 
-            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
+        pub def parse(formatter: DateFormatter, s: String): LocalDate \ Fail = 
+            AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JLocalDate.parse(s1, formatter1) }
             })
@@ -143,17 +144,17 @@ pub mod InteropTime.LocalDate {
 
     // Constructors
 
-    pub def localDate(year: {year = Int32}, 
+    pub def newLocalDate(year: {year = Int32}, 
                         month: {month = Int32}, 
-                        dayOfMonth: {dayOfMonth = Int32}): LocalDate =
-        let ans = unsafe IO { JLocalDate.of(year#year, month#month, dayOfMonth#dayOfMonth) };
-        ToFlix.toFlix(ans)
+                        dayOfMonth: {dayOfMonth = Int32}): LocalDate  \ Fail =
+        AdaptorChecked.of(() -> 
+            unsafe IO { JLocalDate.of(year#year, month#month, dayOfMonth#dayOfMonth) }
+        )
 
-    pub def localDateWithMonth(year: {year = Int32}, 
+    pub def newLocalDateWithMonth(year: {year = Int32}, 
                                 month: {month = Month}, 
-                                dayOfMonth: {dayOfMonth = Int32}): LocalDate =
-        
-        AdaptorUnchecked.op(month#month, month1 -> 
+                                dayOfMonth: {dayOfMonth = Int32}): LocalDate \ Fail =
+        AdaptorChecked.op(month#month, month1 -> 
             unsafe IO { JLocalDate.of(year#year, month1, dayOfMonth#dayOfMonth) }
         )
 
@@ -191,15 +192,15 @@ pub mod InteropTime.LocalDate {
 
     /// ## `from` functions
 
-    pub def ofInstant(zone: ZoneId, x: InstantZ): LocalDate =
-        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> unsafe IO { JLocalDate.ofInstant(x1, zone1) })
+    pub def ofInstant(zone: ZoneId, x: InstantZ): LocalDate \ Fail =
+        AdaptorChecked.op2(zone, x, (zone1, x1) -> unsafe IO { JLocalDate.ofInstant(x1, zone1) })
 
     pub def ofEpochDay(x: Int64): LocalDate =
         AdaptorUnchecked.of(() -> unsafe IO { JLocalDate.ofEpochDay(x) })
 
 
-    ///  `fromTemporalAccessor` specialized
-
+    pub def ofYearDay(year: {year = Int32}, dayOfYear: {dayOfYear = Int32}): LocalDate \ Fail = 
+        AdaptorChecked.of(() -> unsafe IO { JLocalDate.ofYearDay(year#year, dayOfYear#dayOfYear) })
 
 
 

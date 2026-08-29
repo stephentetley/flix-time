@@ -22,6 +22,8 @@ mod TestPeriod {
     use LowerBound.minValue
     use UpperBound.maxValue
     use Comparison.{LessThan, EqualTo, GreaterThan}
+    use EffectExtras.Fail.Fail
+
 
     /////////////////////////////////////////////////////////////////////////////
     // add                                                                     //
@@ -34,10 +36,10 @@ mod TestPeriod {
         assertTrue(ans == InteropTime.Period.ofYears(2))
 
     @Test
-    def add02(): Unit \ Assert = 
+    def add02(): Unit \ Assert + Fail = 
         let p1 = InteropTime.Period.ofYears(10);
         let ans = p1 + InteropTime.Period.ofMonths(10);
-        assertTrue(ans == InteropTime.Period.period(years = 10, months = 10, days = 0))
+        assertTrue(ans == InteropTime.Period.newPeriod(years = 10, months = 10, days = 0))
 
 
     /////////////////////////////////////////////////////////////////////////////

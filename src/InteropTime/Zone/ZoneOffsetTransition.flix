@@ -74,7 +74,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransition {
 
     /// Constructors
 
-    pub def zoneOffsetTransition(transition: {transition = LocalDateTime}, before: {before = ZoneOffset}, after: {after = ZoneOffset}): ZoneOffsetTransition =
+    pub def newZoneOffsetTransition(transition: {transition = LocalDateTime}, before: {before = ZoneOffset}, after: {after = ZoneOffset}): ZoneOffsetTransition =
         AdaptorUnchecked.op3(
             before#before, 
             after#after, 

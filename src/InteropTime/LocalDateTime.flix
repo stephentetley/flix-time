@@ -18,6 +18,8 @@
 
 pub mod InteropTime.LocalDateTime {
 
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
@@ -130,8 +132,8 @@ pub mod InteropTime.LocalDateTime {
     instance TemporalParse[LocalDateTime] {
         type Formatter = DateTimeFormatter
         type Aef = {}
-        pub def parse(formatter: DateTimeFormatter, s: String): Result[String, LocalDateTime] = 
-            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
+        pub def parse(formatter: DateTimeFormatter, s: String): LocalDateTime \ Fail = 
+            AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JLocalDateTime.parse(s1, formatter1) }
             })
@@ -140,29 +142,50 @@ pub mod InteropTime.LocalDateTime {
 
     /// Constructors
 
-    pub def localDateTime(year: {year = Int32}, 
+    pub def newLocalDateTime(year: {year = Int32}, 
                             month: {month = Int32}, 
                             dayOfMonth: {dayOfMonth = Int32}, 
                             hour: {hour = Int32}, 
-                            minute: {minute = Int32}): LocalDateTime =
-        LocalDateTime(unsafe IO { JLocalDateTime.of(year#year, month#month, dayOfMonth#dayOfMonth, hour#hour, minute#minute)}) 
+                            minute: {minute = Int32}): LocalDateTime \ Fail =
+        AdaptorChecked.of(() -> 
+            unsafe IO { JLocalDateTime.of(year#year, 
+                                            month#month, 
+                                            dayOfMonth#dayOfMonth, 
+                                            hour#hour, 
+                                            minute#minute)}
+        ) 
 
-    pub def localDateTimeWithSecond(year: {year = Int32}, 
-                                    month: {month = Int32}, 
-                                    dayOfMonth: {dayOfMonth = Int32},
-                                    hour: {hour = Int32}, 
-                                    minute: {minute = Int32}, 
-                                    second: {second = Int32}): LocalDateTime =
-        LocalDateTime(unsafe IO { JLocalDateTime.of(year#year, month#month, dayOfMonth#dayOfMonth, hour#hour, minute#minute, second#second) })
+    pub def newLocalDateTimeWithSecond(year: {year = Int32}, 
+                                        month: {month = Int32}, 
+                                        dayOfMonth: {dayOfMonth = Int32},
+                                        hour: {hour = Int32}, 
+                                        minute: {minute = Int32}, 
+                                        second: {second = Int32}): LocalDateTime  \ Fail =
+        AdaptorChecked.of(() -> 
+            unsafe IO { JLocalDateTime.of(year#year, 
+                                            month#month, 
+                                            dayOfMonth#dayOfMonth, 
+                                            hour#hour, 
+                                            minute#minute, 
+                                            second#second) }
+        )
 
-    pub def localDateTimeWithSecondAndNano(year: {year = Int32}, 
-                                            month: {month = Int32}, 
-                                            dayOfMonth: {dayOfMonth = Int32},
-                                            hour: {hour = Int32}, 
-                                            minute: {minute = Int32}, 
-                                            second: {second = Int32}, 
-                                            nanoSecond: {nanoSecond = Int32 }): LocalDateTime =
-        LocalDateTime(unsafe IO { JLocalDateTime.of(year#year, month#month, dayOfMonth#dayOfMonth, hour#hour, minute#minute, second#second, nanoSecond#nanoSecond)}) 
+    pub def newLocalDateTimeWithSecondAndNano(year: {year = Int32}, 
+                                                month: {month = Int32}, 
+                                                dayOfMonth: {dayOfMonth = Int32},
+                                                hour: {hour = Int32}, 
+                                                minute: {minute = Int32}, 
+                                                second: {second = Int32}, 
+                                                nanoSecond: {nanoSecond = Int32 }): LocalDateTime \ Fail =
+        AdaptorChecked.of(() -> 
+            unsafe IO { JLocalDateTime.of(year#year, 
+                                            month#month, 
+                                            dayOfMonth#dayOfMonth, 
+                                            hour#hour, 
+                                            minute#minute, 
+                                            second#second, 
+                                            nanoSecond#nanoSecond)}
+        ) 
 
 
     /// `now` and "abstract constructors" if any

@@ -18,14 +18,15 @@ mod TestMonthDay {
     
     use Assert.{assertEq, assertTrue, assertFalse, fail};
     use ToString.toString;
+    use EffectExtras.Fail.Fail
 
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def toString01(): Unit \ {Assert, IO} = 
-        InteropTime.MonthDay.monthDay(month = 1, dayOfMonth = 1) |> toString |> println;
+    def toString01(): Unit \ {Assert, Fail, IO} = 
+        InteropTime.MonthDay.newMonthDay(month = 1, dayOfMonth = 1) |> toString |> println;
         assertTrue(true)
 
     /////////////////////////////////////////////////////////////////////////////
@@ -44,8 +45,8 @@ mod TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def getDayOfMonth01(): Unit \ Assert =         
-        let md = InteropTime.MonthDay.monthDay(month = 1, dayOfMonth = 1);
+    def getDayOfMonth01(): Unit \ Assert + Fail =         
+        let md = InteropTime.MonthDay.newMonthDay(month = 1, dayOfMonth = 1);
         assertEq(expected = 1, InteropTime.MonthDay.getDayOfMonth(md))
 
     // @Test

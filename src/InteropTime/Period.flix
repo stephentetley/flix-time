@@ -17,6 +17,8 @@
 
 pub mod InteropTime.Period {
 
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.LocalDate.LocalDate
@@ -122,11 +124,12 @@ pub mod InteropTime.Period {
 
     /// Constructors
 
-    pub def period(years: {years = Int32}, 
+    pub def newPeriod(years: {years = Int32}, 
                     months: {months = Int32}, 
-                    days: {days = Int32}): Period =
-        let ans = unsafe IO { JPeriod.of(years#years, months#months, days#days) };
-        Period(ans)
+                    days: {days = Int32}): Period \ Fail =
+        AdaptorChecked.of(() -> 
+            unsafe IO { JPeriod.of(years#years, months#months, days#days) }
+        )
 
     /// "abstract constructors" (e.g. `zero`)
 

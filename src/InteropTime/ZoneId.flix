@@ -83,11 +83,11 @@ pub mod InteropTime.ZoneId {
 
     /// Constructors
 
-    pub def zoneId(zone: {zone = String}): ZoneId \ Fail =
+    pub def newZoneId(zone: {zone = String}): ZoneId \ Fail =
         AdaptorChecked.of(() -> unsafe IO { JZoneId.of(zone#zone) })
 
     /// Ideally not in IO...
-    pub def zoneIdWithAliases(zone: {zone = String}, 
+    pub def newZoneIdWithAliases(zone: {zone = String}, 
                                 aliases: Map[String, String]): ZoneId \ Fail =
         AdaptorChecked.of(() -> {
             let jmap = Collection.toJMap(aliases, identity, identity);
@@ -97,7 +97,7 @@ pub mod InteropTime.ZoneId {
 
     /// "abstract constructors" (e.g. `utc`)
 
-    pub def utc(): ZoneId \ Fail = zoneId(zone = "Z")
+    pub def utc(): ZoneId \ Fail = newZoneId(zone = "Z")
 
     pub def systemDefault(): ZoneId \ IO  + Fail =
         AdaptorChecked.of(() -> JZoneId.systemDefault())

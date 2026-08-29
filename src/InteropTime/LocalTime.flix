@@ -18,6 +18,8 @@
 
 pub mod InteropTime.LocalTime {
 
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
@@ -118,8 +120,8 @@ pub mod InteropTime.LocalTime {
     instance TemporalParse[LocalTime] {
         type Formatter = TimeFormatter
         type Aef = {}
-        pub def parse(formatter: TimeFormatter, s: String): Result[String, LocalTime] = 
-            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
+        pub def parse(formatter: TimeFormatter, s: String): LocalTime \ Fail = 
+            AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JLocalTime.parse(s1, formatter1) }
             })
@@ -127,20 +129,20 @@ pub mod InteropTime.LocalTime {
 
     // Constructors
 
-    pub def localTime(hour: {hour = Int32}, minute: {minute = Int32}): LocalTime =
+    pub def newLocalTime(hour: {hour = Int32}, minute: {minute = Int32}): LocalTime =
         let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute) };
         LocalTime(ans)
 
-    pub def localTimeWithSecond(hour: {hour = Int32}, 
-                                minute: {minute = Int32}, 
-                                second: {second = Int32}): LocalTime =
+    pub def newLocalTimeWithSecond(hour: {hour = Int32}, 
+                                    minute: {minute = Int32}, 
+                                    second: {second = Int32}): LocalTime =
         let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute, second#second) };
         LocalTime(ans)
 
-    pub def localTimeWithSecondAndNano(hour: {hour = Int32}, 
-                                        minute: {minute = Int32}, 
-                                        second: {second = Int32}, 
-                                        nanoSecond: {nanoSecond = Int32}): LocalTime =
+    pub def newLocalTimeWithSecondAndNano(hour: {hour = Int32}, 
+                                            minute: {minute = Int32}, 
+                                            second: {second = Int32}, 
+                                            nanoSecond: {nanoSecond = Int32}): LocalTime =
         let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute, second#second, nanoSecond#nanoSecond) };
         LocalTime(ans)
 

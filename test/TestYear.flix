@@ -22,14 +22,15 @@ mod TestYear {
     use LowerBound.minValue
     use UpperBound.maxValue
     use Comparison.{LessThan, EqualTo, GreaterThan}
+    use EffectExtras.Fail.Fail
 
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def toString01(): Unit \ Assert = 
-        assertEq(expected = "1970", toString(InteropTime.Year.year(isoYear = 1970)))
+    def toString01(): Unit \ Assert + Fail = 
+        assertEq(expected = "1970", toString(InteropTime.Year.newYear(1970)))
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -37,56 +38,56 @@ mod TestYear {
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def less01(): Unit \ Assert = 
-        assertTrue(InteropTime.Year.year(isoYear = 2020) < InteropTime.Year.year(isoYear = 2021))
+    def less01(): Unit \ Assert + Fail = 
+        assertTrue(InteropTime.Year.newYear(2020) < InteropTime.Year.newYear(2021))
 
     /////////////////////////////////////////////////////////////////////////////
     // lessEq                                                                  //
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def lessEq01(): Unit \ Assert = 
-        assertTrue(InteropTime.Year.year(isoYear = 2020) <= InteropTime.Year.year(isoYear = 2021))
+    def lessEq01(): Unit \ Assert + Fail = 
+        assertTrue(InteropTime.Year.newYear(2020) <= InteropTime.Year.newYear(2021))
 
     /////////////////////////////////////////////////////////////////////////////
     // greater                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def greater01(): Unit \ Assert = 
-        assertTrue(InteropTime.Year.year(isoYear = 2021) > InteropTime.Year.year(isoYear = 2020))
+    def greater01(): Unit \ Assert + Fail = 
+        assertTrue(InteropTime.Year.newYear(2021) > InteropTime.Year.newYear(2020))
 
     /////////////////////////////////////////////////////////////////////////////
     // greaterEq                                                               //
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def greaterEq01(): Unit \ Assert = 
-        assertTrue(InteropTime.Year.year(isoYear = 2021) >= InteropTime.Year.year(isoYear = 2020))
+    def greaterEq01(): Unit \ Assert + Fail = 
+        assertTrue(InteropTime.Year.newYear(2021) >= InteropTime.Year.newYear(2020))
 
     /////////////////////////////////////////////////////////////////////////////
     // compare                                                                 //
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def compare01(): Unit \ Assert = 
+    def compare01(): Unit \ Assert + Fail = 
          assertEq(
              expected = LessThan,
-             Order.compare(InteropTime.Year.year(isoYear = 2020), InteropTime.Year.year(isoYear = 2021))
+             Order.compare(InteropTime.Year.newYear(2020), InteropTime.Year.newYear(2021))
          )
 
     @Test
-    def compare02(): Unit \ Assert = 
+    def compare02(): Unit \ Assert + Fail = 
         assertEq(
             expected = EqualTo,
-            Order.compare(InteropTime.Year.year(isoYear = 2020), InteropTime.Year.year(isoYear = 2020))
+            Order.compare(InteropTime.Year.newYear(2020), InteropTime.Year.newYear(2020))
         )
 
     @Test
-    def compare03(): Unit \ Assert = 
+    def compare03(): Unit \ Assert + Fail = 
         assertEq(
             expected = GreaterThan,
-            Order.compare(InteropTime.Year.year(isoYear = 2021), InteropTime.Year.year(isoYear = 2020))
+            Order.compare(InteropTime.Year.newYear(2021), InteropTime.Year.newYear(2020))
         )
 
 

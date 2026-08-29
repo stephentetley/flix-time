@@ -17,7 +17,8 @@
 
 pub mod InteropTime.Year {
 
-    
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
@@ -111,8 +112,8 @@ pub mod InteropTime.Year {
     instance TemporalParse[Year] {
         type Formatter = DateFormatter
         type Aef = {}
-        pub def parse(formatter: DateFormatter, s: String): Result[String, Year] = 
-            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
+        pub def parse(formatter: DateFormatter, s: String): Year \ Fail = 
+            AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JYear.parse(s1, formatter1) }
             })
@@ -120,9 +121,8 @@ pub mod InteropTime.Year {
 
     /// Constructors
 
-    pub def year(isoYear: {isoYear = Int32}): Year =
-        let ans = unsafe IO { JYear.of(isoYear#isoYear) };
-        Year(ans)
+    pub def newYear(isoYear: Int32): Year \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JYear.of(isoYear) })
 
 
     /// `now` and "abstract constructors" if any

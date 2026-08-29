@@ -26,6 +26,7 @@ pub mod InteropTime.InstantZ {
     use InteropTime.DurationZ.DurationZ
     use InteropTime.LocalDate
     use InteropTime.LocalDateTime
+    use InteropTime.LocalTime
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.OffsetTime
     use InteropTime.Period.Period
@@ -36,9 +37,12 @@ pub mod InteropTime.InstantZ {
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
     import java.time.{Instant => JInstant}
-    import java.time.{LocalDateTime => JLocalDateTime}
     import java.time.{LocalDate => JLocalDate}
+    import java.time.{LocalDateTime => JLocalDateTime}
+    import java.time.{LocalTime => JLocalTime}
+    import java.time.{OffsetDateTime => JOffsetDateTime}
     import java.time.{OffsetTime => JOffsetTime}
+    import java.time.{ZonedDateTime => JZonedDateTime}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.lang.{Exception => JException}
@@ -110,8 +114,8 @@ pub mod InteropTime.InstantZ {
 
     /// Constructors
 
-    pub def instant(epochSecond: {epochSecond = Int64}, 
-                    nano: {nano = Int64 }): InstantZ =
+    pub def newInstant(epochSecond: {epochSecond = Int64}, 
+                        nano: {nano = Int64 }): InstantZ =
         AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond#epochSecond, nano#nano) })
 
     /// `now` and "abstract constructors" (e.g. `epoch`)
@@ -155,20 +159,37 @@ pub mod InteropTime.InstantZ {
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochMilli() })
 
 
+    pub def toLocalDate(zone: ZoneId, x: InstantZ): LocalDate =
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
+            unsafe IO { JLocalDate.ofInstant(x1, zone1) }
+        )
+
     pub def toLocalDateTime(zone: ZoneId, x: InstantZ): LocalDateTime =
         AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JLocalDateTime.ofInstant(x1, zone1) }
         )
-    
-    pub def toLocalDate(zone: ZoneId, x: InstantZ): LocalDate =
+        
+    pub def toLocalTime(zone: ZoneId, x: InstantZ): LocalTime =
         AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
-            unsafe IO { JLocalDate.ofInstant(x1, zone1) }
+            unsafe IO { JLocalTime.ofInstant(x1, zone1) }
         )
     
 
     pub def toOffsetTime(zone: ZoneId, x: InstantZ): OffsetTime =
         AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JOffsetTime.ofInstant(x1, zone1) }
+        )
+
+
+    pub def toOffsetDateTime(zone: ZoneId, x: InstantZ): OffsetDateTime =
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
+            unsafe IO { JOffsetDateTime.ofInstant(x1, zone1) }
+        )
+
+
+    pub def toZonedDateTime(zone: ZoneId, x: InstantZ): ZonedDateTime =
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
+            unsafe IO { JZonedDateTime.ofInstant(x1, zone1) }
         )
 
     /// `parse` / `format` functions

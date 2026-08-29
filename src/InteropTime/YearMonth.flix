@@ -17,6 +17,8 @@
 
 pub mod InteropTime.YearMonth {
 
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
@@ -112,8 +114,8 @@ pub mod InteropTime.YearMonth {
     instance TemporalParse[YearMonth] {
         type Formatter = DateFormatter
         type Aef = {}
-        pub def parse(formatter: DateFormatter, s: String): Result[String, YearMonth] = 
-            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
+        pub def parse(formatter: DateFormatter, s: String): YearMonth \ Fail = 
+            AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JYearMonth.parse(s1, formatter1) }
             })
@@ -121,12 +123,11 @@ pub mod InteropTime.YearMonth {
 
     /// Constructors
 
-    pub def yearMonth(year: {year = Int32}, month: {month = Int32}): YearMonth =
-        let ans = unsafe IO { JYearMonth.of(year#year, month#month) };
-        YearMonth(ans)
+    pub def newYearMonth(year: {year = Int32}, month: {month = Int32}): YearMonth \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JYearMonth.of(year#year, month#month) })
 
-    pub def yearMonthWithMonth(year: {year = Int32}, month: {month = Month}): YearMonth =
-        AdaptorUnchecked.op(month#month, month1 -> unsafe IO { JYearMonth.of(year#year, month1) })
+    pub def newYearMonthWithMonth(year: {year = Int32}, month: {month = Month}): YearMonth \ Fail =
+        AdaptorChecked.op(month#month, month1 -> unsafe IO { JYearMonth.of(year#year, month1) })
 
 
     /// `now` and "abstract constructors" if any
@@ -187,8 +188,8 @@ pub mod InteropTime.YearMonth {
     pub def getMonth(x: YearMonth): Month =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getMonth() })
 
-    pub def withMonth(month: Month, x: YearMonth): YearMonth =
-        yearMonthWithMonth(year = getYear(x), month = month)
+    pub def withMonth(month: Month, x: YearMonth): YearMonth \ Fail =
+        newYearMonthWithMonth(year = getYear(x), month = month)
 
     pub def getMonthValue(x: YearMonth): Int32 =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getMonthValue() })

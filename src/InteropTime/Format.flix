@@ -16,6 +16,8 @@
 
 pub mod InteropTime.Format { 
 
+    use EffectExtras.Fail.Fail
+
     pub trait TemporalFormat[t] {
         type Formatter[t]: Type
         type Aef[t]: Eff = {}
@@ -25,6 +27,6 @@ pub mod InteropTime.Format {
     pub trait TemporalParse[t] {
         type Formatter[t]: Type
         type Aef[t]: Eff = {}
-        pub def parse(formatter: TemporalFormat.Formatter[t], s: String): Result[String, t] \ aef where TemporalFormat.Aef[t] ~ aef
+        pub def parse(formatter: TemporalFormat.Formatter[t], s: String): t \ Fail + aef where TemporalFormat.Aef[t] ~ aef
     }
 }

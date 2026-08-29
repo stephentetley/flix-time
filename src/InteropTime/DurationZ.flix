@@ -137,7 +137,7 @@ pub mod InteropTime.DurationZ {
     ///
     /// Return a new duration.
     ///
-    pub def duration(seconds: {seconds = Int64}, 
+    pub def newDuration(seconds: {seconds = Int64}, 
                         nanos: {nanos = Int64}): DurationZ =
         AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) })
 
@@ -254,11 +254,6 @@ pub mod InteropTime.DurationZ {
             let s1 = String.trim(s);
             unsafe IO { JDuration.parse(s1) }
         })
-
-    /// Note - alias of `toString`
-    pub def format(x: DurationZ): String =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toString() })
-
 
     /// predicates / comparisons
 
