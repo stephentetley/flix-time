@@ -18,7 +18,7 @@
 pub mod InteropTime.Chrono.ThaiBuddhistDate {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology
     use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra
@@ -76,26 +76,26 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
     /// Returns ___
     ///
     pub def now(): ThaiBuddhistDate \ IO = 
-        AdaptorExtras.of(() -> { JThaiBuddhistDate.now() })
+        AdaptorUnchecked.of(() -> { JThaiBuddhistDate.now() })
 
 
     
     
 
     pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
     pub def fromLocalDate(x: LocalDate): ThaiBuddhistDate = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): ThaiBuddhistDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
 
     pub def getChronology(x: ThaiBuddhistDate): ThaiBuddhistChronology = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getChronology() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
 
     pub def getEra(x: ThaiBuddhistDate): ThaiBuddhistEra = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getEra() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })
 
     // pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
     //     getChronoFieldHelper(x, InteropTime.Temporal.ChronoField.DayOfWeek)

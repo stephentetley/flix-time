@@ -16,7 +16,8 @@
 
 pub mod InteropTime.Chrono.IsoChronology {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorExtras.Collection
+    use JavaInterop.AdaptorUnchecked
     use InteropTime.Chrono.IsoEra.IsoEra
     use InteropTime.LocalDate.LocalDate
     
@@ -52,27 +53,27 @@ pub mod InteropTime.Chrono.IsoChronology {
     
 
     pub def getInstance(): IsoChronology \ IO = 
-        AdaptorExtras.of(() -> checked_ecast(JIsoChronology.INSTANCE))
+        AdaptorUnchecked.of(() -> checked_ecast(JIsoChronology.INSTANCE))
 
     pub def getCalendarType(x: IsoChronology): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
 
     pub def dateNow(x: IsoChronology): LocalDate \ IO = 
-        AdaptorExtras.op(x, x1 -> x1.dateNow())
+        AdaptorUnchecked.op(x, x1 -> x1.dateNow())
 
 
 
     pub def eraOf(x: IsoChronology, i: Int32): IsoEra =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.eraOf(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.eraOf(i) })
 
 
     pub def eras(x: IsoChronology): List[IsoEra] =
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
-            AdaptorExtras.Collection.toList(jiter, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix)
+            Collection.toList(jiter, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix)
         })
 
     pub def getId(x: IsoChronology): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getId() })
 
 }

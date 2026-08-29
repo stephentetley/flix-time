@@ -17,8 +17,9 @@
 
 pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
 
-    use JavaInterop.AdaptorExtras
-
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorUnchecked
+    use JavaInterop.AdaptorChecked
 
     use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition
     use InteropTime.DayOfWeek.DayOfWeek
@@ -119,74 +120,75 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
                                         timeDefinition: {timeDefinition = TimeDefinition},
                                         standardOffset: {standardOffset = ZoneOffset}, 
                                         offsetBefore: {offsetBefore = ZoneOffset},
-                                        offsetAfter: {offsetAfter = ZoneOffset}): Result[String, ZoneOffsetTransitionRule] =
-        try {
-            let month1 = ToJava.toJava(month#month);
-            let dayOfWeek1 = ToJava.toJava(dayOfWeek#dayOfWeek);
-            let LocalTime(time1) = time#time;
-            let ZoneOffset(standardOffset1) = standardOffset#standardOffset;
-            let ZoneOffset(offsetBefore1) = offsetBefore#offsetBefore;
-            let ZoneOffset(offsetAfter1) = offsetAfter#offsetAfter;
-            ZoneOffsetTransitionRule(unsafe IO { JZoneOffsetTransitionRule.of(month1,
+                                        offsetAfter: {offsetAfter = ZoneOffset}): ZoneOffsetTransitionRule \ Fail =
+            AdaptorChecked.op7(
+                month#month,
+                dayOfWeek#dayOfWeek,
+                time#time, 
+                timeDefinition#timeDefinition,
+                standardOffset#standardOffset, 
+                offsetBefore#offsetBefore, 
+                offsetAfter#offsetAfter, 
+                (month1, dayOfWeek1, time1, timeDefinition1, standardOffset1, offsetBefore1, offsetAfter1) -> 
+                    unsafe IO { JZoneOffsetTransitionRule.of(month1,
                                                     dayOfMonthIndicator#dayOfMonthIndicator,
                                                     dayOfWeek1,
                                                     time1,
                                                     timeEndOfDay#timeEndOfDay,
-                                                    ToJava.toJava(timeDefinition#timeDefinition),
+                                                    timeDefinition1,
                                                     standardOffset1,
                                                     offsetBefore1,
                                                     offsetAfter1
-                                                )}) |> Ok
-        } catch {
-            case e: JException => Err(e.getMessage())
-        }
+                                                )
+                })
+        
 
 
     pub def createDateTime(ldt: LocalDateTime, 
                             standardOffset: {standardOffset = ZoneOffset}, 
                             wallOffset: {wallOffset = ZoneOffset},
                             x: TimeDefinition): LocalDateTime = 
-        AdaptorExtras.op4(ldt, standardOffset#standardOffset, wallOffset#wallOffset, x, 
+        AdaptorUnchecked.op4(ldt, standardOffset#standardOffset, wallOffset#wallOffset, x, 
                             (ldt1, standardOffset1, wallOffset1, x1) ->
             unsafe IO { x1.createDateTime(ldt1, standardOffset1, wallOffset1) }
         )
 
     pub def createTransition(year: Int32, x: ZoneOffsetTransitionRule): ZoneOffsetTransition  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.createTransition(year) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.createTransition(year) })
 
 
 
     pub def getDayOfMonthIndicator(x: ZoneOffsetTransitionRule): Int32  = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfMonthIndicator() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getDayOfMonthIndicator() })
 
     pub def getDayOfWeek(x: ZoneOffsetTransitionRule): DayOfWeek  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDayOfWeek() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getDayOfWeek() })
 
 
     pub def getLocalTime(x: ZoneOffsetTransitionRule): LocalTime  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getLocalTime() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getLocalTime() })
 
     pub def getMonth(x: ZoneOffsetTransitionRule): Month  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getMonth() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getMonth() })
 
 
     pub def getOffsetAfter(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetAfter() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getOffsetAfter() })
 
     pub def getOffsetBefore(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffsetBefore() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getOffsetBefore() })
 
     pub def getStandardOffset(x: ZoneOffsetTransitionRule): ZoneOffset  = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getStandardOffset() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getStandardOffset() })
 
     pub def getTimeDefinition(x: ZoneOffsetTransitionRule): TimeDefinition =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getTimeDefinition() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getTimeDefinition() })
 
 
     /// predicates / comparisons
     
     pub def isMidnightEndOfDay(x: ZoneOffsetTransitionRule): Bool  = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isMidnightEndOfDay() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isMidnightEndOfDay() })
 
 
 

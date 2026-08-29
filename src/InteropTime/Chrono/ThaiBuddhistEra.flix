@@ -18,7 +18,7 @@
 pub mod InteropTime.Chrono.ThaiBuddhistEra {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Temporal.ChronoField.ChronoField
@@ -61,17 +61,17 @@ pub mod InteropTime.Chrono.ThaiBuddhistEra {
     }
 
     pub def getValue(x: ThaiBuddhistEra): Int32 = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getValue() })
 
 
 
     //
     pub def getDisplayName(style: TextStyle, locale: Locale, x: ThaiBuddhistEra): String = 
-        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) -> unsafe IO { x1.getDisplayName(style1, locale1) })
+        AdaptorUnchecked.extract3(style, locale, x, (style1, locale1, x1) -> unsafe IO { x1.getDisplayName(style1, locale1) })
         
     // Note only ERA is a valid field, suggests we should provide `rangeEra` instead...
     pub def rangeEra(x: ThaiBuddhistEra): ValueRange = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.range(JChronoField.ERA) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.range(JChronoField.ERA) })
 
 
 }

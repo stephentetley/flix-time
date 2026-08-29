@@ -18,7 +18,7 @@
 pub mod InteropTime.Chrono.MinguoDate {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.MinguoChronology.MinguoChronology
     use InteropTime.Chrono.MinguoEra.MinguoEra
@@ -80,19 +80,19 @@ pub mod InteropTime.Chrono.MinguoDate {
 
 
     pub def toLocalDate(x: MinguoDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
     pub def fromLocalDate(x: LocalDate): MinguoDate = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): MinguoDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
 
     pub def getChronology(x: MinguoDate): MinguoChronology = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getChronology() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
 
     pub def getEra(x: MinguoDate): MinguoEra = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getEra() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })
 
 
     // pub def getDayOfWeek(x: MinguoDate): Int32 = 

@@ -19,17 +19,20 @@
 pub mod InteropTime.ZoneId {
 
     use EffectExtras.Fail.Fail
-
-    use JavaInterop.AdaptorExtras
-    use JavaInterop.AdaptorExtras2
+    use JavaInterop.AdaptorExtras.Collection
+    use JavaInterop.AdaptorChecked
+    use JavaInterop.AdaptorUnchecked
+    
+    use InteropLocale.Locale
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Zone.ZoneRules.ZoneRules
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.OffsetTime.OffsetTime
+    use InteropTime.ZoneId
     use InteropTime.ZoneOffset.ZoneOffset
     use InteropTime.ZonedDateTime.ZonedDateTime
-    use InteropLocale.Locale.Locale
+    
     
     import java.time.{ZoneId => JZoneId}
     import java.time.{ZoneOffset => JZoneOffset}
@@ -81,13 +84,13 @@ pub mod InteropTime.ZoneId {
     /// Constructors
 
     pub def zoneId(zone: {zone = String}): ZoneId \ Fail =
-        AdaptorExtras2.of(() -> unsafe IO { JZoneId.of(zone#zone) })
+        AdaptorChecked.of(() -> unsafe IO { JZoneId.of(zone#zone) })
 
     /// Ideally not in IO...
     pub def zoneIdWithAliases(zone: {zone = String}, 
-                                aliases: Map[String, String]): Result[String, ZoneId] =
-        AdaptorExtras.ofWithResult(() -> {
-            let jmap = JavaInterop.AdaptorExtras.Collection.toJMap(aliases, identity, identity);
+                                aliases: Map[String, String]): ZoneId \ Fail =
+        AdaptorChecked.of(() -> {
+            let jmap = Collection.toJMap(aliases, identity, identity);
             unsafe IO { JZoneId.of(zone#zone, jmap) }
         })
 
@@ -97,7 +100,7 @@ pub mod InteropTime.ZoneId {
     pub def utc(): ZoneId \ Fail = zoneId(zone = "Z")
 
     pub def systemDefault(): ZoneId \ IO  + Fail =
-        AdaptorExtras2.of(() -> JZoneId.systemDefault())
+        AdaptorChecked.of(() -> JZoneId.systemDefault())
 
 
 
@@ -106,7 +109,7 @@ pub mod InteropTime.ZoneId {
     pub def fromOffset(prefix: {prefix = Option[String]}, 
                         offset: ZoneOffset): ZoneId =
         let prefix1 = Option.getWithDefault("", prefix#prefix);
-        AdaptorExtras.op(offset, offset1 -> unsafe IO { JZoneId.ofOffset(prefix1, offset1) })
+        AdaptorUnchecked.op(offset, offset1 -> unsafe IO { JZoneId.ofOffset(prefix1, offset1) })
 
 
     /// ZoneId functions
@@ -121,7 +124,7 @@ pub mod InteropTime.ZoneId {
         }
 
     pub def getDisplayName(style: TextStyle, locale: Locale, zone: ZoneId): String =
-        AdaptorExtras.extract3(style, locale, zone, (style1, locale1, zone1) -> 
+        AdaptorUnchecked.extract3(style, locale, zone, (style1, locale1, zone1) -> 
             unsafe IO { zone1.getDisplayName(style1, locale1) }
         )
 
@@ -129,14 +132,14 @@ pub mod InteropTime.ZoneId {
     /// Returns the unique ID of the time zone.
     ///
     pub def getId(x: ZoneId): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getId() })
 
     ///
     pub def getRules(x: ZoneId): Option[ZoneRules] =
-        AdaptorExtras.opWithOption(x, x1 -> unsafe IO { x1.getRules() })
+        AdaptorUnchecked.opWithOption(x, x1 -> unsafe IO { x1.getRules() })
 
     pub def normalized(x: ZoneId): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.normalized() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.normalized() })
 
 
 }

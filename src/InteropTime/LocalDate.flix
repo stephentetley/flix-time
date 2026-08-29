@@ -18,7 +18,7 @@
 pub mod InteropTime.LocalDate {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -134,7 +134,7 @@ pub mod InteropTime.LocalDate {
         type Formatter = DateFormatter
         type Aef = {}
         pub def parse(formatter: DateFormatter, s: String): Result[String, LocalDate] = 
-            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JLocalDate.parse(s1, formatter1) }
             })
@@ -153,7 +153,7 @@ pub mod InteropTime.LocalDate {
                                 month: {month = Month}, 
                                 dayOfMonth: {dayOfMonth = Int32}): LocalDate =
         
-        AdaptorExtras.op(month#month, month1 -> 
+        AdaptorUnchecked.op(month#month, month1 -> 
             unsafe IO { JLocalDate.of(year#year, month1, dayOfMonth#dayOfMonth) }
         )
 
@@ -168,7 +168,7 @@ pub mod InteropTime.LocalDate {
     /// Returns the current date from the system clock using zoneId.
     ///
     pub def nowWithZoneId(zone: ZoneId): LocalDate \ IO =
-        AdaptorExtras.op(zone, zone1 -> JLocalDate.now(zone1))
+        AdaptorUnchecked.op(zone, zone1 -> JLocalDate.now(zone1))
 
     ///
     /// ___
@@ -178,24 +178,24 @@ pub mod InteropTime.LocalDate {
     /// `at` functions
 
     pub def atStartOfDay(x: LocalDate): LocalDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.atStartOfDay() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.atStartOfDay() })
 
     pub def atStartOfDayWithZoneId(x: LocalDate, zone: ZoneId): ZonedDateTime =
-        AdaptorExtras.op2(x, zone, (x1, zone1) -> unsafe IO { x1.atStartOfDay(zone1) })
+        AdaptorUnchecked.op2(x, zone, (x1, zone1) -> unsafe IO { x1.atStartOfDay(zone1) })
 
     pub def atTimeWithLocalTime(x: LocalDate, t: LocalTime): LocalDateTime =
-        AdaptorExtras.op2(x, t, (x1, t1) -> unsafe IO { x1.atTime(t1) })
+        AdaptorUnchecked.op2(x, t, (x1, t1) -> unsafe IO { x1.atTime(t1) })
 
     pub def atTimeWithOffsetTime(x: LocalDate, t: OffsetTime): OffsetDateTime =
-        AdaptorExtras.op2(x, t, (x1, t1) -> unsafe IO { x1.atTime(t1) })
+        AdaptorUnchecked.op2(x, t, (x1, t1) -> unsafe IO { x1.atTime(t1) })
 
     /// ## `from` functions
 
     pub def ofInstant(zone: ZoneId, x: InstantZ): LocalDate =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { JLocalDate.ofInstant(x1, zone1) })
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> unsafe IO { JLocalDate.ofInstant(x1, zone1) })
 
     pub def ofEpochDay(x: Int64): LocalDate =
-        AdaptorExtras.of(() -> unsafe IO { JLocalDate.ofEpochDay(x) })
+        AdaptorUnchecked.of(() -> unsafe IO { JLocalDate.ofEpochDay(x) })
 
 
     ///  `fromTemporalAccessor` specialized
@@ -206,22 +206,22 @@ pub mod InteropTime.LocalDate {
     /// toX functions
 
     pub def toEpochDay(x: LocalDate): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
 
     pub def toDayOfWeek(x: LocalDate): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
     pub def toMonth(x: LocalDate): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     pub def toMonthDay(x: LocalDate): MonthDay =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
     
     pub def toYear(x: LocalDate): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JYear.$from(x1) })
     
     pub def toYearMonth(x: LocalDateTime): YearMonth =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYearMonth.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JYearMonth.$from(x1) })
     
     /// predicates / comparisons
 
@@ -229,25 +229,25 @@ pub mod InteropTime.LocalDate {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: LocalDate, y: LocalDate): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: LocalDate, y: LocalDate): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
 
     pub def isLeapYear(x: LocalDate): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isLeapYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear() })
 
     // LocalDate functions
 
     pub def lengthOfMonth(x: LocalDate): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.lengthOfMonth() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.lengthOfMonth() })
 
     pub def lengthOfYear(x: LocalDate): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.lengthOfYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.lengthOfYear() })
 
 
     // pub def datesUntil(rc: Region[r], s: LocalDate, e: LocalDate): Iterator[LocalDate, r, r] = 
@@ -278,39 +278,39 @@ pub mod InteropTime.LocalDate {
     // Getters and Setters
 
     pub def getDayOfMonth(x: LocalDate): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfMonth() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getDayOfMonth() })
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withDayOfMonth(dayOfMonth) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withDayOfMonth(dayOfMonth) })
 
 
     pub def getDayOfYear(x: LocalDate): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getDayOfYear() })
 
     pub def withDayOfYear(dayOfYear: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withDayOfYear(dayOfYear) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withDayOfYear(dayOfYear) })
 
 
     pub def withMonth(month: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
 
     pub def getYear(x: LocalDate): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getYear() })
 
     pub def withYear(year: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withYear(year) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withYear(year) })
 
 
     pub def getDayOfWeek(x: LocalDate): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDayOfWeek() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getDayOfWeek() })
 
 
     pub def getMonth(x: LocalDate): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getMonth() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getMonth() })
 
 
     pub def getMonthValue(x: LocalDate): Int32 =
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let m1 = unsafe IO { x1.getMonth() };
             unsafe IO { m1.getValue() }
         })
@@ -320,28 +320,28 @@ pub mod InteropTime.LocalDate {
     /// Get / Set Iso
     
     pub def getDayOfQuarter(x: LocalDate): Int64 = 
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.getLong(JIsoFields.DAY_OF_QUARTER) }
         )
 
 
     pub def withDayOfQuarter(d: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.$with(JIsoFields.DAY_OF_QUARTER, Int32.toInt64(d)) }
         )
 
     pub def getQuarterOfYear(x: LocalDate): Int64 =  
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.getLong(JIsoFields.QUARTER_OF_YEAR) }
         )
 
     pub def withQuarterOfYear(d: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.$with(JIsoFields.QUARTER_OF_YEAR, Int32.toInt64(d)) }
         )
 
     pub def getWeekOfYear(x: LocalDate): Int64 = 
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let weekFields = unsafe IO { JWeekFields.ISO };
             let field: JTemporalField = unsafe IO { weekFields.weekBasedYear() };
             unsafe IO { x1.getLong(field) }
@@ -349,7 +349,7 @@ pub mod InteropTime.LocalDate {
 
 
     pub def withWeekOfYear(d: Int32, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> {
+        AdaptorUnchecked.op(x, x1 -> {
             let weekFields = unsafe IO { JWeekFields.ISO };
             let field = unsafe IO { weekFields.weekBasedYear() };
             unsafe IO { x1.$with(field, Int32.toInt64(d)) }
@@ -357,7 +357,7 @@ pub mod InteropTime.LocalDate {
 
 
     pub def getAlignedDayOfWeekInMonth(x: LocalDate): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let field = unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH };
             let field1: JTemporalField = checked_cast(field);
             unsafe IO { x1.getLong(field1) }
@@ -365,7 +365,7 @@ pub mod InteropTime.LocalDate {
         
     
     pub def getAlignedDayOfWeekInYear(x: LocalDate): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let field = unsafe IO { JChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR };
             let field1: JTemporalField = checked_cast(field);
             unsafe IO { x1.getLong(field1) }
@@ -373,7 +373,7 @@ pub mod InteropTime.LocalDate {
 
 
     pub def getAlignedWeekOfMonth(x: LocalDate): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let field = unsafe IO { JChronoField.ALIGNED_WEEK_OF_MONTH };
             let field1: JTemporalField = checked_cast(field);
             unsafe IO { x1.getLong(field1) }
@@ -381,7 +381,7 @@ pub mod InteropTime.LocalDate {
 
 
     pub def getAlignedWeekOfYear(x: LocalDate): Int64 =
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let field = unsafe IO { JChronoField.ALIGNED_WEEK_OF_YEAR };
             let field1: JTemporalField = checked_cast(field);
             unsafe IO { x1.getLong(field1) }
@@ -389,59 +389,59 @@ pub mod InteropTime.LocalDate {
 
 
     pub def getEra(x: LocalDate): Int64 =
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.getLong(JChronoField.ERA) }
         )
 
     pub def adjustMonthDay(md: MonthDay, x: LocalDate): LocalDate =
-        AdaptorExtras.op2(md, x, (md1, x1) -> unsafe IO { x1.$with(md1) })
+        AdaptorUnchecked.op2(md, x, (md1, x1) -> unsafe IO { x1.$with(md1) })
 
 
     pub def adjustYearMonth(ym: YearMonth, x: LocalDate): LocalDate =
-        AdaptorExtras.op2(ym, x, (ym1, x1) -> unsafe IO { x1.$with(ym1) })
+        AdaptorUnchecked.op2(ym, x, (ym1, x1) -> unsafe IO { x1.$with(ym1) })
 
 
     pub def withEpochDay(i: Int64, x: LocalDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.$with(JChronoField.EPOCH_DAY, i) }
         )
 
     /// DayOfWeek methods
 
     pub def adjustDayOfWeek(x: DayOfWeek, ld: LocalDate): LocalDate = 
-        AdaptorExtras.op2(x, ld, (x1, ld1) -> {
+        AdaptorUnchecked.op2(x, ld, (x1, ld1) -> {
             let d1 = unsafe IO { x1.adjustInto(ld1) };
             unchecked_cast(d1 as JLocalDate)
         })
 
     
     pub def adjustToFirstDayOfMonth(x: LocalDate): LocalDate = 
-        AdaptorExtras.op(x, x1 -> {
+        AdaptorUnchecked.op(x, x1 -> {
             let d1 = unsafe IO { JTemporalAdjusters.firstDayOfMonth() };
             unsafe IO { x1.$with(d1) }
         })
 
     pub def adjustToFirstDayOfNextMonth(x: LocalDate): LocalDate = 
-        AdaptorExtras.op(x, x1 -> {
+        AdaptorUnchecked.op(x, x1 -> {
             let d1 = unsafe IO { JTemporalAdjusters.firstDayOfNextMonth() };
             unsafe IO { x1.$with(d1) }
         })
 
     pub def adjustToFirstDayOfNextYear(x: LocalDate): LocalDate = 
-        AdaptorExtras.op(x, x1 -> {
+        AdaptorUnchecked.op(x, x1 -> {
             let d1 = unsafe IO { JTemporalAdjusters.firstDayOfNextYear() };
             unsafe IO { x1.$with(d1) }
         })
 
     pub def adjustToLastDayOfMonth(x: LocalDate): LocalDate =  
-        AdaptorExtras.op(x, x1 -> {
+        AdaptorUnchecked.op(x, x1 -> {
             let d1 = unsafe IO { JTemporalAdjusters.lastDayOfMonth() };
             unsafe IO { x1.$with(d1) }
         })
 
 
     pub def adjustToLastDayOfYear(x: LocalDate): LocalDate =  
-        AdaptorExtras.op(x, x1 -> {
+        AdaptorUnchecked.op(x, x1 -> {
             let d1 = unsafe IO { JTemporalAdjusters.lastDayOfYear() };
             unsafe IO { x1.$with(d1) }
         })
@@ -450,60 +450,60 @@ pub mod InteropTime.LocalDate {
     /// plus / minus functions
 
     pub def plusYears(x: LocalDate, years: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusYears(years) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusYears(years) })
 
     pub def minusYears(x: LocalDate, years: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusYears(years) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusYears(years) })
 
     pub def plusMonths(x: LocalDate, months: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMonths(months) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusMonths(months) })
 
     pub def minusMonths(x: LocalDate, months: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMonths(months) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusMonths(months) })
 
     pub def plusWeeks(x: LocalDate, weeks: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusWeeks(weeks) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusWeeks(weeks) })
 
     pub def minusWeeks(x: LocalDate, weeks: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusWeeks(weeks) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusWeeks(weeks) })
 
     pub def plusDays(x: LocalDate, days: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusDays(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusDays(days) })
 
     pub def minusDays(x: LocalDate, days: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusDays(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusDays(days) })
 
 
     pub def plusDecades(x: LocalDate, i: Int64): LocalDate =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.plus(i, JChronoUnit.DECADES) }
         )
 
 
     pub def minusDecades(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.minus(i, JChronoUnit.DECADES) }
         )
 
     pub def plusCenturies(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.plus(i, JChronoUnit.CENTURIES) }
         )
 
 
     pub def minusCenturies(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.minus(i, JChronoUnit.CENTURIES) }
         )
 
 
     pub def plusMillenia(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.plus(i, JChronoUnit.MILLENNIA) }
         )
 
     pub def minusMillenia(x: LocalDate, i: Int64): LocalDate = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.minus(i, JChronoUnit.MILLENNIA) }
         )
 
@@ -511,13 +511,13 @@ pub mod InteropTime.LocalDate {
     // Period methods
 
     pub def plusPeriod(x: LocalDate, p: Period): LocalDate =
-        AdaptorExtras.op2(x, p, (x1, p1) -> {
+        AdaptorUnchecked.op2(x, p, (x1, p1) -> {
             let t1 = unsafe IO { p1.addTo(x1) };
             unchecked_cast(t1 as JLocalDate)
         })  
     
     pub def minusPeriod(x: LocalDate, p: Period): LocalDate =
-        AdaptorExtras.op2(x, p, (x1, p1) -> {
+        AdaptorUnchecked.op2(x, p, (x1, p1) -> {
             let t1 = unsafe IO { p1.subtractFrom(x1) };
             unchecked_cast(t1 as JLocalDate)
         })
@@ -525,22 +525,22 @@ pub mod InteropTime.LocalDate {
     // between / until functions
 
     pub def daysUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) ->
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) ->
             unsafe IO { begin1.until(end1, JChronoUnit.DAYS) }
         )
 
     pub def monthsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { begin1.until(end1, JChronoUnit.MONTHS) }
         )
 
     pub def yearsUntil(begin: {begin = LocalDate}, end: {end = LocalDate}): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { begin1.until(end1, JChronoUnit.YEARS) }
         )
 
     pub def quarterYearsUntil(begin: {begin = LocalDate }, end: {end = LocalDate }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { begin1.until(end1, JIsoFields.QUARTER_YEARS) }
         )
 

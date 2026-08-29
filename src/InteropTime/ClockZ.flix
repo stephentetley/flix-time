@@ -19,7 +19,7 @@
 pub mod InteropTime.ClockZ {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.DurationZ.DurationZ
     use InteropTime.InstantZ.InstantZ
@@ -53,32 +53,32 @@ pub mod InteropTime.ClockZ {
 
     /// Pure or Impure? 
     pub def fixedClock(inst: InstantZ, zone: ZoneId): ClockZ \ IO =
-        AdaptorExtras.op2(inst, zone, (inst1, zone1) -> { JClock.fixed(inst1, zone1) })
+        AdaptorUnchecked.op2(inst, zone, (inst1, zone1) -> { JClock.fixed(inst1, zone1) })
         
     pub def systemClock(zone: ZoneId): ClockZ \ IO =
-        AdaptorExtras.op(zone, zone1 -> { JClock.system(zone1) })
+        AdaptorUnchecked.op(zone, zone1 -> { JClock.system(zone1) })
 
     pub def systemClockDefaultZone(): ClockZ \ IO = 
-        AdaptorExtras.of(() -> { JClock.systemDefaultZone() })
+        AdaptorUnchecked.of(() -> { JClock.systemDefaultZone() })
 
     pub def systemClockUTC(): ClockZ \ IO = 
-        AdaptorExtras.of(() -> { JClock.systemUTC() })
+        AdaptorUnchecked.of(() -> { JClock.systemUTC() })
 
     pub def offset(d: DurationZ, c: ClockZ): ClockZ \ IO =
-        AdaptorExtras.op2(d, c, (d1, c1) -> { JClock.offset(c1, d1) })
+        AdaptorUnchecked.op2(d, c, (d1, c1) -> { JClock.offset(c1, d1) })
 
     pub def tick(d: DurationZ, c: ClockZ): ClockZ \ IO =
-        AdaptorExtras.op2(d, c, (d1, c1) -> { JClock.tick(c1, d1) })
+        AdaptorUnchecked.op2(d, c, (d1, c1) -> { JClock.tick(c1, d1) })
 
 
     pub def tickMillis(zone: ZoneId): ClockZ \ IO =
-        AdaptorExtras.op(zone, zone1 -> { JClock.tickMillis(zone1) })
+        AdaptorUnchecked.op(zone, zone1 -> { JClock.tickMillis(zone1) })
 
     pub def tickSeconds(zone: ZoneId): ClockZ \ IO =
-        AdaptorExtras.op(zone, zone1 -> { JClock.tickSeconds(zone1) })
+        AdaptorUnchecked.op(zone, zone1 -> { JClock.tickSeconds(zone1) })
 
     pub def tickMinutes(zone: ZoneId): ClockZ \ IO =
-        AdaptorExtras.op(zone, zone1 -> { JClock.tickMinutes(zone1) })
+        AdaptorUnchecked.op(zone, zone1 -> { JClock.tickMinutes(zone1) })
 
     /// Clock functions
 
@@ -87,13 +87,13 @@ pub mod InteropTime.ClockZ {
     /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
     ///
     pub def toString(x: ClockZ): String \ IO =
-        AdaptorExtras.extract(x, x1 -> { x1.toString() })
+        AdaptorUnchecked.extract(x, x1 -> { x1.toString() })
 
     pub def millis(x: ClockZ): Int64 \ IO =
-        AdaptorExtras.extract(x, x1 -> { x1.millis() })
+        AdaptorUnchecked.extract(x, x1 -> { x1.millis() })
 
     pub def instant(x: ClockZ): InstantZ \ IO =
-        AdaptorExtras.op(x, x1 -> { x1.instant() })
+        AdaptorUnchecked.op(x, x1 -> { x1.instant() })
 
 
     // Getters and Setters (getZone and withZone are abstract in Java)

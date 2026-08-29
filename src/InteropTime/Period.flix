@@ -17,7 +17,7 @@
 
 pub mod InteropTime.Period {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.LocalDate.LocalDate
     
@@ -134,7 +134,7 @@ pub mod InteropTime.Period {
     /// The period of zero.
     ///
     pub def zero(): Period = 
-        AdaptorExtras.of(() -> unsafe IO { JPeriod.ZERO })
+        AdaptorUnchecked.of(() -> unsafe IO { JPeriod.ZERO })
 
 
     /// `of` functions
@@ -154,81 +154,81 @@ pub mod InteropTime.Period {
     /// toX functions
 
     pub def toTotalMonths(x: Period): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toTotalMonths() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toTotalMonths() })
 
     /// `parse` / `format` functions        
 
     pub def parse(s: String): Result[String, Period] =
-        AdaptorExtras.ofWithResult(() -> {
+        AdaptorUnchecked.ofWithResult(() -> {
             let s1 = String.trim(s);
             unsafe IO { JPeriod.parse(s1) }
         })
 
     /// Note - alias of `toString`
     pub def format(x: Period): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toString() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toString() })
 
     /// predicates / comparisons
 
     pub def isZero(x: Period): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isZero() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isZero() })
 
     pub def isPositive(x: Period): Bool =
         not isNegative(x)
 
     pub def isNegative(x: Period): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isNegative() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isNegative() })
 
     /// Period functions
     
     pub def normalized(x: Period): Period =
-        AdaptorExtras.op(x, x1 ->  unsafe IO { x1.normalized() })
+        AdaptorUnchecked.op(x, x1 ->  unsafe IO { x1.normalized() })
 
     /// Getters and Setters
 
     pub def getYears(x: Period): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getYears() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getYears() })
 
     pub def withYears(years: Int32, x: Period): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withYears(years) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withYears(years) })
 
     pub def getMonths(x: Period): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getMonths() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getMonths() })
 
     pub def withMonths(months: Int32, x: Period): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withMonths(months) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withMonths(months) })
 
     pub def getDays(x: Period): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDays() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getDays() })
 
     pub def withDays(days: Int32, x: Period): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withDays(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withDays(days) })
 
 
     /// plus / minus functions
 
     pub def plusYears(x: Period, years: Int64): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusYears(years) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusYears(years) })
 
     pub def minusYears(x: Period, years: Int64): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusYears(years) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusYears(years) })
 
     pub def plusMonths(x: Period, months: Int64): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMonths(months) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusMonths(months) })
 
     pub def minusMonths(x: Period, months: Int64): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMonths(months) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusMonths(months) })
 
     pub def plusDays(x: Period, days: Int64): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusDays(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusDays(days) })
 
     pub def minusDays(x: Period, days: Int64): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusDays(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusDays(days) })
 
    /// multiply / divide functions
 
     pub def multipliedBy(x: Period, y: Int32): Period =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.multipliedBy(y) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.multipliedBy(y) })
 
     // No `dividedBy` in java.time.Period
 
@@ -236,7 +236,7 @@ pub mod InteropTime.Period {
 
     /// Note returns Period as LocalDate has no time component
     pub def between(begin: {begin = LocalDate}, end: {end = LocalDate}): Period =
-        AdaptorExtras.op2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.op2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { JPeriod.between(begin1, end1) }
         )
 

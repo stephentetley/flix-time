@@ -17,7 +17,7 @@
 
 pub mod InteropTime.Format.TextStyle {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     import java.time.format.{TextStyle => JTextStyle}
 
@@ -62,15 +62,15 @@ pub mod InteropTime.Format.TextStyle {
     /// predicates / comparisons
 
     pub def isStandalone(x: TextStyle): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isStandalone() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isStandalone() })
 
     // /// Getters and Setters
     
     pub def asStandalone(x: TextStyle): TextStyle =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.asStandalone() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.asStandalone() })
 
     pub def asNormal(x: TextStyle): TextStyle =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.asNormal() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.asNormal() })
 
     
 }

@@ -18,7 +18,7 @@
 pub mod InteropTime.ZoneOffset {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Zone.ZoneRules.ZoneRules
     use InteropTime.OffsetDateTime.OffsetDateTime
@@ -99,41 +99,41 @@ pub mod InteropTime.ZoneOffset {
     /// `of` functions
 
     pub def ofHours(hours: Int32): ZoneOffset =
-        AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofHours(hours) })
+        AdaptorUnchecked.of(() -> unsafe IO { JZoneOffset.ofHours(hours) })
 
     pub def ofHoursMinutes(hours: {hours = Int32}, 
                             minutes: {minutes = Int32}): ZoneOffset =
-        AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofHoursMinutes(hours#hours, minutes#minutes) })
+        AdaptorUnchecked.of(() -> unsafe IO { JZoneOffset.ofHoursMinutes(hours#hours, minutes#minutes) })
 
     pub def ofHoursMinutesSeconds(hours: {hours = Int32}, 
                                     minutes: {minutes = Int32}, 
                                     seconds: {seconds = Int32}): ZoneOffset =
-        AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofHoursMinutesSeconds(hours#hours, minutes#minutes, seconds#seconds) })
+        AdaptorUnchecked.of(() -> unsafe IO { JZoneOffset.ofHoursMinutesSeconds(hours#hours, minutes#minutes, seconds#seconds) })
 
     pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
-        AdaptorExtras.of(() -> unsafe IO { JZoneOffset.ofTotalSeconds(seconds) })
+        AdaptorUnchecked.of(() -> unsafe IO { JZoneOffset.ofTotalSeconds(seconds) })
 
 
     
     /// ZoneOffset functions
 
     pub def getId(x: ZoneOffset): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getId() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getId() })
 
     pub def getRules(x: ZoneOffset): ZoneRules =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getRules() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getRules() })
 
     pub def getTotalSeconds(x: ZoneOffset): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getTotalSeconds() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getTotalSeconds() })
 
 
     pub def getOffsetSeconds(x: ZoneOffset): Int32 =
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let field = unsafe IO { JChronoField.OFFSET_SECONDS };
             unsafe IO { x1.get(field) }
         })
 
     pub def getZoneId(x: ZoneOffset): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 }
 

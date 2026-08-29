@@ -17,7 +17,7 @@
 
 pub mod InteropTime.Chrono.MinguoEra {
     
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
 
@@ -59,12 +59,12 @@ pub mod InteropTime.Chrono.MinguoEra {
 
 
     pub def getValue(x: MinguoEra): Int32 = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getValue() })
 
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: MinguoEra): String = 
-        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) ->
+        AdaptorUnchecked.extract3(style, locale, x, (style1, locale1, x1) ->
             unsafe IO { x1.getDisplayName(style1, locale1) }
         )
 

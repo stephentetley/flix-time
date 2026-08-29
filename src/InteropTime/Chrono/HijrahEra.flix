@@ -19,7 +19,7 @@ pub mod InteropTime.Chrono.HijrahEra {
     
     use InteropLocale.Locale.Locale
     
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
     use InteropTime.Format.TextStyle.TextStyle
 
     
@@ -75,7 +75,7 @@ pub mod InteropTime.Chrono.HijrahEra {
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: HijrahEra): String =
-        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) ->
+        AdaptorUnchecked.extract3(style, locale, x, (style1, locale1, x1) ->
             unsafe IO { x1.getDisplayName(style1, locale1) }
         )
         

@@ -20,7 +20,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
     use EffectExtras.Fail.Fail
     use InteropLocale.Locale.Locale
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorExtras.Collection
 
     use InteropTime.ZoneId
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
@@ -198,7 +198,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             
             def appendZoneTextWithZoneIds(style, preferredZones, k) = {
                 let style1 = ToJava.toJava(style);
-                let jset: JSet[JZoneId] = AdaptorExtras.Collection.toJSet(preferredZones, ToJava.toJava);
+                let jset: JSet[JZoneId] = Collection.toJSet(preferredZones, ToJava.toJava);
                 unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1, jset) };
                 k()
             }

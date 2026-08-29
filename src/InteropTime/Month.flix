@@ -18,7 +18,7 @@
 pub mod InteropTime.Month {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
@@ -128,35 +128,35 @@ pub mod InteropTime.Month {
     /// Month functions
     
     pub def getDisplayName(style: TextStyle, locale: Locale, x: Month): String =
-        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) -> 
+        AdaptorUnchecked.extract3(style, locale, x, (style1, locale1, x1) -> 
             unsafe IO { x1.getDisplayName(style1, locale1) }
         )
 
     pub def getValue(x: Month): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getValue() })
 
     pub def firstDayOfYear(leap: Bool, x: Month): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.firstDayOfYear(leap) })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.firstDayOfYear(leap) })
 
     pub def firstMonthOfQuarter(x: Month): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.firstMonthOfQuarter() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.firstMonthOfQuarter() })
 
     pub def maxLength(x: Month): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.maxLength() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.maxLength() })
 
     pub def minLength(x: Month): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.minLength() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.minLength() })
 
     pub def length(leap: Bool, x: Month): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.length(leap) })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.length(leap) })
 
     // plus / minus functions
 
     pub def plusMonths(x: Month, y: Int64): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plus(y) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plus(y) })
 
     pub def minusMonths(x: Month, y: Int64): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minus(y) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minus(y) })
 
 }
 

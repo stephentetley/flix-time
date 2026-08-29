@@ -18,7 +18,7 @@
 pub mod InteropTime.Chrono.IsoEra {
     
     
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
     
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
@@ -60,7 +60,7 @@ pub mod InteropTime.Chrono.IsoEra {
     }
 
     pub def getValue(x: IsoEra): Int32 = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getValue() })
 
 
 
@@ -68,7 +68,7 @@ pub mod InteropTime.Chrono.IsoEra {
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: IsoEra): String =
-        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) -> 
+        AdaptorUnchecked.extract3(style, locale, x, (style1, locale1, x1) -> 
             unsafe IO { x1.getDisplayName(style1, locale1) }
         )
         

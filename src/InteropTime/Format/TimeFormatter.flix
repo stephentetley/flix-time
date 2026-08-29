@@ -19,7 +19,7 @@ pub mod InteropTime.Format.TimeFormatter {
 
     use InteropLocale.Locale
         
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
@@ -77,55 +77,55 @@ pub mod InteropTime.Format.TimeFormatter {
     /// Builtin Time Formatters
 
     pub def iso_local_time(): TimeFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_LOCAL_TIME })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_LOCAL_TIME })
 
     pub def iso_offset_time(): TimeFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_OFFSET_TIME })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_OFFSET_TIME })
 
     pub def basic_iso_time(): TimeFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_TIME })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_TIME })
 
     /// ## `from` functions
 
     pub def fromPattern(pattern: String): Result[String, TimeFormatter] =
-        AdaptorExtras.ofWithResult(() -> {
+        AdaptorUnchecked.ofWithResult(() -> {
             let s1 = String.trim(pattern);
             unsafe IO { JDateTimeFormatter.ofPattern(s1) }
         })
 
     // Varies according to system locale
     pub def fromLocalizedTime(style: FormatStyle): TimeFormatter \ IO =
-        AdaptorExtras.op(style, style1 -> { JDateTimeFormatter.ofLocalizedTime(style1) })
+        AdaptorUnchecked.op(style, style1 -> { JDateTimeFormatter.ofLocalizedTime(style1) })
 
 
 
     // /// ## Getters and Setters
 
     pub def getZone(x: TimeFormatter): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getZone() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getZone() })
 
     
     pub def withZone(zone: ZoneId, x: TimeFormatter): TimeFormatter =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { x1.$withZone(zone1) })
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> unsafe IO { x1.$withZone(zone1) })
 
 
     pub def getLocale(x: TimeFormatter): Locale \ IO =
-        AdaptorExtras.op(x, x1 -> { x1.getLocale() })
+        AdaptorUnchecked.op(x, x1 -> { x1.getLocale() })
 
     pub def withLocale(locale: Locale, x: TimeFormatter): TimeFormatter =
-        AdaptorExtras.op2(locale, x, (locale1, x1) -> unsafe IO { x1.$withLocale(locale1) })
+        AdaptorUnchecked.op2(locale, x, (locale1, x1) -> unsafe IO { x1.$withLocale(locale1) })
 
     pub def getDecimalStyle(x: TimeFormatter): DecimalStyle =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDecimalStyle() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getDecimalStyle() })
 
     pub def withDecimalStyle(style: DecimalStyle, x: TimeFormatter): TimeFormatter =
-        AdaptorExtras.op2(style, x, (style1, x1) -> unsafe IO { x1.$withDecimalStyle(style1) })
+        AdaptorUnchecked.op2(style, x, (style1, x1) -> unsafe IO { x1.$withDecimalStyle(style1) })
 
     pub def getResolverStyle(x: TimeFormatter): ResolverStyle =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getResolverStyle() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getResolverStyle() })
 
     pub def withResolverStyle(style: ResolverStyle, x: TimeFormatter): TimeFormatter =
-        AdaptorExtras.op2(style, x, (style1, x1) -> unsafe IO { x1.$withResolverStyle(style1) })
+        AdaptorUnchecked.op2(style, x, (style1, x1) -> unsafe IO { x1.$withResolverStyle(style1) })
 
 }
 

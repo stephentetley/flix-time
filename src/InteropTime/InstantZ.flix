@@ -21,7 +21,7 @@
 
 pub mod InteropTime.InstantZ {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.DurationZ.DurationZ
     use InteropTime.LocalDate
@@ -112,7 +112,7 @@ pub mod InteropTime.InstantZ {
 
     pub def instant(epochSecond: {epochSecond = Int64}, 
                     nano: {nano = Int64 }): InstantZ =
-        AdaptorExtras.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond#epochSecond, nano#nano) })
+        AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond#epochSecond, nano#nano) })
 
     /// `now` and "abstract constructors" (e.g. `epoch`)
 
@@ -133,54 +133,54 @@ pub mod InteropTime.InstantZ {
     /// `at` functions
 
     pub def atOffset(x: InstantZ, offset: ZoneOffset): OffsetDateTime =
-        AdaptorExtras.op2(x, offset, (x1, offset1) -> unsafe IO { x1.atOffset(offset1) })
+        AdaptorUnchecked.op2(x, offset, (x1, offset1) -> unsafe IO { x1.atOffset(offset1) })
 
     pub def atZone(x: InstantZ, zone: ZoneId): ZonedDateTime =
-        AdaptorExtras.op2(x, zone, (x1, zone1) -> unsafe IO { x1.atZone(zone1) })
+        AdaptorUnchecked.op2(x, zone, (x1, zone1) -> unsafe IO { x1.atZone(zone1) })
 
     /// `of` functions
 
     pub def ofEpochSecond(epochSecond: Int64): InstantZ =
-        AdaptorExtras.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond) })
+        AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond) })
 
 
     pub def ofEpochMilli(epochMilli: Int64): InstantZ =
-        AdaptorExtras.of(() -> unsafe IO { JInstant.ofEpochMilli(epochMilli) })
+        AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochMilli(epochMilli) })
 
 
 
     /// toX functions
 
     pub def toEpochMilli(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toEpochMilli() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochMilli() })
 
 
     pub def toLocalDateTime(zone: ZoneId, x: InstantZ): LocalDateTime =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JLocalDateTime.ofInstant(x1, zone1) }
         )
     
     pub def toLocalDate(zone: ZoneId, x: InstantZ): LocalDate =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JLocalDate.ofInstant(x1, zone1) }
         )
     
 
     pub def toOffsetTime(zone: ZoneId, x: InstantZ): OffsetTime =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JOffsetTime.ofInstant(x1, zone1) }
         )
 
     /// `parse` / `format` functions
 
     pub def parse(s: String): Result[String, InstantZ] =
-        AdaptorExtras.ofWithResult(() -> {
+        AdaptorUnchecked.ofWithResult(() -> {
             let s1 = String.trim(s);
             unsafe IO { JInstant.parse(s1) }
         })
 
     pub def format(x: InstantZ): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toString() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toString() })
 
 
     /// predicates / comparisons
@@ -189,137 +189,137 @@ pub mod InteropTime.InstantZ {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: InstantZ, y: InstantZ): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: InstantZ, y: InstantZ): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     
     /// Getters and Setters
 
     pub def getEpochSecond(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getEpochSecond() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getEpochSecond() })
 
     pub def getNano(x: InstantZ): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getNano() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getNano() })
 
 
     pub def getNanoOfSecond(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.getLong(JChronoField.NANO_OF_SECOND) }
         )
 
 
     pub def withNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.$with(JChronoField.NANO_OF_SECOND, i) }
         )
 
     pub def getMicroOfSecond(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.getLong(JChronoField.MICRO_OF_SECOND) }
         )
 
     pub def withMicroOfSecond(i: Int64, x: InstantZ): InstantZ =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.$with(JChronoField.MICRO_OF_SECOND, i) }
         )
 
     pub def getMilliOfSecond(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.getLong(JChronoField.MILLI_OF_SECOND) }
         )
 
     pub def withMilliOfSecond(i: Int64, x: InstantZ): InstantZ =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.$with(JChronoField.MILLI_OF_SECOND, i) }
         )
 
 
     pub def getInstantSeconds(x: InstantZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.getLong(JChronoField.INSTANT_SECONDS) }
         )
 
     pub def withInstantSeconds(i: Int64, x: InstantZ): InstantZ =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.$with(JChronoField.INSTANT_SECONDS, i) }
         )
 
     // `truncatedTo` specialized
 
     pub def truncatedToNanos(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.truncatedTo(JChronoUnit.NANOS) }
         )
 
 
     pub def truncatedToMicros(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.truncatedTo(JChronoUnit.MICROS) }
         )
 
     pub def truncatedToMillis(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.truncatedTo(JChronoUnit.MILLIS) }
         )
 
     pub def truncatedToSeconds(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.truncatedTo(JChronoUnit.SECONDS) }
         )
 
     pub def truncatedToMinutes(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.truncatedTo(JChronoUnit.MINUTES) }
         )
 
     pub def truncatedToHours(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.truncatedTo(JChronoUnit.HOURS) }
         )
 
     pub def truncatedToHalfDays(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.truncatedTo(JChronoUnit.HALF_DAYS) }
         )
 
 
     pub def truncatedToDays(x: InstantZ): InstantZ = 
-        AdaptorExtras.op(x, x1 ->
+        AdaptorUnchecked.op(x, x1 ->
             unsafe IO { x1.truncatedTo(JChronoUnit.DAYS) }
         )
 
     // plus / minus functions
 
     pub def plusSeconds(x: InstantZ, seconds: Int64): InstantZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusSeconds(seconds) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusSeconds(seconds) })
             
 
     pub def minusSeconds(x: InstantZ, seconds: Int64): InstantZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusSeconds(seconds) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusSeconds(seconds) })
 
     pub def plusMillis(x: InstantZ, millis: Int64): InstantZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMillis(millis) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusMillis(millis) })
 
     pub def minusMillis(x: InstantZ, millis: Int64): InstantZ =
-        AdaptorExtras.op(x, x1 ->  unsafe IO { x1.minusMillis(millis) })
+        AdaptorUnchecked.op(x, x1 ->  unsafe IO { x1.minusMillis(millis) })
 
     pub def plusNanos(x: InstantZ, nanos: Int64): InstantZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusNanos(nanos) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusNanos(nanos) })
 
 
     pub def plusDuration(x: InstantZ, d: DurationZ): InstantZ =
-        AdaptorExtras.op2(x, d, (x1, d1) -> {
+        AdaptorUnchecked.op2(x, d, (x1, d1) -> {
             let t1 = unsafe IO { d1.addTo(x1) };
             unchecked_cast(t1 as JInstant)
         })
     
     pub def minusDuration(x: InstantZ, d: DurationZ): InstantZ =
-        AdaptorExtras.op2(x, d, (x1, d1) -> {
+        AdaptorUnchecked.op2(x, d, (x1, d1) -> {
             let t1 = unsafe IO { d1.subtractFrom(x1) };
             unchecked_cast(t1 as JInstant)
         })
@@ -327,13 +327,13 @@ pub mod InteropTime.InstantZ {
     // Period methods
 
     pub def plusPeriod(x: InstantZ, p: Period): InstantZ =
-        AdaptorExtras.op2(x, p, (x1, p1) -> {
+        AdaptorUnchecked.op2(x, p, (x1, p1) -> {
             let t1 = unsafe IO { p1.addTo(x1) };
             unchecked_cast(t1 as JInstant)
         })
     
     pub def minusPeriod(x: InstantZ, p: Period): InstantZ =
-        AdaptorExtras.op2(x, p, (x1, p1) -> {
+        AdaptorUnchecked.op2(x, p, (x1, p1) -> {
             let t1 = unsafe IO { p1.subtractFrom(x1) };
             unchecked_cast(t1 as JInstant)
         })
@@ -342,51 +342,51 @@ pub mod InteropTime.InstantZ {
     // between / until functions
 
     pub def between(begin: {begin = InstantZ }, end: {end = InstantZ }): DurationZ =
-        AdaptorExtras.op2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.op2(begin#begin, end#end, (begin1, end1) -> {
            unsafe IO { JDuration.between(begin1, end1) }
         })
 
     // `until` specialized
 
     pub def nanosUntil(begin: {begin = InstantZ}, end: {end = InstantZ}): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.NANOS) }
         })
 
     pub def microsUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.MICROS) }
         })
         
 
     pub def millisUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.MILLIS) }
         })
 
     pub def secondsUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.SECONDS) }
         })
         
 
     pub def minutesUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.MINUTES) }
         })
 
     pub def hoursUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.HOURS) }
         })
 
     pub def halfDaysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.HALF_DAYS) }
         })
 
     pub def daysUntil(begin: {begin = InstantZ }, end: {end = InstantZ }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.DAYS) }
         })
 

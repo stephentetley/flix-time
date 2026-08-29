@@ -18,7 +18,7 @@
 pub mod InteropTime.Year {
 
     
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -112,7 +112,7 @@ pub mod InteropTime.Year {
         type Formatter = DateFormatter
         type Aef = {}
         pub def parse(formatter: DateFormatter, s: String): Result[String, Year] = 
-            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JYear.parse(s1, formatter1) }
             })
@@ -130,24 +130,24 @@ pub mod InteropTime.Year {
     pub def now(): Year \ IO = Year(JYear.now())
 
     pub def nowWithClock(x: ClockZ): Year \ IO =
-        AdaptorExtras.op(x, x1 -> JYear.now(x1))
+        AdaptorUnchecked.op(x, x1 -> JYear.now(x1))
 
     pub def nowWithZoneId(x: ZoneId): Year \ IO =
-        AdaptorExtras.op(x, x1 -> JYear.now(x1))
+        AdaptorUnchecked.op(x, x1 -> JYear.now(x1))
 
     /// `at` functions
 
     pub def atDay(x: Year, dayOfYear: Int32): Option[LocalDate] =
-        AdaptorExtras.opWithOption(x, x1 -> unsafe IO { x1.atDay(dayOfYear) })
+        AdaptorUnchecked.opWithOption(x, x1 -> unsafe IO { x1.atDay(dayOfYear) })
 
     pub def atMonth(x: Year, month: Int32): Option[YearMonth] =
-        AdaptorExtras.opWithOption(x, x1 -> unsafe IO { x1.atMonth(month) })
+        AdaptorUnchecked.opWithOption(x, x1 -> unsafe IO { x1.atMonth(month) })
 
     pub def atMonthWithMonth(x: Year, month: Month): YearMonth =
-        AdaptorExtras.op2(x, month, (x1, month1) -> unsafe IO { x1.atMonth(month1) })
+        AdaptorUnchecked.op2(x, month, (x1, month1) -> unsafe IO { x1.atMonth(month1) })
 
     pub def atMonthDay(x: Year, md: MonthDay): LocalDate =
-        AdaptorExtras.op2(x, md, (x1, md1) -> unsafe IO { x1.atMonthDay(md1) })
+        AdaptorUnchecked.op2(x, md, (x1, md1) -> unsafe IO { x1.atMonthDay(md1) })
 
 
 
@@ -157,19 +157,19 @@ pub mod InteropTime.Year {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: Year, y: Year): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: Year, y: Year): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeap(x: Year): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isLeap() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeap() })
 
     ///
     /// Returns `true` if `x` is a leap year.
@@ -181,7 +181,7 @@ pub mod InteropTime.Year {
     /// Returns `true` if _.
     ///
     pub def isValidMonthDay(md: MonthDay, x: Year): Bool =
-        AdaptorExtras.extract2(md, x, (md1, x1) -> unsafe IO { x1.isValidMonthDay(md1) })
+        AdaptorUnchecked.extract2(md, x, (md1, x1) -> unsafe IO { x1.isValidMonthDay(md1) })
 
 
     /// Year functions
@@ -190,7 +190,7 @@ pub mod InteropTime.Year {
     /// Returns _
     ///
     pub def length(x: Year): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.length() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.length() })
         
 
     /// plus / minus functions
@@ -199,13 +199,13 @@ pub mod InteropTime.Year {
     /// _
     ///
     pub def plusYears(x: Year, n: Int64): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusYears(n) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusYears(n) })
 
     ///
     /// _
     ///
     pub def minusYears(x: Year, n: Int64): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusYears(n) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusYears(n) })
 
 
     // between / until functions
@@ -213,17 +213,17 @@ pub mod InteropTime.Year {
     // TODO inlining the (Java) ChronoUnit looks fine, should we do it everywhere?
 
     pub def yearsUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { begin1.until(end1, JChronoUnit.YEARS) }
         )
 
     pub def decadesUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { begin1.until(end1, JChronoUnit.DECADES) }
         )
 
     pub def centuriesUntil(begin: {begin = Year}, end: {end = Year}): Int64 =
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { begin1.until(end1, JChronoUnit.CENTURIES) }
         )
 

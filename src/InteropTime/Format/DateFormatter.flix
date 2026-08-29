@@ -19,7 +19,7 @@ pub mod InteropTime.Format.DateFormatter {
 
     use InteropLocale.Locale
         
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
@@ -77,27 +77,27 @@ pub mod InteropTime.Format.DateFormatter {
     /// Builtin Date Formatters
 
     pub def basic_iso_date(): DateFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.BASIC_ISO_DATE })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.BASIC_ISO_DATE })
 
     pub def iso_local_date(): DateFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_LOCAL_DATE })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_LOCAL_DATE })
 
     pub def iso_offset_date(): DateFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_OFFSET_DATE })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_OFFSET_DATE })
 
     pub def iso_date(): DateFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_DATE })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_DATE })
 
     pub def iso_oridinal_date(): DateFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_ORDINAL_DATE })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_ORDINAL_DATE })
 
     pub def iso_week_date(): DateFormatter =
-        AdaptorExtras.of(() -> unsafe IO { JDateTimeFormatter.ISO_WEEK_DATE })
+        AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_WEEK_DATE })
 
     /// ## `from` functions
 
     pub def fromPattern(pattern: String): Result[String, DateFormatter] =
-        AdaptorExtras.ofWithResult(() -> {
+        AdaptorUnchecked.ofWithResult(() -> {
             let s1 = String.trim(pattern);
             unsafe IO { JDateTimeFormatter.ofPattern(s1) }
         })
@@ -105,35 +105,35 @@ pub mod InteropTime.Format.DateFormatter {
 
 
     pub def fromLocalizedDate(style: FormatStyle): DateFormatter \ IO =
-        AdaptorExtras.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDate(style1) })
+        AdaptorUnchecked.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDate(style1) })
 
     /// ## Getters and Setters
 
     pub def getZone(x: DateFormatter): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getZone() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getZone() })
 
     
     pub def withZone(zone: ZoneId, x: DateFormatter): DateFormatter =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> unsafe IO { x1.$withZone(zone1) })
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> unsafe IO { x1.$withZone(zone1) })
 
 
     pub def getLocale(x: DateFormatter): Locale \ IO =
-        AdaptorExtras.op(x, x1 -> { x1.getLocale() })
+        AdaptorUnchecked.op(x, x1 -> { x1.getLocale() })
 
     pub def withLocale(locale: Locale, x: DateFormatter): DateFormatter =
-        AdaptorExtras.op2(locale, x, (locale1, x1) -> unsafe IO { x1.$withLocale(locale1) })
+        AdaptorUnchecked.op2(locale, x, (locale1, x1) -> unsafe IO { x1.$withLocale(locale1) })
 
     pub def getDecimalStyle(x: DateFormatter): DecimalStyle =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDecimalStyle() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getDecimalStyle() })
 
     pub def withDecimalStyle(style: DecimalStyle, x: DateFormatter): DateFormatter =
-        AdaptorExtras.op2(style, x, (style1, x1) -> unsafe IO { x1.$withDecimalStyle(style1) })
+        AdaptorUnchecked.op2(style, x, (style1, x1) -> unsafe IO { x1.$withDecimalStyle(style1) })
 
     pub def getResolverStyle(x: DateFormatter): ResolverStyle =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getResolverStyle() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getResolverStyle() })
 
     pub def withResolverStyle(style: ResolverStyle, x: DateFormatter): DateFormatter =
-        AdaptorExtras.op2(style, x, (style1, x1) -> unsafe IO { x1.$withResolverStyle(style1) })
+        AdaptorUnchecked.op2(style, x, (style1, x1) -> unsafe IO { x1.$withResolverStyle(style1) })
 
 }
 

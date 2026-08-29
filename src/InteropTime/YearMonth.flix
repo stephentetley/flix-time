@@ -17,7 +17,7 @@
 
 pub mod InteropTime.YearMonth {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -113,7 +113,7 @@ pub mod InteropTime.YearMonth {
         type Formatter = DateFormatter
         type Aef = {}
         pub def parse(formatter: DateFormatter, s: String): Result[String, YearMonth] = 
-            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JYearMonth.parse(s1, formatter1) }
             })
@@ -126,7 +126,7 @@ pub mod InteropTime.YearMonth {
         YearMonth(ans)
 
     pub def yearMonthWithMonth(year: {year = Int32}, month: {month = Month}): YearMonth =
-        AdaptorExtras.op(month#month, month1 -> unsafe IO { JYearMonth.of(year#year, month1) })
+        AdaptorUnchecked.op(month#month, month1 -> unsafe IO { JYearMonth.of(year#year, month1) })
 
 
     /// `now` and "abstract constructors" if any
@@ -137,10 +137,10 @@ pub mod InteropTime.YearMonth {
     /// toX functions
     
     pub def toMonth(x: YearMonth): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     pub def toYear(x: YearMonth): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     /// predicates / comparisons
 
@@ -148,25 +148,25 @@ pub mod InteropTime.YearMonth {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: YearMonth, y: YearMonth): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: YearMonth, y: YearMonth): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isLeapYear(x: YearMonth): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isLeapYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear() })
 
     ///
     /// Returns `true` if `x` is a leap year.
     ///
     pub def isValidDay(x: YearMonth, dayOfMonth: Int32): Bool =
-        AdaptorExtras.extract(x, x1 ->  unsafe IO { x1.isValidDay(dayOfMonth) })
+        AdaptorUnchecked.extract(x, x1 ->  unsafe IO { x1.isValidDay(dayOfMonth) })
 
     /// YearMonth functions
 
@@ -174,60 +174,60 @@ pub mod InteropTime.YearMonth {
     /// Returns the length of the month.
     ///
     pub def lengthOfMonth(x: YearMonth): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.lengthOfMonth() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.lengthOfMonth() })
 
     ///
     /// Returns the length of the year.
     ///
     pub def lengthOfYear(x: YearMonth): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.lengthOfYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.lengthOfYear() })
 
     /// Getters and Setters
 
     pub def getMonth(x: YearMonth): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getMonth() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getMonth() })
 
     pub def withMonth(month: Month, x: YearMonth): YearMonth =
         yearMonthWithMonth(year = getYear(x), month = month)
 
     pub def getMonthValue(x: YearMonth): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getMonthValue() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getMonthValue() })
 
     pub def withMonthValue(month: Int32, x: YearMonth): YearMonth =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
 
     pub def getYear(x: YearMonth): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getYear() })
 
     pub def withYear(year: Int32, x: YearMonth): YearMonth =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withYear(year) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withYear(year) })
 
     /// plus / minus functions
 
     pub def plusMonths(x: YearMonth, months: Int64): YearMonth =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMonths(months) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusMonths(months) })
 
     pub def minusMonths(x: YearMonth, months: Int64): YearMonth =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMonths(months) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusMonths(months) })
 
     pub def plusYears(x: YearMonth, years: Int64): YearMonth =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusYears(years) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusYears(years) })
 
     pub def minusYears(x: YearMonth, years: Int64): YearMonth =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusYears(years) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusYears(years) })
 
 
 
     // between / until functions
 
     pub def monthsUntil(begin: {begin = YearMonth}, end: {end = YearMonth}): Int64 =
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { begin1.until(end1, JChronoUnit.MONTHS) }
         )
 
 
     pub def yearsUntil(begin: {begin = YearMonth}, end: {end = YearMonth}): Int64 =
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { begin1.until(end1, JChronoUnit.YEARS) }
         )
 

@@ -19,7 +19,7 @@
 pub mod InteropTime.MonthDay {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
     
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -109,7 +109,7 @@ pub mod InteropTime.MonthDay {
         type Formatter = DateFormatter
         type Aef = {}
         pub def parse(formatter: DateFormatter, s: String): Result[String, MonthDay] = 
-            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JMonthDay.parse(s1, formatter1) }
             })
@@ -124,7 +124,7 @@ pub mod InteropTime.MonthDay {
 
     pub def monthDayWithMonth(month: {month = Month}, 
                                 dayOfMonth: {dayOfMonth = Int32}): MonthDay =
-        AdaptorExtras.op(month#month, month1 -> 
+        AdaptorUnchecked.op(month#month, month1 -> 
             unsafe IO { JMonthDay.of(month1, dayOfMonth#dayOfMonth) }
         )
 
@@ -133,10 +133,10 @@ pub mod InteropTime.MonthDay {
     pub def now(): MonthDay \ IO = MonthDay(JMonthDay.now())
 
     pub def nowWithZoneId(x: ZoneId): MonthDay \ IO =
-        AdaptorExtras.op(x, x1 -> JMonthDay.now(x1))
+        AdaptorUnchecked.op(x, x1 -> JMonthDay.now(x1))
 
     pub def toMonth(x: MonthDay): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
 
     /// predicates / comparisons
@@ -145,42 +145,42 @@ pub mod InteropTime.MonthDay {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: MonthDay, y: MonthDay): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: MonthDay, y: MonthDay): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     ///
     /// Returns `true` if `year` is valid for the MonthDay `x`.
     ///
     pub def isValidYear(year: Int32, x: MonthDay): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isValidYear(year) })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isValidYear(year) })
         
 
     /// Getters and Setters
 
     pub def getDayOfMonth(x: MonthDay): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfMonth() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getDayOfMonth() })
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: MonthDay): MonthDay =
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.$withDayOfMonth(dayOfMonth) }
         )
 
     pub def getMonth(x: MonthDay): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getMonth() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getMonth() })
 
     pub def withMonth(month: Month, x: MonthDay): MonthDay =
-        AdaptorExtras.op2(month, x, (month1, x1) -> unsafe IO { x1.$with(month1) })
+        AdaptorUnchecked.op2(month, x, (month1, x1) -> unsafe IO { x1.$with(month1) })
 
     pub def getMonthValue(x: MonthDay): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getMonthValue() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getMonthValue() })
 
     pub def withMonthValue(month: Int32, x: MonthDay): MonthDay =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
 
 }
 

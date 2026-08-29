@@ -18,7 +18,7 @@
 
 pub mod InteropTime.DayOfWeek {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
@@ -120,22 +120,22 @@ pub mod InteropTime.DayOfWeek {
     /// DayOfWeek functions
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: DayOfWeek): String =
-        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) -> 
+        AdaptorUnchecked.extract3(style, locale, x, (style1, locale1, x1) -> 
             unsafe IO { x1.getDisplayName(style1, locale1) }
         )
 
 
     pub def getValue(x: DayOfWeek): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getValue() })
 
 
     /// plus / minus functions
 
     pub def plusDays(x: DayOfWeek, days: Int64): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plus(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plus(days) })
 
     pub def minusDays(x:DayOfWeek, days: Int64): DayOfWeek = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minus(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minus(days) })
 
 }
 

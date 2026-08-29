@@ -17,7 +17,7 @@
 pub mod InteropTime.Compat { 
 
     use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorExtras2
+    use JavaInterop.AdaptorChecked
 
     use InteropTime.InstantZ
     use InteropTime.LocalDate
@@ -28,7 +28,7 @@ pub mod InteropTime.Compat {
     import java.util.{Date => JDate}
 
     pub def utilDateToInstant(d: JDate): InstantZ \ Fail = 
-        AdaptorExtras2.of(() -> unsafe IO { d.toInstant() })
+        AdaptorChecked.of(() -> unsafe IO { d.toInstant() })
 
     pub def utilDateToLocalDate(d: JDate): LocalDate \ IO + Fail = 
         let ins = utilDateToInstant(d);
@@ -42,7 +42,7 @@ pub mod InteropTime.Compat {
         InstantZ.toLocalDateTime(zone, ins)
 
     pub def instantToUtilDate(ins: InstantZ): JDate \ Fail = 
-        AdaptorExtras2.extract(ins, ins1 -> unsafe IO { JDate.$from(ins1) })
+        AdaptorChecked.extract(ins, ins1 -> unsafe IO { JDate.$from(ins1) })
 
     pub def localDateToUtilDate(ld: LocalDate): JDate \ IO + Fail = 
         let ldt = LocalDate.atStartOfDay(ld);

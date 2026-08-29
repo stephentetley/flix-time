@@ -16,7 +16,7 @@
 
 pub mod InteropTime.Zone.ZoneRules {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition
     use InteropTime.DurationZ.DurationZ
@@ -71,24 +71,24 @@ pub mod InteropTime.Zone.ZoneRules {
     /// Constructors
 
     pub def zoneRules(offset: ZoneOffset): ZoneRules =
-        AdaptorExtras.op(offset, offset1 -> unsafe IO { JZoneRules.of(offset1) })
+        AdaptorUnchecked.op(offset, offset1 -> unsafe IO { JZoneRules.of(offset1) })
 
     /// ZoneRules functions
 
     pub def getOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
-        AdaptorExtras.op2(inst, x, (inst1, x1) ->  unsafe IO { x1.getOffset(inst1) })
+        AdaptorUnchecked.op2(inst, x, (inst1, x1) ->  unsafe IO { x1.getOffset(inst1) })
 
 
     pub def getOffsetWithLocalDateTime(ldt: LocalDateTime, x: ZoneRules): ZoneOffset =
-        AdaptorExtras.op2(ldt, x, (ldt1, x1) -> unsafe IO { x1.getOffset(ldt1) })
+        AdaptorUnchecked.op2(ldt, x, (ldt1, x1) -> unsafe IO { x1.getOffset(ldt1) })
 
 
     pub def getStandardOffset(inst: InstantZ, x: ZoneRules): ZoneOffset =
-        AdaptorExtras.op2(inst, x, (inst1, x1) -> unsafe IO { x1.getStandardOffset(inst1) })
+        AdaptorUnchecked.op2(inst, x, (inst1, x1) -> unsafe IO { x1.getStandardOffset(inst1) })
 
 
     pub def getValidOffsets(ldt: LocalDateTime, x: ZoneRules): List[ZoneOffset] =
-        AdaptorExtras.extract2(ldt, x, (ldt1, x1) -> {
+        AdaptorUnchecked.extract2(ldt, x, (ldt1, x1) -> {
             let jlist = unsafe IO { x1.getValidOffsets(ldt1) };
             let xs: List[JZoneOffset] = Adaptor.fromList(jlist);
             List.map(z -> ToFlix.toFlix(z), xs)
@@ -96,23 +96,23 @@ pub mod InteropTime.Zone.ZoneRules {
 
 
     pub def getDaylightSavings(inst: InstantZ, x: ZoneRules): DurationZ =
-        AdaptorExtras.op2(inst, x, (inst1, x1) -> unsafe IO { x1.getDaylightSavings(inst1) })
+        AdaptorUnchecked.op2(inst, x, (inst1, x1) -> unsafe IO { x1.getDaylightSavings(inst1) })
 
     pub def isDaylightSavings(inst: InstantZ, x: ZoneRules): Bool =
-        AdaptorExtras.extract2(inst, x, (inst1, x1) -> unsafe IO { x1.isDaylightSavings(inst1) })
+        AdaptorUnchecked.extract2(inst, x, (inst1, x1) -> unsafe IO { x1.isDaylightSavings(inst1) })
 
 
     pub def isValidOffset(ldt: LocalDateTime, offset: ZoneOffset, x: ZoneRules): Bool =
-        AdaptorExtras.extract3(ldt, offset, x, (ldt1, offset1, x1) -> 
+        AdaptorUnchecked.extract3(ldt, offset, x, (ldt1, offset1, x1) -> 
             unsafe IO { x1.isValidOffset(ldt1, offset1) }
         )
 
 
     pub def previousTransition(inst: InstantZ, x: ZoneRules): ZoneOffsetTransition =
-        AdaptorExtras.op2(inst, x, (inst1, x1) -> unsafe IO { x1.previousTransition(inst1) })
+        AdaptorUnchecked.op2(inst, x, (inst1, x1) -> unsafe IO { x1.previousTransition(inst1) })
 
     pub def getTransitions(x: ZoneRules): List[ZoneOffsetTransition] = 
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let xs = unsafe IO { x1.getTransitions() };
             let xs1: List[JZoneOffsetTransition] = Adaptor.fromList(xs);
             List.map(z -> ZoneOffsetTransition(z), xs1)

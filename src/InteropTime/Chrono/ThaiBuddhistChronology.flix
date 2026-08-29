@@ -17,7 +17,8 @@
 pub mod InteropTime.Chrono.ThaiBuddhistChronology {
 
     
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorExtras.Collection
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.ThaiBuddhistDate.ThaiBuddhistDate
     use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra
@@ -54,50 +55,50 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
     }
 
     pub def getInstance(): ThaiBuddhistChronology \ IO = 
-        AdaptorExtras.of(() -> checked_ecast(JThaiBuddhistChronology.INSTANCE))
+        AdaptorUnchecked.of(() -> checked_ecast(JThaiBuddhistChronology.INSTANCE))
 
     pub def getCalendarType(x: ThaiBuddhistChronology): String  = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
 
     pub def dateNow(x: ThaiBuddhistChronology): ThaiBuddhistDate \ IO = 
-        AdaptorExtras.op(x, x1 -> { x1.dateNow() })
+        AdaptorUnchecked.op(x, x1 -> { x1.dateNow() })
 
     pub def dateNowWithClock(x: ThaiBuddhistChronology, clock: ClockZ): ThaiBuddhistDate \ IO =
-        AdaptorExtras.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
+        AdaptorUnchecked.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: ThaiBuddhistChronology, zone: ZoneId): ThaiBuddhistDate \ IO =
-        AdaptorExtras.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
+        AdaptorUnchecked.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
 
     pub def dateYearDay(x: ThaiBuddhistChronology, year: Int32, day: Int32): ThaiBuddhistDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.dateYearDay(year, day) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.dateYearDay(year, day) })
         
     pub def dateYearDayWithEra(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32, day: Int32): ThaiBuddhistDate =
-        AdaptorExtras.op2(x, era, (x1, era1) -> {
+        AdaptorUnchecked.op2(x, era, (x1, era1) -> {
             let ans: JChronoLocalDate = unsafe IO { x1.dateYearDay(era1, year, day) };
             unchecked_cast(ans as JThaiBuddhistDate)
         })
 
     // Todo Result[]
     pub def eraOf(x: ThaiBuddhistChronology, i: Int32): Result[String, ThaiBuddhistEra] = 
-        AdaptorExtras.opWithResult(x, x1 -> unsafe IO { x1.eraOf(i) })
+        AdaptorUnchecked.opWithResult(x, x1 -> unsafe IO { x1.eraOf(i) })
 
     pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
-            AdaptorExtras.Collection.toList(jiter, e1 -> unchecked_cast(e1 as JThaiBuddhistEra) |> ToFlix.toFlix)
+            Collection.toList(jiter, e1 -> unchecked_cast(e1 as JThaiBuddhistEra) |> ToFlix.toFlix)
         })
 
     pub def isIsoBased(x: ThaiBuddhistChronology): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isIsoBased() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isIsoBased() })
 
     pub def isLeapYear(x: ThaiBuddhistChronology, year: Int64): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isLeapYear(year) })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear(year) })
 
     pub def prolepticYear(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32): Int32 =
-        AdaptorExtras.extract2(x, era, (x1, era1) -> unsafe IO { x1.prolepticYear(era1, year) })
+        AdaptorUnchecked.extract2(x, era, (x1, era1) -> unsafe IO { x1.prolepticYear(era1, year) })
 
 
 }

@@ -20,7 +20,7 @@
 pub mod InteropTime.DurationZ {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
@@ -139,7 +139,7 @@ pub mod InteropTime.DurationZ {
     ///
     pub def duration(seconds: {seconds = Int64}, 
                         nanos: {nanos = Int64}): DurationZ =
-        AdaptorExtras.of(() -> unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) })
+        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) })
 
     /// "abstract constructors" (e.g. `zero`)
 
@@ -147,7 +147,7 @@ pub mod InteropTime.DurationZ {
     /// Construct a zero length Duration.
     ///
     pub def zero(): DurationZ = 
-        AdaptorExtras.of(() -> unsafe IO { JDuration.ZERO} )
+        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ZERO} )
 
 
     /// `of` functions
@@ -156,44 +156,44 @@ pub mod InteropTime.DurationZ {
     /// Construct a Duration from the supplied number of nanoseconds.
     ///
     pub def ofNanos(nanos: Int64): DurationZ =
-        AdaptorExtras.of(() -> unsafe IO { JDuration.ofNanos(nanos) })
+        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofNanos(nanos) })
 
 
     ///
     /// Construct a Duration from the supplied number of milliseconds.
     ///
     pub def ofMillis(millis: Int64): DurationZ =
-        AdaptorExtras.of(() -> unsafe IO { JDuration.ofMillis(millis) })
+        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofMillis(millis) })
 
 
     ///
     /// Construct a Duration from the supplied number of seconds.
     ///
     pub def ofSeconds(seconds: Int64): DurationZ =
-        AdaptorExtras.of(() -> unsafe IO { JDuration.ofSeconds(seconds) })
+        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofSeconds(seconds) })
 
     ///
     /// Construct a Duration from the supplied number of minutes.
     ///
     pub def ofMinutes(minutes: Int64): DurationZ =
-        AdaptorExtras.of(() -> unsafe IO { JDuration.ofMinutes(minutes) })
+        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofMinutes(minutes) })
 
     ///
     /// Construct a Duration from the supplied number of hours.
     ///
     pub def ofHours(hours: Int64): DurationZ =
-        AdaptorExtras.of(() -> unsafe IO { JDuration.ofHours(hours) })
+        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofHours(hours) })
 
     ///
     /// Construct a Duration from the supplied number of days.
     ///
     pub def ofDays(days: Int64): DurationZ =
-        AdaptorExtras.of(() -> unsafe IO { JDuration.ofDays(days) })
+        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofDays(days) })
 
     // `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
 
     pub def ofHalfDays(i: Int64): DurationZ = 
-        AdaptorExtras.of(() -> 
+        AdaptorUnchecked.of(() -> 
             unsafe IO {  JDuration.of(i, JChronoUnit.HALF_DAYS) }
         )
 
@@ -204,40 +204,40 @@ pub mod InteropTime.DurationZ {
     /// Return the number of nanoseconds in Duration `x`.
     ///
     pub def toNanos(x: DurationZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toNanos() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toNanos() })
 
     ///
     /// Get the total length of Duration `x` in milliseconds.
     ///
     pub def toMillis(x: DurationZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toMillis() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toMillis() })
 
 
     ///
     /// Return the number of seconds in Duration `x`.
     ///
     pub def toSeconds(x: DurationZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toSeconds() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toSeconds() })
 
 
     ///
     /// Return the number of minutes in Duration `x`.
     ///
     pub def toMinutes(x: DurationZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toMinutes() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toMinutes() })
 
 
     ///
     /// Return the number of hours in Duration `x`.
     ///
     pub def toHours(x: DurationZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toHours() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toHours() })
 
     ///
     /// Return the number of days in Duration `x`.
     ///
     pub def toDays(x: DurationZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toDays() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toDays() })
 
     ///
     /// Do we want `toDays` and `toDaysPart` ?
@@ -245,31 +245,31 @@ pub mod InteropTime.DurationZ {
     /// Return the number of days in Duration `x`.
     ///
     pub def toDaysPart(x: DurationZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toDaysPart() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toDaysPart() })
 
     /// `parse` / `format` functions
 
     pub def parse(s: String): Result[String, DurationZ] =
-        AdaptorExtras.ofWithResult(() -> {
+        AdaptorUnchecked.ofWithResult(() -> {
             let s1 = String.trim(s);
             unsafe IO { JDuration.parse(s1) }
         })
 
     /// Note - alias of `toString`
     pub def format(x: DurationZ): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.toString() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toString() })
 
 
     /// predicates / comparisons
 
     pub def isZero(x: DurationZ): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isZero() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isZero() })
 
     pub def isPositive(x: DurationZ): Bool =
         not isNegative(x)
 
     pub def isNegative(x: DurationZ): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.isNegative() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isNegative() })
 
     /// Duration functions
 
@@ -277,7 +277,7 @@ pub mod InteropTime.DurationZ {
     /// Returns the absolute value of `x`.
     ///
     pub def abs(x: DurationZ): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.abs() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.abs() })
 
 
     /// Getters and Setters
@@ -286,49 +286,49 @@ pub mod InteropTime.DurationZ {
     /// Get the nanosecond part of the duration `x`.
     ///
     pub def getNano(x: DurationZ): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getNano() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getNano() })
 
     ///
     /// Set the nano part of the duration `x` to `seconds``.
     ///
     pub def withNanos(nanos: Int32, x: DurationZ): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withNanos(nanos) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withNanos(nanos) })
 
     ///
     /// Get the second part of the duration `x`.
     ///
     pub def getSeconds(x: DurationZ): Int64 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getSeconds() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getSeconds() })
 
     ///
     /// Set the seconds part of the duration `x` to `seconds``.
     ///
     pub def withSeconds(seconds: Int64, x: DurationZ): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withSeconds(seconds) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withSeconds(seconds) })
 
     /// #truncate functions
     
     pub def truncatedToNanos(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.NANOS) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.NANOS) })
 
     pub def truncatedToMicros(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.MICROS) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.MICROS) })
        
     pub def truncatedToMillis(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.MILLIS) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.MILLIS) })
 
     pub def truncatedToSeconds(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.SECONDS) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.SECONDS) })
 
 
     pub def truncatedToMinutes(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.MINUTES) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.MINUTES) })
         
     pub def truncatedToHours(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.HOURS) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.HOURS) })
         
     pub def truncatedToHalfDays(x: DurationZ): DurationZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.HALF_DAYS) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.truncatedTo(JChronoUnit.HALF_DAYS) })
         
 
 
@@ -336,49 +336,49 @@ pub mod InteropTime.DurationZ {
 
 
     pub def plusDays(x: DurationZ, days: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusDays(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusDays(days) })
 
     pub def minusDays(x: DurationZ, days: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusDays(days) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusDays(days) })
 
     pub def plusHours(x: DurationZ, hours: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusHours(hours) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusHours(hours) })
 
     pub def minusHours(x: DurationZ, hours: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusHours(hours) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusHours(hours) })
 
     pub def plusMinutes(x: DurationZ, minutes: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMinutes(minutes) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusMinutes(minutes) })
 
     pub def minusMinutes(x: DurationZ, minutes: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMinutes(minutes) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusMinutes(minutes) })
 
     pub def plusSeconds(x: DurationZ, seconds: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusSeconds(seconds) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusSeconds(seconds) })
 
     pub def minusSeconds(x: DurationZ, seconds: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusSeconds(seconds) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusSeconds(seconds) })
 
     pub def plusMillis(x: DurationZ, millis: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMillis(millis) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusMillis(millis) })
 
     pub def minusMillis(x: DurationZ, millis: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMillis(millis) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusMillis(millis) })
 
     pub def plusNanos(x: DurationZ, nanos: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusNanos(nanos) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusNanos(nanos) })
 
     pub def minusNanos(x: DurationZ, nanos: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusNanos(nanos) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusNanos(nanos) })
 
 
     pub def plusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        AdaptorExtras.op(x, x1 ->
+        AdaptorUnchecked.op(x, x1 ->
             unsafe IO { x1.plus(i, JChronoUnit.HALF_DAYS) }
         )
 
     pub def minusHalfDays(x: DurationZ, i: Int64): DurationZ = 
-        AdaptorExtras.op(x, x1 -> 
+        AdaptorUnchecked.op(x, x1 -> 
             unsafe IO { x1.minus(i, JChronoUnit.HALF_DAYS) }
         )
 
@@ -386,10 +386,10 @@ pub mod InteropTime.DurationZ {
     /// multiply / divide functions
 
     pub def multipliedBy(x: DurationZ, y: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.multipliedBy(y) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.multipliedBy(y) })
 
     pub def dividedBy(x: DurationZ, y: Int64): DurationZ =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.dividedBy(y) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.dividedBy(y) })
 
 
 }

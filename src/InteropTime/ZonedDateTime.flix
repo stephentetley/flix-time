@@ -17,7 +17,7 @@
 
 pub mod InteropTime.ZonedDateTime {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -133,7 +133,7 @@ pub mod InteropTime.ZonedDateTime {
         type Formatter = DateTimeFormatter
         type Aef = {}
         pub def parse(formatter: DateTimeFormatter, s: String): Result[String, ZonedDateTime] = 
-            AdaptorExtras.opWithResult(formatter, formatter1 -> {
+            AdaptorUnchecked.opWithResult(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JZonedDateTime.parse(s1, formatter1) }
             })
@@ -150,7 +150,7 @@ pub mod InteropTime.ZonedDateTime {
                             second: {second = Int32}, 
                             nanoSecond: {nanoSecond = Int32}, 
                             zone: ZoneId): ZonedDateTime =
-        AdaptorExtras.op(zone, zone1 -> 
+        AdaptorUnchecked.op(zone, zone1 -> 
             unsafe IO { JZonedDateTime.of(year#year, 
                                             month#month, 
                                             dayOfMonth#dayOfMonth, 
@@ -171,11 +171,11 @@ pub mod InteropTime.ZonedDateTime {
     /// Returns the current date-time from the system clock in the specified time zone.
     ///
     pub def nowWithZoneId(zone: ZoneId): ZonedDateTime \ IO =
-        AdaptorExtras.op(zone, zone1 -> JZonedDateTime.now(zone1))
+        AdaptorUnchecked.op(zone, zone1 -> JZonedDateTime.now(zone1))
 
 
     pub def ofLocalDateLocalTime(zone: ZoneId, date: LocalDate, time: LocalTime): ZonedDateTime =
-        AdaptorExtras.op3(zone, date, time, (zone1, date1, time1) ->
+        AdaptorUnchecked.op3(zone, date, time, (zone1, date1, time1) ->
             unsafe IO { JZonedDateTime.of(date1, time1, zone1) }
         )
 
@@ -183,50 +183,50 @@ pub mod InteropTime.ZonedDateTime {
     /// toX functions
 
     pub def toDayOfWeek(x: ZonedDateTime): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
     pub def toInstant(x: ZonedDateTime): InstantZ = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JInstant.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JInstant.$from(x1) })
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDate(x: ZonedDateTime): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalDate() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.toLocalDate() })
 
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalDateTime(x: ZonedDateTime): LocalDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalDateTime() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.toLocalDateTime() })
         
     ///
     /// Returns the given date-time `x` as __.
     ///
     pub def toLocalTime(x: ZonedDateTime): LocalTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.toLocalTime() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.toLocalTime() })
 
     pub def toMonth(x: ZonedDateTime): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
 
     pub def toMonthDay(x: ZonedDateTime): MonthDay =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMonthDay.$from(x1) })
 
 
     pub def toOffsetTime(x: ZonedDateTime): OffsetTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetTime.$from(x1) }) 
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JOffsetTime.$from(x1) }) 
 
     pub def toOffsetDateTime(x: ZonedDateTime): OffsetDateTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JOffsetDateTime.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JOffsetDateTime.$from(x1) })
 
     pub def toYear(x: ZonedDateTime): Year =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYear.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JYear.$from(x1) })
 
     pub def toYearMonth(x: ZonedDateTime): YearMonth =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JYearMonth.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JYearMonth.$from(x1) })
 
     pub def toZoneOffset(x: ZonedDateTime): ZoneOffset =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getOffset() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getOffset() })
 
 
 
@@ -236,103 +236,103 @@ pub mod InteropTime.ZonedDateTime {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: ZonedDateTime, y: ZonedDateTime): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: ZonedDateTime, y: ZonedDateTime): Bool =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
     /// Getters and Setters
 
     pub def getYear(x: ZonedDateTime): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getYear() })
 
     pub def withYear(year: Int32, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withYear(year) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withYear(year) })
 
     pub def getMonth(x: ZonedDateTime): Month =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getMonth() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getMonth() })
 
     pub def withMonth(month: Int32, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withMonth(month) })
 
 
     pub def getMonthValue(x: ZonedDateTime): Int32 =
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let m1 = unsafe IO { x1.getMonth() };
             unsafe IO { m1.getValue() }
         })
 
     pub def getZoneId(x: ZonedDateTime): ZoneId =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JZoneId.$from(x1) })
 
     pub def getDayOfYear(x: ZonedDateTime): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfYear() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getDayOfYear() })
 
     pub def withDayOfYear(dayOfYear: Int32, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withDayOfYear(dayOfYear) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withDayOfYear(dayOfYear) })
 
     pub def getDayOfMonth(x: ZonedDateTime): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDayOfMonth() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getDayOfMonth() })
 
     pub def withDayOfMonth(dayOfMonth: Int32, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withDayOfMonth(dayOfMonth) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withDayOfMonth(dayOfMonth) })
 
     pub def getDayOfWeek(x: ZonedDateTime): DayOfWeek =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDayOfWeek() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getDayOfWeek() })
 
     // no setDayOfWeek
 
     pub def getHour(x: ZonedDateTime): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getHour() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getHour() })
 
     pub def withHour(hour: Int32, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withHour(hour) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withHour(hour) })
 
     pub def getMinute(x: ZonedDateTime): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getMinute() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getMinute() })
 
     pub def withMinute(minute: Int32, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withMinute(minute) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withMinute(minute) })
 
     pub def getSecond(x: ZonedDateTime): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getSecond() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getSecond() })
 
     pub def withSecond(second: Int32, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withSecond(second) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withSecond(second) })
 
     pub def getNano(x: ZonedDateTime): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getNano() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getNano() })
 
     pub def withNano(nano: Int32, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withNano(nano) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withNano(nano) })
 
     pub def withZoneSameInstant(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { x1.$withZoneSameInstant(zone1) }
         )
 
     pub def withZoneSameLocal(zone: ZoneId, x: ZonedDateTime): ZonedDateTime =
-        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
+        AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { x1.$withZoneSameLocal(zone1) }
         )
 
 
     pub def withFixedOffsetZone(x: ZonedDateTime): ZonedDateTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withFixedOffsetZone() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withFixedOffsetZone() })
 
     pub def withEarlierOffsetAtOverlap(x: ZonedDateTime): ZonedDateTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withEarlierOffsetAtOverlap() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withEarlierOffsetAtOverlap() })
 
     pub def withLaterOffsetAtOverlap(x: ZonedDateTime): ZonedDateTime = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.$withLaterOffsetAtOverlap() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withLaterOffsetAtOverlap() })
 
     // DayOfWeek methods
 
     pub def adjustDayOfWeek(day: DayOfWeek, x: ZonedDateTime): ZonedDateTime =  
-        AdaptorExtras.op2(day, x, (day1, x1) -> {
+        AdaptorUnchecked.op2(day, x, (day1, x1) -> {
             let dt1 = unsafe IO { day1.adjustInto(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
@@ -340,7 +340,7 @@ pub mod InteropTime.ZonedDateTime {
     // MonthDay methods
 
     pub def adjustMonthDay(mday: MonthDay, x: ZonedDateTime): ZonedDateTime =  
-        AdaptorExtras.op2(mday, x, (mday1, x1) -> {
+        AdaptorUnchecked.op2(mday, x, (mday1, x1) -> {
             let dt1 = unsafe IO { mday1.adjustInto(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
@@ -348,7 +348,7 @@ pub mod InteropTime.ZonedDateTime {
     // ZoneOffset methods
 
     pub def adjustZoneOffset(zo: ZoneOffset, x: ZonedDateTime): ZonedDateTime = 
-        AdaptorExtras.op2(zo, x, (zo1, x1) -> {
+        AdaptorUnchecked.op2(zo, x, (zo1, x1) -> {
             let dt1 = unsafe IO { zo1.adjustInto(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
@@ -357,7 +357,7 @@ pub mod InteropTime.ZonedDateTime {
     // YearMonth methods
 
     pub def adjustYearMonth(ymon: YearMonth, x: ZonedDateTime): ZonedDateTime = 
-        AdaptorExtras.op2(ymon, x, (ymon1, x1) -> {
+        AdaptorUnchecked.op2(ymon, x, (ymon1, x1) -> {
             let dt1 = unsafe IO { ymon1.adjustInto(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
@@ -365,7 +365,7 @@ pub mod InteropTime.ZonedDateTime {
     // LocalDate methods
 
     pub def adjustLocalDate(ld: LocalDate, x: ZonedDateTime): ZonedDateTime = 
-        AdaptorExtras.op2(ld, x, (ld1, x1) -> {
+        AdaptorUnchecked.op2(ld, x, (ld1, x1) -> {
             let dt1 = unsafe IO { ld1.adjustInto(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
@@ -373,7 +373,7 @@ pub mod InteropTime.ZonedDateTime {
     // LocalDateTime methods
 
     pub def adjustLocalDateTime(ldt: LocalDateTime, x: ZonedDateTime): ZonedDateTime = 
-        AdaptorExtras.op2(ldt, x, (ldt1, x1) -> {
+        AdaptorUnchecked.op2(ldt, x, (ldt1, x1) -> {
             let dt1 = unsafe IO { ldt1.adjustInto(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
@@ -381,7 +381,7 @@ pub mod InteropTime.ZonedDateTime {
     // LocalTime methods
 
     pub def adjustLocalTime(lt: LocalTime, x: ZonedDateTime): ZonedDateTime = 
-        AdaptorExtras.op2(lt, x, (lt1, x1) -> {
+        AdaptorUnchecked.op2(lt, x, (lt1, x1) -> {
             let dt1 = unsafe IO { lt1.adjustInto(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
@@ -389,61 +389,61 @@ pub mod InteropTime.ZonedDateTime {
     // plus / minus functions
 
     pub def plusYears(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusYears(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusYears(i) })
 
     pub def minusYears(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusYears(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusYears(i) })
 
     pub def plusMonths(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMonths(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusMonths(i) })
 
     pub def minusMonths(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMonths(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusMonths(i) })
 
     pub def plusWeeks(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusWeeks(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusWeeks(i) })
 
     pub def minusWeeks(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusWeeks(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusWeeks(i) })
 
     pub def plusDays(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusDays(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusDays(i) })
 
     pub def minusDays(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusDays(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusDays(i) })
 
     pub def plusHours(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusHours(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusHours(i) })
 
     pub def minusHours(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusHours(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusHours(i) })
 
     pub def plusMinutes(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusMinutes(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusMinutes(i) })
 
     pub def minusMinutes(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusMinutes(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusMinutes(i) })
 
     pub def plusSeconds(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusSeconds(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusSeconds(i) })
 
     pub def minusSeconds(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusSeconds(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusSeconds(i) })
 
     pub def plusNanos(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.plusNanos(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.plusNanos(i) })
 
     pub def minusNanos(x: ZonedDateTime, i: Int64): ZonedDateTime =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.minusNanos(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.minusNanos(i) })
 
     pub def plusDuration(x: ZonedDateTime, d: DurationZ): ZonedDateTime =
-        AdaptorExtras.op2(x, d, (x1, d1) -> {
+        AdaptorUnchecked.op2(x, d, (x1, d1) -> {
             let dt1 = unsafe IO { d1.addTo(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
     
     pub def minusDuration(x: ZonedDateTime, d: DurationZ): ZonedDateTime =
-        AdaptorExtras.op2(x, d, (x1, d1) -> {
+        AdaptorUnchecked.op2(x, d, (x1, d1) -> {
             let dt1 = unsafe IO { d1.subtractFrom(x1) };
             unchecked_cast(dt1 as JZonedDateTime)
         })
@@ -451,13 +451,13 @@ pub mod InteropTime.ZonedDateTime {
     // Period methods
 
     pub def plusPeriod(x: ZonedDateTime, p: Period): ZonedDateTime =
-        AdaptorExtras.op2(x, p, (x1, p1) -> {
+        AdaptorUnchecked.op2(x, p, (x1, p1) -> {
             let t1 = unsafe IO { p1.addTo(x1) };
             unchecked_cast(t1 as JZonedDateTime)
         })
     
     pub def minusPeriod(x: ZonedDateTime, p: Period): ZonedDateTime =
-        AdaptorExtras.op2(x, p, (x1, p1) -> {
+        AdaptorUnchecked.op2(x, p, (x1, p1) -> {
             let t1 = unsafe IO { p1.subtractFrom(x1) };
             unchecked_cast(t1 as JZonedDateTime)
         })
@@ -468,7 +468,7 @@ pub mod InteropTime.ZonedDateTime {
 
 
     pub def between(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): DurationZ =
-        AdaptorExtras.op2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.op2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { JDuration.between(begin1, end1) }
         )
 
@@ -477,49 +477,49 @@ pub mod InteropTime.ZonedDateTime {
 
 
     pub def secondsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.SECONDS) }
         })
 
 
     pub def minutesUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.MINUTES) }
         })
 
 
     pub def hoursUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.HOURS) }
         })
 
 
     pub def halfDaysUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.HALF_DAYS) }
         })
 
 
     pub def daysUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.DAYS) }
         })
 
 
     pub def monthsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.MONTHS) }
         })
 
 
     pub def yearsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> {
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> {
             unsafe IO { begin1.until(end1, JChronoUnit.YEARS) }
         })
 
 
     pub def quarterYearsUntil(begin: {begin = ZonedDateTime }, end: {end = ZonedDateTime }): Int64 = 
-        AdaptorExtras.extract2(begin#begin, end#end, (begin1, end1) -> 
+        AdaptorUnchecked.extract2(begin#begin, end#end, (begin1, end1) -> 
             unsafe IO { 
                 let u1 = unchecked_cast(JIsoFields.QUARTER_YEARS as JChronoUnit);
                 begin1.until(end1, u1) 

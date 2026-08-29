@@ -18,10 +18,11 @@
 
 pub mod InteropTime.Chrono.JapaneseEra {
 
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorUnchecked
+    use JavaInterop.AdaptorChecked
     
-    use JavaInterop.AdaptorExtras
     use InteropTime.Format.TextStyle.TextStyle
-
     use InteropLocale.Locale.Locale
 
     import java.time.chrono.{JapaneseEra => JJapaneseEra}
@@ -70,32 +71,32 @@ pub mod InteropTime.Chrono.JapaneseEra {
         pub def toFlix(x: JJapaneseEra): JapaneseEra = JapaneseEra.JapaneseEra(x)
     }
 
-    pub def japaneseEra(japaneseEra: {japaneseEra = Int32 }): Result[String, JapaneseEra] =
-        AdaptorExtras.ofWithResult(() -> unsafe IO { JJapaneseEra.of(japaneseEra#japaneseEra)}) 
+    pub def japaneseEra(japaneseEra: {japaneseEra = Int32 }): JapaneseEra \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JJapaneseEra.of(japaneseEra#japaneseEra)}) 
 
     pub def heisei(): JapaneseEra = 
-        AdaptorExtras.of(() -> unsafe IO { JJapaneseEra.HEISEI}) 
+        AdaptorUnchecked.of(() -> unsafe IO { JJapaneseEra.HEISEI}) 
 
     pub def meiji(): JapaneseEra = 
-        AdaptorExtras.of(() -> unsafe IO { JJapaneseEra.MEIJI}) 
+        AdaptorUnchecked.of(() -> unsafe IO { JJapaneseEra.MEIJI}) 
 
     // Java 13
 
     pub def reiwa(): JapaneseEra = 
-        AdaptorExtras.of(() -> unsafe IO { JJapaneseEra.REIWA })
+        AdaptorUnchecked.of(() -> unsafe IO { JJapaneseEra.REIWA })
 
     pub def showa(): JapaneseEra = 
-        AdaptorExtras.of(() -> unsafe IO { JJapaneseEra.SHOWA })
+        AdaptorUnchecked.of(() -> unsafe IO { JJapaneseEra.SHOWA })
 
     pub def taisho(): JapaneseEra = 
-        AdaptorExtras.of(() -> unsafe IO { JJapaneseEra.TAISHO })
+        AdaptorUnchecked.of(() -> unsafe IO { JJapaneseEra.TAISHO })
 
     pub def getValue(x: JapaneseEra): Int32 = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getValue() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getValue() })
 
 
     pub def getDisplayName(style: TextStyle, locale: Locale, x: JapaneseEra): String = 
-        AdaptorExtras.extract3(style, locale, x, (style1, locale1, x1) ->
+        AdaptorUnchecked.extract3(style, locale, x, (style1, locale1, x1) ->
             unsafe IO { x1.getDisplayName(style1, locale1) }
         )
 

@@ -19,8 +19,8 @@
 
 pub mod InteropTime.Chrono.JapaneseChronology {
 
-    
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorExtras.Collection
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.JapaneseDate.JapaneseDate
     use InteropTime.Chrono.JapaneseEra.JapaneseEra
@@ -59,31 +59,31 @@ pub mod InteropTime.Chrono.JapaneseChronology {
 
 
     pub def getInstance(): JapaneseChronology \ IO = 
-        AdaptorExtras.of(() -> checked_ecast(JJapaneseChronology.INSTANCE))
+        AdaptorUnchecked.of(() -> checked_ecast(JJapaneseChronology.INSTANCE))
 
     pub def getCalendarType(x: JapaneseChronology): String = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
 
     pub def dateNow(x: JapaneseChronology): JapaneseDate \ IO = 
-        AdaptorExtras.op(x, x1 -> { x1.dateNow() })
+        AdaptorUnchecked.op(x, x1 -> { x1.dateNow() })
 
 
     pub def dateNowWithClock(x: JapaneseChronology, clock: ClockZ): JapaneseDate \ IO =
-        AdaptorExtras.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
+        AdaptorUnchecked.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
 
     ///
     /// Returns the current date from the system clock in the specified time zone.
     ///
     pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate \ IO =
-        AdaptorExtras.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
+        AdaptorUnchecked.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
 
     pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.eraOf(i) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.eraOf(i) })
 
     pub def eras(x: JapaneseChronology): List[JapaneseEra] = 
-        AdaptorExtras.extract(x, x1 -> {
+        AdaptorUnchecked.extract(x, x1 -> {
             let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
-            AdaptorExtras.Collection.toList(jiter, e1 -> unchecked_cast(e1 as JJapaneseEra) |> ToFlix.toFlix)
+            Collection.toList(jiter, e1 -> unchecked_cast(e1 as JJapaneseEra) |> ToFlix.toFlix)
         })
 
 

@@ -19,7 +19,7 @@
 pub mod InteropTime.Chrono.JapaneseDate {
 
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
     use InteropTime.Chrono.MinguoDate.MinguoDate
@@ -85,14 +85,14 @@ pub mod InteropTime.Chrono.JapaneseDate {
     pub def japaneseDate(prolepticYear: {prolepticYear = Int32}, 
                             month: {month = Int32}, 
                             dayOfMonth: {dayOfMonth = Int32}): JapaneseDate  =
-        AdaptorExtras.of(() -> unsafe IO { JJapaneseDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+        AdaptorUnchecked.of(() -> unsafe IO { JJapaneseDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
     pub def japaneseDateWithJapaneseEra(era: JapaneseEra, 
                                         yearOfEra: {yearOfEra = Int32}, 
                                         month: {month = Int32}, 
                                         dayOfMonth: {dayOfMonth = Int32}): JapaneseDate  =
         
-        AdaptorExtras.op(era, era1 -> 
+        AdaptorUnchecked.op(era, era1 -> 
             unsafe IO { JJapaneseDate.of(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) }
         )
 
@@ -101,17 +101,17 @@ pub mod InteropTime.Chrono.JapaneseDate {
     // Returns ___
     //
     pub def now(): JapaneseDate \ IO =
-        AdaptorExtras.of(() -> { JJapaneseDate.now() })
+        AdaptorUnchecked.of(() -> { JJapaneseDate.now() })
 
         
     pub def toLocalDate(x: JapaneseDate): LocalDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
     pub def fromLocalDate(x: LocalDate): JapaneseDate = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
 
     pub def fromLocalDateTime(x: LocalDateTime): JapaneseDate =
-        AdaptorExtras.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
 
 
     // pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
@@ -132,14 +132,14 @@ pub mod InteropTime.Chrono.JapaneseDate {
 
 
     pub def getChronology(x: JapaneseDate): JapaneseChronology = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getChronology() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
 
 
     pub def getEra(x: JapaneseDate): JapaneseEra = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getEra() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })
 
     pub def lengthOfMonth(x: JapaneseDate): Int32 = 
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.lengthOfMonth() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.lengthOfMonth() })
     
     /// pub def getDayOfWeek(x: JapaneseDate): Int32 = 
     ///     getChronoFieldHelper(x, InteropTime.Temporal.ChronoField.DayOfWeek)
