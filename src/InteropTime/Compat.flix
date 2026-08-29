@@ -27,22 +27,35 @@ pub mod InteropTime.Compat {
 
     import java.util.{Date => JDate}
 
-    pub def jdateToInstant(d: JDate): InstantZ \ Fail = 
+    pub def utilDateToInstant(d: JDate): InstantZ \ Fail = 
         AdaptorExtras2.of(() -> unsafe IO { d.toInstant() })
 
-    pub def utilDateToLocaleDate(d: JDate): LocalDate \ IO + Fail = 
-        let ins = jdateToInstant(d);
+    pub def utilDateToLocalDate(d: JDate): LocalDate \ IO + Fail = 
+        let ins = utilDateToInstant(d);
         let zone = ZoneId.systemDefault();
-        let ldt = InstantZ.toLocalDateTime(zone, ins);
-        LocalDateTime.toLocalDate(ldt)
+        InstantZ.toLocalDate(zone, ins)
 
-    pub def localDateToUtilDate(d: LocalDate): JDate \ IO + Fail = 
-        let ldt = LocalDate.atStartOfDay(d);
+
+    pub def utilDateToLocalDateTime(d: JDate): LocalDateTime \ IO + Fail = 
+        let ins = utilDateToInstant(d);
+        let zone = ZoneId.systemDefault();
+        InstantZ.toLocalDateTime(zone, ins)
+
+    pub def instantToUtilDate(ins: InstantZ): JDate \ Fail = 
+        AdaptorExtras2.extract(ins, ins1 -> unsafe IO { JDate.$from(ins1) })
+
+    pub def localDateToUtilDate(ld: LocalDate): JDate \ IO + Fail = 
+        let ldt = LocalDate.atStartOfDay(ld);
         let zone = ZoneId.systemDefault();
         let zdt = LocalDateTime.toZonedDateTime(zone, ldt);
         let ins = ZonedDateTime.toInstant(zdt);
-        AdaptorExtras2.extract(ins, ins1 -> unsafe IO { JDate.$from(ins1) })
+        instantToUtilDate(ins)
 
+    pub def localDateTimeToUtilDate(ldt: LocalDateTime): JDate \ IO + Fail = 
+        let zone = ZoneId.systemDefault();
+        let zdt = LocalDateTime.toZonedDateTime(zone, ldt);
+        let ins = ZonedDateTime.toInstant(zdt);
+        instantToUtilDate(ins)
 
 
 }

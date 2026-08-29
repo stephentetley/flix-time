@@ -24,6 +24,7 @@ pub mod InteropTime.InstantZ {
     use JavaInterop.AdaptorExtras
 
     use InteropTime.DurationZ.DurationZ
+    use InteropTime.LocalDate
     use InteropTime.LocalDateTime
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.OffsetTime
@@ -36,6 +37,7 @@ pub mod InteropTime.InstantZ {
     import java.time.{Duration => JDuration}
     import java.time.{Instant => JInstant}
     import java.time.{LocalDateTime => JLocalDateTime}
+    import java.time.{LocalDate => JLocalDate}
     import java.time.{OffsetTime => JOffsetTime}
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
@@ -156,8 +158,14 @@ pub mod InteropTime.InstantZ {
     pub def toLocalDateTime(zone: ZoneId, x: InstantZ): LocalDateTime =
         AdaptorExtras.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JLocalDateTime.ofInstant(x1, zone1) }
-        )        
+        )
     
+    pub def toLocalDate(zone: ZoneId, x: InstantZ): LocalDate =
+        AdaptorExtras.op2(zone, x, (zone1, x1) -> 
+            unsafe IO { JLocalDate.ofInstant(x1, zone1) }
+        )
+    
+
     pub def toOffsetTime(zone: ZoneId, x: InstantZ): OffsetTime =
         AdaptorExtras.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JOffsetTime.ofInstant(x1, zone1) }
