@@ -27,6 +27,7 @@ pub mod InteropTime.MonthDay {
     use InteropTime.Format.TemporalParse
     use InteropTime.Format.DateFormatter
     use InteropTime.LocalDate.LocalDate
+    use InteropTime.DayOfWeek
     use InteropTime.LocalDateTime.LocalDateTime
     use InteropTime.Month.Month
     use InteropTime.OffsetDateTime.OffsetDateTime
@@ -35,6 +36,7 @@ pub mod InteropTime.MonthDay {
     
     import java.time.{Month => JMonth}
     import java.time.{MonthDay => JMonthDay}
+    import java.time.{LocalDate => JLocalDate}
     import java.lang.{Object, CharSequence}
     import java.lang.{Exception => JException}
 
@@ -139,8 +141,21 @@ pub mod InteropTime.MonthDay {
     pub def nowWithZoneId(x: ZoneId): MonthDay \ IO =
         AdaptorUnchecked.op(x, x1 -> JMonthDay.now(x1))
 
+    /// toX functions
+
+
+    pub def toDayOfWeek(year: Int32, x: MonthDay): DayOfWeek =
+        toLocaleDate(year, x) |> LocalDate.toDayOfWeek
+
+    pub def toLocaleDate(year: Int32, x: MonthDay): LocalDate =
+        AdaptorUnchecked.of(() ->
+            unsafe IO { JLocalDate.of(year, getMonthValue(x), getDayOfMonth(x)) }
+        )
+
     pub def toMonth(x: MonthDay): Month =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JMonth.$from(x1) })
+
+
 
 
     /// predicates / comparisons
