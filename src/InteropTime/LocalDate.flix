@@ -39,6 +39,7 @@ pub mod InteropTime.LocalDate {
     use InteropTime.ZoneId.ZoneId
 
     import java.time.{LocalDate => JLocalDate}
+    import java.time.{ZonedDateTime => JZonedDateTime}
     import java.time.{DayOfWeek => JDayOfWeek}
     import java.time.{Month => JMonth}
     import java.time.{MonthDay => JMonthDay}
@@ -181,7 +182,7 @@ pub mod InteropTime.LocalDate {
     pub def atStartOfDay(x: LocalDate): LocalDateTime =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.atStartOfDay() })
 
-    pub def atStartOfDayWithZoneId(x: LocalDate, zone: ZoneId): ZonedDateTime =
+    pub def atStartOfDayWithZoneId(zone: ZoneId, x: LocalDate): ZonedDateTime =
         AdaptorUnchecked.op2(x, zone, (x1, zone1) -> unsafe IO { x1.atStartOfDay(zone1) })
 
     pub def atTimeWithLocalTime(x: LocalDate, t: LocalTime): LocalDateTime =
@@ -206,11 +207,17 @@ pub mod InteropTime.LocalDate {
 
     /// toX functions
 
-    pub def toEpochDay(x: LocalDate): Int64 =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
 
     pub def toDayOfWeek(x: LocalDate): DayOfWeek =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
+
+    pub def toEpochDay(x: LocalDate): Int64 =
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
+
+
+    pub def toInstantAtStartOfDay(zone: ZoneId, x: LocalDate): InstantZ =
+        let zdt = atStartOfDayWithZoneId(zone, x);
+        AdaptorUnchecked.op(zdt, zdt1 -> unsafe IO { zdt1.toInstant() })
 
     pub def toMonth(x: LocalDate): Month =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JMonth.$from(x1) })

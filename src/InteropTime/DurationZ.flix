@@ -280,13 +280,13 @@ pub mod InteropTime.DurationZ {
     ///
     /// Get the nanosecond part of the duration `x`.
     ///
-    pub def getNano(x: DurationZ): Int32 =
+    pub def getNanos(x: DurationZ): Int32 =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getNano() })
 
     ///
     /// Set the nano part of the duration `x` to `seconds``.
     ///
-    pub def withNanos(nanos: Int32, x: DurationZ): DurationZ =
+    pub def setNanos(nanos: Int32, x: DurationZ): DurationZ =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withNanos(nanos) })
 
     ///
@@ -298,7 +298,7 @@ pub mod InteropTime.DurationZ {
     ///
     /// Set the seconds part of the duration `x` to `seconds``.
     ///
-    pub def withSeconds(seconds: Int64, x: DurationZ): DurationZ =
+    pub def setSeconds(seconds: Int64, x: DurationZ): DurationZ =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withSeconds(seconds) })
 
     /// #truncate functions

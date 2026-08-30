@@ -227,7 +227,7 @@ pub mod InteropTime.InstantZ {
     pub def getNano(x: InstantZ): Int32 =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getNano() })
 
-
+    // redundant - use `getNano`
     pub def getNanoOfSecond(x: InstantZ): Int64 =
         AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.getLong(JChronoField.NANO_OF_SECOND) }

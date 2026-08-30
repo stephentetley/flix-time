@@ -222,6 +222,12 @@ pub mod InteropTime.LocalDateTime {
     pub def toDayOfWeek(x: LocalDateTime): DayOfWeek =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JDayOfWeek.$from(x1) })
 
+    pub def toInstant(zone: ZoneId, x: LocalDateTime): InstantZ =
+        let zdt = toZonedDateTime(zone, x);
+        AdaptorUnchecked.op(zdt, zdt1 -> unsafe IO { zdt1.toInstant() })
+
+
+
     ///
     /// Returns the given date-time `x` as __.
     ///

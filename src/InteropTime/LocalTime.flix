@@ -129,22 +129,26 @@ pub mod InteropTime.LocalTime {
 
     // Constructors
 
-    pub def newLocalTime(hour: {hour = Int32}, minute: {minute = Int32}): LocalTime =
-        let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute) };
-        LocalTime(ans)
+    pub def newLocalTime(hour: {hour = Int32}, minute: {minute = Int32}): LocalTime \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JLocalTime.of(hour#hour, minute#minute) })
 
     pub def newLocalTimeWithSecond(hour: {hour = Int32}, 
                                     minute: {minute = Int32}, 
-                                    second: {second = Int32}): LocalTime =
-        let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute, second#second) };
-        LocalTime(ans)
+                                    second: {second = Int32}): LocalTime \ Fail =
+        AdaptorChecked.of(() ->
+            unsafe IO { JLocalTime.of(hour#hour, minute#minute, second#second) }
+        )
 
     pub def newLocalTimeWithSecondAndNano(hour: {hour = Int32}, 
                                             minute: {minute = Int32}, 
                                             second: {second = Int32}, 
-                                            nanoSecond: {nanoSecond = Int32}): LocalTime =
-        let ans = unsafe IO { JLocalTime.of(hour#hour, minute#minute, second#second, nanoSecond#nanoSecond) };
-        LocalTime(ans)
+                                            nanoSecond: {nanoSecond = Int32}): LocalTime \ Fail =
+        AdaptorChecked.of(() ->
+            unsafe IO { JLocalTime.of(hour#hour, 
+                                        minute#minute, 
+                                        second#second, 
+                                        nanoSecond#nanoSecond) }
+        )
 
 
     /// `now` and "abstract constructors" (e.g. `midnight`)
