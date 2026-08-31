@@ -271,10 +271,6 @@ pub mod InteropTime.OffsetDateTime {
         AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
 
-    pub def isInstantEqual(x: OffsetDateTime, y: OffsetDateTime): Bool =
-        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isEqual(y1) })
-
-
     pub def isAmOfDay(x: OffsetDateTime): Bool = 
         AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { x1.get(JChronoField.AMPM_OF_DAY) == 0 }
