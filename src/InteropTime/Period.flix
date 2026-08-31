@@ -140,16 +140,15 @@ pub mod InteropTime.Period {
         AdaptorUnchecked.of(() -> unsafe IO { JPeriod.ZERO })
 
 
-    /// `of` functions
+    /// "of" constructors - "newWithX"
 
+    pub def newWithDays(days: Int32): Period = Period(unsafe IO { JPeriod.ofDays(days) })
 
-    pub def ofDays(days: Int32): Period = Period(unsafe IO { JPeriod.ofDays(days) })
+    pub def newWithWeeks(weeks: Int32): Period = Period(unsafe IO { JPeriod.ofWeeks(weeks) })
 
-    pub def ofWeeks(weeks: Int32): Period = Period(unsafe IO { JPeriod.ofWeeks(weeks) })
+    pub def newWithMonths(months: Int32): Period = Period(unsafe IO { JPeriod.ofMonths(months) })
 
-    pub def ofMonths(months: Int32): Period = Period(unsafe IO { JPeriod.ofMonths(months) })
-
-    pub def ofYears(years: Int32): Period = Period(unsafe IO { JPeriod.ofYears(years) })
+    pub def newWithYears(years: Int32): Period = Period(unsafe IO { JPeriod.ofYears(years) })
 
 
 

@@ -96,21 +96,21 @@ pub mod InteropTime.ZoneOffset {
 
     pub def max(): ZoneOffset = ZoneOffset(unsafe IO { JZoneOffset.MAX })
 
-    /// `of` functions
+    /// "of" constructors - "newWithX"
 
-    pub def ofHours(hours: Int32): ZoneOffset =
+    pub def newWithHours(hours: Int32): ZoneOffset =
         AdaptorUnchecked.of(() -> unsafe IO { JZoneOffset.ofHours(hours) })
 
-    pub def ofHoursMinutes(hours: {hours = Int32}, 
+    pub def newWithHoursMinutes(hours: {hours = Int32}, 
                             minutes: {minutes = Int32}): ZoneOffset =
         AdaptorUnchecked.of(() -> unsafe IO { JZoneOffset.ofHoursMinutes(hours#hours, minutes#minutes) })
 
-    pub def ofHoursMinutesSeconds(hours: {hours = Int32}, 
+    pub def newWithHoursMinutesSeconds(hours: {hours = Int32}, 
                                     minutes: {minutes = Int32}, 
                                     seconds: {seconds = Int32}): ZoneOffset =
         AdaptorUnchecked.of(() -> unsafe IO { JZoneOffset.ofHoursMinutesSeconds(hours#hours, minutes#minutes, seconds#seconds) })
 
-    pub def ofTotalSeconds(seconds: Int32): ZoneOffset =
+    pub def newWithTotalSeconds(seconds: Int32): ZoneOffset =
         AdaptorUnchecked.of(() -> unsafe IO { JZoneOffset.ofTotalSeconds(seconds) })
 
 

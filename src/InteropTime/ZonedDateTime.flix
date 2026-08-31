@@ -175,8 +175,9 @@ pub mod InteropTime.ZonedDateTime {
     pub def nowWithZoneId(zone: ZoneId): ZonedDateTime \ IO =
         AdaptorUnchecked.op(zone, zone1 -> JZonedDateTime.now(zone1))
 
+    /// "of" constructors - "newWithX"
 
-    pub def ofLocalDateLocalTime(zone: ZoneId, date: LocalDate, time: LocalTime): ZonedDateTime =
+    pub def newWithLocalDateLocalTime(zone: ZoneId, date: LocalDate, time: LocalTime): ZonedDateTime =
         AdaptorUnchecked.op3(zone, date, time, (zone1, date1, time1) ->
             unsafe IO { JZonedDateTime.of(date1, time1, zone1) }
         )

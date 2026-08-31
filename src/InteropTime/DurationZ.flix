@@ -20,6 +20,8 @@
 pub mod InteropTime.DurationZ {
 
 
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     import java.lang.{Object, CharSequence}
@@ -138,8 +140,8 @@ pub mod InteropTime.DurationZ {
     /// Return a new duration.
     ///
     pub def newDuration(seconds: {seconds = Int64}, 
-                        nanos: {nanos = Int64}): DurationZ =
-        AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) })
+                        nanos: {nanos = Int64}): DurationZ \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) })
 
     /// "abstract constructors" (e.g. `zero`)
 
@@ -150,49 +152,49 @@ pub mod InteropTime.DurationZ {
         AdaptorUnchecked.of(() -> unsafe IO { JDuration.ZERO} )
 
 
-    /// `of` functions
+    /// "of" constructors - "newWithX"
 
     ///
     /// Construct a Duration from the supplied number of nanoseconds.
     ///
-    pub def ofNanos(nanos: Int64): DurationZ =
+    pub def newWithNanos(nanos: Int64): DurationZ =
         AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofNanos(nanos) })
 
 
     ///
     /// Construct a Duration from the supplied number of milliseconds.
     ///
-    pub def ofMillis(millis: Int64): DurationZ =
+    pub def newWithMillis(millis: Int64): DurationZ =
         AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofMillis(millis) })
 
 
     ///
     /// Construct a Duration from the supplied number of seconds.
     ///
-    pub def ofSeconds(seconds: Int64): DurationZ =
+    pub def newWithSeconds(seconds: Int64): DurationZ =
         AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofSeconds(seconds) })
 
     ///
     /// Construct a Duration from the supplied number of minutes.
     ///
-    pub def ofMinutes(minutes: Int64): DurationZ =
+    pub def newWithMinutes(minutes: Int64): DurationZ =
         AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofMinutes(minutes) })
 
     ///
     /// Construct a Duration from the supplied number of hours.
     ///
-    pub def ofHours(hours: Int64): DurationZ =
+    pub def newWithHours(hours: Int64): DurationZ =
         AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofHours(hours) })
 
     ///
     /// Construct a Duration from the supplied number of days.
     ///
-    pub def ofDays(days: Int64): DurationZ =
+    pub def newWithDays(days: Int64): DurationZ =
         AdaptorUnchecked.of(() -> unsafe IO { JDuration.ofDays(days) })
 
     // `of` specialized - except for HalfDays we already have a `from_` function for the other supported ChronoUnits
 
-    pub def ofHalfDays(i: Int64): DurationZ = 
+    pub def newWithHalfDays(i: Int64): DurationZ = 
         AdaptorUnchecked.of(() -> 
             unsafe IO {  JDuration.of(i, JChronoUnit.HALF_DAYS) }
         )
@@ -284,16 +286,17 @@ pub mod InteropTime.DurationZ {
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getNano() })
 
     ///
-    /// Set the nano part of the duration `x` to `seconds``.
-    ///
-    pub def setNanos(nanos: Int32, x: DurationZ): DurationZ =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withNanos(nanos) })
-
-    ///
     /// Get the second part of the duration `x`.
     ///
     pub def getSeconds(x: DurationZ): Int64 =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getSeconds() })
+
+
+    ///
+    /// Set the nano part of the duration `x` to `seconds``.
+    ///
+    pub def setNanos(nanos: Int32, x: DurationZ): DurationZ =
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.$withNanos(nanos) })
 
     ///
     /// Set the seconds part of the duration `x` to `seconds``.

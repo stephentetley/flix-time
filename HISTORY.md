@@ -3,6 +3,7 @@
    Updated functions that use `Result[String, ...]` for failure to use the `Fail` 
      effect.
    Constructors now use "newX" naming convention.
+   Constructors that were formerly "ofX" are now "newWithX".
 
 ### v0.21.1
    Updated dependencies.

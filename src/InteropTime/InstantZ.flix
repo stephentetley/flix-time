@@ -118,6 +118,9 @@ pub mod InteropTime.InstantZ {
                         nano: {nano = Int64 }): InstantZ =
         AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond#epochSecond, nano#nano) })
 
+
+
+
     /// `now` and "abstract constructors" (e.g. `epoch`)
 
     ///
@@ -134,6 +137,16 @@ pub mod InteropTime.InstantZ {
     
     pub def max(): InstantZ = InstantZ(unsafe IO { JInstant.MAX}) 
 
+    /// "of" constructors - "newWithX"
+
+    pub def newWithEpochSecond(epochSecond: Int64): InstantZ =
+        AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond) })
+
+
+    pub def newWithEpochMilli(epochMilli: Int64): InstantZ =
+        AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochMilli(epochMilli) })
+
+
     /// `at` functions
 
     pub def atOffset(x: InstantZ, offset: ZoneOffset): OffsetDateTime =
@@ -141,16 +154,6 @@ pub mod InteropTime.InstantZ {
 
     pub def atZone(x: InstantZ, zone: ZoneId): ZonedDateTime =
         AdaptorUnchecked.op2(x, zone, (x1, zone1) -> unsafe IO { x1.atZone(zone1) })
-
-    /// `of` functions
-
-    pub def ofEpochSecond(epochSecond: Int64): InstantZ =
-        AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochSecond(epochSecond) })
-
-
-    pub def ofEpochMilli(epochMilli: Int64): InstantZ =
-        AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochMilli(epochMilli) })
-
 
 
     /// toX functions
@@ -227,16 +230,16 @@ pub mod InteropTime.InstantZ {
     pub def getNano(x: InstantZ): Int32 =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getNano() })
 
-    // redundant - use `getNano`
-    pub def getNanoOfSecond(x: InstantZ): Int64 =
-        AdaptorUnchecked.extract(x, x1 -> 
-            unsafe IO { x1.getLong(JChronoField.NANO_OF_SECOND) }
+
+    pub def setNano(i: Int32, x: InstantZ): InstantZ =
+        let i1 = Int32.toInt64(i);
+        AdaptorUnchecked.op(x, x1 -> 
+            unsafe IO { x1.$with(JChronoField.NANO_OF_SECOND, i1) }
         )
 
-
-    pub def withNanoOfSecond(i: Int64, x: InstantZ): InstantZ =
+    pub def setEpochSecond(i: Int64, x: InstantZ): InstantZ =
         AdaptorUnchecked.op(x, x1 -> 
-            unsafe IO { x1.$with(JChronoField.NANO_OF_SECOND, i) }
+            unsafe IO { x1.$with(JChronoField.INSTANT_SECONDS, i) }
         )
 
     pub def getMicroOfSecond(x: InstantZ): Int64 =
@@ -259,16 +262,6 @@ pub mod InteropTime.InstantZ {
             unsafe IO { x1.$with(JChronoField.MILLI_OF_SECOND, i) }
         )
 
-
-    pub def getInstantSeconds(x: InstantZ): Int64 =
-        AdaptorUnchecked.extract(x, x1 -> 
-            unsafe IO { x1.getLong(JChronoField.INSTANT_SECONDS) }
-        )
-
-    pub def withInstantSeconds(i: Int64, x: InstantZ): InstantZ =
-        AdaptorUnchecked.op(x, x1 -> 
-            unsafe IO { x1.$with(JChronoField.INSTANT_SECONDS, i) }
-        )
 
     // `truncatedTo` specialized
 

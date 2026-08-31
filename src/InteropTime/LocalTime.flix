@@ -170,18 +170,18 @@ pub mod InteropTime.LocalTime {
     pub def noon(): LocalTime = LocalTime(unsafe IO { JLocalTime.NOON })
 
 
-    // `from` functions
+    /// "of" constructors - "newWithX"
 
-    pub def ofInstant(zone: ZoneId, x: InstantZ): LocalTime =
+    pub def newWithInstant(zone: ZoneId, x: InstantZ): LocalTime =
         AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JLocalTime.ofInstant(x1, zone1) }
         )
 
 
-    pub def ofNanoOfDay(nanoOfDay: Int64): LocalTime =
+    pub def newWithNanoOfDay(nanoOfDay: Int64): LocalTime =
         AdaptorUnchecked.of(() -> unsafe IO { JLocalTime.ofNanoOfDay(nanoOfDay) })
 
-    pub def ofSecondOfDay(secondOfDay: Int64): LocalTime =
+    pub def newWithSecondOfDay(secondOfDay: Int64): LocalTime =
         AdaptorUnchecked.of(() -> unsafe IO { JLocalTime.ofSecondOfDay(secondOfDay) })
 
 

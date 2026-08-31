@@ -202,16 +202,17 @@ pub mod InteropTime.LocalDateTime {
     pub def nowWithZoneId(zone: ZoneId): LocalDateTime \ IO =
         AdaptorUnchecked.op(zone, zone1 -> JLocalDateTime.now(zone1))
 
+    /// "of" constructors - "newWithX"
 
-    pub def ofLocalDateLocalTime(ld: LocalDate, lt: LocalTime): LocalDateTime =
+    pub def newWithLocalDateLocalTime(ld: LocalDate, lt: LocalTime): LocalDateTime =
         AdaptorUnchecked.op2(ld, lt, (ld1, lt1) -> unsafe IO { JLocalDateTime.of(ld1, lt1) })
 
-    pub def ofEpochSecond(offset: ZoneOffset, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
+    pub def newWithEpochSecond(offset: ZoneOffset, epochSecond: Int64, nanoOfSecond: Int32): LocalDateTime =
         AdaptorUnchecked.op(offset, offset1 ->
             unsafe IO { JLocalDateTime.ofEpochSecond(epochSecond, nanoOfSecond, offset1) }
         )
 
-    pub def ofInstant(zone: ZoneId, x: InstantZ): LocalDateTime =
+    pub def newWithInstant(zone: ZoneId, x: InstantZ): LocalDateTime =
         AdaptorUnchecked.op2(zone, x, (zone1, x1) -> 
             unsafe IO { JLocalDateTime.ofInstant(x1, zone1) }
         )

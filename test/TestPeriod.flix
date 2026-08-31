@@ -31,14 +31,14 @@ mod TestPeriod {
 
     @Test
     def add01(): Unit \ Assert = 
-        let p1 = InteropTime.Period.ofYears(1);
+        let p1 = InteropTime.Period.newWithYears(1);
         let ans = p1 + p1;
-        assertTrue(ans == InteropTime.Period.ofYears(2))
+        assertTrue(ans == InteropTime.Period.newWithYears(2))
 
     @Test
     def add02(): Unit \ Assert + Fail = 
-        let p1 = InteropTime.Period.ofYears(10);
-        let ans = p1 + InteropTime.Period.ofMonths(10);
+        let p1 = InteropTime.Period.newWithYears(10);
+        let ans = p1 + InteropTime.Period.newWithMonths(10);
         assertTrue(ans == InteropTime.Period.newPeriod(years = 10, months = 10, days = 0))
 
 
@@ -48,8 +48,8 @@ mod TestPeriod {
 
     @Test
     def negate01(): Unit \ Assert = 
-        let p1 = InteropTime.Period.ofYears(1);
+        let p1 = InteropTime.Period.newWithYears(1);
         let ans = -p1;
-        assertTrue(ans == InteropTime.Period.ofYears(-1))
+        assertTrue(ans == InteropTime.Period.newWithYears(-1))
 
 }

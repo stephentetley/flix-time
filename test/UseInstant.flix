@@ -32,8 +32,7 @@ mod UseInstant {
         let zone = InteropTime.ZoneId.utc();
         let ins1 = InteropTime.LocalDate.toInstantAtStartOfDay(zone, ld);
         println("Instant ins1(): ${ins1}");
-        println("Instant ins1.getNano(): ${InstantZ.getNano(ins1)}");
-        println("Instant ins1.getNano(): ${InstantZ.getNanoOfSecond(ins1)}")
+        println("Instant ins1.getNano(): ${InstantZ.getNano(ins1)}")
 
     @Test
     pub def test03(): Unit \ IO + Fail = 
@@ -42,6 +41,12 @@ mod UseInstant {
         let ins1 = InteropTime.LocalDateTime.toInstant(zone, ldt);
         println("Instant ins1(): ${ins1}");
         println("Instant ins1.getNano(): ${InstantZ.getNano(ins1)}");
-        println("Instant ins1.getNano(): ${InstantZ.getNanoOfSecond(ins1)}")
+        println("Instant ins1.getEpochSecond(): ${InstantZ.getEpochSecond(ins1)}");
+        let i = InstantZ.getNano(ins1) + 10;
+        let ins2 = InstantZ.setNano(i, ins1);
+        println("Instant ins2.getNano(): ${InstantZ.getNano(ins2)}");
+        let i2 = InstantZ.getEpochSecond(ins1) + 10i64;
+        let ins3 = InstantZ.setEpochSecond(i2, ins1);
+        println("Instant ins3.getEpochSecond(): ${InstantZ.getEpochSecond(ins3)}")
 
 }

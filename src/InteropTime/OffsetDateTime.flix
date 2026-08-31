@@ -179,6 +179,13 @@ pub mod InteropTime.OffsetDateTime {
     pub def nowWithZoneId(zone: ZoneId): OffsetDateTime \ IO =
         AdaptorUnchecked.op(zone, zone1 -> JOffsetDateTime.now(zone1))
 
+    /// "of" constructors - "newWithX"
+
+    pub def newWithLocalDateLocalTime(offset: ZoneOffset, ld: LocalDate, lt: LocalTime): OffsetDateTime =
+        AdaptorUnchecked.op3(offset, ld, lt, (offset1, ld1, lt1) -> 
+            unsafe IO { JOffsetDateTime.of(ld1, lt1, offset1) }
+        )
+
     /// `at` functions
 
     pub def atZoneSameInstant(zone: ZoneId, x: OffsetDateTime): ZonedDateTime =
@@ -188,10 +195,6 @@ pub mod InteropTime.OffsetDateTime {
         AdaptorUnchecked.op2(zone, x, (zone1, x1) -> unsafe IO { x1.atZoneSimilarLocal(zone1) })
 
 
-    pub def ofLocalDateLocalTime(offset: ZoneOffset, ld: LocalDate, lt: LocalTime): OffsetDateTime =
-        AdaptorUnchecked.op3(offset, ld, lt, (offset1, ld1, lt1) -> 
-            unsafe IO { JOffsetDateTime.of(ld1, lt1, offset1) }
-        )
 
     /// toX functions
 

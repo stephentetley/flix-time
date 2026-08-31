@@ -177,6 +177,19 @@ pub mod InteropTime.LocalDate {
     ///
     pub def epoch(): LocalDate = LocalDate(unsafe IO { JLocalDate.EPOCH } )
 
+    /// "of" constructors - "newWithX"
+
+    pub def newWithInstant(zone: ZoneId, x: InstantZ): LocalDate \ Fail =
+        AdaptorChecked.op2(zone, x, (zone1, x1) -> unsafe IO { JLocalDate.ofInstant(x1, zone1) })
+
+    pub def newWithEpochDay(x: Int64): LocalDate =
+        AdaptorUnchecked.of(() -> unsafe IO { JLocalDate.ofEpochDay(x) })
+
+
+    pub def newWithYearDay(year: {year = Int32}, dayOfYear: {dayOfYear = Int32}): LocalDate \ Fail = 
+        AdaptorChecked.of(() -> unsafe IO { JLocalDate.ofYearDay(year#year, dayOfYear#dayOfYear) })
+
+
     /// `at` functions
 
     pub def atStartOfDay(x: LocalDate): LocalDateTime =
@@ -190,19 +203,6 @@ pub mod InteropTime.LocalDate {
 
     pub def atTimeWithOffsetTime(x: LocalDate, t: OffsetTime): OffsetDateTime =
         AdaptorUnchecked.op2(x, t, (x1, t1) -> unsafe IO { x1.atTime(t1) })
-
-    /// ## `from` functions
-
-    pub def ofInstant(zone: ZoneId, x: InstantZ): LocalDate \ Fail =
-        AdaptorChecked.op2(zone, x, (zone1, x1) -> unsafe IO { JLocalDate.ofInstant(x1, zone1) })
-
-    pub def ofEpochDay(x: Int64): LocalDate =
-        AdaptorUnchecked.of(() -> unsafe IO { JLocalDate.ofEpochDay(x) })
-
-
-    pub def ofYearDay(year: {year = Int32}, dayOfYear: {dayOfYear = Int32}): LocalDate \ Fail = 
-        AdaptorChecked.of(() -> unsafe IO { JLocalDate.ofYearDay(year#year, dayOfYear#dayOfYear) })
-
 
 
     /// toX functions
