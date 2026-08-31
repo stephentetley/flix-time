@@ -28,6 +28,15 @@ pub mod InteropTime.Temporal.ValueRange {
 
     pub enum ValueRange(JValueRange)
 
+    ///
+    /// Returns the given ValueRange `x` as a String.
+    ///
+    instance ToString[ValueRange] {
+        pub def toString(x: ValueRange): String =
+            let ValueRange.ValueRange(x1) = x;
+            unsafe IO { x1.toString() }
+    }
+
     instance ToJava[ValueRange] {
         type Out = JValueRange
         pub def toJava(x: ValueRange): JValueRange = 

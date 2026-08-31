@@ -17,8 +17,8 @@
 
 pub mod InteropTime.Chrono.HijrahDate {
 
-
-    
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.HijrahChronology.HijrahChronology
@@ -95,10 +95,10 @@ pub mod InteropTime.Chrono.HijrahDate {
         pub def toFlix(x: JHijrahDate): HijrahDate = HijrahDate.HijrahDate(x)
     }
     
-    pub def hijrahDate(prolepticYear: {prolepticYear = Int32}, 
+    pub def newHijrahDate(prolepticYear: {prolepticYear = Int32}, 
                         month: {month = Int32}, 
-                        dayOfMonth: {dayOfMonth = Int32}): HijrahDate =
-        AdaptorUnchecked.of(() -> unsafe IO { JHijrahDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+                        dayOfMonth: {dayOfMonth = Int32}): HijrahDate \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JHijrahDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
 
 

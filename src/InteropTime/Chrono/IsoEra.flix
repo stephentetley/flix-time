@@ -19,14 +19,15 @@ pub mod InteropTime.Chrono.IsoEra {
     
     
     use JavaInterop.AdaptorUnchecked
+    use InteropLocale.Locale.Locale
     
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
-    
-    use InteropLocale.Locale.Locale
+    use InteropTime.Temporal.ValueRange.ValueRange
 
     import java.time.chrono.{IsoEra => JIsoEra}
     import java.time.chrono.{Era => JEra}
+    import java.time.temporal.{ChronoField => JChronoField}
     import java.lang.{Enum => JEnum}
 
 
@@ -71,7 +72,13 @@ pub mod InteropTime.Chrono.IsoEra {
         AdaptorUnchecked.extract3(style, locale, x, (style1, locale1, x1) -> 
             unsafe IO { x1.getDisplayName(style1, locale1) }
         )
-        
+
+    // Note only ERA is a valid field, suggests we should provide `rangeEra` instead...
+    pub def rangeEra(x: IsoEra): ValueRange = 
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.range(JChronoField.ERA) })
+
+    // pub def rangeYearOfEra(x: IsoEra): ValueRange = 
+    //     AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.range(JChronoField.YEAR_OF_ERA) })
 
 
 }

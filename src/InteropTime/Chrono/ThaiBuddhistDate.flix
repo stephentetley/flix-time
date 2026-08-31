@@ -18,6 +18,8 @@
 pub mod InteropTime.Chrono.ThaiBuddhistDate {
 
 
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology
@@ -71,6 +73,13 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
         type In = JThaiBuddhistDate
         pub def toFlix(x: JThaiBuddhistDate): ThaiBuddhistDate = ThaiBuddhistDate.ThaiBuddhistDate(x)
     }
+
+    pub def newThaiBuddhistDate(prolepticYear: {prolepticYear = Int32}, 
+                                month: {month = Int32}, 
+                                dayOfMonth: {dayOfMonth = Int32}): ThaiBuddhistDate \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JThaiBuddhistDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+
+
 
     ///
     /// Returns ___

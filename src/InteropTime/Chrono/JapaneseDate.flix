@@ -19,6 +19,8 @@
 pub mod InteropTime.Chrono.JapaneseDate {
 
 
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
@@ -82,17 +84,17 @@ pub mod InteropTime.Chrono.JapaneseDate {
     ///
     /// Returns ___
     ///
-    pub def japaneseDate(prolepticYear: {prolepticYear = Int32}, 
+    pub def newJapaneseDate(prolepticYear: {prolepticYear = Int32}, 
                             month: {month = Int32}, 
-                            dayOfMonth: {dayOfMonth = Int32}): JapaneseDate  =
-        AdaptorUnchecked.of(() -> unsafe IO { JJapaneseDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+                            dayOfMonth: {dayOfMonth = Int32}): JapaneseDate \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JJapaneseDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
-    pub def japaneseDateWithJapaneseEra(era: JapaneseEra, 
-                                        yearOfEra: {yearOfEra = Int32}, 
-                                        month: {month = Int32}, 
-                                        dayOfMonth: {dayOfMonth = Int32}): JapaneseDate  =
+    pub def newJapaneseDateWithJapaneseEra(era: JapaneseEra, 
+                                            yearOfEra: {yearOfEra = Int32}, 
+                                            month: {month = Int32}, 
+                                            dayOfMonth: {dayOfMonth = Int32}): JapaneseDate \ Fail =
         
-        AdaptorUnchecked.op(era, era1 -> 
+        AdaptorChecked.op(era, era1 -> 
             unsafe IO { JJapaneseDate.of(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) }
         )
 

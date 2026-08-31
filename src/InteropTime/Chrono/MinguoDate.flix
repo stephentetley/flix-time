@@ -17,7 +17,8 @@
 
 pub mod InteropTime.Chrono.MinguoDate {
 
-
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.MinguoChronology.MinguoChronology
@@ -71,6 +72,13 @@ pub mod InteropTime.Chrono.MinguoDate {
         pub def toFlix(x: JMinguoDate): MinguoDate = 
             MinguoDate.MinguoDate(x)
     }
+
+    pub def newMinguoDate(prolepticYear: {prolepticYear = Int32}, 
+                        month: {month = Int32}, 
+                        dayOfMonth: {dayOfMonth = Int32}): MinguoDate \ Fail =
+        AdaptorChecked.of(() -> unsafe IO { JMinguoDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
+
+
 
     ///
     /// Returns ___

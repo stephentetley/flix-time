@@ -116,7 +116,7 @@ pub mod InteropTime.DurationZ {
     /// Monoid is addition
     instance Monoid[DurationZ] {
         pub def empty(): DurationZ = 
-            DurationZ.DurationZ(unsafe IO { JDuration.ZERO} )
+            DurationZ.DurationZ(unsafe IO { JDuration.ZERO })
     }
 
 
