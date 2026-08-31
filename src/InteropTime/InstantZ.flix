@@ -195,17 +195,6 @@ pub mod InteropTime.InstantZ {
             unsafe IO { JZonedDateTime.ofInstant(x1, zone1) }
         )
 
-    /// `parse` / `format` functions
-
-    pub def parse(s: String): Result[String, InstantZ] =
-        AdaptorUnchecked.ofWithResult(() -> {
-            let s1 = String.trim(s);
-            unsafe IO { JInstant.parse(s1) }
-        })
-
-    pub def format(x: InstantZ): String =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toString() })
-
 
     /// predicates / comparisons
 

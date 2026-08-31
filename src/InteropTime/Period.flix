@@ -158,17 +158,6 @@ pub mod InteropTime.Period {
     pub def toTotalMonths(x: Period): Int64 =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toTotalMonths() })
 
-    /// `parse` / `format` functions        
-
-    pub def parse(s: String): Result[String, Period] =
-        AdaptorUnchecked.ofWithResult(() -> {
-            let s1 = String.trim(s);
-            unsafe IO { JPeriod.parse(s1) }
-        })
-
-    /// Note - alias of `toString`
-    pub def format(x: Period): String =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toString() })
 
     /// predicates / comparisons
 

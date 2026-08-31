@@ -249,14 +249,6 @@ pub mod InteropTime.DurationZ {
     pub def toDaysPart(x: DurationZ): Int64 =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toDaysPart() })
 
-    /// `parse` / `format` functions
-
-    pub def parse(s: String): Result[String, DurationZ] =
-        AdaptorUnchecked.ofWithResult(() -> {
-            let s1 = String.trim(s);
-            unsafe IO { JDuration.parse(s1) }
-        })
-
     /// predicates / comparisons
 
     pub def isZero(x: DurationZ): Bool =

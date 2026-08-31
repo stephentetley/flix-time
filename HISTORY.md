@@ -4,6 +4,8 @@
      effect.
    Constructors now use "newX" naming convention.
    Constructors that were formerly "ofX" are now "newWithX".
+   Removed `format` functions if they were just calling `toString`.
+   Removed `parse` functions if they were equivalent to `FromString.fromString`.
 
 ### v0.21.1
    Updated dependencies.
