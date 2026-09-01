@@ -17,10 +17,11 @@
 
 pub mod InteropTime.Format.DateTimeFormatter {
 
-    use InteropLocale.Locale
-        
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
-
+    use InteropLocale.Locale
+    
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
     use InteropTime.Format.FormatStyle.FormatStyle
@@ -67,6 +68,23 @@ pub mod InteropTime.Format.DateTimeFormatter {
     }
 
 
+    /// ## `from` functions
+
+    pub def newDateTimeFormatter(pattern: String): DateTimeFormatter \ Fail =
+        AdaptorChecked.of(() -> {
+            let s1 = String.trim(pattern);
+            unsafe IO { JDateTimeFormatter.ofPattern(s1) }
+        })
+
+
+    // Varies according to system locale
+    pub def newWithFormatStyle(style: FormatStyle): DateTimeFormatter \ IO =
+        AdaptorUnchecked.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDateTime(style1) })
+
+    pub def newWithDateTimeStyles(dateStyle: {dateStyle=FormatStyle}, timeStyle: {timeStyle=FormatStyle}): DateTimeFormatter \ IO =
+        AdaptorUnchecked.op2(dateStyle#dateStyle, timeStyle#timeStyle, (d1, t1) -> { JDateTimeFormatter.ofLocalizedDateTime(d1, t1) })
+
+
     /// ## "abstract constructors"
 
     /// Builtin DateTime Formatters
@@ -85,22 +103,6 @@ pub mod InteropTime.Format.DateTimeFormatter {
 
     pub def rfc_1123_date_time(): DateTimeFormatter =
         DateTimeFormatter(unsafe IO { JDateTimeFormatter.RFC_1123_DATE_TIME })
-
-    /// ## `from` functions
-
-    pub def fromPattern(pattern: String): Result[String, DateTimeFormatter] =
-        AdaptorUnchecked.ofWithResult(() -> {
-            let s1 = String.trim(pattern);
-            unsafe IO { JDateTimeFormatter.ofPattern(s1) }
-        })
-
-
-    // Varies according to system locale
-    pub def fromLocalizedDateTime(style: FormatStyle): DateTimeFormatter \ IO =
-        AdaptorUnchecked.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDateTime(style1) })
-
-    pub def fromLocalizedDateTime2(dateStyle: FormatStyle, timeStyle: FormatStyle): DateTimeFormatter \ IO =
-        AdaptorUnchecked.op2(dateStyle, timeStyle, (d1, t1) -> { JDateTimeFormatter.ofLocalizedDateTime(d1, t1) })
 
 
     /// ## Getters and Setters

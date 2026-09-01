@@ -17,9 +17,10 @@
 
 pub mod InteropTime.Format.TimeFormatter {
 
-    use InteropLocale.Locale
-        
+    use EffectExtras.Fail.Fail
+    use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
+    use InteropLocale.Locale
 
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
@@ -67,6 +68,17 @@ pub mod InteropTime.Format.TimeFormatter {
             TimeFormatter.TimeFormatter(x)
     }
 
+    /// ## `from` functions
+
+    pub def newTimeFormatter(pattern: String): TimeFormatter \ Fail =
+        AdaptorChecked.of(() -> {
+            let s1 = String.trim(pattern);
+            unsafe IO { JDateTimeFormatter.ofPattern(s1) }
+        })
+
+    // Varies according to system locale
+    pub def newWithFormatStyle(style: FormatStyle): TimeFormatter \ IO =
+        AdaptorUnchecked.op(style, style1 -> { JDateTimeFormatter.ofLocalizedTime(style1) })
 
 
     /// ## "abstract constructors"
@@ -84,18 +96,6 @@ pub mod InteropTime.Format.TimeFormatter {
 
     pub def basic_iso_time(): TimeFormatter =
         AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_TIME })
-
-    /// ## `from` functions
-
-    pub def fromPattern(pattern: String): Result[String, TimeFormatter] =
-        AdaptorUnchecked.ofWithResult(() -> {
-            let s1 = String.trim(pattern);
-            unsafe IO { JDateTimeFormatter.ofPattern(s1) }
-        })
-
-    // Varies according to system locale
-    pub def fromLocalizedTime(style: FormatStyle): TimeFormatter \ IO =
-        AdaptorUnchecked.op(style, style1 -> { JDateTimeFormatter.ofLocalizedTime(style1) })
 
 
 

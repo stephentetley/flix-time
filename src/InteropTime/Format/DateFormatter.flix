@@ -17,9 +17,10 @@
 
 pub mod InteropTime.Format.DateFormatter {
 
-    use InteropLocale.Locale
-        
+    use EffectExtras.Fail.Fail
     use JavaInterop.AdaptorUnchecked
+    use JavaInterop.AdaptorChecked
+    use InteropLocale.Locale
 
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
@@ -68,6 +69,16 @@ pub mod InteropTime.Format.DateFormatter {
     }
 
 
+    pub def newDateFormatter(pattern: String): DateFormatter \ Fail =
+        AdaptorChecked.of(() -> {
+            let s1 = String.trim(pattern);
+            unsafe IO { JDateTimeFormatter.ofPattern(s1) }
+        })
+
+    pub def newWithFormatStyle(style: FormatStyle): DateFormatter \ IO =
+        AdaptorUnchecked.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDate(style1) })
+
+
 
     /// ## "abstract constructors"
 
@@ -94,18 +105,6 @@ pub mod InteropTime.Format.DateFormatter {
     pub def iso_week_date(): DateFormatter =
         AdaptorUnchecked.of(() -> unsafe IO { JDateTimeFormatter.ISO_WEEK_DATE })
 
-    /// ## `from` functions
-
-    pub def fromPattern(pattern: String): Result[String, DateFormatter] =
-        AdaptorUnchecked.ofWithResult(() -> {
-            let s1 = String.trim(pattern);
-            unsafe IO { JDateTimeFormatter.ofPattern(s1) }
-        })
-
-
-
-    pub def fromLocalizedDate(style: FormatStyle): DateFormatter \ IO =
-        AdaptorUnchecked.op(style, style1 -> { JDateTimeFormatter.ofLocalizedDate(style1) })
 
     /// ## Getters and Setters
 

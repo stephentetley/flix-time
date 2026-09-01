@@ -1,3 +1,7 @@
+### v0.23.0
+   Formatter nonstructors now use "newX" naming convention.
+   ...
+
 ### v0.22.0
    Added `Compat` module to interface with old Java Date and Time classes.
    Updated functions that use `Result[String, ...]` for failure to use the `Fail` 
