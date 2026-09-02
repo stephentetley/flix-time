@@ -50,21 +50,21 @@ pub mod InteropTime.Chrono.JapaneseDate {
     ///
     instance ToString[JapaneseDate] {
         pub def toString(x: JapaneseDate): String =
-            let JapaneseDate(x1) = x;
+            let JapaneseDate.JapaneseDate(x1) = x;
             unsafe IO { x1.toString() }
     }
 
     instance Eq[JapaneseDate] {
         pub def eq(x: JapaneseDate, y: JapaneseDate): Bool =
-            let JapaneseDate(x1) = x;
-            let JapaneseDate(y1) = y;
+            let JapaneseDate.JapaneseDate(x1) = x;
+            let JapaneseDate.JapaneseDate(y1) = y;
             unsafe IO { x1.equals(y1) }
 
     }
 
     instance Hash[JapaneseDate] {
         pub def hash(x: JapaneseDate): Int32 =
-            let JapaneseDate(x1) = x;
+            let JapaneseDate.JapaneseDate(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
@@ -77,7 +77,8 @@ pub mod InteropTime.Chrono.JapaneseDate {
 
     instance ToFlix[JapaneseDate] {
         type In = JJapaneseDate
-        pub def toFlix(x: JJapaneseDate): JapaneseDate = JapaneseDate.JapaneseDate(x)
+        pub def toFlix(x: JJapaneseDate): JapaneseDate = 
+            JapaneseDate.JapaneseDate(x)
     }
 
 
@@ -98,6 +99,13 @@ pub mod InteropTime.Chrono.JapaneseDate {
             unsafe IO { JJapaneseDate.of(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) }
         )
 
+    pub def newWithLocalDate(x: LocalDate): JapaneseDate = 
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
+
+    pub def newWithLocalDateTime(x: LocalDateTime): JapaneseDate =
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
+
+
 
     //
     // Returns ___
@@ -105,15 +113,13 @@ pub mod InteropTime.Chrono.JapaneseDate {
     pub def now(): JapaneseDate \ IO =
         AdaptorUnchecked.of(() -> { JJapaneseDate.now() })
 
-        
+
+
+    pub def toEpochDay(x: JapaneseDate): Int64 =
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
+
     pub def toLocalDate(x: JapaneseDate): LocalDate =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
-
-    pub def fromLocalDate(x: LocalDate): JapaneseDate = 
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
-
-    pub def fromLocalDateTime(x: LocalDateTime): JapaneseDate =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JJapaneseDate.$from(x1) })
 
 
     // pub def fromHijrahDate(x: HijrahDate): JapaneseDate = 
@@ -183,16 +189,12 @@ pub mod InteropTime.Chrono.JapaneseDate {
     /// Returns `true` if `x` is before `y`.
     ///
     pub def isBefore(x: JapaneseDate, y: JapaneseDate): Bool =
-        let JapaneseDate(x1) = x;
-        let JapaneseDate(y1) = y;
-        unsafe IO { x1.isBefore(y1) }
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     ///
     /// Returns `true` if `x` is after `y`.
     ///
     pub def isAfter(x: JapaneseDate, y: JapaneseDate): Bool =
-        let JapaneseDate(x1) = x;
-        let JapaneseDate(y1) = y;
-        unsafe IO { x1.isAfter(y1) }
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
 
 }

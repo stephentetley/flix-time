@@ -78,7 +78,11 @@ pub mod InteropTime.Chrono.MinguoDate {
                         dayOfMonth: {dayOfMonth = Int32}): MinguoDate \ Fail =
         AdaptorChecked.of(() -> unsafe IO { JMinguoDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
+    pub def newWithLocalDate(x: LocalDate): MinguoDate = 
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
 
+    pub def newWithLocalDateTime(x: LocalDateTime): MinguoDate =
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
 
     ///
     /// Returns ___
@@ -87,20 +91,29 @@ pub mod InteropTime.Chrono.MinguoDate {
         MinguoDate(JMinguoDate.now())
 
 
+    pub def toEpochDay(x: MinguoDate): Int64 =
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
+
     pub def toLocalDate(x: MinguoDate): LocalDate =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
-    pub def fromLocalDate(x: LocalDate): MinguoDate = 
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
-
-    pub def fromLocalDateTime(x: LocalDateTime): MinguoDate =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JMinguoDate.$from(x1) })
 
     pub def getChronology(x: MinguoDate): MinguoChronology = 
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
 
     pub def getEra(x: MinguoDate): MinguoEra = 
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })
+
+
+    pub def isEqual(x: MinguoDate, y: MinguoDate): Bool =
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isEqual(y1) })
+
+    pub def isAfter(x: MinguoDate, y: MinguoDate): Bool =
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
+
+    pub def isBefore(x: MinguoDate, y: MinguoDate): Bool =
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
+
 
 
     // pub def getDayOfWeek(x: MinguoDate): Int32 = 

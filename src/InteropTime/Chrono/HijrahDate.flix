@@ -58,28 +58,28 @@ pub mod InteropTime.Chrono.HijrahDate {
     ///
     instance ToString[HijrahDate] {
         pub def toString(x: HijrahDate): String =
-            let HijrahDate(x1) = x;
+            let HijrahDate.HijrahDate(x1) = x;
             unsafe IO { x1.toString() }
     }
 
     instance Eq[HijrahDate] {
         pub def eq(x: HijrahDate, y: HijrahDate): Bool = 
-            let HijrahDate(x1) = x;
-            let HijrahDate(y1) = y;
+            let HijrahDate.HijrahDate(x1) = x;
+            let HijrahDate.HijrahDate(y1) = y;
             unsafe IO { x1.equals(y1) }
 
     }
 
     instance Order[HijrahDate] {
         pub def compare(x: HijrahDate, y: HijrahDate): Comparison =
-            let HijrahDate(x1) = x;
-            let HijrahDate(y1) = y;
+            let HijrahDate.HijrahDate(x1) = x;
+            let HijrahDate.HijrahDate(y1) = y;
             unsafe IO { x1.compareTo(y1) } |> Comparison.fromInt32
     }
 
     instance Hash[HijrahDate] {
         pub def hash(x: HijrahDate): Int32 = 
-            let HijrahDate(x1) = x;
+            let HijrahDate.HijrahDate(x1) = x;
             unsafe IO { x1.hashCode() }
     }
 
@@ -92,7 +92,8 @@ pub mod InteropTime.Chrono.HijrahDate {
 
     instance ToFlix[HijrahDate] {
         type In = JHijrahDate
-        pub def toFlix(x: JHijrahDate): HijrahDate = HijrahDate.HijrahDate(x)
+        pub def toFlix(x: JHijrahDate): HijrahDate = 
+            HijrahDate.HijrahDate(x)
     }
     
     pub def newHijrahDate(prolepticYear: {prolepticYear = Int32}, 
@@ -100,6 +101,11 @@ pub mod InteropTime.Chrono.HijrahDate {
                         dayOfMonth: {dayOfMonth = Int32}): HijrahDate \ Fail =
         AdaptorChecked.of(() -> unsafe IO { JHijrahDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
+    pub def newWithLocalDate(x: LocalDate): HijrahDate =
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JHijrahDate.$from(x1) })
+
+    pub def newWithLocalDateTime(x: LocalDateTime): HijrahDate =
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JHijrahDate.$from(x1) })
 
 
     ///
@@ -114,7 +120,15 @@ pub mod InteropTime.Chrono.HijrahDate {
     pub def nowWithZoneId(x: ZoneId): HijrahDate \ IO =
         AdaptorUnchecked.op(x, x1 -> { JHijrahDate.now(x1) })
     
-    
+
+
+    pub def toEpochDay(x: HijrahDate): Int64 =
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
+
+    pub def toLocalDate(x: HijrahDate): LocalDate =
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
+
+
     pub def isEqual(x: HijrahDate, y: HijrahDate): Bool =
         AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isEqual(y1) })
 
@@ -125,17 +139,6 @@ pub mod InteropTime.Chrono.HijrahDate {
         AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
 
-    pub def toEpochDay(x: HijrahDate): Int64 =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
-
-    pub def toLocalDate(x: HijrahDate): LocalDate =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
-
-    pub def fromLocalDate(x: LocalDate): HijrahDate =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JHijrahDate.$from(x1) })
-
-    pub def fromLocalDateTime(x: LocalDateTime): HijrahDate =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JHijrahDate.$from(x1) })
 
 
     pub def getChronology(x: HijrahDate): HijrahChronology =

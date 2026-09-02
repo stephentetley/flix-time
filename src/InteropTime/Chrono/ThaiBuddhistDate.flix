@@ -79,7 +79,11 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
                                 dayOfMonth: {dayOfMonth = Int32}): ThaiBuddhistDate \ Fail =
         AdaptorChecked.of(() -> unsafe IO { JThaiBuddhistDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
+    pub def newWithLocalDate(x: LocalDate): ThaiBuddhistDate = 
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
 
+    pub def newWithLocalDateTime(x: LocalDateTime): ThaiBuddhistDate =
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
 
     ///
     /// Returns ___
@@ -88,23 +92,27 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
         AdaptorUnchecked.of(() -> { JThaiBuddhistDate.now() })
 
 
-    
-    
+    pub def toEpochDay(x: ThaiBuddhistDate): Int64 =
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.toEpochDay() })
 
     pub def toLocalDate(x: ThaiBuddhistDate): LocalDate =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
-    pub def fromLocalDate(x: LocalDate): ThaiBuddhistDate = 
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
-
-    pub def fromLocalDateTime(x: LocalDateTime): ThaiBuddhistDate =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { JThaiBuddhistDate.$from(x1) })
 
     pub def getChronology(x: ThaiBuddhistDate): ThaiBuddhistChronology = 
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
 
     pub def getEra(x: ThaiBuddhistDate): ThaiBuddhistEra = 
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })
+
+    pub def isEqual(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool =
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isEqual(y1) })
+
+    pub def isAfter(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool =
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isAfter(y1) })
+
+    pub def isBefore(x: ThaiBuddhistDate, y: ThaiBuddhistDate): Bool =
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
     // pub def getDayOfWeek(x: ThaiBuddhistDate): Int32 = 
     //     getChronoFieldHelper(x, InteropTime.Temporal.ChronoField.DayOfWeek)

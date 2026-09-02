@@ -64,6 +64,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
         pub def toFlix(x: JHijrahChronology): HijrahChronology = HijrahChronology.HijrahChronology(x)
     }
 
+    /// TODO maybe Chronologies should be effects if we rely on JVM provided instances
     pub def getInstance(): HijrahChronology \ IO =
         HijrahChronology(checked_ecast(JHijrahChronology.INSTANCE))
 
@@ -128,7 +129,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
     pub def getId(x: HijrahChronology): String =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getId() })
         
-    pub def isLeapYear(prolepticYear: Int64, x: HijrahChronology): Bool =
+    pub def isLeapYear(x: HijrahChronology, prolepticYear: Int64): Bool =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear(prolepticYear) })
 
     

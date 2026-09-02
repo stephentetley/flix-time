@@ -86,5 +86,7 @@ pub mod InteropTime.Chrono.JapaneseChronology {
             Collection.toList(jiter, e1 -> unchecked_cast(e1 as JJapaneseEra) |> ToFlix.toFlix)
         })
 
+    pub def isLeapYear(x: JapaneseChronology, prolepticYear: Int64): Bool =
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear(prolepticYear) })
 
 }

@@ -34,7 +34,7 @@ pub mod InteropTime.Chrono.IsoChronology {
 
     instance ToString[IsoChronology] {
         pub def toString(x: IsoChronology): String =
-            let IsoChronology(x1) = x;
+            let IsoChronology.IsoChronology(x1) = x;
             unsafe IO { x1.toString() }
     }
 
@@ -48,15 +48,14 @@ pub mod InteropTime.Chrono.IsoChronology {
 
     instance ToFlix[IsoChronology] {
         type In = JIsoChronology
-        pub def toFlix(x: JIsoChronology): IsoChronology = IsoChronology.IsoChronology(x)
+        pub def toFlix(x: JIsoChronology): IsoChronology = 
+            IsoChronology.IsoChronology(x)
     }
     
 
     pub def getInstance(): IsoChronology \ IO = 
         AdaptorUnchecked.of(() -> checked_ecast(JIsoChronology.INSTANCE))
 
-    pub def getCalendarType(x: IsoChronology): String =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
 
     pub def dateNow(x: IsoChronology): LocalDate \ IO = 
         AdaptorUnchecked.op(x, x1 -> x1.dateNow())
@@ -73,7 +72,16 @@ pub mod InteropTime.Chrono.IsoChronology {
             Collection.toList(jiter, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix)
         })
 
+
+    pub def getCalendarType(x: IsoChronology): String =
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
+
     pub def getId(x: IsoChronology): String =
         AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getId() })
 
+    pub def isLeapYear(x: IsoChronology, prolepticYear: Int64): Bool =
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear(prolepticYear) })
+
+
 }
+
