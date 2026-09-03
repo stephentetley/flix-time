@@ -17,7 +17,7 @@
 pub mod TestIsoChronology {
 
     use Assert.{assertEq, assertTrue, assertFalse, fail};
-    
+    use InteropTime.Chrono.IsoChronology.IsoChronology
     
     /////////////////////////////////////////////////////////////////////////////
     // eras                                                                    //
@@ -25,10 +25,12 @@ pub mod TestIsoChronology {
 
     @Test
     def eras01(): Unit \ {Assert, IO} = 
-        let current = InteropTime.Chrono.IsoChronology.getInstance();
-        let xs = InteropTime.Chrono.IsoChronology.eras(current);
-        println("Iso eras: ${xs}");
-        assertTrue(not List.isEmpty(xs))
+        let ans = run {
+            let xs = IsoChronology.eras();
+            println("Iso eras: ${xs}");
+            xs 
+        } with InteropTime.Chrono.IsoChronology.runIsoChronology;
+        assertTrue(not List.isEmpty(ans))
     
         
 }

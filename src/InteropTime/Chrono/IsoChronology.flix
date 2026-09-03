@@ -30,57 +30,57 @@ pub mod InteropTime.Chrono.IsoChronology {
     import java.util.{Iterator => JIterator}
 
 
-    pub enum IsoChronology(JIsoChronology)
-
-    instance ToString[IsoChronology] {
-        pub def toString(x: IsoChronology): String =
-            let IsoChronology.IsoChronology(x1) = x;
-            unsafe IO { x1.toString() }
+    pub eff IsoChronology {
+        def dateNow(): LocalDate
+        def eraOf(i: Int32): IsoEra
+        def eras(): List[IsoEra]
+        def getCalendarType(): String
+        def getId(): String
+        def isLeapYear(prolepticYear: Int64): Bool
     }
 
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + IO - IsoChronology) = x -> 
+        let jiso = JIsoChronology.INSTANCE;
+        run {
+            f(x)
+        } with handler IsoChronology {
+            
+            def dateNow(k) = {
+                let d1 = jiso.dateNow();
+                k(ToFlix.toFlix(d1))
+            }
 
-    instance ToJava[IsoChronology] {
-        type Out = JIsoChronology
-        pub def toJava(x: IsoChronology): JIsoChronology = 
-            let IsoChronology.IsoChronology(x1) = x;
-            x1
-    }
+            def eraOf(i, k) = {
+                let ans = jiso.eraOf(i);
+                k(ToFlix.toFlix(ans))
+            }
 
-    instance ToFlix[IsoChronology] {
-        type In = JIsoChronology
-        pub def toFlix(x: JIsoChronology): IsoChronology = 
-            IsoChronology.IsoChronology(x)
-    }
-    
+            def eras(k) = {
+                let jiter: JIterator[JEra] = unsafe IO { let xs = jiso.eras(); xs.iterator() };
+                let xs = Collection.toList(jiter, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix);
+                k(xs)
+            }
 
-    pub def getInstance(): IsoChronology \ IO = 
-        AdaptorUnchecked.of(() -> checked_ecast(JIsoChronology.INSTANCE))
+            def getCalendarType(k) = {
+                let ans = jiso.getCalendarType();
+                k(ans)
+            }
 
+            def getId(k) = {
+                let ans = jiso.getId();
+                k(ans)
+            }
 
-    pub def dateNow(x: IsoChronology): LocalDate \ IO = 
-        AdaptorUnchecked.op(x, x1 -> x1.dateNow())
-
-
-
-    pub def eraOf(x: IsoChronology, i: Int32): IsoEra =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.eraOf(i) })
-
-
-    pub def eras(x: IsoChronology): List[IsoEra] =
-        AdaptorUnchecked.extract(x, x1 -> {
-            let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
-            Collection.toList(jiter, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix)
-        })
+            def isLeapYear(prolepticYear, k) = {
+                let ans = jiso.isLeapYear(prolepticYear);
+                k(ans)
+            }
 
 
-    pub def getCalendarType(x: IsoChronology): String =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
+        }
 
-    pub def getId(x: IsoChronology): String =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getId() })
-
-    pub def isLeapYear(x: IsoChronology, prolepticYear: Int64): Bool =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear(prolepticYear) })
+    pub def runIsoChronology(f: Unit -> a \ ef): a \ (ef + IO - IsoChronology) = 
+        handle(f)()
 
 
 }
