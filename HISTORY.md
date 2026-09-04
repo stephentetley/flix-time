@@ -1,5 +1,6 @@
 ### v0.23.0
-   Formatter nonstructors now use "newX" naming convention.
+   Formatter constructors now use "newX" naming convention.
+   Reimplemented "XChronology" modules as effects.
    ...
 
 ### v0.22.0

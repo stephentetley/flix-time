@@ -40,39 +40,39 @@ pub mod InteropTime.Chrono.IsoChronology {
     }
 
     pub def handle(f: a -> b \ ef): a -> b \ (ef + IO - IsoChronology) = x -> 
-        let jiso = JIsoChronology.INSTANCE;
+        let jchrono = JIsoChronology.INSTANCE;
         run {
             f(x)
         } with handler IsoChronology {
             
             def dateNow(k) = {
-                let d1 = jiso.dateNow();
+                let d1 = jchrono.dateNow();
                 k(ToFlix.toFlix(d1))
             }
 
             def eraOf(i, k) = {
-                let ans = jiso.eraOf(i);
+                let ans = jchrono.eraOf(i);
                 k(ToFlix.toFlix(ans))
             }
 
             def eras(k) = {
-                let jiter: JIterator[JEra] = unsafe IO { let xs = jiso.eras(); xs.iterator() };
+                let jiter: JIterator[JEra] = unsafe IO { let xs = jchrono.eras(); xs.iterator() };
                 let xs = Collection.toList(jiter, e1 -> unchecked_cast(e1 as JIsoEra) |> ToFlix.toFlix);
                 k(xs)
             }
 
             def getCalendarType(k) = {
-                let ans = jiso.getCalendarType();
+                let ans = jchrono.getCalendarType();
                 k(ans)
             }
 
             def getId(k) = {
-                let ans = jiso.getId();
+                let ans = jchrono.getId();
                 k(ans)
             }
 
             def isLeapYear(prolepticYear, k) = {
-                let ans = jiso.isLeapYear(prolepticYear);
+                let ans = jchrono.isLeapYear(prolepticYear);
                 k(ans)
             }
 

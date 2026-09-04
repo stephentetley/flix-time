@@ -21,8 +21,6 @@ pub mod InteropTime.Chrono.HijrahDate {
     use JavaInterop.AdaptorChecked
     use JavaInterop.AdaptorUnchecked
 
-    use InteropTime.Chrono.HijrahChronology.HijrahChronology
-    use InteropTime.Chrono.HijrahChronology.HijrahChronology.{HijrahChronology}
     use InteropTime.Chrono.HijrahEra.HijrahEra
     use InteropTime.Temporal.ChronoUnit.ChronoUnit
     // use InteropTime.Temporal.ChronoUnit.DateChronoUnits
@@ -139,10 +137,6 @@ pub mod InteropTime.Chrono.HijrahDate {
         AdaptorUnchecked.extract2(x, y, (x1, y1) -> unsafe IO { x1.isBefore(y1) })
 
 
-
-
-    pub def getChronology(x: HijrahDate): HijrahChronology =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
 
     pub def getEra(x: HijrahDate): HijrahEra =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })

@@ -17,18 +17,21 @@
 pub mod TestHijrahChronology {
 
     use Assert.{assertEq, assertTrue, assertFalse, fail};
-    
+    use EffectExtras.Fail
+    use InteropTime.Chrono.HijrahChronology.HijrahChronology
     
     /////////////////////////////////////////////////////////////////////////////
     // eras                                                                    //
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def eras01(): Unit \ {Assert, IO} = 
-        let current = InteropTime.Chrono.HijrahChronology.getInstance();
-        let xs = InteropTime.Chrono.HijrahChronology.eras(current);
-        println("Hirjah eras: ${xs}");
-        assertTrue(not List.isEmpty(xs))
+    def eras01(): Unit \ {Assert, Fail, IO} = 
+        let ans = run {
+            let xs = HijrahChronology.eras();
+            println("Hirjah eras: ${xs}");
+            xs 
+        } with InteropTime.Chrono.HijrahChronology.runHijrahChronology;
+        assertTrue(not List.isEmpty(ans))
     
         
 }
