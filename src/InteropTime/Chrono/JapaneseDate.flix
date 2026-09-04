@@ -138,11 +138,6 @@ pub mod InteropTime.Chrono.JapaneseDate {
     //     JapaneseDate(fromDate(unchecked_cast(x1 as ##java.time.temporal.TemporalAccessor)))
 
 
-
-    pub def getChronology(x: JapaneseDate): JapaneseChronology = 
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
-
-
     pub def getEra(x: JapaneseDate): JapaneseEra = 
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })
 

@@ -36,57 +36,71 @@ pub mod InteropTime.Chrono.JapaneseChronology {
         JapaneseEra => JJapaneseEra}
     import java.util.{Iterator => JIterator}
 
-    pub enum JapaneseChronology(JJapaneseChronology)
-
-    instance ToString[JapaneseChronology] {
-        pub def toString(x: JapaneseChronology): String =
-            let JapaneseChronology(x1) = x;
-            unsafe IO { x1.toString() }
+    pub eff JapaneseChronology {
+        def dateNow(): JapaneseDate
+        def dateNowWithClock(clock: ClockZ): JapaneseDate 
+        def dateNowWithZoneId(zone: ZoneId): JapaneseDate
+        def eraOf(i: Int32): JapaneseEra
+        def eras(): List[JapaneseEra]
+        def getCalendarType(): String
+        def getId(): String
+        def isLeapYear(prolepticYear: Int64): Bool
     }
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + IO - JapaneseChronology) = x -> 
+        let jchrono = JJapaneseChronology.INSTANCE;
+        run {
+            f(x)
+        } with handler JapaneseChronology {
+            
+            def dateNow(k) = {
+                let d1 = jchrono.dateNow();
+                k(ToFlix.toFlix(d1))
+            }
+            
+            def dateNowWithClock(clock, k) = {
+                let clock1 = ToJava.toJava(clock);
+                let d1 = jchrono.dateNow(clock1);
+                k(ToFlix.toFlix(d1))
+            }
 
-    instance ToJava[JapaneseChronology] {
-        type Out = JJapaneseChronology
-        pub def toJava(x: JapaneseChronology): JJapaneseChronology = 
-            let JapaneseChronology.JapaneseChronology(x1) = x;
-            x1
-    }
+            def dateNowWithZoneId(zone, k) = {
+                let zone1 = ToJava.toJava(zone);
+                let d1 = jchrono.dateNow(zone1);
+                k(ToFlix.toFlix(d1))
+            }
 
-    instance ToFlix[JapaneseChronology] {
-        type In = JJapaneseChronology
-        pub def toFlix(x: JJapaneseChronology): JapaneseChronology = JapaneseChronology.JapaneseChronology(x)
-    }
+            def eraOf(i, k) = {
+                let ans = jchrono.eraOf(i);
+                k(ToFlix.toFlix(ans))
+            }
+
+            def eras(k) = {
+                let jiter: JIterator[JEra] = unsafe IO { let xs = jchrono.eras(); xs.iterator() };
+                let xs = Collection.toList(jiter, e1 -> unchecked_cast(e1 as JJapaneseEra) |> ToFlix.toFlix);
+                k(xs)
+            }
+
+            def getCalendarType(k) = {
+                let ans = jchrono.getCalendarType();
+                k(ans)
+            }
+
+            def getId(k) = {
+                let ans = jchrono.getId();
+                k(ans)
+            }
+
+            def isLeapYear(prolepticYear, k) = {
+                let ans = jchrono.isLeapYear(prolepticYear);
+                k(ans)
+            }
 
 
+        }
 
-    pub def getInstance(): JapaneseChronology \ IO = 
-        AdaptorUnchecked.of(() -> checked_ecast(JJapaneseChronology.INSTANCE))
+    pub def runJapaneseChronology(f: Unit -> a \ ef): a \ (ef + IO - JapaneseChronology) = 
+        handle(f)()
 
-    pub def getCalendarType(x: JapaneseChronology): String = 
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
-
-    pub def dateNow(x: JapaneseChronology): JapaneseDate \ IO = 
-        AdaptorUnchecked.op(x, x1 -> { x1.dateNow() })
-
-
-    pub def dateNowWithClock(x: JapaneseChronology, clock: ClockZ): JapaneseDate \ IO =
-        AdaptorUnchecked.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
-
-    ///
-    /// Returns the current date from the system clock in the specified time zone.
-    ///
-    pub def dateNowWithZoneId(x: JapaneseChronology, zone: ZoneId): JapaneseDate \ IO =
-        AdaptorUnchecked.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
-
-    pub def eraOf(x: JapaneseChronology, i: Int32): JapaneseEra = 
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.eraOf(i) })
-
-    pub def eras(x: JapaneseChronology): List[JapaneseEra] = 
-        AdaptorUnchecked.extract(x, x1 -> {
-            let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
-            Collection.toList(jiter, e1 -> unchecked_cast(e1 as JJapaneseEra) |> ToFlix.toFlix)
-        })
-
-    pub def isLeapYear(x: JapaneseChronology, prolepticYear: Int64): Bool =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear(prolepticYear) })
 
 }
+

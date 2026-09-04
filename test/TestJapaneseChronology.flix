@@ -17,7 +17,7 @@
 pub mod TestJapaneseChronology {
 
     use Assert.{assertEq, assertTrue, assertFalse, fail};
-    
+    use InteropTime.Chrono.JapaneseChronology.JapaneseChronology
     
     /////////////////////////////////////////////////////////////////////////////
     // eras                                                                    //
@@ -25,10 +25,12 @@ pub mod TestJapaneseChronology {
 
     @Test
     def eras01(): Unit \ {Assert, IO} = 
-        let current = InteropTime.Chrono.JapaneseChronology.getInstance();
-        let xs = InteropTime.Chrono.JapaneseChronology.eras(current);
-        println("Japanese eras: ${xs}");
-        assertTrue(not List.isEmpty(xs))
+        let ans = run {
+            let xs = JapaneseChronology.eras();
+            println("Japanese eras: ${xs}");
+            xs 
+        } with InteropTime.Chrono.JapaneseChronology.runJapaneseChronology;
+        assertTrue(not List.isEmpty(ans))
     
         
 }
