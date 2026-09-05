@@ -33,9 +33,7 @@ pub mod InteropTime.InstantZ {
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneOffset.ZoneOffset
-
     use InteropTime.ClockZ.ReifyClock
-    use InteropTime.ClockZ.ClockNow
     
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
@@ -118,37 +116,6 @@ pub mod InteropTime.InstantZ {
     }
 
 
-    pub eff InstantNow {
-        def now(): InstantZ
-    }
-
-    instance ClockNow[InstantZ] {
-        pub type E = InstantNow
-        pub def now(): InstantZ \ InstantNow = {
-           InstantNow.now()
-        }
-    }
-
-
-    // `JInstant.now` might not be in IO if we are using a constant clock e.g the 
-    // fixed clock
-    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - InstantNow) = x -> 
-        run {
-            f(x)
-        } with handler InstantNow {
-            def now(k) = {
-                let clock = ReifyClock.getClock();
-                let clock1 = ToJava.toJava(clock);
-                let ans = unsafe IO { JInstant.now(clock1) };
-                k(ToFlix.toFlix(ans))
-            }
-        }
-
-    pub def runInstantNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - InstantNow) = 
-        handle(f)()
-
-    
-
     /// Constructors
 
     pub def newInstant(epochSecond: {epochSecond = Int64}, 
@@ -184,6 +151,13 @@ pub mod InteropTime.InstantZ {
     pub def newWithEpochMilli(epochMilli: Int64): InstantZ =
         AdaptorUnchecked.of(() -> unsafe IO { JInstant.ofEpochMilli(epochMilli) })
 
+
+    pub def clockNow(): InstantZ \ ReifyClock = 
+        let clock = ReifyClock.getClock();
+        let clock1 = ToJava.toJava(clock);
+        let ans = unsafe IO { JInstant.now(clock1) };
+        ToFlix.toFlix(ans)
+    
 
     /// `at` functions
 

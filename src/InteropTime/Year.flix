@@ -34,7 +34,6 @@ pub mod InteropTime.Year {
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ClockZ.ReifyClock
-    use InteropTime.ClockZ.ClockNow
 
 
     import java.lang.{Object, CharSequence}
@@ -122,36 +121,6 @@ pub mod InteropTime.Year {
     }
 
 
-    pub eff YearNow {
-        def now(): Year
-    }
-
-    instance ClockNow[Year] {
-        pub type E = YearNow
-        pub def now(): Year \ YearNow = {
-           YearNow.now()
-        }
-    }
-
-
-    // `JYear.now` might not be in IO if we are using a constant clock e.g the 
-    // fixed clock
-    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - YearNow) = x -> 
-        run {
-            f(x)
-        } with handler YearNow {
-            def now(k) = {
-                let clock = ReifyClock.getClock();
-                let clock1 = ToJava.toJava(clock);
-                let ans = unsafe IO { JYear.now(clock1) };
-                k(ToFlix.toFlix(ans))
-            }
-        }
-
-    pub def runYearNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - YearNow) = 
-        handle(f)()
-
-
     /// Constructors
 
     pub def newYear(isoYear: Int32): Year \ Fail =
@@ -182,6 +151,12 @@ pub mod InteropTime.Year {
     pub def atMonthDay(x: Year, md: MonthDay): LocalDate =
         AdaptorUnchecked.op2(x, md, (x1, md1) -> unsafe IO { x1.atMonthDay(md1) })
 
+
+    pub def clockNow(): Year \ ReifyClock = 
+        let clock = ReifyClock.getClock();
+        let clock1 = ToJava.toJava(clock);
+        let ans = unsafe IO { JYear.now(clock1) };
+        ToFlix.toFlix(ans)
 
 
     /// predicates / comparisons

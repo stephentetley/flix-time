@@ -31,7 +31,6 @@ pub mod InteropTime.YearMonth {
     use InteropTime.Year
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ClockZ.ReifyClock
-    use InteropTime.ClockZ.ClockNow
 
     import java.time.{Month => JMonth}
     import java.time.{YearMonth => JYearMonth}
@@ -124,35 +123,6 @@ pub mod InteropTime.YearMonth {
     }
 
 
-    pub eff YearMonthNow {
-        def now(): YearMonth
-    }
-
-    instance ClockNow[YearMonth] {
-        pub type E = YearMonthNow
-        pub def now(): YearMonth \ YearMonthNow = {
-           YearMonthNow.now()
-        }
-    }
-
-
-    // `JYearMonth.now` might not be in IO if we are using a constant clock e.g the 
-    // fixed clock
-    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - YearMonthNow) = x -> 
-        run {
-            f(x)
-        } with handler YearMonthNow {
-            def now(k) = {
-                let clock = ReifyClock.getClock();
-                let clock1 = ToJava.toJava(clock);
-                let ans = unsafe IO { JYearMonth.now(clock1) };
-                k(ToFlix.toFlix(ans))
-            }
-        }
-
-    pub def runYearMonthNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - YearMonthNow) = 
-        handle(f)()
-
     /// Constructors
 
     pub def newYearMonth(year: {year = Int32}, month: {month = Int32}): YearMonth \ Fail =
@@ -165,6 +135,13 @@ pub mod InteropTime.YearMonth {
     /// `now` and "abstract constructors" if any
 
     pub def now(): YearMonth \ IO = YearMonth(JYearMonth.now())
+
+
+    pub def clockNow(): YearMonth \ ReifyClock = 
+        let clock = ReifyClock.getClock();
+        let clock1 = ToJava.toJava(clock);
+        let ans = unsafe IO { JYearMonth.now(clock1) };
+        ToFlix.toFlix(ans)
 
 
     /// toX functions

@@ -37,18 +37,11 @@ pub mod InteropTime.ClockZ {
     /// A effect for getting the current clock inside a run context.
     ///
     /// Users of flix-time shouldn't need to worry about this but we need 
-    /// it so Instant, etc. can provide nowWithClock() functions via the 
-    /// `ClockNow` trait
+    /// it so Instant, etc. can provide clockNow() functions
     ///
     pub eff ReifyClock {
         def getClock(): ClockZ
     }
-
-    pub trait ClockNow[t] {
-        pub type E: Eff
-        pub def now(): t \ ClockNow.E[t]
-    }
-
 
     ///
     /// An effect for running clocks.
@@ -90,9 +83,7 @@ pub mod InteropTime.ClockZ {
 
     pub def runClock(clock: ClockZ, f: Unit -> a \ ef): a \ (ef - ReifyClock - RunClock) = 
         handle(clock, f)()
-
-
-    
+        
 
     instance ToJava[ClockZ] {
         type Out = JClock

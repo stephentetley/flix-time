@@ -40,7 +40,6 @@ pub mod InteropTime.LocalDateTime {
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneOffset.ZoneOffset
     use InteropTime.ClockZ.ReifyClock
-    use InteropTime.ClockZ.ClockNow
     
     import java.time.{DayOfWeek => JDayOfWeek}
     import java.time.{Duration => JDuration}
@@ -142,36 +141,6 @@ pub mod InteropTime.LocalDateTime {
     }
 
 
-    pub eff LocalDateTimeNow {
-        def now(): LocalDateTime
-    }
-
-    instance ClockNow[LocalDateTime] {
-        pub type E = LocalDateTimeNow
-        pub def now(): LocalDateTime \ LocalDateTimeNow = {
-           LocalDateTimeNow.now()
-        }
-    }
-
-
-    // `JLocalDateTime.now` might not be in IO if we are using a constant clock e.g the 
-    // fixed clock
-    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - LocalDateTimeNow) = x -> 
-        run {
-            f(x)
-        } with handler LocalDateTimeNow {
-            def now(k) = {
-                let clock = ReifyClock.getClock();
-                let clock1 = ToJava.toJava(clock);
-                let ans = unsafe IO { JLocalDateTime.now(clock1) };
-                k(ToFlix.toFlix(ans))
-            }
-        }
-
-    pub def runLocalDateTimeNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - LocalDateTimeNow) = 
-        handle(f)()
-
-
     /// Constructors
 
     pub def newLocalDateTime(year: {year = Int32}, 
@@ -249,6 +218,12 @@ pub mod InteropTime.LocalDateTime {
             unsafe IO { JLocalDateTime.ofInstant(x1, zone1) }
         )
 
+
+    pub def clockNow(): LocalDateTime \ ReifyClock = 
+        let clock = ReifyClock.getClock();
+        let clock1 = ToJava.toJava(clock);
+        let ans = unsafe IO { JLocalDateTime.now(clock1) };
+        ToFlix.toFlix(ans)
 
     /// toX functions
 

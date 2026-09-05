@@ -37,9 +37,7 @@ pub mod InteropTime.LocalDate {
     use InteropTime.YearMonth.YearMonth
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
-
     use InteropTime.ClockZ.ReifyClock
-    use InteropTime.ClockZ.ClockNow
 
     import java.time.{LocalDate => JLocalDate}
     import java.time.{ZonedDateTime => JZonedDateTime}
@@ -146,35 +144,6 @@ pub mod InteropTime.LocalDate {
     }
 
 
-    pub eff LocalDateNow {
-        def now(): LocalDate
-    }
-
-    instance ClockNow[LocalDate] {
-        pub type E = LocalDateNow
-        pub def now(): LocalDate \ LocalDateNow = {
-           LocalDateNow.now()
-        }
-    }
-
-
-    // `JLocalDate.now` might not be in IO if we are using a constant clock e.g the 
-    // fixed clock
-    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - LocalDateNow) = x -> 
-        run {
-            f(x)
-        } with handler LocalDateNow {
-            def now(k) = {
-                let clock = ReifyClock.getClock();
-                let clock1 = ToJava.toJava(clock);
-                let ans = unsafe IO { JLocalDate.now(clock1) };
-                k(ToFlix.toFlix(ans))
-            }
-        }
-
-    pub def runLocalDateNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - LocalDateNow) = 
-        handle(f)()
-
     // Constructors
 
     pub def newLocalDate(year: {year = Int32}, 
@@ -221,6 +190,13 @@ pub mod InteropTime.LocalDate {
     pub def newWithYearDay(year: {year = Int32}, dayOfYear: {dayOfYear = Int32}): LocalDate \ Fail = 
         AdaptorChecked.of(() -> unsafe IO { JLocalDate.ofYearDay(year#year, dayOfYear#dayOfYear) })
 
+
+
+    pub def clockNow(): LocalDate \ ReifyClock = 
+        let clock = ReifyClock.getClock();
+        let clock1 = ToJava.toJava(clock);
+        let ans = unsafe IO { JLocalDate.now(clock1) };
+        ToFlix.toFlix(ans)
 
     /// `at` functions
 
