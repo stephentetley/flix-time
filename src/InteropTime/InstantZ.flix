@@ -33,9 +33,13 @@ pub mod InteropTime.InstantZ {
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneOffset.ZoneOffset
+
+    use InteropTime.ClockZ.ReifyClock
+    use InteropTime.ClockZ.ClockNow
     
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
+    import java.time.{Clock => JClock}
     import java.time.{Instant => JInstant}
     import java.time.{LocalDate => JLocalDate}
     import java.time.{LocalDateTime => JLocalDateTime}
@@ -46,11 +50,42 @@ pub mod InteropTime.InstantZ {
     import java.time.temporal.{ChronoField => JChronoField}
     import java.time.temporal.{ChronoUnit => JChronoUnit}
     import java.lang.{Exception => JException}
-
+    
+    
     ///
     /// A wrapper around a Java instant.
     ///
     pub enum InstantZ(JInstant)
+
+    pub eff InstantNow {
+        def now(): InstantZ
+    }
+
+    instance ClockNow[InstantZ] {
+        pub type E = InstantNow
+        pub def now(): InstantZ \ InstantNow = {
+           InstantNow.now()
+        }
+    }
+
+
+    // `JInstant.now` might not be in IO if we are using a constant clock e.g the 
+    // fixed clock
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - InstantNow) = x -> 
+        run {
+            f(x)
+        } with handler InstantNow {
+            def now(k) = {
+                let clock = ReifyClock.getClock();
+                let clock1 = ToJava.toJava(clock);
+                let ans = unsafe IO { JInstant.now(clock1) };
+                k(ToFlix.toFlix(ans))
+            }
+        }
+        
+    pub def runInstantNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - InstantNow) = 
+        handle(f)()
+
 
     ///
     /// Returns the given instant `x` as a String using ISO-8601 representation.
@@ -126,12 +161,13 @@ pub mod InteropTime.InstantZ {
     ///
     /// Returns the current time from the system clock.
     ///
-    pub def now(): InstantZ \ IO = InstantZ(JInstant.now())
+    pub def now(): InstantZ \ IO = InstantZ.InstantZ(JInstant.now())
 
     ///
     /// Returns the start of epoch instant - 1970-01-01T00:00:00Z
     ///
-    pub def epoch(): InstantZ = InstantZ(unsafe IO { JInstant.EPOCH}) 
+    pub def epoch(): InstantZ = 
+        AdaptorUnchecked.of(() -> unsafe IO { JInstant.EPOCH}) 
 
     pub def min(): InstantZ = InstantZ(unsafe IO { JInstant.MIN}) 
     

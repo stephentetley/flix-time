@@ -30,10 +30,69 @@ pub mod InteropTime.ClockZ {
     ///
     /// A wrapper around a Java Clock.
     ///
-    /// Should be an effect?
-    ///
     pub enum ClockZ(JClock)
 
+
+    ///
+    /// A effect for getting the current clock inside a run context.
+    ///
+    /// Users of flix-time shouldn't need to worry about this but we need 
+    /// it so Instant, etc. can provide nowWithClock() functions via the 
+    /// `ClockNow` trait
+    ///
+    pub eff ReifyClock {
+        def getClock(): ClockZ
+    }
+
+    pub trait ClockNow[t] {
+        pub type E: Eff
+        pub def now(): t \ ClockNow.E[t]
+    }
+
+
+    ///
+    /// An effect for running clocks.
+    ///
+    pub eff RunClock {
+        def instant(): InstantZ
+        def millis(): Int64
+        def getZone(): ZoneId
+    }
+
+    pub def handle(clock: ClockZ, f: a -> b \ ef): a -> b \ (ef - ReifyClock - RunClock) = x -> 
+        let jclock = ToJava.toJava(clock);
+        run {
+            f(x)
+        } with handler ReifyClock {
+            
+            def getClock(k) = k(clock)
+
+        } with handler RunClock {
+            
+            def instant(k) = {
+                let inst = unsafe IO { jclock.instant() };
+                k(ToFlix.toFlix(inst))
+            }
+
+            def millis(k) = {
+                let m = unsafe IO { jclock.millis() };
+                k(m)
+            }
+
+            def getZone(k) = {
+                let zone = unsafe IO { jclock.getZone() };
+                k(ToFlix.toFlix(zone))
+            }
+        }
+
+
+
+
+    pub def runClock(clock: ClockZ, f: Unit -> a \ ef): a \ (ef - ReifyClock - RunClock) = 
+        handle(clock, f)()
+
+
+    
 
     instance ToJava[ClockZ] {
         type Out = JClock
@@ -51,9 +110,11 @@ pub mod InteropTime.ClockZ {
 
     /// "factory methods" (e.g. `fixedClock`)
 
-    /// Pure or Impure? 
-    pub def fixedClock(inst: InstantZ, zone: ZoneId): ClockZ \ IO =
-        AdaptorUnchecked.op2(inst, zone, (inst1, zone1) -> { JClock.fixed(inst1, zone1) })
+
+    pub def fixedClock(inst: InstantZ, zone: ZoneId): ClockZ  =
+        AdaptorUnchecked.op2(inst, zone, (inst1, zone1) -> 
+            unsafe IO { JClock.fixed(inst1, zone1) }
+        )
         
     pub def systemClock(zone: ZoneId): ClockZ \ IO =
         AdaptorUnchecked.op(zone, zone1 -> { JClock.system(zone1) })
@@ -80,32 +141,6 @@ pub mod InteropTime.ClockZ {
     pub def tickMinutes(zone: ZoneId): ClockZ \ IO =
         AdaptorUnchecked.op(zone, zone1 -> { JClock.tickMinutes(zone1) })
 
-    /// Clock functions
 
-    ///
-    /// Impure as Clock keeps changing (so not a ToString instance).
-    /// This uses the `java.lang.Object.toString()` method, the result is not expected to be user friendly.
-    ///
-    pub def toString(x: ClockZ): String \ IO =
-        AdaptorUnchecked.extract(x, x1 -> { x1.toString() })
-
-    pub def millis(x: ClockZ): Int64 \ IO =
-        AdaptorUnchecked.extract(x, x1 -> { x1.millis() })
-
-    pub def instant(x: ClockZ): InstantZ \ IO =
-        AdaptorUnchecked.op(x, x1 -> { x1.instant() })
-
-
-    // Getters and Setters (getZone and withZone are abstract in Java)
-
-    // pub def getZone(c: Clock): ZoneId \ IO =
-    //     let c1 = ToJava.toJava(c);
-    //     ZoneId(c1.getZone())
-
-    // pub def withZone(zone: ZoneId, c: Clock): Clock \ IO =
-    //     let c1 = ToJava.toJava(c);
-    //     let zone1 = ToJava.toJava(zone);
-    //     Clock(c1.withZone(zone1))
-
-    
 }
+
