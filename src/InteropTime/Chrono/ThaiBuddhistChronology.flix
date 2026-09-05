@@ -34,71 +34,90 @@ pub mod InteropTime.Chrono.ThaiBuddhistChronology {
     import java.util.{Iterator => JIterator}
     import java.lang.{Exception => JException}
 
-    pub enum ThaiBuddhistChronology(JThaiBuddhistChronology)
-
-    instance ToString[ThaiBuddhistChronology] {
-        pub def toString(x: ThaiBuddhistChronology): String =
-            let ThaiBuddhistChronology.ThaiBuddhistChronology(x1) = x;
-            unsafe IO { x1.toString() }
+    pub eff ThaiBuddhistChronology {
+        def dateNow(): ThaiBuddhistDate
+        def dateNowWithClock(clock: ClockZ): ThaiBuddhistDate 
+        def dateNowWithZoneId(zone: ZoneId): ThaiBuddhistDate
+        def eraOf(i: Int32): ThaiBuddhistEra
+        def eras(): List[ThaiBuddhistEra]
+        def getCalendarType(): String
+        def getId(): String
+        def isLeapYear(prolepticYear: Int64): Bool
     }
 
-    instance ToJava[ThaiBuddhistChronology] {
-        type Out = JThaiBuddhistChronology
-        pub def toJava(x: ThaiBuddhistChronology): JThaiBuddhistChronology = 
-            let ThaiBuddhistChronology.ThaiBuddhistChronology(x1) = x;
-            x1
-    }
 
-    instance ToFlix[ThaiBuddhistChronology] {
-        type In = JThaiBuddhistChronology
-        pub def toFlix(x: JThaiBuddhistChronology): ThaiBuddhistChronology = ThaiBuddhistChronology.ThaiBuddhistChronology(x)
-    }
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + IO - ThaiBuddhistChronology) = x -> 
+        let jchrono = JThaiBuddhistChronology.INSTANCE;
+        run {
+            f(x)
+        } with handler ThaiBuddhistChronology {
+            
+            def dateNow(k) = {
+                let d1 = jchrono.dateNow();
+                k(ToFlix.toFlix(d1))
+            }
+            
+            def dateNowWithClock(clock, k) = {
+                let clock1 = ToJava.toJava(clock);
+                let d1 = jchrono.dateNow(clock1);
+                k(ToFlix.toFlix(d1))
+            }
 
-    pub def getInstance(): ThaiBuddhistChronology \ IO = 
-        AdaptorUnchecked.of(() -> checked_ecast(JThaiBuddhistChronology.INSTANCE))
+            def dateNowWithZoneId(zone, k) = {
+                let zone1 = ToJava.toJava(zone);
+                let d1 = jchrono.dateNow(zone1);
+                k(ToFlix.toFlix(d1))
+            }
 
-    pub def getCalendarType(x: ThaiBuddhistChronology): String  = 
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
+            def eraOf(i, k) = {
+                let ans = jchrono.eraOf(i);
+                k(ToFlix.toFlix(ans))
+            }
 
-    pub def dateNow(x: ThaiBuddhistChronology): ThaiBuddhistDate \ IO = 
-        AdaptorUnchecked.op(x, x1 -> { x1.dateNow() })
+            def eras(k) = {
+                let jiter: JIterator[JEra] = unsafe IO { let xs = jchrono.eras(); xs.iterator() };
+                let xs = Collection.toList(jiter, e1 -> unchecked_cast(e1 as JThaiBuddhistEra) |> ToFlix.toFlix);
+                k(xs)
+            }
 
-    pub def dateNowWithClock(x: ThaiBuddhistChronology, clock: ClockZ): ThaiBuddhistDate \ IO =
-        AdaptorUnchecked.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
+            def getCalendarType(k) = {
+                let ans = jchrono.getCalendarType();
+                k(ans)
+            }
 
-    ///
-    /// Returns the current date from the system clock in the specified time zone.
-    ///
-    pub def dateNowWithZoneId(x: ThaiBuddhistChronology, zone: ZoneId): ThaiBuddhistDate \ IO =
-        AdaptorUnchecked.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
+            def getId(k) = {
+                let ans = jchrono.getId();
+                k(ans)
+            }
 
-    pub def dateYearDay(x: ThaiBuddhistChronology, year: Int32, day: Int32): ThaiBuddhistDate =
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.dateYearDay(year, day) })
+            def isLeapYear(prolepticYear, k) = {
+                let ans = jchrono.isLeapYear(prolepticYear);
+                k(ans)
+            }
+
+
+        }
+
+    pub def runThaiBuddhistChronology(f: Unit -> a \ ef): a \ (ef + IO - ThaiBuddhistChronology) = 
+        handle(f)()
+
+    // pub def dateYearDay(x: ThaiBuddhistChronology, year: Int32, day: Int32): ThaiBuddhistDate =
+    //     AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.dateYearDay(year, day) })
         
-    pub def dateYearDayWithEra(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32, day: Int32): ThaiBuddhistDate =
-        AdaptorUnchecked.op2(x, era, (x1, era1) -> {
-            let ans: JChronoLocalDate = unsafe IO { x1.dateYearDay(era1, year, day) };
-            unchecked_cast(ans as JThaiBuddhistDate)
-        })
+    // pub def dateYearDayWithEra(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32, day: Int32): ThaiBuddhistDate =
+    //     AdaptorUnchecked.op2(x, era, (x1, era1) -> {
+    //         let ans: JChronoLocalDate = unsafe IO { x1.dateYearDay(era1, year, day) };
+    //         unchecked_cast(ans as JThaiBuddhistDate)
+    //     })
 
-    // Todo Result[]
-    pub def eraOf(x: ThaiBuddhistChronology, i: Int32): Result[String, ThaiBuddhistEra] = 
-        AdaptorUnchecked.opWithResult(x, x1 -> unsafe IO { x1.eraOf(i) })
+    // pub def isIsoBased(x: ThaiBuddhistChronology): Bool =
+    //     AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isIsoBased() })
 
-    pub def eras(x: ThaiBuddhistChronology): List[ThaiBuddhistEra] = 
-        AdaptorUnchecked.extract(x, x1 -> {
-            let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
-            Collection.toList(jiter, e1 -> unchecked_cast(e1 as JThaiBuddhistEra) |> ToFlix.toFlix)
-        })
+    // pub def isLeapYear(x: ThaiBuddhistChronology, year: Int64): Bool =
+    //     AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear(year) })
 
-    pub def isIsoBased(x: ThaiBuddhistChronology): Bool =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isIsoBased() })
-
-    pub def isLeapYear(x: ThaiBuddhistChronology, year: Int64): Bool =
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.isLeapYear(year) })
-
-    pub def prolepticYear(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32): Int32 =
-        AdaptorUnchecked.extract2(x, era, (x1, era1) -> unsafe IO { x1.prolepticYear(era1, year) })
+    // pub def prolepticYear(x: ThaiBuddhistChronology, era: ThaiBuddhistEra, year: Int32): Int32 =
+    //     AdaptorUnchecked.extract2(x, era, (x1, era1) -> unsafe IO { x1.prolepticYear(era1, year) })
 
 
 }

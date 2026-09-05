@@ -99,9 +99,6 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
 
-    pub def getChronology(x: ThaiBuddhistDate): ThaiBuddhistChronology = 
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
-
     pub def getEra(x: ThaiBuddhistDate): ThaiBuddhistEra = 
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })
 

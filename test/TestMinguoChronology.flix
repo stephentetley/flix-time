@@ -16,8 +16,8 @@
 
 pub mod TestMinguoChronology {
 
-    use Assert.{assertEq, assertTrue, assertFalse, fail};
-    
+    use Assert.{assertEq, assertTrue, assertFalse, fail}
+    use InteropTime.Chrono.MinguoChronology.MinguoChronology
     
     /////////////////////////////////////////////////////////////////////////////
     // eras                                                                    //
@@ -25,10 +25,12 @@ pub mod TestMinguoChronology {
 
     @Test
     def eras01(): Unit \ {Assert, IO} = 
-        let current = InteropTime.Chrono.MinguoChronology.getInstance();
-        let xs = InteropTime.Chrono.MinguoChronology.eras(current);
-        println("Minguo eras: ${xs}");
-        assertTrue(not List.isEmpty(xs))
+        let ans = run {
+            let xs = MinguoChronology.eras();
+            println("Minguo eras: ${xs}");
+            xs 
+        } with InteropTime.Chrono.MinguoChronology.runMinguoChronology;
+        assertTrue(not List.isEmpty(ans))
     
         
 }

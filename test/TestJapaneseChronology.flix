@@ -16,7 +16,7 @@
 
 pub mod TestJapaneseChronology {
 
-    use Assert.{assertEq, assertTrue, assertFalse, fail};
+    use Assert.{assertEq, assertTrue, assertFalse, fail}
     use InteropTime.Chrono.JapaneseChronology.JapaneseChronology
     
     /////////////////////////////////////////////////////////////////////////////

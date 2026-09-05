@@ -98,9 +98,6 @@ pub mod InteropTime.Chrono.MinguoDate {
         AdaptorUnchecked.op(x, x1 -> unsafe IO { JLocalDate.$from(x1) })
 
 
-    pub def getChronology(x: MinguoDate): MinguoChronology = 
-        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getChronology() })
-
     pub def getEra(x: MinguoDate): MinguoEra = 
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getEra() })
 

@@ -17,16 +17,14 @@
 
 pub mod InteropTime.Chrono.MinguoChronology {
 
+    use EffectExtras.Fail.Fail
     use JavaInterop.AdaptorExtras.Collection
     use JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.MinguoDate.MinguoDate
-    use InteropTime.Chrono.MinguoDate.MinguoDate.{MinguoDate}
     use InteropTime.Chrono.MinguoEra.MinguoEra
     use InteropTime.ClockZ.ClockZ
-    use InteropTime.ClockZ.ClockZ.{ClockZ}
     use InteropTime.ZoneId.ZoneId
-    use InteropTime.ZoneId.ZoneId.{ZoneId}
 
     import java.time.chrono.{MinguoChronology => JMinguoChronology}
     import java.time.chrono.{Chronology => JChronology, 
@@ -36,56 +34,72 @@ pub mod InteropTime.Chrono.MinguoChronology {
         MinguoEra => JMinguoEra}
     import java.util.{Iterator => JIterator}
 
-    pub enum MinguoChronology(JMinguoChronology)
-
-    instance ToString[MinguoChronology] {
-        pub def toString(x: MinguoChronology): String =
-            let MinguoChronology.MinguoChronology(x1) = x;
-            unsafe IO { x1.toString() }
+    pub eff MinguoChronology {
+        def dateNow(): MinguoDate
+        def dateNowWithClock(clock: ClockZ): MinguoDate 
+        def dateNowWithZoneId(zone: ZoneId): MinguoDate
+        def eraOf(i: Int32): MinguoEra
+        def eras(): List[MinguoEra]
+        def getCalendarType(): String
+        def getId(): String
+        def isLeapYear(prolepticYear: Int64): Bool
     }
 
-    instance ToJava[MinguoChronology] {
-        type Out = JMinguoChronology
-        pub def toJava(x: MinguoChronology): JMinguoChronology = 
-            let MinguoChronology.MinguoChronology(x1) = x;
-            x1
-    }
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + IO - MinguoChronology) = x -> 
+        let jchrono = JMinguoChronology.INSTANCE;
+        run {
+            f(x)
+        } with handler MinguoChronology {
+            
+            def dateNow(k) = {
+                let d1 = jchrono.dateNow();
+                k(ToFlix.toFlix(d1))
+            }
+            
+            def dateNowWithClock(clock, k) = {
+                let clock1 = ToJava.toJava(clock);
+                let d1 = jchrono.dateNow(clock1);
+                k(ToFlix.toFlix(d1))
+            }
 
-    instance ToFlix[MinguoChronology] {
-        type In = JMinguoChronology
-        pub def toFlix(x: JMinguoChronology): MinguoChronology = 
-            MinguoChronology.MinguoChronology(x)
-    }
+            def dateNowWithZoneId(zone, k) = {
+                let zone1 = ToJava.toJava(zone);
+                let d1 = jchrono.dateNow(zone1);
+                k(ToFlix.toFlix(d1))
+            }
+
+            def eraOf(i, k) = {
+                let ans = jchrono.eraOf(i);
+                k(ToFlix.toFlix(ans))
+            }
+
+            def eras(k) = {
+                let jiter: JIterator[JEra] = unsafe IO { let xs = jchrono.eras(); xs.iterator() };
+                let xs = Collection.toList(jiter, e1 -> unchecked_cast(e1 as JMinguoEra) |> ToFlix.toFlix);
+                k(xs)
+            }
+
+            def getCalendarType(k) = {
+                let ans = jchrono.getCalendarType();
+                k(ans)
+            }
+
+            def getId(k) = {
+                let ans = jchrono.getId();
+                k(ans)
+            }
+
+            def isLeapYear(prolepticYear, k) = {
+                let ans = jchrono.isLeapYear(prolepticYear);
+                k(ans)
+            }
 
 
-    pub def getInstance(): MinguoChronology \ IO = 
-        AdaptorUnchecked.of(() -> checked_ecast(JMinguoChronology.INSTANCE))
+        }
 
-    pub def getCalendarType(x: MinguoChronology): String = 
-        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getCalendarType() })
+    pub def runMinguoChronology(f: Unit -> a \ ef): a \ (ef + IO - MinguoChronology) = 
+        handle(f)()
 
-
-    pub def dateNow(x: MinguoChronology): MinguoDate \ IO = 
-        AdaptorUnchecked.op(x, x1 -> { x1.dateNow() })
-
-    pub def dateNowWithClock(x: MinguoChronology, clock: ClockZ): MinguoDate \ IO =
-        AdaptorUnchecked.op2(x, clock, (x1, clock1) -> { x1.dateNow(clock1) })
-
-
-    ///
-    /// Returns the current date from the system clock in the specified time zone.
-    ///
-    pub def dateNowWithZoneId(x: MinguoChronology, zone: ZoneId): MinguoDate \ IO =
-        AdaptorUnchecked.op2(x, zone, (x1, zone1) -> { x1.dateNow(zone1) })
-                
-
-    pub def eraOf(x: MinguoChronology, i: Int32): MinguoEra = 
-        AdaptorUnchecked.op(x, x1 ->  unsafe IO { x1.eraOf(i) })
-
-    pub def eras(x: MinguoChronology): List[MinguoEra] = 
-        AdaptorUnchecked.extract(x, x1 -> {
-            let jiter: JIterator[JEra] = unsafe IO { let xs = x1.eras(); xs.iterator() };
-            Collection.toList(jiter, e1 -> unchecked_cast(e1 as JMinguoEra) |> ToFlix.toFlix)
-        })
 
 }
+

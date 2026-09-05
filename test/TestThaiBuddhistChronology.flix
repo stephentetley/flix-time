@@ -16,7 +16,8 @@
 
 mod TestThaiBuddhistChronology {
 
-    use Assert.{assertEq, assertTrue, assertFalse, fail};
+    use Assert.{assertEq, assertTrue, assertFalse, fail}
+    use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology
 
     /////////////////////////////////////////////////////////////////////////////
     // dateNow                                                                 //
@@ -24,9 +25,10 @@ mod TestThaiBuddhistChronology {
 
     @Test
     def dateNow01(): Unit \ {Assert, IO} = 
-        let inst = InteropTime.Chrono.ThaiBuddhistChronology.getInstance();
-        let dt1 = InteropTime.Chrono.ThaiBuddhistChronology.dateNow(inst);
-        println(dt1);
+        run {
+            let dt = ThaiBuddhistChronology.dateNow();
+            println("ThaiBuddhistChronology.dateNow: ${dt}")
+        } with InteropTime.Chrono.ThaiBuddhistChronology.runThaiBuddhistChronology;
         assertTrue(true)
         
     /////////////////////////////////////////////////////////////////////////////
@@ -35,9 +37,10 @@ mod TestThaiBuddhistChronology {
 
     @Test
     def eraOf01(): Unit \ {Assert, IO} = 
-        let inst = InteropTime.Chrono.ThaiBuddhistChronology.getInstance();
-        let e1 = InteropTime.Chrono.ThaiBuddhistChronology.eraOf(inst, 1);
-        println(e1);
+        run {
+            let e1 = ThaiBuddhistChronology.eraOf(1);
+            println(e1)
+        } with InteropTime.Chrono.ThaiBuddhistChronology.runThaiBuddhistChronology;
         assertTrue(true)
 
     /////////////////////////////////////////////////////////////////////////////
@@ -46,9 +49,11 @@ mod TestThaiBuddhistChronology {
 
     @Test
     def eras01(): Unit \ {Assert, IO} = 
-        let current = InteropTime.Chrono.ThaiBuddhistChronology.getInstance();
-        let xs = InteropTime.Chrono.ThaiBuddhistChronology.eras(current);
-        println("Thai Buddhist eras: ${xs}");
-        assertTrue(not List.isEmpty(xs))
+        let ans = run {
+            let xs = ThaiBuddhistChronology.eras();
+            println("Thai Buddhist eras: ${xs}");
+            xs 
+        } with InteropTime.Chrono.ThaiBuddhistChronology.runThaiBuddhistChronology;
+        assertTrue(not List.isEmpty(ans))
 
 }
