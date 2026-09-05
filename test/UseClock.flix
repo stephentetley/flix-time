@@ -21,6 +21,7 @@ mod UseClock {
     use Assert.{assertEq}
     use EffectExtras.Fail.Fail
     use InteropTime.ClockZ
+    use InteropTime.ClockZ.ClockNow
     use InteropTime.ClockZ.RunClock
     use InteropTime.InstantZ
     use InteropTime.InstantZ.InstantNow
@@ -30,12 +31,12 @@ mod UseClock {
     pub def test01(): Unit \ Assert + IO + Fail + Time.Sleep = 
         let clock = ClockZ.fixedClock(InstantZ.epoch(), ZoneId.systemDefault());
         let dif = run {
-            let now1 = InstantNow.now();
-            println("InstantNow.now1: ${now1}");
+            let now1: InstantZ = ClockNow.now();
+            println("ClockNow.now1: ${now1}");
             let millis1 = RunClock.millis();
             Time.Sleep.sleep(Time.Duration.seconds(2));
-            let now2 = InstantNow.now();
-            println("InstantNow.now2: ${now2}");
+            let now2: InstantZ = ClockNow.now();
+            println("ClockNow.now2: ${now2}");
             let millis2 = RunClock.millis();
             millis1 - millis2
         } with InteropTime.InstantZ.runInstantNow

@@ -32,6 +32,8 @@ pub mod InteropTime.OffsetTime {
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneOffset.ZoneOffset
+    use InteropTime.ClockZ.ReifyClock
+    use InteropTime.ClockZ.ClockNow
     
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
@@ -126,6 +128,36 @@ pub mod InteropTime.OffsetTime {
                 unsafe IO { JOffsetTime.parse(s1, formatter1) }
             })
     }
+
+
+    pub eff OffsetTimeNow {
+        def now(): OffsetTime
+    }
+
+    instance ClockNow[OffsetTime] {
+        pub type E = OffsetTimeNow
+        pub def now(): OffsetTime \ OffsetTimeNow = {
+           OffsetTimeNow.now()
+        }
+    }
+
+
+    // `JOffsetTime.now` might not be in IO if we are using a constant clock e.g the 
+    // fixed clock
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - OffsetTimeNow) = x -> 
+        run {
+            f(x)
+        } with handler OffsetTimeNow {
+            def now(k) = {
+                let clock = ReifyClock.getClock();
+                let clock1 = ToJava.toJava(clock);
+                let ans = unsafe IO { JOffsetTime.now(clock1) };
+                k(ToFlix.toFlix(ans))
+            }
+        }
+
+    pub def runOffsetTimeNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - OffsetTimeNow) = 
+        handle(f)()
 
     /// Constructors
 

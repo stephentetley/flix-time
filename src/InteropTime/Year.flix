@@ -33,6 +33,8 @@ pub mod InteropTime.Year {
     use InteropTime.YearMonth.YearMonth
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
+    use InteropTime.ClockZ.ReifyClock
+    use InteropTime.ClockZ.ClockNow
 
 
     import java.lang.{Object, CharSequence}
@@ -118,6 +120,37 @@ pub mod InteropTime.Year {
                 unsafe IO { JYear.parse(s1, formatter1) }
             })
     }
+
+
+    pub eff YearNow {
+        def now(): Year
+    }
+
+    instance ClockNow[Year] {
+        pub type E = YearNow
+        pub def now(): Year \ YearNow = {
+           YearNow.now()
+        }
+    }
+
+
+    // `JYear.now` might not be in IO if we are using a constant clock e.g the 
+    // fixed clock
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - YearNow) = x -> 
+        run {
+            f(x)
+        } with handler YearNow {
+            def now(k) = {
+                let clock = ReifyClock.getClock();
+                let clock1 = ToJava.toJava(clock);
+                let ans = unsafe IO { JYear.now(clock1) };
+                k(ToFlix.toFlix(ans))
+            }
+        }
+
+    pub def runYearNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - YearNow) = 
+        handle(f)()
+
 
     /// Constructors
 

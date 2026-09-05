@@ -39,6 +39,8 @@ pub mod InteropTime.ZonedDateTime {
     use InteropTime.YearMonth.YearMonth
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneOffset.ZoneOffset
+    use InteropTime.ClockZ.ReifyClock
+    use InteropTime.ClockZ.ClockNow
 
     import java.time.{DayOfWeek => JDayOfWeek}
     import java.time.{Month => JMonth}
@@ -160,6 +162,36 @@ pub mod InteropTime.ZonedDateTime {
                                             second#second, nanoSecond#nanoSecond, 
                                             zone1) }
             ) 
+
+
+    pub eff ZonedDateTimeNow {
+        def now(): ZonedDateTime
+    }
+
+    instance ClockNow[ZonedDateTime] {
+        pub type E = ZonedDateTimeNow
+        pub def now(): ZonedDateTime \ ZonedDateTimeNow = {
+           ZonedDateTimeNow.now()
+        }
+    }
+
+
+    // `JZonedDateTime.now` might not be in IO if we are using a constant clock e.g the 
+    // fixed clock
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - ZonedDateTimeNow) = x -> 
+        run {
+            f(x)
+        } with handler ZonedDateTimeNow {
+            def now(k) = {
+                let clock = ReifyClock.getClock();
+                let clock1 = ToJava.toJava(clock);
+                let ans = unsafe IO { JZonedDateTime.now(clock1) };
+                k(ToFlix.toFlix(ans))
+            }
+        }
+
+    pub def runZonedDateTimeNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - ZonedDateTimeNow) = 
+        handle(f)()
 
 
     /// `now` and "abstract constructors" (e.g. `epoch`)

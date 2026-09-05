@@ -33,7 +33,9 @@ pub mod InteropTime.MonthDay {
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
-    
+    use InteropTime.ClockZ.ReifyClock
+    use InteropTime.ClockZ.ClockNow
+
     import java.time.{Month => JMonth}
     import java.time.{MonthDay => JMonthDay}
     import java.time.{LocalDate => JLocalDate}
@@ -118,6 +120,35 @@ pub mod InteropTime.MonthDay {
                 unsafe IO { JMonthDay.parse(s1, formatter1) }
             })
     }
+
+    pub eff MonthDayNow {
+        def now(): MonthDay
+    }
+
+    instance ClockNow[MonthDay] {
+        pub type E = MonthDayNow
+        pub def now(): MonthDay \ MonthDayNow = {
+           MonthDayNow.now()
+        }
+    }
+
+
+    // `JMonthDay.now` might not be in IO if we are using a constant clock e.g the 
+    // fixed clock
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - MonthDayNow) = x -> 
+        run {
+            f(x)
+        } with handler MonthDayNow {
+            def now(k) = {
+                let clock = ReifyClock.getClock();
+                let clock1 = ToJava.toJava(clock);
+                let ans = unsafe IO { JMonthDay.now(clock1) };
+                k(ToFlix.toFlix(ans))
+            }
+        }
+
+    pub def runMonthDayNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - MonthDayNow) = 
+        handle(f)()
 
 
     // Constructors
