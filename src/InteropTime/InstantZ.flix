@@ -57,35 +57,6 @@ pub mod InteropTime.InstantZ {
     ///
     pub enum InstantZ(JInstant)
 
-    pub eff InstantNow {
-        def now(): InstantZ
-    }
-
-    instance ClockNow[InstantZ] {
-        pub type E = InstantNow
-        pub def now(): InstantZ \ InstantNow = {
-           InstantNow.now()
-        }
-    }
-
-
-    // `JInstant.now` might not be in IO if we are using a constant clock e.g the 
-    // fixed clock
-    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - InstantNow) = x -> 
-        run {
-            f(x)
-        } with handler InstantNow {
-            def now(k) = {
-                let clock = ReifyClock.getClock();
-                let clock1 = ToJava.toJava(clock);
-                let ans = unsafe IO { JInstant.now(clock1) };
-                k(ToFlix.toFlix(ans))
-            }
-        }
-        
-    pub def runInstantNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - InstantNow) = 
-        handle(f)()
-
 
     ///
     /// Returns the given instant `x` as a String using ISO-8601 representation.
@@ -145,6 +116,37 @@ pub mod InteropTime.InstantZ {
         type In = JInstant
         pub def toFlix(x: JInstant): InstantZ = InstantZ.InstantZ(x)
     }
+
+
+    pub eff InstantNow {
+        def now(): InstantZ
+    }
+
+    instance ClockNow[InstantZ] {
+        pub type E = InstantNow
+        pub def now(): InstantZ \ InstantNow = {
+           InstantNow.now()
+        }
+    }
+
+
+    // `JInstant.now` might not be in IO if we are using a constant clock e.g the 
+    // fixed clock
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - InstantNow) = x -> 
+        run {
+            f(x)
+        } with handler InstantNow {
+            def now(k) = {
+                let clock = ReifyClock.getClock();
+                let clock1 = ToJava.toJava(clock);
+                let ans = unsafe IO { JInstant.now(clock1) };
+                k(ToFlix.toFlix(ans))
+            }
+        }
+
+    pub def runInstantNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - InstantNow) = 
+        handle(f)()
+
     
 
     /// Constructors

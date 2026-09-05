@@ -33,6 +33,8 @@ pub mod InteropTime.LocalTime {
     use InteropTime.ZonedDateTime.ZonedDateTime
     use InteropTime.ZoneId.ZoneId
     use InteropTime.ZoneOffset
+    use InteropTime.ClockZ.ReifyClock
+    use InteropTime.ClockZ.ClockNow
     
     import java.time.{Duration => JDuration}
     import java.time.{LocalTime => JLocalTime}
@@ -126,6 +128,37 @@ pub mod InteropTime.LocalTime {
                 unsafe IO { JLocalTime.parse(s1, formatter1) }
             })
     }
+
+
+    pub eff LocalTimeNow {
+        def now(): LocalTime
+    }
+
+    instance ClockNow[LocalTime] {
+        pub type E = LocalTimeNow
+        pub def now(): LocalTime \ LocalTimeNow = {
+           LocalTimeNow.now()
+        }
+    }
+
+
+    // `JLocalTime.now` might not be in IO if we are using a constant clock e.g the 
+    // fixed clock
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + ReifyClock - LocalTimeNow) = x -> 
+        run {
+            f(x)
+        } with handler LocalTimeNow {
+            def now(k) = {
+                let clock = ReifyClock.getClock();
+                let clock1 = ToJava.toJava(clock);
+                let ans = unsafe IO { JLocalTime.now(clock1) };
+                k(ToFlix.toFlix(ans))
+            }
+        }
+
+    pub def runLocalTimeNow(f: Unit -> a \ ef): a \ (ef + ReifyClock - LocalTimeNow) = 
+        handle(f)()
+
 
     // Constructors
 

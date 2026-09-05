@@ -1,7 +1,7 @@
 ### v0.23.0
    Formatter constructors now use "newX" naming convention.
    Reimplemented "XChronology" modules as effects.
-   ...
+   Reimplemented `ClockZ` as a type and an effect.
 
 ### v0.22.0
    Added `Compat` module to interface with old Java Date and Time classes.
