@@ -17,15 +17,14 @@
 
 
 pub mod InteropTime.Chrono.HijrahChronology {
-    use InteropTime.Chrono.HijrahChronology
 
     
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorExtras.Collection
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
-
-    use InteropLocale.Locale.Locale
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorExtras.Collection
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
+    use cl::InteropLocale.Locale.Locale
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
     use InteropTime.Chrono.HijrahEra.HijrahEra
@@ -55,6 +54,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
                         yearOfEra: {yearOfEra = Int32}, 
                         month: {month = Int32}, 
                         dayOfMonth: {dayOfMonth = Int32}): HijrahDate
+
         def dateNow(): HijrahDate
         def dateNowWithClock(clock: ClockZ): HijrahDate 
         def dateNowWithZoneId(zone: ZoneId): HijrahDate
@@ -69,7 +69,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
     }
 
 
-    pub def handle(f: a -> b \ ef): a -> b \ (ef + IO + Fail - HijrahChronology) = x -> 
+    pub def handle(f: a -> b \ ef): a -> b \ (ef + IO + Fail[InteropErr] - HijrahChronology) = x -> 
         let jchrono = JHijrahChronology.INSTANCE;
         run {
             f(x)
@@ -79,19 +79,17 @@ pub mod InteropTime.Chrono.HijrahChronology {
                 let d1 = jchrono.date(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth);
                 k(ToFlix.toFlix(d1))
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
-            def dateWithEra(era, yearOfEra, month, dayOfMonth, k) = try {
-                let era1 = ToJava.toJava(era);
-                let d1: JChronoLocalDate = jchrono.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth);
-                let ans = unchecked_cast(d1 as JHijrahDate);
+            def dateWithEra(hera, yearOfEra, month, dayOfMonth, k) = try {
+                let hera1: JHijrahEra = ToJava.toJava(hera);
+                let era1: JEra = checked_cast(hera1);
+                let ans: JHijrahDate = jchrono.date(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth);
                 k(ToFlix.toFlix(ans))
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
-
-
 
             def dateNow(k) = {
                 let d1 = jchrono.dateNow();
@@ -114,7 +112,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
                 let d1 = jchrono.dateEpochDay(epochDay);
                 k(ToFlix.toFlix(d1))
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
             def eraOf(i, k) = {
@@ -159,7 +157,7 @@ pub mod InteropTime.Chrono.HijrahChronology {
 
         }
 
-    pub def runHijrahChronology(f: Unit -> a \ ef): a \ (ef + IO + Fail - HijrahChronology) = 
+    pub def runHijrahChronology(f: Unit -> a \ ef): a \ (ef + IO + Fail[InteropErr] - HijrahChronology) = 
         handle(f)()
     
 

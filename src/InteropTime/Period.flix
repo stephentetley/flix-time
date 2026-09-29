@@ -17,9 +17,10 @@
 
 pub mod InteropTime.Period {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.LocalDate.LocalDate
     
@@ -126,7 +127,7 @@ pub mod InteropTime.Period {
 
     pub def newPeriod(years: {years = Int32}, 
                     months: {months = Int32}, 
-                    days: {days = Int32}): Period \ Fail =
+                    days: {days = Int32}): Period \ Fail[InteropErr] =
         AdaptorChecked.of(() -> 
             unsafe IO { JPeriod.of(years#years, months#months, days#days) }
         )

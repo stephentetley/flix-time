@@ -17,9 +17,10 @@
 
 pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorUnchecked
-    use JavaInterop.AdaptorChecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorChecked
 
     use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition
     use InteropTime.DayOfWeek.DayOfWeek
@@ -119,7 +120,7 @@ pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
                                         timeDefinition: {timeDefinition = TimeDefinition},
                                         standardOffset: {standardOffset = ZoneOffset}, 
                                         offsetBefore: {offsetBefore = ZoneOffset},
-                                        offsetAfter: {offsetAfter = ZoneOffset}): ZoneOffsetTransitionRule \ Fail =
+                                        offsetAfter: {offsetAfter = ZoneOffset}): ZoneOffsetTransitionRule \ Fail[InteropErr] =
             AdaptorChecked.op7(
                 month#month,
                 dayOfWeek#dayOfWeek,

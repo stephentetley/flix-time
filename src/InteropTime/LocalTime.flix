@@ -18,9 +18,10 @@
 
 pub mod InteropTime.LocalTime {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -121,7 +122,7 @@ pub mod InteropTime.LocalTime {
     instance TemporalParse[LocalTime] {
         type Formatter = TimeFormatter
         type Aef = {}
-        pub def parse(formatter: TimeFormatter, s: String): LocalTime \ Fail = 
+        pub def parse(formatter: TimeFormatter, s: String): LocalTime \ Fail[InteropErr] = 
             AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JLocalTime.parse(s1, formatter1) }
@@ -132,12 +133,12 @@ pub mod InteropTime.LocalTime {
 
     // Constructors
 
-    pub def newLocalTime(hour: {hour = Int32}, minute: {minute = Int32}): LocalTime \ Fail =
+    pub def newLocalTime(hour: {hour = Int32}, minute: {minute = Int32}): LocalTime \ Fail[InteropErr] =
         AdaptorChecked.of(() -> unsafe IO { JLocalTime.of(hour#hour, minute#minute) })
 
     pub def newLocalTimeWithSecond(hour: {hour = Int32}, 
                                     minute: {minute = Int32}, 
-                                    second: {second = Int32}): LocalTime \ Fail =
+                                    second: {second = Int32}): LocalTime \ Fail[InteropErr] =
         AdaptorChecked.of(() ->
             unsafe IO { JLocalTime.of(hour#hour, minute#minute, second#second) }
         )
@@ -145,7 +146,7 @@ pub mod InteropTime.LocalTime {
     pub def newLocalTimeWithSecondAndNano(hour: {hour = Int32}, 
                                             minute: {minute = Int32}, 
                                             second: {second = Int32}, 
-                                            nanoSecond: {nanoSecond = Int32}): LocalTime \ Fail =
+                                            nanoSecond: {nanoSecond = Int32}): LocalTime \ Fail[InteropErr] =
         AdaptorChecked.of(() ->
             unsafe IO { JLocalTime.of(hour#hour, 
                                         minute#minute, 

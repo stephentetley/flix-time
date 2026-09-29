@@ -18,9 +18,10 @@
 pub mod InteropTime.Chrono.ThaiBuddhistDate {
 
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.ThaiBuddhistChronology.ThaiBuddhistChronology
     use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra
@@ -76,7 +77,7 @@ pub mod InteropTime.Chrono.ThaiBuddhistDate {
 
     pub def newThaiBuddhistDate(prolepticYear: {prolepticYear = Int32}, 
                                 month: {month = Int32}, 
-                                dayOfMonth: {dayOfMonth = Int32}): ThaiBuddhistDate \ Fail =
+                                dayOfMonth: {dayOfMonth = Int32}): ThaiBuddhistDate \ Fail[InteropErr] =
         AdaptorChecked.of(() -> unsafe IO { JThaiBuddhistDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
     pub def newWithLocalDate(x: LocalDate): ThaiBuddhistDate = 

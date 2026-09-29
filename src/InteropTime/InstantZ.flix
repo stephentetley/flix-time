@@ -21,7 +21,7 @@
 
 pub mod InteropTime.InstantZ {
 
-    use JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.DurationZ.DurationZ
     use InteropTime.LocalDate

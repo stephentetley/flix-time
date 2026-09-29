@@ -20,9 +20,10 @@
 pub mod InteropTime.DurationZ {
 
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}
@@ -140,7 +141,7 @@ pub mod InteropTime.DurationZ {
     /// Return a new duration.
     ///
     pub def newDuration(seconds: {seconds = Int64}, 
-                        nanos: {nanos = Int64}): DurationZ \ Fail =
+                        nanos: {nanos = Int64}): DurationZ \ Fail[InteropErr] =
         AdaptorChecked.of(() -> unsafe IO { JDuration.ofSeconds(seconds#seconds, nanos#nanos) })
 
     /// "abstract constructors" (e.g. `zero`)

@@ -16,18 +16,23 @@
 
 mod TestMonthDay {
     
+    use ee::EffectExtras
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+
     use Assert.{assertEq, assertTrue, assertFalse, fail};
     use ToString.toString;
-    use EffectExtras.Fail.Fail
 
     /////////////////////////////////////////////////////////////////////////////
     // toString                                                                //
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def toString01(): Unit \ {Assert, Fail, IO} = 
-        InteropTime.MonthDay.newMonthDay(month = 1, dayOfMonth = 1) |> toString |> println;
-        assertTrue(true)
+    def toString01(): Unit \ {Assert, IO} = 
+        run {
+            InteropTime.MonthDay.newMonthDay(month = 1, dayOfMonth = 1) |> toString |> println;
+            assertTrue(true)
+        } with EffectExtras.Fail.runWithIO
 
     /////////////////////////////////////////////////////////////////////////////
     // fromLocalDate                                                           //
@@ -45,9 +50,11 @@ mod TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def getDayOfMonth01(): Unit \ Assert + Fail =         
-        let md = InteropTime.MonthDay.newMonthDay(month = 1, dayOfMonth = 1);
-        assertEq(expected = 1, InteropTime.MonthDay.getDayOfMonth(md))
+    def getDayOfMonth01(): Unit \ Assert + IO =
+        run {
+            let md = InteropTime.MonthDay.newMonthDay(month = 1, dayOfMonth = 1);
+            assertEq(expected = 1, InteropTime.MonthDay.getDayOfMonth(md))
+        } with EffectExtras.Fail.runWithIO
 
     // @Test
     // def get02(): Int32 \ IO =         
@@ -57,3 +64,4 @@ mod TestMonthDay {
     //     i  
 
 }
+

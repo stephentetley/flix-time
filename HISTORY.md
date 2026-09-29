@@ -1,3 +1,7 @@
+### v0.24.0
+   Updated dependencies.
+   Updated to use package mounts.
+
 ### v0.23.0
    Formatter constructors now use "newX" naming convention.
    Reimplemented "XChronology" modules as effects.

@@ -17,9 +17,10 @@
 
 pub mod InteropTime.Chrono.MinguoDate {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.MinguoChronology.MinguoChronology
     use InteropTime.Chrono.MinguoEra.MinguoEra
@@ -75,7 +76,7 @@ pub mod InteropTime.Chrono.MinguoDate {
 
     pub def newMinguoDate(prolepticYear: {prolepticYear = Int32}, 
                         month: {month = Int32}, 
-                        dayOfMonth: {dayOfMonth = Int32}): MinguoDate \ Fail =
+                        dayOfMonth: {dayOfMonth = Int32}): MinguoDate \ Fail[InteropErr] =
         AdaptorChecked.of(() -> unsafe IO { JMinguoDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
     pub def newWithLocalDate(x: LocalDate): MinguoDate = 

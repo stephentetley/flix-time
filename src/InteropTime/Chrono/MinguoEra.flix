@@ -17,11 +17,11 @@
 
 pub mod InteropTime.Chrono.MinguoEra {
     
-    use JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
 
-    use InteropLocale.Locale.Locale
+    use cl::InteropLocale.Locale.Locale
 
     import java.time.chrono.{MinguoEra => JMinguoEra }
     import java.lang.{Enum => JEnum }

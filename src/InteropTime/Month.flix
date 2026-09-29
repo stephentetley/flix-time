@@ -18,7 +18,7 @@
 pub mod InteropTime.Month {
 
 
-    use JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
@@ -28,7 +28,7 @@ pub mod InteropTime.Month {
     use InteropTime.YearMonth.YearMonth
     use InteropTime.ZonedDateTime.ZonedDateTime
     
-    use InteropLocale.Locale.Locale
+    use cl::InteropLocale.Locale.Locale
     
     import java.time.{Month => JMonth}
     import java.lang.{Enum => JEnum}

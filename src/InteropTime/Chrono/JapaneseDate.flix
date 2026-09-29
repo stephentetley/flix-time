@@ -19,9 +19,10 @@
 pub mod InteropTime.Chrono.JapaneseDate {
 
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
     use InteropTime.Chrono.MinguoDate.MinguoDate
@@ -87,13 +88,13 @@ pub mod InteropTime.Chrono.JapaneseDate {
     ///
     pub def newJapaneseDate(prolepticYear: {prolepticYear = Int32}, 
                             month: {month = Int32}, 
-                            dayOfMonth: {dayOfMonth = Int32}): JapaneseDate \ Fail =
+                            dayOfMonth: {dayOfMonth = Int32}): JapaneseDate \ Fail[InteropErr] =
         AdaptorChecked.of(() -> unsafe IO { JJapaneseDate.of(prolepticYear#prolepticYear, month#month, dayOfMonth#dayOfMonth) })
 
     pub def newJapaneseDateWithJapaneseEra(era: JapaneseEra, 
                                             yearOfEra: {yearOfEra = Int32}, 
                                             month: {month = Int32}, 
-                                            dayOfMonth: {dayOfMonth = Int32}): JapaneseDate \ Fail =
+                                            dayOfMonth: {dayOfMonth = Int32}): JapaneseDate \ Fail[InteropErr] =
         
         AdaptorChecked.op(era, era1 -> 
             unsafe IO { JJapaneseDate.of(era1, yearOfEra#yearOfEra, month#month, dayOfMonth#dayOfMonth) }

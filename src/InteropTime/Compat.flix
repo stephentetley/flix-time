@@ -16,8 +16,9 @@
 
 pub mod InteropTime.Compat { 
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
 
     use InteropTime.InstantZ
     use InteropTime.LocalDate
@@ -27,31 +28,31 @@ pub mod InteropTime.Compat {
 
     import java.util.{Date => JDate}
 
-    pub def utilDateToInstant(d: JDate): InstantZ \ Fail = 
+    pub def utilDateToInstant(d: JDate): InstantZ \ Fail[InteropErr] = 
         AdaptorChecked.of(() -> unsafe IO { d.toInstant() })
 
-    pub def utilDateToLocalDate(d: JDate): LocalDate \ IO + Fail = 
+    pub def utilDateToLocalDate(d: JDate): LocalDate \ IO + Fail[InteropErr] = 
         let ins = utilDateToInstant(d);
         let zone = ZoneId.systemDefault();
         InstantZ.toLocalDate(zone, ins)
 
 
-    pub def utilDateToLocalDateTime(d: JDate): LocalDateTime \ IO + Fail = 
+    pub def utilDateToLocalDateTime(d: JDate): LocalDateTime \ IO + Fail[InteropErr] = 
         let ins = utilDateToInstant(d);
         let zone = ZoneId.systemDefault();
         InstantZ.toLocalDateTime(zone, ins)
 
-    pub def instantToUtilDate(ins: InstantZ): JDate \ Fail = 
+    pub def instantToUtilDate(ins: InstantZ): JDate \ Fail[InteropErr] = 
         AdaptorChecked.extract(ins, ins1 -> unsafe IO { JDate.$from(ins1) })
 
-    pub def localDateToUtilDate(ld: LocalDate): JDate \ IO + Fail = 
+    pub def localDateToUtilDate(ld: LocalDate): JDate \ IO + Fail[InteropErr] = 
         let ldt = LocalDate.atStartOfDay(ld);
         let zone = ZoneId.systemDefault();
         let zdt = LocalDateTime.toZonedDateTime(zone, ldt);
         let ins = ZonedDateTime.toInstant(zdt);
         instantToUtilDate(ins)
 
-    pub def localDateTimeToUtilDate(ldt: LocalDateTime): JDate \ IO + Fail = 
+    pub def localDateTimeToUtilDate(ldt: LocalDateTime): JDate \ IO + Fail[InteropErr] = 
         let zone = ZoneId.systemDefault();
         let zdt = LocalDateTime.toZonedDateTime(zone, ldt);
         let ins = ZonedDateTime.toInstant(zdt);

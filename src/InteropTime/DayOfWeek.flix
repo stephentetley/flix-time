@@ -18,7 +18,8 @@
 
 pub mod InteropTime.DayOfWeek {
 
-    use JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorUnchecked
+    use cl::InteropLocale.Locale.Locale
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
@@ -26,7 +27,7 @@ pub mod InteropTime.DayOfWeek {
     use InteropTime.OffsetDateTime.OffsetDateTime
     use InteropTime.ZonedDateTime.ZonedDateTime
 
-    use InteropLocale.Locale.Locale
+    
 
     import java.time.{DayOfWeek => JDayOfWeek}
     import java.lang.{Enum => JEnum}

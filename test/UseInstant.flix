@@ -18,7 +18,9 @@
 
 mod UseInstant {
 
-    use EffectExtras.Fail.Fail
+    use ee::EffectExtras
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
     use InteropTime.InstantZ
 
     @Test
@@ -27,26 +29,30 @@ mod UseInstant {
         println("Instant now(): ${ins}")
 
     @Test
-    pub def test02(): Unit \ IO + Fail = 
-        let ld = InteropTime.LocalDate.newLocalDate(year=2026, month=8, dayOfMonth=30);
-        let zone = InteropTime.ZoneId.utc();
-        let ins1 = InteropTime.LocalDate.toInstantAtStartOfDay(zone, ld);
-        println("Instant ins1(): ${ins1}");
-        println("Instant ins1.getNano(): ${InstantZ.getNano(ins1)}")
+    pub def test02(): Unit \ IO - Fail[InteropErr] = 
+        run {
+            let ld = InteropTime.LocalDate.newLocalDate(year=2026, month=8, dayOfMonth=30);
+            let zone = InteropTime.ZoneId.utc();
+            let ins1 = InteropTime.LocalDate.toInstantAtStartOfDay(zone, ld);
+            println("Instant ins1(): ${ins1}");
+            println("Instant ins1.getNano(): ${InstantZ.getNano(ins1)}")
+        } with EffectExtras.Fail.runWithIO
 
     @Test
-    pub def test03(): Unit \ IO + Fail = 
-        let ldt = InteropTime.LocalDateTime.now();
-        let zone = InteropTime.ZoneId.utc();
-        let ins1 = InteropTime.LocalDateTime.toInstant(zone, ldt);
-        println("Instant ins1(): ${ins1}");
-        println("Instant ins1.getNano(): ${InstantZ.getNano(ins1)}");
-        println("Instant ins1.getEpochSecond(): ${InstantZ.getEpochSecond(ins1)}");
-        let i = InstantZ.getNano(ins1) + 10;
-        let ins2 = InstantZ.setNano(i, ins1);
-        println("Instant ins2.getNano(): ${InstantZ.getNano(ins2)}");
-        let i2 = InstantZ.getEpochSecond(ins1) + 10i64;
-        let ins3 = InstantZ.setEpochSecond(i2, ins1);
-        println("Instant ins3.getEpochSecond(): ${InstantZ.getEpochSecond(ins3)}")
+    pub def test03(): Unit \ IO - Fail[InteropErr] = 
+        run {
+            let ldt = InteropTime.LocalDateTime.now();
+            let zone = InteropTime.ZoneId.utc();
+            let ins1 = InteropTime.LocalDateTime.toInstant(zone, ldt);
+            println("Instant ins1(): ${ins1}");
+            println("Instant ins1.getNano(): ${InstantZ.getNano(ins1)}");
+            println("Instant ins1.getEpochSecond(): ${InstantZ.getEpochSecond(ins1)}");
+            let i = InstantZ.getNano(ins1) + 10;
+            let ins2 = InstantZ.setNano(i, ins1);
+            println("Instant ins2.getNano(): ${InstantZ.getNano(ins2)}");
+            let i2 = InstantZ.getEpochSecond(ins1) + 10i64;
+            let ins3 = InstantZ.setEpochSecond(i2, ins1);
+            println("Instant ins3.getEpochSecond(): ${InstantZ.getEpochSecond(ins3)}")
+        } with EffectExtras.Fail.runWithIO
 
 }

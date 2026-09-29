@@ -17,10 +17,11 @@
 
 pub mod InteropTime.Format.DateTimeFormatterBuilder {
 
-    use EffectExtras.Fail.Fail
-    use InteropLocale.Locale.Locale
-
-    use JavaInterop.AdaptorExtras.Collection
+    use ee::EffectExtras
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorExtras.Collection
+    use cl::InteropLocale.Locale.Locale
 
     use InteropTime.ZoneId
     use InteropTime.Format.DateTimeFormatter.DateTimeFormatter
@@ -69,7 +70,7 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
         def parseLenient(): Unit
     }
 
-    pub def handle(f: a -> b \ ef): a -> (DateTimeFormatter, b) \ (ef + Fail - DateTimeFormatterBuilder) = x -> {
+    pub def handle(f: a -> b \ ef): a -> (DateTimeFormatter, b) \ (ef + Fail[InteropErr] - DateTimeFormatterBuilder) = x -> {
         let builder = unsafe IO { new JDateTimeFormatterBuilder() };
         let ans = run {
             f(x)
@@ -77,121 +78,121 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             
             def appendFormatter(fmt, k) = {
                 let fmt1 = ToJava.toJava(fmt);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.append(fmt1) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.append(fmt1) };
                 k()
             }
 
             def appendChronologyId(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendChronologyId() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendChronologyId() };
                 k()
             }
 
             def appendChronologyText(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendChronologyText(style1) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendChronologyText(style1) };
                 k()
             }
 
             def appendDayPeriodText(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendDayPeriodText(style1) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendDayPeriodText(style1) };
                 k()
             }
 
             def appendGenericZoneText(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendGenericZoneText(style1) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendGenericZoneText(style1) };
                 k()
             }
 
             def appendInstant(k) = try {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendInstant() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendInstant() };
                 k()
             } catch { 
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
             def appendInstantWithFractionalDigits(i, k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendInstant(i) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendInstant(i) };
                 k()
             }
 
             def appendStringLiteral(s, k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLiteral(s) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendLiteral(s) };
                 k()
             }
 
             def appendCharLiteral(c, k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLiteral(c) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendLiteral(c) };
                 k()
             }
 
             def appendLocalized(timeStyle, dateStyle, k) = try {
                 let timeStyle1 = ToJava.toJava(timeStyle#timeStyle);
                 let dateStyle1 = ToJava.toJava(dateStyle#dateStyle);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLocalized(timeStyle1, dateStyle1) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendLocalized(timeStyle1, dateStyle1) };
                 k()
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
             def appendLocalizedWithTemplateString(s, k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLocalized(s) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendLocalized(s) };
                 k()
             }
 
             def appendLocalizedOffset(style, k) = try {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendLocalizedOffset(style1) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendLocalizedOffset(style1) };
                 k()
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
             def appendOffset(pattern, noOffsetText, k) = try {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendOffset(pattern#pattern, noOffsetText#noOffsetText) };
                 k()
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
             def appendOffsetId(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendOffsetId() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendOffsetId() };
                 k()
             }
 
             def appendOptional(fmt, k) = {
                 let fmt1 = ToJava.toJava(fmt);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendOptional(fmt1) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendOptional(fmt1) };
                 k()
             }
 
             def appendPattern(patt, k) = try {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendPattern(patt) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendPattern(patt) };
                 k()
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
             def appendZoneId(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneId() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendZoneId() };
                 k()
             }
 
 
             def appendZoneOrOffsetId(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneOrOffsetId() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendZoneOrOffsetId() };
                 k()
             }
 
             def appendZoneRegionId(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneRegionId() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendZoneRegionId() };
                 k()
             }
 
             def appendZoneText(style, k) = {
                 let style1 = ToJava.toJava(style);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1) };
                 k()
             }
 
@@ -199,54 +200,54 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
             def appendZoneTextWithZoneIds(style, preferredZones, k) = {
                 let style1 = ToJava.toJava(style);
                 let jset: JSet[JZoneId] = Collection.toJSet(preferredZones, ToJava.toJava);
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1, jset) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.appendZoneText(style1, jset) };
                 k()
             }
 
             def optionalStart(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.optionalStart() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.optionalStart() };
                 k()
             }
 
             def optionalEnd(k) = try {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.optionalEnd() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.optionalEnd() };
                 k()
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
 
             def padNext(n, k) = try {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.padNext(n) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.padNext(n) };
                 k()
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
             def padNextWithChar(n, ch, k) = try {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.padNext(n, ch) };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.padNext(n, ch) };
                 k()
             } catch {
-                case ex: JException => Fail.report(ex.getMessage())
+                case ex: JException => Fail.report(InteropErr.Exception(ex.getMessage()))
             }
 
             def parseCaseSensitive(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.parseCaseSensitive() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.parseCaseSensitive() };
                 k()
             }
 
             def parseCaseInsensitive(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.parseCaseInsensitive() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.parseCaseInsensitive() };
                 k()
             }
 
             def parseStrict(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.parseStrict() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.parseStrict() };
                 k()
             }
 
             def parseLenient(k) = {
-                unsafe IO as {ef + Fail - DateTimeFormatterBuilder} { discard builder.parseLenient() };
+                unsafe IO as {ef + Fail[InteropErr] - DateTimeFormatterBuilder} { discard builder.parseLenient() };
                 k()
             }
             
@@ -256,16 +257,16 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
     }
 
 
-    pub def runDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): (DateTimeFormatter, a) \ (ef + Fail - DateTimeFormatterBuilder) = 
+    pub def runDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): (DateTimeFormatter, a) \ (ef + Fail[InteropErr] - DateTimeFormatterBuilder) = 
         handle(buildfun)()
 
-    pub def execDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): DateTimeFormatter \ (ef + Fail - DateTimeFormatterBuilder)  = 
+    pub def execDateTimeFormatterBuilder(buildfun: Unit -> a \ ef): DateTimeFormatter \ (ef + Fail[InteropErr] - DateTimeFormatterBuilder)  = 
         handle(buildfun)() |> fst
 
-    pub def runDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[String, (DateTimeFormatter, a)] \ (ef - Fail - DateTimeFormatterBuilder)  = 
+    pub def runDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[InteropErr, (DateTimeFormatter, a)] \ (ef - Fail[InteropErr] - DateTimeFormatterBuilder)  = 
         run { handle(buildfun)() } with EffectExtras.Fail.runWithResult
 
-    pub def execDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[String, DateTimeFormatter] \ (ef - Fail - DateTimeFormatterBuilder)  = 
+    pub def execDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[InteropErr, DateTimeFormatter] \ (ef - Fail[InteropErr] - DateTimeFormatterBuilder)  = 
         { run { handle(buildfun)() } with EffectExtras.Fail.runWithResult } |> Result.map(fst)
 
 

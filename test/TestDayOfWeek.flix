@@ -16,6 +16,8 @@
 
 mod TestDayOfWeek {
 
+    use cl::InteropLocale
+
     use InteropTime.DayOfWeek
     use InteropTime.DayOfWeek.DayOfWeek
 

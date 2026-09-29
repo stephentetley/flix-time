@@ -17,9 +17,10 @@
 
 pub mod InteropTime.ZonedDateTime {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -135,7 +136,7 @@ pub mod InteropTime.ZonedDateTime {
     instance TemporalParse[ZonedDateTime] {
         type Formatter = DateTimeFormatter
         type Aef = {}
-        pub def parse(formatter: DateTimeFormatter, s: String): ZonedDateTime \ Fail = 
+        pub def parse(formatter: DateTimeFormatter, s: String): ZonedDateTime \ Fail[InteropErr] = 
             AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JZonedDateTime.parse(s1, formatter1) }
@@ -152,7 +153,7 @@ pub mod InteropTime.ZonedDateTime {
                             minute: {minute = Int32}, 
                             second: {second = Int32}, 
                             nanoSecond: {nanoSecond = Int32}, 
-                            zone: ZoneId): ZonedDateTime \ Fail =
+                            zone: ZoneId): ZonedDateTime \ Fail[InteropErr] =
         AdaptorChecked.op(zone, zone1 -> 
             unsafe IO { JZonedDateTime.of(year#year, 
                                             month#month, 

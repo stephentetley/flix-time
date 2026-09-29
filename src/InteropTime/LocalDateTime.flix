@@ -18,9 +18,10 @@
 
 pub mod InteropTime.LocalDateTime {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -133,7 +134,7 @@ pub mod InteropTime.LocalDateTime {
     instance TemporalParse[LocalDateTime] {
         type Formatter = DateTimeFormatter
         type Aef = {}
-        pub def parse(formatter: DateTimeFormatter, s: String): LocalDateTime \ Fail = 
+        pub def parse(formatter: DateTimeFormatter, s: String): LocalDateTime \ Fail[InteropErr] = 
             AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JLocalDateTime.parse(s1, formatter1) }
@@ -147,7 +148,7 @@ pub mod InteropTime.LocalDateTime {
                             month: {month = Int32}, 
                             dayOfMonth: {dayOfMonth = Int32}, 
                             hour: {hour = Int32}, 
-                            minute: {minute = Int32}): LocalDateTime \ Fail =
+                            minute: {minute = Int32}): LocalDateTime \ Fail[InteropErr] =
         AdaptorChecked.of(() -> 
             unsafe IO { JLocalDateTime.of(year#year, 
                                             month#month, 
@@ -161,7 +162,7 @@ pub mod InteropTime.LocalDateTime {
                                         dayOfMonth: {dayOfMonth = Int32},
                                         hour: {hour = Int32}, 
                                         minute: {minute = Int32}, 
-                                        second: {second = Int32}): LocalDateTime  \ Fail =
+                                        second: {second = Int32}): LocalDateTime  \ Fail[InteropErr] =
         AdaptorChecked.of(() -> 
             unsafe IO { JLocalDateTime.of(year#year, 
                                             month#month, 
@@ -177,7 +178,7 @@ pub mod InteropTime.LocalDateTime {
                                                 hour: {hour = Int32}, 
                                                 minute: {minute = Int32}, 
                                                 second: {second = Int32}, 
-                                                nanoSecond: {nanoSecond = Int32 }): LocalDateTime \ Fail =
+                                                nanoSecond: {nanoSecond = Int32 }): LocalDateTime \ Fail[InteropErr] =
         AdaptorChecked.of(() -> 
             unsafe IO { JLocalDateTime.of(year#year, 
                                             month#month, 

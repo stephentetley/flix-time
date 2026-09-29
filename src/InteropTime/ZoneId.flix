@@ -18,12 +18,13 @@
 
 pub mod InteropTime.ZoneId {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorExtras.Collection
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorExtras.Collection
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
     
-    use InteropLocale.Locale
+    use cl::InteropLocale.Locale
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Zone.ZoneRules.ZoneRules
@@ -83,12 +84,12 @@ pub mod InteropTime.ZoneId {
 
     /// Constructors
 
-    pub def newZoneId(zone: {zone = String}): ZoneId \ Fail =
+    pub def newZoneId(zone: {zone = String}): ZoneId \ Fail[InteropErr] =
         AdaptorChecked.of(() -> unsafe IO { JZoneId.of(zone#zone) })
 
     /// Ideally not in IO...
     pub def newZoneIdWithAliases(zone: {zone = String}, 
-                                aliases: Map[String, String]): ZoneId \ Fail =
+                                aliases: Map[String, String]): ZoneId \ Fail[InteropErr] =
         AdaptorChecked.of(() -> {
             let jmap = Collection.toJMap(aliases, identity, identity);
             unsafe IO { JZoneId.of(zone#zone, jmap) }
@@ -97,9 +98,9 @@ pub mod InteropTime.ZoneId {
 
     /// "abstract constructors" (e.g. `utc`)
 
-    pub def utc(): ZoneId \ Fail = newZoneId(zone = "Z")
+    pub def utc(): ZoneId \ Fail[InteropErr] = newZoneId(zone = "Z")
 
-    pub def systemDefault(): ZoneId \ IO  + Fail =
+    pub def systemDefault(): ZoneId \ IO  + Fail[InteropErr] =
         AdaptorChecked.of(() -> JZoneId.systemDefault())
 
 

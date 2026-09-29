@@ -17,10 +17,10 @@
 pub mod InteropTime.Format.DecimalStyle {
 
 
-    use InteropLocale.Locale.{Locale}
+    use cl::InteropLocale.Locale.{Locale}
 
-    use JavaInterop.AdaptorExtras.Collection 
-    use JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorExtras.Collection 
+    use ae::JavaInterop.AdaptorUnchecked
 
     import java.time.format.{DecimalStyle => JDecimalStyle}
     import java.util.{Locale => JLocale, 

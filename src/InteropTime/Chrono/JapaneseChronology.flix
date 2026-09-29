@@ -19,8 +19,8 @@
 
 pub mod InteropTime.Chrono.JapaneseChronology {
 
-    use JavaInterop.AdaptorExtras.Collection
-    use JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorExtras.Collection
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Chrono.JapaneseDate.JapaneseDate
     use InteropTime.Chrono.JapaneseEra.JapaneseEra

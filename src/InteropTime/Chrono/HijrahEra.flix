@@ -17,9 +17,9 @@
 
 pub mod InteropTime.Chrono.HijrahEra {
     
-    use InteropLocale.Locale.Locale
-    
-    use JavaInterop.AdaptorUnchecked
+    use cl::InteropLocale.Locale.Locale
+    use ae::JavaInterop.AdaptorUnchecked
+
     use InteropTime.Format.TextStyle.TextStyle
 
     

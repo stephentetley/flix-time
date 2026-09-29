@@ -17,9 +17,10 @@
 
 pub mod InteropTime.YearMonth {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -115,7 +116,7 @@ pub mod InteropTime.YearMonth {
     instance TemporalParse[YearMonth] {
         type Formatter = DateFormatter
         type Aef = {}
-        pub def parse(formatter: DateFormatter, s: String): YearMonth \ Fail = 
+        pub def parse(formatter: DateFormatter, s: String): YearMonth \ Fail[InteropErr] = 
             AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JYearMonth.parse(s1, formatter1) }
@@ -125,10 +126,10 @@ pub mod InteropTime.YearMonth {
 
     /// Constructors
 
-    pub def newYearMonth(year: {year = Int32}, month: {month = Int32}): YearMonth \ Fail =
+    pub def newYearMonth(year: {year = Int32}, month: {month = Int32}): YearMonth \ Fail[InteropErr] =
         AdaptorChecked.of(() -> unsafe IO { JYearMonth.of(year#year, month#month) })
 
-    pub def newYearMonthWithMonth(year: {year = Int32}, month: {month = Month}): YearMonth \ Fail =
+    pub def newYearMonthWithMonth(year: {year = Int32}, month: {month = Month}): YearMonth \ Fail[InteropErr] =
         AdaptorChecked.op(month#month, month1 -> unsafe IO { JYearMonth.of(year#year, month1) })
 
 
@@ -197,7 +198,7 @@ pub mod InteropTime.YearMonth {
     pub def getMonth(x: YearMonth): Month =
         AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getMonth() })
 
-    pub def withMonth(month: Month, x: YearMonth): YearMonth \ Fail =
+    pub def withMonth(month: Month, x: YearMonth): YearMonth \ Fail[InteropErr] =
         newYearMonthWithMonth(year = getYear(x), month = month)
 
     pub def getMonthValue(x: YearMonth): Int32 =

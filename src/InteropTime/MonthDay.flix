@@ -19,9 +19,10 @@
 pub mod InteropTime.MonthDay {
 
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
     
     use InteropTime.Format.TemporalFormat
     use InteropTime.Format.TemporalParse
@@ -113,7 +114,7 @@ pub mod InteropTime.MonthDay {
     instance TemporalParse[MonthDay] {
         type Formatter = DateFormatter
         type Aef = {}
-        pub def parse(formatter: DateFormatter, s: String): MonthDay \ Fail = 
+        pub def parse(formatter: DateFormatter, s: String): MonthDay \ Fail[InteropErr] = 
             AdaptorChecked.op(formatter, formatter1 -> {
                 let s1 = String.trim(s);
                 unsafe IO { JMonthDay.parse(s1, formatter1) }
@@ -125,13 +126,13 @@ pub mod InteropTime.MonthDay {
     // Constructors
 
     pub def newMonthDay(month: {month = Int32}, 
-                        dayOfMonth: {dayOfMonth = Int32}): MonthDay \ Fail =
+                        dayOfMonth: {dayOfMonth = Int32}): MonthDay \ Fail[InteropErr] =
         AdaptorChecked.of(() -> 
             unsafe IO { JMonthDay.of(month#month, dayOfMonth#dayOfMonth) }
         )
 
     pub def newMonthDayWithMonth(month: {month = Month}, 
-                                dayOfMonth: {dayOfMonth = Int32}): MonthDay \ Fail =
+                                dayOfMonth: {dayOfMonth = Int32}): MonthDay \ Fail[InteropErr] =
         AdaptorChecked.op(month#month, month1 -> 
             unsafe IO { JMonthDay.of(month1, dayOfMonth#dayOfMonth) }
         )

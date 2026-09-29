@@ -17,7 +17,7 @@
 
 pub mod InteropTime.Format.TextStyle {
 
-    use JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     import java.time.format.{TextStyle => JTextStyle}
 

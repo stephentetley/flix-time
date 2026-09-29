@@ -18,13 +18,13 @@
 pub mod InteropTime.Chrono.ThaiBuddhistEra {
 
 
-    use JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Temporal.ChronoField.ChronoField
     use InteropTime.Temporal.ValueRange.ValueRange
 
-    use InteropLocale.Locale.Locale
+    use cl::InteropLocale.Locale.Locale
 
     import java.time.chrono.{ThaiBuddhistEra => JThaiBuddhistEra }
     import java.time.temporal.{ChronoField => JChronoField}

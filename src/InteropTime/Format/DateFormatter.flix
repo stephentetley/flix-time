@@ -17,10 +17,11 @@
 
 pub mod InteropTime.Format.DateFormatter {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorUnchecked
-    use JavaInterop.AdaptorChecked
-    use InteropLocale.Locale
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorChecked
+    use cl::InteropLocale.Locale
 
     use InteropTime.Format.DecimalStyle.DecimalStyle
     use InteropTime.Format.DecimalStyle.DecimalStyle.{DecimalStyle}
@@ -69,7 +70,7 @@ pub mod InteropTime.Format.DateFormatter {
     }
 
 
-    pub def newDateFormatter(pattern: String): DateFormatter \ Fail =
+    pub def newDateFormatter(pattern: String): DateFormatter \ Fail[InteropErr] =
         AdaptorChecked.of(() -> {
             let s1 = String.trim(pattern);
             unsafe IO { JDateTimeFormatter.ofPattern(s1) }

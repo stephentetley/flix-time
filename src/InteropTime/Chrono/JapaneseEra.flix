@@ -18,12 +18,13 @@
 
 pub mod InteropTime.Chrono.JapaneseEra {
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorUnchecked
-    use JavaInterop.AdaptorChecked
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorUnchecked
+    use ae::JavaInterop.AdaptorChecked
+    use cl::InteropLocale.Locale.Locale
     
     use InteropTime.Format.TextStyle.TextStyle
-    use InteropLocale.Locale.Locale
 
     import java.time.chrono.{JapaneseEra => JJapaneseEra}
     import java.time.chrono.{Era => JEra}
@@ -71,7 +72,7 @@ pub mod InteropTime.Chrono.JapaneseEra {
         pub def toFlix(x: JJapaneseEra): JapaneseEra = JapaneseEra.JapaneseEra(x)
     }
 
-    pub def japaneseEra(japaneseEra: {japaneseEra = Int32 }): JapaneseEra \ Fail =
+    pub def japaneseEra(japaneseEra: {japaneseEra = Int32 }): JapaneseEra \ Fail[InteropErr] =
         AdaptorChecked.of(() -> unsafe IO { JJapaneseEra.of(japaneseEra#japaneseEra)}) 
 
     pub def heisei(): JapaneseEra = 

@@ -18,8 +18,8 @@
 pub mod InteropTime.Chrono.IsoEra {
     
     
-    use JavaInterop.AdaptorUnchecked
-    use InteropLocale.Locale.Locale
+    use ae::JavaInterop.AdaptorUnchecked
+    use cl::InteropLocale.Locale.Locale
     
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate
