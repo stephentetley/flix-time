@@ -18,9 +18,9 @@
 pub mod InteropTime.Format.TimeFormatter {
 
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
-    use ae::JavaInterop.AdaptorChecked
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.InteropErr
+    use ae::AdaptorExtras.AdaptorChecked
+    use ae::AdaptorExtras.AdaptorUnchecked
     use cl::InteropLocale.Locale
 
     use InteropTime.Format.DecimalStyle.DecimalStyle

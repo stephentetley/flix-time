@@ -17,7 +17,7 @@
 
 pub mod InteropTime.Zone.ZoneOffsetTransition {
 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.ZoneOffset.ZoneOffset
     use InteropTime.LocalDateTime.LocalDateTime

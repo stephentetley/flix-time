@@ -18,7 +18,7 @@
 pub mod InteropTime.Month {
 
 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.LocalDate.LocalDate

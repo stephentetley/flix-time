@@ -17,8 +17,8 @@
 pub mod InteropTime.Compat { 
 
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
-    use ae::JavaInterop.AdaptorChecked
+    use ae::AdaptorExtras.InteropErr
+    use ae::AdaptorExtras.AdaptorChecked
 
     use InteropTime.InstantZ
     use InteropTime.LocalDate

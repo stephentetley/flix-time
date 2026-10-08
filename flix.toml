@@ -1,13 +1,11 @@
 [package]
-name        = "flix-time"
-description = "A wrapper over Java's time library so it can be used by Flix."
-version     = "0.23.0"
-flix        = "0.75.3"
-license     = "Apache-2.0"
-authors     = ["Stephen Tetley <stephen.tetley@gmail.com>"]
+version     = "0.24.0"
+flix        = "0.76.2"
+repository  = "github:stephentetley/flix-time"
 
 [dependencies]
-"github:stephentetley/effect-extras" = { version = "0.4.2", security = "unrestricted" }
-"github:stephentetley/charset-locale" = { version = "0.16.3", security = "unrestricted" }
-"github:stephentetley/adaptor-extras" = { version = "0.3.0", security = "unrestricted" }
+"github:stephentetley/effect-extras" = { version = "0.7.0", security = "unrestricted", mount = "ee" }
+"github:stephentetley/adaptor-extras" = { version = "0.6.0", security = "unrestricted", mount = "ae" }
+"github:stephentetley/charset-locale" = { version = "0.18.0", security = "unrestricted", mount = "cl" }
+
 

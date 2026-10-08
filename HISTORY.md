@@ -1,4 +1,5 @@
 ### v0.24.0
+   Updated to use the new style package definition.
    Updated dependencies.
    Updated to use package mounts.
 

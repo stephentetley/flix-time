@@ -19,8 +19,8 @@ pub mod InteropTime.Format.DecimalStyle {
 
     use cl::InteropLocale.Locale.{Locale}
 
-    use ae::JavaInterop.AdaptorExtras.Collection 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.Collection 
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     import java.time.format.{DecimalStyle => JDecimalStyle}
     import java.util.{Locale => JLocale, 

@@ -18,7 +18,7 @@
 
 pub mod InteropTime.DayOfWeek {
 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
     use cl::InteropLocale.Locale.Locale
 
     use InteropTime.Format.TextStyle.TextStyle

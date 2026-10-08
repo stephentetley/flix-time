@@ -18,7 +18,7 @@
 pub mod InteropTime.Chrono.ThaiBuddhistEra {
 
 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
     use InteropTime.Temporal.ChronoField.ChronoField

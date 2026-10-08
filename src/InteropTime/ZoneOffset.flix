@@ -18,7 +18,7 @@
 pub mod InteropTime.ZoneOffset {
 
 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.Zone.ZoneRules.ZoneRules
     use InteropTime.OffsetDateTime.OffsetDateTime

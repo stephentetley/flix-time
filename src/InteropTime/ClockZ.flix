@@ -19,7 +19,7 @@
 pub mod InteropTime.ClockZ {
 
 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.DurationZ.DurationZ
     use InteropTime.InstantZ.InstantZ

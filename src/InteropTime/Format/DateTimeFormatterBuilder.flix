@@ -19,8 +19,8 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
 
     use ee::EffectExtras
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
-    use ae::JavaInterop.AdaptorExtras.Collection
+    use ae::AdaptorExtras.InteropErr
+    use ae::AdaptorExtras.Collection
     use cl::InteropLocale.Locale.Locale
 
     use InteropTime.ZoneId

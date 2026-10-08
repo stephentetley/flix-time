@@ -18,9 +18,9 @@
 pub mod InteropTime.Zone.ZoneOffsetTransitionRule {
 
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
-    use ae::JavaInterop.AdaptorUnchecked
-    use ae::JavaInterop.AdaptorChecked
+    use ae::AdaptorExtras.InteropErr
+    use ae::AdaptorExtras.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorChecked
 
     use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition
     use InteropTime.DayOfWeek.DayOfWeek

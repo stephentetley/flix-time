@@ -20,10 +20,10 @@ pub mod InteropTime.Chrono.HijrahChronology {
 
     
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
-    use ae::JavaInterop.AdaptorExtras.Collection
-    use ae::JavaInterop.AdaptorChecked
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.InteropErr
+    use ae::AdaptorExtras.Collection
+    use ae::AdaptorExtras.AdaptorChecked
+    use ae::AdaptorExtras.AdaptorUnchecked
     use cl::InteropLocale.Locale.Locale
 
     use InteropTime.Chrono.HijrahDate.HijrahDate

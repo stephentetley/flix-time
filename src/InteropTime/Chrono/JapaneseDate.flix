@@ -20,9 +20,9 @@ pub mod InteropTime.Chrono.JapaneseDate {
 
 
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
-    use ae::JavaInterop.AdaptorChecked
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.InteropErr
+    use ae::AdaptorExtras.AdaptorChecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.Chrono.HijrahDate.HijrahDate
     use InteropTime.Chrono.MinguoDate.MinguoDate

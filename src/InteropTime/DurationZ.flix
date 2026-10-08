@@ -21,9 +21,9 @@ pub mod InteropTime.DurationZ {
 
 
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
-    use ae::JavaInterop.AdaptorChecked
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.InteropErr
+    use ae::AdaptorExtras.AdaptorChecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     import java.lang.{Object, CharSequence}
     import java.time.{Duration => JDuration}

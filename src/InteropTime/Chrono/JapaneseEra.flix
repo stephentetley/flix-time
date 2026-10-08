@@ -19,9 +19,9 @@
 pub mod InteropTime.Chrono.JapaneseEra {
 
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
-    use ae::JavaInterop.AdaptorUnchecked
-    use ae::JavaInterop.AdaptorChecked
+    use ae::AdaptorExtras.InteropErr
+    use ae::AdaptorExtras.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorChecked
     use cl::InteropLocale.Locale.Locale
     
     use InteropTime.Format.TextStyle.TextStyle

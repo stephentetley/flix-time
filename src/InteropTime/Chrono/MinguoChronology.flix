@@ -18,8 +18,8 @@
 pub mod InteropTime.Chrono.MinguoChronology {
 
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.AdaptorExtras.Collection
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.Collection
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.Chrono.MinguoDate.MinguoDate
     use InteropTime.Chrono.MinguoEra.MinguoEra

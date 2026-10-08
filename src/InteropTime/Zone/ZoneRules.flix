@@ -16,7 +16,7 @@
 
 pub mod InteropTime.Zone.ZoneRules {
 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.Zone.ZoneOffsetTransition.ZoneOffsetTransition
     use InteropTime.DurationZ.DurationZ

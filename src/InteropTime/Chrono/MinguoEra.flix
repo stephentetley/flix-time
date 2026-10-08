@@ -17,7 +17,7 @@
 
 pub mod InteropTime.Chrono.MinguoEra {
     
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.Format.TextStyle.TextStyle
 

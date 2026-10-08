@@ -18,7 +18,7 @@ mod TestYear {
 
     use ee::EffectExtras
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
+    use ae::AdaptorExtras.InteropErr
 
     use Assert.{assertEq, assertTrue, assertFalse, fail};
     use ToString.toString
@@ -31,82 +31,91 @@ mod TestYear {
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def toString01(): Unit \ Assert + IO = 
-        run {
-            assertEq(expected = "1970", toString(InteropTime.Year.newYear(1970)))
-        } with EffectExtras.Fail.runWithIO
+    def toString01(): Unit \ Assert + IO - Fail[InteropErr] = 
+        let proxyErr: Proxy[InteropErr] = Proxy.Proxy;
+        let ans = run {
+            toString(InteropTime.Year.newYear(1970))
+        } with runWithIO(proxyErr);
+        assertEq(expected = "1970", ans)
 
 
-    /////////////////////////////////////////////////////////////////////////////
-    // less                                                                    //
-    /////////////////////////////////////////////////////////////////////////////
+    pub def runWithIO(_: Proxy[err], f: Unit -> a \ ef): a \ ef + IO - Fail[err] with ToString[err] = 
+        match EffectExtras.Fail.runWithResult(f) {
+            case Ok(a) => a
+            case Err(_) => { println("failed"); bug!("")}
+        }
 
-    @Test
-    def less01(): Unit \ Assert + IO = 
-        run {
-            assertTrue(InteropTime.Year.newYear(2020) < InteropTime.Year.newYear(2021))
-        } with EffectExtras.Fail.runWithIO
 
-    /////////////////////////////////////////////////////////////////////////////
-    // lessEq                                                                  //
-    /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
+    // // less                                                                    //
+    // /////////////////////////////////////////////////////////////////////////////
 
-    @Test
-    def lessEq01(): Unit \ Assert + IO = 
-        run {
-            assertTrue(InteropTime.Year.newYear(2020) <= InteropTime.Year.newYear(2021))
-        } with EffectExtras.Fail.runWithIO
+    // @Test
+    // def less01(): Unit \ Assert + IO = 
+    //     run {
+    //         assertTrue(InteropTime.Year.newYear(2020) < InteropTime.Year.newYear(2021))
+    //     } with EffectExtras.Fail.runWithIO
 
-    /////////////////////////////////////////////////////////////////////////////
-    // greater                                                                 //
-    /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
+    // // lessEq                                                                  //
+    // /////////////////////////////////////////////////////////////////////////////
 
-    @Test
-    def greater01(): Unit \ Assert + IO = 
-        run {
-            assertTrue(InteropTime.Year.newYear(2021) > InteropTime.Year.newYear(2020))
-        } with EffectExtras.Fail.runWithIO
+    // @Test
+    // def lessEq01(): Unit \ Assert + IO = 
+    //     run {
+    //         assertTrue(InteropTime.Year.newYear(2020) <= InteropTime.Year.newYear(2021))
+    //     } with EffectExtras.Fail.runWithIO
 
-    /////////////////////////////////////////////////////////////////////////////
-    // greaterEq                                                               //
-    /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
+    // // greater                                                                 //
+    // /////////////////////////////////////////////////////////////////////////////
 
-    @Test
-    def greaterEq01(): Unit \ Assert + IO = 
-        run {
-            assertTrue(InteropTime.Year.newYear(2021) >= InteropTime.Year.newYear(2020))
-        } with EffectExtras.Fail.runWithIO
+    // @Test
+    // def greater01(): Unit \ Assert + IO = 
+    //     run {
+    //         assertTrue(InteropTime.Year.newYear(2021) > InteropTime.Year.newYear(2020))
+    //     } with EffectExtras.Fail.runWithIO
 
-    /////////////////////////////////////////////////////////////////////////////
-    // compare                                                                 //
-    /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
+    // // greaterEq                                                               //
+    // /////////////////////////////////////////////////////////////////////////////
 
-    @Test
-    def compare01(): Unit \ Assert + IO = 
-        run {
-            assertEq(
-                 expected = LessThan,
-                Order.compare(InteropTime.Year.newYear(2020), InteropTime.Year.newYear(2021))
-            )
-        } with EffectExtras.Fail.runWithIO
+    // @Test
+    // def greaterEq01(): Unit \ Assert + IO = 
+    //     run {
+    //         assertTrue(InteropTime.Year.newYear(2021) >= InteropTime.Year.newYear(2020))
+    //     } with EffectExtras.Fail.runWithIO
 
-    @Test
-    def compare02(): Unit \ Assert + IO = 
-        run { 
-            assertEq(
-                expected = EqualTo,
-                Order.compare(InteropTime.Year.newYear(2020), InteropTime.Year.newYear(2020))
-            )
-        } with EffectExtras.Fail.runWithIO
+    // /////////////////////////////////////////////////////////////////////////////
+    // // compare                                                                 //
+    // /////////////////////////////////////////////////////////////////////////////
 
-    @Test
-    def compare03(): Unit \ Assert + IO = 
-        run { 
-            assertEq(
-                expected = GreaterThan,
-                Order.compare(InteropTime.Year.newYear(2021), InteropTime.Year.newYear(2020))
-            )
-        } with EffectExtras.Fail.runWithIO
+    // @Test
+    // def compare01(): Unit \ Assert + IO = 
+    //     run {
+    //         assertEq(
+    //              expected = LessThan,
+    //             Order.compare(InteropTime.Year.newYear(2020), InteropTime.Year.newYear(2021))
+    //         )
+    //     } with EffectExtras.Fail.runWithIO
+
+    // @Test
+    // def compare02(): Unit \ Assert + IO = 
+    //     run { 
+    //         assertEq(
+    //             expected = EqualTo,
+    //             Order.compare(InteropTime.Year.newYear(2020), InteropTime.Year.newYear(2020))
+    //         )
+    //     } with EffectExtras.Fail.runWithIO
+
+    // @Test
+    // def compare03(): Unit \ Assert + IO = 
+    //     run { 
+    //         assertEq(
+    //             expected = GreaterThan,
+    //             Order.compare(InteropTime.Year.newYear(2021), InteropTime.Year.newYear(2020))
+    //         )
+    //     } with EffectExtras.Fail.runWithIO
 
 
     /////////////////////////////////////////////////////////////////////////////

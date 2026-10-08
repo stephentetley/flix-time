@@ -17,8 +17,8 @@
 pub mod InteropTime.Chrono.ThaiBuddhistChronology {
 
     
-    use ae::JavaInterop.AdaptorExtras.Collection
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.Collection
+    use ae::AdaptorExtras.AdaptorUnchecked
 
     use InteropTime.Chrono.ThaiBuddhistDate.ThaiBuddhistDate
     use InteropTime.Chrono.ThaiBuddhistEra.ThaiBuddhistEra

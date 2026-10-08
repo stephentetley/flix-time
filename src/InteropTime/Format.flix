@@ -16,7 +16,7 @@
 
 pub mod InteropTime.Format { 
 
-    use ae::JavaInterop.InteropErr
+    use ae::AdaptorExtras.InteropErr
     use ee::EffectExtras.Fail.Fail
 
     pub trait TemporalFormat[t] {
