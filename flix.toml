@@ -4,8 +4,8 @@ flix        = "0.76.2"
 repository  = "github:stephentetley/flix-time"
 
 [dependencies]
-"github:stephentetley/effect-extras" = { version = "0.7.0", security = "unrestricted", mount = "ee" }
-"github:stephentetley/adaptor-extras" = { version = "0.6.0", security = "unrestricted", mount = "ae" }
-"github:stephentetley/charset-locale" = { version = "0.18.0", security = "unrestricted", mount = "cl" }
+"github:stephentetley/effect-extras" = { version = "0.8.0", security = "unrestricted", mount = "ee" }
+"github:stephentetley/adaptor-extras" = { version = "0.6.1", security = "unrestricted", mount = "ae" }
+"github:stephentetley/charset-locale" = { version = "0.18.1", security = "unrestricted", mount = "cl" }
 
 

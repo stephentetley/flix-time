@@ -18,7 +18,8 @@ mod TestMonthDay {
     
     use ee::EffectExtras
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
+    use ae::AdaptorExtras
+    use ae::AdaptorExtras.InteropErr
 
     use Assert.{assertEq, assertTrue, assertFalse, fail};
     use ToString.toString;
@@ -28,11 +29,13 @@ mod TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def toString01(): Unit \ {Assert, IO} = 
-        run {
+    def toString01(): Unit \ {Assert, IO} - Fail[InteropErr] = 
+        let px = AdaptorExtras.proxyInteropErr();
+        let ans =  run {
             InteropTime.MonthDay.newMonthDay(month = 1, dayOfMonth = 1) |> toString |> println;
-            assertTrue(true)
-        } with EffectExtras.Fail.runWithIO
+            true
+        } with EffectExtras.Fail.runWithResult(px);
+        assertEq(expected = Ok(true), ans)
 
     /////////////////////////////////////////////////////////////////////////////
     // fromLocalDate                                                           //
@@ -50,11 +53,13 @@ mod TestMonthDay {
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def getDayOfMonth01(): Unit \ Assert + IO =
-        run {
+    def getDayOfMonth01(): Unit \ Assert - Fail[InteropErr] =
+        let px = AdaptorExtras.proxyInteropErr();
+        let ans = run {
             let md = InteropTime.MonthDay.newMonthDay(month = 1, dayOfMonth = 1);
-            assertEq(expected = 1, InteropTime.MonthDay.getDayOfMonth(md))
-        } with EffectExtras.Fail.runWithIO
+            InteropTime.MonthDay.getDayOfMonth(md)
+        } with EffectExtras.Fail.runWithResult(px);
+        assertEq(expected = Ok(1), ans)
 
     // @Test
     // def get02(): Int32 \ IO =         

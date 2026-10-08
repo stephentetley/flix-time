@@ -15,13 +15,14 @@
  */
 
 mod TestPeriod {
+    use ae::AdaptorExtras
 
     use ee::EffectExtras
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
+    use ae::AdaptorExtras.InteropErr
 
 
-    use Assert.{assertEq, assertTrue, assertFalse, fail};
+    use Assert.{assertEq, assertOk, assertTrue, assertFalse, fail};
     use ToString.toString
     use LowerBound.minValue
     use UpperBound.maxValue
@@ -38,13 +39,13 @@ mod TestPeriod {
         assertTrue(ans == InteropTime.Period.newWithYears(2))
 
     @Test
-    def add02(): Unit \ Assert + IO = 
-        run {
+    def add02(): Unit \ Assert - Fail[InteropErr] = 
+        let px = AdaptorExtras.proxyInteropErr();
+        let ans = run {
             let p1 = InteropTime.Period.newWithYears(10);
-            let ans = p1 + InteropTime.Period.newWithMonths(10);
-            assertTrue(ans == InteropTime.Period.newPeriod(years = 10, months = 10, days = 0))
-        } with EffectExtras.Fail.runWithIO
-
+            p1 + InteropTime.Period.newWithMonths(10)
+        } with EffectExtras.Fail.runWithResult(px);
+        assertOk(ans)
 
     /////////////////////////////////////////////////////////////////////////////
     // negate                                                                  //

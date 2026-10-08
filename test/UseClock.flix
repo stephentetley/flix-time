@@ -22,7 +22,7 @@ mod UseClock {
     
     use ee::EffectExtras
     use ee::EffectExtras.Fail.Fail
-    use ae::JavaInterop.InteropErr
+    use ae::AdaptorExtras.InteropErr
 
     use InteropTime.ClockZ
     use InteropTime.ClockZ.RunClock

@@ -31,19 +31,13 @@ mod TestYear {
     /////////////////////////////////////////////////////////////////////////////
 
     @Test
-    def toString01(): Unit \ Assert + IO - Fail[InteropErr] = 
-        let proxyErr: Proxy[InteropErr] = Proxy.Proxy;
+    def toString01(): Unit \ Assert  - Fail[InteropErr] = 
+        let px: Proxy[InteropErr] = Proxy.Proxy;
         let ans = run {
             toString(InteropTime.Year.newYear(1970))
-        } with runWithIO(proxyErr);
-        assertEq(expected = "1970", ans)
+        } with Fail.runWithResult(px);
+        assertEq(expected = Ok("1970"), ans)
 
-
-    pub def runWithIO(_: Proxy[err], f: Unit -> a \ ef): a \ ef + IO - Fail[err] with ToString[err] = 
-        match EffectExtras.Fail.runWithResult(f) {
-            case Ok(a) => a
-            case Err(_) => { println("failed"); bug!("")}
-        }
 
 
     // /////////////////////////////////////////////////////////////////////////////

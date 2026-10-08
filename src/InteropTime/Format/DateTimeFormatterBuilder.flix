@@ -16,6 +16,7 @@
 
 
 pub mod InteropTime.Format.DateTimeFormatterBuilder {
+    use ae::AdaptorExtras
 
     use ee::EffectExtras
     use ee::EffectExtras.Fail.Fail
@@ -264,10 +265,12 @@ pub mod InteropTime.Format.DateTimeFormatterBuilder {
         handle(buildfun)() |> fst
 
     pub def runDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[InteropErr, (DateTimeFormatter, a)] \ (ef - Fail[InteropErr] - DateTimeFormatterBuilder)  = 
-        run { handle(buildfun)() } with EffectExtras.Fail.runWithResult
+        let px = AdaptorExtras.proxyInteropErr();
+        run { handle(buildfun)() } with EffectExtras.Fail.runWithResult(px)
 
     pub def execDateTimeFormatterBuilderWithResult(buildfun: Unit -> a \ ef): Result[InteropErr, DateTimeFormatter] \ (ef - Fail[InteropErr] - DateTimeFormatterBuilder)  = 
-        { run { handle(buildfun)() } with EffectExtras.Fail.runWithResult } |> Result.map(fst)
+        let px = AdaptorExtras.proxyInteropErr();
+        { run { handle(buildfun)() } with EffectExtras.Fail.runWithResult(px) } |> Result.map(fst)
 
 
 }
